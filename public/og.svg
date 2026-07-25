@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07090f" />
+      <stop offset="1" stop-color="#05060a" />
+    </linearGradient>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0 L0 0 0 56" fill="none" stroke="rgba(232,230,220,0.05)" stroke-width="1" />
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#grid)" />
+  <g transform="translate(80,160)">
+    <text x="0" y="0" font-family="Fraunces, Georgia, serif" font-size="86" font-weight="300" fill="#f5f4ef" letter-spacing="-3">Your career should</text>
+    <text x="0" y="100" font-family="Fraunces, Georgia, serif" font-size="86" font-weight="300" fill="#c8c5b8" letter-spacing="-3">not be a public</text>
+    <text x="0" y="200" font-family="Fraunces, Georgia, serif" font-size="86" font-weight="300" fill="#3fc487" letter-spacing="-3">attack surface.</text>
+  </g>
+  <g transform="translate(80,560)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="22" fill="#c8c5b8" letter-spacing="3">LINKBOT — PRIVATE ELIGIBILITY</text>
+  </g>
+  <g transform="translate(1080,540)" stroke="#3fc487" stroke-width="1.2" fill="none">
+    <path d="M0 30 L30 0 L60 30 L30 60 Z" />
+    <circle cx="30" cy="30" r="6" fill="#3fc487" />
+  </g>
+</svg>
