@@ -1,0 +1,34 @@
+name: Agency acquisition validation
+
+on:
+  push:
+    branches:
+      - velocity/agency-acquisition
+  pull_request:
+    paths:
+      - 'src/pages/for-agencies.astro'
+      - 'src/components/agency/**'
+      - 'src/lib/agency-demo.ts'
+      - 'tests/agency-demo.test.mjs'
+      - '.github/workflows/agency-acquisition.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  agency-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Typecheck Astro and React islands
+        run: npm run typecheck
+      - name: Test synthetic mandate semantics
+        run: node --experimental-strip-types --test tests/agency-demo.test.mjs
+      - name: Build static site
+        run: npm run build
