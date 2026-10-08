@@ -1,0 +1,48 @@
+name: Agency acquisition validation
+
+on:
+  push:
+    branches:
+      - velocity/agency-acquisition
+  pull_request:
+    paths:
+      - 'src/pages/for-agencies.astro'
+      - 'src/components/agency/**'
+      - 'src/lib/agency-demo.ts'
+      - 'tests/agency-demo.test.mjs'
+      - 'tests/agency-journey.playwright.mjs'
+      - '.github/workflows/agency-acquisition.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  agency-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Typecheck Astro and React islands
+        run: npm run typecheck
+      - name: Test synthetic mandate semantics
+        run: node --experimental-strip-types --test tests/agency-demo.test.mjs
+      - name: Build static site
+        run: npm run build
+      - name: Install browser test tooling (CI only)
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Exercise the browser journey
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/agency-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/for-agencies > /dev/null; then break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:4321/for-agencies > /dev/null
+          node tests/agency-journey.playwright.mjs
