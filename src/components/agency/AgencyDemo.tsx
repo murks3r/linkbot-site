@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import { evaluateCandidate, mandates, rankCandidates } from '../lib/agency-demo';
-import type { ExampleCandidate, Mandate, RequirementStatus } from '../lib/agency-demo';
+import { evaluateCandidate, mandates, rankCandidates } from '../../lib/agency-demo';
+import type { ExampleCandidate, Mandate, RequirementStatus } from '../../lib/agency-demo';
 
 const stateStyle: Record<RequirementStatus, string> = {
   met: 'border-signal-400/30 bg-signal-400/10 text-signal-400',
