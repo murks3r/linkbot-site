@@ -11,7 +11,9 @@ export default defineConfig({
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
-    sitemap(),
+    // The jobsite preview is noindex (see src/jobsite/components/JobsiteSEO.astro)
+    // and must not enter the sitemap while it is fixture-backed.
+    sitemap({ filter: (page) => !new URL(page).pathname.startsWith('/jobs') }),
   ],
   build: { inlineStylesheets: 'auto' },
   vite: { ssr: { noExternal: ['gsap', 'lenis'] } },

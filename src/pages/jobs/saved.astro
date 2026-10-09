@@ -1,0 +1,26 @@
+---
+import JobsiteLayout from '../../jobsite/layouts/JobsiteLayout.astro';
+import { SavedApp } from '../../jobsite/ui/SavedApp.tsx';
+---
+
+<JobsiteLayout
+  title="Saved — Linkbot jobsite"
+  description="Saved opportunities, watched searches and locally expressed interest. Stored in your browser only."
+  canonicalPath="/jobs/saved"
+  active="saved"
+>
+  <section class="lbj-hero">
+    <div class="lbj-container">
+      <p class="lbj-hero__eyebrow j-label">Held in this browser</p>
+      <h1 class="lbj-hero__title j-display">Your own shortlist, on your own device.</h1>
+      <p class="lbj-hero__lede">
+        Everything on this page lives in local storage for this origin. Nothing is sent to Linkbot,
+        nothing is shared with an employer, and clearing your browser data clears this page.
+      </p>
+    </div>
+  </section>
+
+  <section class="lbj-container lbj-saved-page" aria-label="Saved items">
+    <SavedApp client:load />
+  </section>
+</JobsiteLayout>

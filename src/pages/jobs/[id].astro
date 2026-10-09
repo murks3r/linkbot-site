@@ -1,0 +1,250 @@
+---
+import JobsiteLayout from '../../jobsite/layouts/JobsiteLayout.astro';
+import { DetailActions } from '../../jobsite/ui/DetailActions.tsx';
+import Glyph from '../../jobsite/components/Glyph.astro';
+import { selectJobSearchAdapter } from '../../jobsite/create-adapter.ts';
+import { JOBS_ROUTES } from '../../jobsite/config.ts';
+import type { JobOpportunity } from '../../jobsite/types.ts';
+import {
+  EMPLOYMENT_TYPE_LABELS,
+  OPPORTUNITY_STATUS_LABELS,
+  SALARY_PERIOD_LABELS,
+  WORK_MODE_LABELS,
+} from '../../jobsite/types.ts';
+import { formatDate, formatDateTime, freshness, hostOf } from '../../jobsite/lib/format.ts';
+
+/**
+ * One opportunity, in full, with its provenance.
+ *
+ * Static paths come from the adapter's own search, so the detail route can only
+ * ever serve identities the search can produce. With live supply this route must
+ * become on-demand (see docs/jobsite/supply-integration-handoff.md).
+ */
+export async function getStaticPaths() {
+  const adapter = selectJobSearchAdapter({ latencyMs: 0, now: () => new Date() });
+  const page = await adapter.search({ limit: 50, includeClosed: true, sort: 'newest' });
+  if (page.items.length >= 50) {
+    console.warn(
+      '[jobsite] detail routes may be truncated: the adapter returned a full page of ' +
+        `${page.items.length} while generating static paths.`,
+    );
+  }
+  return page.items.map((job) => ({ params: { id: job.id }, props: { job } }));
+}
+
+interface Props {
+  job: JobOpportunity;
+}
+
+const { job } = Astro.props;
+const nowMs = Date.now();
+
+const adapter = selectJobSearchAdapter({ latencyMs: 0 });
+const fresh = freshness(job.publishedAt, nowMs);
+const salaryText = job.salary.stated
+  ? [
+      `${job.salary.currency ?? ''}`.trim() +
+        ' ' +
+        (job.salary.min != null && job.salary.max != null && job.salary.max !== job.salary.min
+          ? `${job.salary.min.toLocaleString('en-US')}–${job.salary.max.toLocaleString('en-US')}`
+          : job.salary.min != null
+            ? job.salary.min.toLocaleString('en-US')
+            : job.salary.max != null
+              ? `up to ${job.salary.max.toLocaleString('en-US')}`
+              : 'amount not stated'),
+      SALARY_PERIOD_LABELS[job.salary.period],
+    ]
+      .filter((part) => part.trim().length > 0)
+      .join(' ')
+  : null;
+
+const locationText = job.locations
+  .map((l) => l.raw)
+  .filter((l) => l.length > 0)
+  .join(' · ');
+const applyHost = hostOf(job.applyUrl);
+const isFixture = job.source.kind === 'fixture';
+
+const facts: { term: string; value: string | null; unknownLabel: string }[] = [
+  { term: 'Occupation', value: job.occupation.label, unknownLabel: 'Occupation not stated' },
+  { term: 'Work mode', value: job.workMode === 'unknown' ? null : WORK_MODE_LABELS[job.workMode], unknownLabel: 'Work mode not stated' },
+  { term: 'Employment type', value: job.employmentType === 'unknown' ? null : EMPLOYMENT_TYPE_LABELS[job.employmentType], unknownLabel: 'Employment type not stated' },
+  { term: 'Compensation', value: salaryText, unknownLabel: 'Compensation not stated' },
+  { term: 'Location', value: locationText || null, unknownLabel: 'Location not stated' },
+  { term: 'Language', value: job.language, unknownLabel: 'Language not stated' },
+];
+---
+
+<JobsiteLayout
+  title={`${job.title} — ${job.employer.name} — Linkbot jobsite`}
+  description={`${job.title} at ${job.employer.name}. ${job.summary}`}
+  canonicalPath={JOBS_ROUTES.detail(job.id)}
+  active="jobs"
+>
+  <article class="lbj-container lbj-detail">
+    <p class="lbj-filter-note">
+      <a href={JOBS_ROUTES.index}>← Back to search</a>
+      {' · viewing an opportunity (one-sided) — not a match, not an application'}
+    </p>
+
+    <div class="lbj-detail__grid">
+      <div>
+        <h1 class="lbj-detail__title j-display">{job.title}</h1>
+        <p class="lbj-detail__employer">
+          {job.employer.url
+            ? <a href={job.employer.url} target="_blank" rel="noopener noreferrer nofollow">{job.employer.name} <Glyph name="external" size={11} /></a>
+            : job.employer.name}
+        </p>
+
+        <div class="lbj-detail__meta">
+          <span class:list={['lbj-mark', `lbj-mark--${job.status === 'active' ? 'active' : job.status === 'unknown' ? 'unknown' : job.status}`]}>
+            <Glyph name={job.status === 'active' ? 'square' : job.status === 'unknown' ? 'ring' : 'dot'} size={10} />
+            {OPPORTUNITY_STATUS_LABELS[job.status]}
+          </span>
+          {job.workMode === 'unknown'
+            ? <span class="lbj-unknown"><Glyph name="ring" size={11} /> Work mode unknown</span>
+            : <span class="lbj-mark lbj-mark--workmode">{WORK_MODE_LABELS[job.workMode]}</span>}
+          {fresh.bucket === 'unknown'
+            ? <span class="lbj-unknown"><Glyph name="ring" size={11} /> Freshness unknown</span>
+            : <span class="lbj-mark lbj-mark--fresh"><Glyph name="clock" size={10} /> Posted {fresh.relative}</span>}
+        </div>
+
+        {job.summary ? <p>{job.summary}</p> : null}
+        {job.description ? <p>{job.description}</p> : null}
+
+        {job.skills.length > 0 ? (
+          <>
+            <h2 class="j-label">Skills named by the source</h2>
+            <ul class="lbj-skill-list">
+              {job.skills.map((skill) => <li class="lbj-chip">{skill}</li>)}
+            </ul>
+          </>
+        ) : (
+          <p class="lbj-unknown"><Glyph name="ring" size={11} /> No skills were listed by the source.</p>
+        )}
+
+        <h2 class="j-label">Recorded facts</h2>
+        <dl class="lbj-facts">
+          {facts.map((fact) => (
+            <div>
+              <dt>{fact.term}</dt>
+              <dd>
+                {fact.value
+                  ? fact.value
+                  : <span class="lbj-unknown"><Glyph name="ring" size={11} /> {fact.unknownLabel}</span>}
+              </dd>
+            </div>
+          ))}
+          <div>
+            <dt>Published by source</dt>
+            <dd>{formatDate(job.publishedAt) ?? <span class="lbj-unknown"><Glyph name="ring" size={11} /> Not stated</span>}</dd>
+          </div>
+          <div>
+            <dt>Valid through</dt>
+            <dd>{formatDate(job.validThrough) ?? <span class="lbj-unknown"><Glyph name="ring" size={11} /> Open-ended or not stated</span>}</dd>
+          </div>
+        </dl>
+
+        <h2 class="j-label">The three ways to act — and what each one is</h2>
+        <dl class="lbj-facts">
+          <div>
+            <dt>Viewing</dt>
+            <dd>This page. Nothing is recorded, nothing is shared, nobody is contacted.</dd>
+          </div>
+          <div>
+            <dt>Expressing interest</dt>
+            <dd>One-sided and private. It is an opportunity, not a match; the employer has not confirmed anything, and it is not an application.</dd>
+          </div>
+          <div>
+            <dt>Applying</dt>
+            <dd>A separate, externally authorised action through the original posting. It leaves Linkbot and is governed by the employer’s own process.</dd>
+          </div>
+        </dl>
+      </div>
+
+      <aside aria-label="Actions and provenance">
+        <div class="lbj-panel">
+          <h2 class="lbj-panel__title j-label">Apply through the source</h2>
+          {job.applyUrl ? (
+            <>
+              <a class="lbj-btn lbj-btn--block" href={job.applyUrl} target="_blank" rel="noopener noreferrer nofollow">
+                Apply on {applyHost ?? 'the original posting'}
+                <Glyph name="external" size={12} />
+              </a>
+              <p class="lbj-actions__note">
+                Opens the original posting in a new tab. Linkbot does not submit anything on your
+                behalf.
+              </p>
+              {isFixture ? (
+                <p class="lbj-actions__note">
+                  <strong>Preview:</strong> this is a fixture record, so the application URL is
+                  synthetic ({applyHost} is a reserved example domain).
+                </p>
+              ) : null}
+            </>
+          ) : (
+            <p class="lbj-unknown">
+              <Glyph name="ring" size={11} /> The source did not provide an original application
+              link for this posting.
+            </p>
+          )}
+
+          <div class="lbj-divider" />
+
+          <h2 class="lbj-panel__title j-label">Private actions</h2>
+          <DetailActions client:load job={job} />
+        </div>
+
+        <div class="lbj-panel lbj-panel--provenance">
+          <h2 class="lbj-panel__title j-label">Source &amp; provenance</h2>
+          <dl class="lbj-facts">
+            <div>
+              <dt>Source</dt>
+              <dd>{job.source.name}</dd>
+            </div>
+            <div>
+              <dt>Source kind</dt>
+              <dd>{job.source.kind}</dd>
+            </div>
+            <div>
+              <dt>Source URL</dt>
+              <dd>
+                {job.source.url
+                  ? <a href={job.source.url} target="_blank" rel="noopener noreferrer nofollow">{job.source.url}</a>
+                  : <span class="lbj-unknown"><Glyph name="ring" size={11} /> Not provided</span>}
+              </dd>
+            </div>
+            <div>
+              <dt>Observed</dt>
+              <dd>{formatDateTime(job.source.retrievedAt) ?? 'Unknown'}</dd>
+            </div>
+            <div>
+              <dt>Published</dt>
+              <dd>{formatDateTime(job.publishedAt) ?? 'Not stated'}</dd>
+            </div>
+            <div>
+              <dt>Last modified</dt>
+              <dd>{formatDateTime(job.modifiedAt) ?? 'Not stated'}</dd>
+            </div>
+            <div>
+              <dt>Canonical id</dt>
+              <dd class="j-num">{job.canonicalId}</dd>
+            </div>
+            <div>
+              <dt>Local id</dt>
+              <dd class="j-num">{job.id}</dd>
+            </div>
+            <div>
+              <dt>Observed via</dt>
+              <dd class="j-num">{adapter.id} ({adapter.kind})</dd>
+            </div>
+          </dl>
+          <p class="lbj-actions__note">
+            Freshness is the last observation, not a guarantee: a posting can close between
+            observations. Confirm on the original posting before acting.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </article>
+</JobsiteLayout>
