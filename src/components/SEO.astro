@@ -1,48 +1,201 @@
 ---
+/**
+ * Head-level SEO: canonical URL, description, robots directives, Open Graph,
+ * Twitter cards and JSON-LD structured data.
+ *
+ * Every absolute URL emitted here is derived from a single origin so that
+ * `<link rel="canonical">`, `og:url` and the JSON-LD `url`/`@id` values can
+ * never disagree with each other.
+ *
+ * Evidence for the claims in the structured data is limited to what this
+ * repository itself publishes (page copy and `public/llms.txt`). Anything the
+ * site does not state is deliberately absent — see docs/site-hardening/.
+ */
 interface Props {
   title: string;
   description: string;
+  /** Site-relative path (or absolute URL) of the canonical page. */
   canonicalPath: string;
+  /** Social preview image: site-relative path or absolute URL. Defaults to the OG card. */
+  image?: string;
+  imageAlt?: string;
+  /** Only defaults to the OG card's real dimensions; set explicitly for other assets. */
+  imageWidth?: number;
+  imageHeight?: number;
+  /** Robots meta content. Defaults to full indexing with large image previews. */
+  robots?: string;
+  ogType?: 'website' | 'article' | 'profile';
 }
 
-const { title, description, canonicalPath } = Astro.props;
-const canonical = new URL(canonicalPath, Astro.site ?? 'https://linkbot.org').toString();
-const ogImage = new URL('/og.svg', Astro.site ?? 'https://linkbot.org').toString();
+const {
+  title,
+  description,
+  canonicalPath,
+  image = '/og.svg',
+  imageAlt = 'Linkbot — your career should not be a public attack surface.',
+  imageWidth,
+  imageHeight,
+  robots = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+  ogType = 'website',
+} = Astro.props;
+
+/** Single source of truth for the canonical host; must match astro.config.mjs `site`. */
+const SITE_ORIGIN = 'https://linkbot.org';
+const site = Astro.site ?? new URL(SITE_ORIGIN);
+const origin = site.origin;
+
+/**
+ * Normalise a canonical path: accept either a path or an absolute URL, drop
+ * query/hash, force a leading slash and drop a trailing slash (the deploy
+ * target serves non-root routes without one: vercel.json `trailingSlash: false`).
+ */
+function normalisePath(input: string): string {
+  const raw = input.trim();
+  const withoutQuery = /^[a-z][a-z0-9+.-]*:\/\//i.test(raw)
+    ? new URL(raw).pathname
+    : raw.split(/[?#]/)[0] ?? '';
+  const trimmed = withoutQuery.replace(/^\/+/, '').replace(/\/+$/, '');
+  return trimmed === '' ? '/' : `/${trimmed}`;
+}
+
+const path = normalisePath(canonicalPath);
+const canonical = new URL(path, origin).toString();
+const imageUrl = new URL(image, origin).toString();
+const logoUrl = new URL('/favicon.svg', origin).toString();
+
+/**
+ * Authoritative dimensions of the default social card (`public/og.svg` reads
+ * `viewBox="0 0 1200 630"`). The regression tests re-derive these from the
+ * asset, so drift between the asset and the metadata fails the suite.
+ */
+const OG_CARD = { path: '/og.svg', width: 1200, height: 630 };
+
+const IMAGE_TYPES: Record<string, string> = {
+  svg: 'image/svg+xml',
+  png: 'image/png',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  webp: 'image/webp',
+  gif: 'image/gif',
+};
+
+const imageExtension = imageUrl.split('.').pop()?.toLowerCase() ?? '';
+const imageType = IMAGE_TYPES[imageExtension];
+const isDefaultCard = imageUrl.endsWith(OG_CARD.path);
+const resolvedWidth = imageWidth ?? (isDefaultCard ? OG_CARD.width : undefined);
+const resolvedHeight = imageHeight ?? (isDefaultCard ? OG_CARD.height : undefined);
+
+const organizationId = `${origin}/#organization`;
+const websiteId = `${origin}/#website`;
+const webpageId = `${canonical}#webpage`;
+
+/**
+ * Organisation description: assembled only from wording this repository already
+ * publishes — public/llms.txt ("a privacy-first matching layer for the labour
+ * market") and src/pages/index.astro ("Linkbot is a permissioned matching
+ * layer", "you hold a private, verifiable record", employers "request access to
+ * specific signals", "with the holder's consent").
+ */
+const organizationDescription =
+  'Linkbot is a privacy-first matching layer for the labour market. It replaces public career exposure with permissioned, private eligibility: people hold their own private, verifiable record, and employers request access to specific signals with the holder\u2019s consent.';
+
+/**
+ * `logo` is the brand mark that actually exists in this repository
+ * (public/favicon.svg, the 22\u00d722 diamond used in the header). `image` carries
+ * the 1200\u00d7630 social card, which is a page image and not a logo. A square
+ * logo of at least 112\u00d7112 is still required for logo eligibility — tracked in
+ * docs/site-hardening/02-unresolved-and-out-of-scope.md.
+ */
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: 'Linkbot',
+      legalName: 'Linkbot OÜ',
+      url: `${origin}/`,
+      logo: {
+        '@type': 'ImageObject',
+        url: logoUrl,
+        width: 22,
+        height: 22,
+      },
+      image: {
+        '@type': 'ImageObject',
+        url: imageUrl,
+        width: resolvedWidth,
+        height: resolvedHeight,
+      },
+      description: organizationDescription,
+      foundingDate: '2024',
+      email: 'hello@linkbot.org',
+      address: { '@type': 'PostalAddress', addressCountry: 'EE', addressLocality: 'Tallinn' },
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          contactType: 'private beta access requests',
+          email: 'hello@linkbot.org',
+          availableLanguage: ['en'],
+        },
+      ],
+      knowsAbout: [
+        'Privacy engineering',
+        'Permissioned matching',
+        'Consent management',
+        'Identity verification',
+        'Labour market matching',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      name: 'Linkbot',
+      url: `${origin}/`,
+      inLanguage: 'en',
+      publisher: { '@id': organizationId },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': webpageId,
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: 'en',
+      isPartOf: { '@id': websiteId },
+      about: { '@id': organizationId },
+      publisher: { '@id': organizationId },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: imageUrl,
+        width: resolvedWidth,
+        height: resolvedHeight,
+      },
+    },
+  ],
+};
 ---
 
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+<meta name="robots" content={robots} />
 
-<meta property="og:type" content="website" />
+<meta property="og:type" content={ogType} />
 <meta property="og:site_name" content="Linkbot" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
-<meta property="og:image" content={ogImage} />
+<meta property="og:image" content={imageUrl} />
+{imageType && <meta property="og:image:type" content={imageType} />}
+{resolvedWidth !== undefined && <meta property="og:image:width" content={String(resolvedWidth)} />}
+{resolvedHeight !== undefined && <meta property="og:image:height" content={String(resolvedHeight)} />}
+<meta property="og:image:alt" content={imageAlt} />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
 
-<script type="application/ld+json" is:inline set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Linkbot',
-  legalName: 'Linkbot OÜ',
-  url: 'https://linkbot.org',
-  logo: 'https://linkbot.org/og.svg',
-  description: 'Private eligibility infrastructure for the labour market. We replace public exposure with permissioned matching.',
-  foundingDate: '2024',
-  address: { '@type': 'PostalAddress', addressCountry: 'EE', addressLocality: 'Tallinn' },
-  knowsAbout: ['Privacy engineering', 'Identity and access management', 'Labour market matching', 'Eligibility protocols'],
-})}></script>
-
-<script type="application/ld+json" is:inline set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Linkbot',
-  url: 'https://linkbot.org',
-  inLanguage: 'en',
-})}></script>
+<script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)}></script>
