@@ -196,7 +196,37 @@ Served with `astro preview` on `127.0.0.1:4400` from the local build
 | Marketing home | **exactly one** `robots` meta (the duplicate is gone), canonical on the build origin, preview notice present |
 | Canonical / robots on every jobsite route | `http://localhost:4321/jobs[...]` + `noindex, nofollow, noarchive, nosnippet` |
 
-## 7. Gates run
+## 7. Remote preview deployment
+
+The branch is connected to Vercel, so the push produced a preview without any CLI
+login or token.
+
+| Field | Value |
+| --- | --- |
+| Deployment (GitHub) | `6963120063`, environment `Preview`, state `success` |
+| Immutable URL | https://linkbot-m3-1u49av4m0-geoprocure.vercel.app |
+| Branch alias | https://linkbot-m3-git-integration-jobsite-preview-v1-geoprocure.vercel.app |
+| HTTP classification | `302 → https://vercel.com/sso-api?…` on both hosts — **SSO-protected** |
+| Production deployments before/after the push | 1 / 1 (unchanged) |
+| `https://linkbot-site.vercel.app/` | still serves the `main` build, canonical `https://linkbot.org/` |
+
+Because Vercel Authentication is enabled, the deployed HTML cannot be fetched from
+outside the team; that is recorded as `sso-protected` (a pass, not a failure) by
+`PREVIEW_URL=… npm run smoke:dist`:
+
+```
+$ PREVIEW_URL=https://linkbot-m3-1u49av4m0-geoprocure.vercel.app npm run smoke:dist
+ℹ tests 33 / pass 33 / fail 0
+ℹ https://linkbot-m3-1u49av4m0-geoprocure.vercel.app is deployed but protected by
+  Vercel Authentication (HTTP 302 -> vercel.com/sso-api)
+```
+
+The remote deployment also proves the file PR #10 called "the classic installs on
+macOS, fails `npm ci` on Vercel" trap is closed: Vercel built this branch with
+`installCommand: npm ci` from the committed lockfile and finished successfully on
+Linux. Vercel Authentication was neither disabled nor weakened.
+
+## 8. Gates run
 
 ```
 npm ci                      # 550 packages, 7 s, lockfileVersion 3 (648 entries)
@@ -209,7 +239,7 @@ SITE_ORIGIN=https://careers.example.com npm run build && <all three suites>   # 
 npm run verify              # typecheck + build + all three suites, 0 fail
 ```
 
-## 8. Decisions this integration did **not** make
+## 9. Decisions this integration did **not** make
 
 Each needs an owner; none was silently chosen.
 
@@ -241,7 +271,7 @@ Each needs an owner; none was silently chosen.
    anywhere in this build; that claim is asserted in the UI copy and was not
    independently audited here.
 
-## 9. Known residual gaps (carried, not introduced)
+## 10. Known residual gaps (carried, not introduced)
 
 - `docs/preview/domain-migration.md` §4's failure counts are superseded by §4
   above; §3.8's helper patch is superseded by the resolver-based helper.
