@@ -9,12 +9,14 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "preview:local": "npm run build && astro preview",
-    "smoke": "npm run build && node --test \"tests/preview-smoke/*.test.mjs\"",
-    "smoke:dist": "node --test \"tests/preview-smoke/*.test.mjs\"",
     "astro": "astro",
     "typecheck": "astro check",
-    "test": "node --test 'tests/**/*.test.mjs'",
-    "test:jobsite": "node --test 'tests/jobsite-*.test.mjs'"
+    "test": "node --test \"tests/jobsite-*.test.mjs\"",
+    "test:jobsite": "node --test \"tests/jobsite-*.test.mjs\"",
+    "test:site": "npm run build && node --test \"tests/site-hardening/*.test.mjs\"",
+    "smoke": "npm run build && node --test \"tests/preview-smoke/*.test.mjs\"",
+    "smoke:dist": "node --test \"tests/preview-smoke/*.test.mjs\"",
+    "verify": "npm run typecheck && npm run build && node --test \"tests/jobsite-*.test.mjs\" \"tests/site-hardening/*.test.mjs\" \"tests/preview-smoke/*.test.mjs\""
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

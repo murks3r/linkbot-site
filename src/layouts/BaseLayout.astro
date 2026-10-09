@@ -43,9 +43,12 @@ const noindex = !site.indexable || originDisagrees;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 
-    <SEO title={title} description={description} canonicalPath={canonicalPath} />
-
-    {noindex && <meta name="robots" content="noindex, nofollow, noarchive" />}
+    <SEO
+      title={title}
+      description={description}
+      canonicalPath={canonicalPath}
+      robots={noindex ? 'noindex, nofollow, noarchive' : undefined}
+    />
   </head>
   <body class="bg-ink-950 text-bone-50 font-sans selection:bg-signal-500/30 selection:text-bone-50">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-ink-800 focus:px-3 focus:py-2 focus:text-bone-50">Skip to content</a>

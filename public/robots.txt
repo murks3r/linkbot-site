@@ -1,5 +1,14 @@
-# robots.txt — https://linkbot.org
-# Canonical host matches astro.config.mjs `site`. See docs/site-hardening/.
+# robots.txt — the canonical host is resolved at build time (astro.config.mjs
+# `site`, from SITE_ORIGIN / VERCEL_ENV / VERCEL_URL). See docs/preview/README.md
+# and docs/site-hardening/.
+#
+# No `Sitemap:` directive is stored here on purpose: this is a static file, and a
+# literal host would be wrong in every environment but one (and would cite a
+# domain the organisation may not own). src/lib/preview-guard.mjs owns that
+# directive instead: it appends `Sitemap: <build origin>/sitemap-index.xml` to
+# the build output on an indexable build, and replaces the whole file with
+# `Disallow: /` on every non-production build. Both directions are tested in
+# tests/site-hardening/robots.test.mjs and tests/preview-smoke/output.test.mjs.
 
 User-agent: *
 Allow: /
@@ -8,6 +17,11 @@ Allow: /
 # /accessibility is not swallowed by an /access prefix rule.
 Disallow: /api/
 Disallow: /access$
+# Jobsite preview: noindex and out of the sitemap while it is fixture-backed
+# (see src/jobsite). `/jobs/` stops at the path separator, so it cannot swallow
+# a sibling route such as /jobsboard.
+Disallow: /jobs$
+Disallow: /jobs/
 
 # Answer-engine crawlers are explicitly welcome; /llms.txt is the
 # machine-readable summary. Each named group repeats the reserved-path rules
@@ -20,9 +34,5 @@ User-agent: CCBot
 Allow: /
 Disallow: /api/
 Disallow: /access$
-
-# Jobsite preview: noindex while fixture-backed (see src/jobsite).
-Disallow: /jobs
+Disallow: /jobs$
 Disallow: /jobs/
-
-Sitemap: https://linkbot.org/sitemap-index.xml

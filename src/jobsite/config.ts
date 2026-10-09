@@ -1,21 +1,20 @@
 /**
  * Jobsite configuration.
  *
- * Everything here is overridable by environment so the preview never depends on
- * a production domain:
+ * Only *supply* is configured here. The canonical origin is not a jobsite
+ * setting: it is resolved once for the whole build in astro.config.mjs
+ * (src/lib/site-origin.mjs) and read as `Astro.site`, so the marketing pages,
+ * the jobsite, the sitemap and robots.txt cannot disagree. There is no
+ * PUBLIC_SITE_ORIGIN.
  *
- *   PUBLIC_SITE_ORIGIN       absolute origin used for canonical/og URLs.
- *                            Falls back to the request origin, then to
- *                            Astro's configured site. Never hardcoded.
  *   PUBLIC_SUPPLY_API_ORIGIN when set, the live canonical adapter is used
  *                            instead of fixtures. Unset in the preview.
  *
- * No secret ever belongs in a PUBLIC_ variable: these are inlined into the
+ * No secret ever belongs in a PUBLIC_ variable: those are inlined into the
  * client bundle by design.
  */
 
 interface EnvLike {
-  PUBLIC_SITE_ORIGIN?: string;
   PUBLIC_SUPPLY_API_ORIGIN?: string;
 }
 
@@ -28,13 +27,6 @@ function readEnv(): EnvLike {
 function orNull(value: string | undefined): string | null {
   const trimmed = value?.trim();
   return trimmed && trimmed.length > 0 ? trimmed : null;
-}
-
-/** Absolute origin for canonical links, or null to stay relative. */
-export function getSiteOrigin(): string | null {
-  const configured = orNull(readEnv().PUBLIC_SITE_ORIGIN);
-  if (configured) return configured.replace(/\/+$/, '');
-  return null;
 }
 
 /** Canonical supply origin, or null while the backend is not wired. */

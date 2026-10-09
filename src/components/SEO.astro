@@ -39,9 +39,21 @@ const {
   ogType = 'website',
 } = Astro.props;
 
-/** Single source of truth for the canonical host; must match astro.config.mjs `site`. */
-const SITE_ORIGIN = 'https://linkbot.org';
-const site = Astro.site ?? new URL(SITE_ORIGIN);
+/**
+ * The canonical origin is resolved once, in `astro.config.mjs`, from
+ * `SITE_ORIGIN` / `VERCEL_ENV` / `VERCEL_URL` (src/lib/site-origin.mjs, see
+ * docs/preview/README.md). This component deliberately keeps **no** domain
+ * fallback: a build that cannot name its own origin must fail rather than
+ * invent a canonical host, because whoever owns the invented host inherits the
+ * site's authority.
+ */
+const site = Astro.site;
+if (!site) {
+  throw new Error(
+    'astro.config.mjs resolved no site origin — every absolute URL in this ' +
+      'document would otherwise be invented. See docs/preview/README.md §3.',
+  );
+}
 const origin = site.origin;
 
 /**
