@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="emacron" format="2">
+  <advance width="600.0"/>
+  <unicode hex="0113"/>
+  <outline>
+    <contour>
+      <point x="560.1656" y="162.9687" type="move"/>
+      <point x="602.905" y="314.8181"/>
+      <point x="540.1294" y="479.5163"/>
+      <point x="414.2748" y="545.7278" type="curve" smooth="yes"/>
+      <point x="288.4202" y="611.9394"/>
+      <point x="139.5624" y="558.5807"/>
+      <point x="68.3287" y="421.722" type="curve" smooth="yes"/>
+      <point x="-2.905" y="284.8632"/>
+      <point x="26.1683" y="108.0843"/>
+      <point x="135.8951" y="10.8871" type="curve" smooth="yes"/>
+      <point x="245.6219" y="-86.3102"/>
+      <point x="401.0621" y="-72.9754"/>
+      <point x="497.1386" y="41.8773" type="curve" smooth="yes"/>
+      <point x="369.576" y="18.2217"/>
+      <point x="263.2824" y="8.5391"/>
+      <point x="188.2486" y="79.1154" type="curve" smooth="yes"/>
+      <point x="113.2148" y="149.6918"/>
+      <point x="93.3338" y="278.0535"/>
+      <point x="142.0451" y="377.4287" type="curve" smooth="yes"/>
+      <point x="190.7564" y="476.8038"/>
+      <point x="292.5488" y="515.5484"/>
+      <point x="378.6112" y="467.4712" type="curve" smooth="yes"/>
+      <point x="464.6735" y="419.394"/>
+      <point x="507.6009" y="299.8042"/>
+      <point x="478.3747" y="189.5441" type="curve" smooth="yes"/>
+    </contour>
+    <contour>
+      <point x="209.8782" y="287.4" type="move"/>
+      <point x="209.8782" y="201.4" type="line"/>
+      <point x="530.4782" y="201.4" type="line"/>
+      <point x="530.4782" y="287.4" type="line"/>
+      <point x="209.8782" y="287.4" type="line"/>
+    </contour>
+    <contour>
+      <point x="181.32" y="661.76" type="move"/>
+      <point x="181.32" y="582.64" type="line"/>
+      <point x="418.68" y="582.64" type="line"/>
+      <point x="418.68" y="661.76" type="line"/>
+      <point x="181.32" y="661.76" type="line"/>
+    </contour>
+  </outline>
+</glyph>

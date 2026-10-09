@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Emacron" format="2">
+  <advance width="600.0"/>
+  <unicode hex="0112"/>
+  <outline>
+    <contour>
+      <point x="76.0" y="0.0" type="move"/>
+      <point x="200.0" y="0.0" type="line"/>
+      <point x="200.0" y="700.0" type="line"/>
+      <point x="76.0" y="700.0" type="line"/>
+      <point x="76.0" y="0.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="76.0" y="762.0" type="move"/>
+      <point x="76.0" y="638.0" type="line"/>
+      <point x="524.0" y="638.0" type="line"/>
+      <point x="524.0" y="762.0" type="line"/>
+      <point x="76.0" y="762.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="76.0" y="433.0" type="move"/>
+      <point x="76.0" y="309.0" type="line"/>
+      <point x="470.24" y="309.0" type="line"/>
+      <point x="470.24" y="433.0" type="line"/>
+      <point x="76.0" y="433.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="76.0" y="62.0" type="move"/>
+      <point x="76.0" y="-62.0" type="line"/>
+      <point x="524.0" y="-62.0" type="line"/>
+      <point x="524.0" y="62.0" type="line"/>
+      <point x="76.0" y="62.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="128.88" y="888.84" type="move"/>
+      <point x="128.88" y="774.76" type="line"/>
+      <point x="471.12" y="774.76" type="line"/>
+      <point x="471.12" y="888.84" type="line"/>
+      <point x="128.88" y="888.84" type="line"/>
+    </contour>
+  </outline>
+</glyph>

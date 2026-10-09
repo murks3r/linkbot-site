@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Ccaron" format="2">
+  <advance width="636.0"/>
+  <unicode hex="010C"/>
+  <outline>
+    <contour>
+      <point x="655.9058" y="119.4851" type="move"/>
+      <point x="743.6193" y="301.758"/>
+      <point x="715.6659" y="539.8913"/>
+      <point x="590.1148" y="679.9534" type="curve" smooth="yes"/>
+      <point x="464.5638" y="820.0155"/>
+      <point x="279.0556" y="820.0155"/>
+      <point x="153.5045" y="679.9534" type="curve" smooth="yes"/>
+      <point x="27.9534" y="539.8913"/>
+      <point x="0.0" y="301.758"/>
+      <point x="87.7136" y="119.4851" type="curve" smooth="yes"/>
+      <point x="83.2563" y="127.8014" type="line"/>
+      <point x="157.6029" y="317.5059"/>
+      <point x="173.7074" y="477.9038"/>
+      <point x="246.0398" y="572.2445" type="curve" smooth="yes"/>
+      <point x="318.3722" y="666.5852"/>
+      <point x="425.2471" y="666.5852"/>
+      <point x="497.5795" y="572.2445" type="curve" smooth="yes"/>
+      <point x="569.9119" y="477.9038"/>
+      <point x="586.0164" y="317.5059"/>
+      <point x="535.483" y="194.7337" type="curve" smooth="yes"/>
+      <point x="531.0257" y="186.4174" type="line"/>
+    </contour>
+    <contour>
+      <point x="201.4532" y="943.5175" type="move"/>
+      <point x="144.5661" y="848.4825" type="line"/>
+      <point x="343.3661" y="729.4825" type="line"/>
+      <point x="400.2532" y="824.5175" type="line"/>
+      <point x="201.4532" y="943.5175" type="line"/>
+    </contour>
+  </outline>
+</glyph>

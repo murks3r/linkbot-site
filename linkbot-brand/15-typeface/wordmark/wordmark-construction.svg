@@ -1,0 +1,30 @@
+<!-- Linkbot Type 0.1.0 — wordmark outlined from Linkbot Display Bold. PROPOSED, NOT APPROVED. Original work; not a registered trademark. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 525.71 171.43" width="525.71" height="171.43" role="img" aria-label="Linkbot wordmark construction"><title>Linkbot wordmark construction</title>
+  <g stroke="#ABABA1" stroke-width="0.25">
+    <path d="M0 30.00 H525.71" />
+  </g>
+  <g opacity="0.7">
+    <path d="M0.00 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M52.57 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M105.14 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M157.71 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M210.29 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M262.86 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M315.43 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M368.00 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M420.57 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M473.14 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+    <path d="M525.71 0 V171.43" stroke="#ABABA1" stroke-width="0.25" />
+  </g>
+  <g transform="translate(0.00 0.00) scale(0.142857)">
+    <g fill="currentColor" transform="translate(0 990) scale(1 -1)">
+  <path transform="translate(0.00 0)" d="M58 0V700H208V0H58ZM58 46H523V-46H58V46Z" />
+  <path transform="translate(577.00 0)" d="M58 0V470H208V0H58ZM49 683V851H217V683H49Z" />
+  <path transform="translate(839.00 0)" d="M58 0V303H208V0H58ZM78 248Q61 317 86.0 384.0Q111 451 170 491Q229 532 300.0 532.0Q371 532 430 491Q469 464 493.0 427.0Q517 390 521.5 356.0Q526 322 507 305Q510 302 516.0 300.0Q522 298 542 303V0H392V303Q392 296 394.0 289.5Q396 283 402 278Q410 309 398.5 340.0Q387 371 360 389Q333 408 300.0 408.0Q267 408 240 389Q213 371 201.5 340.0Q190 309 198 278L78 248Z" />
+  <path transform="translate(1435.00 0)" d="M58 0V726H208V0H58ZM145 258 471 512Q465 507 458.0 498.5Q451 490 437.0 474.0Q423 458 396.0 431.5Q369 405 323.0 363.5Q277 322 205 262L563 45L508 -45L151 171Q166 161 184.0 163.5Q202 166 215 179Q220 184 226.5 191.5Q233 199 249.0 214.5Q265 230 298.0 256.5Q331 283 388.5 324.5Q446 366 536 428L211 174L145 258Z" />
+  <path transform="translate(2025.00 0)" d="M85 538Q176 553 266.0 543.0Q356 533 434.0 499.5Q512 466 565 412Q619 359 636.5 297.0Q654 235 636.5 173.0Q619 111 565 58Q512 4 434.5 -29.5Q357 -63 268.0 -73.5Q179 -84 90 -69L115 53Q181 43 246.5 49.5Q312 56 368.5 76.0Q425 96 463 128Q522 176 522.0 235.0Q522 294 463 342Q425 374 368.0 394.0Q311 414 244.5 420.0Q178 426 110 416L90 539ZM44 0V726H194V0H44Z" />
+  <path transform="translate(2649.00 0)" d="M668 235Q668 170 642.0 113.5Q616 57 570.0 14.0Q524 -29 463.5 -53.0Q403 -77 334 -77Q265 -77 204.5 -53.0Q144 -29 98.0 14.0Q52 57 26.0 113.5Q0 170 0 235Q0 300 26.0 356.5Q52 413 98.0 456.0Q144 499 204.5 523.0Q265 547 334 547Q403 547 463.5 523.0Q524 499 570.0 456.0Q616 413 642.0 356.5Q668 300 668 235ZM544 235Q544 287 515.5 329.5Q487 372 439.5 397.5Q392 423 334 423Q276 423 228.5 397.5Q181 372 152.5 329.5Q124 287 124 235Q124 183 152.5 140.5Q181 98 228.5 72.5Q276 47 334 47Q392 47 439.5 72.5Q487 98 515.5 140.5Q544 183 544 235Z" />
+  <path transform="translate(3277.00 0)" d="M58 -13V653H208V-13H58ZM53 450H382V358H53V450Z" />
+    </g>
+  </g>
+</svg>

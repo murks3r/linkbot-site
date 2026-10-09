@@ -1,0 +1,3 @@
+# Linkbot Type — no GSUB/GPOS is authored beyond the compiled kerning.
+# Figures are the same width in every glyph, so tabular alignment needs no
+# 'tnum' feature; it is the default behaviour.

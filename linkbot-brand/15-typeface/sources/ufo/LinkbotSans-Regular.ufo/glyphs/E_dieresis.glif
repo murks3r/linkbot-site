@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Edieresis" format="2">
+  <advance width="576.0"/>
+  <unicode hex="00CB"/>
+  <outline>
+    <contour>
+      <point x="78.0" y="0.0" type="move"/>
+      <point x="166.0" y="0.0" type="line"/>
+      <point x="166.0" y="700.0" type="line"/>
+      <point x="78.0" y="700.0" type="line"/>
+      <point x="78.0" y="0.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="78.0" y="742.0" type="move"/>
+      <point x="78.0" y="658.0" type="line"/>
+      <point x="498.0" y="658.0" type="line"/>
+      <point x="498.0" y="742.0" type="line"/>
+      <point x="78.0" y="742.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="78.0" y="413.0" type="move"/>
+      <point x="78.0" y="329.0" type="line"/>
+      <point x="447.6" y="329.0" type="line"/>
+      <point x="447.6" y="413.0" type="line"/>
+      <point x="78.0" y="413.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="78.0" y="42.0" type="move"/>
+      <point x="78.0" y="-42.0" type="line"/>
+      <point x="498.0" y="-42.0" type="line"/>
+      <point x="498.0" y="42.0" type="line"/>
+      <point x="78.0" y="42.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="185.04" y="749.5" type="move"/>
+      <point x="266.0" y="749.5" type="line"/>
+      <point x="266.0" y="830.46" type="line"/>
+      <point x="185.04" y="830.46" type="line"/>
+      <point x="185.04" y="749.5" type="line"/>
+    </contour>
+    <contour>
+      <point x="310.0" y="749.5" type="move"/>
+      <point x="390.96" y="749.5" type="line"/>
+      <point x="390.96" y="830.46" type="line"/>
+      <point x="310.0" y="830.46" type="line"/>
+      <point x="310.0" y="749.5" type="line"/>
+    </contour>
+  </outline>
+</glyph>
