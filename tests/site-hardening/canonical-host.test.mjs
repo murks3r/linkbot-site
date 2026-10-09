@@ -9,12 +9,12 @@ import { join, resolve } from 'node:path';
 import test from 'node:test';
 import {
   ALLOWED_EXTERNAL_HOSTS,
-  CANONICAL_ORIGIN,
+  RESERVED_FIXTURE_HOSTS,
   ROOT,
+  SITE,
   configuredSiteOrigin,
   exists,
   readText,
-  sitemapDirectives,
 } from './helpers.mjs';
 
 const TEXT_EXTENSIONS = ['.astro', '.ts', '.tsx', '.js', '.mjs', '.css', '.json', '.md', '.txt', '.html'];
@@ -29,15 +29,67 @@ function* walk(directory) {
   }
 }
 
-test('astro.config.mjs declares the canonical host', () => {
-  assert.equal(configuredSiteOrigin(), CANONICAL_ORIGIN);
+test('astro.config.mjs derives the canonical host from the environment', () => {
+  const config = readText('astro.config.mjs');
+  assert.match(config, /site:\s*site\.origin/, 'astro.config.mjs must feed the resolved origin to `site`');
+  assert.match(config, /resolveSite\(process\.env\)/, 'the origin must come from the shared resolver');
+  assert.doesNotMatch(
+    config,
+    /site:\s*['"]https?:\/\//,
+    'astro.config.mjs must not hardcode a site origin',
+  );
+  assert.equal(configuredSiteOrigin(), SITE.origin);
 });
 
-test('SEO.astro fallback origin matches the configured site', () => {
+test('SEO.astro derives absolute URLs from Astro.site and keeps no domain fallback', () => {
   const seo = readText('src/components/SEO.astro');
-  const fallback = seo.match(/SITE_ORIGIN\s*=\s*['"]([^'"]+)['"]/);
-  assert.ok(fallback, 'SEO.astro must keep a single SITE_ORIGIN fallback constant');
-  assert.equal(new URL(fallback[1]).origin, configuredSiteOrigin());
+  assert.doesNotMatch(
+    seo,
+    /https?:\/\/(?:www\.)?linkbot\.org/,
+    'SEO.astro must not name a domain as an origin: a fallback host ships canonical authority to whoever owns it',
+  );
+  assert.doesNotMatch(
+    seo,
+    /SITE_ORIGIN\s*=\s*['"]/,
+    'the fallback constant must be gone — the origin comes from astro.config.mjs',
+  );
+  assert.match(seo, /Astro\.site/);
+  assert.match(
+    seo,
+    /if\s*\(!site\)\s*\{[\s\S]*throw/,
+    'SEO.astro must fail the build when no origin was resolved, not invent one',
+  );
+
+  // Recorded, not asserted away: the contact *address* is still on the same
+  // domain. That is a contact decision (docs/site-hardening/02 §1, and
+  // docs/preview/domain-migration.md §3.4), not an origin decision.
+  const emails = [...seo.matchAll(/[a-z0-9._-]+@linkbot\.org/gi)].map((match) => match[0]);
+  assert.ok(emails.length > 0, 'expected the published contact address to still be present');
+});
+
+test('the jobsite uses the same resolver and exposes no second origin variable', () => {
+  const seo = readText('src/jobsite/components/JobsiteSEO.astro');
+  assert.match(seo, /Astro\.site/, 'the jobsite must take the origin the build resolved');
+  assert.match(seo, /if\s*\(!site\)\s*\{[\s\S]*throw/);
+  assert.doesNotMatch(seo, /PUBLIC_SITE_ORIGIN|getSiteOrigin/);
+
+  const config = readText('src/jobsite/config.ts');
+  assert.doesNotMatch(
+    config,
+    /getSiteOrigin|PUBLIC_SITE_ORIGIN\s*[?:]/,
+    'a second origin variable is a second place to disagree with the document',
+  );
+  assert.doesNotMatch(readText('.env.example'), /^PUBLIC_SITE_ORIGIN=/m);
+});
+
+test('astro.config.mjs keeps the fixture-backed jobsite out of the sitemap', () => {
+  const config = readText('astro.config.mjs');
+  assert.match(
+    config,
+    /sitemap\(\{\s*filter:/,
+    'the sitemap must exclude /jobs while it is fixture-backed (see src/jobsite)',
+  );
+  assert.match(config, /startsWith\('\/jobs'\)/);
 });
 
 test('every absolute URL in source and public assets points at an approved host', () => {
@@ -54,15 +106,34 @@ test('every absolute URL in source and public assets points at an approved host'
   assert.deepEqual(offenders, [], `unexpected external hosts: ${offenders.join(', ')}`);
 });
 
-test('robots.txt and llms.txt agree on the canonical host', () => {
-  const sitemapHost = new URL(sitemapDirectives(readText('public/robots.txt'))[0]).origin;
-  const llms = readText('public/llms.txt');
-  const hosts = new Set(
-    [...llms.matchAll(/https?:\/\/([^\s/)>,\]]+)/g)].map((match) => match[1]),
-  );
-  for (const host of hosts) {
-    assert.equal(`https://${host}`, sitemapHost, `llms.txt host ${host} disagrees with robots.txt`);
+test('robots.txt and llms.txt name no host of their own', () => {
+  for (const file of ['public/robots.txt', 'public/llms.txt']) {
+    const absolute = [...readText(file).matchAll(/https?:\/\/[^\s"'<>)]+/g)].map((match) => match[0]);
+    assert.deepEqual(
+      absolute,
+      [],
+      `${file} must name no host: it is a static file, so any literal is wrong in every ` +
+        'other environment. The Sitemap directive is injected into the build output instead ' +
+        '(src/lib/preview-guard.mjs) and llms.txt must stay relative.',
+    );
   }
+});
+
+test('jobsite fixtures cite reserved hosts only, so no real employer or source is named', () => {
+  const offenders = [];
+  for (const file of ['src/jobsite/fixtures/opportunities.ts', 'src/jobsite/fixture-adapter.ts']) {
+    if (!exists(file)) continue;
+    for (const match of readText(file).matchAll(/https?:\/\/([a-zA-Z0-9.-]+)/g)) {
+      if (!RESERVED_FIXTURE_HOSTS.includes(match[1].toLowerCase())) {
+        offenders.push(`${file}: ${match[0]}`);
+      }
+    }
+  }
+  assert.deepEqual(
+    offenders,
+    [],
+    'labelled fixture supply must be built from RFC 2606 reserved names only',
+  );
 });
 
 test('crawler-relevant third-party assets are preconnected', () => {

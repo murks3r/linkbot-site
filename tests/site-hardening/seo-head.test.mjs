@@ -8,6 +8,7 @@ import test from 'node:test';
 import {
   CANONICAL_HOST,
   CANONICAL_ORIGIN,
+  SITE,
   allMetaContents,
   exists,
   loadBuiltHtml,
@@ -29,12 +30,16 @@ test('head emits exactly one title, description and canonical link', { skip: ski
   assert.equal((html.match(/rel="canonical"/g) ?? []).length, 1, 'expected exactly one canonical link');
 });
 
-test('canonical URL is absolute, https and on the canonical host', { skip: skipReason }, () => {
+test('canonical URL is absolute, on the canonical host this build was given', { skip: skipReason }, () => {
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
   assert.ok(canonical, 'no canonical link in the built head');
   const url = new URL(canonical);
-  assert.equal(url.protocol, 'https:');
+  assert.ok(url.protocol === 'https:' || url.protocol === 'http:', 'the canonical must be absolute');
+  assert.equal(url.origin, CANONICAL_ORIGIN, 'the canonical must use the origin this build resolved');
   assert.equal(url.host, CANONICAL_HOST);
+  if (SITE.indexable) {
+    assert.equal(url.protocol, 'https:', 'an indexable production build must be https');
+  }
   assert.equal(canonical, `${CANONICAL_ORIGIN}/`, 'the home page canonical must be the origin root');
 });
 
@@ -53,20 +58,33 @@ test('title and description are identical across page, Open Graph and Twitter ta
   assert.ok(description.length > 50 && description.length < 300, 'description length is outside a usable range');
 });
 
-test('robots directives ask for indexing and large previews', { skip: skipReason }, () => {
+test('robots directives match the indexing posture of this build', { skip: skipReason }, () => {
   const robots = metaContent(html, 'robots');
   assert.ok(robots, 'no robots meta directive');
+
+  if (!SITE.indexable) {
+    // Non-production build (localhost, a *.vercel.app deployment, or a Vercel
+    // preview): the guard in BaseLayout/PreviewNotice decides this, and exactly
+    // one robots meta is allowed to carry the decision.
+    assert.match(robots, /\bnoindex\b/, 'a non-production build must be noindex');
+    assert.match(robots, /\bnofollow\b/);
+    assert.doesNotMatch(robots, /(^|[,\s])index([,\s]|$)/, 'no sibling `index` directive may contradict it');
+    assert.equal(allMetaContents(html, 'robots').length, 1, 'a duplicate robots meta is a defect');
+    return;
+  }
+
   assert.match(robots, /\bindex\b/);
   assert.match(robots, /\bfollow\b/);
-  assert.doesNotMatch(robots, /\bnoindex\b/, 'the marketing page must stay indexable');
+  assert.doesNotMatch(robots, /\bnoindex\b/, 'an indexable build must not be marked noindex');
   assert.match(robots, /max-image-preview:large/, 'large previews are required for the 1200x630 card');
 });
 
-test('og:image and twitter:image are the same absolute https asset that exists', { skip: skipReason }, () => {
+test('og:image and twitter:image are the same absolute asset that exists', { skip: skipReason }, () => {
   const ogImage = metaContent(html, 'og:image');
   assert.equal(metaContent(html, 'twitter:image'), ogImage);
   const url = new URL(ogImage);
-  assert.equal(url.protocol, 'https:');
+  assert.ok(url.protocol === 'https:' || url.protocol === 'http:', 'the social image must be absolute');
+  assert.equal(url.origin, CANONICAL_ORIGIN, 'og:image must use the origin this build resolved');
   assert.equal(url.host, CANONICAL_HOST);
   assert.ok(exists(`public${url.pathname}`), `og:image asset public${url.pathname} does not exist`);
 });

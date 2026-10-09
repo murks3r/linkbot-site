@@ -77,14 +77,29 @@ function metaContent(html, name) {
 }
 
 /**
- * Extract href/src values from a document.
+ * Extract anchors and asset references from a document.
+ *
+ * Anchors and assets are kept apart because they carry different risk: an
+ * outbound anchor is a deliberate hand-off, an asset reference is a third-party
+ * dependency. Returns `{ tag, raw, rel }` — `tag` is `'a'` or `'asset'`.
+ *
  * @param {string} html
  */
 function references(html) {
   const found = [];
-  const pattern = /(?:href|src)="([^"]*)"/g;
-  let match;
-  while ((match = pattern.exec(html)) !== null) found.push(match[1]);
+
+  for (const match of html.matchAll(/<a\s([^>]*)>/g)) {
+    const href = /\bhref="([^"]*)"/.exec(match[1])?.[1];
+    if (href !== undefined) {
+      found.push({ tag: 'a', raw: href, rel: /\brel="([^"]*)"/.exec(match[1])?.[1] ?? '' });
+    }
+  }
+
+  for (const match of html.matchAll(/<(?:link|script|img|source|iframe)\s([^>]*)>/g)) {
+    const raw = /\b(?:href|src)="([^"]*)"/.exec(match[1])?.[1];
+    if (raw !== undefined) found.push({ tag: 'asset', raw, rel: '' });
+  }
+
   return found;
 }
 
@@ -242,7 +257,10 @@ test('non-production guard: previews are noindex, production is not', async () =
   const directives = [...html.matchAll(/<meta\s+name="robots"\s+content="([^"]*)"/gi)].map(
     (match) => match[1],
   );
-  const hasNotice = html.includes('data-preview-notice');
+  // The marker element, not the string: BaseLayout's scoped style sheet always
+  // contains the `[data-preview-notice]` selector, so a bare substring check
+  // would "find" the notice in a production build that renders none.
+  const hasNotice = /data-preview-notice="true"/.test(html);
 
   if (site.indexable) {
     assert.equal(hasNotice, false, 'a production build must not show the preview notice');
@@ -275,11 +293,18 @@ test('non-production guard: previews are noindex, production is not', async () =
   assert.ok(html.includes(site.origin), 'the notice must name the origin it is served from');
 });
 
-test('non-production guard: the built robots.txt refuses crawlers', async () => {
+test('non-production guard: the built robots.txt refuses crawlers, production advertises its sitemap', async () => {
   const robots = await (await get('/robots.txt')).text();
 
   if (site.indexable) {
     assert.doesNotMatch(robots, /^Disallow: \/$/m, 'production robots.txt must be untouched');
+    const directives = [...robots.matchAll(/^Sitemap:\s*(\S+)\s*$/gim)].map((match) => match[1]);
+    assert.equal(directives.length, 1, 'a production build must advertise exactly one sitemap');
+    assert.equal(
+      new URL(directives[0]).origin,
+      site.origin,
+      'the sitemap directive must name this build origin',
+    );
     return;
   }
 
@@ -289,22 +314,78 @@ test('non-production guard: the built robots.txt refuses crawlers', async () => 
   assert.doesNotMatch(robots, /^Sitemap:/m, 'a preview must not advertise a sitemap URL');
 });
 
-test('links: every internal reference resolves to a built file', async () => {
+test('jobsite: /jobs and its detail routes are served, noindex and out of the sitemap', async () => {
+  const jobs = await get('/jobs');
+  assert.equal(jobs.status, 200, '/jobs must be served');
+  const html = await jobs.text();
+
+  assert.match(html, /<meta name="robots" content="noindex/i, 'every jobsite route must be noindex');
+  assert.match(html, /sample data/i, 'fixture supply must be labelled in the rendered page');
+
+  const canonical = /<link rel="canonical" href="([^"]+)"/.exec(html)?.[1];
+  assert.ok(canonical, 'the jobsite must emit a canonical on the origin this build resolved');
+  assert.equal(new URL(canonical).origin, site.origin);
+  assert.doesNotMatch(canonical, /linkbot\.org/);
+
+  const detailHref = /href="(\/jobs\/[^"#?]+)"/.exec(html)?.[1];
+  assert.ok(detailHref, 'the listing page must link at least one detail route');
+  const detail = await get(detailHref);
+  assert.equal(detail.status, 200, `${detailHref} must be served`);
+  assert.match(await detail.text(), /<meta name="robots" content="noindex/i);
+
+  // No /jobs URL may reach the sitemap: the sitemap filter in astro.config.mjs
+  // and the noindex directive are two halves of the same guard.
+  const index = await (await get('/sitemap-index.xml')).text();
+  const children = [...index.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+  const documents = [index];
+  for (const child of children) {
+    documents.push(await (await get(new URL(child).pathname)).text());
+  }
+  const locs = documents.flatMap((doc) => [...doc.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]));
+  assert.ok(locs.length > 0, 'the sitemap must list at least one URL');
+  assert.deepEqual(
+    locs.filter((loc) => new URL(loc).pathname.startsWith('/jobs')).map((loc) => new URL(loc).pathname),
+    [],
+    'the fixture-backed jobsite must not be advertised in the sitemap',
+  );
+});
+
+test('links: every internal reference resolves, and every external one is declared', async () => {
   const missing = [];
+  const external = [];
 
   for (const file of htmlFiles()) {
     const html = readFileSync(join(DIST, file), 'utf8');
     const pagePath = `/${file.replace(/index\.html$/, '')}`;
 
-    for (const raw of references(html)) {
+    // Anchors and asset references carry different risks. An outbound anchor is a
+    // deliberate hand-off (the jobsite hands a visitor to the original posting)
+    // and is only acceptable when it says so with rel="noopener noreferrer
+    // nofollow". An asset reference (src, stylesheet, preload) must not reach a
+    // third party at all unless that host is explicitly allow-listed.
+    for (const { tag, raw, rel } of references(html)) {
       if (raw === '' || raw.startsWith('data:') || raw.startsWith('mailto:') || raw.startsWith('tel:')) continue;
       if (raw.startsWith('#')) continue;
 
       if (/^[a-z][a-z0-9+.-]*:\/\//i.test(raw) || raw.startsWith('//')) {
         const url = new URL(raw.startsWith('//') ? `https:${raw}` : raw);
         if (url.origin === site.origin) continue;
+
+        if (tag === 'a') {
+          const declared =
+            /\bnoopener\b/.test(rel) && /\bnoreferrer\b/.test(rel) && /\bnofollow\b/.test(rel);
+          if (!declared) {
+            missing.push(
+              `${file}: outbound anchor ${raw} must declare rel="noopener noreferrer nofollow"`,
+            );
+            continue;
+          }
+          external.push(`${file}: ${url.host}`);
+          continue;
+        }
+
         if (!EXTERNAL_ALLOWLIST.has(url.hostname)) {
-          missing.push(`${file}: undeclared external reference ${raw}`);
+          missing.push(`${file}: undeclared external asset reference ${raw}`);
         }
         continue;
       }
@@ -322,6 +403,12 @@ test('links: every internal reference resolves to a built file', async () => {
   }
 
   assert.deepEqual(missing, []);
+  if (external.length > 0) {
+    console.log(
+      `[preview-smoke] outbound anchors with rel="noopener noreferrer nofollow": ` +
+        `${external.length} on ${new Set(external.map((entry) => entry.split(': ')[1])).size} host(s)`,
+    );
+  }
 });
 
 test('links: in-page anchors point at ids that exist', async () => {

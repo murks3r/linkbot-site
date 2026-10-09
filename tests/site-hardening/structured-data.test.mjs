@@ -9,6 +9,7 @@ import test from 'node:test';
 import {
   CANONICAL_HOST,
   CANONICAL_ORIGIN,
+  SITE,
   exists,
   loadBuiltHtml,
   parseJsonLdBlocks,
@@ -33,7 +34,7 @@ test('JSON-LD parses and declares the schema.org context once', { skip: skipReas
   assert.ok(Array.isArray(blocks[0]['@graph']), 'expected an @graph array');
 });
 
-test('every absolute URL and @id in the graph is https on the canonical host', { skip: skipReason }, () => {
+test('every absolute URL and @id in the graph resolves on this build origin', { skip: skipReason }, () => {
   const nodes = graph();
   assert.ok(nodes.length >= 3, 'expected Organization, WebSite and WebPage nodes');
   for (const node of nodes) {
@@ -41,8 +42,14 @@ test('every absolute URL and @id in the graph is https on the canonical host', {
       const value = node[key];
       if (value === undefined) continue;
       const url = new URL(value.startsWith('http') ? value : `${CANONICAL_ORIGIN}${value}`);
-      assert.equal(url.protocol, 'https:', `${key} ${value} must be https`);
+      assert.ok(url.protocol === 'https:' || url.protocol === 'http:', `${key} ${value} must be absolute`);
+      assert.equal(
+        url.origin,
+        CANONICAL_ORIGIN,
+        `${key} ${value} must name the origin this build resolved, not another host`,
+      );
       assert.equal(url.host, CANONICAL_HOST, `${key} ${value} must use the canonical host`);
+      if (SITE.indexable) assert.equal(url.protocol, 'https:', `${key} ${value} must be https in production`);
     }
   }
 });

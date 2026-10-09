@@ -8,11 +8,29 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { resolveSite } from '../../src/lib/site-origin.mjs';
+
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
-/** The canonical host this site claims. Everything absolute must agree with it. */
-export const CANONICAL_HOST = 'linkbot.org';
-export const CANONICAL_ORIGIN = `https://${CANONICAL_HOST}`;
+/**
+ * The build this suite is asserting against — the same resolver astro.config.mjs
+ * and the layouts use, so expectations follow SITE_ORIGIN / VERCEL_ENV /
+ * VERCEL_URL rather than naming a host of their own. A test must never assert a
+ * domain the build was not given; run the suite against the same environment the
+ * build ran in (`npm run test:site`, or `npm run verify`).
+ */
+export const SITE = resolveSite(process.env);
+
+/** The canonical origin this build claims. Everything absolute must agree with it. */
+export const CANONICAL_ORIGIN = SITE.origin;
+export const CANONICAL_HOST = new URL(CANONICAL_ORIGIN).host;
+
+/**
+ * RFC 2606 / RFC 6761 reserved names. The jobsite fixture set is built entirely
+ * from these, so labelled sample data can never name or link to a real employer,
+ * source or posting. jobsite-fixtures.test.mjs enforces the invariant.
+ */
+export const RESERVED_FIXTURE_HOSTS = ['example.com', 'example.org', 'example.net'];
 
 /**
  * Hosts that may legitimately appear in source/public assets. Anything else is
@@ -25,8 +43,9 @@ export const ALLOWED_EXTERNAL_HOSTS = new Set([
   'fonts.googleapis.com',
   'fonts.gstatic.com',
   'openapi.vercel.sh', // vercel.json $schema
-  'localhost', // documented dev server (README)
+  'localhost', // documented dev server / LOCAL_ORIGIN
   '127.0.0.1',
+  ...RESERVED_FIXTURE_HOSTS, // labelled fixture provenance under src/jobsite
 ]);
 
 export function readText(relativePath) {
@@ -37,12 +56,9 @@ export function exists(relativePath) {
   return existsSync(resolve(ROOT, relativePath));
 }
 
-/** Origin declared as `site` in astro.config.mjs — the build's source of truth. */
+/** Origin resolved for this build — the build's source of truth, not a literal. */
 export function configuredSiteOrigin() {
-  const config = readText('astro.config.mjs');
-  const match = config.match(/site:\s*['"]([^'"]+)['"]/);
-  if (!match) throw new Error('astro.config.mjs declares no `site`');
-  return new URL(match[1]).origin;
+  return resolveSite(process.env).origin;
 }
 
 /**
