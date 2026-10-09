@@ -1,0 +1,1038 @@
+{
+  "brand_os_version": "0.1.0",
+  "generated_at": "2026-10-09T10:11:41Z",
+  "note": "Statuses describe the approval state of the artifact, not the approval state of an identity. No identity in this folder is APPROVED.",
+  "totals": {
+    "files": 113,
+    "by_category": {
+      "documentation": 23,
+      "logo": 32,
+      "imagery": 7,
+      "iconography": 21,
+      "motion": 2,
+      "tokens": 8,
+      "template": 9,
+      "source": 7,
+      "evidence": 4
+    }
+  },
+  "assets": [
+    {
+      "path": ".gitignore",
+      "category": "documentation",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 72,
+      "sha256": "20271e037e9d477ecc836ec6656c54d47b21cf48d638b7fbc976936af2bce893"
+    },
+    {
+      "path": "00-audit/brand-audit.md",
+      "category": "documentation",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 10550,
+      "sha256": "5a63a2b3d4e758040a30899d81c8d6c590840c4244866807946ef40921e401c2"
+    },
+    {
+      "path": "00-audit/product-truths.md",
+      "category": "documentation",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 7056,
+      "sha256": "76efe50f55402668f6051647bd6ef51e7fc3555babd32914ed2ec0ec3474ecd3"
+    },
+    {
+      "path": "01-strategy/messaging-house.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 7693,
+      "sha256": "6bdfd0c43f6688cd040f899b750716aead34bd086744939c5211619284962ae5"
+    },
+    {
+      "path": "01-strategy/positioning.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 6470,
+      "sha256": "dbba0fc07ccadb7019cc0597c1d436d58892184d338ed6e613a46a55106fd41e"
+    },
+    {
+      "path": "02-directions/PROPOSED.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 7638,
+      "sha256": "f9f4c3f8cbec349d58d5e4fa0ed1e9b55fbc2cf1fad1176ccda86f819e493191"
+    },
+    {
+      "path": "02-directions/comparison.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 7386,
+      "sha256": "d25aeace0a82c9bb2c80e0e015e92526e3b46bda344a92492510a4001e98922c"
+    },
+    {
+      "path": "02-directions/direction-A-notarial.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 6345,
+      "sha256": "499e35cdfdf6d6a04536d9a41292efe49738923b32190f43b2e3787a41eda77b"
+    },
+    {
+      "path": "02-directions/direction-B-protocol.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 5466,
+      "sha256": "2bb4c93bcb9a3bf40e78855171ac64f7171ada2bfd2fba6e44c348a93663e95d"
+    },
+    {
+      "path": "02-directions/direction-C-commons.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 5423,
+      "sha256": "1efa26ade64c3b90b5b02a2e7ee047f5f2d68f61d7efa43b6547b2e2e321cf0b"
+    },
+    {
+      "path": "03-verbal/terminology.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 5794,
+      "sha256": "4b9f15b19be37fe081b4541d0372623ffa6edbcd8775f9253b4a8be0f0f9952e"
+    },
+    {
+      "path": "03-verbal/verbal-identity-de.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 7277,
+      "sha256": "d4b7e9028bf07b4c4c8b7d3714e39c3541b69b9989d8c674bbbb129ee6e6567e"
+    },
+    {
+      "path": "03-verbal/verbal-identity-en.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 5511,
+      "sha256": "0e08f7699c8aaad86df2516e8749860e22ff4f407fe49140c572684f5d28caae"
+    },
+    {
+      "path": "04-logo/A-notarial/app-icon-inverse.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 723,
+      "sha256": "2ddb6c14df53c330368defaf55ff9cfaa9d809c36c21981097072ddd36500307"
+    },
+    {
+      "path": "04-logo/A-notarial/app-icon.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 714,
+      "sha256": "78ecca464e61333334ba64c79d77442cd5b70f8f2bcd69da658e07c6293bb053"
+    },
+    {
+      "path": "04-logo/A-notarial/favicon.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 569,
+      "sha256": "ff203f0d2751bd6b4273d2a464ca7458e505c9f6d3a81aa00002c02d44a768aa"
+    },
+    {
+      "path": "04-logo/A-notarial/lockup-horizontal.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1508,
+      "sha256": "c6436f93556da0947c5db6e6802bd9c981496eb5da1ca1c185238795555da060"
+    },
+    {
+      "path": "04-logo/A-notarial/lockup-stacked.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1502,
+      "sha256": "46023a3e118796ae444f3bd77e4c83fa26b174125435afb59822084ec7146964"
+    },
+    {
+      "path": "04-logo/A-notarial/mark-construction.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 718,
+      "sha256": "bee8353881ec58d193aa10985402b9e4096d622b0fee57660916e191b56605a3"
+    },
+    {
+      "path": "04-logo/A-notarial/mark-monochrome.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 568,
+      "sha256": "087d3fc06477927f5f5e528b2b62b72b1c3329f1fa04aeed959634d83ede137f"
+    },
+    {
+      "path": "04-logo/A-notarial/mark.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 566,
+      "sha256": "7e6d9441e7a48bbf09029dbbe90298d62a61d34ffaea7fbfbd3fe483e2efc7fe"
+    },
+    {
+      "path": "04-logo/A-notarial/misuse.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 5674,
+      "sha256": "7caa197ef701e29a0c8497c580e06791ce34d5befceaba9bdcd5d3b352568903"
+    },
+    {
+      "path": "04-logo/A-notarial/social-avatar.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 737,
+      "sha256": "c5a447dcde3d79ee0ae9aff8b34dc7d7923f28a33fa076058b34e61d5ca070e7"
+    },
+    {
+      "path": "04-logo/A-notarial/wordmark-monoline.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1007,
+      "sha256": "2fb1b11e22c4b484f6950a9c1b23998cd066f490d19bde599e4600cdf5d05946"
+    },
+    {
+      "path": "04-logo/B-protocol/app-icon-inverse.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 736,
+      "sha256": "ad6166565a1e07fbba2b688e3b2086bb6a7461f1bf62c39033182b8eaa56034d"
+    },
+    {
+      "path": "04-logo/B-protocol/app-icon.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 727,
+      "sha256": "041e17ed5d6c8ba9ec3439c87bb919931acc3ee01b72f22f45aa9ab44c01b1de"
+    },
+    {
+      "path": "04-logo/B-protocol/favicon.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 578,
+      "sha256": "3785c1e9644510a65711dc7ca400919ddc2d776879c7db80c1951f251e5c1091"
+    },
+    {
+      "path": "04-logo/B-protocol/lockup-horizontal.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1644,
+      "sha256": "140d5c648829acdba7b26678ea75b022ccdba6219c6b2904fbc273a06866dcba"
+    },
+    {
+      "path": "04-logo/B-protocol/lockup-stacked.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1636,
+      "sha256": "c041aad526f16efe41953a89b17f9c85e0a85ac7dcca85b506e12e2bdb7f5c0f"
+    },
+    {
+      "path": "04-logo/B-protocol/mark-construction.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 727,
+      "sha256": "879fcc756060db3bbc11700cea6baa39befc6ad3775d3488bcbc3ba2b9ddd2de"
+    },
+    {
+      "path": "04-logo/B-protocol/mark-monochrome.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 577,
+      "sha256": "9c7375cdea5dfbca528d4a00adab141fdca3d407ff8ea6192619b6f8ebc76ee1"
+    },
+    {
+      "path": "04-logo/B-protocol/mark.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 575,
+      "sha256": "fbf54704b21fbb68ca1bd93f9bcb32ac6087c30059655e4f7aa804e0583c8314"
+    },
+    {
+      "path": "04-logo/B-protocol/social-avatar.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 750,
+      "sha256": "59c05b4b8194e9e70f0e9c2bbfa9ae0a6a1291f263a2a9a30f2c61c0282e5e87"
+    },
+    {
+      "path": "04-logo/B-protocol/wordmark-monoline.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1126,
+      "sha256": "bcd802af57236f10f930750bff33493a8bfe8dcd77f5e28a866baf45739da1f4"
+    },
+    {
+      "path": "04-logo/C-commons/app-icon-inverse.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 725,
+      "sha256": "51eec592e4df405728b78d1a75d4aa96cefef2fdb853d37bebe4807243f045c1"
+    },
+    {
+      "path": "04-logo/C-commons/app-icon.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 716,
+      "sha256": "02718afbb1b20a791c0101d3eab958cc5326ee809095a51b6b1a4e1f5f8cde98"
+    },
+    {
+      "path": "04-logo/C-commons/favicon.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 567,
+      "sha256": "611d121d9095f1033f080f840dcce430b202720a868ffad061ed0a082cbb7530"
+    },
+    {
+      "path": "04-logo/C-commons/lockup-horizontal.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1513,
+      "sha256": "c8412edb4bd24bef429e1d299d99826193a8540bc39a1de3203875666d2a09b1"
+    },
+    {
+      "path": "04-logo/C-commons/lockup-stacked.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1511,
+      "sha256": "e167098d29b59ba652ac7e1bbeb3d3ca3e48e87374ddd2149d93418da717e1a9"
+    },
+    {
+      "path": "04-logo/C-commons/mark-construction.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 716,
+      "sha256": "9a393f27398e00d1bcace2b2918dec335d460fcef88f2e07b2329ff58eb77bba"
+    },
+    {
+      "path": "04-logo/C-commons/mark-monochrome.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 561,
+      "sha256": "d4f0d273b4d28c37a405967b8419ad3d17219b2d24b49ca29265f505f5e4ca7a"
+    },
+    {
+      "path": "04-logo/C-commons/mark.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 564,
+      "sha256": "257fd21f9aadeca55ef8660f3aa72ea883001a8f4863c70e7e6a8b1790e14980"
+    },
+    {
+      "path": "04-logo/C-commons/social-avatar.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 739,
+      "sha256": "ca3d6d1ab11b44d6586c93258b6f8aa7df3ca2724776158618344d4c781e4fdc"
+    },
+    {
+      "path": "04-logo/C-commons/wordmark-monoline.svg",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 1007,
+      "sha256": "1879f599ac7ebf9d538480a2ab3d4b1f43a80c9350a5f40688409a165c6b5f89"
+    },
+    {
+      "path": "04-logo/README.md",
+      "category": "logo",
+      "status": "CANDIDATE",
+      "licence": "Linkbot OÜ (original work)",
+      "generated_by": "scripts/gen_logos.py",
+      "bytes": 7054,
+      "sha256": "ba7629f08a70c159c97078c50f07a77de6af6e5392b132f5295f5b818e676e99"
+    },
+    {
+      "path": "05-colour/colour-system.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 5901,
+      "sha256": "355548c60446805dcb810296b4895fdf685fa2f617751b0833621f7a6175d2fc"
+    },
+    {
+      "path": "06-typography/font-evaluation.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 5662,
+      "sha256": "07b6a1b0066cda8ee597c850fcbbae4ee87ad90a19e35edbefde0252e5b49436"
+    },
+    {
+      "path": "06-typography/licenses.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 6127,
+      "sha256": "401b285ab8420e5957ba142fba7cb2137c70bd3ef897fc92c3ec808440088340"
+    },
+    {
+      "path": "06-typography/typography.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 6093,
+      "sha256": "8d75b76aadc941f92605b6c78a2b491260213e3b16efd67c4701ea7c04bb7523"
+    },
+    {
+      "path": "07-imagery/README.md",
+      "category": "imagery",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (generated geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 4201,
+      "sha256": "f9ff5099e0a4f246fe0b8f6746386adc3bb12ce4aa92444c3f3695b5d43e9e9e"
+    },
+    {
+      "path": "07-imagery/field-A-notarial.md",
+      "category": "imagery",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (generated geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 495,
+      "sha256": "21e4c67ba594035bccf7c455c984a324b244c0cc03a006554689d34118a06f44"
+    },
+    {
+      "path": "07-imagery/field-A-notarial.svg",
+      "category": "imagery",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (generated geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 1583,
+      "sha256": "105de1fbebf6a7d5d82ed4def6d649c32cd274bc9ea968e1e45e20746a551b81"
+    },
+    {
+      "path": "07-imagery/field-B-protocol.md",
+      "category": "imagery",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (generated geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 504,
+      "sha256": "462ffee0d400a2bb659852f2edecef30bdb734486e558f918cee779eb00070ae"
+    },
+    {
+      "path": "07-imagery/field-B-protocol.svg",
+      "category": "imagery",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (generated geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 2798,
+      "sha256": "874c75d4cd663648755fb8b2c46ae63b7551022d3d9c61d5e2cc90a5066978c0"
+    },
+    {
+      "path": "07-imagery/field-C-commons.md",
+      "category": "imagery",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (generated geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 502,
+      "sha256": "105bcd6511a0a1ad4680cbf9464de5c94b1e7d3e5595bf3222eb5451912bfc49"
+    },
+    {
+      "path": "07-imagery/field-C-commons.svg",
+      "category": "imagery",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (generated geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 1352,
+      "sha256": "0250a9085c9043a0f500012b0441477a8cceb8e4ca26ebc6b4d056e4089fdf79"
+    },
+    {
+      "path": "08-iconography/README.md",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 5260,
+      "sha256": "35ed18e97e3c036c5c12a673a35608e992d6bc2e038753d0c4d98818473a5b4f"
+    },
+    {
+      "path": "08-iconography/icons/agency-mandate.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 611,
+      "sha256": "adaef0d49c6b57f5641eaafefa71dfcf99cb9f486479abde87471cec21bdfe38"
+    },
+    {
+      "path": "08-iconography/icons/attention.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 526,
+      "sha256": "e2fac4cf25f4340493c825559fbb2aa145a084d80c8d656aef80c75962faa788"
+    },
+    {
+      "path": "08-iconography/icons/audit-history.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 633,
+      "sha256": "1c0737516373d2c9ae3186f88efc3867b8b0a9c4e259b0815c9e20183eada79a"
+    },
+    {
+      "path": "08-iconography/icons/authority-grant.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 504,
+      "sha256": "75b1f6052a29dcb9ae3edce2357fd5f2570772ed65c5c1ca8a0137502ce752e3"
+    },
+    {
+      "path": "08-iconography/icons/authority-revoke.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 467,
+      "sha256": "5d98fccde72cf32fd106f1d7ba3491432c001a482e7e18285bfc8c6c521373cb"
+    },
+    {
+      "path": "08-iconography/icons/claim-statement.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 463,
+      "sha256": "3112973c2c1ce99b5b98eb9301b8ef29909b8cdb2cbd6beaac2be2a541438150"
+    },
+    {
+      "path": "08-iconography/icons/confirmed.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 439,
+      "sha256": "1a7ab7bad6ad9c70542e5089af441f22b1a035d75fbf44bf33d88c8c97c48c72"
+    },
+    {
+      "path": "08-iconography/icons/disclosure.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 512,
+      "sha256": "e93553e846b32c21af58c7d519fc157d95c3f66967569f98b74d5bc533479b14"
+    },
+    {
+      "path": "08-iconography/icons/employer-party.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 481,
+      "sha256": "dc57e654dd48987ceeba005e3d2939aa583d212ae1ea8c6415bf7a63d32443a0"
+    },
+    {
+      "path": "08-iconography/icons/evidence-source.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 477,
+      "sha256": "1c4f7c0604b6cd12197adfb3ad8a8156e60ae3ecb7a0f5f12073be98961dbc14"
+    },
+    {
+      "path": "08-iconography/icons/expiry.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 423,
+      "sha256": "ae50865da6982b3535e833767701826e7b319b767c82beb8640ac321a7a6fb00"
+    },
+    {
+      "path": "08-iconography/icons/external-source.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 496,
+      "sha256": "479ac51182c974d018bc81a0fb9f75a077154b3fbe41693fc1a932f044120966"
+    },
+    {
+      "path": "08-iconography/icons/intent-direction.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 499,
+      "sha256": "2582e624e254606a67ffca40299880c4ff3bc129d10681113d41f2d2b1ef2b0a"
+    },
+    {
+      "path": "08-iconography/icons/match-bilateral.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 632,
+      "sha256": "e32dfc3db39c731416efe01154334f8dabd6277c3b0b45764a2d68b274c48319"
+    },
+    {
+      "path": "08-iconography/icons/opportunity.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 529,
+      "sha256": "e8d8c598eae1ba855acb63d1f07e86cd0a1389dc8b54c7f59af8a6d109486832"
+    },
+    {
+      "path": "08-iconography/icons/private-store.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 476,
+      "sha256": "3ddd04829d63abcc617d8e241ebd90f9d9189db1c9c0f1d1f579356c1c2dd7b1"
+    },
+    {
+      "path": "08-iconography/icons/proposed.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 441,
+      "sha256": "ed90f33d09ca6f3588894e903328b8a9f6e6a39da378d40b7c11224ad284915c"
+    },
+    {
+      "path": "08-iconography/icons/receipt.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 477,
+      "sha256": "8ebc002b2bf41ed54355dac44aac73008bc3fc1f603b2aefb2a90243e6940812"
+    },
+    {
+      "path": "08-iconography/icons/unresolved-unknown.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 517,
+      "sha256": "5dec966613f1e7ec1034a04ad36fa536d640ebc08b40d24d081de12def1be3a8"
+    },
+    {
+      "path": "08-iconography/icons/version.svg",
+      "category": "iconography",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ (original geometry)",
+      "generated_by": "scripts/gen_assets.py",
+      "bytes": 518,
+      "sha256": "f5df27c54dba6a9bcbc7bec8a5b7a811b19ba22103940d8f320ec2100a94fbd0"
+    },
+    {
+      "path": "09-motion/motion.css",
+      "category": "motion",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 3942,
+      "sha256": "c4b82961517f9c3e729cc55c59e2a90df638c9f5269eccaf90c7c3fe86fc5982"
+    },
+    {
+      "path": "09-motion/motion.md",
+      "category": "motion",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 4349,
+      "sha256": "d83ced7efeac312f7029d09964256b0204655ecb1fe7d122c6a05b1650bb29a1"
+    },
+    {
+      "path": "10-tokens/A-notarial.tokens.css",
+      "category": "tokens",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py",
+      "bytes": 2982,
+      "sha256": "b906f3328f4d9b74a5a5a4cdb5efb38e284a13fadefb7ee7582ffabef863afcf"
+    },
+    {
+      "path": "10-tokens/A-notarial.tokens.json",
+      "category": "tokens",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py",
+      "bytes": 9482,
+      "sha256": "d7b3c48213b5c8284ac381ab544658aefbf52d09f41ab3ddfa09c000103cd46a"
+    },
+    {
+      "path": "10-tokens/B-protocol.tokens.css",
+      "category": "tokens",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py",
+      "bytes": 2839,
+      "sha256": "b8c98267fef627c90b69e1bf3d2b548525a73e977ae7318d21fddc8911085974"
+    },
+    {
+      "path": "10-tokens/B-protocol.tokens.json",
+      "category": "tokens",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py",
+      "bytes": 9074,
+      "sha256": "a3a86984bba067b481fc7381be561dfec7deb60760a68c4aebd2628aed4e1802"
+    },
+    {
+      "path": "10-tokens/C-commons.tokens.css",
+      "category": "tokens",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py",
+      "bytes": 2870,
+      "sha256": "191076f5fe1d1f599ef8f56be0a1d3ffbdc3f4605b8998d18227f7380175d90f"
+    },
+    {
+      "path": "10-tokens/C-commons.tokens.json",
+      "category": "tokens",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py",
+      "bytes": 9024,
+      "sha256": "606769ba7888cc7c214906d919bcb31085b553337f85ac8bd84a20c54aca78df"
+    },
+    {
+      "path": "10-tokens/README.md",
+      "category": "tokens",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py",
+      "bytes": 3986,
+      "sha256": "d0548e82652c61fc78307ed462858a4ce234b8cb6d3d5d54e4e16b20c6d250ed"
+    },
+    {
+      "path": "10-tokens/proposed.DESIGN.md",
+      "category": "tokens",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py",
+      "bytes": 6938,
+      "sha256": "a92de477f4671f61ffeb2ce23c5ac73b6b0d27a4d0ff569186178718eea4e5e2"
+    },
+    {
+      "path": "11-templates/README.md",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 3208,
+      "sha256": "ef18a32a0735de5a7dda1bd77251580ea2d5cf925e0d7bcfb56e701d5c6cbbd0"
+    },
+    {
+      "path": "11-templates/og-A-notarial.svg",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 1675,
+      "sha256": "02157e3495c550e945237d7e4cd22ea27b2346b4b94f3c1dd89b0537ae9c7d4c"
+    },
+    {
+      "path": "11-templates/og-B-protocol.svg",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 1743,
+      "sha256": "3a0c52b2b74b48d025dc20236b2162c4b1c6465577355f9eb3a4b1d7fc008a1e"
+    },
+    {
+      "path": "11-templates/og-C-commons.svg",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 1659,
+      "sha256": "b47356d730be6547448b13d94de16662486c56d6e5a960afea7310d066762a2a"
+    },
+    {
+      "path": "11-templates/specimens/_logo-check.html",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 1970,
+      "sha256": "d9b808df6660c2d9ee49aabcfccf35151898e26fce6c9b2b81b4063e71c3406c"
+    },
+    {
+      "path": "11-templates/specimens/index.html",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 1161,
+      "sha256": "013be7db1c6e45a938f32bc29877f3ca2f0972b3b9cf7fe5fedce354dee322d8"
+    },
+    {
+      "path": "11-templates/specimens/specimen-A-notarial.html",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 30388,
+      "sha256": "8a243f096462b195ae25cbdf419b58c60076960d37c3ce0700e2620c582dc35b"
+    },
+    {
+      "path": "11-templates/specimens/specimen-B-protocol.html",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 30762,
+      "sha256": "8aa17ae2cb9760b9b3b96f53571ddd58ba55fd4a79ccdab9d7bd3453939ba155"
+    },
+    {
+      "path": "11-templates/specimens/specimen-C-commons.html",
+      "category": "template",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_specimens.py / gen_assets.py",
+      "bytes": 30248,
+      "sha256": "9b4bd606e7476eec1f0f01534eabf2340989887fdad10a1401b25d1753cb2ccd"
+    },
+    {
+      "path": "12-governance/GOVERNANCE.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 5578,
+      "sha256": "994688bc409fb6fbb72c8458c72eeb385f73253fe7a10df1c3a9e7d9b6b2b2d1"
+    },
+    {
+      "path": "13-approval/approval-checklist.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 5663,
+      "sha256": "56957aef6c0344225fb308f37310a03ae48de4d72aca5bcb609a37ab298020b5"
+    },
+    {
+      "path": "13-approval/founder-decision-sheet.md",
+      "category": "documentation",
+      "status": "PROPOSED",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 4799,
+      "sha256": "03b4673fb4b73de3bc18214f8a64b2e788d291c272a62579361e49d7c5679442"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "category": "documentation",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 6738,
+      "sha256": "444e497edbffe0170ca046eb7523b3c5164bcb9c0c17235e3122d77c5763a660"
+    },
+    {
+      "path": "README.md",
+      "category": "documentation",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 3986,
+      "sha256": "277b07ea0d46f4204b275544fad3ab0a66df2b706bf07714412308eb34bafbb6"
+    },
+    {
+      "path": "VERSION",
+      "category": "documentation",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 6,
+      "sha256": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67"
+    },
+    {
+      "path": "scripts/build.sh",
+      "category": "source",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 1483,
+      "sha256": "91d9695a08a9b3879b26db2d32dffb9ede0c29a874d2354df4615e7899f460a5"
+    },
+    {
+      "path": "scripts/gen_assets.py",
+      "category": "source",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 13310,
+      "sha256": "56ca1e526a784ddb9f54aaa267b58621b21ca324382a9616776444ca9da2d117"
+    },
+    {
+      "path": "scripts/gen_logos.py",
+      "category": "source",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 11699,
+      "sha256": "d47dcb62a8d8024705a6bdfd829190665001d8d678fd1eec2d9e88e235e6913e"
+    },
+    {
+      "path": "scripts/gen_registry.py",
+      "category": "source",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 4343,
+      "sha256": "901614b4d644322e0a2358b026af1aa44a0483ff1c9c8515b549e681aa6482fb"
+    },
+    {
+      "path": "scripts/gen_specimens.py",
+      "category": "source",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 33548,
+      "sha256": "23cdd8052f96be815446bea4127cfd6bbac1c4653374516419c2e982d9c54441"
+    },
+    {
+      "path": "scripts/gen_tokens.py",
+      "category": "source",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 19777,
+      "sha256": "abdefe371950e91bf4a49da7e2b5af07622107aecd0d2f9fb5b5278bbaf5f221"
+    },
+    {
+      "path": "scripts/validate_brand.py",
+      "category": "source",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "hand-authored",
+      "bytes": 6542,
+      "sha256": "2f81675618d5e5b378bb4f996c61bbd08b164b0d369da94a7593804eace1450c"
+    },
+    {
+      "path": "validation/README.md",
+      "category": "evidence",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py / design.md CLI",
+      "bytes": 3015,
+      "sha256": "4a2bde05e5ae7e5c13cf20c2b83c8d6f878cf8a85d71c2f40620d99799d39fe7"
+    },
+    {
+      "path": "validation/contrast-report.md",
+      "category": "evidence",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py / design.md CLI",
+      "bytes": 12781,
+      "sha256": "6e05013971aaca1d04a6760f950a4e922aef7b9050cec04a16a6bb8335239c8a"
+    },
+    {
+      "path": "validation/design-md-export.dtcg.json",
+      "category": "evidence",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py / design.md CLI",
+      "bytes": 3764,
+      "sha256": "bb8190b6c25cc9933f46811cb50937ffe5a5485819b76ac0e4b0add686e3895e"
+    },
+    {
+      "path": "validation/validation-log.txt",
+      "category": "evidence",
+      "status": "FACT",
+      "licence": "Linkbot OÜ",
+      "generated_by": "scripts/gen_tokens.py / design.md CLI",
+      "bytes": 3311,
+      "sha256": "a4d5de34aa3e1e4a48e7aa60f175e02aad32a424fe783d3abb2551b9f924b77c"
+    }
+  ]
+}

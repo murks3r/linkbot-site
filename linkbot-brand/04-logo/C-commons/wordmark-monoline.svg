@@ -1,0 +1,14 @@
+<!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 586 132" width="586" height="132" role="img" aria-label="Linkbot wordmark"><title>Linkbot — Commons wordmark</title>
+  <g transform="translate(9.00 9.00)">
+  <g fill="none" stroke="currentColor" stroke-width="14.0" stroke-linecap="round" stroke-linejoin="round">
+    <path transform="translate(0.00 0)" d="M0 0 V100 H60" />
+    <path transform="translate(84.00 0)" d="M0 0 V100" />
+    <path transform="translate(106.00 0)" d="M0 100 V0 M0 0 L72 100 M72 100 V0" />
+    <path transform="translate(202.00 0)" d="M0 0 V100 M7 52 L60 0 M7 52 L60 100" />
+    <path transform="translate(286.00 0)" d="M0 0 V100 M0 0 H33 A25 25 0 0 1 33 50 H0 M0 50 H38 A25 25 0 0 1 38 100 H0" />
+    <path transform="translate(376.00 0)" d="M0 50 a33 50 0 1 0 66 0 a33 50 0 1 0 -66 0" />
+    <path transform="translate(466.00 0)" d="M0 0 H68 M34 0 V100" />
+  </g>
+  </g>
+</svg>

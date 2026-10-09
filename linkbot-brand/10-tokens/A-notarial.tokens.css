@@ -1,0 +1,112 @@
+/* Linkbot Brand OS 0.1.0 — Notarial candidate direction.
+ * NOT APPROVED. Non-applied artifact: generated from A-notarial.tokens.json.
+ * No runtime file imports this file. */
+
+:root {
+  /* primitives */
+  --lb-a-paper: #F4F1EA;
+  --lb-a-paper-deep: #EAE4D8;
+  --lb-a-porcelain: #FDFCF9;
+  --lb-a-ink: #14161A;
+  --lb-a-ink-soft: #33383F;
+  --lb-a-slate: #565C63;
+  --lb-a-rule: #D9D3C5;
+  --lb-a-rule-strong: #ABA391;
+  --lb-a-control-rule: #90897A;
+  --lb-a-seal: #1D5B45;
+  --lb-a-seal-bright: #4FBE92;
+  --lb-a-seal-deep: #14402F;
+  --lb-a-ember: #8A5B00;
+  --lb-a-oxblood: #8E2F2F;
+  --lb-a-midnight: #0E1013;
+  --lb-a-midnight-raised: #181B1F;
+  --lb-a-midnight-line: #2A2E33;
+  --lb-a-midnight-control: #65686C;
+  --lb-a-moon-text: #E9E4D8;
+  --lb-a-moon-dim: #A9A395;
+
+  /* semantic */
+  --lb-canvas: var(--lb-a-paper);
+  --lb-surface: var(--lb-a-porcelain);
+  --lb-surface-sunken: var(--lb-a-paper-deep);
+  --lb-text: var(--lb-a-ink);
+  --lb-text-muted: var(--lb-a-slate);
+  --lb-text-on-dark: var(--lb-a-moon-text);
+  --lb-brand: var(--lb-a-seal);
+  --lb-brand-contrast: var(--lb-a-paper);
+  --lb-link: var(--lb-a-seal);
+  --lb-border-subtle: var(--lb-a-rule);
+  --lb-border-control: var(--lb-a-rule-strong);
+  --lb-status-granted: var(--lb-a-seal);
+  --lb-status-pending: var(--lb-a-ember);
+  --lb-status-denied: var(--lb-a-oxblood);
+  --lb-status-unknown: var(--lb-a-slate);
+  --lb-focus: var(--lb-a-seal);
+  --lb-focus-ring: var(--lb-a-seal);
+
+  /* type */
+  --lb-text-12: 12px;
+  --lb-text-13: 13px;
+  --lb-text-14: 14px;
+  --lb-text-16: 16px;
+  --lb-text-18: 18px;
+  --lb-text-20: 20px;
+  --lb-text-24: 24px;
+  --lb-text-30: 30px;
+  --lb-text-38: 38px;
+  --lb-text-48: 48px;
+  --lb-text-60: 60px;
+  --lb-text-76: 76px;
+  --lb-leading-tight: 1.05;
+  --lb-leading-snug: 1.25;
+  --lb-leading-normal: 1.5;
+  --lb-tracking-tighter: -0.03em;
+  --lb-tracking-tight: -0.015em;
+  --lb-tracking-label: 0.14em;
+
+  /* space */
+  --lb-space-3xs: 2px;
+  --lb-space-2xs: 4px;
+  --lb-space-xs: 8px;
+  --lb-space-sm: 12px;
+  --lb-space-md: 16px;
+  --lb-space-lg: 24px;
+  --lb-space-xl: 32px;
+  --lb-space-2xl: 48px;
+  --lb-space-3xl: 64px;
+  --lb-space-4xl: 96px;
+
+  /* radius */
+  --lb-radius-none: 0px;
+  --lb-radius-xs: 2px;
+  --lb-radius-sm: 4px;
+  --lb-radius-md: 8px;
+  --lb-radius-lg: 12px;
+  --lb-radius-xl: 20px;
+  --lb-radius-full: 9999px;
+
+  /* motion */
+  --lb-duration-instant: 80ms;
+  --lb-duration-fast: 160ms;
+  --lb-duration-base: 240ms;
+  --lb-duration-slow: 400ms;
+  --lb-duration-deliberate: 640ms;
+  --lb-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --lb-ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --lb-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --lb-ease-linear: linear;
+
+  /* focus */
+  --lb-focus-width: 2px;
+  --lb-focus-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lb-duration-instant: 0ms;
+    --lb-duration-fast: 0ms;
+    --lb-duration-base: 0ms;
+    --lb-duration-slow: 0ms;
+    --lb-duration-deliberate: 0ms;
+  }
+}

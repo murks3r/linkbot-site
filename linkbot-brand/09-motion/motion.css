@@ -1,0 +1,113 @@
+/* Linkbot Brand OS — motion primitives.
+ * NOT APPROVED. Non-applied artifact: no runtime file imports this stylesheet.
+ * Direction-agnostic: it defines timing only, never colour, type or layout.
+ * Generated alongside 10-tokens/*.tokens.css; keep both in step.
+ */
+
+:root {
+  /* duration */
+  --lb-duration-instant: 80ms;
+  --lb-duration-fast: 160ms;
+  --lb-duration-base: 240ms;
+  --lb-duration-slow: 400ms;
+  --lb-duration-deliberate: 640ms;
+
+  /* easing */
+  --lb-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --lb-ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --lb-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --lb-ease-linear: linear;
+
+  /* the single brand moment, per direction */
+  --lb-moment-duration: var(--lb-duration-base);
+  --lb-moment-ease: var(--lb-ease-entrance);
+}
+
+/* ---------------------------------------------------------------------------
+ * State change: colour and glyph only. No movement. Used for every one of the
+ * four product states, because a state is too important to be a transition.
+ * ------------------------------------------------------------------------- */
+.lb-state {
+  transition:
+    color var(--lb-duration-fast) var(--lb-ease-standard),
+    background-color var(--lb-duration-fast) var(--lb-ease-standard),
+    border-color var(--lb-duration-fast) var(--lb-ease-standard);
+}
+
+/* Local feedback on a focusable control. */
+.lb-control {
+  transition:
+    border-color var(--lb-duration-fast) var(--lb-ease-standard),
+    background-color var(--lb-duration-fast) var(--lb-ease-standard);
+}
+.lb-control:active {
+  transition-duration: var(--lb-duration-instant);
+}
+
+/* ---------------------------------------------------------------------------
+ * The one deliberate brand moment. Apply to at most one element per page.
+ * ------------------------------------------------------------------------- */
+@keyframes lb-settle {
+  from { transform: scale(0.94); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+.lb-moment {
+  animation: lb-settle var(--lb-moment-duration) var(--lb-moment-ease) both;
+}
+
+/* A boundary being crossed. Directional, small, never full-viewport. */
+@keyframes lb-cross {
+  from { transform: translateX(-6px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+.lb-cross {
+  animation: lb-cross var(--lb-duration-base) var(--lb-ease-entrance) both;
+}
+
+/* An exit leaves faster and less eagerly than an entrance. */
+@keyframes lb-leave {
+  from { transform: translateX(0);   opacity: 1; }
+  to   { transform: translateX(6px); opacity: 0; }
+}
+.lb-leave {
+  animation: lb-leave var(--lb-duration-fast) var(--lb-ease-exit) both;
+}
+
+/* ---------------------------------------------------------------------------
+ * Focus: never removed, always visible.
+ * ------------------------------------------------------------------------- */
+.lb-focusable:focus-visible {
+  outline: 2px solid var(--lb-focus, currentColor);
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Reduced motion: every duration collapses to zero, and the one deliberate
+ * moment is replaced by a VISIBLE state change rather than by nothing.
+ * ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lb-duration-instant: 0ms;
+    --lb-duration-fast: 0ms;
+    --lb-duration-base: 0ms;
+    --lb-duration-slow: 0ms;
+    --lb-duration-deliberate: 0ms;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* The moment must not become a no-op: show a bounded outline instead. */
+  .lb-moment {
+    animation: none;
+    outline: 2px solid var(--lb-focus, currentColor);
+    outline-offset: 3px;
+  }
+  .lb-cross, .lb-leave {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

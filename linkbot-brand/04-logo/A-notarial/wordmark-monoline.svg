@@ -1,0 +1,14 @@
+<!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 118" width="640" height="118" role="img" aria-label="Linkbot wordmark"><title>Linkbot — Notarial wordmark</title>
+  <g transform="translate(5.50 5.50)">
+  <g fill="none" stroke="currentColor" stroke-width="7.0" stroke-linecap="round" stroke-linejoin="round">
+    <path transform="translate(0.00 0)" d="M0 0 V100 H60" />
+    <path transform="translate(94.00 0)" d="M0 0 V100" />
+    <path transform="translate(126.00 0)" d="M0 100 V0 M0 0 L72 100 M72 100 V0" />
+    <path transform="translate(232.00 0)" d="M0 0 V100 M0 54 L58 0 M0 54 L58 100" />
+    <path transform="translate(324.00 0)" d="M0 0 V100 M0 0 H33 A25 25 0 0 1 33 50 H0 M0 50 H38 A25 25 0 0 1 38 100 H0" />
+    <path transform="translate(424.00 0)" d="M0 50 a33 50 0 1 0 66 0 a33 50 0 1 0 -66 0" />
+    <path transform="translate(524.00 0)" d="M0 0 H68 M34 0 V100" />
+  </g>
+  </g>
+</svg>
