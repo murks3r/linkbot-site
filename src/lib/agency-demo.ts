@@ -177,7 +177,96 @@ export const mandates: Mandate[] = [
       },
     ],
   },
+  {
+    id: 'security',
+    label: 'Staff Security Engineer',
+    brief: 'A Dublin fintech needs a staff engineer to own application security review, threat modelling and incident readiness for regulated payment systems.',
+    location: 'Dublin, Ireland',
+    workMode: 'Hybrid · 3 days in office',
+    level: 'Staff',
+    pool: 'Agency-owned security network (example)',
+    requirements: [
+      { key: 'appsec', label: 'Application security ownership', kind: 'required', interpretation: 'Owned application security review for a production system' },
+      { key: 'dublin', label: 'Dublin hybrid', kind: 'required', interpretation: 'Available for three Dublin office days weekly' },
+      { key: 'regulated', label: 'Regulated framework', kind: 'required', interpretation: 'Worked under a named regulated security framework' },
+      { key: 'threat', label: 'Threat modelling', kind: 'preferred', interpretation: 'Ran threat modelling with engineering teams' },
+    ],
+    candidates: [
+      {
+        id: 'S-002', role: 'Security engineer · 9 years', context: 'Payments infrastructure', location: 'Portugal', availability: 'Not confirmed',
+        strengths: ['Application security', 'Threat modelling', 'Secure SDLC'],
+        assessments: {
+          appsec: { status: 'met', evidence: 'Example work history: owned application security review' },
+          dublin: { status: 'unmet', evidence: 'Example preference: remote only, based outside Ireland' },
+          regulated: { status: 'met', evidence: 'Example work: payment platform security reviews' },
+          threat: { status: 'met', evidence: 'Example practice: threat modelling sessions' },
+        },
+      },
+      {
+        id: 'S-011', role: 'Security architect · 12 years', context: 'Enterprise platforms', location: 'Ireland', availability: 'Not confirmed',
+        strengths: ['Security architecture', 'Incident readiness', 'Risk assessment'],
+        assessments: {
+          appsec: { status: 'unknown', evidence: 'Direct application security ownership not documented' },
+          dublin: { status: 'met', evidence: 'Example location: Ireland' },
+          regulated: { status: 'unmet', evidence: 'Example history: no regulated framework named' },
+          threat: { status: 'met', evidence: 'Example practice: architecture risk reviews' },
+        },
+      },
+    ],
+  },
 ];
+
+export interface ExcludedCandidate {
+  candidate: ExampleCandidate;
+  reasons: { label: string; detail: string }[];
+}
+
+export interface PoolSummary {
+  /** Hard requirements met, with no outstanding verification. */
+  ready: ExampleCandidate[];
+  /** Hard requirements met, but at least one required criterion is still unverified. */
+  needsVerification: ExampleCandidate[];
+  /** At least one stated hard requirement is not met; these are never silently promoted. */
+  excluded: ExcludedCandidate[];
+  eligible: number;
+}
+
+/** Required criteria a candidate demonstrably does not meet. */
+export function unmetRequirements(mandate: Mandate, candidate: ExampleCandidate) {
+  return mandate.requirements
+    .filter((r) => r.kind === 'required')
+    .filter((r) => candidate.assessments[r.key]?.status === 'unmet' || !candidate.assessments[r.key])
+    .map((r) => ({ label: r.label, detail: candidate.assessments[r.key]?.evidence ?? 'No evidence supplied' }));
+}
+
+/** Required criteria with no evidence either way. Unknown stays unknown. */
+export function unknownRequirements(mandate: Mandate, candidate: ExampleCandidate) {
+  return mandate.requirements
+    .filter((r) => r.kind === 'required')
+    .filter((r) => candidate.assessments[r.key]?.status === 'unknown')
+    .map((r) => ({ label: r.label, detail: candidate.assessments[r.key]?.evidence ?? 'No evidence supplied' }));
+}
+
+/**
+ * Groups a set of fictional candidates the way a recruiter would review them.
+ * Failures, unknown evidence and preferences are never merged into one score.
+ */
+export function summariseCandidates(mandate: Mandate, candidates: ExampleCandidate[]): PoolSummary {
+  const ready: ExampleCandidate[] = [];
+  const needsVerification: ExampleCandidate[] = [];
+  const excluded: ExcludedCandidate[] = [];
+  for (const candidate of candidates) {
+    const fit = evaluateCandidate(mandate, candidate);
+    if (fit.failed > 0) excluded.push({ candidate, reasons: unmetRequirements(mandate, candidate) });
+    else if (fit.unresolved > 0) needsVerification.push(candidate);
+    else ready.push(candidate);
+  }
+  return { ready, needsVerification, excluded, eligible: ready.length + needsVerification.length };
+}
+
+export function summarisePool(mandate: Mandate): PoolSummary {
+  return summariseCandidates(mandate, rankCandidates(mandate));
+}
 
 export function evaluateCandidate(mandate: Mandate, candidate: ExampleCandidate) {
   const required = mandate.requirements.filter((r) => r.kind === 'required');

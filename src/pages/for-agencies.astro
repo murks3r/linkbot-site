@@ -4,22 +4,38 @@ import AgencyDemo from '../components/agency/AgencyDemo';
 import AgencyPilotForm from '../components/agency/AgencyPilotForm';
 
 const steps = [
-  { number: '01', label: 'Interpret', title: 'Make the mandate explicit.', description: 'Translate the role brief into reviewable hard constraints, preferences and unanswered questions. The agency stays in control of the criteria.' },
-  { number: '02', label: 'Match', title: 'Find evidence, not just keywords.', description: 'Compare those criteria with profiles the agency is authorized to use. See what is supported, what is missing and what fails a hard requirement.' },
-  { number: '03', label: 'Confirm', title: 'Ask whether there is interest.', description: 'A promising match is not an interested candidate. Confirm the person wants to explore the opportunity before moving forward.' },
-  { number: '04', label: 'Introduce', title: 'Share only with permission.', description: 'An introduction is a distinct step: the candidate knows what is being shared, with whom and why, before any disclosure.' },
+  { number: '01', label: 'Interpret', title: 'Make the mandate explicit.', description: 'Translate the role brief into reviewable hard constraints, preferences and unanswered questions. The agency reviews, corrects and owns the criteria before anything else happens.' },
+  { number: '02', label: 'Verify', title: 'Show the evidence, including the gaps.', description: 'Compare those criteria with sources the agency is authorised to use. Each criterion is answered separately: supported, missing, or failing a stated hard requirement.' },
+  { number: '03', label: 'Review', title: 'The recruiter decides.', description: 'Ranking is a review aid, not a verdict. Your recruiter can override, add, exclude or ask for more evidence, and the reasoning stays attached to the list.' },
+  { number: '04', label: 'Confirm', title: 'Ask whether there is interest.', description: 'A promising match is not an interested candidate. Confirm the person wants to explore the opportunity before anything moves forward.' },
+  { number: '05', label: 'Introduce', title: 'Share only with permission.', description: 'An introduction is a separate, explicit step: the candidate knows what is shared, with whom and why before any disclosure.' },
+];
+
+const responsibilities = [
+  { owner: 'Linkbot', label: 'Drafts and shows', description: 'Structures the mandate, surfaces evidence and gaps, and keeps exclusions visible. It produces a review, never a decision.' },
+  { owner: 'Your recruiters', label: 'Decide and override', description: 'Own the criteria, the shortlist and the client relationship. Every override and rejection remains theirs, with the reason recorded.' },
+  { owner: 'Candidates', label: 'Consent, always separately', description: 'Interest is confirmed first; disclosure of details is a second, explicit decision the person makes for themselves.' },
 ];
 
 const principles = [
-  { label: 'Your relationships remain yours', description: 'Keep your pool, engagement and client relationships under your agency’s control. Linkbot is a decision-support layer, not another candidate marketplace.' },
+  { label: 'Your relationships remain yours', description: 'Keep your pool, engagement and client relationships under your agency’s control. Linkbot is intended as a decision-support layer, not another candidate marketplace.' },
   { label: 'Your systems remain in place', description: 'Work alongside the ATS and sourcing process you already use. The pilot starts with a bounded mandate, not a platform migration.' },
-  { label: 'Every gap stays visible', description: 'Missing evidence is not silently converted into a pass. Hard failures, unknowns and preferences receive different treatment.' },
+  { label: 'Every gap stays visible', description: 'Missing evidence is not silently converted into a pass. Hard failures, unknowns and preferences receive different treatment and separate labels.' },
+];
+
+const faqs = [
+  { question: 'Is this a live product we can use today?', answer: 'Not for this workflow. The agency offering is pre-production. The interactive workspace on this page is a self-contained illustration built from fictional data; there is no live candidate pool, matching service or ATS integration behind it. A pilot is a scoped discovery exercise, not a switch-on.' },
+  { question: 'Does Linkbot replace our ATS or CRM?', answer: 'No. The intended role is a review layer for mandate interpretation, evidence review and permission-aware matching around the systems your agency already operates.' },
+  { question: 'Is the candidate pool in the example real?', answer: 'No. Every mandate, profile, evidence statement and result is fictional and written for this page. The example does not process real candidate records, contact anyone, or access any pool.' },
+  { question: 'What does the ranking claim?', answer: 'Nothing about model accuracy or commercial outcomes. It is a fixed documented rule — hard requirements first, then missing evidence, then preferred signals — included so the reasoning is inspectable. We publish no accuracy, speed or placement statistics because none have been validated.' },
+  { question: 'Does a match mean we can introduce someone?', answer: 'No. Fit is a screening signal. The candidate must separately confirm interest and authorise the introduction and its data scope.' },
+  { question: 'What would we need to supply for a pilot?', answer: 'A specific mandate, an understanding of your current workflow, and an authorised pool or sample if the exercise needs one. A first conversation needs no candidate data at all. We agree scope, data handling and feasibility before anything real is touched.' },
 ];
 ---
 
 <BaseLayout
-  title="Linkbot for Recruiting Agencies — Evidence-led shortlists"
-  description="Turn recruiting mandates into explainable shortlists. Explore Linkbot's synthetic interactive agency demo and request a scoped recruiting pilot."
+  title="Linkbot for Recruiting Agencies — Explainable, evidence-led shortlists"
+  description="Turn a recruiting mandate into an explainable, evidence-backed shortlist without replacing your ATS. Walk through a synthetic interactive example, then request a scoped one-mandate pilot."
   canonicalPath="/for-agencies"
 >
   <main id="main">
@@ -34,9 +50,9 @@ const principles = [
             <span class="hidden border-l border-bone-50/20 pl-3 text-xs font-normal text-bone-200/50 sm:inline">For agencies</span>
           </a>
           <nav aria-label="Agency page navigation" class="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
-            <a href="#workflow" class="text-bone-200/70 transition-colors hover:text-bone-50">How it works</a>
-            <a href="#demo" class="text-bone-200/70 transition-colors hover:text-bone-50">Live demo</a>
-            <a href="#pilot" class="rounded-full border border-bone-50/30 px-4 py-2 font-medium text-bone-50 transition-colors hover:border-signal-400 hover:text-signal-400">Request a pilot <span aria-hidden="true">↗</span></a>
+            <a href="#workflow" class="inline-flex min-h-11 items-center text-bone-200/70 transition-colors hover:text-bone-50">How it works</a>
+            <a href="#demo" class="inline-flex min-h-11 items-center text-bone-200/70 transition-colors hover:text-bone-50">Interactive example</a>
+            <a href="#pilot" class="inline-flex min-h-11 items-center rounded-full border border-bone-50/30 px-4 py-2 font-medium text-bone-50 transition-colors hover:border-signal-400 hover:text-signal-400">Request a pilot <span aria-hidden="true">↗</span></a>
           </nav>
         </header>
 
@@ -44,22 +60,25 @@ const principles = [
           <div class="lg:col-span-7">
             <p class="pill mb-7"><span class="h-1.5 w-1.5 rounded-full bg-signal-400"></span>Recruiting intelligence · private by design</p>
             <h1 id="agency-hero-heading" class="max-w-3xl font-display text-[clamp(2.8rem,5.5vw,5.3rem)] font-light leading-[1.02] tracking-tightest text-balance">
-              Better shortlists. <span class="text-signal-400">Your candidates.</span> Your call.
+              Explainable shortlists. <span class="text-signal-400">Your candidates.</span> Your call.
             </h1>
             <p class="mt-7 max-w-2xl text-lg leading-8 text-bone-200/80 text-pretty sm:text-xl">
-              Translate a mandate into clear requirements. Understand why each candidate might fit. Confirm interest before any introduction. Linkbot adds an intelligence layer to your recruiting workflow — without replacing your ATS or taking over your relationships.
+              Turn a mandate into clear requirements you can review. See why each candidate is on the list — and why the others are not. Confirm interest before any introduction. No ATS replacement, no claim over your relationships.
             </p>
             <div class="mt-9 flex flex-wrap items-center gap-3">
-              <a href="#demo" class="btn-primary">Try the interactive demo <span aria-hidden="true">↗</span></a>
-              <a href="#pilot" class="btn-ghost">Discuss an agency pilot</a>
+              <a href="#pilot" class="btn-primary">Request a scoped pilot <span aria-hidden="true">↗</span></a>
+              <a href="#demo" class="btn-ghost">See the interactive example</a>
             </div>
-            <p class="mt-5 text-xs leading-5 text-bone-200/55">Interactive walkthrough uses fictional mandates and synthetic candidate profiles. No real people or live matching.</p>
+            <p class="mt-5 text-xs leading-5 text-bone-200/60">
+              <span class="font-medium text-bone-200/80">First conversation needs no candidate data.</span>
+              The interactive example uses fictional mandates and synthetic profiles — no live matching, no real people.
+            </p>
           </div>
           <div class="lg:col-span-5">
-            <div class="relative overflow-hidden rounded-2xl border border-bone-50/15 bg-ink-900/90 p-6 shadow-2xl shadow-black/40 sm:p-8" aria-label="Mandate to introduction process">
+            <div class="relative overflow-hidden rounded-2xl border border-bone-50/15 bg-ink-900/90 p-6 shadow-2xl shadow-black/40 sm:p-8" aria-label="Illustration of the intended mandate to introduction process">
               <div class="mb-7 flex items-center justify-between gap-4">
-                <span class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/55">THE WORKFLOW</span>
-                <span class="rounded-full border border-signal-400/25 bg-signal-400/10 px-3 py-1 font-mono text-[10px] tracking-widest text-signal-400">AGENCY CONTROLLED</span>
+                <span class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/55">THE INTENDED WORKFLOW</span>
+                <span class="rounded-full border border-amber-200/25 bg-amber-200/10 px-3 py-1 font-mono text-[10px] tracking-widest text-amber-100">ILLUSTRATION</span>
               </div>
               <ol class="space-y-0">
                 <li class="relative flex gap-5 pb-8">
@@ -74,15 +93,23 @@ const principles = [
                 </li>
                 <li class="relative flex gap-5 pb-8">
                   <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-signal-400/60 font-mono text-xs text-signal-400">03</span>
+                  <div><p class="font-medium text-bone-50">Review → recruiter's call</p><p class="mt-1 text-sm text-bone-200/65">Override, add or exclude, with reasons kept.</p></div>
+                  <span class="absolute bottom-1 left-5 h-6 w-px bg-bone-50/20" aria-hidden="true"></span>
+                </li>
+                <li class="relative flex gap-5 pb-8">
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-signal-400/60 font-mono text-xs text-signal-400">04</span>
                   <div><p class="font-medium text-bone-50">Potential fit → interest</p><p class="mt-1 text-sm text-bone-200/65">Candidate chooses whether to engage.</p></div>
                   <span class="absolute bottom-1 left-5 h-6 w-px bg-bone-50/20" aria-hidden="true"></span>
                 </li>
                 <li class="flex gap-5">
-                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-bone-50/30 font-mono text-xs text-bone-200/75">04</span>
+                  <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-bone-50/30 font-mono text-xs text-bone-200/75">05</span>
                   <div><p class="font-medium text-bone-50">Interest → permitted introduction</p><p class="mt-1 text-sm text-bone-200/65">Disclosure is a separate, explicit decision.</p></div>
                 </li>
               </ol>
-              <div class="mt-8 border-t border-bone-50/10 pt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-bone-200/45">Match ≠ interest ≠ consent</div>
+              <div class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-bone-50/10 pt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-bone-200/45">
+                <span>Match ≠ interest ≠ consent</span>
+                <span>Diagram, not a screenshot</span>
+              </div>
             </div>
           </div>
         </div>
@@ -96,17 +123,31 @@ const principles = [
             <p class="pill mb-5"><span class="h-1.5 w-1.5 rounded-full bg-signal-400"></span>From brief to decision</p>
             <h2 id="workflow-heading" class="max-w-3xl font-display text-4xl font-light leading-[1.06] tracking-tightest text-balance sm:text-5xl">Know why a candidate belongs on the shortlist.</h2>
           </div>
-          <p class="max-w-md text-base leading-7 text-bone-200/70 lg:col-span-4">The recruiter remains the decision-maker. The product helps organize evidence and makes the next permitted step explicit.</p>
+          <p class="max-w-md text-base leading-7 text-bone-200/70 lg:col-span-4">The recruiter remains the decision-maker at every step. The product organises evidence and makes the next permitted step explicit.</p>
         </div>
-        <ol class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-bone-50/10 bg-bone-50/10 sm:grid-cols-2 lg:grid-cols-4">
+        <ol class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-bone-50/10 bg-bone-50/10 sm:grid-cols-2 lg:grid-cols-5">
           {steps.map((step) => (
-            <li class="bg-ink-950 p-7 sm:p-8">
+            <li class="bg-ink-950 p-7">
               <p class="font-mono text-xs uppercase tracking-widest text-signal-400">{step.number} / {step.label}</p>
-              <h3 class="mt-7 font-display text-2xl font-light leading-tight">{step.title}</h3>
+              <h3 class="mt-6 font-display text-2xl font-light leading-tight">{step.title}</h3>
               <p class="mt-4 text-sm leading-6 text-bone-200/70">{step.description}</p>
             </li>
           ))}
         </ol>
+
+        <div class="mt-12">
+          <h3 class="text-sm font-semibold uppercase tracking-[0.16em] text-bone-200/70">Who does what</h3>
+          <div class="mt-5 grid gap-px overflow-hidden rounded-2xl border border-bone-50/10 bg-bone-50/10 lg:grid-cols-3">
+            {responsibilities.map((row) => (
+              <div class="bg-ink-950 p-6 sm:p-7">
+                <p class="font-mono text-xs uppercase tracking-widest text-signal-400">{row.owner}</p>
+                <h4 class="mt-4 text-lg font-medium">{row.label}</h4>
+                <p class="mt-2 text-sm leading-6 text-bone-200/70">{row.description}</p>
+              </div>
+            ))}
+          </div>
+          <p class="mt-5 max-w-3xl text-xs leading-6 text-bone-200/55">This is the intended division of responsibility for a pilot. The interactive example below demonstrates the review half of it — with fictional data only.</p>
+        </div>
       </div>
     </section>
 
@@ -115,7 +156,7 @@ const principles = [
         <div class="lg:col-span-5">
           <p class="pill mb-5">Built around your pool</p>
           <h2 id="ownership-heading" class="font-display text-4xl font-light leading-[1.06] tracking-tightest text-balance sm:text-5xl">Your network is the asset. <span class="text-signal-400">Keep it that way.</span></h2>
-          <p class="mt-6 max-w-md text-base leading-7 text-bone-200/75">Linkbot is not a competing talent marketplace. Its proposed agency workflow helps you reason over sources you are authorized to use while keeping sourcing, judgment and relationships with your firm.</p>
+          <p class="mt-6 max-w-md text-base leading-7 text-bone-200/75">Linkbot is not a competing talent marketplace. The proposed agency workflow is designed to help you reason over sources you are authorised to use while sourcing, judgement and relationships stay with your firm.</p>
         </div>
         <div class="lg:col-span-6 lg:col-start-7">
           <div class="divide-y divide-bone-50/10 border-t border-bone-50/10">
@@ -126,7 +167,7 @@ const principles = [
               </div>
             ))}
           </div>
-          <p class="mt-6 border-l-2 border-signal-400/60 pl-5 text-sm leading-7 text-bone-200/75">Pilot data access, retention and candidate-contact boundaries are agreed before any real agency data is used. The public demonstration below runs on fixtures only.</p>
+          <p class="mt-6 border-l-2 border-signal-400/60 pl-5 text-sm leading-7 text-bone-200/75">Pilot data access, retention and candidate-contact boundaries would be agreed before any real agency data is used. The demonstration below runs on fictional fixtures only.</p>
         </div>
       </div>
     </section>
@@ -136,16 +177,29 @@ const principles = [
       <div class="container-prose relative">
         <div class="mb-12 grid gap-6 lg:grid-cols-12 lg:items-end">
           <div class="lg:col-span-8">
-            <p class="pill mb-5"><span class="h-1.5 w-1.5 rounded-full bg-signal-400"></span>Interactive experience</p>
-            <h2 id="demo-heading" class="font-display text-4xl font-light leading-[1.06] tracking-tightest text-balance sm:text-5xl">Try the decision workflow.</h2>
-            <p class="mt-5 max-w-2xl text-base leading-7 text-bone-200/75">Choose a mandate, inspect its interpretation, compare fictional profiles, build a shortlist and explore what interest confirmation looks like from the candidate side.</p>
+            <p class="pill mb-5"><span class="h-1.5 w-1.5 rounded-full bg-signal-400"></span>Interactive example</p>
+            <h2 id="demo-heading" class="font-display text-4xl font-light leading-[1.06] tracking-tightest text-balance sm:text-5xl">Walk through an example shortlist.</h2>
+            <p class="mt-5 max-w-2xl text-base leading-7 text-bone-200/75">Choose an example mandate, read its interpretation, inspect the evidence behind each fictional profile, review who is excluded and why, then see what interest confirmation looks like from the candidate side.</p>
+            <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs text-bone-200/60">
+              <li>Seven steps, entirely in your browser</li>
+              <li>Keyboard accessible</li>
+              <li>No account, no data entry required</li>
+            </ul>
           </div>
-          <p class="max-w-sm rounded-lg border border-amber-200/25 bg-amber-200/10 px-4 py-3 text-xs leading-5 text-amber-100 lg:col-span-4">This is a self-contained illustration. The example pool, evidence and ranking are synthetic and do not represent live Linkbot capabilities or validated results.</p>
+          <p class="max-w-sm rounded-lg border border-amber-200/25 bg-amber-200/10 px-4 py-3 text-xs leading-5 text-amber-100 lg:col-span-4">Status: demonstration only. All mandates, profiles, evidence and results are synthetic, and nothing here represents validated Linkbot performance or a live product integration.</p>
         </div>
         <AgencyDemo client:load />
         <noscript>
-          <div class="mt-5 rounded-lg border border-bone-50/20 p-5 text-sm text-bone-200/80">JavaScript is required for the interactive sample. The workflow is: choose a mandate, review requirements and supporting evidence, prepare a shortlist, then seek candidate interest and separate permission for disclosure. <a href="#pilot" class="text-signal-400 underline">Request a pilot</a> without running the demo.</div>
+          <div class="mt-5 rounded-lg border border-bone-50/20 p-5 text-sm text-bone-200/80">JavaScript is required for the interactive example. The workflow is: choose a mandate, review requirements and supporting evidence, review exclusions, prepare a shortlist, then seek candidate interest and separate permission for disclosure. <a href="#pilot" class="text-signal-400 underline">Request a pilot</a> without running the example.</div>
         </noscript>
+
+        <div class="mt-10 flex flex-col gap-5 rounded-2xl border border-signal-400/25 bg-signal-400/[0.06] p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div>
+            <h3 class="font-display text-2xl font-light">Finished the example? Start with one real mandate.</h3>
+            <p class="mt-2 max-w-xl text-sm leading-6 text-bone-200/75">A pilot runs these steps against a bounded, authorised sample of your own pool, with your recruiters deciding. Bring a mandate and a workflow description — no candidate data needed to begin.</p>
+          </div>
+          <a href="#pilot" class="btn-primary shrink-0">Request a scoped pilot <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
     </section>
 
@@ -154,22 +208,37 @@ const principles = [
         <div class="grid gap-14 lg:grid-cols-12">
           <div class="lg:col-span-5">
             <p class="pill mb-5"><span class="h-1.5 w-1.5 rounded-full bg-signal-400"></span>Scoped agency pilot</p>
-            <h2 id="pilot-heading" class="font-display text-4xl font-light leading-[1.06] tracking-tightest text-balance sm:text-5xl">Start with one mandate. See what's worth testing.</h2>
-            <p class="mt-5 text-base leading-7 text-bone-200/75">A practical discovery pilot, not a promise of automatic placements or a production integration. We agree the boundaries before touching real data.</p>
+            <h2 id="pilot-heading" class="font-display text-4xl font-light leading-[1.06] tracking-tightest text-balance sm:text-5xl">Start with one mandate. See what is worth testing.</h2>
+            <p class="mt-5 text-base leading-7 text-bone-200/75">A scoped discovery pilot, not a promise of automatic placements and not a production integration. We agree the boundaries before any real data is involved.</p>
             <h3 class="mt-9 text-sm font-semibold uppercase tracking-[0.16em] text-bone-200/70">Proposed pilot scope</h3>
             <ul class="mt-5 space-y-4 text-sm leading-6 text-bone-200/80">
               <li class="flex gap-3"><span aria-hidden="true" class="text-signal-400">✓</span><span>One current recruiting mandate, interpreted with your team</span></li>
-              <li class="flex gap-3"><span aria-hidden="true" class="text-signal-400">✓</span><span>A bounded, authorized sample of your candidate pool</span></li>
+              <li class="flex gap-3"><span aria-hidden="true" class="text-signal-400">✓</span><span>A bounded, authorised sample of your candidate pool, if the exercise needs one</span></li>
               <li class="flex gap-3"><span aria-hidden="true" class="text-signal-400">✓</span><span>Review of fit, missing evidence, hard exclusions and recruiter overrides</span></li>
               <li class="flex gap-3"><span aria-hidden="true" class="text-signal-400">✓</span><span>A defined interest and permission workflow before any introduction</span></li>
+              <li class="flex gap-3"><span aria-hidden="true" class="text-signal-400">✓</span><span>A written record of what was and was not validated</span></li>
+            </ul>
+            <h3 class="mt-9 text-sm font-semibold uppercase tracking-[0.16em] text-bone-200/70">What this page does not offer</h3>
+            <ul class="mt-5 space-y-3 text-sm leading-6 text-bone-200/70">
+              <li class="flex gap-3"><span aria-hidden="true" class="text-bone-200/45">–</span><span>No published accuracy, time-saving or placement figures</span></li>
+              <li class="flex gap-3"><span aria-hidden="true" class="text-bone-200/45">–</span><span>No automated candidate outreach or database access</span></li>
+              <li class="flex gap-3"><span aria-hidden="true" class="text-bone-200/45">–</span><span>No self-service signup or live candidate availability</span></li>
             </ul>
             <p class="mt-6 text-xs leading-6 text-bone-200/55">Timing, integration needs, commercial terms and data-processing safeguards are determined together; none are implied by this enquiry.</p>
           </div>
           <div class="rounded-2xl border border-bone-50/15 bg-ink-800/70 p-6 sm:p-9 lg:col-span-7">
             <h3 class="font-display text-2xl font-light">Tell us what your agency recruits for.</h3>
-            <p class="mt-3 mb-8 text-sm leading-6 text-bone-200/70">We’ll use this context to discuss whether a one-mandate pilot fits your workflow.</p>
+            <p class="mt-3 mb-8 text-sm leading-6 text-bone-200/70">We use this context to discuss whether a one-mandate pilot fits your workflow. The form below prepares an email draft on your device — it is not submitted to Linkbot’s website.</p>
             <AgencyPilotForm client:load />
             <noscript><p class="mt-6 text-sm text-bone-200/75">Email <a class="text-signal-400 underline" href="mailto:hello@linkbot.org?subject=Linkbot%20agency%20pilot%20enquiry">hello@linkbot.org</a> to enquire about a pilot.</p></noscript>
+            <div class="mt-8 border-t border-bone-50/10 pt-6">
+              <h4 class="text-xs font-semibold uppercase tracking-[0.16em] text-bone-200/65">What happens next</h4>
+              <ol class="mt-4 space-y-3 text-sm leading-6 text-bone-200/75">
+                <li class="flex gap-3"><span class="font-mono text-xs text-signal-400">01</span><span>We read your message and reply to arrange a short scoping conversation.</span></li>
+                <li class="flex gap-3"><span class="font-mono text-xs text-signal-400">02</span><span>If a pilot makes sense, scope, data handling and access limits are agreed in writing first.</span></li>
+                <li class="flex gap-3"><span class="font-mono text-xs text-signal-400">03</span><span>If it does not fit, we say so — there is no automated follow-up sequence.</span></li>
+              </ol>
+            </div>
           </div>
         </div>
       </div>
@@ -179,10 +248,9 @@ const principles = [
       <div class="container-prose grid gap-10 lg:grid-cols-12">
         <div class="lg:col-span-4"><p class="pill mb-5">Questions</p><h2 id="agency-faq-heading" class="font-display text-3xl font-light sm:text-4xl">Before you try it.</h2></div>
         <dl class="divide-y divide-bone-50/10 border-t border-bone-50/10 lg:col-span-7 lg:col-start-6">
-          <div class="py-6"><dt class="font-medium">Does Linkbot replace our ATS or CRM?</dt><dd class="mt-3 text-sm leading-7 text-bone-200/70">No. The intended role is a layer for mandate interpretation, evidence review and permission-aware matching around the systems your agency already operates.</dd></div>
-          <div class="py-6"><dt class="font-medium">Is the candidate pool in the demo real?</dt><dd class="mt-3 text-sm leading-7 text-bone-200/70">No. Every profile, qualification and result is fictional. The demonstration does not process real candidate records or contact anyone.</dd></div>
-          <div class="py-6"><dt class="font-medium">Does a match mean we can introduce someone?</dt><dd class="mt-3 text-sm leading-7 text-bone-200/70">No. Fit is a screening signal. The candidate must separately confirm interest and authorize the introduction and its data scope.</dd></div>
-          <div class="py-6"><dt class="font-medium">What would we need to supply for a pilot?</dt><dd class="mt-3 text-sm leading-7 text-bone-200/70">A specific mandate, an understanding of your current workflow and an authorized pool or sample. We agree on data handling, practical feasibility and scope before starting.</dd></div>
+          {faqs.map((faq) => (
+            <div class="py-6"><dt class="font-medium">{faq.question}</dt><dd class="mt-3 text-sm leading-7 text-bone-200/70">{faq.answer}</dd></div>
+          ))}
         </dl>
       </div>
     </section>
@@ -191,10 +259,10 @@ const principles = [
       <div class="container-prose flex flex-wrap items-center justify-between gap-5 text-sm text-bone-200/60">
         <p>© 2026 Linkbot OÜ · Tallinn, Estonia</p>
         <nav aria-label="Footer navigation" class="flex flex-wrap gap-x-6 gap-y-3">
-          <a href="/" class="hover:text-bone-50">Home</a>
-          <a href="#demo" class="hover:text-bone-50">Try demo</a>
-          <a href="#pilot" class="hover:text-bone-50">Agency pilot</a>
-          <a href="mailto:hello@linkbot.org" class="hover:text-bone-50">Contact</a>
+          <a href="/" class="inline-flex min-h-11 items-center hover:text-bone-50">Home</a>
+          <a href="#demo" class="inline-flex min-h-11 items-center hover:text-bone-50">Interactive example</a>
+          <a href="#pilot" class="inline-flex min-h-11 items-center hover:text-bone-50">Agency pilot</a>
+          <a href="mailto:hello@linkbot.org" class="inline-flex min-h-11 items-center hover:text-bone-50">Contact</a>
         </nav>
       </div>
     </footer>
