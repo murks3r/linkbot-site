@@ -1,0 +1,71 @@
+/* ------------------------------------------------------------------ *
+ * Typography ROLES — the only file that knows which font files are used.
+ *
+ * Components never name a typeface. They use --font-display, --font-sans and
+ * --font-mono (tokens.css), which resolve to the three role families below.
+ *
+ * The files behind the roles are TEMPORARY, correctly licensed stand-ins:
+ *
+ *   Display  ->  Inter Display (SIL OFL 1.1)         display-500 / display-600
+ *   Sans     ->  Inter         (SIL OFL 1.1)         sans-400 / 500 / 600
+ *   Mono     ->  DejaVu Sans Mono (Bitstream Vera)   mono-400 / 700
+ *
+ * They are NOT Linkbot fonts and are deliberately not called that. The
+ * separate Brand workstream is developing the original Linkbot Display, Sans
+ * and Mono. To swap them in: drop the final files into /public/fonts, point the
+ * `src` lines below at them, and keep the weights that the CSS actually uses
+ * (Display 500+600, Sans 400+500+600, Mono 400+700). Nothing else changes.
+ * Licence texts for the stand-ins live in /public/fonts/licenses.
+ * ------------------------------------------------------------------ */
+
+@font-face {
+  font-family: "Role Display";
+  src: url("/fonts/display-500.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Role Display";
+  src: url("/fonts/display-600.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Role Sans";
+  src: url("/fonts/sans-400.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Role Sans";
+  src: url("/fonts/sans-500.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Role Sans";
+  src: url("/fonts/sans-600.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Role Mono";
+  src: url("/fonts/mono-400.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Role Mono";
+  src: url("/fonts/mono-700.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

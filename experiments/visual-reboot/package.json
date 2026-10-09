@@ -1,0 +1,16 @@
+{
+  "name": "linkbot-visual-reboot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Isolated, dependency-free visual-identity prototype for Linkbot. Not part of the Astro site; deployable on its own.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node serve.mjs --dir src",
+    "build": "node build.mjs",
+    "start": "node build.mjs && node serve.mjs --dir dist",
+    "preview": "node serve.mjs --dir dist",
+    "check": "node scripts/check.mjs",
+    "shoot": "node scripts/shoot.mjs"
+  }
+}

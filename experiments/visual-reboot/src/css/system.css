@@ -1,0 +1,131 @@
+/* Specimen page only. */
+
+.sys {
+  padding-block: var(--s-6) var(--s-9);
+}
+.sys-head {
+  display: grid;
+  gap: var(--s-5);
+  padding-bottom: var(--s-7);
+}
+.sys-head__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.sys-section {
+  display: grid;
+  gap: var(--s-5);
+  margin-top: var(--s-8);
+}
+.sys-section > .rulehead h2 {
+  margin: 0;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr));
+  gap: var(--gutter);
+}
+.swatch {
+  display: grid;
+  gap: var(--s-2);
+}
+.swatch__chip {
+  height: 5.5rem;
+  border: 1px solid var(--rule-2);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--s-2);
+  font: 700 0.75rem / 1 var(--font-mono);
+}
+.swatch__name {
+  font: 700 var(--fs-label) / var(--lh-label) var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.swatch__meta {
+  color: var(--muted);
+  font: 400 0.75rem / 1.125rem var(--font-mono);
+}
+
+.roles {
+  display: grid;
+  gap: var(--s-6);
+}
+.role {
+  display: grid;
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: var(--hair);
+}
+.role__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  color: var(--muted);
+  font: 400 0.75rem / 1.125rem var(--font-mono);
+}
+.scale {
+  display: grid;
+  gap: 0;
+}
+.scale__row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--s-4);
+  padding-block: var(--s-3);
+  border-top: var(--hair);
+}
+
+.seal-scale {
+  display: grid;
+  gap: 0;
+}
+.seal-scale__row {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-4);
+  padding-block: var(--s-4);
+  border-top: var(--hair);
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+.demo-grid {
+  display: grid;
+  align-items: start;
+  gap: var(--s-5);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+.spacing {
+  display: grid;
+  gap: var(--s-2);
+}
+.spacing__row {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-3);
+  font: 400 0.75rem / 1 var(--font-mono);
+}
+.spacing__bar {
+  height: 12px;
+  background: var(--ink);
+}
+
+@media (max-width: 40em) {
+  .scale__row,
+  .seal-scale__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-2);
+  }
+}
