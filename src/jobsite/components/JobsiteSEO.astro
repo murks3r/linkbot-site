@@ -1,0 +1,46 @@
+---
+/**
+ * Jobsite metadata. Deliberately separate from the marketing `SEO.astro`,
+ * which is untouched.
+ *
+ * Two jobsite-specific rules:
+ *  1. Every page here is noindex while the preview is fixture-backed, so a
+ *     sample posting can never be crawled as if it were a real job.
+ *  2. The canonical origin is configurable (PUBLIC_SITE_ORIGIN). If no origin
+ *     is configured, no canonical or og:url is emitted at all rather than
+ *     pointing at a production domain the preview does not own.
+ */
+import { getSiteOrigin } from '../config.ts';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+}
+
+const { title, description, canonicalPath } = Astro.props;
+const origin = getSiteOrigin();
+const canonical = origin ? new URL(canonicalPath, origin).toString() : null;
+const ogImage = origin ? new URL('/og.svg', origin).toString() : null;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+{canonical ? <link rel="canonical" href={canonical} /> : null}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Linkbot" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{canonical ? <meta property="og:url" content={canonical} /> : null}
+{ogImage ? <meta property="og:image" content={ogImage} /> : null}
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+<!-- No JobPosting structured data is emitted anywhere in the jobsite: the
+     preview supply is synthetic, and marking it up as a job posting would
+     present fixture data as a live catalogue to search engines. -->

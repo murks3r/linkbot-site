@@ -19,6 +19,7 @@ embedded in the middle of the scroll.
 npm ci               # reproducible install from package-lock.json
 npm run dev          # http://localhost:4321
 npm run typecheck    # astro check (TS strict)
+npm test             # node:test unit suite
 npm run build        # static output in ./dist
 npm run preview:local # build, then serve ./dist locally
 npm run smoke        # build + preview smoke checks (routing, metadata, links, guards)
@@ -29,6 +30,23 @@ for an explicit origin, otherwise the Vercel deployment's own host, otherwise
 localhost. `linkbot.org` is refused as a deployment target. Local, preview and
 future production origins, the Vercel preview configuration and the smoke
 harness are documented in [`docs/preview/`](docs/preview/README.md).
+
+## Jobsite preview (`/jobs`)
+
+A public job-discovery experience lives at `/jobs`, built as an isolated subtree
+(`src/jobsite/**`, `src/pages/jobs/**`) with its own layout, stylesheet and
+search adapter. It does not alter this marketing page, the agency page,
+`global.css` or `SEO.astro`.
+
+It currently runs on clearly labelled local fixtures — never presented as a live
+catalogue — behind a typed, replaceable adapter. Setting
+`PUBLIC_SUPPLY_API_ORIGIN` switches it to live supply. Every jobsite route is
+`noindex` and excluded from the sitemap. Its canonical origin comes from the same
+build-time resolver as the rest of the site (`src/lib/site-origin.mjs`) — there
+is no separate jobsite origin variable.
+
+See `docs/jobsite/` for the review guide, the typed contract, the Supply
+integration handoff and the QA evidence. Configure via `.env.example`.
 
 ## Deployment (Vercel)
 

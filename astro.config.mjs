@@ -31,7 +31,10 @@ export default defineConfig({
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
-    sitemap(),
+    // The jobsite routes (/jobs, /jobs/<id>, /jobs/saved — PR #11) are noindex
+    // while they are fixture-backed and must not enter the sitemap.
+    sitemap({ filter: (page) => !new URL(page).pathname.startsWith('/jobs') }),
+    // Non-production guard (PR #10): robots.txt and the visible notice.
     previewGuard(),
   ],
   build: { inlineStylesheets: 'auto' },

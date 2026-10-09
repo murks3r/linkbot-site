@@ -1,0 +1,58 @@
+---
+/**
+ * Jobsite shell. Isolated from `BaseLayout.astro`, which the marketing home and
+ * the agency page keep using: this layout does not import smooth scrolling, does
+ * not touch the marketing metadata component, and scopes the Notarial styles to
+ * the `.lbj` root class only.
+ */
+import '../../styles/global.css';
+import '../jobsite.css';
+
+import JobsiteSEO from '../components/JobsiteSEO.astro';
+import JobsiteHeader from '../components/JobsiteHeader.astro';
+import JobsiteFooter from '../components/JobsiteFooter.astro';
+import PreviewNotice from '../components/PreviewNotice.astro';
+import { selectJobSearchAdapter } from '../create-adapter.ts';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+  active?: 'jobs' | 'saved';
+  /** Full-bleed sections manage their own container. */
+}
+
+const { title, description, canonicalPath, active } = Astro.props;
+
+// The adapter is inspected at build time only to state, in the page itself,
+// which supply is being shown. It performs no network request here.
+const adapter = selectJobSearchAdapter();
+---
+
+<!doctype html>
+<html lang="en" class="lbj-html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f1ea" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    <JobsiteSEO title={title} description={description} canonicalPath={canonicalPath} />
+  </head>
+  <body class="lbj">
+    <a class="lbj-skip" href="#jobsite-main">Skip to content</a>
+    <JobsiteHeader active={active} />
+    <PreviewNotice kind={adapter.kind} label={adapter.label} notice={adapter.notice} />
+    <main id="jobsite-main">
+      <slot />
+    </main>
+    <JobsiteFooter kind={adapter.kind} />
+  </body>
+</html>

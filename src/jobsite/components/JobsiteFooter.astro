@@ -1,0 +1,24 @@
+---
+import { JOBS_ROUTES } from '../config.ts';
+
+interface Props {
+  kind: 'fixture' | 'live';
+}
+
+const { kind } = Astro.props;
+const year = new Date().getUTCFullYear();
+---
+
+<footer class="lbj-footer">
+  <div class="lbj-container lbj-footer__inner">
+    <span>
+      © {year} Linkbot OÜ · Tallinn, Estonia · jobsite preview
+      {kind === 'fixture' ? ' · fixture supply, not live postings' : ''}
+    </span>
+    <nav aria-label="Jobsite footer">
+      <a href={JOBS_ROUTES.index}>Discover</a>
+      <a href={JOBS_ROUTES.saved}>Saved</a>
+      <a href="/#access">Private access</a>
+    </nav>
+  </div>
+</footer>

@@ -21,4 +21,8 @@ Allow: /
 Disallow: /api/
 Disallow: /access$
 
+# Jobsite preview: noindex while fixture-backed (see src/jobsite).
+Disallow: /jobs
+Disallow: /jobs/
+
 Sitemap: https://linkbot.org/sitemap-index.xml
