@@ -376,6 +376,15 @@ def _force(contour: list[Seg], sign: int) -> list[Seg]:
     return contour
 
 
+def disc(cx: float, cy: float, r: float) -> list[list[Seg]]:
+    """A filled circle as a SINGLE contour.
+
+    Stroking a ring with enough width to fill it clamps the inner radius to zero and
+    leaves a zero-area contour behind, which is an invalid outline. This emits the
+    circle directly instead."""
+    return [_force(_arc_cubics((cx, cy), r, r, 0.0, 360.0), +1)]
+
+
 def union(*groups, cap: str = "butt", join: str = "round") -> list[list[Seg]]:
     """Assemble a glyph from SEVERAL separate strokes.
 

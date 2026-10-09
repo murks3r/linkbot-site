@@ -4,6 +4,62 @@ All notable changes to `15-typeface/`. **No face in this folder is APPROVED.**
 
 ---
 
+## [0.2.0] — 2026-10-09
+
+Stage 3: independent verification and a demanding visual review. Corrections to drawing and
+metrics are a MINOR bump while the family is pre-adoption; MAJOR is reserved for adoption.
+
+### Fixed — defects found by auditing the binaries and looking at renders
+
+- **The build was not byte-reproducible.** `head.created`/`modified` were stamped with the
+  current time, and pinning them was insufficient because fontTools re-stamps `modified` at
+  save time unless `recalcTimestamp` is off. Two consecutive builds now hash identically.
+- **Every round letter was one half-stroke too large.** `o` measured 610 units against a
+  declared x-height of 500 (88% of cap height instead of 71%). The authored radii were being
+  placed on the intended extremes, but stroking pushes the outline half a stroke further out.
+  Corrected by treating authored numbers as OUTER extents and subtracting half the stroke
+  width in the geometry helpers. `o` is now −11…511, `n` 0…511, `0` −11…711.
+- **`C`, `c` and `G` opened on the wrong side** — the arc swept through 0°, leaving a mirrored
+  C. Now a 38°→322° sweep.
+- **`@` was two concentric rings (a bullseye)**; rebuilt as a ring with an open inner bowl and
+  a right-hand bar. **`?` was a flat hook**; rebuilt with a rounder bowl and a near-vertical
+  tail. **The comma** was a long heavy bar; now a dot with a light tail.
+- **`bullet` and `questiondown` carried a zero-area contour**, an invalid outline from stroking
+  a ring until the inner radius clamped to zero. `bullet` is a single-contour disc now.
+- **`hash`, `percent` and `asterisk` were claimed in the character map but never drawn**, and
+  **`Ÿ` (U+0178) was missing**. Both were found by the gates, not by inspection.
+
+### Added — independent verification
+
+- `scripts/audit_binaries.py` — an audit that shares no code path with the gates: the expected
+  character set is written out by hand, every measurement is taken from the compiled binaries,
+  GPOS pairs are counted out of the GPOS table, contour areas are computed from raw point data,
+  and reproducibility is checked by rebuilding and re-hashing. Writes
+  `validation/independent-audit.md`.
+- `validation/typography-review.md` — the demanding visual review, with findings tagged
+  `[Fact]`/`[Hypothesis]`, the remaining weaknesses, and eight recommended changes before use.
+
+### Added — the review gallery and a rendered alternative
+
+- `scripts/build_review.py` → `review/gallery.html`: a browser-accessible gallery covering the
+  glyph spotlight, the size ladder, a 20-row job listing, a full job description, navigation and
+  forms, salary figures and dates, German and English, 320/390/1440 px panels driven by
+  container queries, light and dark, labelled alternatives, explicit limitations, and the A/B/C
+  experiences evaluated together as one brand.
+- `fonts/alternatives/LinkbotSans-RoundDots.woff2` — the same family with the dot switch
+  flipped, so "alternative" is a rendered artifact. Deliberately NOT part of the seven validated
+  faces: not in the coverage claim, not in the asset registry, not referenced by any experience.
+- The dot shape is now a single switch (`glyphset.DOT_SHAPE`) governing the dot of i and j, the
+  period, comma, colon, semicolon, exclamation, ellipsis, divide and every diacritic dot.
+
+### Verified in this revision
+
+- 204 codepoints on 7 faces; 209 glyph slots each; 39 kern pairs on the proportional faces and
+  none on the monospaced; monospaced advance fixed at 600.
+- Artefacts byte-reproducible across consecutive builds.
+- Rendered and inspected at 12/13/15/16/17/19/24/30/38/48/60/76/118/130/150 px, light and dark,
+  320/390/1400 px, German and English.
+
 ## [0.1.0] — 2026-10-09
 
 Stage 2 of `parallel/brand-experiences-v1`. New work is confined to `14-experiences/`

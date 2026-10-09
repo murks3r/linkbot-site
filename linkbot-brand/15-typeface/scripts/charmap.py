@@ -75,6 +75,7 @@ _ACCENTS = {
     "rcaron": 0x0159, "amacron": 0x0101, "emacron": 0x0113, "omacron": 0x014D,
     "uogonek": 0x0173, "aogonek": 0x0105, "zdotaccent": 0x017C,
     "Adieresis": 0x00C4, "Odieresis": 0x00D6, "Udieresis": 0x00DC,
+    "Ydieresis": 0x0178,
     "Edieresis": 0x00CB, "Idieresis": 0x00CF, "Aacute": 0x00C1, "Eacute": 0x00C9,
     "Iacute": 0x00CD, "Oacute": 0x00D3, "Uacute": 0x00DA, "Yacute": 0x00DD,
     "Agrave": 0x00C0, "Egrave": 0x00C8, "Igrave": 0x00CC, "Ograve": 0x00D2,

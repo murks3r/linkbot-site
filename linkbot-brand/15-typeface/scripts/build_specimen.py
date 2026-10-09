@@ -27,7 +27,7 @@ from glyphset import ROLES  # noqa: E402
 SPEC = ROOT / "specimen"
 TTF_DIR = ROOT / "fonts" / "ttf"
 WOFF2 = "fonts/woff2"
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 FACE_CSS = "\n".join(
     f'@font-face{{font-family:"LB{name.split("-")[0][7:]}";'

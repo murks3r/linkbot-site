@@ -33,7 +33,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "wordmark"
 TTF = ROOT / "fonts" / "ttf" / "LinkbotDisplay-Bold.ttf"
 UFO = ROOT / "sources" / "ufo" / "LinkbotDisplay-Bold.ufo"
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 NOTE = (f"Linkbot Type {VERSION} — wordmark outlined from Linkbot Display Bold. "
         "PROPOSED, NOT APPROVED. Original work; not a registered trademark.")
 

@@ -20,7 +20,8 @@ Stdlib only. Imported by build_sources.py.
 """
 from __future__ import annotations
 
-from glyphlib import Arc, Line, Prim, Ring, union
+from glyphlib import Arc, Line, Prim, Ring, disc, union
+import glyphset
 from glyphset import Style, V, H, bowl_right, spine, Glyph
 
 
@@ -42,7 +43,14 @@ def shift(contours: list[list], dx: float = 0.0, dy: float = 0.0) -> list[list]:
 
 
 def sq(x: float, y: float, side: float) -> list[list]:
-    """An exact square with its lower-left corner at (x, y)."""
+    """A dot with its lower-left corner at (x, y).
+
+    Square by default — the mark's inscribed square. Every `sq()` call in this module is
+    a dot (period, comma, colon, semicolon, exclamation, ellipsis, divide, diacritics),
+    so the family-wide dot decision is honoured in one place and the round-dot
+    alternative is produced by flipping `glyphset.DOT_SHAPE`."""
+    if glyphset.DOT_SHAPE == "round":
+        return disc(x + side / 2.0, y + side / 2.0, side / 2.0)
     return union(([V(x + side / 2.0, y, y + side)], [side]))
 
 
@@ -140,12 +148,12 @@ def punct(st: Style) -> dict[str, Glyph]:
     adv = 268.0 * st.wf
     cx = adv / 2.0
     g["period"] = (sq(cx - s / 2.0, 0.0, s), adv)
-    g["comma"] = (combine(sq(cx - s / 2.0, xh * 0.11, s),
-                          bar(cx - s * 0.10, xh * 0.11, cx - s * 0.95, -cap * 0.17, wv * 0.74)), adv)
+    g["comma"] = (combine(sq(cx - s / 2.0, xh * 0.13, s),
+                          bar(cx - s * 0.16, xh * 0.13, cx - s * 0.78, -cap * 0.115, wv * 0.56)), adv)
     g["colon"] = (combine(sq(cx - s / 2.0, 0.0, s), sq(cx - s / 2.0, xh * 0.46, s)), adv)
     g["semicolon"] = (combine(sq(cx - s / 2.0, xh * 0.46, s),
                               sq(cx - s / 2.0, xh * 0.11, s),
-                              bar(cx - s * 0.10, xh * 0.11, cx - s * 0.95, -cap * 0.17, wv * 0.74)), adv)
+                              bar(cx - s * 0.16, xh * 0.13, cx - s * 0.78, -cap * 0.115, wv * 0.56)), adv)
 
     adv = 272.0 * st.wf
     cx = adv / 2.0
@@ -156,14 +164,15 @@ def punct(st: Style) -> dict[str, Glyph]:
     adv = 470.0 * st.wf
     cx = adv / 2.0
     r = adv * 0.26
-    qb = Arc((cx, cap * 0.75), r, cap * 0.19, 190.0, -35.0)
-    qs = Line(qb.end(), (cx + r * 0.10, xh * 0.36))
+    qb = Arc((cx, cap * 0.76), r * 1.16 - wv * 0.46, cap * 0.22 - wv * 0.46, 202.0, -58.0)
+    qs = Line(qb.end(), (cx + r * 0.06, xh * 0.34))
     g["question"] = (combine(union(([qb], [wv * 0.92])),
                              union(([qs], [wv * 0.92])),
-                             sq(cx + r * 0.10 - s / 2.0, 0.0, s)), adv)
-    g["questiondown"] = (combine(ring(cx, cap * 0.28, r * 0.7, wv * 1.2),
-                                 union(([Line((cx, cap * 0.46), (cx, cap * 0.16))], [wv * 0.92])),
-                                 sq(cx - s / 2.0, cap * 0.80, s)), adv)
+                             sq(cx + r * 0.06 - s / 2.0, 0.0, s)), adv)
+    qdb = Arc((cx, cap * 0.25), r, cap * 0.19, 10.0, 145.0)
+    g["questiondown"] = (combine(union(([qdb], [wv * 0.92])),
+                                 union(([Line(qdb.end(), (cx + r * 0.10, cap * 0.64))], [wv * 0.92])),
+                                 sq(cx + r * 0.10 - s / 2.0, cap * 0.80, s)), adv)
 
     # quotes — flat-cut slanted bars, so they match the family's terminals
     adv = 214.0 * st.wf
@@ -297,7 +306,7 @@ def punct(st: Style) -> dict[str, Glyph]:
     cx = adv / 2.0
     g["periodcentered"] = (sq(cx - s * 0.42, xh * 0.30, s * 0.84), adv)
     g["middot"] = g["periodcentered"]
-    g["bullet"] = (combine(ring(cx, xh * 0.32, wv * 1.10, wv * 2.40)), adv)
+    g["bullet"] = (disc(cx, xh * 0.32, wv * 1.10), adv)
     adv = 972.0 * st.wf
     g["ellipsis"] = (combine(sq(adv * 0.10 - s / 2.0, 0.0, s),
                              sq(adv * 0.50 - s / 2.0, 0.0, s),
@@ -348,10 +357,12 @@ def punct(st: Style) -> dict[str, Glyph]:
                               union(([leg], [wv * 0.92]))), adv)
     adv = 700.0 * st.wf
     cx = adv / 2.0
-    g["at"] = (combine(union(([Ring((cx, cap * 0.46), adv * 0.34, cap * 0.44)], [wv * 0.86])),
-                       union(([Ring((cx, cap * 0.44), adv * 0.13, cap * 0.17)], [wv * 0.82])),
-                       union(([Line((cx + adv * 0.13, cap * 0.44), (cx + adv * 0.13, cap * 0.60))],
-                              [wv * 0.82]))), adv)
+    g["at"] = (combine(union(([Ring((cx, cap * 0.46), adv * 0.34 - wv * 0.43, cap * 0.44 - wv * 0.43)],
+                              [wv * 0.86])),
+                       union(([Arc((cx - adv * 0.05, cap * 0.44), adv * 0.16, cap * 0.20,
+                                   55.0, 305.0)], [wv * 0.78])),
+                       union(([Line((cx + adv * 0.11, cap * 0.26), (cx + adv * 0.11, cap * 0.62))],
+                              [wv * 0.78]))), adv)
     return g
 
 
@@ -370,9 +381,9 @@ def german(st: Style) -> dict[str, Glyph]:
     stem_x = il + wv / 2.0
     cx = il + wv
     rx = ir - cx
-    g["germandbls"] = (union(([bowl_right(cx, xh * 0.74, rx, xh * 0.26 + ov)], [wc]),
+    g["germandbls"] = (union(([bowl_right(cx, xh * 0.74, rx, xh * 0.26 + ov, wc)], [wc]),
                              ([V(stem_x, 0.0, asc * 0.90)], [wv]),
-                             ([bowl_right(cx, xh * 0.28, rx * 0.96, xh * 0.28 + ov)], [wc])), adv)
+                             ([bowl_right(cx, xh * 0.28, rx * 0.96, xh * 0.28 + ov, wc)], [wc])), adv)
     # ẞ — the capital form: a full-height stem with two bowls
     adv = 632.0 * st.wf
     il, ir = sbr, adv - sbr
@@ -380,8 +391,8 @@ def german(st: Style) -> dict[str, Glyph]:
     cx = il + wv
     rx = ir - cx
     g["uni1E9E"] = (union(([V(stem_x, 0.0, cap)], [wv]),
-                          ([bowl_right(cx, cap * 0.76, rx * 0.96, cap * 0.24 + ov)], [wc]),
-                          ([bowl_right(cx, cap * 0.26, rx, cap * 0.26 + ov)], [wc])), adv)
+                          ([bowl_right(cx, cap * 0.76, rx * 0.96, cap * 0.24 + ov, wc)], [wc]),
+                          ([bowl_right(cx, cap * 0.26, rx, cap * 0.26 + ov, wc)], [wc])), adv)
     return g
 
 
@@ -416,7 +427,7 @@ UPPER_COMPOSITES = [
     ("A", "dieresis", "Adieresis"), ("O", "dieresis", "Odieresis"), ("U", "dieresis", "Udieresis"),
     ("E", "dieresis", "Edieresis"), ("I", "dieresis", "Idieresis"),
     ("A", "acute", "Aacute"), ("E", "acute", "Eacute"), ("I", "acute", "Iacute"),
-    ("O", "acute", "Oacute"), ("U", "acute", "Uacute"), ("Y", "acute", "Yacute"),
+    ("O", "acute", "Oacute"), ("U", "acute", "Uacute"), ("Y", "acute", "Yacute"), ("Y", "dieresis", "Ydieresis"),
     ("A", "grave", "Agrave"), ("E", "grave", "Egrave"), ("I", "grave", "Igrave"),
     ("O", "grave", "Ograve"), ("U", "grave", "Ugrave"),
     ("A", "circumflex", "Acircumflex"), ("E", "circumflex", "Ecircumflex"),

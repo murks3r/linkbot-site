@@ -1,6 +1,6 @@
 # Linkbot Type
 
-Version **0.1.0** · branch `parallel/brand-experiences-v1` · stage 2 of the Brand Experiences work.
+Version **0.2.0** · branch `parallel/brand-experiences-v1` · stage 2 of the Brand Experiences work.
 
 **Original type designs for Linkbot.** Three roles, one construction:
 
@@ -35,6 +35,8 @@ Read `PROPOSED.md` before using anything from this folder.
   fonts/woff2/           compiled WOFF2 (what a web page would load)
   wordmark/              the wordmark, outlined from Linkbot Display
   specimen/              the type specimen (open the HTML directly)
+  review/gallery.html    the typography review gallery: contexts, alternatives, limitations
+  fonts/alternatives/    the round-dot alternative face (outside the validated set)
   validation/            coverage report, font gate log, asset registry
   scripts/               the geometry engine, the glyphs, the build, the gates
 ```
@@ -43,8 +45,14 @@ Read `PROPOSED.md` before using anything from this folder.
 
 ```bash
 open specimen/type-specimen.html      # the specimen: roles, weights, German, symbols
+open review/gallery.html              # the review gallery: contexts, alternatives, limitations
 open wordmark/lockup-horizontal.svg   # the wordmark derived from the typeface
+open validation/typography-review.md  # the findings, tagged, including what is still wrong
+open validation/independent-audit.md  # the binary audit, taken from the compiled files
 ```
+
+`review/gallery.html` drives its 320 px and 390 px panels with CSS container queries, so
+both mobile widths can be inspected on one desktop screen; resize the window for 1440 px.
 
 ## Reproduce it
 
@@ -70,10 +78,11 @@ cd 15-typeface
 
 Measured by `scripts/validate_type.py` from the compiled binaries, not asserted:
 
-- **203 codepoints** on all seven faces — Latin upper and lower, figures, German
+- **204 codepoints** on all seven faces — Latin upper and lower, figures, German
   (ä ö ü Ä Ö Ü ß ẞ), a Western/Central European accented set, ASCII punctuation,
   typographic punctuation, currency, maths, arrows and a check mark.
-- 208 glyph slots per face including `.notdef` and `space`.
+- 209 glyph slots per face including `.notdef` and `space`.
+- Artefacts are **byte-reproducible**: two consecutive builds hash identically.
 - Monospaced faces: **one advance, 600 units**, for every glyph.
 - Proportional faces: GPOS pair kerning from 39 authored pairs.
 - Full table: `validation/coverage-report.md`.
@@ -85,8 +94,9 @@ registered, trademark, per-mille, guillemets, OE/oe and AE/ae ligatures, Greek,
 Cyrillic and CJK. Those fall back to a licensed OFL face; the fallback stack is
 declared in every consumer and is tested in the specimen.
 
-Two glyphs — **ampersand** and **at** — are first-pass approximations. They are
-recognizable and they are flagged rather than hidden (`design/letterforms.md`).
+**Ampersand** is the one glyph still flagged as idiosyncratic: recognizable at display
+sizes, ambiguous at 12–14 px, and recommended for redrawing. `at` and `question mark` were
+rebuilt in v0.2.0 after the review found them malformed.
 
 ## Where it plugs in
 

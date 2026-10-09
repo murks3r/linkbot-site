@@ -31,8 +31,14 @@ LOG="validation/build-log.txt"
   echo "\$ $PY scripts/build_wordmark.py     # the wordmark, outlined from Display"
   "$PY" scripts/build_wordmark.py || exit 1
   echo
+  echo "\$ $PY scripts/audit_binaries.py    # independent audit; rebuilds to check reproducibility"
+  "$PY" scripts/audit_binaries.py || exit 1
+  echo
   echo "\$ $PY scripts/build_specimen.py"
   "$PY" scripts/build_specimen.py || exit 1
+  echo
+  echo "\$ $PY scripts/build_review.py      # the review gallery + the round-dot alternative"
+  "$PY" scripts/build_review.py || exit 1
   echo
   echo "\$ python3 scripts/gen_registry.py   # stdlib only"
   python3 scripts/gen_registry.py || exit 1

@@ -1,32 +1,48 @@
 {
-  "$description": "Linkbot Type 0.1.0 \u2014 asset registry. Every artifact is PROPOSED and NOT APPROVED. One master family: Display, Sans, Mono, plus the wordmark outlined from the typeface. Original work authored in this repository.",
-  "version": "0.1.0",
-  "count": 49,
-  "total_bytes": 3037252,
+  "$description": "Linkbot Type 0.2.0 \u2014 asset registry. Every artifact is PROPOSED and NOT APPROVED. One master family: Display, Sans, Mono, plus the wordmark outlined from the typeface. Original work authored in this repository.",
+  "version": "0.2.0",
+  "count": 54,
+  "total_bytes": 3161555,
   "files": [
     {
       "path": "scripts/__pycache__",
       "category": "generator",
       "status": "PROPOSED",
       "kind": "directory",
-      "bytes": 120537,
-      "sha256": "e510f98f283f0081fcad4e277bea608c12fd7ad003e999561bf17ea3d2273b6b"
+      "bytes": 140547,
+      "sha256": "e9ed36ca1e4a24f34371038b1fb0ab8770f7fb870d14c1798d4c1b0dacac89ae"
+    },
+    {
+      "path": "scripts/audit_binaries.py",
+      "category": "generator",
+      "status": "PROPOSED",
+      "kind": "file",
+      "bytes": 15423,
+      "sha256": "aa7143016a48c562628f993f9cdd655bb8f0f976d606a4c8185bf52c9892ed91"
     },
     {
       "path": "scripts/build.sh",
       "category": "generator",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 1474,
-      "sha256": "bd81e982183219956f2cd0b7268ae77ea8ad7a9e502df2d25982834783489afd"
+      "bytes": 1768,
+      "sha256": "ecfeb2fe728ba2ca7e3b19ba8113b33f09a530bf144873d99ceeb5453f34f3e1"
     },
     {
       "path": "scripts/build_fonts.py",
       "category": "generator",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 2199,
-      "sha256": "9e6f7973f38774b58a9fd1b57d024ca6c118f61cc10a58d0cb7effe2f2a3359b"
+      "bytes": 3129,
+      "sha256": "5eebd6676c0743c8d4d0df0221a90451bad83a3291f7045b14ad8b9251cfdac9"
+    },
+    {
+      "path": "scripts/build_review.py",
+      "category": "generator",
+      "status": "PROPOSED",
+      "kind": "file",
+      "bytes": 41390,
+      "sha256": "3e4c177046a363d85cd7fc57c2258bdf7077d584b59ebbd8a5d8c0d36f67c1a5"
     },
     {
       "path": "scripts/build_sources.py",
@@ -42,7 +58,7 @@
       "status": "PROPOSED",
       "kind": "file",
       "bytes": 12071,
-      "sha256": "baeb10e7db4286fe737ec888b1ef634b041baa57c98b78251c24af406a9cc3bc"
+      "sha256": "9a268ab42434a3ea77c6ebf6c5587fcc17f3d1f19127f677507c2de23b16601b"
     },
     {
       "path": "scripts/build_wordmark.py",
@@ -50,15 +66,15 @@
       "status": "PROPOSED",
       "kind": "file",
       "bytes": 7210,
-      "sha256": "1a21c38d32c437411ca6364478b02d3cb401265c07ea148cd00246ac7995732c"
+      "sha256": "318eed3462b612e6ccb63e1d453764c13811a5407dbb31cfcfeb0bd570bd7d4f"
     },
     {
       "path": "scripts/charmap.py",
       "category": "generator",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 4857,
-      "sha256": "2e543c6ac99924a598501582d0c0c9aeb5d0925b313d52c1afc1c751416219ca"
+      "bytes": 4882,
+      "sha256": "df70c444470ec613b7d6971cb110b64d52e49d7e96935088c3ca5bcfc0631caf"
     },
     {
       "path": "scripts/gen_registry.py",
@@ -66,31 +82,31 @@
       "status": "PROPOSED",
       "kind": "file",
       "bytes": 3817,
-      "sha256": "e20ecd295e64c87f3ecd473075dfd423f87f7ec36178288a5180702a2f5d2b95"
+      "sha256": "f8bc345fc5cde35b320120edb5af22ba7d093a4181c58fcfe77baad18c29c963"
     },
     {
       "path": "scripts/glyphlib.py",
       "category": "generator",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 14683,
-      "sha256": "3716f459a99e234beca74118bf08944e5ae50beb0a13f07610d7942a4e30f3f9"
+      "bytes": 15056,
+      "sha256": "cec74f9cb35867c899a274506043c1a0ada05cf8b1687a79435f7b0a3a669bca"
     },
     {
       "path": "scripts/glyphset.py",
       "category": "generator",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 21556,
-      "sha256": "3417dd580176661b7eb498d675f12f3191a5270f580e1e3ad7013cf9ce82a81d"
+      "bytes": 23263,
+      "sha256": "e51fdaf5af2466fa76606b77c8f4503d9bc3e0e839d2b706d6e1dd8cebdfb728"
     },
     {
       "path": "scripts/glyphset_extra.py",
       "category": "generator",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 24734,
-      "sha256": "13627566dab2f6be9328c48597cff8fe449b971ee0921937d7d65524f22722ce"
+      "bytes": 25407,
+      "sha256": "178a102489098afa92a8673e16b68cf03261a56423db2904878942dfbf708aa0"
     },
     {
       "path": "scripts/validate_type.py",
@@ -137,232 +153,240 @@
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 26396,
-      "sha256": "310a9353e186db4a7e923e19a259f289f440d683cb04dda7c7f2818327b584e6"
+      "bytes": 25968,
+      "sha256": "87929278cb0eaf2802215e8a51bf8df0ccbe480bdcaef5a515689ad8bd47b080"
     },
     {
       "path": "fonts/ttf/LinkbotDisplay-Regular.ttf",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 26072,
-      "sha256": "591fbbda560faa0464ca1ca0d883d082ef2acbb5ffcc1d8564096dd773c7b284"
+      "bytes": 25968,
+      "sha256": "ce93b7168b259e262c13e8bb1b11bbb04059ca5a19851d2ea26e3f44b3dd53fa"
     },
     {
       "path": "fonts/ttf/LinkbotMono-Bold.ttf",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 25580,
-      "sha256": "5f7dbb8d4cd1c7e6b4be649572ef5bafb8ad9c311a2391ce286886d8802a17c6"
+      "bytes": 25224,
+      "sha256": "9f8b73c791a85d69dbcdeb9d42c7cb183d94ce3484dfa71495525b41e09171e0"
     },
     {
       "path": "fonts/ttf/LinkbotMono-Regular.ttf",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 25188,
-      "sha256": "b48fd0fda703ea2e28b1517530a911b1b3212bdc624c56ee510a1db49ea2aeab"
+      "bytes": 25092,
+      "sha256": "ec9181891cebd3b8fbbc519755cd0ee793a36f86a21f84c8c73ad5e6b6db2843"
     },
     {
       "path": "fonts/ttf/LinkbotSans-Bold.ttf",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 26420,
-      "sha256": "b1e097d3132d14b3715aafc8db50c607fad3d304868ad81ac84de7f900eb0194"
+      "bytes": 26076,
+      "sha256": "23e3ae2c2024a894a9a4d1ce1655d9ad55b1c06bdbe45924448b298c4879a02f"
     },
     {
       "path": "fonts/ttf/LinkbotSans-Medium.ttf",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 26208,
-      "sha256": "64347937230f5b5014811fb3df6260665f34df88665d44792199ed3064c0d2da"
+      "bytes": 25884,
+      "sha256": "dca131d9378a54d712231ad55831f11a895e209f217c5697b76492cb3f31024e"
     },
     {
       "path": "fonts/ttf/LinkbotSans-Regular.ttf",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 25868,
-      "sha256": "8744307e4933a487df3e210bd150e769f7bdf27f9aa5e1089622de123478fae3"
+      "bytes": 25744,
+      "sha256": "f2147007526d99ff24290256207a15b9d629976a2edb4dd69a2dae353bca2668"
     },
     {
       "path": "fonts/woff2/LinkbotDisplay-Bold.woff2",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 8460,
-      "sha256": "cc7dd01b0de4488ae345dfd5e85a1f6c2dc3547f896e77923ea78ff1ae2e2d16"
+      "bytes": 8352,
+      "sha256": "af9ce7ff0ef10a0a3f51a175c88a2520d92b3aff17106aa63147a720ce9c412d"
     },
     {
       "path": "fonts/woff2/LinkbotDisplay-Regular.woff2",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 8456,
-      "sha256": "807cab2e427d8875a6076390a8c550c89ffb718c69c282c71e5b81a3f68719d1"
+      "bytes": 8396,
+      "sha256": "8615a11cbfbc722cc9f08c9084781ee247c0b8b6542840669b66adc74dc548aa"
     },
     {
       "path": "fonts/woff2/LinkbotMono-Bold.woff2",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 7836,
-      "sha256": "32d6b30a5290ab0d4b48265783f0fe5391288248987f0e6fd2bd735bf0b05840"
+      "bytes": 7864,
+      "sha256": "afc7cacaeea2e832f1993f835d1eaf6571151db484215fce6f7615e6fceae4ee"
     },
     {
       "path": "fonts/woff2/LinkbotMono-Regular.woff2",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 7736,
-      "sha256": "6dbbdc8a6047b6643d40ef69f02664873dbc9339354e56205dcaac83b4aa17ac"
+      "bytes": 7704,
+      "sha256": "363c05c6bab7c7fc628cc688b355344b6fadaa8d4292ce4184fcd9e7e335bfef"
     },
     {
       "path": "fonts/woff2/LinkbotSans-Bold.woff2",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 8384,
-      "sha256": "53970dfe306a0eae2653a36236404682fe4420cd1fce60db403fb3dc03893ef8"
+      "bytes": 8208,
+      "sha256": "c161e3224f5a2896d829edaf5d1ad046682f04624b1d7f566946b8a92d34febd"
     },
     {
       "path": "fonts/woff2/LinkbotSans-Medium.woff2",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 8148,
-      "sha256": "813690bdb87e0a9e004cffdea463a6a69b1ee90b2a44164b60cf2bbe33a9aeb0"
+      "bytes": 8104,
+      "sha256": "d60cbd0fb208f641b3ea71bce33192d0178a2056b5a0b66c68bcd3ab061758ff"
     },
     {
       "path": "fonts/woff2/LinkbotSans-Regular.woff2",
       "category": "compiled font",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 8072,
-      "sha256": "93b476164cc0da9851f116c63039e072a851836c8ef2003d084fd175691d461b"
+      "bytes": 8076,
+      "sha256": "a1487905af1a6b63693aab1343ab84c91906ad95dd257e68157ef36322a07f90"
     },
     {
       "path": "sources/ufo/LinkbotDisplay-Bold.ufo",
       "category": "editable source",
       "status": "PROPOSED",
       "kind": "directory",
-      "bytes": 358894,
-      "sha256": "ec621ac2f049f82f5dda26a34771b1edca73ed256a569075a626f1ef7c0cac01"
+      "bytes": 359678,
+      "sha256": "0909cd33e05cbf8f237a81286e6eb7ca2384c41e10a579a1238b89cc922eb50f"
     },
     {
       "path": "sources/ufo/LinkbotDisplay-Regular.ufo",
       "category": "editable source",
       "status": "PROPOSED",
       "kind": "directory",
-      "bytes": 356447,
-      "sha256": "10a0cac3ce981a8c1a0bd52134cf4e13296a8ff930c57a005b5208214a751392"
+      "bytes": 359663,
+      "sha256": "4c54651af86cec0df9201f6a70c55a182d1d788ed4e756e612c2b4fbf3c6d77e"
     },
     {
       "path": "sources/ufo/LinkbotMono-Bold.ufo",
       "category": "editable source",
       "status": "PROPOSED",
       "kind": "directory",
-      "bytes": 354905,
-      "sha256": "a54f3e32ebb893c5865001abb756daa2806428a5214091ad93177d305eef2554"
+      "bytes": 356658,
+      "sha256": "32f89ec5b5e5306920ceddd2f0590b00a3251552f025ddf8d00478e6a7aedbec"
     },
     {
       "path": "sources/ufo/LinkbotMono-Regular.ufo",
       "category": "editable source",
       "status": "PROPOSED",
       "kind": "directory",
-      "bytes": 353671,
-      "sha256": "d806c790f1421db502a3ce4810209be9a627db06175837de9288d3730e4fbd5d"
+      "bytes": 357120,
+      "sha256": "103312fef1442c1c2d9f592b0e121121f6e71d406fac6cf6b42d6b6463f974b5"
     },
     {
       "path": "sources/ufo/LinkbotSans-Bold.ufo",
       "category": "editable source",
       "status": "PROPOSED",
       "kind": "directory",
-      "bytes": 358683,
-      "sha256": "90463c35c90739b517a6168acab915c656587b54792eb2adca4f266808f7a8f6"
+      "bytes": 359398,
+      "sha256": "611637c8d166bb7add23ff3b94f9d10113a529fcca604ed5f8202e668dd89de8"
     },
     {
       "path": "sources/ufo/LinkbotSans-Medium.ufo",
       "category": "editable source",
       "status": "PROPOSED",
       "kind": "directory",
-      "bytes": 356480,
-      "sha256": "ff727ac8d52fdb9486919a8abae31cf1421eddf88f14a6a6e9ced84aa732eabd"
+      "bytes": 358138,
+      "sha256": "74610c172dbcdb4c65cb07a4e55bbe3b1378d02f2f1b7bb24eff1b29d7f2633d"
     },
     {
       "path": "sources/ufo/LinkbotSans-Regular.ufo",
       "category": "editable source",
       "status": "PROPOSED",
       "kind": "directory",
-      "bytes": 354790,
-      "sha256": "cd8f6a22e427119a0ffd9099b51967f5d0f48efb2a9ec09bc80b77b90290d9ef"
+      "bytes": 357905,
+      "sha256": "9bacc721963f25a365a863a0e59b2ed31f3d31c9bbc932ec7f1c003aac13a03f"
     },
     {
       "path": "wordmark/lockup-horizontal.svg",
       "category": "brand asset",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 2847,
-      "sha256": "b536b525b54432be361fb015af81a98b054dae63d109f6a65a539c35ee9023c3"
+      "bytes": 2788,
+      "sha256": "bee5bb0681b4e0cf88c175796037f92689018fae6ea5db1a5bd387a9027b0bd4"
     },
     {
       "path": "wordmark/lockup-stacked.svg",
       "category": "brand asset",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 2842,
-      "sha256": "53516f82556df8d01ce973d4d1d77560707a47a127823af64e388b60d73bed86"
+      "bytes": 2783,
+      "sha256": "4f7a029001e45a379e5a0a278a96e919b4141fd12b8ff8f80d6685a5470f9d07"
     },
     {
       "path": "wordmark/wordmark-caps.svg",
       "category": "brand asset",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 2797,
-      "sha256": "adc1e7eeb1e2df7aa2f6e4bcb8ec8b4d8a4a0f0e2e484c99a9a6b4a821bf891d"
+      "bytes": 2649,
+      "sha256": "50b03dcc846f31ad795f35840c985615e5ddda73f9ddeca0a4cf930e73c476fa"
     },
     {
       "path": "wordmark/wordmark-construction.svg",
       "category": "brand asset",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 3379,
-      "sha256": "9521d6f54eea79c7afbe7ddeee82200ac37e4f0d92b37b4dda58db635ac59287"
+      "bytes": 3320,
+      "sha256": "aeba24e441a0255a8ce874d4e2b5b612beb95e86565e479f4498a14c1190f1ea"
     },
     {
       "path": "wordmark/wordmark-inverse.svg",
       "category": "brand asset",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 2404,
-      "sha256": "19c15756180702ff58f170aafa69c4bae5238ad4a29d80efc1ae20d949c7a7fb"
+      "bytes": 2345,
+      "sha256": "cbf327b139b85e490a6fcfbbcaacb27414079e0cd4e5266005afc86d6001624a"
     },
     {
       "path": "wordmark/wordmark-lower.svg",
       "category": "brand asset",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 2411,
-      "sha256": "a7d39111659ecc00c8be9629c913bc90061866e2a07bfd14a35a6e613cd790a1"
+      "bytes": 2352,
+      "sha256": "7658d126c95645415099ef67f9b26aed6a996563a01f028cb81d70aa0b663c68"
     },
     {
       "path": "specimen/type-specimen.html",
       "category": "specimen",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 21628,
-      "sha256": "26594ae192bb934cd2d3a4ba36764af6277a906fd227abbe83f4629cd28a0ecb"
+      "bytes": 21303,
+      "sha256": "418d5c68919f175b03330f736df4e332852ad111a2df81ae7e18830e9440ce7e"
+    },
+    {
+      "path": "validation/asset-registry.json",
+      "category": "evidence",
+      "status": "PROPOSED",
+      "kind": "file",
+      "bytes": 13458,
+      "sha256": "79d307176f1f2a5250eae644af88a834a994bf6045985564871e83f71af6627b"
     },
     {
       "path": "validation/build-log.txt",
       "category": "evidence",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 2883,
-      "sha256": "4c16257bf97ca341998280807326f348cb25a9f347e7811c42cf3acd7ec88c21"
+      "bytes": 3870,
+      "sha256": "511a85f2f77577957be285926de02c0a5a7f43904408465c3fb53db3167fcc34"
     },
     {
       "path": "validation/coverage-report.md",
@@ -370,15 +394,31 @@
       "status": "PROPOSED",
       "kind": "file",
       "bytes": 1731,
-      "sha256": "9e6506023a7ce9f5011555f05d4127e29d17a102656034ba141e3fa5fc0462b0"
+      "sha256": "11840d542e903194deaa8419fdf68de20e3c02df21fddc98a96a44eeb102ad04"
+    },
+    {
+      "path": "validation/independent-audit.md",
+      "category": "evidence",
+      "status": "PROPOSED",
+      "kind": "file",
+      "bytes": 2968,
+      "sha256": "0bde14046656763bc3f092aa969ce9845eb5ab76311a7a118168e89bf93f397b"
+    },
+    {
+      "path": "validation/typography-review.md",
+      "category": "evidence",
+      "status": "PROPOSED",
+      "kind": "file",
+      "bytes": 9800,
+      "sha256": "4452765c4af87be027014d9d435223a9ab60cc3ff27e5fe83e2fd3e1c0ffb405"
     },
     {
       "path": "README.md",
       "category": "documentation",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 4505,
-      "sha256": "4a58a0ce57e3f1ef9510d5dae92c026e9e5487864ff564fd3150365638386bd3"
+      "bytes": 5290,
+      "sha256": "215a638231b80c83c3e2bd8bb1b9ac0d2e2c270de6b659e6b44517eed9cf5e1a"
     },
     {
       "path": "PROPOSED.md",
@@ -393,8 +433,8 @@
       "category": "documentation",
       "status": "PROPOSED",
       "kind": "file",
-      "bytes": 4694,
-      "sha256": "56abe3ffae81496d99c3a2fcd128a69cb6fb146ff57914a766d1b99c61aef5e2"
+      "bytes": 8416,
+      "sha256": "fdcf3b9c9d437fa42698487d4fee70776f3985b85d0e1a69248b7d68ad846b23"
     }
   ]
 }

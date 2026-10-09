@@ -150,6 +150,8 @@
     <string>Y_.glif</string>
     <key>Yacute</key>
     <string>Y_acute.glif</string>
+    <key>Ydieresis</key>
+    <string>Y_dieresis.glif</string>
     <key>Z</key>
     <string>Z_.glif</string>
     <key>Zacute</key>

@@ -30,10 +30,23 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from glyphlib import Arc, Line, Prim, Ring, union, union_closed
+from glyphlib import Arc, Line, Prim, Ring, disc, union, union_closed
 
 UPM = 1000
-APEX = 9.0  # half-length of the flat at a diagonal vertex (the octagonal apex)
+APEX = 9.0
+
+# The family's loudest decision is that every dot is a SQUARE — the mark's inscribed
+# square carried into the type. It is also the decision most likely to be argued about
+# in UI text, so it is a single switch: build_review.py flips it to produce the round-dot
+# alternative as a real rendered face rather than a description.
+DOT_SHAPE = "square"
+
+
+def _dot(x: float, y: float, side: float) -> list[list]:
+    """A dot with its lower-left corner at (x, y). Square by default."""
+    if DOT_SHAPE == "round":
+        return disc(x + side / 2.0, y + side / 2.0, side / 2.0)
+    return union(([V(x + side / 2.0, y, y + side)], [side]))  # half-length of the flat at a diagonal vertex (the octagonal apex)
 
 
 @dataclass
@@ -100,35 +113,50 @@ def H(y: float, x0: float, x1: float) -> Line:
 OVER = 14.0
 
 
-def arch(xl: float, xr: float, ytop: float) -> Arc:
-    """Upper arch from the left stem, over the top, to the right stem."""
+def arch(xl: float, xr: float, ytop: float, w: float) -> Arc:
+    """Upper arch from the left stem, over the top, to the right stem.
+
+    `ytop` is the OUTER top of the finished letter, so the centreline radius is
+    reduced by half the stroke — otherwise the stroked outline lands one half-stroke
+    above the intended x-height and the whole lowercase grows by ~9%.
+    """
     ro = (xr - xl) / 2.0
-    return Arc(((xl + xr) / 2.0, ytop - ro), ro, ro, 180.0 + OVER, 0.0 - OVER)
+    return Arc(((xl + xr) / 2.0, ytop - w / 2.0 - ro), ro, ro, 180.0 + OVER, 0.0 - OVER)
 
 
-def trough(xl: float, xr: float, ybot: float) -> Arc:
-    """Lower trough from the left stem, under the bottom, to the right stem."""
+def trough(xl: float, xr: float, ybot: float, w: float) -> Arc:
+    """Lower trough from the left stem, under the bottom, to the right stem.
+
+    `ybot` is the OUTER bottom."""
     ro = (xr - xl) / 2.0
-    return Arc(((xl + xr) / 2.0, ybot + ro), ro, ro, 180.0 - OVER, 360.0 + OVER)
+    return Arc(((xl + xr) / 2.0, ybot + w / 2.0 + ro), ro, ro, 180.0 - OVER, 360.0 + OVER)
 
 
-def bowl_left(cx: float, cy: float, rx: float, ry: float) -> Arc:
-    """Left half bowl, from the top attachment round the left to the bottom."""
-    return Arc((cx, cy), rx, ry, 90.0 - OVER, 270.0 + OVER)
+def bowl_left(cx: float, cy: float, rx: float, ry: float, w: float) -> Arc:
+    """Left half bowl. `rx`/`ry` are the OUTER half-extents."""
+    return Arc((cx, cy), rx - w / 2.0, ry - w / 2.0, 90.0 - OVER, 270.0 + OVER)
 
 
-def bowl_right(cx: float, cy: float, rx: float, ry: float) -> Arc:
-    """Right half bowl, from the top attachment round the right to the bottom."""
-    return Arc((cx, cy), rx, ry, 90.0 + OVER, -90.0 - OVER)
+def bowl_right(cx: float, cy: float, rx: float, ry: float, w: float) -> Arc:
+    """Right half bowl. `rx`/`ry` are the OUTER half-extents."""
+    return Arc((cx, cy), rx - w / 2.0, ry - w / 2.0, 90.0 + OVER, -90.0 - OVER)
 
 
-def spine(cx: float, rx: float, y_top: float, y_bot: float, depth: float = 0.28) -> list[Prim]:
+def ring_arc(cx: float, cy: float, rx: float, ry: float, w: float,
+             a0: float = 0.0, a1: float = 360.0) -> Arc:
+    """An elliptical arc whose OUTER extent is rx/ry."""
+    return Arc((cx, cy), rx - w / 2.0, ry - w / 2.0, a0, a1)
+
+
+def spine(cx: float, rx: float, y_top: float, y_bot: float, w: float,
+          depth: float = 0.28) -> list[Prim]:
     """The S spine: an upper sweep, a middle diagonal, a lower sweep, as ONE
     connected path. Two independent bowls cannot make an S — they overlap on the
     same side and read as a C with a bar through it."""
-    ry = (y_top - y_bot) * depth
-    a1 = Arc((cx, y_top - ry), rx, ry, 12.0, 168.0)
-    a3 = Arc((cx, y_bot + ry), rx, ry, 48.0, -180.0)
+    ry = (y_top - y_bot) * depth - w / 2.0
+    h = w / 2.0
+    a1 = Arc((cx, y_top - h - ry), rx - h, ry, 12.0, 168.0)
+    a3 = Arc((cx, y_bot + h + ry), rx - h, ry, 48.0, -180.0)
     return [a1, Line(a1.end(), a3.start()), a3]
 
 
@@ -158,7 +186,7 @@ def lower(st: Style) -> dict[str, Glyph]:
         chain: list[Prim] = []
         widths: list[float] = []
         for i in range(arches):
-            chain.append(arch(xs[i], xs[i + 1], xh))
+            chain.append(arch(xs[i], xs[i + 1], xh + ov, wc))
             widths.append(wc)
         chain.append(V(xs[arches], cy, 0.0))
         widths.append(wv)
@@ -174,7 +202,7 @@ def lower(st: Style) -> dict[str, Glyph]:
     il, ir = sbs, adv - sbs
     xs = [il + wv / 2.0, ir - wv / 2.0]
     ro = (xs[1] - xs[0]) / 2.0
-    g["u"] = (union(([V(xs[0], xh, ro), trough(xs[0], xs[1], 0.0), V(xs[1], ro, xh)], [wv, wc, wv])), adv)
+    g["u"] = (union(([V(xs[0], xh, ro), trough(xs[0], xs[1], -ov, wc), V(xs[1], ro, xh)], [wv, wc, wv])), adv)
 
     # l i j
     ladv = sbs * 2.0 + wv
@@ -182,11 +210,11 @@ def lower(st: Style) -> dict[str, Glyph]:
     g["l"] = (union(([V(lx, 0.0, asc)], [wv])), ladv)
     dw = wv * 1.12                      # the dot is a square of the stem's order
     dot_y0 = xh + wv * 1.42
-    g["i"] = (union(([V(lx, 0.0, xh)], [wv]), ([V(lx, dot_y0, dot_y0 + dw)], [dw])), ladv)
+    g["i"] = (union(([V(lx, 0.0, xh)], [wv])) + _dot(lx - dw / 2.0, dot_y0, dw), ladv)
     rh = wc * 0.9
     yd = desc + rh
-    g["j"] = (union(([V(lx, xh, yd), Arc((lx - rh, yd), rh, rh, 0.0, -180.0)], [wv, wc]),
-                    ([V(lx, dot_y0, dot_y0 + dw)], [dw])), ladv)
+    g["j"] = (union(([V(lx, xh, yd), Arc((lx - rh, yd), rh, rh, 0.0, -180.0)], [wv, wc]))
+              + _dot(lx - dw / 2.0, dot_y0, dw), ladv)
 
     # t f r — stem plus a crossing bar or an arm
     adv = 380.0 * st.wf
@@ -211,17 +239,18 @@ def lower(st: Style) -> dict[str, Glyph]:
     cx = (il + ir) / 2.0
     rx = (ir - il) / 2.0
     ry = xh / 2.0 + ov
-    g["c"] = (union(([Arc((cx, xh / 2.0), rx, ry, -32.0, 212.0)], [wc])), adv)
+    g["c"] = (union(([ring_arc(cx, xh / 2.0, rx, ry, wc, 38.0, 322.0)], [wc])), adv)
     adv = 570.0 * st.wf
     il, ir = sbr, adv - sbr
     cx = (il + ir) / 2.0
     rx = (ir - il) / 2.0
     ry = xh / 2.0 + ov
-    g["e"] = (union_closed(([Arc((cx, xh / 2.0), rx, ry, -18.0, 316.0)], [wc]))
+    g["e"] = (union_closed(([ring_arc(cx, xh / 2.0, rx, ry, wc, -18.0, 316.0)], [wc]))
               + union(([H(xh * 0.47, cx - rx * 0.40, ir)], [wh])), adv)
     adv = 596.0 * st.wf
     il, ir = sbr, adv - sbr
-    g["o"] = (union(([Ring(((il + ir) / 2.0, xh / 2.0), (ir - il) / 2.0, xh / 2.0 + ov)], [wc])), adv)
+    g["o"] = (union(([Ring(((il + ir) / 2.0, xh / 2.0), (ir - il) / 2.0 - wc / 2.0,
+                             xh / 2.0 + ov - wc / 2.0)], [wc])), adv)
 
     # a b d p q g — one bowl attached to a straight stem
     def bowl_side(adv: float, side: str, tall: bool, deep: bool) -> Glyph:
@@ -229,12 +258,12 @@ def lower(st: Style) -> dict[str, Glyph]:
         if side == "left":
             cx = ir - wv
             rx = cx - il
-            bowl = bowl_left(cx, xh / 2.0, rx, xh / 2.0 + ov)
+            bowl = bowl_left(cx, xh / 2.0, rx, xh / 2.0 + ov, wc)
             stem_x = ir - wv / 2.0
         else:
             cx = il + wv
             rx = ir - cx
-            bowl = bowl_right(cx, xh / 2.0, rx, xh / 2.0 + ov)
+            bowl = bowl_right(cx, xh / 2.0, rx, xh / 2.0 + ov, wc)
             stem_x = il + wv / 2.0
         return (union(([bowl], [wc]), ([V(stem_x, desc if deep else 0.0, asc if tall else xh)], [wv])), adv)
 
@@ -252,7 +281,7 @@ def lower(st: Style) -> dict[str, Glyph]:
     rh = wc * 0.9
     yd = desc + rh
     stem_x = ir - wv / 2.0
-    g["g"] = (union(([bowl_left(cx, xh / 2.0, rx, ry)], [wc]),
+    g["g"] = (union(([bowl_left(cx, xh / 2.0, rx, ry, wc)], [wc]),
                     ([V(stem_x, xh, yd), Arc((stem_x - rh, yd), rh, rh, 0.0, -170.0)], [wv, wc])), adv)
 
     adv = 528.0 * st.wf
@@ -260,7 +289,7 @@ def lower(st: Style) -> dict[str, Glyph]:
     cx = (il + ir) / 2.0
     rx = (ir - il) / 2.0
     ym = xh * 0.50
-    g["s"] = (union((spine(cx, rx, xh, 0.0), [wc, wc, wc])), adv)
+    g["s"] = (union((spine(cx, rx, xh + ov, -ov, wc), [wc, wc, wc])), adv)
 
     adv = 560.0 * st.wf
     il, ir = sbs, adv - sbs
@@ -337,7 +366,8 @@ def upper(st: Style) -> dict[str, Glyph]:
 
     def ring_letter(adv: float) -> list[list]:
         il, ir = sbr, adv - sbr
-        return union(([Ring(((il + ir) / 2.0, cap / 2.0), (ir - il) / 2.0, cap / 2.0 + ov)], [wc]))
+        return union(([Ring(((il + ir) / 2.0, cap / 2.0), (ir - il) / 2.0 - wc / 2.0,
+                            cap / 2.0 + ov - wc / 2.0)], [wc]))
 
     adv = 692.0 * st.wf
     g["O"] = (ring_letter(adv), adv)
@@ -352,53 +382,53 @@ def upper(st: Style) -> dict[str, Glyph]:
     cx = (il + ir) / 2.0
     rx = (ir - il) / 2.0
     ry = cap / 2.0 + ov
-    g["C"] = (union(([Arc((cx, cap / 2.0), rx, ry, -32.0, 212.0)], [wc])), adv)
+    g["C"] = (union(([ring_arc(cx, cap / 2.0, rx, ry, wc, 38.0, 322.0)], [wc])), adv)
     adv = 684.0 * st.wf
     il, ir = sbr, adv - sbr
     cx = (il + ir) / 2.0
     rx = (ir - il) / 2.0
     ry = cap / 2.0 + ov
-    g["G"] = (union(([Arc((cx, cap / 2.0), rx, ry, -32.0, 212.0)], [wc]),
+    g["G"] = (union(([ring_arc(cx, cap / 2.0, rx, ry, wc, 38.0, 322.0)], [wc]),
                     ([H(cap * 0.47, cx - rx * 0.06, ir)], [wh])), adv)
     adv = 584.0 * st.wf
     il, ir = sbr, adv - sbr
     cx = (il + ir) / 2.0
     rx = (ir - il) / 2.0
     ym = cap * 0.50
-    g["S"] = (union((spine(cx, rx, cap, 0.0), [wc, wc, wc])), adv)
+    g["S"] = (union((spine(cx, rx, cap + ov, -ov, wc), [wc, wc, wc])), adv)
 
     adv = 664.0 * st.wf
     il, ir = sbs, adv - sbr
     stem_x = il + wv / 2.0
     cx = il + wv
     g["D"] = (union(([V(stem_x, 0.0, cap)], [wv]),
-                    ([bowl_right(cx, cap / 2.0, ir - cx, cap / 2.0 + ov)], [wc])), adv)
+                    ([bowl_right(cx, cap / 2.0, ir - cx, cap / 2.0 + ov, wc)], [wc])), adv)
     adv = 620.0 * st.wf
     il, ir = sbs, adv - sbr
     stem_x = il + wv / 2.0
     cx = il + wv
     g["P"] = (union(([V(stem_x, 0.0, cap)], [wv]),
-                    ([bowl_right(cx, cap * 0.72, ir - cx, cap * 0.28 + ov)], [wc])), adv)
+                    ([bowl_right(cx, cap * 0.72, ir - cx, cap * 0.28 + ov, wc)], [wc])), adv)
     adv = 632.0 * st.wf
     il, ir = sbs, adv - sbr
     stem_x = il + wv / 2.0
     cx = il + wv
     br = ir - cx
     g["R"] = (union(([V(stem_x, 0.0, cap)], [wv]),
-                    ([bowl_right(cx, cap * 0.74, br, cap * 0.26 + ov)], [wc]),
+                    ([bowl_right(cx, cap * 0.74, br, cap * 0.26 + ov, wc)], [wc]),
                     ([Line((cx + br * 0.22, cap * 0.48), (ir, 0.0))], [wd])), adv)
     adv = 632.0 * st.wf
     il, ir = sbs, adv - sbr
     stem_x = il + wv / 2.0
     cx = il + wv
     g["B"] = (union(([V(stem_x, 0.0, cap)], [wv]),
-                    ([bowl_right(cx, cap * 0.76, (ir - cx) * 0.94, cap * 0.24 + ov)], [wc]),
-                    ([bowl_right(cx, cap * 0.26, ir - cx, cap * 0.26 + ov)], [wc])), adv)
+                    ([bowl_right(cx, cap * 0.76, (ir - cx) * 0.94, cap * 0.24 + ov, wc)], [wc]),
+                    ([bowl_right(cx, cap * 0.26, ir - cx, cap * 0.26 + ov, wc)], [wc])), adv)
     adv = 684.0 * st.wf
     il, ir = sbs, adv - sbs
     xs = [il + wv / 2.0, ir - wv / 2.0]
     ro = (xs[1] - xs[0]) / 2.0
-    g["U"] = (union(([V(xs[0], cap, ro), trough(xs[0], xs[1], 0.0), V(xs[1], ro, cap)], [wv, wc, wv])), adv)
+    g["U"] = (union(([V(xs[0], cap, ro), trough(xs[0], xs[1], -ov, wc), V(xs[1], ro, cap)], [wv, wc, wv])), adv)
     adv = 520.0 * st.wf
     il, ir = sbs, adv - sbs
     rh = wc * 1.4
@@ -475,26 +505,28 @@ def digits(st: Style) -> dict[str, Glyph]:
     ry = cap / 2.0 + ov
     g: dict[str, Glyph] = {}
 
-    g["0"] = (union(([Ring((cx, cap / 2.0), rx, ry)], [wc])), adv)
+    g["0"] = (union(([Ring((cx, cap / 2.0), rx - wc / 2.0, ry - wc / 2.0)], [wc])), adv)
     x1 = il + (ir - il) * 0.60
     g["1"] = (union(([Line((il + wv * 0.55, cap * 0.78), (x1, cap)), V(x1, cap, 0.0)], [wd, wv])), adv)
-    a2 = Arc((cx, cap * 0.72), rx, cap * 0.28 + ov, 200.0, -34.0)
+    a2 = ring_arc(cx, cap * 0.72, rx, cap * 0.28 + ov, wc, 200.0, -34.0)
     g["2"] = (union(([a2, Line(a2.end(), (il, 0.0)), H(0.0, il, ir)], [wc, wd, wh])), adv)
-    g["3"] = (union(([Arc((cx, cap * 0.76), rx * 0.86, cap * 0.24 + ov, 190.0, -82.0)], [wc]),
-                    ([Arc((cx, cap * 0.25), rx * 0.90, cap * 0.25 + ov, 82.0, -190.0)], [wc])), adv)
+    g["3"] = (union(([ring_arc(cx, cap * 0.76, rx * 0.86, cap * 0.24 + ov, wc, 190.0, -82.0)], [wc]),
+                    ([ring_arc(cx, cap * 0.25, rx * 0.90, cap * 0.25 + ov, wc, 82.0, -190.0)], [wc])), adv)
     g["4"] = (union(([Line((il + (ir - il) * 0.68, cap), (il + wv * 0.25, 0.0))], [wd]),
                     ([H(cap * 0.30, il, ir)], [wh]),
                     ([V(il + (ir - il) * 0.68 - wv * 0.62, 0.0, cap)], [wv])), adv)
     g["5"] = (union(([H(cap, il, ir)], [wh]), ([V(il + wv / 2.0, cap * 0.62, cap)], [wv]),
-                    ([Arc((cx, cap * 0.32), rx, cap * 0.32 + ov, 150.0, -140.0)], [wc])), adv)
-    g["6"] = (union(([Ring((cx, cap * 0.30), rx, cap * 0.30 + ov)], [wc]),
-                    ([Arc((cx + rx * 0.10, cap * 0.62), rx * 0.90, cap * 0.42, 175.0, 78.0)], [wc])), adv)
+                    ([ring_arc(cx, cap * 0.32, rx, cap * 0.32 + ov, wc, 150.0, -140.0)], [wc])), adv)
+    g["6"] = (union(([Ring((cx, cap * 0.30), rx - wc / 2.0, cap * 0.30 + ov - wc / 2.0)], [wc]),
+                    ([Arc((cx + rx * 0.10, cap * 0.62), rx * 0.90 - wc / 2.0, cap * 0.42 - wc / 2.0,
+                           175.0, 78.0)], [wc])), adv)
     g["7"] = (union(([H(cap, il, ir)], [wh]),
                     ([Line((ir - wd * 0.35, cap), (cx - rx * 0.04, 0.0))], [wd])), adv)
-    g["8"] = (union(([Ring((cx, cap * 0.74), rx * 0.70, cap * 0.26 + ov)], [wc]),
-                    ([Ring((cx, cap * 0.27), rx, cap * 0.27 + ov)], [wc])), adv)
-    g["9"] = (union(([Ring((cx, cap * 0.70), rx, cap * 0.30 + ov)], [wc]),
-                    ([Arc((cx - rx * 0.10, cap * 0.38), rx * 0.90, cap * 0.42, 5.0, -78.0)], [wc])), adv)
+    g["8"] = (union(([Ring((cx, cap * 0.74), rx * 0.70 - wc / 2.0, cap * 0.26 + ov - wc / 2.0)], [wc]),
+                    ([Ring((cx, cap * 0.27), rx - wc / 2.0, cap * 0.27 + ov - wc / 2.0)], [wc])), adv)
+    g["9"] = (union(([Ring((cx, cap * 0.70), rx - wc / 2.0, cap * 0.30 + ov - wc / 2.0)], [wc]),
+                    ([Arc((cx - rx * 0.10, cap * 0.38), rx * 0.90 - wc / 2.0, cap * 0.42 - wc / 2.0,
+                           5.0, -78.0)], [wc])), adv)
     return g
 
 

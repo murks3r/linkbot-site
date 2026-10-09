@@ -26,6 +26,20 @@ UFO_DIR = ROOT / "sources" / "ufo"
 TTF_DIR = ROOT / "fonts" / "ttf"
 WOFF2_DIR = ROOT / "fonts" / "woff2"
 
+# head.created/modified are stamped with the current time by ufo2ft, which made
+# every build produce different binaries — reproducible builds were impossible.
+# They are pinned to the state date instead, so the same sources produce the same
+# bytes and the asset registry hashes are meaningful.
+BUILD_DATE = "2026-10-09"
+_EPOCH_1904_TO_1970 = 2082844800
+
+
+def _fixed_epoch() -> int:
+    from datetime import datetime, timezone
+
+    return (int(datetime.strptime(BUILD_DATE, "%Y-%m-%d")
+                .replace(tzinfo=timezone.utc).timestamp()) + _EPOCH_1904_TO_1970)
+
 
 def compile_one(name: str) -> tuple[Path, Path, int]:
     from ufo2ft import compileTTF
@@ -44,6 +58,14 @@ def compile_one(name: str) -> tuple[Path, Path, int]:
         flattenComponents=True,
         autoUseMyMetrics=False,
     )
+
+    # Pin the timestamps so the build is byte-reproducible. Setting head.modified
+    # is not enough: fontTools re-stamps it at save time unless recalcTimestamp is
+    # switched off, which is what made two identical builds differ.
+    stamp = _fixed_epoch()
+    ttf.recalcTimestamp = False
+    ttf["head"].created = stamp
+    ttf["head"].modified = stamp
 
     TTF_DIR.mkdir(parents=True, exist_ok=True)
     WOFF2_DIR.mkdir(parents=True, exist_ok=True)
