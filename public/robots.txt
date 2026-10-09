@@ -1,21 +1,24 @@
+# robots.txt — https://linkbot.org
+# Canonical host matches astro.config.mjs `site`. See docs/site-hardening/.
+
 User-agent: *
 Allow: /
+# Reserved paths: not part of the public site.
+# `$` anchors the rule to the exact path, so a future public route such as
+# /accessibility is not swallowed by an /access prefix rule.
+Disallow: /api/
+Disallow: /access$
 
-User-agent: Googlebot
-Allow: /
-User-agent: Bingbot
-Allow: /
-
+# Answer-engine crawlers are explicitly welcome; /llms.txt is the
+# machine-readable summary. Each named group repeats the reserved-path rules
+# because a named group is matched on its own and never inherits rules from the
+# `*` group (RFC 9309).
 User-agent: GPTBot
-Allow: /
 User-agent: ClaudeBot
-Allow: /
 User-agent: PerplexityBot
-Allow: /
 User-agent: CCBot
 Allow: /
-
 Disallow: /api/
-Disallow: /access
+Disallow: /access$
 
 Sitemap: https://linkbot.org/sitemap-index.xml

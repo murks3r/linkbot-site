@@ -10,6 +10,14 @@ people a private, verifiable record of who they are and what they are
 eligible for, and lets employers request access to specific signals — with
 the holder's consent.
 
+## Status
+
+Private beta, invitation-led. Onboarding runs in small cohorts (roughly 20
+people at a time) to keep matching quality high, for a first cohort of senior
+professionals and a first cohort of employers with specific roles. An API is
+in private testing; endpoints that could bypass the consent layer are not
+exposed publicly.
+
 ## Who operates it
 
 Linkbot OÜ, registered in Tallinn, Estonia. Operated by a small team across
@@ -24,8 +32,15 @@ Europe and Africa.
 
 - https://linkbot.org/
 
+## Contact
+
+- Email: hello@linkbot.org — access requests and general enquiries.
+- Access request form: https://linkbot.org/#access
+
 ## What this site is not
 
 - It is not a recruiter database.
 - It is not a public profile host.
 - It is not a job board. There are no public listings on this site.
+- It does not expose API endpoints that could be used to bypass the consent
+  layer.
