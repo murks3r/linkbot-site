@@ -1,0 +1,90 @@
+/* Linkbot Brand Experiences 0.1.0 — Experience A: Talent / Jobsite.
+ * PROPOSED, NOT APPROVED. Non-applied: generated from the token JSON.
+ * Overrides ground, accent and density only. Roles and scale are inherited. */
+
+:root {
+  /* experience palette (shared + override) */
+  --lb-a-control-light: #8B8B8B;  /* shared */
+  --lb-a-denied-dark: #E08880;  /* shared */
+  --lb-a-denied-light: #8E2F2F;  /* shared */
+  --lb-a-granted-dark: #4FBE92;  /* shared */
+  --lb-a-granted-light: #1D5B45;  /* shared */
+  --lb-a-ink: #14161A;  /* shared */
+  --lb-a-ink-soft: #33383F;  /* shared */
+  --lb-a-midnight: #0E1013;  /* shared */
+  --lb-a-midnight-control: #65686C;  /* shared */
+  --lb-a-midnight-line: #2A2E33;  /* shared */
+  --lb-a-midnight-raised: #181B1F;  /* shared */
+  --lb-a-midnight-sunken: #111417;  /* shared */
+  --lb-a-mint: #ABEBA1;  /* shared */
+  --lb-a-mint-deep: #567651;  /* shared */
+  --lb-a-moon-dim: #A9A395;  /* shared */
+  --lb-a-moon-text: #E9E4D8;  /* shared */
+  --lb-a-paper: #F4F1EA;  /* override */
+  --lb-a-paper-deep: #EAE4D8;  /* shared */
+  --lb-a-pending-dark: #D9A93F;  /* shared */
+  --lb-a-pending-light: #8A5B00;  /* shared */
+  --lb-a-porcelain: #FDFCF9;  /* shared */
+  --lb-a-pure-white: #FFFFFF;  /* shared */
+  --lb-a-rule: #D9D3C5;  /* shared */
+  --lb-a-rule-strong: #ABA391;  /* shared */
+  --lb-a-seal: #1D5B45;  /* override */
+  --lb-a-seal-bright: #4FBE92;  /* override */
+  --lb-a-slate: #565C63;  /* shared */
+  --lb-a-unknown-dark: #A9A395;  /* shared */
+  --lb-a-unknown-light: #565C63;  /* shared */
+  --lb-a-warm-neutral: #ABABA1;  /* shared */
+
+  /* density (the only scale knob an experience may touch) */
+  --lb-space-scale: 1.0;
+  --lb-measure: 34rem;
+
+  /* resolved roles, light mode */
+  --lb-canvas: var(--lb-a-paper);
+  --lb-surface: var(--lb-a-porcelain);
+  --lb-surface-sunken: var(--lb-a-paper-deep);
+  --lb-text: var(--lb-a-ink);
+  --lb-text-muted: var(--lb-a-slate);
+  --lb-brand: var(--lb-a-seal);
+  --lb-brand-contrast: var(--lb-a-paper);
+  --lb-link: var(--lb-a-seal);
+  --lb-border-subtle: var(--lb-a-rule);
+  --lb-border-control: var(--lb-a-control-light);
+  --lb-border-decorative-strong: var(--lb-a-warm-neutral);
+  --lb-marker: var(--lb-a-mint);
+  --lb-marker-contrast: var(--lb-a-ink);
+  --lb-status-granted: var(--lb-a-granted-light);
+  --lb-status-pending: var(--lb-a-pending-light);
+  --lb-status-denied: var(--lb-a-denied-light);
+  --lb-status-unknown: var(--lb-a-unknown-light);
+  --lb-focus: var(--lb-a-seal);
+}
+
+[data-experience="A"][data-mode="dark"],
+[data-experience="A"] [data-mode="dark"] {
+  --lb-canvas: var(--lb-a-midnight);
+  --lb-surface: var(--lb-a-midnight-raised);
+  --lb-surface-sunken: var(--lb-a-midnight-sunken);
+  --lb-text: var(--lb-a-moon-text);
+  --lb-text-muted: var(--lb-a-moon-dim);
+  --lb-brand: var(--lb-a-seal-bright);
+  --lb-brand-contrast: var(--lb-a-midnight);
+  --lb-link: var(--lb-a-seal-bright);
+  --lb-border-subtle: var(--lb-a-midnight-line);
+  --lb-border-control: var(--lb-a-midnight-control);
+  --lb-border-decorative-strong: var(--lb-a-warm-neutral);
+  --lb-marker: var(--lb-a-mint);
+  --lb-marker-contrast: var(--lb-a-midnight);
+  --lb-status-granted: var(--lb-a-granted-dark);
+  --lb-status-pending: var(--lb-a-pending-dark);
+  --lb-status-denied: var(--lb-a-denied-dark);
+  --lb-status-unknown: var(--lb-a-unknown-dark);
+  --lb-focus: var(--lb-a-seal-bright);
+}
+
+[data-experience="A"] {
+  color-scheme: light;
+}
+[data-experience="A"][data-mode="dark"] {
+  color-scheme: dark;
+}

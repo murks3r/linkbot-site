@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en" data-experience="B" data-mode="dark" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Developer Platform — API documentation and MCP — Linkbot experience B specimen (candidate)</title>
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Linkbot Brand Experiences v0.1.0 — candidate specimen, not an approved identity and not a product screen.">
+<link rel="stylesheet" href="../00-shared/tokens.shared.css">
+<link rel="stylesheet" href="../00-shared/experience-B-developer.tokens.css">
+<link rel="stylesheet" href="../00-shared/fonts.css">
+<link rel="stylesheet" href="../00-shared/app.css">
+</head>
+<body>
+<a class="skip" href="#main"><span data-en>Skip to content</span><span data-de>Zum Inhalt springen</span></a>
+<header class="topbar">
+  <div class="brand">
+    <span class="lockup" aria-label="Linkbot"><!-- Linkbot Brand Experiences v0.1.0 — shared logo asset. PROPOSED, NOT APPROVED. Direction A geometry, carried over unchanged. Editable vector source. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 171.4 25.96" width="171.4" height="25.96" role="img" aria-label="Linkbot horizontal lockup"><title>Linkbot — horizontal lockup</title>
+  <g transform="translate(0.00 0.76) scale(0.7639)">
+    <g fill="none" stroke="currentColor" stroke-width="2.016" stroke-linejoin="miter">
+      <path d="M29.30 21.51 L21.51 29.30 L10.49 29.30 L2.70 21.51 L2.70 10.49 L10.49 2.70 L21.51 2.70 L29.30 10.49 Z" />
+      <path d="M9 9 H23 V23 H9 Z" />
+    </g>
+    <circle cx="16" cy="16" r="2.6" fill="currentColor" />
+  </g>
+  <g transform="translate(35.44 0.00) scale(0.22)">
+    <g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+      <path transform="translate(0.00 0)" d="M0 0 V100 H60" />
+      <path transform="translate(94.00 0)" d="M0 0 V100" />
+      <path transform="translate(126.00 0)" d="M0 100 V0 M0 0 L72 100 M72 100 V0" />
+      <path transform="translate(232.00 0)" d="M0 0 V100 M0 54 L58 0 M0 54 L58 100" />
+      <path transform="translate(324.00 0)" d="M0 0 V100 M0 0 H33 A25 25 0 0 1 33 50 H0 M0 50 H38 A25 25 0 0 1 38 100 H0" />
+      <path transform="translate(424.00 0)" d="M0 50 a33 50 0 1 0 66 0 a33 50 0 1 0 -66 0" />
+      <path transform="translate(524.00 0)" d="M0 0 H68 M34 0 V100" />
+    </g>
+  </g>
+</svg>
+</span>
+    <span class="who"><span data-en>Developer Platform — API documentation and MCP</span><span data-de>Entwicklerplattform — API-Doku und MCP</span> · <span data-en>Experience</span><span data-de>Erlebnis</span> B</span>
+  </div>
+  <div class="ctrls">
+    <div class="seg" role="group" aria-label="Colour mode">
+      <button type="button" data-mode-btn="light" aria-pressed="false"><span data-en>Light</span><span data-de>Hell</span></button>
+      <button type="button" data-mode-btn="dark" aria-pressed="true"><span data-en>Dark</span><span data-de>Dunkel</span></button>
+    </div>
+    <div class="seg" role="group" aria-label="Language">
+      <button type="button" data-lang-btn="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang-btn="de" aria-pressed="false">DE</button>
+    </div>
+  </div>
+</header>
+<main id="main" class="wrap">
+
+<section>
+  <p class="kicker"><span data-en>Developer Platform · experience B</span><span data-de>Entwicklerplattform · Erlebnis B</span></p>
+  <h1><span data-en>The consent layer is the API</span><span data-de>Die Einwilligungsschicht ist die API</span></h1>
+  <p class="lede"><span data-en>Every endpoint is bounded by the same authority model as the product. Unknown version, purpose, evaluator or domain fails closed. There is no endpoint that bypasses the consent layer, and none is planned for private testing either.</span><span data-de>Jeder Endpunkt ist an dasselbe Berechtigungsmodell gebunden wie das Produkt. Unbekannte Version, Zweck, Prüfer oder Domain werden abgelehnt. Es gibt keinen Endpunkt, der die Einwilligungsschicht umgeht — auch nicht im privaten Testbetrieb.</span></p>
+  <div class="scrollx"><table class="tbl state-table"><caption><span data-en>Response states</span><span data-de>Antwortzustände</span></caption><tr><th><span data-en>State</span><span data-de>Zustand</span></th><th><span data-en>What it means</span><span data-de>Was er bedeutet</span></th></tr><tr><td><span class="state s-granted"><span class="g"><span class="sq"></span></span><span data-en>Confirmed</span><span data-de>Bestätigt</span></span></td><td><span data-en>The holder confirmed this field.</span><span data-de>Der Inhaber hat dieses Feld bestätigt.</span></td></tr><tr><td><span class="state s-pending"><span class="g"><span class="tri"></span></span><span data-en>Proposed</span><span data-de>Vorgeschlagen</span></span></td><td><span data-en>Reviewed as proposed, not confirmed.</span><span data-de>Als vorgeschlagen geprüft, nicht bestätigt.</span></td></tr><tr><td><span class="state s-unknown"><span class="g"><span class="ring"></span></span><span data-en>Unknown</span><span data-de>Unbekannt</span></span></td><td><span data-en>Not stated. Returned as UNKNOWN, never omitted.</span><span data-de>Nicht angegeben. Als UNBekannt zurückgegeben, nie weggelassen.</span></td></tr><tr><td><span class="state s-denied"><span class="g"><span class="dot"></span></span><span data-en>Denied</span><span data-de>Abgelehnt</span></span></td><td><span data-en>Explicitly refused, or an unknown evaluator.</span><span data-de>Ausdrücklich abgelehnt oder unbekannter Prüfer.</span></td></tr></table></div>
+</section>
+
+<section>
+  <div class="cols-wide">
+    <nav class="card sunken" aria-label="<span data-en>Documentation</span><span data-de>Dokumentation</span>">
+      <p class="kicker"><span data-en>Docs</span><span data-de>Doku</span></p>
+      <ul class="list" style="gap:2px">
+        <li><a href="#quickstart"><span data-en>Quickstart</span><span data-de>Schnellstart</span></a></li>
+        <li><a href="#auth"><span data-en>Authority model</span><span data-de>Berechtigungsmodell</span></a></li>
+        <li><a href="#endpoints"><span data-en>Endpoints</span><span data-de>Endpunkte</span></a></li>
+        <li><a href="#mcp"><span data-en>MCP integration</span><span data-de>MCP-Integration</span></a></li>
+        <li><a href="#errors"><span data-en>Errors and denial</span><span data-de>Fehler und Ablehnung</span></a></li>
+      </ul>
+    </nav>
+    <div>
+      <div id="quickstart">
+        <h2><span data-en>Quickstart</span><span data-de>Schnellstart</span></h2>
+        <p class="note"><span data-en>Credentials are scoped to a purpose and a policy version. There is no global key that widens authority.</span><span data-de>Zugangsdaten sind an einen Zweck und eine Richtlinienversion gebunden. Es gibt keinen globalen Schlüssel, der die Vollmacht erweitert.</span></p>
+        <div class="code"><pre><span class="c"># one bounded disclosure request</span>
+curl -sS https://api.linkbot.example/v1/disclosures \
+  -H <span class="k">"authorization: Bearer $LINKBOT_TOKEN"</span> \
+  -H <span class="k">"idempotency-key: $UUID"</span> \
+  -d '{
+    "subject": "person:9f21",
+    "purpose": "recruiting_opportunity_evaluation",
+    "fields": ["seniority", "employment_country", "availability"],
+    "policy_version": "v3"
+  }'</pre></div>
+      </div>
+
+      <div id="auth" style="margin-top:var(--lb-space-lg)">
+        <h2><span data-en>Authority model</span><span data-de>Berechtigungsmodell</span></h2>
+        <div class="scrollx"><table class="tbl">
+          <caption><span data-en>Scopes — each one narrow on purpose</span><span data-de>Scopes — jeder absichtlich eng</span></caption>
+          <tr><th>Scope</th><th><span data-en>Grants</span><span data-de>Gewährt</span></th><th><span data-en>Does not grant</span><span data-de>Gewährt nicht</span></th></tr>
+          <tr><td class="mono">signal:read</td><td><span data-en>a bounded field set the holder confirmed</span><span data-de>ein begrenztes, bestätigtes Feldset</span></td>
+              <td><span data-en>contact, application, or a Match</span><span data-de>Kontakt, Bewerbung oder einen Match</span></td></tr>
+          <tr><td class="mono">request:create</td><td><span data-en>one request to one holder</span><span data-de>eine Anfrage an einen Inhaber</span></td>
+              <td><span data-en>enumeration or bulk requests</span><span data-de>Aufzählung oder Massenanfragen</span></td></tr>
+          <tr><td class="mono">receipt:read</td><td><span data-en>the history recorded for your membership</span><span data-de>die für deine Mitgliedschaft verzeichnete Historie</span></td>
+              <td><span data-en>another party's history</span><span data-de>die Historie einer anderen Partei</span></td></tr>
+        </table></div>
+      </div>
+
+      <div id="endpoints" style="margin-top:var(--lb-space-lg)">
+        <h2><span data-en>Endpoints</span><span data-de>Endpunkte</span></h2>
+        <div class="scrollx"><table class="tbl">
+          <caption><span data-en>Private testing surface</span><span data-de>Private Test-Oberfläche</span></caption>
+          <tr><th><span data-en>Method</span><span data-de>Methode</span></th><th>Path</th><th><span data-en>Notes</span><span data-de>Hinweise</span></th></tr>
+          <tr><td class="mono">POST</td><td class="mono">/v1/disclosures</td>
+              <td><span data-en>requires purpose, fields and policy_version</span><span data-de>erfordert Zweck, Felder und policy_version</span></td></tr>
+          <tr><td class="mono">GET</td><td class="mono">/v1/disclosures/{id}</td>
+              <td><span data-en>returns the receipt and the current state</span><span data-de>liefert den Beleg und den aktuellen Zustand</span></td></tr>
+          <tr><td class="mono">POST</td><td class="mono">/v1/disclosures/{id}/revoke</td>
+              <td><span data-en>revokes future access; delivered copies are not claimed erased</span><span data-de>widerruft künftigen Zugriff; gelieferte Kopien gelten nicht als gelöscht</span></td></tr>
+          <tr><td class="mono">GET</td><td class="mono">/me/private-state/export</td>
+              <td><span data-en>portable owner export; not a backup, not a vault</span><span data-de>portabler Eigentümer-Export; kein Backup, kein Tresor</span></td></tr>
+        </table></div>
+      </div>
+
+      <div id="mcp" style="margin-top:var(--lb-space-lg)">
+        <h2><span data-en>MCP integration</span><span data-de>MCP-Integration</span></h2>
+        <p class="note"><span data-en>The MCP server exposes the same tools as the HTTP surface, with the same authority checks and the same refusal behaviour. A tool call that cannot name its purpose and policy version is refused before it reaches a record.</span><span data-de>Der MCP-Server stellt dieselben Werkzeuge bereit wie die HTTP-Oberfläche, mit denselben Berechtigungsprüfungen und demselben Ablehnungsverhalten. Ein Werkzeugaufruf, der Zweck und Richtlinienversion nicht nennen kann, wird abgelehnt, bevor er einen Datensatz erreicht.</span></p>
+        <div class="code"><pre>{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"linkbot"</span>: {
+      <span class="k">"command"</span>: "npx",
+      <span class="k">"args"</span>: ["-y", "@linkbot/mcp-server"],
+      <span class="k">"env"</span>: { <span class="k">"LINKBOT_PURPOSE"</span>: "recruiting_opportunity_evaluation",
+                <span class="k">"LINKBOT_POLICY_VERSION"</span>: "v3" }
+    }
+  }
+}</pre></div>
+        <div class="scrollx" style="margin-top:var(--lb-space-md)"><table class="tbl">
+          <caption><span data-en>Tools</span><span data-de>Werkzeuge</span></caption>
+          <tr><th><span data-en>Tool</span><span data-de>Werkzeug</span></th><th><span data-en>Behaviour</span><span data-de>Verhalten</span></th></tr>
+          <tr><td class="mono">request_disclosure</td><td><span data-en>one subject, one bounded field set</span><span data-de>ein Subjekt, ein begrenztes Feldset</span></td></tr>
+          <tr><td class="mono">read_receipt</td><td><span data-en>returns the recorded state, including UNKNOWN</span><span data-de>liefert den verzeichneten Zustand, inklusive UNBEKANNT</span></td></tr>
+          <tr><td class="mono">revoke</td><td><span data-en>stops future access</span><span data-de>stoppt künftigen Zugriff</span></td></tr>
+        </table></div>
+      </div>
+
+      <div id="errors" style="margin-top:var(--lb-space-lg)">
+        <h2><span data-en>Errors and denial</span><span data-de>Fehler und Ablehnung</span></h2>
+        <div class="code"><pre><span class="c">// HTTP 451 — fail closed, and say which check refused it</span>
+{
+  <span class="k">"error"</span>: "authority_refused",
+  <span class="k">"check"</span>: "policy_version_unknown",
+  <span class="k">"state"</span>: "denied",
+  <span class="k">"detail"</span>: "policy_version v1 has no configured authority for this purpose"
+}</pre></div>
+        <div class="banner denied" style="margin-top:12px">
+          <span data-en>The API returns a refusal, not an empty object. A caller must be able to render refused and empty as different states.</span><span data-de>Die API liefert eine Ablehnung, kein leeres Objekt. Ein Aufrufer muss abgelehnt und leer als verschiedene Zustände darstellen können.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <hr class="prov">
+  <p class="prov">
+    <span class="stamp"><span data-en>Candidate · not approved</span><span data-de>Entwurf · nicht freigegeben</span></span><br>
+    <span data-en>Linkbot Brand Experiences v0.1.0. This is an illustrative composition built from the real shared brand assets — one logo, one type system, one token layer. It is not a product screen, it states no new capability, and it carries no pilot, scale or commercial figure. An Opportunity is not a Match, a disclosure is not an application, and Unknown is never rendered as satisfied.</span><span data-de>Linkbot Brand Experiences v0.1.0. Dies ist eine illustrative Komposition aus den echten gemeinsamen Marken-Assets — ein Logo, ein Schriftsystem, eine Token-Schicht. Es ist kein Produktbildschirm, nennt keine neue Fähigkeit und enthält keine Pilot-, Skalierungs- oder Umsatzzahl. Eine Gelegenheit ist kein Match, eine Offenlegung ist keine Bewerbung, und Unbekannt wird nie als erfüllt dargestellt.</span>
+  </p>
+</main>
+<script>
+(function(){
+  var root=document.documentElement;
+  function applyMode(m){
+    root.setAttribute('data-mode', m==='dark'?'dark':'light');
+    root.querySelectorAll('[data-mode-btn]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.modeBtn===m));});
+  }
+  root.querySelectorAll('[data-mode-btn]').forEach(function(b){
+    b.addEventListener('click',function(){applyMode(b.dataset.modeBtn);});
+  });
+  function applyLang(l){
+    root.setAttribute('data-lang',l);
+    root.setAttribute('lang',l);
+    root.querySelectorAll('[data-lang-btn]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.langBtn===l));});
+  }
+  root.querySelectorAll('[data-lang-btn]').forEach(function(b){
+    b.addEventListener('click',function(){applyLang(b.dataset.langBtn);});
+  });
+  var pb=document.getElementById('pulseBtn');
+  if(pb){pb.addEventListener('click',function(){pb.classList.add('on');setTimeout(function(){pb.classList.remove('on');},260);});}
+  applyMode('dark');applyLang('en');
+})();
+</script>
+</body>
+</html>

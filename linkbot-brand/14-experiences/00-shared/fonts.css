@@ -1,0 +1,13 @@
+/* Linkbot Brand Experiences 0.1.0 — type system.
+ * PROPOSED, NOT APPROVED. Non-applied.
+ * Linkbot Display / Sans / Mono are original designs built in 15-typeface/.
+ * STATUS: the original faces are NOT yet built, so only the tested OFL
+ * fallback stack is declared. Nothing here pretends to ship a font.
+ */
+
+:root {
+  --lb-font-display: "Linkbot Display", "Iowan Old Style", Georgia, serif;
+  --lb-font-sans: "Linkbot Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --lb-font-mono: "Linkbot Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+

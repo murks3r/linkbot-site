@@ -1,0 +1,47 @@
+Linkbot Brand Experiences — build and validation
+date (UTC): 2026-10-09T14:03:25Z
+python:     Python 3.14.6
+
+$ python3 scripts/gen_experience_tokens.py   # exits non-zero on a failing pair
+tokens: shared + 3 experiences
+required pairs=96 failures=0
+wrote 00-shared/*.json|css and validation/*.md
+
+$ python3 scripts/gen_logo.py
+  wrote logo/mark.svg (615 bytes)
+  wrote logo/mark-monochrome.svg (629 bytes)
+  wrote logo/mark-inverse.svg (623 bytes)
+  wrote logo/mark-compact.svg (657 bytes)
+  wrote logo/favicon.svg (626 bytes)
+  wrote logo/app-icon.svg (758 bytes)
+  wrote logo/app-icon-inverse.svg (776 bytes)
+  wrote logo/social-avatar.svg (786 bytes)
+  wrote logo/wordmark.svg (1151 bytes)
+  wrote logo/lockup-stacked.svg (1479 bytes)
+  wrote logo/lockup-horizontal.svg (1484 bytes)
+  wrote logo/clearspace.svg (1397 bytes)
+  wrote logo/construction.svg (775 bytes)
+  wrote logo/misuse.svg (2465 bytes)
+  wrote logo/logo-manifest.json (14 files)
+
+$ python3 scripts/gen_screens.py
+  wrote 00-shared/app.css (10823 bytes)
+  wrote 01-talent-jobsite/index.html (18876 bytes)
+  wrote 02-private-job-agent/index.html (14434 bytes)
+  wrote 03-developer-platform/index.html (15426 bytes)
+  wrote 04-employer-dashboard/index.html (13912 bytes)
+  wrote 05-agency-mandate/index.html (14433 bytes)
+  wrote index.html
+
+$ python3 scripts/validate_experiences.py    # the gate
+Linkbot Brand Experiences — gate
+  A assets     14 SVG files parsed, no forbidden content, unique ids
+  B tokens     4 token files, 108 alias references resolved, CSS/JSON parity
+  C coherence  27 shared keys identical across 3 experiences, role set exact
+  D contrast   17 pairs x 3 experiences x 2 modes recomputed from the emitted JSON
+  E screens    5/5 specimens present, local references exist, copy rules held
+  F boundary   1 changed paths, all inside ('linkbot-brand/14-experiences', 'linkbot-brand/15-typeface')
+
+ALL CHECKS PASSED
+
+ALL LOCAL CHECKS PASSED
