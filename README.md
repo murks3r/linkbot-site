@@ -19,9 +19,25 @@ embedded in the middle of the scroll.
 npm install
 npm run dev          # http://localhost:4321
 npm run typecheck    # astro check (TS strict)
+npm test             # node:test unit suite
 npm run build        # static output in ./dist
 npm run preview      # serve the built output locally
 ```
+
+## Jobsite preview (`/jobs`)
+
+A public job-discovery experience lives at `/jobs`, built as an isolated subtree
+(`src/jobsite/**`, `src/pages/jobs/**`) with its own layout, stylesheet and
+search adapter. It does not alter this marketing page, the agency page,
+`global.css` or `SEO.astro`.
+
+It currently runs on clearly labelled local fixtures — never presented as a live
+catalogue — behind a typed, replaceable adapter. Setting
+`PUBLIC_SUPPLY_API_ORIGIN` switches it to live supply. Every jobsite route is
+`noindex` and excluded from the sitemap.
+
+See `docs/jobsite/` for the review guide, the typed contract, the Supply
+integration handoff and the QA evidence. Configure via `.env.example`.
 
 ## Deployment (Vercel)
 

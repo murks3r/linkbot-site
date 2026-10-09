@@ -1,0 +1,84 @@
+---
+import JobsiteLayout from '../../jobsite/layouts/JobsiteLayout.astro';
+import { JobSearchApp } from '../../jobsite/ui/JobSearchApp.tsx';
+import Glyph from '../../jobsite/components/Glyph.astro';
+import { parseSearchQuery } from '../../jobsite/lib/url-state.ts';
+import { selectJobSearchAdapter } from '../../jobsite/create-adapter.ts';
+import type { JobSearchPage } from '../../jobsite/adapter.ts';
+import { COUNTRY_NAMES, OCCUPATIONS } from '../../jobsite/fixtures/opportunities.ts';
+
+// The first page is rendered at build time from the same adapter the island
+// uses, so the static HTML is already a real (if build-dated) result page.
+// Fixture supply only: with a live origin configured, the first paint is a
+// loading state and the island fetches on mount.
+const adapter = selectJobSearchAdapter({ latencyMs: 0, now: () => new Date() });
+const initialQuery = parseSearchQuery(new URLSearchParams());
+const initialPage: JobSearchPage | null =
+  adapter.kind === 'fixture' ? await adapter.search(initialQuery) : null;
+
+const occupations = Object.entries(OCCUPATIONS).map(([value, label]) => ({ value, label }));
+const countries = Object.entries(COUNTRY_NAMES).map(([value, label]) => ({ value, label }));
+---
+
+<JobsiteLayout
+  title="Job discovery — Linkbot"
+  description="Search public opportunities without publishing a profile. Viewing is free, saving is local, and interest stays private. Preview build with labelled sample data."
+  canonicalPath="/jobs"
+  active="jobs"
+>
+  <section class="lbj-hero">
+    <div class="lbj-container">
+      <p class="lbj-hero__eyebrow j-label">Public discovery · private interest</p>
+      <h1 class="lbj-hero__title j-display">Find work worth the disclosure.</h1>
+      <p class="lbj-hero__lede">
+        Search what Linkbot can see. Nothing here requires an account, and browsing tells nobody
+        anything. When something fits, the private job agent carries your interest without handing
+        over your record.
+      </p>
+    </div>
+  </section>
+
+  <section class="lbj-container" aria-label="Opportunity search">
+    <JobSearchApp
+      client:load
+      initialQuery={initialQuery}
+      initialPage={initialPage}
+      occupations={occupations}
+      countries={countries}
+      adapterId={adapter.id}
+      adapterKind={adapter.kind}
+    />
+
+    <noscript>
+      <p class="lbj-alert">
+        <span class="lbj-alert__body">
+          <span class="lbj-alert__title">Filtering and paging need JavaScript.</span>
+          <span class="lbj-alert__text">
+            The list above is the unfiltered first page. Each card links to a detail page that
+            works without JavaScript.
+          </span>
+        </span>
+      </p>
+    </noscript>
+
+    <!-- Placed after the list on purpose: on a phone the search box must be the
+         first thing under the headline, not the fourth. -->
+    <section class="lbj-terms-band" aria-labelledby="lbj-terms-heading">
+      <h2 class="j-label" id="lbj-terms-heading">What each action is</h2>
+      <dl class="lbj-terms">
+        <div>
+          <dt><Glyph name="ledger" size={12} /> Viewing</dt>
+          <dd>A one-sided opportunity. Reading it is not an application and not a signal.</dd>
+        </div>
+        <div>
+          <dt><Glyph name="bookmark" size={12} /> Saving</dt>
+          <dd>Local to this browser. There is no server-side list and no account.</dd>
+        </div>
+        <div>
+          <dt><Glyph name="shield" size={12} /> Interest</dt>
+          <dd>One-sided and private: not a match, not an application. Only applying leaves Linkbot.</dd>
+        </div>
+      </dl>
+    </section>
+  </section>
+</JobsiteLayout>
