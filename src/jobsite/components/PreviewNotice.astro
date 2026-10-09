@@ -1,0 +1,28 @@
+---
+import Glyph from './Glyph.astro';
+
+interface Props {
+  /** 'fixture' renders the un-missable sample-data chip. */
+  kind: 'fixture' | 'live';
+  label: string;
+  notice: string;
+}
+
+const { kind, label, notice } = Astro.props;
+---
+
+<div class="lbj-notice">
+  <div class="lbj-container lbj-notice__inner">
+    <span class="lbj-notice__chip lbj-notice__chip--proposed">
+      <Glyph name="triangle" size={10} />
+      Proposed direction — Notarial (not approved)
+    </span>
+    <span class="lbj-notice__chip">
+      <Glyph name={kind === 'fixture' ? 'triangle' : 'square'} size={10} />
+      {kind === 'fixture' ? 'Preview — sample data' : 'Live supply'}
+    </span>
+    <span>
+      <strong>{label}.</strong> {notice}
+    </span>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+---
+import Glyph from './Glyph.astro';
+import { JOBS_ROUTES } from '../config.ts';
+
+interface Props {
+  active?: 'jobs' | 'saved';
+}
+
+const { active } = Astro.props;
+---
+
+<header class="lbj-header">
+  <div class="lbj-container lbj-header__inner">
+    <a class="lbj-brand" href={JOBS_ROUTES.index}>
+      <Glyph name="mark" size={22} class="lbj-brand__mark" />
+      <span>Linkbot</span>
+      <span class="lbj-brand__section">Jobs</span>
+    </a>
+
+    <nav class="lbj-nav" aria-label="Jobsite">
+      <a
+        class:list={['lbj-nav__link', { 'is-active': active === 'jobs' }]}
+        href={JOBS_ROUTES.index}
+        aria-current={active === 'jobs' ? 'page' : undefined}
+      >
+        Discover
+      </a>
+      <a
+        class:list={['lbj-nav__link', { 'is-active': active === 'saved' }]}
+        href={JOBS_ROUTES.saved}
+        aria-current={active === 'saved' ? 'page' : undefined}
+      >
+        Saved
+      </a>
+      <!-- Relative link: the jobsite never hardcodes a production domain. -->
+      <a class="lbj-btn lbj-btn--sm" href="/#access">Request private access</a>
+    </nav>
+  </div>
+</header>

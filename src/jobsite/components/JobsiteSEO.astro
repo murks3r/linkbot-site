@@ -1,0 +1,56 @@
+---
+/**
+ * Jobsite metadata. Deliberately separate from the marketing `SEO.astro`, which
+ * it does not touch, but it takes its origin from the same place.
+ *
+ * Two jobsite-specific rules:
+ *  1. Every page here is noindex while the preview is fixture-backed, so a
+ *     sample posting can never be crawled as if it were a real job.
+ *  2. The canonical origin is the one `astro.config.mjs` resolved for this build
+ *     (src/lib/site-origin.mjs). The jobsite deliberately has no origin variable
+ *     of its own: a second variable is a second place to disagree with the
+ *     document, the sitemap and the marketing pages, and no build may name a
+ *     domain it does not own. A build that cannot name its own origin throws
+ *     rather than emitting a relative or invented canonical.
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string;
+}
+
+const { title, description, canonicalPath } = Astro.props;
+
+const site = Astro.site;
+if (!site) {
+  throw new Error(
+    'astro.config.mjs resolved no site origin — the jobsite cannot emit a ' +
+      'canonical URL for this build. See docs/preview/README.md §3.',
+  );
+}
+const origin = site.origin;
+const canonical = new URL(canonicalPath, origin).toString();
+const ogImage = new URL('/og.svg', origin).toString();
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+<meta name="googlebot" content="noindex, nofollow" />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Linkbot" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+<!-- No JobPosting structured data is emitted anywhere in the jobsite: the
+     preview supply is synthetic, and marking it up as a job posting would
+     present fixture data as a live catalogue to search engines. -->

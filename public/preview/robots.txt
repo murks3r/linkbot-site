@@ -1,0 +1,17 @@
+# robots.txt for branch preview deployments only.
+#
+# vercel.json rewrites /robots.txt to this file when the request host is a
+# Vercel branch alias (`<project>-git-<branch>-<scope>.vercel.app`). That host
+# condition cannot match the production alias (`<project>.vercel.app`) or a
+# custom domain, so this file is unreachable from production.
+#
+# It exists so a preview never serves a robots.txt that advertises a domain the
+# organisation does not own. Branch previews are additionally protected by
+# Vercel Authentication, and the build writes an equivalent `Disallow: /`
+# robots.txt into `dist/` for every non-production build — see
+# src/lib/preview-guard.mjs.
+#
+# Canonical-domain migration: docs/preview/domain-migration.md
+
+User-agent: *
+Disallow: /

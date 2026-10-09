@@ -10,6 +10,14 @@ people a private, verifiable record of who they are and what they are
 eligible for, and lets employers request access to specific signals — with
 the holder's consent.
 
+## Status
+
+Private beta, invitation-led. Onboarding runs in small cohorts (roughly 20
+people at a time) to keep matching quality high, for a first cohort of senior
+professionals and a first cohort of employers with specific roles. An API is
+in private testing; endpoints that could bypass the consent layer are not
+exposed publicly.
+
 ## Who operates it
 
 Linkbot OÜ, registered in Tallinn, Estonia. Operated by a small team across
@@ -17,15 +25,28 @@ Europe and Africa.
 
 ## Core pages
 
-- [Home / Overview](https://linkbot.org/): the problem, the position, and
-  the private-beta access request.
+- [Home / Overview](/): the problem, the position, and the private-beta access
+  request.
 
-## Canonical URL
+## Hosts
 
-- https://linkbot.org/
+Every URL in this file is root-relative on purpose. The canonical host is
+resolved at build time (astro.config.mjs `site`) and is deliberately not written
+here: a static file carrying a literal host would name the wrong origin in every
+other environment, and no host this organisation does not control may appear in
+this file at all. See docs/preview/domain-migration.md.
+
+## Contact
+
+- Email: hello@linkbot.org — access requests and general enquiries.
+- [Access request form](/#access)
 
 ## What this site is not
 
 - It is not a recruiter database.
 - It is not a public profile host.
-- It is not a job board. There are no public listings on this site.
+- It is not a job board. There are no real job listings on this site: the
+  `/jobs` route is a preview of the discovery experience, built on clearly
+  labelled synthetic sample data.
+- It does not expose API endpoints that could be used to bypass the consent
+  layer.
