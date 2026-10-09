@@ -1,0 +1,96 @@
+Linkbot Brand OS — full build and validation
+date (UTC): 2026-10-09T10:11:33Z
+version:    0.1.0
+python:     Python 3.14.6
+
+$ python3 scripts/gen_logos.py
+marks + wordmarks + lockups
+  wrote 04-logo/A-notarial/mark.svg  (562 bytes)
+  wrote 04-logo/A-notarial/mark-construction.svg  (714 bytes)
+  wrote 04-logo/A-notarial/mark-monochrome.svg  (564 bytes)
+  wrote 04-logo/A-notarial/app-icon.svg  (710 bytes)
+  wrote 04-logo/A-notarial/app-icon-inverse.svg  (719 bytes)
+  wrote 04-logo/A-notarial/social-avatar.svg  (733 bytes)
+  wrote 04-logo/A-notarial/wordmark-monoline.svg  (1003 bytes)
+  wrote 04-logo/A-notarial/lockup-stacked.svg  (1498 bytes)
+  wrote 04-logo/A-notarial/lockup-horizontal.svg  (1504 bytes)
+  wrote 04-logo/A-notarial/favicon.svg  (565 bytes)
+  wrote 04-logo/B-protocol/mark.svg  (571 bytes)
+  wrote 04-logo/B-protocol/mark-construction.svg  (723 bytes)
+  wrote 04-logo/B-protocol/mark-monochrome.svg  (573 bytes)
+  wrote 04-logo/B-protocol/app-icon.svg  (723 bytes)
+  wrote 04-logo/B-protocol/app-icon-inverse.svg  (732 bytes)
+  wrote 04-logo/B-protocol/social-avatar.svg  (746 bytes)
+  wrote 04-logo/B-protocol/wordmark-monoline.svg  (1122 bytes)
+  wrote 04-logo/B-protocol/lockup-stacked.svg  (1632 bytes)
+  wrote 04-logo/B-protocol/lockup-horizontal.svg  (1640 bytes)
+  wrote 04-logo/B-protocol/favicon.svg  (574 bytes)
+  wrote 04-logo/C-commons/mark.svg  (560 bytes)
+  wrote 04-logo/C-commons/mark-construction.svg  (712 bytes)
+  wrote 04-logo/C-commons/mark-monochrome.svg  (557 bytes)
+  wrote 04-logo/C-commons/app-icon.svg  (712 bytes)
+  wrote 04-logo/C-commons/app-icon-inverse.svg  (721 bytes)
+  wrote 04-logo/C-commons/social-avatar.svg  (735 bytes)
+  wrote 04-logo/C-commons/wordmark-monoline.svg  (1003 bytes)
+  wrote 04-logo/C-commons/lockup-stacked.svg  (1507 bytes)
+  wrote 04-logo/C-commons/lockup-horizontal.svg  (1509 bytes)
+  wrote 04-logo/C-commons/favicon.svg  (563 bytes)
+done
+
+$ python3 scripts/gen_assets.py
+icons
+  wrote 20 icons
+imagery fields
+  wrote 3 fields
+og templates
+  wrote 3 OG templates
+done
+
+$ python3 scripts/gen_tokens.py        # exits non-zero on a failing contrast pair
+tokens written for 3 directions; pairs=116 failures=0
+
+$ python3 scripts/gen_specimens.py
+  wrote specimen-A-notarial.html (30296 bytes)
+  wrote specimen-B-protocol.html (30667 bytes)
+  wrote specimen-C-commons.html (30159 bytes)
+  wrote 04-logo/A-notarial/misuse.svg
+  wrote index.html
+done
+
+$ python3 scripts/gen_registry.py
+registry: 113 files -> 12-governance/asset-registry.json
+  documentation    22
+  evidence         4
+  iconography      21
+  imagery          7
+  logo             32
+  motion           2
+  source           7
+  template         9
+  tokens           8
+  uncategorised    1
+
+$ python3 scripts/validate_brand.py    # the gate
+svg files checked      : 57
+token json files       : 3
+css exports checked    : 3
+
+OK — all brand asset and token checks passed
+
+$ npx -y @google/design.md lint 10-tokens/proposed.DESIGN.md   (external cross-check)
+{
+  "findings": [
+    {
+      "severity": "info",
+      "message": "Design system defines 4 colors, 5 typography scales, 4 rounding levels, 9 spacing tokens, 8 components.",
+      "rule": "token-summary"
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1
+  }
+}
+
+ALL LOCAL GATES PASSED
