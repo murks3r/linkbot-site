@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import SEO from '../components/SEO.astro';
+import PreviewNotice from '../components/preview/PreviewNotice.astro';
+import { resolveSite } from '../lib/site-origin.mjs';
 
 interface Props {
   title?: string;
@@ -13,6 +15,19 @@ const {
   description = 'Public career profiles have become attack surfaces. Linkbot replaces public exposure with permissioned, private eligibility for the people employers are actually looking for.',
   canonicalPath = '/',
 } = Astro.props;
+
+/**
+ * Non-production guard. `site` is resolved from the same module astro.config.mjs
+ * uses, so the document, the canonical URL and the visible notice all agree.
+ *
+ * A build is indexable only when it has an explicit, publicly servable
+ * `SITE_ORIGIN` and is not a Vercel preview. If `Astro.site` ever disagrees with
+ * that decision the build is treated as non-production: failing closed is the
+ * only safe direction for a `noindex` guard.
+ */
+const site = resolveSite(process.env);
+const originDisagrees = !Astro.site || Astro.site.origin !== site.origin;
+const noindex = !site.indexable || originDisagrees;
 ---
 
 <!doctype html>
@@ -29,9 +44,12 @@ const {
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 
     <SEO title={title} description={description} canonicalPath={canonicalPath} />
+
+    {noindex && <meta name="robots" content="noindex, nofollow, noarchive" />}
   </head>
   <body class="bg-ink-950 text-bone-50 font-sans selection:bg-signal-500/30 selection:text-bone-50">
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-ink-800 focus:px-3 focus:py-2 focus:text-bone-50">Skip to content</a>
+    <PreviewNotice />
     <slot />
     <script>
       import { initSmoothScroll } from '../lib/smooth-scroll';

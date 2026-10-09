@@ -8,6 +8,9 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "preview:local": "npm run build && astro preview",
+    "smoke": "npm run build && node --test \"tests/preview-smoke/*.test.mjs\"",
+    "smoke:dist": "node --test \"tests/preview-smoke/*.test.mjs\"",
     "astro": "astro",
     "typecheck": "astro check"
   },

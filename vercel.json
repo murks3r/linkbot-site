@@ -3,7 +3,7 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm install",
+  "installCommand": "npm ci",
   "trailingSlash": false,
   "headers": [
     {
@@ -18,6 +18,18 @@
     {
       "source": "/llms.txt",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "^.*-git-.*\\.vercel\\.app$" }],
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/robots.txt",
+      "has": [{ "type": "host", "value": "^.*-git-.*\\.vercel\\.app$" }],
+      "destination": "/preview/robots.txt"
     }
   ]
 }

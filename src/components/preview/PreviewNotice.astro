@@ -1,0 +1,43 @@
+---
+/**
+ * Visible non-production marker.
+ *
+ * Requirement: any preview carrying fixture or placeholder data must clearly
+ * identify itself as non-production. This renders only when the build is not
+ * indexable (localhost, `*.vercel.app` preview, or any deployment without an
+ * explicit production `SITE_ORIGIN`), so it can never appear on the live site.
+ *
+ * Marked up as `role="note"` with a `data-preview-notice` hook so the smoke
+ * tests can assert both its presence on previews and its absence on production.
+ */
+import { resolveSite } from '../../lib/site-origin.mjs';
+
+const site = resolveSite(process.env);
+---
+
+{
+  !site.indexable && (
+    <div
+      data-preview-notice="true"
+      role="note"
+      aria-label="Non-production preview build"
+      class="fixed inset-x-0 bottom-0 z-[100] border-t border-alarm-400/60 bg-ink-900/95 px-4 py-2 backdrop-blur"
+    >
+      <p class="container-prose flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-bone-100">
+        <span class="font-mono uppercase tracking-[0.18em] text-alarm-400">Not production</span>
+        <span>
+          Non-production preview build. Content may be placeholder or fixture data — do not cite
+          this as the live Linkbot site.
+        </span>
+        <span class="font-mono text-bone-200/60">origin: {site.origin}</span>
+      </p>
+    </div>
+  )
+}
+
+<style is:global>
+  /* Keep the fixed notice from covering the end of the document. */
+  body:has([data-preview-notice]) {
+    padding-bottom: 3rem;
+  }
+</style>
