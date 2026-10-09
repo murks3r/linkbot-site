@@ -1,0 +1,105 @@
+{
+  "$description": "Linkbot Brand Experiences 0.1.0 \u2014 shared logo assets. PROPOSED, NOT APPROVED. One set of files for all three experiences; per-experience logo variants are forbidden.",
+  "direction": "A \u2014 Notarial (mark geometry carried over unchanged from 04-logo/A-notarial/)",
+  "wordmark": "interim monoline concept; type-derived master in 15-typeface/wordmark/",
+  "files": [
+    {
+      "path": "logo/mark.svg",
+      "category": "mark",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 619
+    },
+    {
+      "path": "logo/mark-monochrome.svg",
+      "category": "mark",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 633
+    },
+    {
+      "path": "logo/mark-inverse.svg",
+      "category": "mark",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 627
+    },
+    {
+      "path": "logo/mark-compact.svg",
+      "category": "mark",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 661
+    },
+    {
+      "path": "logo/favicon.svg",
+      "category": "favicon",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 630
+    },
+    {
+      "path": "logo/app-icon.svg",
+      "category": "app-icon",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 762
+    },
+    {
+      "path": "logo/app-icon-inverse.svg",
+      "category": "app-icon",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 780
+    },
+    {
+      "path": "logo/social-avatar.svg",
+      "category": "social",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 790
+    },
+    {
+      "path": "logo/wordmark.svg",
+      "category": "wordmark",
+      "status": "PROPOSED (interim)",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 1155
+    },
+    {
+      "path": "logo/lockup-stacked.svg",
+      "category": "lockup",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 1483
+    },
+    {
+      "path": "logo/lockup-horizontal.svg",
+      "category": "lockup",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 1488
+    },
+    {
+      "path": "logo/clearspace.svg",
+      "category": "construction",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 1401
+    },
+    {
+      "path": "logo/construction.svg",
+      "category": "construction",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 779
+    },
+    {
+      "path": "logo/misuse.svg",
+      "category": "misuse",
+      "status": "PROPOSED",
+      "licence": "Original geometry authored in this repository; not a registered trademark",
+      "bytes": 2465
+    }
+  ]
+}

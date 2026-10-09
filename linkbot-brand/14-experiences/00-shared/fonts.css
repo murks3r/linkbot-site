@@ -1,0 +1,63 @@
+/* Linkbot Brand Experiences 0.1.0 — type system.
+ * PROPOSED, NOT APPROVED. Non-applied: no runtime file imports this.
+ * Linkbot Display / Sans / Mono are original designs built in 15-typeface/.
+ * STATUS: the original faces are present and self-hosted below,
+ * with the tested OFL stack retained as the fallback.
+ */
+
+@font-face {
+  font-family: "Linkbot Sans";
+  src: url("../../15-typeface/fonts/woff2/LinkbotSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Linkbot Sans";
+  src: url("../../15-typeface/fonts/woff2/LinkbotSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Linkbot Sans";
+  src: url("../../15-typeface/fonts/woff2/LinkbotSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Linkbot Mono";
+  src: url("../../15-typeface/fonts/woff2/LinkbotMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Linkbot Mono";
+  src: url("../../15-typeface/fonts/woff2/LinkbotMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Linkbot Display";
+  src: url("../../15-typeface/fonts/woff2/LinkbotDisplay-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Linkbot Display";
+  src: url("../../15-typeface/fonts/woff2/LinkbotDisplay-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --lb-font-display: "Linkbot Display", "Iowan Old Style", Georgia, serif;
+  --lb-font-sans: "Linkbot Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --lb-font-mono: "Linkbot Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+

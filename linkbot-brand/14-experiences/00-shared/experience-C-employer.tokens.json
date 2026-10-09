@@ -1,0 +1,582 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$description": "Linkbot Brand Experiences 0.1.0 — Experience C, Employer / Agency. PROPOSED, NOT APPROVED. Non-applied. Overrides are ground, accent and density only; the shared layer lives in tokens.shared.json.",
+  "experience": {
+    "letter": {
+      "$type": "string",
+      "$value": "C"
+    },
+    "audience": {
+      "$type": "string",
+      "$value": "Employer / Agency"
+    },
+    "register": {
+      "$type": "string",
+      "$value": "Commons register: neutral light, ocean accent."
+    },
+    "inherit": {
+      "$type": "string",
+      "$value": "tokens.shared.json"
+    }
+  },
+  "color": {
+    "palette": {
+      "canvasCool": {
+        "$type": "color",
+        "$value": "#F6F8F9"
+      },
+      "controlLight": {
+        "$type": "color",
+        "$value": "#8B8B8B"
+      },
+      "deniedDark": {
+        "$type": "color",
+        "$value": "#E08880"
+      },
+      "deniedLight": {
+        "$type": "color",
+        "$value": "#8E2F2F"
+      },
+      "grantedDark": {
+        "$type": "color",
+        "$value": "#4FBE92"
+      },
+      "grantedLight": {
+        "$type": "color",
+        "$value": "#1D5B45"
+      },
+      "ink": {
+        "$type": "color",
+        "$value": "#14161A"
+      },
+      "inkSoft": {
+        "$type": "color",
+        "$value": "#33383F"
+      },
+      "midnight": {
+        "$type": "color",
+        "$value": "#0E1013"
+      },
+      "midnightControl": {
+        "$type": "color",
+        "$value": "#65686C"
+      },
+      "midnightLine": {
+        "$type": "color",
+        "$value": "#2A2E33"
+      },
+      "midnightRaised": {
+        "$type": "color",
+        "$value": "#181B1F"
+      },
+      "midnightSunken": {
+        "$type": "color",
+        "$value": "#111417"
+      },
+      "mint": {
+        "$type": "color",
+        "$value": "#ABEBA1"
+      },
+      "mintDeep": {
+        "$type": "color",
+        "$value": "#567651"
+      },
+      "moonDim": {
+        "$type": "color",
+        "$value": "#A9A395"
+      },
+      "moonText": {
+        "$type": "color",
+        "$value": "#E9E4D8"
+      },
+      "ocean": {
+        "$type": "color",
+        "$value": "#245C73"
+      },
+      "oceanBright": {
+        "$type": "color",
+        "$value": "#7FC4DC"
+      },
+      "paperDeep": {
+        "$type": "color",
+        "$value": "#EAE4D8"
+      },
+      "pendingDark": {
+        "$type": "color",
+        "$value": "#D9A93F"
+      },
+      "pendingLight": {
+        "$type": "color",
+        "$value": "#8A5B00"
+      },
+      "porcelain": {
+        "$type": "color",
+        "$value": "#FDFCF9"
+      },
+      "pureWhite": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      },
+      "rule": {
+        "$type": "color",
+        "$value": "#D9D3C5"
+      },
+      "ruleStrong": {
+        "$type": "color",
+        "$value": "#ABA391"
+      },
+      "slate": {
+        "$type": "color",
+        "$value": "#565C63"
+      },
+      "sunkenCool": {
+        "$type": "color",
+        "$value": "#EDF2F4"
+      },
+      "unknownDark": {
+        "$type": "color",
+        "$value": "#A9A395"
+      },
+      "unknownLight": {
+        "$type": "color",
+        "$value": "#565C63"
+      },
+      "warmNeutral": {
+        "$type": "color",
+        "$value": "#ABABA1"
+      }
+    },
+    "override-keys": {
+      "canvasCool": {
+        "$type": "color",
+        "$value": "#F6F8F9"
+      },
+      "ocean": {
+        "$type": "color",
+        "$value": "#245C73"
+      },
+      "oceanBright": {
+        "$type": "color",
+        "$value": "#7FC4DC"
+      },
+      "sunkenCool": {
+        "$type": "color",
+        "$value": "#EDF2F4"
+      }
+    },
+    "shared-keys": {
+      "ink": {
+        "$type": "color",
+        "$value": "#14161A"
+      },
+      "inkSoft": {
+        "$type": "color",
+        "$value": "#33383F"
+      },
+      "slate": {
+        "$type": "color",
+        "$value": "#565C63"
+      },
+      "porcelain": {
+        "$type": "color",
+        "$value": "#FDFCF9"
+      },
+      "paperDeep": {
+        "$type": "color",
+        "$value": "#EAE4D8"
+      },
+      "rule": {
+        "$type": "color",
+        "$value": "#D9D3C5"
+      },
+      "ruleStrong": {
+        "$type": "color",
+        "$value": "#ABA391"
+      },
+      "controlLight": {
+        "$type": "color",
+        "$value": "#8B8B8B"
+      },
+      "midnight": {
+        "$type": "color",
+        "$value": "#0E1013"
+      },
+      "midnightRaised": {
+        "$type": "color",
+        "$value": "#181B1F"
+      },
+      "midnightSunken": {
+        "$type": "color",
+        "$value": "#111417"
+      },
+      "midnightLine": {
+        "$type": "color",
+        "$value": "#2A2E33"
+      },
+      "midnightControl": {
+        "$type": "color",
+        "$value": "#65686C"
+      },
+      "moonText": {
+        "$type": "color",
+        "$value": "#E9E4D8"
+      },
+      "moonDim": {
+        "$type": "color",
+        "$value": "#A9A395"
+      },
+      "warmNeutral": {
+        "$type": "color",
+        "$value": "#ABABA1"
+      },
+      "mint": {
+        "$type": "color",
+        "$value": "#ABEBA1"
+      },
+      "mintDeep": {
+        "$type": "color",
+        "$value": "#567651"
+      },
+      "grantedLight": {
+        "$type": "color",
+        "$value": "#1D5B45"
+      },
+      "grantedDark": {
+        "$type": "color",
+        "$value": "#4FBE92"
+      },
+      "pendingLight": {
+        "$type": "color",
+        "$value": "#8A5B00"
+      },
+      "pendingDark": {
+        "$type": "color",
+        "$value": "#D9A93F"
+      },
+      "deniedLight": {
+        "$type": "color",
+        "$value": "#8E2F2F"
+      },
+      "deniedDark": {
+        "$type": "color",
+        "$value": "#E08880"
+      },
+      "unknownLight": {
+        "$type": "color",
+        "$value": "#565C63"
+      },
+      "unknownDark": {
+        "$type": "color",
+        "$value": "#A9A395"
+      },
+      "pureWhite": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      }
+    }
+  },
+  "semantic": {
+    "light.canvas": {
+      "$type": "color",
+      "$value": "{color.palette.canvasCool}",
+      "$extensions": {
+        "linkbot.primitive": "canvasCool",
+        "$value": "#F6F8F9"
+      }
+    },
+    "light.surface": {
+      "$type": "color",
+      "$value": "{color.palette.pureWhite}",
+      "$extensions": {
+        "linkbot.primitive": "pureWhite",
+        "$value": "#FFFFFF"
+      }
+    },
+    "light.surface-sunken": {
+      "$type": "color",
+      "$value": "{color.palette.sunkenCool}",
+      "$extensions": {
+        "linkbot.primitive": "sunkenCool",
+        "$value": "#EDF2F4"
+      }
+    },
+    "light.text": {
+      "$type": "color",
+      "$value": "{color.palette.ink}",
+      "$extensions": {
+        "linkbot.primitive": "ink",
+        "$value": "#14161A"
+      }
+    },
+    "light.text-muted": {
+      "$type": "color",
+      "$value": "{color.palette.slate}",
+      "$extensions": {
+        "linkbot.primitive": "slate",
+        "$value": "#565C63"
+      }
+    },
+    "light.brand": {
+      "$type": "color",
+      "$value": "{color.palette.ocean}",
+      "$extensions": {
+        "linkbot.primitive": "ocean",
+        "$value": "#245C73"
+      }
+    },
+    "light.brand-contrast": {
+      "$type": "color",
+      "$value": "{color.palette.pureWhite}",
+      "$extensions": {
+        "linkbot.primitive": "pureWhite",
+        "$value": "#FFFFFF"
+      }
+    },
+    "light.link": {
+      "$type": "color",
+      "$value": "{color.palette.ocean}",
+      "$extensions": {
+        "linkbot.primitive": "ocean",
+        "$value": "#245C73"
+      }
+    },
+    "light.border-subtle": {
+      "$type": "color",
+      "$value": "{color.palette.rule}",
+      "$extensions": {
+        "linkbot.primitive": "rule",
+        "$value": "#D9D3C5"
+      }
+    },
+    "light.border-control": {
+      "$type": "color",
+      "$value": "{color.palette.controlLight}",
+      "$extensions": {
+        "linkbot.primitive": "controlLight",
+        "$value": "#8B8B8B"
+      }
+    },
+    "light.border-decorative-strong": {
+      "$type": "color",
+      "$value": "{color.palette.warmNeutral}",
+      "$extensions": {
+        "linkbot.primitive": "warmNeutral",
+        "$value": "#ABABA1"
+      }
+    },
+    "light.marker": {
+      "$type": "color",
+      "$value": "{color.palette.mint}",
+      "$extensions": {
+        "linkbot.primitive": "mint",
+        "$value": "#ABEBA1"
+      }
+    },
+    "light.marker-contrast": {
+      "$type": "color",
+      "$value": "{color.palette.ink}",
+      "$extensions": {
+        "linkbot.primitive": "ink",
+        "$value": "#14161A"
+      }
+    },
+    "light.status-granted": {
+      "$type": "color",
+      "$value": "{color.palette.grantedLight}",
+      "$extensions": {
+        "linkbot.primitive": "grantedLight",
+        "$value": "#1D5B45"
+      }
+    },
+    "light.status-pending": {
+      "$type": "color",
+      "$value": "{color.palette.pendingLight}",
+      "$extensions": {
+        "linkbot.primitive": "pendingLight",
+        "$value": "#8A5B00"
+      }
+    },
+    "light.status-denied": {
+      "$type": "color",
+      "$value": "{color.palette.deniedLight}",
+      "$extensions": {
+        "linkbot.primitive": "deniedLight",
+        "$value": "#8E2F2F"
+      }
+    },
+    "light.status-unknown": {
+      "$type": "color",
+      "$value": "{color.palette.unknownLight}",
+      "$extensions": {
+        "linkbot.primitive": "unknownLight",
+        "$value": "#565C63"
+      }
+    },
+    "light.focus": {
+      "$type": "color",
+      "$value": "{color.palette.ocean}",
+      "$extensions": {
+        "linkbot.primitive": "ocean",
+        "$value": "#245C73"
+      }
+    },
+    "dark.canvas": {
+      "$type": "color",
+      "$value": "{color.palette.midnight}",
+      "$extensions": {
+        "linkbot.primitive": "midnight",
+        "$value": "#0E1013"
+      }
+    },
+    "dark.surface": {
+      "$type": "color",
+      "$value": "{color.palette.midnightRaised}",
+      "$extensions": {
+        "linkbot.primitive": "midnightRaised",
+        "$value": "#181B1F"
+      }
+    },
+    "dark.surface-sunken": {
+      "$type": "color",
+      "$value": "{color.palette.midnightSunken}",
+      "$extensions": {
+        "linkbot.primitive": "midnightSunken",
+        "$value": "#111417"
+      }
+    },
+    "dark.text": {
+      "$type": "color",
+      "$value": "{color.palette.moonText}",
+      "$extensions": {
+        "linkbot.primitive": "moonText",
+        "$value": "#E9E4D8"
+      }
+    },
+    "dark.text-muted": {
+      "$type": "color",
+      "$value": "{color.palette.moonDim}",
+      "$extensions": {
+        "linkbot.primitive": "moonDim",
+        "$value": "#A9A395"
+      }
+    },
+    "dark.brand": {
+      "$type": "color",
+      "$value": "{color.palette.oceanBright}",
+      "$extensions": {
+        "linkbot.primitive": "oceanBright",
+        "$value": "#7FC4DC"
+      }
+    },
+    "dark.brand-contrast": {
+      "$type": "color",
+      "$value": "{color.palette.midnight}",
+      "$extensions": {
+        "linkbot.primitive": "midnight",
+        "$value": "#0E1013"
+      }
+    },
+    "dark.link": {
+      "$type": "color",
+      "$value": "{color.palette.oceanBright}",
+      "$extensions": {
+        "linkbot.primitive": "oceanBright",
+        "$value": "#7FC4DC"
+      }
+    },
+    "dark.border-subtle": {
+      "$type": "color",
+      "$value": "{color.palette.midnightLine}",
+      "$extensions": {
+        "linkbot.primitive": "midnightLine",
+        "$value": "#2A2E33"
+      }
+    },
+    "dark.border-control": {
+      "$type": "color",
+      "$value": "{color.palette.midnightControl}",
+      "$extensions": {
+        "linkbot.primitive": "midnightControl",
+        "$value": "#65686C"
+      }
+    },
+    "dark.border-decorative-strong": {
+      "$type": "color",
+      "$value": "{color.palette.warmNeutral}",
+      "$extensions": {
+        "linkbot.primitive": "warmNeutral",
+        "$value": "#ABABA1"
+      }
+    },
+    "dark.marker": {
+      "$type": "color",
+      "$value": "{color.palette.mint}",
+      "$extensions": {
+        "linkbot.primitive": "mint",
+        "$value": "#ABEBA1"
+      }
+    },
+    "dark.marker-contrast": {
+      "$type": "color",
+      "$value": "{color.palette.midnight}",
+      "$extensions": {
+        "linkbot.primitive": "midnight",
+        "$value": "#0E1013"
+      }
+    },
+    "dark.status-granted": {
+      "$type": "color",
+      "$value": "{color.palette.grantedDark}",
+      "$extensions": {
+        "linkbot.primitive": "grantedDark",
+        "$value": "#4FBE92"
+      }
+    },
+    "dark.status-pending": {
+      "$type": "color",
+      "$value": "{color.palette.pendingDark}",
+      "$extensions": {
+        "linkbot.primitive": "pendingDark",
+        "$value": "#D9A93F"
+      }
+    },
+    "dark.status-denied": {
+      "$type": "color",
+      "$value": "{color.palette.deniedDark}",
+      "$extensions": {
+        "linkbot.primitive": "deniedDark",
+        "$value": "#E08880"
+      }
+    },
+    "dark.status-unknown": {
+      "$type": "color",
+      "$value": "{color.palette.unknownDark}",
+      "$extensions": {
+        "linkbot.primitive": "unknownDark",
+        "$value": "#A9A395"
+      }
+    },
+    "dark.focus": {
+      "$type": "color",
+      "$value": "{color.palette.oceanBright}",
+      "$extensions": {
+        "linkbot.primitive": "oceanBright",
+        "$value": "#7FC4DC"
+      }
+    }
+  },
+  "density": {
+    "space-scale": {
+      "$type": "number",
+      "$value": 0.95
+    },
+    "measure": {
+      "$type": "string",
+      "$value": "38rem"
+    },
+    "radius-base": {
+      "$type": "string",
+      "$value": "sm"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="ecaron" format="2">
+  <advance width="570.0"/>
+  <unicode hex="011B"/>
+  <outline>
+    <contour>
+      <point x="504.6941" y="169.1105" type="move"/>
+      <point x="540.9911" y="297.2637"/>
+      <point x="487.678" y="436.2605"/>
+      <point x="380.7941" y="492.1397" type="curve" smooth="yes"/>
+      <point x="273.9103" y="548.0189"/>
+      <point x="147.4906" y="502.9869"/>
+      <point x="86.9944" y="387.4851" type="curve" smooth="yes"/>
+      <point x="26.4981" y="271.9833"/>
+      <point x="51.189" y="122.7909"/>
+      <point x="144.3761" y="40.7614" type="curve" smooth="yes"/>
+      <point x="237.5632" y="-41.2682"/>
+      <point x="369.5731" y="-30.0143"/>
+      <point x="451.1675" y="66.9155" type="curve" smooth="yes"/>
+      <point x="317.5844" y="120.567"/>
+      <point x="266.7235" y="115.3434"/>
+      <point x="230.8202" y="153.4175" type="curve" smooth="yes"/>
+      <point x="194.917" y="191.4916"/>
+      <point x="185.404" y="260.7394"/>
+      <point x="208.7121" y="314.3497" type="curve" smooth="yes"/>
+      <point x="232.0202" y="367.96"/>
+      <point x="280.7273" y="388.8616"/>
+      <point x="321.9077" y="362.9252" type="curve" smooth="yes"/>
+      <point x="363.0881" y="336.9889"/>
+      <point x="383.6286" y="272.4733"/>
+      <point x="369.644" y="212.9909" type="curve" smooth="yes"/>
+    </contour>
+    <contour>
+      <point x="192.6" y="302.94" type="move"/>
+      <point x="192.6" y="168.94" type="line"/>
+      <point x="516.0" y="168.94" type="line"/>
+      <point x="516.0" y="302.94" type="line"/>
+      <point x="192.6" y="302.94" type="line"/>
+    </contour>
+    <contour>
+      <point x="113.3882" y="735.0175" type="move"/>
+      <point x="56.5011" y="639.9825" type="line"/>
+      <point x="255.3011" y="520.9825" type="line"/>
+      <point x="312.1882" y="616.0175" type="line"/>
+      <point x="113.3882" y="735.0175" type="line"/>
+    </contour>
+  </outline>
+</glyph>

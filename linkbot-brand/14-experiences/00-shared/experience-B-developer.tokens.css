@@ -1,0 +1,92 @@
+/* Linkbot Brand Experiences 0.1.0 — Experience B: Developer Platform.
+ * PROPOSED, NOT APPROVED. Non-applied: generated from the token JSON.
+ * Overrides ground, accent and density only. Roles and scale are inherited. */
+
+:root {
+  /* experience palette (shared + override) */
+  --lb-b-control-light: #8B8B8B;  /* shared */
+  --lb-b-denied-dark: #E08880;  /* shared */
+  --lb-b-denied-light: #8E2F2F;  /* shared */
+  --lb-b-granted-dark: #4FBE92;  /* shared */
+  --lb-b-granted-light: #1D5B45;  /* shared */
+  --lb-b-ink: #14161A;  /* shared */
+  --lb-b-ink-soft: #33383F;  /* shared */
+  --lb-b-midnight: #0E1013;  /* shared */
+  --lb-b-midnight-control: #65686C;  /* shared */
+  --lb-b-midnight-line: #2A2E33;  /* shared */
+  --lb-b-midnight-raised: #181B1F;  /* shared */
+  --lb-b-midnight-sunken: #111417;  /* shared */
+  --lb-b-mint: #ABEBA1;  /* shared */
+  --lb-b-mint-deep: #567651;  /* shared */
+  --lb-b-moon-dim: #A9A395;  /* shared */
+  --lb-b-moon-text: #E9E4D8;  /* shared */
+  --lb-b-panel: #0C1014;  /* override */
+  --lb-b-paper-deep: #EAE4D8;  /* shared */
+  --lb-b-pending-dark: #D9A93F;  /* shared */
+  --lb-b-pending-light: #8A5B00;  /* shared */
+  --lb-b-phosphor: #3BE08C;  /* override */
+  --lb-b-phosphor-deep: #0A6B41;  /* override */
+  --lb-b-porcelain: #FDFCF9;  /* shared */
+  --lb-b-pure-white: #FFFFFF;  /* shared */
+  --lb-b-raised: #131A20;  /* override */
+  --lb-b-rule: #D9D3C5;  /* shared */
+  --lb-b-rule-strong: #ABA391;  /* shared */
+  --lb-b-slate: #565C63;  /* shared */
+  --lb-b-unknown-dark: #A9A395;  /* shared */
+  --lb-b-unknown-light: #565C63;  /* shared */
+  --lb-b-void: #06080B;  /* override */
+  --lb-b-warm-neutral: #ABABA1;  /* shared */
+
+  /* density (the only scale knob an experience may touch) */
+  --lb-space-scale: 0.9;
+  --lb-measure: 36rem;
+
+  /* resolved roles, light mode */
+  --lb-canvas: var(--lb-b-porcelain);
+  --lb-surface: var(--lb-b-pure-white);
+  --lb-surface-sunken: var(--lb-b-paper-deep);
+  --lb-text: var(--lb-b-ink);
+  --lb-text-muted: var(--lb-b-slate);
+  --lb-brand: var(--lb-b-phosphor-deep);
+  --lb-brand-contrast: var(--lb-b-pure-white);
+  --lb-link: var(--lb-b-phosphor-deep);
+  --lb-border-subtle: var(--lb-b-rule);
+  --lb-border-control: var(--lb-b-control-light);
+  --lb-border-decorative-strong: var(--lb-b-warm-neutral);
+  --lb-marker: var(--lb-b-mint);
+  --lb-marker-contrast: var(--lb-b-ink);
+  --lb-status-granted: var(--lb-b-granted-light);
+  --lb-status-pending: var(--lb-b-pending-light);
+  --lb-status-denied: var(--lb-b-denied-light);
+  --lb-status-unknown: var(--lb-b-unknown-light);
+  --lb-focus: var(--lb-b-phosphor-deep);
+}
+
+[data-experience="B"][data-mode="dark"],
+[data-experience="B"] [data-mode="dark"] {
+  --lb-canvas: var(--lb-b-void);
+  --lb-surface: var(--lb-b-panel);
+  --lb-surface-sunken: var(--lb-b-raised);
+  --lb-text: var(--lb-b-moon-text);
+  --lb-text-muted: var(--lb-b-moon-dim);
+  --lb-brand: var(--lb-b-phosphor);
+  --lb-brand-contrast: var(--lb-b-void);
+  --lb-link: var(--lb-b-phosphor);
+  --lb-border-subtle: var(--lb-b-midnight-line);
+  --lb-border-control: var(--lb-b-midnight-control);
+  --lb-border-decorative-strong: var(--lb-b-warm-neutral);
+  --lb-marker: var(--lb-b-mint);
+  --lb-marker-contrast: var(--lb-b-void);
+  --lb-status-granted: var(--lb-b-granted-dark);
+  --lb-status-pending: var(--lb-b-pending-dark);
+  --lb-status-denied: var(--lb-b-denied-dark);
+  --lb-status-unknown: var(--lb-b-unknown-dark);
+  --lb-focus: var(--lb-b-phosphor);
+}
+
+[data-experience="B"] {
+  color-scheme: light;
+}
+[data-experience="B"][data-mode="dark"] {
+  color-scheme: dark;
+}

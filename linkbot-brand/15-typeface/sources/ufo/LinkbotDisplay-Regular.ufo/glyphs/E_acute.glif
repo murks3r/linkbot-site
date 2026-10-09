@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Eacute" format="2">
+  <advance width="610.56"/>
+  <unicode hex="00C9"/>
+  <outline>
+    <contour>
+      <point x="62.0" y="0.0" type="move"/>
+      <point x="166.0" y="0.0" type="line"/>
+      <point x="166.0" y="700.0" type="line"/>
+      <point x="62.0" y="700.0" type="line"/>
+      <point x="62.0" y="0.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="62.0" y="731.0" type="move"/>
+      <point x="62.0" y="669.0" type="line"/>
+      <point x="548.56" y="669.0" type="line"/>
+      <point x="548.56" y="731.0" type="line"/>
+      <point x="62.0" y="731.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="62.0" y="402.0" type="move"/>
+      <point x="62.0" y="340.0" type="line"/>
+      <point x="490.1728" y="340.0" type="line"/>
+      <point x="490.1728" y="402.0" type="line"/>
+      <point x="62.0" y="402.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="62.0" y="31.0" type="move"/>
+      <point x="62.0" y="-31.0" type="line"/>
+      <point x="548.56" y="-31.0" type="line"/>
+      <point x="548.56" y="31.0" type="line"/>
+      <point x="62.0" y="31.0" type="line"/>
+    </contour>
+    <contour>
+      <point x="219.4043" y="800.9977" type="move"/>
+      <point x="285.9077" y="751.0023" type="line"/>
+      <point x="391.1557" y="891.0023" type="line"/>
+      <point x="324.6523" y="940.9977" type="line"/>
+      <point x="219.4043" y="800.9977" type="line"/>
+    </contour>
+  </outline>
+</glyph>

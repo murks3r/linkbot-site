@@ -1,0 +1,65 @@
+Linkbot Type — build and validation
+date (UTC): 2026-10-09T15:26:48Z
+python:     Python 3.14.6
+
+$ ../../../.venv-type/bin/python scripts/build_sources.py      # glyphs -> 7 editable UFO sources
+  LinkbotSans-Regular        glyphs=209 contours= 495 kerning= 39 -> LinkbotSans-Regular.ufo
+  LinkbotSans-Medium         glyphs=209 contours= 495 kerning= 39 -> LinkbotSans-Medium.ufo
+  LinkbotSans-Bold           glyphs=209 contours= 495 kerning= 39 -> LinkbotSans-Bold.ufo
+  LinkbotMono-Regular        glyphs=209 contours= 495 kerning=  0 -> LinkbotMono-Regular.ufo
+  LinkbotMono-Bold           glyphs=209 contours= 495 kerning=  0 -> LinkbotMono-Bold.ufo
+  LinkbotDisplay-Regular     glyphs=209 contours= 495 kerning= 39 -> LinkbotDisplay-Regular.ufo
+  LinkbotDisplay-Bold        glyphs=209 contours= 495 kerning= 39 -> LinkbotDisplay-Bold.ufo
+
+$ ../../../.venv-type/bin/python scripts/build_fonts.py        # UFO -> TTF + WOFF2
+  LinkbotSans-Regular        glyphs=209    25744 B ttf     8076 B woff2
+  LinkbotSans-Medium         glyphs=209    25884 B ttf     8104 B woff2
+  LinkbotSans-Bold           glyphs=209    26076 B ttf     8208 B woff2
+  LinkbotMono-Regular        glyphs=209    25092 B ttf     7704 B woff2
+  LinkbotMono-Bold           glyphs=209    25224 B ttf     7864 B woff2
+  LinkbotDisplay-Regular     glyphs=209    25968 B ttf     8396 B woff2
+  LinkbotDisplay-Bold        glyphs=209    25968 B ttf     8352 B woff2
+  compiled 7 faces, 1463 glyph slots total
+
+$ ../../../.venv-type/bin/python scripts/validate_type.py      # the font gate; reads the binaries
+Linkbot Type — font gate
+  LinkbotSans-Regular        glyphs=209 covered=204/204 advance=proportional gpos=True
+  LinkbotSans-Medium         glyphs=209 covered=204/204 advance=proportional gpos=True
+  LinkbotSans-Bold           glyphs=209 covered=204/204 advance=proportional gpos=True
+  LinkbotMono-Regular        glyphs=209 covered=204/204 advance=600 gpos=False
+  LinkbotMono-Bold           glyphs=209 covered=204/204 advance=600 gpos=False
+  LinkbotDisplay-Regular     glyphs=209 covered=204/204 advance=proportional gpos=True
+  LinkbotDisplay-Bold        glyphs=209 covered=204/204 advance=proportional gpos=True
+ALL FONT CHECKS PASSED — 204 codepoints on 7 faces
+
+$ ../../../.venv-type/bin/python scripts/build_wordmark.py     # the wordmark, outlined from Display
+  wrote wordmark/wordmark-lower.svg (2350 bytes)
+  wrote wordmark/wordmark-caps.svg (2647 bytes)
+  wrote wordmark/wordmark-inverse.svg (2343 bytes)
+  wrote wordmark/lockup-horizontal.svg (2786 bytes)
+  wrote wordmark/lockup-stacked.svg (2781 bytes)
+  wrote wordmark/wordmark-construction.svg (3318 bytes)
+  cap scale 0.142857, mark scale 3.4722, matched mark stroke 6.171
+
+$ ../../../.venv-type/bin/python scripts/audit_binaries.py    # independent audit; rebuilds to check reproducibility
+Linkbot Type — independent binary audit
+  LinkbotDisplay-Regular     glyphs=209 contours= 495 required=186/186 kern=39
+  LinkbotDisplay-Bold        glyphs=209 contours= 495 required=186/186 kern=39
+  LinkbotSans-Regular        glyphs=209 contours= 495 required=186/186 kern=39
+  LinkbotSans-Medium         glyphs=209 contours= 495 required=186/186 kern=39
+  LinkbotSans-Bold           glyphs=209 contours= 495 required=186/186 kern=39
+  LinkbotMono-Regular        glyphs=209 contours= 495 required=186/186 kern=0
+  LinkbotMono-Bold           glyphs=209 contours= 495 required=186/186 kern=0
+AUDIT PASSED — 7 faces, artefacts byte-reproducible
+
+$ ../../../.venv-type/bin/python scripts/build_specimen.py
+  wrote specimen/type-specimen.html (21079 bytes)
+
+$ ../../../.venv-type/bin/python scripts/build_review.py      # the review gallery + the round-dot alternative
+  wrote fonts/alternatives/LinkbotSans-RoundDots.woff2 (8152 bytes)
+  wrote review/gallery.html (58277 bytes)
+
+$ python3 scripts/gen_registry.py   # stdlib only
+  registry: 54 entries, 3161555 bytes total
+
+ALL TYPE CHECKS PASSED

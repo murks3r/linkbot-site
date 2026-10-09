@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="less" format="2">
+  <advance width="600.0"/>
+  <unicode hex="003C"/>
+  <outline>
+    <contour>
+      <point x="504.8036" y="318.9857" type="move"/>
+      <point x="470.1893" y="388.2143" type="line"/>
+      <point x="116.5893" y="211.4143" type="line"/>
+      <point x="103.4783" y="204.8589"/>
+      <point x="95.1964" y="191.4585"/>
+      <point x="95.1964" y="176.8" type="curve" smooth="yes"/>
+      <point x="95.1964" y="162.1415"/>
+      <point x="103.4783" y="148.7411"/>
+      <point x="116.5893" y="142.1857" type="curve" smooth="yes"/>
+      <point x="470.1893" y="-34.6143" type="line"/>
+      <point x="504.8036" y="34.6143" type="line"/>
+      <point x="151.2036" y="211.4143" type="line"/>
+      <point x="164.3145" y="204.8589"/>
+      <point x="172.5964" y="191.4585"/>
+      <point x="172.5964" y="176.8" type="curve" smooth="yes"/>
+      <point x="172.5964" y="162.1415"/>
+      <point x="164.3145" y="148.7411"/>
+      <point x="151.2036" y="142.1857" type="curve" smooth="yes"/>
+      <point x="504.8036" y="318.9857" type="line"/>
+    </contour>
+  </outline>
+</glyph>

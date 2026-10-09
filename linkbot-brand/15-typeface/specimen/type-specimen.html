@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linkbot Type 0.2.0 — specimen (type-design prototype)</title>
+<meta name="description" content="Linkbot Display / Sans / Mono — original type-design prototype, PROPOSED and not approved.">
+<style>@font-face{font-family:"LBSans";src:url("../fonts/woff2/LinkbotSans-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"LBSans";src:url("../fonts/woff2/LinkbotSans-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"LBSans";src:url("../fonts/woff2/LinkbotSans-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"LBMono";src:url("../fonts/woff2/LinkbotMono-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"LBMono";src:url("../fonts/woff2/LinkbotMono-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"LBDisplay";src:url("../fonts/woff2/LinkbotDisplay-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"LBDisplay";src:url("../fonts/woff2/LinkbotDisplay-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:#F4F1EA;color:#14161A;font-family:"LBSans",system-ui;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+section{padding:34px 0;border-bottom:1px solid #D9D3C5}
+h1{font-family:"LBDisplay",Georgia,serif;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.06;
+  letter-spacing:-.02em;margin:0 0 10px;font-weight:400}
+h2{font-family:"LBDisplay",Georgia,serif;font-weight:400;font-size:1.5rem;margin:0 0 12px}
+.k{font-family:"LBMono",ui-monospace,monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:#565C63;margin:0 0 8px}
+p{margin:0 0 .8em;max-width:38rem}
+.lede{color:#565C63;font-size:1.04rem}
+.row{font-size:clamp(1.4rem,3.2vw,2.4rem);line-height:1.3;margin:0 0 6px;overflow-wrap:anywhere}
+.sm{font-size:16px}.xs{font-size:13px}.xxs{font-size:12px}
+.mono{font-family:"LBMono",ui-monospace,monospace}
+.disp{font-family:"LBDisplay",Georgia,serif}
+.tnum{font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid #D9D3C5;vertical-align:top}
+th{font-family:"LBMono",ui-monospace,monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:#565C63;font-weight:400}
+.card{background:#FDFCF9;border:1px solid #D9D3C5;border-radius:2px;padding:16px;margin:0 0 14px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.svgbox{background:#FDFCF9;border:1px solid #D9D3C5;border-radius:2px;padding:20px;
+  display:grid;place-items:center;color:#14161A}
+.svgbox.dark{background:#0E1013;color:#F4F1EA}
+.svgbox svg{max-width:100%;height:auto}
+.fb{color:#565C63;font-family:"Inter","Helvetica Neue",Arial,sans-serif}
+.stamp{display:inline-block;border:1px dashed #1D5B45;color:#1D5B45;
+  font-family:"LBMono",ui-monospace,monospace;font-size:11px;letter-spacing:.16em;
+  padding:5px 10px;border-radius:2px;text-transform:uppercase}
+.notes{font-size:.86rem;color:#565C63}
+.w{font-weight:400}.w5{font-weight:500}.w7{font-weight:700}
+</style></head>
+<body><div class="wrap">
+
+<section>
+  <p class="k">Linkbot Type 0.2.0 · original designs · prototype under validation</p>
+  <h1>One family, three roles</h1>
+  <p class="lede">Linkbot Display, Linkbot Sans and Linkbot Mono are one construction evaluated at
+  three sets of parameters: the same skeletons, one contrast axis, one terminal language. They are
+  original work drawn from centrelines in this repository — not a renamed existing typeface, and not
+  derived from any proprietary outline.</p>
+  <p><span class="stamp">Proposed · not approved</span></p>
+</section>
+
+<section>
+  <p class="k">Display — editorial headings</p>
+  <p class="row disp">The record is the brand</p>
+  <p class="row disp" style="font-size:1.4rem">Permissioned, not published · Größe · 2026</p>
+  <p class="k">Sans — jobs, descriptions, filters, product UI</p>
+  <p class="row">Find work on your terms — Handwerk &amp; Ordnung</p>
+  <p class="sm">An employer asks for one bounded signal. You decide whether to release it. Revoking
+  stops future access; it does not claim that delivered copies were erased.</p>
+  <p class="k">Mono — code, structured evidence, developer documentation</p>
+  <p class="row mono" style="font-size:1.15rem">policy_version: v3 · 2026-10-09T09:14Z</p>
+  <p class="sm mono">POST /v1/disclosures/{id}/revoke · recruiting_opportunity_evaluation</p>
+</section>
+
+<section>
+  <p class="k">Weights</p>
+  <div class="grid">
+    <div class="card"><p class="k">Sans 400</p><p class="row w" style="font-size:1.6rem">Größe 90 Tage</p></div>
+    <div class="card"><p class="k">Sans 500</p><p class="row w5" style="font-size:1.6rem">Größe 90 Tage</p></div>
+    <div class="card"><p class="k">Sans 700</p><p class="row w7" style="font-size:1.6rem">Größe 90 Tage</p></div>
+    <div class="card"><p class="k">Display 400</p><p class="row disp" style="font-size:1.6rem">Größe 90 Tage</p></div>
+    <div class="card"><p class="k">Display 700</p><p class="row disp w7" style="font-size:1.6rem">Größe 90 Tage</p></div>
+    <div class="card"><p class="k">Mono 400 / 700</p>
+      <p class="row mono" style="font-size:1.3rem">v3 0123</p>
+      <p class="row mono w7" style="font-size:1.3rem">v3 0123</p></div>
+  </div>
+</section>
+
+<section>
+  <p class="k">German — the characters that decide whether a face is usable here</p>
+  <p class="row">Größe · Straße · Prüfung · Änderung · Übungsbüro · Öl · ẞ · Größenänderung</p>
+  <p class="notes">Umlauts and the dot of i and j are SQUARE — the mark's inscribed square, carried
+  into the type. That is the family's most visible identifying decision.</p>
+  <p class="k">Accented Latin — covered</p>
+  <p class="row" style="font-size:1.5rem">àáâãäå ç èéêë ìíîï ñ òóôõ ø ö ùúûü ýÿ Čč Šš Žž</p>
+  <p class="notes">Not covered, and rendered below by the fallback on purpose so the difference is
+  visible: <span class="fb">Ąą Ęę Ūū Łł Ææ Œœ ^ | § © ® ™ „“” « » · 中文 · Привет</span></p>
+</section>
+
+<section>
+  <p class="k">Punctuation</p>
+  <p class="row" style="font-size:1.6rem">. , ; : ! ? ' " ( ) [ ] { } — – - … • · / \ @ & # % *</p>
+  <p class="k">Symbols and UI marks</p>
+  <p class="row" style="font-size:1.6rem">€ $ £ + = < > ~ ° ± × ÷ ≈ ≠ ≤ ≥ ← → ↑ ↓ ✓</p>
+  <p class="notes">Coverage is stated exactly, not implied: the gate checks every codepoint the fonts
+  claim. Characters outside the set — caret, pipe, section, copyright, guillemets, ligatures, Greek,
+  Cyrillic, CJK — are listed in <span class="mono">validation/coverage-report.md</span> as not
+  covered and fall back to a licensed OFL face.</p>
+</section>
+
+<section>
+  <p class="k">Figures — one width everywhere, so tabular alignment needs no feature</p>
+  <p class="row tnum" style="font-size:1.6rem">0,00 € · 1.234,56 € · 2026-10-09 · v3 · 4,53:1 · 90 Tage</p>
+  <p class="row mono tnum" style="font-size:1.05rem">0000 1111 8888 · 12,50 € · −0,25 %</p>
+</section>
+
+<section>
+  <p class="k">Small sizes — the sizes the product actually uses</p>
+  <p class="sm">16 px · An employer asks for one bounded signal. Größe: 90 Tage, Prüfung ausstehend.</p>
+  <p class="xs">13 px · Dense UI, table cells, filters · 4,53:1 · abgelehnt · unbekannt</p>
+  <p class="xxs">12 px · Utility labels and dense evidence rows · policy v3 · 2026-10-09</p>
+  <p class="xxs mono">12 px mono · disclosures/{id}/revoke · 09:14Z</p>
+</section>
+
+<section>
+  <p class="k">Kerning — explicit pairs, compiled to GPOS</p>
+  <p class="row" style="font-size:1.9rem">AV TA Wo f. LY P, r, V. — AUTOR · Wörter · Yosemite</p>
+  <p class="notes">The proportional faces carry 39 authored pairs. The monospaced faces carry none,
+  which is correct: a fixed advance cannot be kerned without breaking the grid.</p>
+</section>
+
+<section>
+  <p class="k">The wordmark, outlined from Linkbot Display</p>
+  <div class="svgbox"><!-- Linkbot Type 0.2.0 — wordmark outlined from Linkbot Display Bold. PROPOSED, NOT APPROVED. Original work; not a registered trademark. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 682.83 171.43" width="682.83" height="171.43" role="img" aria-label="Linkbot horizontal lockup"><title>Linkbot horizontal lockup</title>
+  <g transform="translate(0.00 30.16) scale(3.4722)">
+    <g fill="none" stroke="currentColor" stroke-width="6.171" stroke-linejoin="miter">
+      <path d="M29.30 21.51 L21.51 29.30 L10.49 29.30 L2.70 21.51 L2.70 10.49 L10.49 2.70 L21.51 2.70 L29.30 10.49 Z" />
+      <path d="M9 9 H23 V23 H9 Z" />
+    </g>
+    <circle cx="16" cy="16" r="2.6" fill="currentColor" />
+  </g>
+  <g transform="translate(157.11 0.00) scale(0.142857)">
+    <g fill="currentColor" transform="translate(0 990) scale(1 -1)">
+  <path transform="translate(0.00 0)" d="M58 0V700H208V0H58ZM58 46H523V-46H58V46Z" />
+  <path transform="translate(577.00 0)" d="M58 0V470H208V0H58ZM49 683V851H217V683H49Z" />
+  <path transform="translate(839.00 0)" d="M58 0V303H208V0H58ZM78 201Q61 270 86.0 337.0Q111 404 170 444Q229 485 300.0 485.0Q371 485 430 444Q469 417 493.0 380.0Q517 343 521.5 309.0Q526 275 507 258Q507 258 508.0 260.5Q509 263 516.5 272.5Q524 282 542 303V0H392V303Q392 287 396.5 270.5Q401 254 402 231Q410 262 398.5 293.0Q387 324 360 342Q333 361 300.0 361.0Q267 361 240 342Q213 324 201.5 293.0Q190 262 198 231L78 201Z" />
+  <path transform="translate(1435.00 0)" d="M58 0V726H208V0H58ZM145 258 471 512Q465 507 458.0 498.5Q451 490 437.0 474.0Q423 458 396.0 431.5Q369 405 323.0 363.5Q277 322 205 262L563 45L508 -45L151 171Q166 161 184.0 163.5Q202 166 215 179Q220 184 226.5 191.5Q233 199 249.0 214.5Q265 230 298.0 256.5Q331 283 388.5 324.5Q446 366 536 428L211 174L145 258Z" />
+  <path transform="translate(2025.00 0)" d="M100 478Q178 490 256.0 482.0Q334 474 401.0 447.0Q468 420 514 377Q560 334 575.5 284.5Q591 235 575.5 185.5Q560 136 514 93Q468 50 401.5 23.0Q335 -4 258.5 -12.5Q182 -21 106 -9L130 113Q183 106 236.5 110.5Q290 115 335.5 128.5Q381 142 412 163Q460 196 460.0 235.0Q460 274 412 307Q365 339 287.0 352.5Q209 366 124 356L106 479ZM44 0V726H194V0H44Z" />
+  <path transform="translate(2649.00 0)" d="M588 235Q588 166 551.0 109.0Q514 52 452.5 18.5Q391 -15 316 -15Q241 -15 179.0 18.5Q117 52 80.5 109.0Q44 166 44 235Q44 304 80.5 361.0Q117 418 179.0 451.5Q241 485 316 485Q391 485 452.5 451.5Q514 418 551.0 361.0Q588 304 588 235ZM464 235Q464 270 444.0 298.5Q424 327 390.5 344.0Q357 361 316 361Q275 361 241.5 344.0Q208 327 188.0 298.5Q168 270 168 235Q168 200 188.0 171.5Q208 143 241.5 126.0Q275 109 316 109Q357 109 390.5 126.0Q424 143 444.0 171.5Q464 200 464 235Z" />
+  <path transform="translate(3277.00 0)" d="M58 -13V653H208V-13H58ZM53 450H382V358H53V450Z" />
+    </g>
+  </g>
+</svg>
+</div>
+  <div class="grid" style="margin-top:14px">
+    <div class="svgbox"><!-- Linkbot Type 0.2.0 — wordmark outlined from Linkbot Display Bold. PROPOSED, NOT APPROVED. Original work; not a registered trademark. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3680.00 1200.00" width="3680.00" height="1200.00" role="img" aria-label="Linkbot wordmark (Linkbot)"><title>Linkbot wordmark (Linkbot)</title>
+  <g fill="currentColor" transform="translate(0 990) scale(1 -1)">
+  <path transform="translate(0.00 0)" d="M58 0V700H208V0H58ZM58 46H523V-46H58V46Z" />
+  <path transform="translate(577.00 0)" d="M58 0V470H208V0H58ZM49 683V851H217V683H49Z" />
+  <path transform="translate(839.00 0)" d="M58 0V303H208V0H58ZM78 201Q61 270 86.0 337.0Q111 404 170 444Q229 485 300.0 485.0Q371 485 430 444Q469 417 493.0 380.0Q517 343 521.5 309.0Q526 275 507 258Q507 258 508.0 260.5Q509 263 516.5 272.5Q524 282 542 303V0H392V303Q392 287 396.5 270.5Q401 254 402 231Q410 262 398.5 293.0Q387 324 360 342Q333 361 300.0 361.0Q267 361 240 342Q213 324 201.5 293.0Q190 262 198 231L78 201Z" />
+  <path transform="translate(1435.00 0)" d="M58 0V726H208V0H58ZM145 258 471 512Q465 507 458.0 498.5Q451 490 437.0 474.0Q423 458 396.0 431.5Q369 405 323.0 363.5Q277 322 205 262L563 45L508 -45L151 171Q166 161 184.0 163.5Q202 166 215 179Q220 184 226.5 191.5Q233 199 249.0 214.5Q265 230 298.0 256.5Q331 283 388.5 324.5Q446 366 536 428L211 174L145 258Z" />
+  <path transform="translate(2025.00 0)" d="M100 478Q178 490 256.0 482.0Q334 474 401.0 447.0Q468 420 514 377Q560 334 575.5 284.5Q591 235 575.5 185.5Q560 136 514 93Q468 50 401.5 23.0Q335 -4 258.5 -12.5Q182 -21 106 -9L130 113Q183 106 236.5 110.5Q290 115 335.5 128.5Q381 142 412 163Q460 196 460.0 235.0Q460 274 412 307Q365 339 287.0 352.5Q209 366 124 356L106 479ZM44 0V726H194V0H44Z" />
+  <path transform="translate(2649.00 0)" d="M588 235Q588 166 551.0 109.0Q514 52 452.5 18.5Q391 -15 316 -15Q241 -15 179.0 18.5Q117 52 80.5 109.0Q44 166 44 235Q44 304 80.5 361.0Q117 418 179.0 451.5Q241 485 316 485Q391 485 452.5 451.5Q514 418 551.0 361.0Q588 304 588 235ZM464 235Q464 270 444.0 298.5Q424 327 390.5 344.0Q357 361 316 361Q275 361 241.5 344.0Q208 327 188.0 298.5Q168 270 168 235Q168 200 188.0 171.5Q208 143 241.5 126.0Q275 109 316 109Q357 109 390.5 126.0Q424 143 444.0 171.5Q464 200 464 235Z" />
+  <path transform="translate(3277.00 0)" d="M58 -13V653H208V-13H58ZM53 450H382V358H53V450Z" />
+  </g>
+</svg>
+</div>
+    <div class="svgbox"><!-- Linkbot Type 0.2.0 — wordmark outlined from Linkbot Display Bold. PROPOSED, NOT APPROVED. Original work; not a registered trademark. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4356.00 1200.00" width="4356.00" height="1200.00" role="img" aria-label="Linkbot wordmark (LINKBOT)"><title>Linkbot wordmark (LINKBOT)</title>
+  <g fill="currentColor" transform="translate(0 990) scale(1 -1)">
+  <path transform="translate(0.00 0)" d="M58 0V700H208V0H58ZM58 46H523V-46H58V46Z" />
+  <path transform="translate(591.00 0)" d="M67 0V700H217V0H67Z" />
+  <path transform="translate(885.00 0)" d="M58 0V700Q58 725 73.0 745.0Q88 765 112 772Q136 779 157.0 769.0Q178 759 178 729L628 29Q619 44 602.5 50.0Q586 56 569 51Q552 46 538.5 32.0Q525 18 509 0V700H659V0Q659 -25 644.0 -45.0Q629 -65 605 -72Q581 -79 560.0 -69.0Q539 -59 539 -29L88 671Q98 656 114.5 650.0Q131 644 148 649Q165 654 178.5 668.0Q192 682 208 700V0H58Z" />
+  <path transform="translate(1612.00 0)" d="M58 0V700H208V0H58ZM143 348 585 740Q579 734 571.0 724.0Q563 714 544.5 691.5Q526 669 487.5 628.0Q449 587 381.5 519.5Q314 452 208 351L651 43L590 -43L148 265Q164 253 183.0 255.0Q202 257 216 271Q221 276 226.5 283.0Q232 290 245.0 304.5Q258 319 285.0 344.5Q312 370 359.0 411.5Q406 453 478.5 514.0Q551 575 656 660L213 268L143 348Z" />
+  <path transform="translate(2300.00 0)" d="M58 0V700H208V0H58ZM113 710Q192 719 270.5 713.0Q349 707 417.0 687.0Q485 667 531 636Q601 589 601.0 532.0Q601 475 531 428Q485 397 417.5 377.0Q350 357 273.5 350.5Q197 344 122 353L143 475Q197 472 251.0 474.0Q305 476 351.0 482.0Q397 488 429 498Q477 514 477.0 532.0Q477 550 429 566Q381 581 301.5 587.0Q222 593 134 588L122 711ZM107 373Q191 383 274.5 376.5Q358 370 430.0 349.0Q502 328 552 294Q626 243 626.0 182.0Q626 121 552 70Q502 36 430.5 15.0Q359 -6 277.5 -13.0Q196 -20 116 -11L137 111Q196 107 255.0 109.5Q314 112 364.5 120.0Q415 128 450 140Q502 159 502.0 182.0Q502 205 450 224Q398 242 311.0 250.0Q224 258 128 251L116 375Z" />
+  <path transform="translate(2980.00 0)" d="M690 350Q690 274 664.5 208.0Q639 142 595.0 92.0Q551 42 492.5 13.5Q434 -15 367 -15Q300 -15 241.5 13.5Q183 42 138.5 92.0Q94 142 69.0 208.0Q44 274 44 350Q44 426 69.0 492.0Q94 558 138.5 608.0Q183 658 241.5 686.5Q300 715 367 715Q434 715 492.5 686.5Q551 658 595.0 608.0Q639 558 664.5 492.0Q690 426 690 350ZM566 350Q566 417 539.0 471.5Q512 526 467.0 558.5Q422 591 367 591Q312 591 267.0 558.5Q222 526 195.0 471.5Q168 417 168 350Q168 283 195.0 228.5Q222 174 267.0 141.5Q312 109 367 109Q422 109 467.0 141.5Q512 174 539.0 228.5Q566 283 566 350Z" />
+  <path transform="translate(3724.00 0)" d="M58 746H574V654H58V746ZM241 0V700H391V0H241Z" />
+  </g>
+</svg>
+</div>
+    <div class="svgbox dark"><!-- Linkbot Type 0.2.0 — wordmark outlined from Linkbot Display Bold. PROPOSED, NOT APPROVED. Original work; not a registered trademark. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3680.00 1200.00" width="3680.00" height="1200.00" role="img" aria-label="Linkbot wordmark, inverse"><title>Linkbot wordmark, inverse</title>
+  <g fill="#F4F1EA" transform="translate(0 990) scale(1 -1)">
+  <path transform="translate(0.00 0)" d="M58 0V700H208V0H58ZM58 46H523V-46H58V46Z" />
+  <path transform="translate(577.00 0)" d="M58 0V470H208V0H58ZM49 683V851H217V683H49Z" />
+  <path transform="translate(839.00 0)" d="M58 0V303H208V0H58ZM78 201Q61 270 86.0 337.0Q111 404 170 444Q229 485 300.0 485.0Q371 485 430 444Q469 417 493.0 380.0Q517 343 521.5 309.0Q526 275 507 258Q507 258 508.0 260.5Q509 263 516.5 272.5Q524 282 542 303V0H392V303Q392 287 396.5 270.5Q401 254 402 231Q410 262 398.5 293.0Q387 324 360 342Q333 361 300.0 361.0Q267 361 240 342Q213 324 201.5 293.0Q190 262 198 231L78 201Z" />
+  <path transform="translate(1435.00 0)" d="M58 0V726H208V0H58ZM145 258 471 512Q465 507 458.0 498.5Q451 490 437.0 474.0Q423 458 396.0 431.5Q369 405 323.0 363.5Q277 322 205 262L563 45L508 -45L151 171Q166 161 184.0 163.5Q202 166 215 179Q220 184 226.5 191.5Q233 199 249.0 214.5Q265 230 298.0 256.5Q331 283 388.5 324.5Q446 366 536 428L211 174L145 258Z" />
+  <path transform="translate(2025.00 0)" d="M100 478Q178 490 256.0 482.0Q334 474 401.0 447.0Q468 420 514 377Q560 334 575.5 284.5Q591 235 575.5 185.5Q560 136 514 93Q468 50 401.5 23.0Q335 -4 258.5 -12.5Q182 -21 106 -9L130 113Q183 106 236.5 110.5Q290 115 335.5 128.5Q381 142 412 163Q460 196 460.0 235.0Q460 274 412 307Q365 339 287.0 352.5Q209 366 124 356L106 479ZM44 0V726H194V0H44Z" />
+  <path transform="translate(2649.00 0)" d="M588 235Q588 166 551.0 109.0Q514 52 452.5 18.5Q391 -15 316 -15Q241 -15 179.0 18.5Q117 52 80.5 109.0Q44 166 44 235Q44 304 80.5 361.0Q117 418 179.0 451.5Q241 485 316 485Q391 485 452.5 451.5Q514 418 551.0 361.0Q588 304 588 235ZM464 235Q464 270 444.0 298.5Q424 327 390.5 344.0Q357 361 316 361Q275 361 241.5 344.0Q208 327 188.0 298.5Q168 270 168 235Q168 200 188.0 171.5Q208 143 241.5 126.0Q275 109 316 109Q357 109 390.5 126.0Q424 143 444.0 171.5Q464 200 464 235Z" />
+  <path transform="translate(3277.00 0)" d="M58 -13V653H208V-13H58ZM53 450H382V358H53V450Z" />
+  </g>
+</svg>
+</div>
+  </div>
+  <p class="notes">Outlines, not live text, so the wordmark cannot break when a webfont fails. Because
+  the project owns the typeface, this is a legitimate master rather than the concept outline the
+  Brand OS had to settle for.</p>
+</section>
+
+<section>
+  <p class="k">Fallback comparison — what renders if the fonts do not arrive</p>
+  <p class="row fb" style="font-size:1.5rem">Größe 90 Tage · Find work on your terms</p>
+  <p class="notes">The declared stack is <span class="mono">"Linkbot Sans", "Inter",
+  ui-sans-serif, system-ui, sans-serif</span>. Inter, JetBrains Mono and the display fallback are
+  SIL OFL 1.1, self-hostable and committed-ready; the fallback is a graceful degradation, never a
+  substitute for the brand face.</p>
+</section>
+
+<section style="border-bottom:0">
+  <p class="k">Status of these fonts</p>
+  <h2>A validated prototype, not an approved brand font</h2>
+  <table>
+    <tr><th>Face</th><th>Glyphs</th><th>Codepoints</th><th>Advance</th></tr>
+    <tr><td class='mono'>LinkbotSans-Regular</td><td class='mono tnum'>209</td><td class='mono tnum'>204/204</td><td class='mono'>proportional</td></tr><tr><td class='mono'>LinkbotSans-Medium</td><td class='mono tnum'>209</td><td class='mono tnum'>204/204</td><td class='mono'>proportional</td></tr><tr><td class='mono'>LinkbotSans-Bold</td><td class='mono tnum'>209</td><td class='mono tnum'>204/204</td><td class='mono'>proportional</td></tr><tr><td class='mono'>LinkbotMono-Regular</td><td class='mono tnum'>209</td><td class='mono tnum'>204/204</td><td class='mono'>600</td></tr><tr><td class='mono'>LinkbotMono-Bold</td><td class='mono tnum'>209</td><td class='mono tnum'>204/204</td><td class='mono'>600</td></tr><tr><td class='mono'>LinkbotDisplay-Regular</td><td class='mono tnum'>209</td><td class='mono tnum'>204/204</td><td class='mono'>proportional</td></tr><tr><td class='mono'>LinkbotDisplay-Bold</td><td class='mono tnum'>209</td><td class='mono tnum'>204/204</td><td class='mono'>proportional</td></tr>
+  </table>
+  <p class="notes" style="margin-top:12px">Everything here is <b>PROPOSED</b>. The fonts compile from
+  editable UFO sources and pass the font gate in
+  <span class="mono">scripts/validate_type.py</span>; they are not yet reviewed by a type designer,
+  not hinted, not tested on a physical print proof, and not approved for production. Two glyphs —
+  ampersand and at — are first-pass approximations and are flagged as such in the design notes.
+  No runtime file consumes these fonts: the experience specimens declare them with an OFL fallback
+  and no page is wired to a build pipeline yet.</p>
+</section>
+
+</div></body></html>

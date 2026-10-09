@@ -1,0 +1,113 @@
+/* Linkbot Brand Experiences 0.1.0 — SHARED token export.
+ * PROPOSED, NOT APPROVED. Non-applied: no runtime file imports this.
+ * These declarations are identical in all three experiences. */
+
+:root {
+  /* shared primitives */
+  --lb-shared-control-light: #8B8B8B;
+  --lb-shared-denied-dark: #E08880;
+  --lb-shared-denied-light: #8E2F2F;
+  --lb-shared-granted-dark: #4FBE92;
+  --lb-shared-granted-light: #1D5B45;
+  --lb-shared-ink: #14161A;
+  --lb-shared-ink-soft: #33383F;
+  --lb-shared-midnight: #0E1013;
+  --lb-shared-midnight-control: #65686C;
+  --lb-shared-midnight-line: #2A2E33;
+  --lb-shared-midnight-raised: #181B1F;
+  --lb-shared-midnight-sunken: #111417;
+  --lb-shared-mint: #ABEBA1;
+  --lb-shared-mint-deep: #567651;
+  --lb-shared-moon-dim: #A9A395;
+  --lb-shared-moon-text: #E9E4D8;
+  --lb-shared-paper-deep: #EAE4D8;
+  --lb-shared-pending-dark: #D9A93F;
+  --lb-shared-pending-light: #8A5B00;
+  --lb-shared-porcelain: #FDFCF9;
+  --lb-shared-pure-white: #FFFFFF;
+  --lb-shared-rule: #D9D3C5;
+  --lb-shared-rule-strong: #ABA391;
+  --lb-shared-slate: #565C63;
+  --lb-shared-unknown-dark: #A9A395;
+  --lb-shared-unknown-light: #565C63;
+  --lb-shared-warm-neutral: #ABABA1;
+
+  /* one type system */
+  --lb-font-display: Linkbot Display;
+  --lb-font-sans: Linkbot Sans;
+  --lb-font-mono: Linkbot Mono;
+  --lb-stack-display: "Linkbot Display", "Iowan Old Style", Georgia, serif;
+  --lb-stack-sans: "Linkbot Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --lb-stack-mono: "Linkbot Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --lb-text-12: 12px;
+  --lb-text-13: 13px;
+  --lb-text-14: 14px;
+  --lb-text-16: 16px;
+  --lb-text-18: 18px;
+  --lb-text-20: 20px;
+  --lb-text-24: 24px;
+  --lb-text-30: 30px;
+  --lb-text-38: 38px;
+  --lb-text-48: 48px;
+  --lb-text-60: 60px;
+  --lb-text-76: 76px;
+  --lb-weight-regular: 400;
+  --lb-weight-medium: 500;
+  --lb-weight-semibold: 600;
+  --lb-weight-bold: 700;
+  --lb-leading-tight: 1.05;
+  --lb-leading-snug: 1.25;
+  --lb-leading-normal: 1.5;
+  --lb-leading-relaxed: 1.7;
+  --lb-tracking-tighter: -0.03em;
+  --lb-tracking-tight: -0.015em;
+  --lb-tracking-normal: 0em;
+  --lb-tracking-label: 0.14em;
+
+  /* one spacing scale */
+  --lb-space-3xs: 2px;
+  --lb-space-2xs: 4px;
+  --lb-space-xs: 8px;
+  --lb-space-sm: 12px;
+  --lb-space-md: 16px;
+  --lb-space-lg: 24px;
+  --lb-space-xl: 32px;
+  --lb-space-2xl: 48px;
+  --lb-space-3xl: 64px;
+  --lb-space-4xl: 96px;
+
+  /* one radius scale */
+  --lb-radius-none: 0px;
+  --lb-radius-xs: 2px;
+  --lb-radius-sm: 4px;
+  --lb-radius-md: 8px;
+  --lb-radius-lg: 12px;
+  --lb-radius-xl: 20px;
+  --lb-radius-full: 9999px;
+
+  /* one motion set */
+  --lb-duration-instant: 80ms;
+  --lb-duration-fast: 160ms;
+  --lb-duration-base: 240ms;
+  --lb-duration-slow: 400ms;
+  --lb-duration-deliberate: 640ms;
+  --lb-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --lb-ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --lb-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --lb-ease-linear: linear;
+
+  /* one focus treatment */
+  --lb-focus-width: 2px;
+  --lb-focus-offset: 2px;
+  --lb-focus-colour: var(--lb-shared-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lb-duration-instant: 0ms;
+    --lb-duration-fast: 0ms;
+    --lb-duration-base: 0ms;
+    --lb-duration-slow: 0ms;
+    --lb-duration-deliberate: 0ms;
+  }
+}

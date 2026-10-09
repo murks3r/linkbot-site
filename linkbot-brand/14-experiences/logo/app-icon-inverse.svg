@@ -1,0 +1,11 @@
+<!-- Linkbot Brand Experiences v0.1.0 — shared logo asset. PROPOSED, NOT APPROVED. Direction A geometry, carried over unchanged. Editable vector source. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Linkbot app icon, inverse"><title>Linkbot — app icon, inverse</title>
+  <rect width="64" height="64" rx="14" fill="#F4F1EA" />
+  <g transform="translate(16 16)" color="#14161A">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="miter">
+        <path d="M29.30 21.51 L21.51 29.30 L10.49 29.30 L2.70 21.51 L2.70 10.49 L10.49 2.70 L21.51 2.70 L29.30 10.49 Z" />
+        <path d="M9 9 H23 V23 H9 Z" />
+      </g>
+      <circle cx="16" cy="16" r="2.6" fill="currentColor" />
+  </g>
+</svg>

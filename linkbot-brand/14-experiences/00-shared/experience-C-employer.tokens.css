@@ -1,0 +1,91 @@
+/* Linkbot Brand Experiences 0.1.0 — Experience C: Employer / Agency.
+ * PROPOSED, NOT APPROVED. Non-applied: generated from the token JSON.
+ * Overrides ground, accent and density only. Roles and scale are inherited. */
+
+:root {
+  /* experience palette (shared + override) */
+  --lb-c-canvas-cool: #F6F8F9;  /* override */
+  --lb-c-control-light: #8B8B8B;  /* shared */
+  --lb-c-denied-dark: #E08880;  /* shared */
+  --lb-c-denied-light: #8E2F2F;  /* shared */
+  --lb-c-granted-dark: #4FBE92;  /* shared */
+  --lb-c-granted-light: #1D5B45;  /* shared */
+  --lb-c-ink: #14161A;  /* shared */
+  --lb-c-ink-soft: #33383F;  /* shared */
+  --lb-c-midnight: #0E1013;  /* shared */
+  --lb-c-midnight-control: #65686C;  /* shared */
+  --lb-c-midnight-line: #2A2E33;  /* shared */
+  --lb-c-midnight-raised: #181B1F;  /* shared */
+  --lb-c-midnight-sunken: #111417;  /* shared */
+  --lb-c-mint: #ABEBA1;  /* shared */
+  --lb-c-mint-deep: #567651;  /* shared */
+  --lb-c-moon-dim: #A9A395;  /* shared */
+  --lb-c-moon-text: #E9E4D8;  /* shared */
+  --lb-c-ocean: #245C73;  /* override */
+  --lb-c-ocean-bright: #7FC4DC;  /* override */
+  --lb-c-paper-deep: #EAE4D8;  /* shared */
+  --lb-c-pending-dark: #D9A93F;  /* shared */
+  --lb-c-pending-light: #8A5B00;  /* shared */
+  --lb-c-porcelain: #FDFCF9;  /* shared */
+  --lb-c-pure-white: #FFFFFF;  /* shared */
+  --lb-c-rule: #D9D3C5;  /* shared */
+  --lb-c-rule-strong: #ABA391;  /* shared */
+  --lb-c-slate: #565C63;  /* shared */
+  --lb-c-sunken-cool: #EDF2F4;  /* override */
+  --lb-c-unknown-dark: #A9A395;  /* shared */
+  --lb-c-unknown-light: #565C63;  /* shared */
+  --lb-c-warm-neutral: #ABABA1;  /* shared */
+
+  /* density (the only scale knob an experience may touch) */
+  --lb-space-scale: 0.95;
+  --lb-measure: 38rem;
+
+  /* resolved roles, light mode */
+  --lb-canvas: var(--lb-c-canvas-cool);
+  --lb-surface: var(--lb-c-pure-white);
+  --lb-surface-sunken: var(--lb-c-sunken-cool);
+  --lb-text: var(--lb-c-ink);
+  --lb-text-muted: var(--lb-c-slate);
+  --lb-brand: var(--lb-c-ocean);
+  --lb-brand-contrast: var(--lb-c-pure-white);
+  --lb-link: var(--lb-c-ocean);
+  --lb-border-subtle: var(--lb-c-rule);
+  --lb-border-control: var(--lb-c-control-light);
+  --lb-border-decorative-strong: var(--lb-c-warm-neutral);
+  --lb-marker: var(--lb-c-mint);
+  --lb-marker-contrast: var(--lb-c-ink);
+  --lb-status-granted: var(--lb-c-granted-light);
+  --lb-status-pending: var(--lb-c-pending-light);
+  --lb-status-denied: var(--lb-c-denied-light);
+  --lb-status-unknown: var(--lb-c-unknown-light);
+  --lb-focus: var(--lb-c-ocean);
+}
+
+[data-experience="C"][data-mode="dark"],
+[data-experience="C"] [data-mode="dark"] {
+  --lb-canvas: var(--lb-c-midnight);
+  --lb-surface: var(--lb-c-midnight-raised);
+  --lb-surface-sunken: var(--lb-c-midnight-sunken);
+  --lb-text: var(--lb-c-moon-text);
+  --lb-text-muted: var(--lb-c-moon-dim);
+  --lb-brand: var(--lb-c-ocean-bright);
+  --lb-brand-contrast: var(--lb-c-midnight);
+  --lb-link: var(--lb-c-ocean-bright);
+  --lb-border-subtle: var(--lb-c-midnight-line);
+  --lb-border-control: var(--lb-c-midnight-control);
+  --lb-border-decorative-strong: var(--lb-c-warm-neutral);
+  --lb-marker: var(--lb-c-mint);
+  --lb-marker-contrast: var(--lb-c-midnight);
+  --lb-status-granted: var(--lb-c-granted-dark);
+  --lb-status-pending: var(--lb-c-pending-dark);
+  --lb-status-denied: var(--lb-c-denied-dark);
+  --lb-status-unknown: var(--lb-c-unknown-dark);
+  --lb-focus: var(--lb-c-ocean-bright);
+}
+
+[data-experience="C"] {
+  color-scheme: light;
+}
+[data-experience="C"][data-mode="dark"] {
+  color-scheme: dark;
+}

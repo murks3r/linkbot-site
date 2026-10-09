@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="V" format="2">
+  <advance width="600.0"/>
+  <unicode hex="0056"/>
+  <outline>
+    <contour>
+      <point x="94.255" y="721.2215" type="move"/>
+      <point x="-22.255" y="678.7785" type="line"/>
+      <point x="232.745" y="-21.2215" type="line"/>
+      <point x="241.6643" y="-45.7059"/>
+      <point x="264.9416" y="-62.0"/>
+      <point x="291.0" y="-62.0" type="curve" smooth="yes"/>
+      <point x="309.0" y="-62.0" type="line"/>
+      <point x="335.0584" y="-62.0"/>
+      <point x="358.3357" y="-45.7059"/>
+      <point x="367.255" y="-21.2215" type="curve" smooth="yes"/>
+      <point x="622.255" y="678.7785" type="line"/>
+      <point x="505.745" y="721.2215" type="line"/>
+      <point x="250.745" y="21.2215" type="line"/>
+      <point x="259.6643" y="45.7059"/>
+      <point x="282.9416" y="62.0"/>
+      <point x="309.0" y="62.0" type="curve" smooth="yes"/>
+      <point x="291.0" y="62.0" type="line"/>
+      <point x="317.0584" y="62.0"/>
+      <point x="340.3357" y="45.7059"/>
+      <point x="349.255" y="21.2215" type="curve" smooth="yes"/>
+      <point x="94.255" y="721.2215" type="line"/>
+    </contour>
+  </outline>
+</glyph>
