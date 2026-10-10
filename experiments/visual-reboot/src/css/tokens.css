@@ -31,7 +31,24 @@
   --accent-ink: #8c1d0c;   /* hover / pressed / text on tint */
   --accent-tint: #f8e5e0;  /* selected-row wash */
   --on-accent: #ffffff;
+  --accent-bright: #ff7a59;        /* the same accent, lifted for the ink band */
+  --accent-bright-hover: #ff967b;
   --audience-label: "Talent";
+
+  /* the one dark band (.on-dark): ground, text and control values */
+  --dark-paper: #101216;
+  --dark-surface: #1a1d23;
+  --dark-sunken: #23272e;
+  --dark-text: #f4f4f1;
+  --dark-text-2: #d9dbdf;
+  --dark-muted: #a9adb5;
+  --dark-rule: #363a42;
+  --dark-control: #8c919a;
+
+  /* every register's accent, side by side (used only to introduce the registers) */
+  --accent-talent: #c2301a;
+  --accent-developers: #2740dc;
+  --accent-employers: #0b6a5b;
 
   /* 3 — type roles ---------------------------------------------------- */
   --font-display: "Role Display", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -106,6 +123,8 @@
   --accent: #2740dc;
   --accent-ink: #172793;
   --accent-tint: #e3e8fb;
+  --accent-bright: #8f9dff;
+  --accent-bright-hover: #aab4ff;
   --audience-label: "Developers";
 }
 
@@ -114,5 +133,7 @@
   --accent: #0b6a5b;
   --accent-ink: #064238;
   --accent-tint: #dcefeb;
+  --accent-bright: #4fd1b8;
+  --accent-bright-hover: #75ddc8;
   --audience-label: "Employers";
 }

@@ -76,6 +76,18 @@ const PAIRS = [
   ['focus', 'surface', 3, 'focus ring on sheet'],
   ['focus', 'sunken', 3, 'focus ring on well'],
   ['focus', 'accent-tint', 3, 'focus ring on selected-row wash'],
+  // the one dark band (.on-dark) — see tokens.css
+  ['dark-text', 'dark-paper', 4.5, 'dark band: text'],
+  ['dark-text-2', 'dark-paper', 4.5, 'dark band: secondary text'],
+  ['dark-muted', 'dark-paper', 4.5, 'dark band: tertiary text'],
+  ['dark-muted', 'dark-surface', 4.5, 'dark band: tertiary text on panel'],
+  ['dark-muted', 'dark-sunken', 4.5, 'dark band: tertiary text on well'],
+  ['dark-control', 'dark-paper', 3, 'dark band: control border'],
+  ['dark-control', 'dark-surface', 3, 'dark band: control border on panel'],
+  ['accent-bright', 'dark-paper', 4.5, 'dark band: accent as text'],
+  ['accent-bright', 'dark-surface', 4.5, 'dark band: accent as text on panel'],
+  ['dark-paper', 'accent-bright', 4.5, 'dark band: primary button label'],
+  ['dark-paper', 'accent-bright-hover', 4.5, 'dark band: primary button label, hover'],
 ];
 console.log('Contrast (WCAG 2.2; text >= 4.5, graphics/controls >= 3)');
 for (const [audience, v] of Object.entries(audiences)) {

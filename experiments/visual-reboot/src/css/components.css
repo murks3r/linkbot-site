@@ -543,3 +543,48 @@
   from { opacity: 0; translate: 0 8px; }
   to { opacity: 1; translate: 0 0; }
 }
+
+/* ---------- the one dark band: tokens flip, components do not change ---------- */
+
+.on-dark {
+  --paper: var(--dark-paper);
+  --surface: var(--dark-surface);
+  --sunken: var(--dark-sunken);
+  --ink: var(--dark-text);
+  --ink-2: var(--dark-text-2);
+  --muted: var(--dark-muted);
+  --rule: var(--dark-rule);
+  --rule-2: var(--dark-control);
+  --control: var(--dark-control);
+  --focus: var(--dark-text);
+  --accent: var(--accent-bright);
+  --accent-ink: var(--accent-bright-hover);
+  --on-accent: var(--dark-paper);
+  background: var(--dark-paper);
+  color: var(--dark-text);
+}
+.on-dark a {
+  color: var(--dark-text);
+}
+
+/* ---------- JSON view (Developers register) ---------- */
+
+.code {
+  margin: 0;
+  overflow-x: auto;
+  font: 400 0.75rem / 1.125rem var(--font-mono);
+  color: var(--ink-2);
+  white-space: pre;
+  tab-size: 2;
+}
+.code .jk { color: var(--ink); font-weight: 700; }
+.code .js { color: var(--accent-ink); }
+.code .jn { color: var(--ink); }
+.code .jnull {
+  padding: 0 4px;
+  border: 1px dashed var(--control);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 4px, rgb(16 18 22 / 0.07) 4px 5px),
+    var(--sunken);
+  color: var(--muted);
+}

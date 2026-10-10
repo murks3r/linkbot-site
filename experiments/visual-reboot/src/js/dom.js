@@ -122,3 +122,20 @@ export function mark(size = 28) {
 export function unknown(text = 'Not stated by source') {
   return h('span', { class: 'void' }, sealGlyph('unknown', 14), text);
 }
+
+/* ---------- JSON, rendered so that `null` reads as the honest void it is ---------- */
+
+export function jsonView(value, depth = 0) {
+  const pad = '  '.repeat(depth);
+  if (value === null) return [h('span', { class: 'jnull' }, 'null')];
+  if (Array.isArray(value)) {
+    if (value.length === 0) return ['[]'];
+    return ['[\n', ...value.flatMap((v, i) => [pad + '  ', ...jsonView(v, depth + 1), i < value.length - 1 ? ',' : '', '\n']), pad + ']'];
+  }
+  if (typeof value === 'object') {
+    const entries = Object.entries(value);
+    return ['{\n', ...entries.flatMap(([k, v], i) => [pad + '  ', h('span', { class: 'jk' }, JSON.stringify(k)), ': ', ...jsonView(v, depth + 1), i < entries.length - 1 ? ',' : '', '\n']), pad + '}'];
+  }
+  if (typeof value === 'string') return [h('span', { class: 'js' }, JSON.stringify(value))];
+  return [h('span', { class: 'jn' }, String(value))];
+}
