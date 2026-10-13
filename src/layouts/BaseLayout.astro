@@ -9,33 +9,24 @@ interface Props {
 }
 
 const {
-  title = 'Linkbot — Private eligibility, not public exposure',
-  description = 'Public career profiles have become attack surfaces. Linkbot replaces public exposure with permissioned, private eligibility for the people employers are actually looking for.',
+  title = 'Linkbot — Find work. Find talent. Keep your privacy.',
+  description = 'Linkbot shows people current job listings with the evidence for every claim, and gives recruiting agencies and companies one place to describe a role and work from evidence. No public profile; nothing is shared until you confirm it.',
   canonicalPath = '/',
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="bg-ink-950 text-bone-50 antialiased">
+<html lang="en" class="bg-ground text-ink antialiased">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#05060a" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#fbf7f0" />
+    <meta name="color-scheme" content="light" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
-
     <SEO title={title} description={description} canonicalPath={canonicalPath} />
   </head>
-  <body class="bg-ink-950 text-bone-50 font-sans selection:bg-signal-500/30 selection:text-bone-50">
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-ink-800 focus:px-3 focus:py-2 focus:text-bone-50">Skip to content</a>
+  <body class="bg-ground text-ink font-sans selection:bg-you-wash">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-ink focus:px-3 focus:py-2 focus:text-surface">Skip to content</a>
     <slot />
-    <script>
-      import { initSmoothScroll } from '../lib/smooth-scroll';
-      initSmoothScroll();
-    </script>
   </body>
 </html>
