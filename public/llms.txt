@@ -1,24 +1,29 @@
 # Linkbot
 
-> Linkbot replaces public career exposure with permissioned, private eligibility.
+> Find work. Find talent. Keep your privacy. Linkbot shows people current job listings with the
+> evidence for every claim, and gives recruiting agencies and companies one place to describe a
+> role and work from evidence. There is no public profile and no index of people.
 
 ## What this site is
 
-The official site for Linkbot, a privacy-first matching layer for the labour
-market. Public career profiles have become attack surfaces. Linkbot gives
-people a private, verifiable record of who they are and what they are
-eligible for, and lets employers request access to specific signals — with
-the holder's consent.
+The official site for Linkbot. Two things are offered:
+
+- Find work: search current public job listings in your own words. Each listing shows what it
+  states, what it states differently, and what it does not say. No account is needed to search;
+  searches are not stored. Saving a job or watching a search needs an account. Nothing is shared
+  with an employer unless the person confirms it.
+- Find talent: recruiting agencies work their own candidate pool against client mandates with an
+  explainable, evidence-backed shortlist; companies describe their own roles and receive the
+  applications people deliberately send. Access is granted to verified organisations during the
+  pilot. Linkbot sends no messages on anyone's behalf.
 
 ## Who operates it
 
-Linkbot OÜ, registered in Tallinn, Estonia. Operated by a small team across
-Europe and Africa.
+Linkbot OÜ, registered in Tallinn, Estonia.
 
 ## Core pages
 
-- [Home / Overview](https://linkbot.org/): the problem, the position, and
-  the private-beta access request.
+- [Home](https://linkbot.org/): what Linkbot does for people, for recruiting agencies and for companies.
 
 ## Canonical URL
 
@@ -26,6 +31,6 @@ Europe and Africa.
 
 ## What this site is not
 
-- It is not a recruiter database.
+- It is not a recruiter database and holds no index of people.
 - It is not a public profile host.
-- It is not a job board. There are no public listings on this site.
+- It is not a job board: listings are searched in the product, not published on this site.

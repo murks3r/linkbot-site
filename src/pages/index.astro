@@ -1,197 +1,163 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ThreeExperience from '../components/three/ThreeExperience.astro';
+// The product lives at /talent on the application origin. The site never claims more than the
+// product does today (linkbot: docs/launch-execution/marketing-copy-proposal.md).
+const app = import.meta.env.PUBLIC_APP_ORIGIN ?? 'https://app.linkbot.org';
+const findWork = `${app}/talent#/search`;
+const findTalent = `${app}/talent#/find-talent`;
 ---
 
 <BaseLayout>
-  <main id="main" class="relative">
-    <section class="relative isolate min-h-[100svh] overflow-hidden border-b border-bone-50/5" aria-labelledby="hero-headline">
-      <div class="absolute inset-0 -z-10 bg-grid opacity-60" aria-hidden="true"></div>
-      <div class="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-bone-50/20 to-transparent" aria-hidden="true"></div>
+  <header class="sticky top-0 z-20 border-b border-line bg-ground/95 backdrop-blur">
+    <div class="container-prose flex min-h-[64px] flex-wrap items-center gap-x-6 gap-y-2 py-2">
+      <a href="/" class="flex items-center gap-2.5 font-display text-xl font-bold tracking-tight text-ink" aria-label="Linkbot home">
+        <svg width="42" height="22" viewBox="0 0 38 20" aria-hidden="true" class="text-forest">
+          <rect x="1" y="5" width="10" height="10" fill="none" stroke="#2433e6" stroke-width="2" />
+          <path d="M11 10h16" stroke="currentColor" stroke-width="2" />
+          <rect x="27" y="5" width="10" height="10" fill="currentColor" />
+        </svg>
+        <span>Linkbot</span>
+      </a>
+      <nav class="flex items-center gap-0.5 rounded-full bg-sand p-[3px]" aria-label="Linkbot">
+        <a href={findWork} class="nav-pill">Find work</a>
+        <a href={findTalent} class="nav-pill">Find talent</a>
+      </nav>
+      <nav class="ml-auto hidden items-center gap-5 text-sm font-medium text-ink-2 md:flex" aria-label="Site">
+        <a href="#how" class="hover:text-ink">How it works</a>
+        <a href="#agencies" class="hover:text-ink">For agencies</a>
+        <a href="#companies" class="hover:text-ink">For companies</a>
+        <a href="#privacy" class="hover:text-ink">Privacy</a>
+      </nav>
+      <a href={findWork} class="ml-auto inline-flex min-h-[44px] items-center rounded-full border border-ink px-5 text-sm font-semibold md:ml-0">Open Linkbot</a>
+    </div>
+  </header>
 
-      <div class="container-prose flex min-h-[100svh] flex-col justify-between py-12 sm:py-20">
-        <header class="flex items-center justify-between">
-          <a href="/" class="flex items-center gap-2 text-sm font-medium text-bone-50">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true" class="text-signal-400">
-              <path d="M3 11 L11 3 L19 11 L11 19 Z" stroke="currentColor" stroke-width="1.2" fill="none" />
-              <circle cx="11" cy="11" r="2.2" fill="currentColor" />
-            </svg>
-            <span>Linkbot</span>
-          </a>
-          <span class="pill"><span class="h-1.5 w-1.5 rounded-full bg-signal-500"></span>Private beta</span>
-        </header>
-
-        <div class="max-w-3xl">
-          <p class="pill mb-6"><span class="h-1.5 w-1.5 rounded-full bg-alarm-500"></span>The current job market rewards visibility</p>
-          <h1 id="hero-headline" class="font-display text-[clamp(2.4rem,6vw,4.5rem)] font-light leading-[0.95] tracking-tightest text-balance">
-            Your career should not be a <span class="text-bone-200/70">public attack surface.</span>
+  <main id="main">
+    <section class="relative isolate" aria-labelledby="hero-headline">
+      <div class="container-prose grid gap-12 py-16 sm:py-24 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-7">
+          <p class="eyebrow mb-5">Find work · Find talent</p>
+          <h1 id="hero-headline" class="font-display text-[clamp(2.6rem,1.5rem+4.6vw,5rem)] font-bold leading-[0.98] tracking-tightest text-balance">
+            Find work.<br />Find talent.<br /><span class="text-forest-3">Keep your privacy.</span>
           </h1>
-          <p class="mt-6 max-w-xl text-lg leading-relaxed text-bone-200/80 text-pretty">
-            Public profiles turned people into openly readable, permanently indexable targets.
-            Recruiters, scrapers, and competitors scan the same surface.
-            <span class="text-bone-50">Linkbot</span> is the opposite:
-            <span class="text-signal-400">private eligibility</span> instead of public exposure.
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-2 text-pretty">
+            Say what you’re looking for in your own words. Linkbot shows current listings with what each one states, states differently or doesn’t say.
+            For recruiting agencies and companies it is one place to describe a role and work from evidence. No public profile, and nothing is shared until you confirm it.
           </p>
           <div class="mt-10 flex flex-wrap items-center gap-3">
-            <a href="#access" class="btn-primary">
-              Request private access
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </a>
-            <a href="#how" class="btn-ghost">How it works</a>
+            <a href={findWork} class="btn-primary">Find work <span aria-hidden="true">→</span></a>
+            <a href={findTalent} class="btn-secondary">Find talent <span aria-hidden="true">→</span></a>
+          </div>
+          <p class="mt-5 text-sm text-ink-3">No account needed to search. Searches aren’t stored.</p>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="card shadow-e2">
+            <p class="eyebrow">How every listing is read</p>
+            <ul class="mt-4 space-y-3 text-[15px]">
+              <li class="flex items-start gap-3"><span class="mark-fit mt-1.5"></span><span><b>Stated in the listing.</b> The listing says what you asked for.</span></li>
+              <li class="flex items-start gap-3"><span class="mark-differs mt-1.5"></span><span><b>Stated differently.</b> The listing says something else, quoted.</span></li>
+              <li class="flex items-start gap-3"><span class="mark-unknown mt-1.5"></span><span><b>Not stated.</b> The listing doesn’t say. Nothing missing is treated as a match.</span></li>
+            </ul>
+            <p class="mt-5 text-sm text-ink-3">Compared with your words, not with you. Linkbot doesn’t assess your qualifications or an employer’s interest.</p>
           </div>
         </div>
-
-        <footer class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs uppercase tracking-[0.18em] text-bone-200/50">
-          <span>Identity is verified</span><span aria-hidden="true">·</span>
-          <span>Eligibility is private</span><span aria-hidden="true">·</span>
-          <span>Matching is permissioned</span>
-        </footer>
       </div>
     </section>
 
-    <ThreeExperience />
+    <section id="how" class="border-t border-line bg-sand/60 py-20 sm:py-28" aria-labelledby="how-headline">
+      <div class="container-prose">
+        <p class="eyebrow mb-4">How it works</p>
+        <h2 id="how-headline" class="max-w-2xl font-display text-[clamp(1.9rem,1.4rem+1.7vw,2.6rem)] font-bold leading-[1.05] tracking-tightest text-balance">Three steps. Each one is yours.</h2>
+        <ol class="mt-12 grid gap-4 md:grid-cols-3">
+          <li class="card"><p class="eyebrow">01 · Say it</p><h3 class="mt-3 text-xl font-semibold">Say what you want.</h3><p class="mt-2 text-[15px] text-ink-2">A role, what you want more or less of, and how you want to work. For example: “Backend engineering, more ownership, remote”.</p></li>
+          <li class="card"><p class="eyebrow">02 · See it</p><h3 class="mt-3 text-xl font-semibold">See what fits, and why.</h3><p class="mt-2 text-[15px] text-ink-2">Each listing shows what matches your words, what differs and what it doesn’t say. Your words become the columns.</p></li>
+          <li class="card"><p class="eyebrow">03 · Decide</p><h3 class="mt-3 text-xl font-semibold">Save, watch or apply.</h3><p class="mt-2 text-[15px] text-ink-2">Apply on the employer’s own site. Saving and watching need an account. Sharing your details is always a separate step you confirm.</p></li>
+        </ol>
+      </div>
+    </section>
 
-    <section id="problem" class="relative border-b border-bone-50/5 py-28 sm:py-40" aria-labelledby="problem-headline">
+    <section class="py-20 sm:py-28" aria-labelledby="talent-headline">
+      <div class="container-prose">
+        <p class="eyebrow mb-4">Find talent</p>
+        <h2 id="talent-headline" class="max-w-2xl font-display text-[clamp(1.9rem,1.4rem+1.7vw,2.6rem)] font-bold leading-[1.05] tracking-tightest text-balance">Who are you looking for?</h2>
+        <p class="mt-5 max-w-2xl text-lg text-ink-2 text-pretty">Describe the person you need, in your own words. Linkbot turns it into requirements you can correct. Nothing is uploaded to begin, and no candidate is contacted. Same product, separate authority: an agency works its own pool; a company works its own roles.</p>
+        <div class="mt-12 grid gap-4 lg:grid-cols-2">
+          <article id="agencies" class="card flex flex-col gap-4">
+            <p class="eyebrow">Recruiting agencies</p>
+            <h3 class="font-display text-2xl font-semibold">Match a mandate against your own candidates.</h3>
+            <ul class="space-y-2 text-[15px] text-ink-2">
+              <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 bg-forest-3"></span>Paste the client’s brief or type the role; Linkbot reads it into requirements and leaves unknowns unknown.</li>
+              <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 bg-forest-3"></span>Your pool, imported once, reused across every mandate. No contact details are stored.</li>
+              <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 bg-forest-3"></span>A ranked shortlist with the reasons for every suggestion; interest checks and introduction permissions recorded separately.</li>
+            </ul>
+            <p class="text-sm text-ink-3">Linkbot sends nothing on your behalf and never discloses agency profiles. For verified agencies, by invitation during the pilot.</p>
+            <a href={findTalent} class="btn-primary self-start">Find talent as an agency <span aria-hidden="true">→</span></a>
+          </article>
+          <article id="companies" class="card flex flex-col gap-4">
+            <p class="eyebrow">Companies</p>
+            <h3 class="font-display text-2xl font-semibold">Publish roles people can apply to privately.</h3>
+            <ul class="space-y-2 text-[15px] text-ink-2">
+              <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 bg-forest-3"></span>Describe a role in text; confirm the structured fields before a draft is saved. No document is required.</li>
+              <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 bg-forest-3"></span>Publication after an independent role-category review.</li>
+              <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 bg-forest-3"></span>Only the applications people deliberately send you. There is no candidate directory to browse.</li>
+            </ul>
+            <p class="text-sm text-ink-3">For verified organisations during the beta.</p>
+            <a href={findTalent} class="btn-secondary self-start">Find talent as a company <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy" class="bg-forest py-20 text-onforest sm:py-28" aria-labelledby="privacy-headline">
+      <div class="container-prose grid gap-12 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <p class="eyebrow mb-4 !text-onforest-2">Privacy, by default</p>
+          <h2 id="privacy-headline" class="font-display text-[clamp(1.9rem,1.4rem+1.7vw,2.6rem)] font-bold leading-[1.05] tracking-tightest text-balance">Private until you decide.</h2>
+        </div>
+        <dl class="grid gap-8 sm:grid-cols-2 lg:col-span-7">
+          <div><dt class="font-semibold">No public profile</dt><dd class="mt-1 text-onforest-2">Linkbot doesn’t publish you, and employers can’t browse people. There is no index of people.</dd></div>
+          <div><dt class="font-semibold">Viewing is only viewing</dt><dd class="mt-1 text-onforest-2">Searching, viewing and saving jobs never sends anything to an employer.</dd></div>
+          <div><dt class="font-semibold">You choose what’s shared</dt><dd class="mt-1 text-onforest-2">Before anything is sent, you see exactly which details go to whom.</dd></div>
+          <div><dt class="font-semibold">You can see the history</dt><dd class="mt-1 text-onforest-2">What you shared, with whom and when stays visible to you.</dd></div>
+          <div><dt class="font-semibold">Organisations are verified</dt><dd class="mt-1 text-onforest-2">Only named, verified organisations can publish roles or run an agency workspace. People are never asked to prove identity to search.</dd></div>
+          <div><dt class="font-semibold">Honest unknowns</dt><dd class="mt-1 text-onforest-2">Results are dated and sourced. Where a listing doesn’t say, Linkbot says so instead of guessing.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="faq" class="py-20 sm:py-28" aria-labelledby="faq-headline">
       <div class="container-prose grid gap-12 md:grid-cols-12">
         <div class="md:col-span-4">
-          <p class="pill mb-4"><span class="h-1.5 w-1.5 rounded-full bg-alarm-500"></span>The problem</p>
-          <h2 id="problem-headline" class="font-display text-3xl font-light leading-[1.05] tracking-tightest text-balance sm:text-4xl">
-            A profile is no longer a page. It is a continuously mined dataset.
-          </h2>
+          <p class="eyebrow mb-4">Direct answers</p>
+          <h2 id="faq-headline" class="font-display text-[clamp(1.75rem,1.3rem+1.2vw,2.2rem)] font-bold leading-[1.05] tracking-tightest text-balance">What Linkbot is, and isn’t.</h2>
         </div>
         <div class="md:col-span-7 md:col-start-6">
-          <dl class="space-y-8 text-bone-200/85">
-            <div>
-              <dt class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50">01 — Exposure</dt>
-              <dd class="mt-2 text-pretty text-lg leading-relaxed">Career history, location, skills, activity, and connections live on the open web. Every field is a coordinate. Together they form a target.</dd>
-            </div>
-            <div>
-              <dt class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50">02 — Continuous scanning</dt>
-              <dd class="mt-2 text-pretty text-lg leading-relaxed">Recruiters, sales teams, scraping services, and competitors query the same surface. Polling, alerting, and matching engines never sleep.</dd>
-            </div>
-            <div>
-              <dt class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50">03 — No consent</dt>
-              <dd class="mt-2 text-pretty text-lg leading-relaxed">Visibility became the price of relevance. The user does not approve each viewer, each scan, or each inference drawn from the data.</dd>
-            </div>
+          <dl class="divide-y divide-line">
+            <div class="py-6"><dt class="font-display text-xl font-semibold">Where do the listings come from?</dt><dd class="mt-2 text-ink-2">From public job boards whose listings Linkbot has the rights to read, shown with their source, the date they were checked and a link to apply on the employer’s own site. Linkbot doesn’t cover every job, and says how many it checked.</dd></div>
+            <div class="py-6"><dt class="font-display text-xl font-semibold">Is this a recruiter database?</dt><dd class="mt-2 text-ink-2">No. Linkbot holds no index of people. An agency works only the candidate pool it already owns, inside its own workspace; a company sees only the applications people send it.</dd></div>
+            <div class="py-6"><dt class="font-display text-xl font-semibold">Does Linkbot contact candidates for me?</dt><dd class="mt-2 text-ink-2">No. Interest checks are drafted for a human to review; contact happens outside Linkbot by the authorised recruiter, and Linkbot records the evidence.</dd></div>
+            <div class="py-6"><dt class="font-display text-xl font-semibold">Who can use it today?</dt><dd class="mt-2 text-ink-2">Anyone can search for work without an account. Agency and company workspaces are open to verified organisations by invitation during the pilot.</dd></div>
+            <div class="py-6"><dt class="font-display text-xl font-semibold">Where is the company?</dt><dd class="mt-2 text-ink-2">Linkbot OÜ is registered in Tallinn, Estonia.</dd></div>
           </dl>
         </div>
       </div>
     </section>
 
-    <section id="how" class="relative border-b border-bone-50/5 py-28 sm:py-40" aria-labelledby="position-headline">
-      <div class="container-prose">
-        <p class="pill mb-4"><span class="h-1.5 w-1.5 rounded-full bg-signal-500"></span>The position</p>
-        <h2 id="position-headline" class="max-w-3xl font-display text-3xl font-light leading-[1.05] tracking-tightest text-balance sm:text-5xl">
-          From public exposure to <span class="text-signal-400">private eligibility</span>.
-        </h2>
-        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-bone-200/80 text-pretty">
-          Linkbot is a permissioned matching layer. You hold a private, verifiable record of who you are and what you are eligible for.
-          Employers request access to specific signals. You decide. Nothing is broadcast, scraped, or quietly indexed.
-        </p>
-      </div>
-      <div class="container-prose mt-20 grid gap-px overflow-hidden rounded-2xl border border-bone-50/10 bg-bone-50/5 sm:grid-cols-3">
-        <article class="bg-ink-950 p-8">
-          <p class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50">Holder</p>
-          <h3 class="mt-3 font-display text-xl font-light text-balance">You hold the profile.</h3>
-          <p class="mt-3 text-sm leading-relaxed text-bone-200/75">Identity, credentials, history, and preferences live in your private store. No public URL, no edit page, no API key handed to the open web.</p>
-        </article>
-        <article class="bg-ink-950 p-8">
-          <p class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50">Channel</p>
-          <h3 class="mt-3 font-display text-xl font-light text-balance">Access is requested, not scraped.</h3>
-          <p class="mt-3 text-sm leading-relaxed text-bone-200/75">Employers ask for specific signals — "eligible for senior engineering, willing to relocate to Berlin, available in 90 days." You see the request and you respond.</p>
-        </article>
-        <article class="bg-ink-950 p-8">
-          <p class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50">Result</p>
-          <h3 class="mt-3 font-display text-xl font-light text-balance">Fewer, better matches.</h3>
-          <p class="mt-3 text-sm leading-relaxed text-bone-200/75">No inbox of unsolicited pings. No scraped leads. Only the conversations that meet your stated criteria, with people who have asked for the privilege.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="claims" class="relative border-b border-bone-50/5 py-28 sm:py-40" aria-labelledby="claims-headline">
-      <div class="container-prose">
-        <p class="pill mb-4">What we believe</p>
-        <h2 id="claims-headline" class="sr-only">Statements of position</h2>
-        <ul class="space-y-12">
-          <li class="grid gap-4 md:grid-cols-12">
-            <span class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50 md:col-span-2">Claim 01</span>
-            <p class="font-display text-3xl font-light leading-[1.05] tracking-tightest text-balance md:col-span-10 md:text-4xl">Not every employer should see you. <span class="text-bone-200/60">Only the right ones.</span></p>
-          </li>
-          <li class="grid gap-4 md:grid-cols-12">
-            <span class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50 md:col-span-2">Claim 02</span>
-            <p class="font-display text-3xl font-light leading-[1.05] tracking-tightest text-balance md:col-span-10 md:text-4xl">The current job market rewards visibility. <span class="text-bone-200/60">We built for relevance and control.</span></p>
-          </li>
-          <li class="grid gap-4 md:grid-cols-12">
-            <span class="font-mono text-xs uppercase tracking-[0.18em] text-bone-200/50 md:col-span-2">Claim 03</span>
-            <p class="font-display text-3xl font-light leading-[1.05] tracking-tightest text-balance md:col-span-10 md:text-4xl">Your career history is yours. <span class="text-signal-400">Its disclosure is your decision.</span></p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="access" class="relative py-28 sm:py-40" aria-labelledby="access-headline">
-      <div class="container-prose max-w-3xl">
-        <p class="pill mb-4"><span class="h-1.5 w-1.5 rounded-full bg-signal-500"></span>Private beta</p>
-        <h2 id="access-headline" class="font-display text-3xl font-light leading-[1.05] tracking-tightest text-balance sm:text-5xl">We open the door in small groups, by invitation.</h2>
-        <p class="mt-6 text-lg leading-relaxed text-bone-200/80 text-pretty">Tell us who you are and what you are looking for. We reply personally within a few days. No marketing list, no automated drip, no scraped profile.</p>
-        <form class="mt-12 grid gap-4 sm:grid-cols-2" action="mailto:hello@linkbot.org" method="post" enctype="text/plain">
-          <label class="block">
-            <span class="block text-xs uppercase tracking-[0.18em] text-bone-200/60">Your name</span>
-            <input type="text" name="name" required autocomplete="name" class="mt-2 w-full rounded-md border border-bone-50/15 bg-ink-900/60 px-3 py-3 text-bone-50 placeholder:text-bone-200/30 focus:border-signal-500 focus:outline-none" placeholder="Jane Doe" />
-          </label>
-          <label class="block">
-            <span class="block text-xs uppercase tracking-[0.18em] text-bone-200/60">Email</span>
-            <input type="email" name="email" required autocomplete="email" class="mt-2 w-full rounded-md border border-bone-50/15 bg-ink-900/60 px-3 py-3 text-bone-50 placeholder:text-bone-200/30 focus:border-signal-500 focus:outline-none" placeholder="jane@example.com" />
-          </label>
-          <label class="block sm:col-span-2">
-            <span class="block text-xs uppercase tracking-[0.18em] text-bone-200/60">What you are looking for</span>
-            <textarea name="intent" rows="3" required class="mt-2 w-full rounded-md border border-bone-50/15 bg-ink-900/60 px-3 py-3 text-bone-50 placeholder:text-bone-200/30 focus:border-signal-500 focus:outline-none" placeholder="A senior role in climate engineering, remote-first, EU-based."></textarea>
-          </label>
-          <div class="sm:col-span-2">
-            <button type="submit" class="btn-primary">Request private access
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
-                <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </button>
-            <p class="mt-3 text-xs text-bone-200/50">We do not share your information. Replies come from a real human at Linkbot OÜ.</p>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <section id="faq" class="relative border-t border-bone-50/5 py-28 sm:py-40" aria-labelledby="faq-headline">
-      <div class="container-prose grid gap-12 md:grid-cols-12">
-        <div class="md:col-span-4">
-          <p class="pill mb-4">FAQ</p>
-          <h2 id="faq-headline" class="font-display text-3xl font-light leading-[1.05] tracking-tightest text-balance sm:text-4xl">Direct answers to direct questions.</h2>
-        </div>
-        <div class="md:col-span-7 md:col-start-6">
-          <dl class="divide-y divide-bone-50/10">
-            <div class="py-6"><dt class="font-display text-xl font-light text-balance">How is this different from a recruiter database?</dt><dd class="mt-3 text-bone-200/80">Recruiter databases index public data and resell access. Linkbot does not aggregate. Nothing is indexed. You decide which signal an employer sees and for how long.</dd></div>
-            <div class="py-6"><dt class="font-display text-xl font-light text-balance">What does "private eligibility" mean in practice?</dt><dd class="mt-3 text-bone-200/80">It means an employer can ask, for example, "are you eligible for a senior role, willing to relocate, available in 90 days?" and you answer yes or no — without disclosing your full CV, current employer, or contact details.</dd></div>
-            <div class="py-6"><dt class="font-display text-xl font-light text-balance">Do you have an API?</dt><dd class="mt-3 text-bone-200/80">An API is in private testing. We will not expose endpoints that could be used to bypass the consent layer.</dd></div>
-            <div class="py-6"><dt class="font-display text-xl font-light text-balance">Who can use Linkbot today?</dt><dd class="mt-3 text-bone-200/80">A small first cohort of senior professionals and a small first cohort of employers with specific roles. We onboard in groups of roughly 20 to keep the matching quality high.</dd></div>
-            <div class="py-6"><dt class="font-display text-xl font-light text-balance">Where is the company?</dt><dd class="mt-3 text-bone-200/80">Linkbot OÜ is registered in Estonia and operated by a small team across Europe and Africa.</dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
-    <footer class="border-t border-bone-50/5 py-12">
+    <footer class="border-t border-line bg-sand/60 py-12">
       <div class="container-prose flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-        <div class="flex items-center gap-3 text-sm text-bone-200/60">
-          <svg width="18" height="18" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <path d="M3 11 L11 3 L19 11 L11 19 Z" stroke="currentColor" stroke-width="1.2" fill="none" />
-            <circle cx="11" cy="11" r="2.2" fill="currentColor" />
+        <div class="flex items-center gap-3 text-sm text-ink-2">
+          <svg width="30" height="16" viewBox="0 0 38 20" aria-hidden="true" class="text-forest">
+            <rect x="1" y="5" width="10" height="10" fill="none" stroke="#2433e6" stroke-width="2" />
+            <path d="M11 10h16" stroke="currentColor" stroke-width="2" />
+            <rect x="27" y="5" width="10" height="10" fill="currentColor" />
           </svg>
           <span>© 2026 Linkbot OÜ · Tallinn, Estonia</span>
         </div>
-        <nav class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-bone-200/60">
-          <a href="#how" class="hover:text-bone-50">How it works</a>
-          <a href="#access" class="hover:text-bone-50">Private access</a>
-          <a href="mailto:hello@linkbot.org" class="hover:text-bone-50">hello@linkbot.org</a>
+        <nav class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-2" aria-label="Footer">
+          <a href={findWork} class="hover:text-ink">Find work</a>
+          <a href={findTalent} class="hover:text-ink">Find talent</a>
+          <a href="#privacy" class="hover:text-ink">Privacy</a>
+          <a href="mailto:hello@linkbot.org" class="hover:text-ink">hello@linkbot.org</a>
         </nav>
       </div>
     </footer>
