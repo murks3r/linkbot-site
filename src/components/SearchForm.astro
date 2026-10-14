@@ -5,70 +5,77 @@
    without scripts opens the app's search without sending the words anywhere. */
 import { app, searchWith } from '../lib/links';
 import Icon from './Icon.astro';
-interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental'; label?: string; hint?: string }
-const { id, examples = [], size = 'hero', label = 'What work are you looking for?', hint = 'Short phrases, separated by commas. No account needed, and searches aren’t stored.' } = Astro.props;
+interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental'; label?: string; placeholder?: string }
+const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = 'Data engineer, remote, no on-call' } = Astro.props;
 ---
 <form class="search" data-size={size} action={app('#/search')} method="get" data-handoff={app('#/search')} role="search" aria-label="Search jobs in Linkbot">
   <label class="search-label" for={id}>{label}</label>
   <div class="search-box">
-    <Icon name="search" size={18} />
-    <input id={id} type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="2000"
-      placeholder="Backend engineer, remote, no management" aria-describedby={`${id}-hint`} />
-    <button class="btn btn-primary" type="submit"><span>Search jobs</span><Icon name="arrow" /></button>
+    <span class="search-field">
+      <Icon name="search" size={18} />
+      <input id={id} type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="2000" placeholder={placeholder} />
+    </span>
+    <button class="btn btn-primary" type="submit"><span>Search</span><Icon name="arrow" /></button>
   </div>
-  <p class="search-hint" id={`${id}-hint`} data-hint>{hint}</p>
-  {examples.length > 0 && <p class="search-try"><span>Try</span>{examples.map(example => <a href={searchWith(example)}>{example}</a>)}</p>}
+  <p class="search-alert" id={`${id}-alert`} data-alert hidden></p>
+  {examples.length > 0 && <ul class="search-try" aria-label="Examples">{examples.map(example => <li><a href={searchWith(example)}>{example}</a></li>)}</ul>}
 </form>
 
 <style>
   .search { display: grid; gap: 12px; width: 100%; max-width: 46rem; }
   .search-label { font-size: var(--size-small); font-weight: 650; }
-  .search-box { display: flex; align-items: center; min-height: 72px; padding: 6px 6px 6px 18px; border: 1px solid var(--line-ink); border-radius: var(--r-3); background: var(--paper); transition: border-color var(--fast), box-shadow var(--fast); }
-  .search-box:focus-within { border-color: var(--cobalt); box-shadow: 0 0 0 3px var(--cobalt-wash); }
-  .search-box > :global(.icon) { color: var(--ink-3); }
-  .search input { flex: 1; min-width: 0; height: 56px; padding: 0 12px; border: 0; outline: none; background: transparent; font-size: clamp(1.0625rem, 1rem + .4vw, 1.25rem); font-weight: 500; letter-spacing: -.01em; }
+  .search-box { display: flex; align-items: center; gap: 8px; min-height: 68px; padding: 6px; border: 1.5px solid var(--line-ink); border-radius: var(--pill); background: var(--surface);
+    transition: border-color var(--fast), box-shadow var(--base) var(--ease); }
+  .search-box:hover { border-color: var(--ink-2); }
+  .search-box:focus-within { border-color: var(--green); box-shadow: 0 0 0 4px var(--green-wash); }
+  .search-field { display: flex; align-items: center; flex: 1; min-width: 0; padding-left: 16px; }
+  .search-field > :global(.icon) { flex: none; color: var(--ink-3); }
+  .search input { flex: 1; min-width: 0; height: 54px; padding: 0 12px; border: 0; outline: none; background: transparent; font-size: clamp(1.0625rem, 1rem + .35vw, 1.2rem); font-weight: 500; letter-spacing: -.005em; color: var(--ink); }
   .search input::placeholder { color: var(--ink-3); opacity: 1; font-weight: 400; }
-  .search .btn { min-height: 56px; flex: none; }
-  .search-hint { font-size: var(--size-small); color: var(--ink-2); }
-  .search-hint[data-alert] { color: var(--warn); font-weight: 600; }
-  .search-try { display: flex; flex-wrap: wrap; align-items: center; gap: 0 18px; font-size: var(--size-small); }
-  .search-try span { font-weight: 650; color: var(--ink-3); }
-  .search-try a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-ink); text-underline-offset: 5px; }
-  .search-try a:hover { text-decoration-color: var(--ink); }
-  .search[data-size='band'] .search-box { border-color: var(--ink); }
+  .search .btn { min-height: 54px; flex: none; }
+  .search-alert { font-size: var(--size-small); font-weight: 600; color: var(--warn); }
+  .search-try { display: flex; flex-wrap: wrap; align-items: center; gap: 0 22px; font-size: var(--size-small); }
+  .search-try a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 5px; transition: color var(--fast), text-decoration-color var(--fast); }
+  .search-try a:hover { color: var(--ink); text-decoration-color: currentColor; }
+  .search[data-size='band'] .search-box { border-color: var(--green); }
   /* The hero: one wide field on the page's centre line, the label for assistive technology only. */
-  .search[data-size='monumental'] { max-width: 54rem; justify-items: center; text-align: center; gap: 14px; }
+  .search[data-size='monumental'] { max-width: 52rem; justify-items: center; text-align: center; gap: 14px; }
   .search[data-size='monumental'] .search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .search[data-size='monumental'] .search-box { width: 100%; min-height: 84px; padding: 8px 8px 8px 24px; border: 1.5px solid var(--ink); border-radius: var(--r-3); text-align: left; }
-  .search[data-size='monumental'] .search-box:focus-within { border-color: var(--cobalt); box-shadow: 0 0 0 4px var(--cobalt-wash); }
-  .search[data-size='monumental'] input { height: 64px; font-size: clamp(1.125rem, 1rem + .6vw, 1.4rem); }
-  .search[data-size='monumental'] .btn { min-height: 64px; padding: 0 28px; font-size: 1.0625rem; border-radius: var(--r-2); }
+  .search[data-size='monumental'] .search-box { width: 100%; min-height: 80px; padding: 8px; border-color: var(--green); text-align: left; }
+  .search[data-size='monumental'] .search-field { padding-left: 22px; }
+  .search[data-size='monumental'] input { height: 62px; font-size: clamp(1.125rem, 1rem + .55vw, 1.375rem); }
+  .search[data-size='monumental'] .btn { min-height: 62px; padding: 0 30px; font-size: 1.0625rem; }
   .search[data-size='monumental'] .search-try { justify-content: center; }
+  /* Phones: the words get the whole width, and the action sits under them, where the thumb is. */
   @media (max-width: 30rem) {
-    .search-box { flex-wrap: wrap; padding: 6px; }
-    .search-box > :global(.icon) { display: none; }
-    .search input { flex-basis: 100%; height: 52px; padding: 0 10px; }
-    .search .btn { flex-basis: 100%; }
-    .search-try { gap: 0 14px; }
-    .search-try span { flex-basis: 100%; }
+    .search .search-box, .search[data-size='monumental'] .search-box { flex-direction: column; align-items: stretch; gap: 10px; min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+    .search .search-field { min-height: 60px; padding: 0 6px 0 16px; border: 1.5px solid var(--green); border-radius: var(--pill); background: var(--surface); transition: box-shadow var(--base) var(--ease); }
+    .search .search-field:focus-within { box-shadow: 0 0 0 4px var(--green-wash); }
+    .search input, .search[data-size='monumental'] input { height: 56px; padding: 0 10px; font-size: 1.0625rem; }
+    .search .btn, .search[data-size='monumental'] .btn { min-height: 56px; width: 100%; }
+    .search-try { gap: 0 16px; }
   }
 </style>
 
 <script>
   import { searchWith } from '../lib/links';
   for (const form of document.querySelectorAll<HTMLFormElement>('form[data-handoff]')) {
-    const input = form.querySelector('input'), hint = form.querySelector<HTMLElement>('[data-hint]');
-    const original = hint?.textContent ?? '';
+    const input = form.querySelector('input'), alert = form.querySelector<HTMLElement>('[data-alert]');
+    const clear = () => { if (alert && !alert.hidden) { alert.hidden = true; alert.textContent = ''; alert.removeAttribute('role'); input?.removeAttribute('aria-invalid'); input?.removeAttribute('aria-describedby'); } };
     form.addEventListener('submit', event => {
       event.preventDefault();
       const words = input?.value.trim() ?? '';
       if (!words) {
-        if (hint) { hint.textContent = 'Write a few words first, for example a role and how you want to work.'; hint.setAttribute('data-alert', ''); hint.setAttribute('role', 'alert'); }
+        if (alert && input) {
+          alert.textContent = 'Add a few words first, such as a role and how you want to work.';
+          alert.hidden = false; alert.setAttribute('role', 'alert');
+          input.setAttribute('aria-invalid', 'true'); input.setAttribute('aria-describedby', alert.id);
+        }
         input?.focus();
         return;
       }
       location.href = searchWith(words);
     });
-    input?.addEventListener('input', () => { if (hint?.hasAttribute('data-alert')) { hint.textContent = original; hint.removeAttribute('data-alert'); hint.removeAttribute('role'); } });
+    input?.addEventListener('input', clear);
   }
 </script>

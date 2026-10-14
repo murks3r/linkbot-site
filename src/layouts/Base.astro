@@ -1,8 +1,10 @@
 ---
-import '@fontsource-variable/instrument-sans/wdth.css';
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/figtree/index.css';
 import '../styles/palette.css';
 import '../styles/site.css';
-import fontUrl from '@fontsource-variable/instrument-sans/files/instrument-sans-latin-wdth-normal.woff2?url';
+import displayUrl from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import textUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import SEO from '../components/SEO.astro';
 import Masthead from '../components/Masthead.astro';
 import Footer from '../components/Footer.astro';
@@ -14,24 +16,23 @@ const { title, description, path, crumbs, quietHeader = false } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={displayUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={textUrl} as="font" type="font/woff2" crossorigin />
     <SEO title={title} description={description} path={path} crumbs={crumbs} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#fbf8f1" />
     <meta name="color-scheme" content="light" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- Marks that are drawn on view start undrawn only when scripts run; if the page's scripts
-         never start, everything is drawn after three seconds anyway. -->
-    <script is:inline>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__lbReady)document.documentElement.classList.add('drawn')},3000);</script>
+    <!-- Scripts mark the page so enhancements (the scroll-linked story) can take over from the
+         complete, static version every page ships with. -->
+    <script is:inline>document.documentElement.classList.add('js')</script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <Masthead current={path} quiet={quietHeader} />
     <main id="main" tabindex="-1"><slot /></main>
     <Footer />
-    <script>import '../scripts/reveal';</script>
   </body>
 </html>
 <style is:global>
   main { outline: none; }
-  .drawn [data-draw] .hl, .drawn .hl[data-draw] { background-size: 100% 100% !important; }
 </style>
