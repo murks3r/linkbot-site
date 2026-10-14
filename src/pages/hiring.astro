@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+import Mark from '../components/Mark.astro';
+import Icon from '../components/Icon.astro';
+import record from '../data/readings.json';
+import { app } from '../lib/links';
+const role = record.roles[0];
+const commit = record.commit.slice(0, 7);
+// Mark, in the brief itself, the words the role reader took each field from (located, not interpreted).
+const words = [...role.stated.map(s => s.from).filter((w): w is string => !!w), ...role.skills];
+const spans: [number, number][] = [];
+for (const word of words) { const at = role.text.toLowerCase().indexOf(word.toLowerCase()); if (at >= 0) spans.push([at, at + word.length]); }
+spans.sort((a, b) => a[0] - b[0]);
+const lines = role.text.split('\n').map((line, index, all) => {
+  const offset = all.slice(0, index).reduce((n, l) => n + l.length + 1, 0);
+  const parts: { text: string; hl: boolean }[] = []; let at = 0;
+  for (const [s, e] of spans) { if (s < offset || e > offset + line.length) continue; if (s - offset > at) parts.push({ text: line.slice(at, s - offset), hl: false }); parts.push({ text: line.slice(s - offset, e - offset), hl: true }); at = e - offset; }
+  if (at < line.length) parts.push({ text: line.slice(at), hl: false });
+  return parts;
+});
+---
+<Base title="Hiring with Linkbot: evidence, not exposure"
+  description="For recruiting agencies and companies. Linkbot reads a role description into requirements you can correct and shows every candidate or application with its evidence. No directory of people, and nobody contacted on your behalf."
+  path="/hiring" crumbs={[['Hiring', '/hiring']]}>
+
+  <section class="hero" aria-labelledby="hiring-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Hiring with Linkbot</p>
+        <h1 id="hiring-title" data-draw><span class="h1-line">Say <span class="hl">who you need</span>.</span> <span class="h1-line">See the evidence.</span></h1>
+        <p class="lede">For recruiting agencies and companies. Linkbot reads a role description into requirements you can correct, and shows every candidate or application with its evidence: what’s stated, what differs and what’s still unknown.</p>
+        <p class="hero-actions"><a class="btn btn-primary" href="#paths">Choose your path<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Try reading a role first<Icon name="arrow" /></a></p>
+      </div>
+      <figure class="card role" data-draw>
+        <figcaption class="card-label"><span>A role description</span><span>Read by Linkbot</span></figcaption>
+        <div class="card-body">
+          <p class="role-text">{lines.map((parts, index) => <span class={index === 0 ? 'role-title' : 'role-line'}>{parts.map(p => p.hl ? <span class="hl">{p.text}</span> : p.text)}</span>)}</p>
+          <dl class="role-read">
+            {role.stated.filter(s => s.field !== 'Role title').map(s => <div><dt><Mark tone="fit" />{s.field}</dt><dd>{s.value}{s.from && <small>from “{s.from}”</small>}</dd></div>)}
+            {role.skills.length > 0 && <div><dt><Mark tone="fit" />Skills named</dt><dd>{role.skills.join(', ')}</dd></div>}
+            {role.unknown.map(field => <div data-unknown><dt><Mark tone="unknown" />{field}</dt><dd>Not stated. Linkbot doesn’t guess it.</dd></div>)}
+          </dl>
+        </div>
+        <p class="role-proof">Recorded from Linkbot’s role reader (app commit {commit}). Every field stays editable before anything is saved.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band" data-tone="mist" aria-labelledby="differ-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="differ-title">What changes when you hire with Linkbot</h2>
+      </div>
+      <ul class="differ">
+        <li><h3>Evidence, not a score</h3><p>Every candidate or application shows what’s stated about each requirement, what differs and what’s unknown. Ranking is a suggestion; the decision is yours.</p></li>
+        <li><h3>No directory of people</h3><p>There is no searchable talent database. Agencies work their own candidate pool; companies see only what people choose to send.</p></li>
+        <li><h3>Every decision on record</h3><p>Shortlists, interest checks and introductions are separate, logged decisions, with who made them and when.</p></li>
+        <li><h3>Nobody contacted for you</h3><p>Linkbot sends no messages on your behalf and never discloses an agency’s candidate profiles.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="paths" aria-labelledby="paths-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="paths-title">Two ways in, kept separate</h2>
+        <p>Same product, separate authority. An agency works with the candidates it already has; a company works with its own roles and the applications people send. Switching between them never mixes data.</p>
+      </div>
+      <div class="paths">
+        <article class="card path" id="agencies" aria-labelledby="agencies-title">
+          <div class="card-body">
+            <p class="path-kind">Recruiting agencies</p>
+            <h3 id="agencies-title">Find the right people in the pool you already have.</h3>
+            <ol class="path-steps">
+              <li><b>Paste a client brief.</b> Linkbot reads it into a role you can correct: skills, level, market and work mode. What the brief doesn’t say stays unknown.</li>
+              <li><b>Rank your own candidates.</b> Import your pool once; it stays yours and is reused across roles. Every suggestion shows what matches, what conflicts and what is still unknown.</li>
+              <li><b>Rediscover people you already have</b> for each new role, before you add anyone.</li>
+              <li><b>Decide and keep the record.</b> Shortlist, prepare an interest check and log the outreach you do outside Linkbot.</li>
+            </ol>
+            <p class="path-status"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Pilot · invited agencies</span></p>
+            <p class="path-actions"><a class="btn btn-primary" href={app('#/agency')}>Open the agency workspace<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Read a brief first<Icon name="arrow" /></a></p>
+            <p class="path-note">Opening the workspace asks you to sign in with an authorised recruiter account. Linkbot checks the membership on every request.</p>
+          </div>
+        </article>
+        <article class="card path" id="companies" aria-labelledby="companies-title">
+          <div class="card-body">
+            <p class="path-kind">Companies</p>
+            <h3 id="companies-title">Publish roles people can apply to privately.</h3>
+            <ol class="path-steps">
+              <li><b>Describe the role</b> in text or structured fields: requirements, work mode and country.</li>
+              <li><b>Publish after review.</b> A role appears in searches after an independent role-category review.</li>
+              <li><b>Receive deliberate applications.</b> People choose exactly which confirmed details to send. You see what they sent, with a receipt. Names and contact details are not part of an application.</li>
+              <li><b>No profile browsing.</b> Interest and introductions are never inferred from a ranking.</li>
+            </ol>
+            <p class="path-status"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Limited beta · invited organisations</span></p>
+            <p class="path-actions"><a class="btn btn-primary" href={app('#/employer')}>Open the company workspace<Icon name="arrow" /></a></p>
+            <p class="path-note">Opening the workspace asks you to sign in with an account your organisation was invited with.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" data-tone="sand" aria-labelledby="before-title">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2 id="before-title">Before you receive anything</h2>
+        <p>What a company or agency has to do first, and what isn’t available. Stated plainly, so nobody is surprised.</p>
+      </div>
+      <ul class="rules">
+        <li><Mark tone="fit" /><div><h3>You’re invited and you sign in</h3><p>Access is by invitation during the pilot; there is no self-registration. Your organisation membership is checked on every request: navigation alone never grants access.</p></div></li>
+        <li><Mark tone="fit" /><div><h3>People decide what you see</h3><p>A company sees an application only when a person sends one, with the details they chose. An agency sees only its own imported candidates.</p></div></li>
+        <li><Mark tone="unknown" /><div><h3>Private matching isn’t live</h3><p>Being matched privately with people who opted in, and asking them first, is in development. Today no company is matched with Linkbot’s users, and nothing about a person is shared because of a match.</p></div></li>
+        <li><Mark tone="unknown" /><div><h3>No connected ATS or CRM yet</h3><p>Imports stay explicit and reviewable: an agency adds its pool itself. Connecting an existing system isn’t available in the pilot.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band close-hire" aria-labelledby="next-title">
+    <div class="wrap close-grid">
+      <h2 id="next-title">Already invited? Your workspace is one sign-in away.</h2>
+      <p class="hero-actions"><a class="btn btn-primary" href={app('#/agency')}>Agency workspace<Icon name="arrow" /></a><a class="btn btn-secondary" href={app('#/employer')}>Company workspace<Icon name="arrow" /></a></p>
+      <p class="muted close-note">Not invited yet? Linkbot is in a pilot with invited organisations and isn’t taking sign-ups. Looking for work instead? <a href="/">Start here</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-block: clamp(40px, 7vw, 96px) clamp(48px, 7vw, 96px); }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
+  @media (min-width: 64rem) { .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); } }
+  .hero-copy { display: grid; gap: clamp(18px, 2.4vw, 26px); justify-items: start; }
+  .h1-line { display: block; }
+  @media (min-width: 40rem) { .h1-line { white-space: nowrap; } }
+  h1 { font-size: clamp(2.5rem, 1.1rem + 4.4vw, 4.75rem); }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .role { box-shadow: var(--shadow-stage); }
+  .role-text { display: grid; gap: 4px; font-size: 1.125rem; line-height: 1.45; }
+  .role-title { font-size: 1.375rem; font-weight: 620; letter-spacing: -.015em; }
+  .role-read { display: grid; margin-top: 18px; border-top: 2px solid var(--ink); }
+  .role-read > div { display: grid; grid-template-columns: 10rem minmax(0, 1fr); gap: 4px 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: var(--size-small); }
+  .role-read dt { display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-weight: 600; }
+  .role-read dd { margin: 0; font-weight: 620; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; }
+  .role-read dd small { font-size: var(--size-micro); font-weight: 500; color: var(--ink-3); }
+  .role-read > div[data-unknown] dd { font-weight: 500; color: var(--ink-2); }
+  .role-proof { padding: 12px 18px; border-top: 1px solid var(--line); font-size: var(--size-micro); color: var(--ink-3); }
+  .differ { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 32px; margin-top: clamp(28px, 4vw, 40px); }
+  .differ li { display: grid; gap: 8px; align-content: start; padding-top: 16px; border-top: 2px solid var(--ink); }
+  .differ p { font-size: var(--size-small); color: var(--ink-2); }
+  @media (max-width: 64rem) { .differ { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 36rem) { .differ { grid-template-columns: minmax(0, 1fr); } }
+  .paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); margin-top: clamp(28px, 4vw, 44px); }
+  @media (max-width: 56rem) { .paths { grid-template-columns: minmax(0, 1fr); } }
+  .path .card-body { display: grid; gap: 16px; align-content: start; padding: clamp(20px, 3vw, 32px); height: 100%; }
+  .path-kind { font-size: var(--size-micro); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .path h3 { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.9rem); letter-spacing: -.025em; }
+  .path-steps { display: grid; gap: 0; counter-reset: step; }
+  .path-steps li { position: relative; padding: 12px 0 12px 40px; border-top: 1px solid var(--line); font-size: var(--size-small); color: var(--ink-2); counter-increment: step; }
+  .path-steps li::before { content: counter(step); position: absolute; left: 0; top: 12px; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--sun); font-size: var(--size-micro); font-weight: 700; color: var(--ink); }
+  .path-steps b { color: var(--ink); font-weight: 650; }
+  .path-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: auto; }
+  .path-note { font-size: var(--size-micro); color: var(--ink-3); }
+  .rules { display: grid; gap: 0; }
+  .rules li { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 18px 0; border-top: 1px solid var(--line-strong); }
+  .rules li :global(.mark) { margin-top: 6px; }
+  .rules h3 { font-size: 1.125rem; }
+  .rules p { margin-top: 6px; font-size: var(--size-small); color: var(--ink-2); }
+  .close-hire { padding-top: clamp(64px, 8vw, 104px); }
+  .close-grid { display: grid; gap: 20px; justify-items: start; }
+  .close-grid h2 { max-width: 22ch; }
+  .close-note { font-size: var(--size-small); }
+</style>

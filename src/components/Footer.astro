@@ -1,0 +1,42 @@
+---
+import { app } from '../lib/links';
+const year = new Date().getUTCFullYear();
+---
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="/"><span>Linkbot</span></a>
+      <p>Private job search. Say what matters, see what fits, and decide what happens next.</p>
+    </div>
+    <nav aria-labelledby="footer-people">
+      <h2 id="footer-people">For people</h2>
+      <a href={app('#/search')}>Search jobs</a>
+      <a href="/how-it-works">How it works</a>
+      <a href="/privacy">How your privacy works</a>
+      <a href={app('#/saved')}>My radar</a>
+    </nav>
+    <nav aria-labelledby="footer-hiring">
+      <h2 id="footer-hiring">For hiring</h2>
+      <a href="/hiring">Hiring with Linkbot</a>
+      <a href="/hiring#agencies">Recruiting agencies</a>
+      <a href="/hiring#companies">Companies</a>
+    </nav>
+    <p class="footer-legal">© {year} Linkbot. This site sets no cookies and uses no third-party analytics or tracking.</p>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--sand); border-top: 1px solid var(--line); }
+  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding-block: 56px 36px; font-size: var(--size-small); }
+  .footer-brand { display: grid; gap: 10px; align-content: start; }
+  .footer-brand p { max-width: 34ch; color: var(--ink-2); }
+  .brand { display: inline-flex; align-items: center; min-height: var(--target); font-size: 1.625rem; font-weight: 700; letter-spacing: -.035em; line-height: 1; text-decoration: none; justify-self: start; }
+  .brand span { padding: 0 .08em; margin: 0 -.08em; background: linear-gradient(transparent 0 54%, var(--sun) 54% 94%, transparent 94%); }
+  nav { display: grid; align-content: start; justify-items: start; }
+  h2 { margin-bottom: 6px; font-size: var(--size-micro); font-weight: 650; letter-spacing: .02em; color: var(--ink-3); }
+  nav a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink); text-decoration: none; }
+  nav a:hover { text-decoration: underline; }
+  .footer-legal { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line-strong); color: var(--ink-3); }
+  @media (max-width: 48rem) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 22.5rem) { .footer-inner { grid-template-columns: 1fr; } }
+</style>

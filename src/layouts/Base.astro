@@ -1,0 +1,37 @@
+---
+import '@fontsource-variable/instrument-sans/wdth.css';
+import '../styles/palette.css';
+import '../styles/site.css';
+import fontUrl from '@fontsource-variable/instrument-sans/files/instrument-sans-latin-wdth-normal.woff2?url';
+import SEO from '../components/SEO.astro';
+import Masthead from '../components/Masthead.astro';
+import Footer from '../components/Footer.astro';
+interface Props { title: string; description: string; path: string; crumbs?: [string, string][] }
+const { title, description, path, crumbs } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
+    <SEO title={title} description={description} path={path} crumbs={crumbs} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Marks that are drawn on view start undrawn only when scripts run; if they never run,
+         everything is drawn after three seconds anyway. -->
+    <script is:inline>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('drawn')},3000);</script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Masthead current={path} />
+    <main id="main" tabindex="-1"><slot /></main>
+    <Footer />
+    <script>import '../scripts/reveal';</script>
+  </body>
+</html>
+<style is:global>
+  main { outline: none; }
+  .drawn [data-draw] .hl, .drawn .hl[data-draw] { background-size: 100% 100% !important; }
+</style>

@@ -1,0 +1,137 @@
+/* Linkbot's public site — Concept A, "Highlight".
+   One palette with the app (palette.css is copied from the app's generated tokens), one family
+   (Instrument Sans, self-hosted), one signature: the highlighter marks what Linkbot read in a
+   person's words and what a listing actually states. Nothing unknown is ever highlighted.
+   Cobalt is every action and focus. Evidence and product status use the app's three square
+   marks (solid, split, dashed), never colour alone. */
+
+/* Metric-matched fallback while the web font loads (measured against Arial: width 101.6 %,
+   ascent .97, descent .25), so the swap barely moves anything. */
+@font-face { font-family: 'Instrument Sans Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 101.6%; ascent-override: 95.5%; descent-override: 24.6%; line-gap-override: 0%; }
+
+:root {
+  color-scheme: light;
+  --paper: var(--lb-white); --ink: var(--lb-ink); --ink-2: var(--lb-ink-2); --ink-3: var(--lb-ink-3);
+  --cobalt: var(--lb-forest); --cobalt-hover: var(--lb-forest-hover); --cobalt-press: var(--lb-forest-press);
+  --cobalt-wash: var(--lb-forest-wash); --cobalt-line: var(--lb-forest-line); --on-cobalt: var(--lb-on-forest); --on-cobalt-2: var(--lb-on-forest-2);
+  --sun: var(--lb-sun); --sun-wash: var(--lb-sun-wash); --sun-line: var(--lb-sun-line);
+  --line: var(--lb-line); --line-strong: var(--lb-line-strong); --line-ink: var(--lb-line-ink);
+  --sand: var(--lb-sand); --sand-2: var(--lb-sand-2); --mist: var(--lb-mist);
+  --warn: var(--lb-warn); --warn-wash: var(--lb-warn-wash);
+
+  --font: 'Instrument Sans Variable', 'Instrument Sans Fallback', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --size-hero: clamp(2.6rem, 1.15rem + 4.9vw, 5.25rem);
+  --size-h2: clamp(2rem, 1.35rem + 2.6vw, 3.4rem);
+  --size-h3: clamp(1.2rem, 1.1rem + .4vw, 1.4rem);
+  --size-lede: clamp(1.125rem, 1.05rem + .35vw, 1.3125rem);
+  --size-body: 1.0625rem; --size-small: .9375rem; --size-micro: .8125rem;
+  --page: 1240px; --gutter: clamp(16px, 4vw, 40px); --prose: 62ch;
+  --band: clamp(72px, 10vw, 136px);
+  --r-1: 6px; --r-2: 10px; --r-3: 16px;
+  --target: 44px;
+  --ease: cubic-bezier(.2, .7, .2, 1); --fast: 140ms; --base: 220ms; --draw: 620ms;
+  --mark-low: linear-gradient(transparent 0 56%, var(--sun) 56% 92%, transparent 92%);
+  --mark-soft: linear-gradient(transparent 0 58%, var(--sun-wash) 58% 96%, transparent 96%);
+  --shadow-stage: 0 1px 2px rgb(18 26 51 / .06), 0 18px 48px rgb(18 26 51 / .10);
+}
+@media (prefers-reduced-motion: reduce) { :root { --fast: 0ms; --base: 0ms; --draw: 0ms; } }
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 88px; background: var(--paper); }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--size-body)/1.55 var(--font); font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-wrap: break-word; }
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3 { font-weight: 620; line-height: 1.05; text-wrap: balance; }
+h1 { font-size: var(--size-hero); font-weight: 640; letter-spacing: -.045em; line-height: .98; }
+h2 { font-size: var(--size-h2); letter-spacing: -.032em; }
+h3 { font-size: var(--size-h3); letter-spacing: -.016em; line-height: 1.2; }
+p { text-wrap: pretty; }
+a { color: inherit; text-underline-offset: .22em; text-decoration-thickness: 1px; }
+img, svg { display: block; max-width: 100%; }
+button, input { font: inherit; color: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 3px; }
+.sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 100; padding: 12px 16px; border-radius: var(--r-2); background: var(--ink); color: var(--paper); font-weight: 600; text-decoration: none; }
+.skip:focus { top: 12px; }
+::selection { background: var(--sun); color: var(--ink); }
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.band { padding-block: var(--band); }
+.band[data-tone='mist'] { background: var(--mist); }
+.band[data-tone='sand'] { background: var(--sand); }
+.band[data-tone='sun'] { background: var(--sun); }
+.band[data-tone='ink'] { background: var(--ink); color: var(--paper); }
+.band + .band:not([data-tone]) { padding-top: 0; }
+.lede { font-size: var(--size-lede); line-height: 1.5; color: var(--ink-2); max-width: 40em; }
+.prose { max-width: var(--prose); }
+.prose > * + * { margin-top: 1em; }
+.prose p, .muted { color: var(--ink-2); }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: var(--size-micro); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.eyebrow::before { content: ''; width: 18px; height: 8px; background: var(--sun); }
+.section-head { display: grid; gap: 18px; max-width: 46rem; }
+.section-head p { font-size: var(--size-lede); color: var(--ink-2); }
+.split { display: grid; gap: clamp(32px, 5vw, 72px); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 64rem) { .split { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; } .split[data-flip] { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+.stack { display: grid; gap: 20px; }
+
+/* ── The highlighter ───────────────────────────────────────────────────── */
+.hl { color: inherit; background: var(--mark-low) no-repeat 0 0 / 100% 100%; -webkit-box-decoration-break: clone; box-decoration-break: clone; padding: 0 .06em; margin: 0 -.06em; }
+.hl[data-soft] { background-image: var(--mark-soft); }
+/* Drawn once, left to right, when it comes into view (js adds .is-in); never hides the words. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-draw] .hl, .js .hl[data-draw] { background-size: 0% 100%; transition: background-size var(--draw) var(--ease); }
+  .js [data-draw].is-in .hl, .js .hl[data-draw].is-in { background-size: 100% 100%; }
+  .js [data-draw].is-in .hl:nth-of-type(2) { transition-delay: 160ms; }
+  .js [data-draw].is-in .hl:nth-of-type(3) { transition-delay: 320ms; }
+  .js [data-draw].is-in .hl:nth-of-type(4) { transition-delay: 480ms; }
+  .js [data-draw].is-in .hl:nth-of-type(5) { transition-delay: 640ms; }
+}
+.unused { color: var(--ink-2); text-decoration: underline dashed var(--ink-3); text-decoration-thickness: 1.5px; text-underline-offset: .28em; }
+
+/* ── Buttons and links ─────────────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border: 1px solid transparent; border-radius: var(--r-2);
+  font-size: 1rem; font-weight: 650; line-height: 1.2; text-align: center; text-decoration: none; transition: background var(--fast) var(--ease), border-color var(--fast), color var(--fast); }
+.btn svg { flex: none; }
+.btn-primary { background: var(--cobalt); color: var(--on-cobalt); }
+.btn-primary:hover { background: var(--cobalt-hover); }
+.btn-primary:active { background: var(--cobalt-press); }
+.btn-primary:focus-visible { outline-color: var(--ink); }
+.btn-secondary { background: var(--paper); color: var(--ink); border-color: var(--line-ink); }
+.btn-secondary:hover { border-color: var(--ink); background: var(--sand); }
+.btn-ink { background: var(--ink); color: var(--paper); }
+.btn-ink:hover { background: var(--ink-2); }
+.btn[data-size='sm'] { min-height: var(--target); padding: 0 16px; font-size: var(--size-small); }
+.link { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); font-weight: 650; color: var(--cobalt); text-decoration: underline; text-decoration-color: var(--cobalt-line); }
+.link:hover { text-decoration-color: currentColor; }
+.link svg { flex: none; }
+
+/* ── Evidence and status marks (the app's three squares) ──────────────── */
+.mark { flex: none; color: var(--ink); }
+.mark[data-tone='unknown'] { color: var(--ink-3); }
+.status { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; min-height: 26px; padding: 3px 10px; border-radius: var(--r-1); font-size: var(--size-micro); font-weight: 650; line-height: 1.3; }
+.status[data-tone='live'] { background: var(--cobalt-wash); color: var(--cobalt); }
+.status[data-tone='live'] .mark { color: var(--cobalt); }
+.status[data-tone='built'] { background: var(--sand-2); color: var(--ink); }
+.status[data-tone='next'] { background: var(--paper); color: var(--ink-2); outline: 1px dashed var(--line-ink); outline-offset: -1px; }
+.status[data-tone='next'] .mark { color: var(--ink-3); }
+
+/* ── Criteria chips: the person's words as Linkbot read them ──────────── */
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 4px 12px; border: 1px solid var(--sun-line); border-radius: var(--r-2); background: var(--sun-wash); font-size: var(--size-small); font-weight: 600; line-height: 1.25; }
+.chip small { padding-left: 8px; border-left: 1px solid var(--sun-line); font-size: var(--size-micro); font-weight: 560; color: var(--ink-2); }
+.chip[data-level='must'], .chip[data-level='never'] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.chip[data-level='must'] small, .chip[data-level='never'] small { color: var(--paper); border-left-color: rgb(255 255 255 / .4); }
+
+/* ── Cards (paper objects) ──────────────────────────────────────────────── */
+.card { background: var(--paper); border: 1px solid var(--line-strong); border-radius: var(--r-3); }
+.card-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
+.card-body { padding: 18px; }
+
+@media (forced-colors: active) {
+  .hl, .chip { forced-color-adjust: none; background: Mark; color: MarkText; border-color: MarkText; }
+  .btn { border: 1px solid ButtonText; }
+}

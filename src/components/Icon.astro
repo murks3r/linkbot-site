@@ -1,0 +1,12 @@
+---
+interface Props { name: 'arrow' | 'down' | 'check' | 'close' | 'search' | 'out'; size?: number }
+const { name, size = 16 } = Astro.props;
+---
+<svg class="icon" width={size} height={size} viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true" focusable="false">
+  {name === 'arrow' && <path d="M2 8h12M9 3l5 5-5 5" />}
+  {name === 'down' && <path d="M4 6l4 4 4-4" />}
+  {name === 'check' && <path d="M3 8.5l3 3 7-7" />}
+  {name === 'close' && <path d="M3 3l10 10M13 3 3 13" />}
+  {name === 'search' && <><circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3.5 3.5" /></>}
+  {name === 'out' && <path d="M6 3h7v7M13 3 4 12" />}
+</svg>
