@@ -175,6 +175,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
     await rows.nth(2).click();
     check(await page.locator('[data-listing] mark.is-fit, [data-listing] mark.is-tradeoff').count() === 0, 'nothing is highlighted for a criterion the listing does not state');
     check(/doesn’t mention management/.test(await page.locator('[data-listing] [data-status]').innerText()), 'the status explains the unknown');
+    report.journeys.listing = 'stated, differs, not stated';
 
     // Demonstration 3: the count follows the last visit and pausing.
     const count = () => page.locator('[data-watch] [data-count]').innerText();
@@ -185,12 +186,14 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
     await visit('Monday').click();
     await page.locator('[data-watch]').getByRole('button', { name: 'Pause from Thursday' }).click();
     check(await count() === '2' && await page.locator('[data-watch] [data-paused-note]').isVisible(), 'pausing stops the checks from Thursday');
+    report.journeys.watching = 'last visit, pause';
 
     // Demonstration 4: five separate decisions, each with its status.
     const steps = page.getByRole('tablist', { name: 'Five separate decisions' }).getByRole('tab');
     check(await steps.count() === 5, 'five decisions');
     await steps.nth(3).click();
     check(/Built, tested in staging/.test(await page.locator('#step-panel-shared').innerText()), 'sharing states its status');
+    report.journeys.decisions = 'five steps, status';
     await context.close();
 
     // ── 3. Crawl files ──

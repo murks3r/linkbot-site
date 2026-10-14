@@ -42,17 +42,17 @@ const EXAMPLES = ['Product designer, hybrid', 'Data engineer, remote', 'Site rel
       </div>
       <ol class="shift">
         <li data-draw>
-          <span class="shift-benefit">Less effort</span>
+          <h3 class="shift-benefit">Less effort</h3>
           <p class="shift-old"><s>The same search, typed into one site after another, every week.</s></p>
           <p class="shift-new"><span class="hl">Say it once.</span> Linkbot reads current listings for you, merges copies of the same job into one, and can keep checking a direction you save.</p>
         </li>
         <li data-draw>
-          <span class="shift-benefit">Better understanding</span>
+          <h3 class="shift-benefit">Better understanding</h3>
           <p class="shift-old"><s>A list of matches, and no idea why each one is there.</s></p>
           <p class="shift-new"><span class="hl">See the reasons.</span> Each listing shows what it states about your words, what it states differently and what it doesn’t say, with its source and the day it was checked.</p>
         </li>
         <li data-draw>
-          <span class="shift-benefit">More control</span>
+          <h3 class="shift-benefit">More control</h3>
           <p class="shift-old"><s>Make yourself visible, and hope the right people find you.</s></p>
           <p class="shift-new"><span class="hl">Stay private.</span> There is no public profile and no directory of people. Nothing about you reaches an employer unless you decide it should.</p>
         </li>
@@ -99,8 +99,7 @@ const EXAMPLES = ['Product designer, hybrid', 'Data engineer, remote', 'Site rel
 
   <!-- 5. Demonstration: watching -->
   <section class="band" data-tone="sand" id="watching" aria-labelledby="watching-title">
-    <div class="wrap split" data-flip>
-      <WatchDemo />
+    <div class="wrap split watch-split">
       <div class="section-head">
         <p class="eyebrow">How it saves you the next search</p>
         <h2 id="watching-title">Save a direction. Come back to what’s new.</h2>
@@ -114,6 +113,7 @@ const EXAMPLES = ['Product designer, hybrid', 'Data engineer, remote', 'Site rel
         <p class="ladder-status-line"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Built, being proven in testing</span></p>
         <p class="aside">Watching needs a free account, because what you save has to be kept somewhere only you can open. Searching never does.</p>
       </div>
+      <WatchDemo />
     </div>
   </section>
 
@@ -172,8 +172,8 @@ const EXAMPLES = ['Product designer, hybrid', 'Data engineer, remote', 'Site rel
 
   .shift { display: grid; gap: 0; margin-top: clamp(32px, 4vw, 48px); border-top: 2px solid var(--ink); }
   .shift li { display: grid; grid-template-columns: 12rem minmax(0, 1fr) minmax(0, 1.25fr); gap: 12px clamp(20px, 3vw, 40px); align-items: baseline; padding: clamp(20px, 3vw, 28px) 0; border-bottom: 1px solid var(--line-strong); }
-  .shift-benefit { font-size: var(--size-micro); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
-  .shift-old { font-size: var(--size-small); color: var(--ink-3); }
+  .shift-benefit { font-size: 1.25rem; font-weight: 650; letter-spacing: -.015em; color: var(--ink); }
+  .shift-old { font-size: 1rem; color: var(--ink-3); }
   .shift-old s { text-decoration: none; background: linear-gradient(var(--ink-3), var(--ink-3)) no-repeat 0 58% / 100% 1.5px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
   @media (prefers-reduced-motion: no-preference) {
     .js .shift li .shift-old s { background-size: 0% 1.5px; transition: background-size 520ms var(--ease); }
@@ -192,7 +192,13 @@ const EXAMPLES = ['Product designer, hybrid', 'Data engineer, remote', 'Site rel
   @media (max-width: 56rem) { .facts-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 30rem) { .facts-row { grid-template-columns: minmax(0, 1fr); } }
   .aside { font-size: var(--size-small); color: var(--ink-3) !important; }
-  @media (min-width: 64rem) { .sticky-head { position: sticky; top: 104px; } }
+  @media (min-width: 64rem) {
+    .sticky-head { position: sticky; top: 104px; }
+    /* Watching: the explanation reads first (and comes first for screen readers and on phones);
+       on wide screens it sits to the right of the week. It holds no controls, so focus order is unchanged. */
+    .watch-split { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .watch-split > .section-head { order: 2; }
+  }
   #results .section-head, #control .section-head, #today .section-head { margin-bottom: clamp(28px, 4vw, 44px); }
   .cta-row { margin-top: 28px; }
   .ladder-status-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-size: inherit !important; }
