@@ -40,7 +40,8 @@
   ],
   "git": {
     "deploymentEnabled": {
-      "design/concept-a-reinvention": false
+      "design/concept-a-reinvention": false,
+      "design/concept-a3": false
     }
   }
 }
