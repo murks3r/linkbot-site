@@ -3,8 +3,7 @@ import Base from '../layouts/Base.astro';
 import SearchForm from '../components/SearchForm.astro';
 import Clarity from '../components/Clarity.astro';
 import Icon from '../components/Icon.astro';
-/* Every example is read in full by the app's interpreter (nothing in them goes unused). */
-const EXAMPLES = ['Backend engineer, hybrid', 'Engineering manager, more mentoring', 'Data analyst, remote, no on-call'];
+import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
 ---
 <Base title="Linkbot: find work that fits, keep your privacy"
   description="Say what matters in a few words. Linkbot reads current job listings against them and shows why each one fits, or doesn’t. No account needed."
@@ -49,7 +48,7 @@ const EXAMPLES = ['Backend engineer, hybrid', 'Engineering manager, more mentori
   <section class="band start" data-stage="start" aria-labelledby="start-title">
     <div class="wrap start-inner">
       <h2 id="start-title">What would make your next move worth it?</h2>
-      <SearchForm id="q-start" size="monumental" placeholder="Product manager, more research" examples={EXAMPLES} />
+      <SearchForm id="q-start" size="monumental" placeholder={START_PLACEHOLDER} examples={START_EXAMPLES} />
       <p class="start-hiring">Hiring? <a href="/hiring">Linkbot works for recruiting agencies and companies too</a>.</p>
     </div>
   </section>

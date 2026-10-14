@@ -12,6 +12,17 @@ export const reading = (id: string) => {
   return found;
 };
 
+/** The phrases the site offers as examples and placeholders, each read in full by the app's
+    interpreter (recorded with the readings; tests/data.test.mjs checks nothing goes unused). */
+export const example = (id: string) => {
+  const found = record.examples.find(e => e.id === id);
+  if (!found) throw Error(`no recorded example ${id}`);
+  return found.text;
+};
+export const HERO_PLACEHOLDER = example('hero-placeholder');
+export const START_PLACEHOLDER = example('start-placeholder');
+export const START_EXAMPLES = ['start-1', 'start-2', 'start-3'].map(example);
+
 export const LEVEL: Record<string, string> = { must: 'Must', prefer: 'Prefer', open_to: 'Open to', avoid: 'Avoid', never: 'Never' };
 export const KIND: Record<string, string> = { role_direction: 'Role', work_mode: 'Work mode', task: 'Work', location: 'Place' };
 export const REASON: Record<string, string> = {

@@ -50,3 +50,12 @@ test('the homepage story is read in full by the interpreter', () => {
   assert.deepEqual(story.criteria.map(c => `${c.dimension}:${c.label}:${c.level}`),
     ['role_direction:Product designer:prefer', 'work_mode:Hybrid:prefer', 'task:more research:prefer', 'task:agency work:avoid']);
 });
+
+test('every example and placeholder the site offers is read in full', () => {
+  assert.deepEqual(record.examples.map(e => e.id), ['hero-placeholder', 'start-placeholder', 'start-1', 'start-2', 'start-3']);
+  for (const e of record.examples) {
+    assert.equal(e.unused.length, 0, `${e.id}: “${e.text}” leaves words unused`);
+    assert.ok(e.criteria.length >= 2, `${e.id}: “${e.text}” reads to fewer than two criteria`);
+    assert.ok(e.criteria.some(c => c.dimension === 'role_direction'), `${e.id}: “${e.text}” names no role Linkbot reads`);
+  }
+});

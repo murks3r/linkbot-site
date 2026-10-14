@@ -4,9 +4,10 @@
    removes them from the address and searches in memory. The input has no name, so a browser
    without scripts opens the app's search without sending the words anywhere. */
 import { app, searchWith } from '../lib/links';
+import { HERO_PLACEHOLDER } from '../data/content';
 import Icon from './Icon.astro';
 interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental'; label?: string; placeholder?: string }
-const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = 'Data engineer, remote, no on-call' } = Astro.props;
+const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = HERO_PLACEHOLDER } = Astro.props;
 ---
 <form class="search" data-size={size} action={app('#/search')} method="get" data-handoff={app('#/search')} role="search" aria-label="Search jobs in Linkbot">
   <label class="search-label" for={id}>{label}</label>

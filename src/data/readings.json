@@ -1,6 +1,6 @@
 {
   "generator": "murks3r/linkbot tools/site/readings.ts",
-  "commit": "36385b4c9ca6d5a59e60b18a0a7c97bd822c8115",
+  "commit": "51f32a1f8d21ab4de11febc638ebb63425859cca",
   "interpreterChanged": false,
   "readings": [
     {
@@ -339,6 +339,209 @@
           "level": "avoid",
           "hardAllowed": false,
           "quote": "no agency work"
+        }
+      ],
+      "unused": []
+    }
+  ],
+  "examples": [
+    {
+      "id": "hero-placeholder",
+      "text": "Data engineer, remote, no on-call",
+      "spans": [
+        {
+          "start": 0,
+          "end": 13,
+          "tone": "read",
+          "quote": "Data engineer"
+        },
+        {
+          "start": 15,
+          "end": 21,
+          "tone": "read",
+          "quote": "remote"
+        },
+        {
+          "start": 23,
+          "end": 33,
+          "tone": "read",
+          "quote": "no on-call"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Data engineer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Data engineer"
+        },
+        {
+          "label": "Remote",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "remote"
+        },
+        {
+          "label": "on-call",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no on-call"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "start-placeholder",
+      "text": "Product manager, more research",
+      "spans": [
+        {
+          "start": 0,
+          "end": 15,
+          "tone": "read",
+          "quote": "Product manager"
+        },
+        {
+          "start": 17,
+          "end": 30,
+          "tone": "read",
+          "quote": "more research"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Product manager",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Product manager"
+        },
+        {
+          "label": "more research",
+          "dimension": "task",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "more research"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "start-1",
+      "text": "Backend engineer, hybrid",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "tone": "read",
+          "quote": "Backend engineer"
+        },
+        {
+          "start": 18,
+          "end": 24,
+          "tone": "read",
+          "quote": "hybrid"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Backend engineer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Backend engineer"
+        },
+        {
+          "label": "Hybrid",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "hybrid"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "start-2",
+      "text": "Engineering manager, more mentoring",
+      "spans": [
+        {
+          "start": 0,
+          "end": 19,
+          "tone": "read",
+          "quote": "Engineering manager"
+        },
+        {
+          "start": 21,
+          "end": 35,
+          "tone": "read",
+          "quote": "more mentoring"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Engineering manager",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Engineering manager"
+        },
+        {
+          "label": "more mentoring",
+          "dimension": "task",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "more mentoring"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "start-3",
+      "text": "Data analyst, remote, no on-call",
+      "spans": [
+        {
+          "start": 0,
+          "end": 12,
+          "tone": "read",
+          "quote": "Data analyst"
+        },
+        {
+          "start": 14,
+          "end": 20,
+          "tone": "read",
+          "quote": "remote"
+        },
+        {
+          "start": 22,
+          "end": 32,
+          "tone": "read",
+          "quote": "no on-call"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Data analyst",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Data analyst"
+        },
+        {
+          "label": "Remote",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "remote"
+        },
+        {
+          "label": "on-call",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no on-call"
         }
       ],
       "unused": []
