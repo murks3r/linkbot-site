@@ -1,8 +1,9 @@
 ---
-/* Demonstration 2: one listing, explained. The listing is an example (and says so); the way it
+/* Demonstration: one listing, explained. The listing is an example (and says so); the way it
    is read is the app's: what the listing states about each criterion (solid), what it states
    differently (split) and what it doesn't say (dashed, never counted as a fit), each with where
-   the answer came from. Choosing a criterion highlights its evidence in the listing text. */
+   the answer came from. Choosing a criterion brings its evidence forward: the rest of the
+   listing softens and the words it came from stay in full ink. Nothing is marked. */
 import Mark from './Mark.astro';
 import { LISTING } from '../data/content';
 ---
@@ -10,7 +11,7 @@ import { LISTING } from '../data/content';
   <article class="card listing-paper" aria-labelledby="listing-title">
     <p class="card-label"><span>Example listing</span><span>{LISTING.checked}</span></p>
     <div class="card-body">
-      <h3 id="listing-title" class="listing-title"><mark data-ev="role" class="is-fit">{LISTING.title}</mark></h3>
+      <h3 id="listing-title" class="listing-title"><mark data-ev="role">{LISTING.title}</mark></h3>
       <p class="listing-facts">{LISTING.org} · {LISTING.place} · {LISTING.hours} · {LISTING.posted}</p>
       <div class="listing-text">
         <p>We’re looking for a senior backend engineer to own the services behind our booking platform: APIs, data pipelines and the reliability work that keeps them fast.</p>
@@ -30,7 +31,7 @@ import { LISTING } from '../data/content';
         </button>
       </li>)}
     </ul>
-    <p class="listing-status" role="status" data-status>Highlighted in the listing: where it states “Senior backend engineer”.</p>
+    <p class="listing-status" role="status" data-status>In the listing: “Senior Backend Engineer”, in the title.</p>
   </div>
 </div>
 
@@ -39,20 +40,24 @@ import { LISTING } from '../data/content';
   @media (min-width: 64rem) { .listing { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; } }
   .listing-title { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.75rem); font-weight: 620; letter-spacing: -.02em; }
   .listing-facts { margin-top: 6px; font-size: var(--size-small); color: var(--ink-2); }
-  .listing-text { display: grid; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 2px solid var(--ink); font-size: 1rem; line-height: 1.65; }
+  .listing-text { display: grid; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1.5px solid var(--ink); font-size: 1rem; line-height: 1.65; }
   .listing-source { margin-top: 18px; font-size: var(--size-micro); color: var(--ink-3); }
-  mark { color: inherit; background: none; transition: background-color var(--base), box-shadow var(--base); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-  mark.is-fit { background: var(--sun); }
-  mark.is-tradeoff { background: var(--warn-wash); box-shadow: inset 0 -2px 0 var(--warn); }
+  /* Focus, not marking: while a criterion is chosen, the listing steps back to softened ink and the
+     words its answer came from stay in full ink (both legible, 5:1 and more). */
+  .listing-paper { --body: var(--ink); }
+  .listing-paper[data-focus] { --body: var(--ink-3); }
+  .listing-title, .listing-text { color: var(--body); transition: color var(--base) var(--ease); }
+  mark { color: inherit; background: none; transition: color var(--base) var(--ease); }
+  mark.is-on { color: var(--ink); }
   .listing-read { display: grid; gap: 10px; }
   .listing-read-head { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: 16px; padding: 0 14px 8px; border-bottom: 1px solid var(--ink); font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
   .listing-rows { display: grid; gap: 8px; }
-  .listing-row { width: 100%; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: 16px; align-items: start; min-height: 64px; padding: 14px; border: 1px solid var(--line-strong); border-radius: var(--r-2); background: var(--paper); text-align: left; }
+  .listing-row { width: 100%; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: 16px; align-items: start; min-height: 64px; padding: 14px 16px; border: 1px solid var(--line-strong); border-radius: var(--r-2); background: var(--surface); text-align: left; transition: border-color var(--fast), background-color var(--fast); }
   .listing-row:hover { border-color: var(--ink); }
-  .listing-row[aria-pressed='true'] { border-color: var(--ink); box-shadow: inset 4px 0 0 var(--ink); }
+  .listing-row[aria-pressed='true'] { border-color: var(--green); background: var(--green-wash); }
   .listing-ask, .listing-says > span { display: grid; gap: 2px; min-width: 0; }
   .listing-ask { display: block; }
-  .listing-ask b { display: inline; font-weight: 620; background: var(--mark-low); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .listing-ask b { display: inline; font-weight: 650; }
   .listing-ask small { display: block; margin-top: 2px; }
   .listing-row small { font-size: var(--size-micro); color: var(--ink-2); line-height: 1.4; }
   .listing-says { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 10px; align-items: baseline; }
@@ -67,18 +72,20 @@ import { LISTING } from '../data/content';
 
 <script>
   const SAY: Record<string, string> = {
-    role: 'Highlighted in the listing: where it states “Senior backend engineer”.',
-    mode: 'Highlighted in the listing: it states a hybrid role, which differs from Remote.',
-    manage: 'Nothing is highlighted: the listing doesn’t mention management at all. Linkbot shows that as not stated, never as a fit.',
+    role: 'In the listing: “Senior Backend Engineer”, in the title.',
+    mode: 'In the listing: it states a hybrid role, which differs from Remote.',
+    manage: 'The listing doesn’t mention management at all. Linkbot shows that as not stated, never as a fit.',
   };
   for (const demo of document.querySelectorAll<HTMLElement>('[data-listing]')) {
     const rows = [...demo.querySelectorAll<HTMLButtonElement>('[data-row]')];
     const status = demo.querySelector<HTMLElement>('[data-status]');
     const choose = (row: HTMLButtonElement) => {
       rows.forEach(r => r.setAttribute('aria-pressed', String(r === row)));
-      demo.querySelectorAll('mark').forEach(m => m.classList.remove('is-fit', 'is-tradeoff'));
-      const mark = demo.querySelector(`mark[data-ev="${row.dataset.row}"]`);
-      if (mark && row.dataset.tone !== 'unknown') mark.classList.add(row.dataset.tone === 'fit' ? 'is-fit' : 'is-tradeoff');
+      demo.querySelectorAll('mark').forEach(m => m.classList.remove('is-on'));
+      const mark = demo.querySelector(`mark[data-ev="${row.dataset.row}"]`), paper = demo.querySelector<HTMLElement>('.listing-paper');
+      const stated = !!mark && row.dataset.tone !== 'unknown';
+      if (stated) mark.classList.add('is-on');
+      paper?.toggleAttribute('data-focus', stated);
       if (status) status.textContent = SAY[row.dataset.row ?? ''] ?? '';
     };
     rows.forEach(row => row.addEventListener('click', () => choose(row)));

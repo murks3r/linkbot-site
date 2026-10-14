@@ -7,7 +7,7 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
 ---
 <header class="masthead" data-masthead data-quiet={quiet ? '' : undefined}>
   <div class="wrap masthead-inner">
-    <a class="brand" href="/"><span>Linkbot</span></a>
+    <a class="brand" href="/">Linkbot</a>
     <nav class="nav" aria-label="Main">
       {NAV.map(([href, label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
     </nav>
@@ -25,27 +25,28 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
 <style>
   .masthead { position: sticky; top: 0; z-index: 30; background: var(--paper); border-bottom: 1px solid transparent; transition: border-color var(--base); }
   .masthead[data-scrolled] { border-bottom-color: var(--line); }
-  /* Home: nothing in the header competes with the hero's search; the action returns once it has scrolled away. */
-  /* The action keeps its box (nothing moves); until the hero has scrolled away it is quiet text. */
+  /* Home: nothing in the header competes with the hero's search. The action keeps its box (nothing
+     moves) and is quiet text until the hero's search has scrolled away. */
   .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta { background: transparent; color: var(--ink-2); }
-  .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
-  .masthead-cta { transition: background var(--base) var(--ease), color var(--base); }
-  .masthead-inner { display: flex; align-items: center; gap: 12px clamp(20px, 3vw, 40px); min-height: 72px; }
-  .brand { display: inline-flex; align-items: center; min-height: var(--target); font-size: 1.625rem; font-weight: 700; letter-spacing: -.035em; line-height: 1; text-decoration: none; color: var(--ink); }
-  .brand span { padding: 0 .08em; margin: 0 -.08em; background: linear-gradient(transparent 0 54%, var(--sun) 54% 94%, transparent 94%); }
-  .nav { display: flex; gap: 4px clamp(18px, 2.4vw, 32px); margin-left: auto; }
-  .nav a { position: relative; display: inline-flex; align-items: center; min-height: var(--target); font-size: var(--size-small); font-weight: 580; color: var(--ink-2); text-decoration: none; }
+  .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 4px; }
+  .masthead-cta { transition: background-color var(--base) var(--ease), color var(--base); }
+  .masthead-inner { display: flex; align-items: center; gap: 12px clamp(20px, 3vw, 44px); min-height: 72px; }
+  .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-stretch: 112%; font-size: 1.5rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; text-decoration: none; color: var(--ink); }
+  .nav { display: flex; gap: 4px clamp(20px, 2.6vw, 36px); margin-left: auto; }
+  .nav a { position: relative; display: inline-flex; align-items: center; min-height: var(--target); font-size: var(--size-small); font-weight: 560; color: var(--ink-2); text-decoration: none; transition: color var(--fast); }
   .nav a:hover { color: var(--ink); }
   .nav a[aria-current='page'] { color: var(--ink); font-weight: 650; }
-  .nav a[aria-current='page']::after { content: ''; position: absolute; left: 0; right: 0; bottom: 6px; height: 2px; background: var(--cobalt); }
+  .nav a[aria-current='page']::after { content: ''; position: absolute; left: 0; right: 0; bottom: 8px; height: 1.5px; background: var(--green); }
   .menu { display: none; position: relative; }
-  .menu summary { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); padding: 0 14px; border: 1px solid var(--line-strong); border-radius: var(--r-2); font-size: var(--size-small); font-weight: 620; cursor: pointer; list-style: none; }
+  .menu summary { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--pill); font-size: var(--size-small); font-weight: 600; cursor: pointer; list-style: none; transition: border-color var(--fast); }
   .menu summary::-webkit-details-marker { display: none; }
-  .menu[open] summary { border-color: var(--ink); }
-  .menu-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(280px, calc(100vw - 32px)); padding: 6px; display: grid; background: var(--paper); border: 1px solid var(--line-strong); border-radius: var(--r-3); box-shadow: var(--shadow-stage); }
-  .menu-panel a { display: flex; align-items: center; min-height: var(--target); padding: 0 12px; border-radius: var(--r-2); font-weight: 580; text-decoration: none; }
+  .menu summary :global(.icon) { transition: transform var(--base) var(--ease); }
+  .menu[open] summary { border-color: var(--green); }
+  .menu[open] summary :global(.icon) { transform: rotate(180deg); }
+  .menu-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(280px, calc(100vw - 32px)); padding: 6px; display: grid; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-3); box-shadow: var(--shadow-float); }
+  .menu-panel a { display: flex; align-items: center; min-height: var(--target); padding: 0 14px; border-radius: var(--r-2); font-weight: 560; text-decoration: none; }
   .menu-panel a:hover { background: var(--sand); }
-  .menu-panel a[aria-current='page'] { background: var(--cobalt-wash); color: var(--cobalt); }
+  .menu-panel a[aria-current='page'] { background: var(--green-wash); font-weight: 650; }
   @media (max-width: 52rem) {
     .masthead-inner { min-height: 64px; }
     .nav { display: none; }
@@ -53,10 +54,10 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
     .menu { display: block; }
   }
   @media (max-width: 22.5rem) {
-    .brand { font-size: 1.4rem; }
+    .brand { font-size: 1.3rem; }
     .menu summary span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
     .menu summary { padding: 0 12px; }
-    .masthead-cta { padding: 0 12px; }
+    .masthead-cta { padding: 0 14px; }
   }
 </style>
 

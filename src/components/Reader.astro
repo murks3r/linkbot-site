@@ -1,11 +1,13 @@
 ---
-/* Demonstration 1: from everyday words to criteria you can see. Every panel is a reading the
+/* Demonstration: from everyday words to criteria you can see. Every panel is a reading the
    app's own interpreter produced (src/data/readings.json, with the commit that produced it);
-   nothing here interprets anything. The Must switch shows the one decision Linkbot leaves to
-   the person: a phrase becomes a hard requirement only when they say so, and only where the
-   listing can be checked for it (work mode here; places in the app). */
+   nothing here interprets anything. What was read is set in full ink and weight, what can't be
+   used is softened: no marks. The Must switch shows the one decision Linkbot leaves to the
+   person: a phrase becomes a hard requirement only when they say so, and only where the listing
+   can be checked for it (work mode here; places in the app). */
 import Icon from './Icon.astro';
-import { readings, readingCommit, LEVEL, KIND, REASON, LEVEL_HINT } from '../data/content';
+import { readings as recorded, readingCommit, LEVEL, KIND, REASON, LEVEL_HINT } from '../data/content';
+const readings = recorded.filter(r => r.id !== 'story');  // the homepage story has its own stage
 import { searchWith } from '../lib/links';
 const pieces = (r: (typeof readings)[number]) => {
   const out: { text: string; tone: string | null }[] = [];
@@ -19,9 +21,9 @@ const pieces = (r: (typeof readings)[number]) => {
   <div class="reader-tabs" role="tablist" aria-label="Example sentences">
     {readings.map((r, index) => <button type="button" role="tab" id={`reader-tab-${r.id}`} aria-controls={`reader-panel-${r.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1}>{r.label}</button>)}
   </div>
-  {readings.map((r, index) => <section class="reader-panel" role="tabpanel" id={`reader-panel-${r.id}`} aria-labelledby={`reader-tab-${r.id}`} hidden={index !== 0} data-draw>
+  {readings.map((r, index) => <section class="reader-panel" role="tabpanel" id={`reader-panel-${r.id}`} aria-labelledby={`reader-tab-${r.id}`} hidden={index !== 0}>
     <p class="reader-label">You write</p>
-    <p class="reader-words">{pieces(r).map(p => p.tone === 'read' ? <span class="hl">{p.text}</span> : p.tone ? <span class="unused">{p.text}</span> : p.text)}</p>
+    <p class="reader-words">{pieces(r).map(p => p.tone === 'read' ? <b class="read">{p.text}</b> : p.tone ? <span class="unused">{p.text}</span> : p.text)}</p>
     <p class="reader-label">Linkbot reads</p>
     {r.criteria.length > 0 ? <ul class="reader-criteria">
       {r.criteria.map(c => <li data-criterion>
@@ -46,27 +48,29 @@ const pieces = (r: (typeof readings)[number]) => {
 <style>
   .reader { display: grid; gap: 0; border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--paper); color: var(--ink); overflow: clip; }
   .reader-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px; border-bottom: 1px solid var(--line); background: var(--sand); }
+  .reader-words { color: var(--ink-3); }
+  .reader-words .read { color: var(--ink); font-weight: 620; }
   @media (max-width: 40rem) {
     /* Phones: one scrolling row of examples instead of three wrapped rows. */
     .reader-tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; scroll-padding-inline: 12px; }
     .reader-tabs::-webkit-scrollbar { display: none; }
     .reader-tabs button { flex: none; }
   }
-  .reader-tabs button { min-height: var(--target); padding: 0 14px; border: 1px solid var(--line-strong); border-radius: var(--r-2); background: var(--paper); font-size: var(--size-small); font-weight: 600; color: var(--ink-2); }
+  .reader-tabs button { min-height: var(--target); padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--pill); background: var(--surface); font-size: var(--size-small); font-weight: 600; color: var(--ink-2); transition: border-color var(--fast), color var(--fast), background-color var(--fast); }
   .reader-tabs button:hover { border-color: var(--ink); color: var(--ink); }
-  .reader-tabs button[aria-selected='true'] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .reader-tabs button[aria-selected='true'] { background: var(--green); border-color: var(--green); color: var(--on-green); }
   .reader-panel { display: grid; gap: 10px; padding: clamp(20px, 3vw, 32px); }
   .reader-label { font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
   .reader-label + .reader-words { margin-bottom: 14px; }
-  .reader-words { font-size: clamp(1.3rem, 1.1rem + .9vw, 1.75rem); font-weight: 560; line-height: 1.38; letter-spacing: -.015em; }
+  .reader-words { font-family: var(--display); font-stretch: 104%; font-size: clamp(1.3rem, 1.1rem + .9vw, 1.75rem); font-weight: 420; line-height: 1.38; letter-spacing: -.015em; }
   .reader-criteria { display: grid; }
   .reader-criteria li { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) auto auto; align-items: center; gap: 6px 12px; padding: 10px 0; border-top: 1px solid var(--line); }
   .reader-criteria li:last-child { border-bottom: 1px solid var(--line); }
   .reader-kind { font-size: var(--size-micro); font-weight: 600; color: var(--ink-3); }
   .reader-criteria b { font-weight: 620; overflow-wrap: anywhere; }
-  .reader-must { min-height: var(--target); padding: 0 12px; border: 1px dashed var(--line-ink); border-radius: var(--r-2); background: var(--paper); font-size: var(--size-micro); font-weight: 650; }
+  .reader-must { min-height: var(--target); padding: 0 14px; border: 1px dashed var(--line-ink); border-radius: var(--pill); background: var(--surface); font-size: var(--size-micro); font-weight: 650; transition: border-color var(--fast), background-color var(--fast); }
   .reader-must:hover { border-style: solid; border-color: var(--ink); }
-  .reader-must[aria-pressed='true'] { border-style: solid; border-color: var(--ink); background: var(--sand); }
+  .reader-must[aria-pressed='true'] { border-style: solid; border-color: var(--green); background: var(--green-wash); }
   .reader-hint { grid-column: 2 / -1; font-size: var(--size-micro); color: var(--ink-2); }
   .reader-none { padding: 14px 16px; border: 1px dashed var(--line-ink); border-radius: var(--r-2); font-weight: 600; }
   .reader-unused { display: grid; gap: 6px; margin-top: 6px; }
@@ -86,8 +90,8 @@ const pieces = (r: (typeof readings)[number]) => {
 
 <script>
   /* Tabs (WAI-ARIA tabs pattern, automatic activation): arrow keys, Home and End move between
-     example sentences; the chosen panel's marks draw again. The Must switch changes only this
-     demonstration, exactly as the level menu does in the app. */
+     example sentences. The Must switch changes only this demonstration, exactly as the level menu
+     does in the app. */
   const HINT = { must: 'Hides listings that state otherwise. Listings that don’t say stay, marked.', prefer: 'Shown higher when the listing states it.' };
   for (const reader of document.querySelectorAll<HTMLElement>('[data-reader]')) {
     const tabs = [...reader.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
@@ -95,7 +99,7 @@ const pieces = (r: (typeof readings)[number]) => {
       for (const other of tabs) {
         const on = other === tab, panel = reader.querySelector<HTMLElement>(`#${other.getAttribute('aria-controls')}`);
         other.setAttribute('aria-selected', String(on)); other.tabIndex = on ? 0 : -1;
-        if (panel) { panel.hidden = !on; if (on) { panel.classList.remove('is-in'); void panel.offsetWidth; panel.classList.add('is-in'); } }
+        if (panel) panel.hidden = !on;
       }
       if (focus) tab.focus();
     };

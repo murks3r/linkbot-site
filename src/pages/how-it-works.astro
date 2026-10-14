@@ -2,10 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Toc from '../components/Toc.astro';
 import Mark from '../components/Mark.astro';
-import Icon from '../components/Icon.astro';
 import SearchForm from '../components/SearchForm.astro';
 import WatchDemo from '../components/WatchDemo.astro';
-const SECTIONS: [string, string][] = [['say', 'Say what matters'], ['see', 'See what fits'], ['keep', 'Keep what’s worth keeping'], ['decide', 'Decide what happens next'], ['next', 'What’s next: private matching']];
+import Reader from '../components/Reader.astro';
+import ListingDemo from '../components/ListingDemo.astro';
+import Today from '../components/Today.astro';
+const SECTIONS: [string, string][] = [['say', 'Say what matters'], ['see', 'See what fits'], ['keep', 'Keep what’s worth keeping'], ['decide', 'Decide what happens next'], ['next', 'What’s next: private matching'], ['today', 'What’s live today']];
 const LEVELS: [string, string, string][] = [
   ['Prefer', 'Where you start for anything you want.', 'Listings that state it are shown higher.'],
   ['Open to', 'Fine either way.', 'Listings are kept either way, without moving up.'],
@@ -20,7 +22,7 @@ const LEVELS: [string, string, string][] = [
   <section class="page-hero">
     <div class="wrap">
       <p class="eyebrow">How it works</p>
-      <h1 data-draw>From a few words to a <span class="hl">decision you understand</span>.</h1>
+      <h1><span class="h1-soft">From a few words</span> to a decision you understand.</h1>
       <p class="lede">Linkbot does the reading: of your words, and of every listing. It shows its work at each step, and every step after a search is your choice.</p>
     </div>
   </section>
@@ -31,7 +33,8 @@ const LEVELS: [string, string, string][] = [
       <section id="say" aria-labelledby="say-title">
         <p class="step">Step 1</p>
         <h2 id="say-title">Say what matters</h2>
-        <p>Write a few short phrases, separated by commas: a role, how you want to work, work you want more of, work you’d rather avoid, a place. Linkbot reads each phrase on its own and shows what it understood as criteria under the search field. In your own words, the parts it read are highlighted.</p>
+        <p>Write a few short phrases, separated by commas: a role, how you want to work, work you want more of, work you’d rather avoid, a place. Linkbot reads each phrase on its own and shows what it understood as criteria under the search field, each one a choice you can change.</p>
+        <Reader />
         <dl class="kinds">
           <div><dt>Role</dt><dd>“Senior backend engineer”, “Data scientist”</dd></div>
           <div><dt>Work mode</dt><dd>“remote”, “hybrid”, “on-site”</dd></div>
@@ -46,7 +49,6 @@ const LEVELS: [string, string, string][] = [
         </table></div>
         <h3>What Linkbot can’t read stays visible</h3>
         <p>Words Linkbot can’t check are listed under the search field as not used. They never filter anything, and Linkbot never guesses what they mean. Where it makes sense, you can still look for listings that mention them, as words: your choice, never inferred. Long sentences are the clearest case: write “Senior backend engineer, remote, no management” rather than a paragraph.</p>
-        <p class="see"><a class="link" href="/#reading">See real examples of how Linkbot reads<Icon name="arrow" /></a></p>
       </section>
 
       <section id="see" aria-labelledby="see-title">
@@ -58,6 +60,7 @@ const LEVELS: [string, string, string][] = [
           <li><Mark tone="tradeoff" size={14} /><div><b>Stated differently</b><p>The listing says something else, and Linkbot shows what: “Hybrid, not remote”.</p></div></li>
           <li><Mark tone="unknown" size={14} /><div><b>Not stated</b><p>The listing doesn’t say. That is never counted as a fit, and there is no match score that could hide it.</p></div></li>
         </ul>
+        <ListingDemo />
         <h3>Where listings come from, and how current they are</h3>
         <ul class="plain">
           <li>Every listing shows its source and the day Linkbot last checked it, with a link to the original.</li>
@@ -102,6 +105,13 @@ const LEVELS: [string, string, string][] = [
         <p>Recruiting is the first place Linkbot works. The same approach, private by default and shared only with permission, is meant to carry further, one area at a time.</p>
       </section>
 
+      <section id="today" aria-labelledby="today-title">
+        <p class="step">Status</p>
+        <h2 id="today-title">What’s live today, and what isn’t yet</h2>
+        <p>Linkbot is early. This is exactly which parts you can rely on now, with the same squares the product uses for evidence.</p>
+        <Today />
+      </section>
+
       <section class="doc-cta" aria-labelledby="try-title">
         <h2 id="try-title">Try it with your own words</h2>
         <SearchForm id="q-how" />
@@ -115,7 +125,8 @@ const LEVELS: [string, string, string][] = [
   .page-hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 56px); }
   .page-hero .wrap { display: grid; gap: 20px; justify-items: center; text-align: center; }
   .page-hero .lede { text-wrap: balance; }
-  .page-hero h1 { font-size: clamp(2.4rem, 1.2rem + 3.8vw, 4.5rem); max-width: 18ch; }
+  .page-hero h1 { font-size: clamp(2.4rem, 1.1rem + 3.9vw, 4.75rem); max-width: 17ch; }
+  .h1-soft { font-weight: 300; color: var(--ink-2); }
   .doc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); padding-bottom: var(--band); }
   @media (min-width: 64rem) { .doc { grid-template-columns: 15rem minmax(0, 1fr); } }
   .doc-body { display: grid; gap: clamp(56px, 7vw, 88px); max-width: 48rem; }
@@ -124,7 +135,8 @@ const LEVELS: [string, string, string][] = [
   .doc-body h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem); }
   .doc-body h3 { margin-top: 12px; }
   .doc-body p { color: var(--ink-2); }
-  .doc-body a:not(.link):not(.btn) { color: var(--cobalt); }
+  .doc-body a:not(.link):not(.btn) { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--green-line); }
+  .doc-body a:not(.link):not(.btn):hover { text-decoration-color: currentColor; }
   .step { font-size: var(--size-micro); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3) !important; }
   .kinds { display: grid; margin: 4px 0 0; border-top: 2px solid var(--ink); }
   .kinds > div { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
@@ -145,7 +157,8 @@ const LEVELS: [string, string, string][] = [
   .marks p { margin-top: 4px; font-size: var(--size-small); }
   .plain { display: grid; gap: 8px; padding-left: 1.1em; list-style: disc; color: var(--ink-2); }
   .note { padding: 14px 16px; border-radius: var(--r-2); background: var(--sand); font-size: var(--size-small); }
-  .see { margin-top: 4px; }
   .status-line { display: flex; }
-  .doc-cta { padding: clamp(24px, 4vw, 40px); border-radius: var(--r-3); background: var(--sun-wash); }
+  /* Inside the reading column the listing and its reading stack. */
+  .doc-body :global(.listing) { grid-template-columns: minmax(0, 1fr); }
+  .doc-cta { padding: clamp(24px, 4vw, 40px); border-radius: var(--r-3); background: var(--mist); }
 </style>

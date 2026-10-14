@@ -26,15 +26,15 @@ const lines = role.text.split('\n').map((line, index, all) => {
   <section class="hero" aria-labelledby="hiring-title">
     <div class="wrap hero-inner">
       <p class="eyebrow">Hiring with Linkbot</p>
-      <h1 id="hiring-title" data-draw><span class="h1-line">Say <span class="hl">who you need</span>.</span> <span class="h1-line">See the evidence.</span></h1>
+      <h1 id="hiring-title"><span class="h1-line">Say who you need.</span> <span class="h1-line h1-soft">See the evidence.</span></h1>
       <p class="lede">For recruiting agencies and companies. Linkbot reads a role description into requirements you can correct, and shows every candidate or application with its evidence: what’s stated, what differs and what’s still unknown.</p>
       <p class="hero-actions"><a class="btn btn-primary" href="#paths">Choose your path<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Try reading a role first<Icon name="arrow" /></a></p>
     </div>
     <div class="wrap role-wrap">
-      <figure class="card role" data-draw>
+      <figure class="card role">
         <figcaption class="card-label"><span>A role description</span><span>Read by Linkbot</span></figcaption>
         <div class="card-body">
-          <p class="role-text">{lines.map((parts, index) => <span class={index === 0 ? 'role-title' : 'role-line'}>{parts.map(p => p.hl ? <span class="hl">{p.text}</span> : p.text)}</span>)}</p>
+          <p class="role-text">{lines.map((parts, index) => <span class={index === 0 ? 'role-title' : 'role-line'}>{parts.map(p => p.hl ? <b class="read">{p.text}</b> : p.text)}</span>)}</p>
           <dl class="role-read">
             {role.stated.filter(s => s.field !== 'Role title').map(s => <div><dt><Mark tone="fit" />{s.field}</dt><dd>{s.value}{s.from && <small>from “{s.from}”</small>}</dd></div>)}
             {role.skills.length > 0 && <div><dt><Mark tone="fit" />Skills named</dt><dd>{role.skills.join(', ')}</dd></div>}
@@ -78,7 +78,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
               <li><b>Decide and keep the record.</b> Shortlist, prepare an interest check and log the outreach you do outside Linkbot.</li>
             </ol>
             <p class="path-status"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Pilot · invited agencies</span></p>
-            <p class="path-actions"><a class="btn btn-primary" href={app('#/agency')}>Open the agency workspace<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Read a brief first<Icon name="arrow" /></a></p>
+            <p class="path-actions"><a class="btn btn-green" href={app('#/agency')}>Open the agency workspace<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Read a brief first<Icon name="arrow" /></a></p>
             <p class="path-note">Opening the workspace asks you to sign in with an authorised recruiter account. Linkbot checks the membership on every request.</p>
           </div>
         </article>
@@ -93,7 +93,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
               <li><b>No profile browsing.</b> Interest and introductions are never inferred from a ranking.</li>
             </ol>
             <p class="path-status"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Limited beta · invited organisations</span></p>
-            <p class="path-actions"><a class="btn btn-primary" href={app('#/employer')}>Open the company workspace<Icon name="arrow" /></a></p>
+            <p class="path-actions"><a class="btn btn-green" href={app('#/employer')}>Open the company workspace<Icon name="arrow" /></a></p>
             <p class="path-note">Opening the workspace asks you to sign in with an account your organisation was invited with.</p>
           </div>
         </article>
@@ -119,7 +119,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
   <section class="band close-hire" aria-labelledby="next-title">
     <div class="wrap close-grid">
       <h2 id="next-title">Already invited? Your workspace is one sign-in away.</h2>
-      <p class="hero-actions"><a class="btn btn-primary" href={app('#/agency')}>Agency workspace<Icon name="arrow" /></a><a class="btn btn-secondary" href={app('#/employer')}>Company workspace<Icon name="arrow" /></a></p>
+      <p class="hero-actions"><a class="btn btn-green" href={app('#/agency')}>Agency workspace<Icon name="arrow" /></a><a class="btn btn-secondary" href={app('#/employer')}>Company workspace<Icon name="arrow" /></a></p>
       <p class="muted close-note">Not invited yet? Linkbot is in a pilot with invited organisations and isn’t taking sign-ups. Looking for work instead? <a href="/">Start here</a>.</p>
     </div>
   </section>
@@ -132,11 +132,14 @@ const lines = role.text.split('\n').map((line, index, all) => {
   .role-wrap { display: grid; justify-items: center; margin-top: clamp(40px, 6vw, 72px); }
   .role { width: min(100%, 40rem); }
   .h1-line { display: block; }
+  .h1-soft { font-weight: 300; color: var(--ink-2); }
   @media (min-width: 40rem) { .h1-line { white-space: nowrap; } }
   h1 { font-size: clamp(2.5rem, 1.1rem + 4.4vw, 4.75rem); }
   .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 24px; }
   .role { box-shadow: var(--shadow-stage); }
-  .role-text { display: grid; gap: 4px; font-size: 1.125rem; line-height: 1.45; }
+  /* The brief as written, softened; the words the role reader took each field from in full ink. */
+  .role-text { display: grid; gap: 4px; font-size: 1.125rem; line-height: 1.45; color: var(--ink-3); }
+  .role-text .read { color: var(--ink); font-weight: 650; }
   .role-title { font-size: 1.375rem; font-weight: 620; letter-spacing: -.015em; }
   .role-read { display: grid; margin-top: 18px; border-top: 2px solid var(--ink); }
   .role-read > div { display: grid; grid-template-columns: 10rem minmax(0, 1fr); gap: 4px 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: var(--size-small); }
@@ -145,10 +148,9 @@ const lines = role.text.split('\n').map((line, index, all) => {
   .role-read dd small { font-size: var(--size-micro); font-weight: 500; color: var(--ink-3); }
   .role-read > div[data-unknown] dd { font-weight: 500; color: var(--ink-2); }
   .role-proof { padding: 12px 18px; border-top: 1px solid var(--line); font-size: var(--size-micro); color: var(--ink-3); }
-  .differ { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 32px; margin-top: clamp(28px, 4vw, 40px); }
-  .differ li { display: grid; gap: 8px; align-content: start; padding-top: 16px; border-top: 2px solid var(--ink); }
+  .differ { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px clamp(32px, 5vw, 72px); width: min(100%, 60rem); margin: clamp(28px, 4vw, 48px) auto 0; }
+  .differ li { display: grid; gap: 8px; align-content: start; padding: 18px 0 22px; border-top: 1.5px solid var(--ink); }
   .differ p { font-size: var(--size-small); color: var(--ink-2); }
-  @media (max-width: 64rem) { .differ { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 36rem) { .differ { grid-template-columns: minmax(0, 1fr); } }
   .paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); margin-top: clamp(28px, 4vw, 44px); }
   @media (max-width: 56rem) { .paths { grid-template-columns: minmax(0, 1fr); } }
@@ -157,7 +159,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
   .path h3 { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.9rem); letter-spacing: -.025em; }
   .path-steps { display: grid; gap: 0; counter-reset: step; }
   .path-steps li { position: relative; padding: 12px 0 12px 40px; border-top: 1px solid var(--line); font-size: var(--size-small); color: var(--ink-2); counter-increment: step; }
-  .path-steps li::before { content: counter(step); position: absolute; left: 0; top: 12px; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--sun); font-size: var(--size-micro); font-weight: 700; color: var(--ink); }
+  .path-steps li::before { content: counter(step); position: absolute; left: 0; top: 12px; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--line-ink); background: var(--surface); font-size: var(--size-micro); font-weight: 700; color: var(--ink); }
   .path-steps b { color: var(--ink); font-weight: 650; }
   .path-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: auto; }
   .path-note { font-size: var(--size-micro); color: var(--ink-3); }

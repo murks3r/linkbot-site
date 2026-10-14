@@ -1,189 +1,103 @@
 ---
 import Base from '../layouts/Base.astro';
 import SearchForm from '../components/SearchForm.astro';
-import ProblemLoop from '../components/ProblemLoop.astro';
-import Unwind from '../components/Unwind.astro';
-import Reader from '../components/Reader.astro';
-import ListingDemo from '../components/ListingDemo.astro';
-import Ladder from '../components/Ladder.astro';
-import Today from '../components/Today.astro';
-import Mark from '../components/Mark.astro';
+import Clarity from '../components/Clarity.astro';
 import Icon from '../components/Icon.astro';
-import { app } from '../lib/links';
-const EXAMPLES = ['Product designer, hybrid', 'Data engineer, remote', 'Site reliability engineer, no on-call'];
+import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
 ---
-<Base title="Linkbot: find work, keep your privacy"
-  description="Describe the work you want in a few words. Linkbot reads current job listings and shows what fits, what differs and what isn’t said. No account needed."
+<Base title="Linkbot: find work that fits, keep your privacy"
+  description="Say what matters in a few words. Linkbot reads current job listings against them and shows why each one fits, or doesn’t. No account needed."
   path="/" quietHeader>
 
-  <!-- 1. Immediate value: one centred line of sight, from the promise to the search. -->
+  <!-- 1. Value: one centred line of sight, from the promise to the search. -->
   <section class="hero" data-stage="value" aria-labelledby="hero-title">
     <div class="wrap hero-inner">
-      <p class="eyebrow">Private job search · Free</p>
-      <h1 id="hero-title" data-draw><span class="h1-line">Find work.</span> <span class="h1-line"><span class="hl">Keep your privacy.</span></span></h1>
-      <p class="lede hero-lede">Describe the work you want in a few words. Linkbot reads current listings and shows what fits, what differs and what isn’t said.</p>
+      <h1 id="hero-title"><span class="h1-line">Find work that fits.</span> <span class="h1-line h1-soft">Keep your privacy.</span></h1>
+      <p class="lede hero-lede">Say what matters in a few words. Linkbot reads current listings against them and shows you why each one fits, or doesn’t.</p>
       <div class="hero-search" data-hero-search>
-        <SearchForm id="q-hero" size="monumental" examples={EXAMPLES} hint="No account needed. Searches aren’t stored." />
+        <SearchForm id="q-hero" size="monumental" />
       </div>
-      <a class="hero-next" href="#problem">Why job search needs this<Icon name="down" /></a>
     </div>
   </section>
 
-  <!-- 2. The market problem, as one connected loop. -->
-  <section class="band story" id="problem" data-stage="problem" aria-labelledby="problem-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">The problem</p>
-        <h2 id="problem-title">Job search runs in circles.</h2>
-        <p>Looking for work means looking everywhere, again and again, and still not knowing what fits. The more visible you make yourself, the noisier it gets. Each problem feeds the next.</p>
+  <!-- 2. The question everyone recognises, then Linkbot's answer, on one scroll-linked stage. -->
+  <section class="story" id="story" data-stage="story" aria-labelledby="story-title">
+    <div class="wrap story-head">
+      <h2 id="story-title">Which one is right for you?</h2>
+      <p class="lede">There’s no shortage of openings. The hard part is knowing which one is worth your next move.</p>
+    </div>
+    <Clarity />
+  </section>
+
+  <!-- 3. Trust, composed off the centre line: the one deep band. -->
+  <section class="band trust" data-tone="green" id="trust" data-stage="trust" aria-labelledby="trust-title">
+    <div class="wrap trust-grid">
+      <h2 id="trust-title">Being a good fit doesn’t make you visible.</h2>
+      <div class="trust-body">
+        <ul class="trust-list">
+          <li><h3>No profile to publish</h3><p>There is no public profile, and no directory of people for anyone to search.</p></li>
+          <li><h3>Nothing reaches an employer unless you send it</h3><p>Searching, saving and reading listings send nothing to any employer.</p></li>
+          <li><h3>A search is not a record</h3><p>Searching needs no account, and a search without one isn’t stored.</p></li>
+        </ul>
+        <p><a class="trust-link" href="/privacy">How your privacy works<Icon name="arrow" /></a></p>
       </div>
-      <ProblemLoop />
     </div>
   </section>
 
-  <!-- 3. Linkbot's response: the same loop, unwound into a line of answers. -->
-  <section class="band story" data-tone="mist" id="answer" data-stage="response" aria-labelledby="answer-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Linkbot’s answer</p>
-        <h2 id="answer-title">Linkbot is built to break that loop.</h2>
-        <p>Say what matters once. Linkbot does the reading, explains every listing and keeps watching, while you stay private until you decide.</p>
-      </div>
-      <Unwind />
-    </div>
-  </section>
-
-  <!-- 4. How the intelligence works: words → criteria → a listing read against them → watching. -->
-  <section class="band story" id="reading" data-stage="intelligence" aria-labelledby="reading-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">How it understands you</p>
-        <h2 id="reading-title">It reads your words, and shows its reading.</h2>
-        <p>Short phrases become criteria you can see and change. What Linkbot can’t read stays in view and never filters anything. Nothing is guessed, and a Must is always your choice.</p>
-      </div>
-      <div class="flow">
-        <div class="flow-step"><Reader /></div>
-        <div class="flow-join" aria-hidden="true"></div>
-        <div class="flow-step">
-          <h3 class="flow-title">Then every listing is read against your words.</h3>
-          <p class="flow-lede">What it states, what it states differently and what it leaves out, with where each answer came from. There is no match score: a missing answer is never counted as a fit.</p>
-          <ListingDemo />
-          <ul class="facts">
-            <li><Mark tone="fit" /><span><b>Source and date</b> on every listing</span></li>
-            <li><Mark tone="fit" /><span><b>Current only:</b> checked in the last 7 days</span></li>
-            <li><Mark tone="fit" /><span><b>One listing per job:</b> copies merged</span></li>
-            <li><Mark tone="unknown" /><span><b>Not every job:</b> Linkbot says what it checked</span></li>
-          </ul>
-        </div>
-        <div class="flow-join" aria-hidden="true"></div>
-        <div class="flow-step flow-watch">
-          <h3 class="flow-title">And it keeps watching, quietly.</h3>
-          <p class="flow-lede">Save what you searched, and Linkbot is built to check it again once a day while it’s active, marking what’s new for your next visit. Pause it any time. No email or push alerts yet.</p>
-          <p class="flow-status"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Built, being proven in testing</span> <a class="link" href="/how-it-works#keep">How watching works<Icon name="arrow" /></a></p>
-        </div>
-      </div>
-      <p class="cta-row"><a class="btn btn-secondary" href={app('#/search')}>Explore current listings<Icon name="arrow" /></a></p>
-    </div>
-  </section>
-
-  <!-- 5. Privacy and control. -->
-  <section class="band story control" data-tone="ink" id="control" data-stage="control" aria-labelledby="control-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Privacy and control</p>
-        <h2 id="control-title">Being a good fit doesn’t make you visible.</h2>
-        <p>Finding a job, matching it, keeping it, sharing details and applying are five separate decisions. None of them happens because another one did.</p>
-      </div>
-      <div class="control-ladder"><Ladder /></div>
-      <aside class="standing" aria-labelledby="standing-title">
-        <h3 id="standing-title">Once, or as a standing rule</h3>
-        <p>You can share details one time, or set a rule: specific details, for one named recipient, for a limited time. Every share under it gets a receipt, and you can revoke it whenever you want. Linkbot never creates a rule for you.</p>
-        <p class="standing-meta"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Built, tested in staging</span> <a class="link" href="/privacy#sharing">How sharing works<Icon name="arrow" /></a></p>
-      </aside>
-    </div>
-  </section>
-
-  <!-- What works today (the honest status), then the next action. -->
-  <section class="band story" id="today" data-stage="today" aria-labelledby="today-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">What it can genuinely do</p>
-        <h2 id="today-title">What works today, and what doesn’t yet.</h2>
-        <p>Linkbot is early. You should know exactly which parts you can rely on now.</p>
-      </div>
-      <Today />
-    </div>
-  </section>
-
-  <!-- 6. The natural next action. -->
-  <section class="band close" data-tone="sun" data-stage="action" aria-labelledby="close-title">
-    <div class="wrap close-inner">
-      <h2 id="close-title">Start with a few words.</h2>
-      <p class="close-lede">No account, no profile, nothing stored. You’ll see current listings and their reasons in seconds.</p>
-      <SearchForm id="q-close" size="monumental" hint="Short phrases, separated by commas." />
-      <p class="close-hiring"><b>Hiring?</b> Linkbot works for recruiting agencies and companies too, without a directory of people. <a class="link-ink" href="/hiring">See how hiring works<Icon name="arrow" /></a></p>
+  <!-- 4. First use, in context: the question the story leaves you with. -->
+  <section class="band start" data-stage="start" aria-labelledby="start-title">
+    <div class="wrap start-inner">
+      <h2 id="start-title">What would make your next move worth it?</h2>
+      <SearchForm id="q-start" size="monumental" placeholder={START_PLACEHOLDER} examples={START_EXAMPLES} />
+      <p class="start-hiring">Hiring? <a href="/hiring">Linkbot works for recruiting agencies and companies too</a>.</p>
     </div>
   </section>
 </Base>
 
 <style>
-  /* Every section shares one centre line: heads, figures and actions are composed on it. */
-  .section-head { margin-inline: auto; justify-items: center; text-align: center; max-width: 44rem; }
-  .section-head p { max-width: 38em; }
-  .story .section-head { margin-bottom: clamp(36px, 5vw, 64px); }
-
-  /* 1. The hero: monumental and calm. */
-  .hero { position: relative; display: grid; align-items: center; min-height: calc(100svh - 72px); padding-block: clamp(40px, 8vh, 96px) clamp(40px, 6vh, 72px);
-    background: radial-gradient(ellipse 62% 46% at 50% 44%, color-mix(in srgb, var(--sun-wash) 70%, transparent), transparent 72%); }
-  .hero-inner { display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.6vh, 28px); }
-  .hero h1 { font-size: clamp(2.75rem, 1.1rem + 6.6vw, 7.25rem); letter-spacing: -.048em; line-height: .96; }
+  /* 1. The hero: monumental and calm. The second line is the same voice, softened: emphasis by
+     weight and tone, never a marker. */
+  .hero { display: grid; align-items: center; min-height: calc(100svh - 72px); padding-block: clamp(40px, 8vh, 104px) clamp(56px, 9vh, 112px); }
+  .hero-inner { display: grid; justify-items: center; text-align: center; gap: clamp(22px, 3.2vh, 34px); }
   .h1-line { display: block; }
-  .hero-lede { max-width: 34em; text-wrap: balance; }
-  .hero-search { width: 100%; display: grid; justify-items: center; margin-top: clamp(4px, 1.4vh, 16px); }
-  .hero-next { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); margin-top: clamp(8px, 3vh, 32px); font-size: var(--size-small); font-weight: 600; color: var(--ink-2); text-decoration: none; }
-  .hero-next:hover { color: var(--ink); }
+  .h1-soft { font-weight: 300; color: var(--ink-2); }
+  .hero-lede { max-width: 31em; text-wrap: balance; }
+  .hero-search { width: 100%; display: grid; justify-items: center; margin-top: clamp(4px, 1.2vh, 14px); }
 
-  /* 4. One vertical flow: the reading, the listing, watching. */
-  .flow { display: grid; justify-items: center; gap: 0; }
-  .flow-step { display: grid; justify-items: center; gap: 16px; width: min(100%, 60rem); text-align: center; }
-  .flow-step > :global(.reader) { width: min(100%, 52rem); text-align: left; }
-  .flow-step > :global(.listing) { width: 100%; text-align: left; }
-  .flow-join { width: 2px; height: clamp(40px, 6vw, 64px); background: linear-gradient(var(--line-ink), var(--line-ink)) center / 2px 100% no-repeat; }
-  .flow-title { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.9rem); letter-spacing: -.025em; max-width: 24ch; }
-  .flow-lede { max-width: 40em; color: var(--ink-2); }
-  .flow-status { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 18px; }
-  .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; margin-top: 4px; }
-  .facts li { display: inline-flex; align-items: baseline; gap: 10px; font-size: var(--size-small); color: var(--ink-2); }
-  .facts b { color: var(--ink); font-weight: 650; }
-  .cta-row { display: flex; justify-content: center; margin-top: clamp(32px, 5vw, 56px); }
+  /* 2. The story's head sits on the centre line; the stage below breaks it on purpose. */
+  .story { padding-top: clamp(24px, 4vw, 56px); }
+  .story-head { display: grid; justify-items: center; gap: 18px; text-align: center; margin-bottom: clamp(40px, 6vw, 72px); }
+  .story-head .lede { max-width: 30em; text-wrap: balance; }
 
-  /* 5. The one deep band. */
-  .control { --on-ink-2: color-mix(in srgb, var(--paper) 74%, var(--ink)); }
-  .control .section-head p, .control .standing p, .control .eyebrow { color: var(--on-ink-2); }
-  .control h2, .control .standing h3 { color: var(--paper); }
-  .control-ladder { width: min(100%, 64rem); margin-inline: auto; }
-  .control :global(.ladder) { border-color: transparent; }
-  .standing { display: grid; justify-items: center; gap: 10px; max-width: 44rem; margin: clamp(32px, 4vw, 48px) auto 0; text-align: center; }
-  .standing p { font-size: var(--size-small); }
-  .standing-meta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 18px; }
-  .control .standing :global(.status) { background: color-mix(in srgb, var(--paper) 14%, var(--ink)); color: var(--paper); }
-  .control .standing :global(.status .mark) { color: var(--paper); }
-  .control .standing :global(.link) { color: var(--paper); text-decoration-color: color-mix(in srgb, var(--paper) 55%, var(--ink)); }
-  .control :global(:focus-visible) { outline-color: var(--sun); }
-  .control :global(.ladder :focus-visible) { outline-color: var(--cobalt); }
+  /* 3. Trust: a statement on the left, three short lines on the right. */
+  .trust { margin-top: clamp(64px, 10vw, 140px); }
+  .trust-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(40px, 6vw, 112px); align-items: start; }
+  .trust h2 { font-size: clamp(2.25rem, 1.2rem + 3.6vw, 4.5rem); color: var(--on-green); text-wrap: balance; }
+  .trust-body { display: grid; gap: 28px; padding-top: 10px; }
+  .trust-list { display: grid; }
+  .trust-list li { display: grid; gap: 6px; padding: 18px 0; border-top: 1px solid var(--green-rule); }
+  .trust-list li:last-child { border-bottom: 1px solid var(--green-rule); }
+  .trust h3 { color: var(--on-green); font-size: 1.125rem; }
+  .trust-list p { color: var(--on-green-2); font-size: var(--size-small); }
+  .trust-link { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); font-weight: 650; color: var(--on-green); text-decoration: underline; text-decoration-color: var(--green-rule); }
+  .trust-link:hover { text-decoration-color: currentColor; }
+  .trust-link :global(.icon) { transition: transform var(--base) var(--ease); }
+  .trust-link:hover :global(.icon) { transform: translateX(3px); }
+  .trust :global(:focus-visible) { outline-color: var(--pink); }
 
-  /* 6. The close: the search again, on the same centre line. */
-  .close { padding-block: clamp(72px, 9vw, 120px) clamp(48px, 6vw, 72px); }
-  .close-inner { display: grid; justify-items: center; text-align: center; gap: 18px; }
-  .close-inner h2 { font-size: clamp(2.25rem, 1.4rem + 3.4vw, 4.25rem); }
-  .close-lede { font-size: var(--size-lede); max-width: 30em; }
-  .close :global(.search-hint) { color: var(--ink); }
-  .close-hiring { max-width: 46rem; margin-top: clamp(24px, 4vw, 40px); padding-top: 20px; border-top: 1px solid var(--sun-line); font-size: var(--size-small); }
-  .link-ink { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); font-weight: 650; color: var(--ink); }
+  /* 4. The start: back on the centre line, with the question the story leaves. */
+  .start-inner { display: grid; justify-items: center; text-align: center; gap: clamp(24px, 3vw, 36px); }
+  .start h2 { max-width: 16ch; }
+  .start-hiring { max-width: 40rem; margin-top: clamp(20px, 3vw, 36px); font-size: var(--size-small); color: var(--ink-2); }
+  .start-hiring a { font-weight: 600; color: var(--ink); }
 
+  @media (max-width: 64rem) {
+    .trust-grid { grid-template-columns: minmax(0, 1fr); }
+  }
   @media (max-width: 40rem) {
-    .hero { min-height: auto; padding-block: 36px 40px; }
-    .hero h1 { font-size: clamp(2.5rem, 11.5vw, 3.4rem); }
-    .facts { display: grid; justify-content: start; text-align: left; }
+    .hero { min-height: auto; padding-block: 40px 64px; }
+  }
+  @media (max-width: 22.5rem) {
+    .hero h1 { font-size: 2.05rem; }
   }
 </style>

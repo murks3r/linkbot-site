@@ -2,18 +2,20 @@
 import Base from '../layouts/Base.astro';
 import SearchForm from '../components/SearchForm.astro';
 ---
-<Base title="Page not found · Linkbot" description="This page doesn’t exist. Search jobs in your own words, or go back to Linkbot’s home page." path="/404">
+<Base title="Page not found · Linkbot" description="This page doesn’t exist. Search jobs in your own words, or go back to Linkbot’s home page." path="/404" quietHeader>
   <section class="nf">
     <div class="wrap">
       <p class="eyebrow">Page not found</p>
-      <h1>There’s <span class="hl">nothing here</span>.</h1>
+      <h1>There’s nothing here.</h1>
       <p class="lede">The page may have moved. You can still search in your own words, or <a href="/">go to the home page</a>.</p>
-      <SearchForm id="q-404" />
+      <div data-hero-search><SearchForm id="q-404" /></div>
     </div>
   </section>
 </Base>
 <style>
   .nf { padding-block: clamp(56px, 9vw, 120px); }
-  .nf .wrap { display: grid; gap: 22px; justify-items: start; }
+  .nf .wrap { display: grid; gap: 22px; justify-items: center; text-align: center; }
+  .nf .lede { text-wrap: balance; }
+  .nf [data-hero-search] { width: 100%; display: grid; justify-items: center; }
   h1 { font-size: clamp(2.4rem, 1.2rem + 4vw, 4.5rem); }
 </style>
