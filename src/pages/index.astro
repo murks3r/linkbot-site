@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import SearchForm from '../components/SearchForm.astro';
-import HeroStage from '../components/HeroStage.astro';
+import ProblemLoop from '../components/ProblemLoop.astro';
+import Unwind from '../components/Unwind.astro';
 import Reader from '../components/Reader.astro';
 import ListingDemo from '../components/ListingDemo.astro';
-import WatchDemo from '../components/WatchDemo.astro';
 import Ladder from '../components/Ladder.astro';
 import Today from '../components/Today.astro';
 import Mark from '../components/Mark.astro';
@@ -12,216 +12,178 @@ import Icon from '../components/Icon.astro';
 import { app } from '../lib/links';
 const EXAMPLES = ['Product designer, hybrid', 'Data engineer, remote', 'Site reliability engineer, no on-call'];
 ---
-<Base title="Linkbot: private job search in your own words"
-  description="Describe the work you want in a few phrases. Linkbot reads current job listings and shows what each states, what differs and what it doesn’t say. No account."
-  path="/">
+<Base title="Linkbot: find work, keep your privacy"
+  description="Describe the work you want in a few words. Linkbot reads current job listings and shows what fits, what differs and what isn’t said. No account needed."
+  path="/" quietHeader>
 
-  <!-- 1. What Linkbot is, and the first thing to do -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Private job search · Free · No account</p>
-        <h1 id="hero-title" data-draw><span class="h1-line">Say <span class="hl">what matters</span>.</span> <span class="h1-line">See what fits.</span></h1>
-        <p class="lede">Describe the work you want in a few short phrases. Linkbot reads current listings against them and shows, for each one, what it states, what it states differently and what it doesn’t say.</p>
-        <SearchForm id="q-hero" examples={EXAMPLES} />
+  <!-- 1. Immediate value: one centred line of sight, from the promise to the search. -->
+  <section class="hero" data-stage="value" aria-labelledby="hero-title">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">Private job search · Free</p>
+      <h1 id="hero-title" data-draw><span class="h1-line">Find work.</span> <span class="h1-line"><span class="hl">Keep your privacy.</span></span></h1>
+      <p class="lede hero-lede">Describe the work you want in a few words. Linkbot reads current listings and shows what fits, what differs and what isn’t said.</p>
+      <div class="hero-search" data-hero-search>
+        <SearchForm id="q-hero" size="monumental" examples={EXAMPLES} hint="No account needed. Searches aren’t stored." />
       </div>
-      <div class="hero-stage">
-        <HeroStage />
-        <p class="hero-caption">Top: a sentence as Linkbot’s interpreter reads it. Below: an example listing, read the way Linkbot reads every listing.</p>
-      </div>
+      <a class="hero-next" href="#problem">Why job search needs this<Icon name="down" /></a>
     </div>
   </section>
 
-  <!-- 2. The problem, and what changes -->
-  <section class="band" aria-labelledby="shift-title">
+  <!-- 2. The market problem, as one connected loop. -->
+  <section class="band story" id="problem" data-stage="problem" aria-labelledby="problem-title">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">Why it’s different</p>
-        <h2 id="shift-title">Less looking. More knowing.</h2>
-        <p>Job search usually means doing all the reading yourself. Linkbot does the reading, shows its work, and leaves every decision with you.</p>
+        <p class="eyebrow">The problem</p>
+        <h2 id="problem-title">Job search runs in circles.</h2>
+        <p>Looking for work means looking everywhere, again and again, and still not knowing what fits. The more visible you make yourself, the noisier it gets. Each problem feeds the next.</p>
       </div>
-      <ol class="shift">
-        <li data-draw>
-          <h3 class="shift-benefit">Less effort</h3>
-          <p class="shift-old"><s>The same search, typed into one site after another, every week.</s></p>
-          <p class="shift-new"><span class="hl">Say it once.</span> Linkbot reads current listings for you, merges copies of the same job into one, and can keep checking a direction you save.</p>
-        </li>
-        <li data-draw>
-          <h3 class="shift-benefit">Better understanding</h3>
-          <p class="shift-old"><s>A list of matches, and no idea why each one is there.</s></p>
-          <p class="shift-new"><span class="hl">See the reasons.</span> Each listing shows what it states about your words, what it states differently and what it doesn’t say, with its source and the day it was checked.</p>
-        </li>
-        <li data-draw>
-          <h3 class="shift-benefit">More control</h3>
-          <p class="shift-old"><s>Make yourself visible, and hope the right people find you.</s></p>
-          <p class="shift-new"><span class="hl">Stay private.</span> There is no public profile and no directory of people. Nothing about you reaches an employer unless you decide it should.</p>
-        </li>
-      </ol>
+      <ProblemLoop />
     </div>
   </section>
 
-  <!-- 3. Demonstration: words → criteria -->
-  <section class="band" data-tone="mist" id="reading" aria-labelledby="reading-title">
-    <div class="wrap split">
-      <div class="section-head sticky-head">
+  <!-- 3. Linkbot's response: the same loop, unwound into a line of answers. -->
+  <section class="band story" data-tone="mist" id="answer" data-stage="response" aria-labelledby="answer-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Linkbot’s answer</p>
+        <h2 id="answer-title">Linkbot is built to break that loop.</h2>
+        <p>Say what matters once. Linkbot does the reading, explains every listing and keeps watching, while you stay private until you decide.</p>
+      </div>
+      <Unwind />
+    </div>
+  </section>
+
+  <!-- 4. How the intelligence works: words → criteria → a listing read against them → watching. -->
+  <section class="band story" id="reading" data-stage="intelligence" aria-labelledby="reading-title">
+    <div class="wrap">
+      <div class="section-head">
         <p class="eyebrow">How it understands you</p>
-        <h2 id="reading-title">It reads your words, and shows you how.</h2>
-        <p>Short phrases become criteria you can see: a role, how you want to work, work you want more of or would rather avoid. What Linkbot can’t read stays in view, and never filters anything.</p>
-        <ul class="facts">
-          <li><Mark tone="fit" /><span><b>Prefer and Avoid</b> move listings up or down. Nothing disappears because of a preference.</span></li>
-          <li><Mark tone="fit" /><span><b>A Must is always your choice.</b> Linkbot never turns a phrase into a dealbreaker by itself.</span></li>
-          <li><Mark tone="unknown" /><span><b>Unclear words stay unused</b>, visibly, instead of being guessed at.</span></li>
-        </ul>
-        <p class="aside">Easier than a questionnaire: a few phrases, and every criterion stays one tap from changing.</p>
+        <h2 id="reading-title">It reads your words, and shows its reading.</h2>
+        <p>Short phrases become criteria you can see and change. What Linkbot can’t read stays in view and never filters anything. Nothing is guessed, and a Must is always your choice.</p>
       </div>
-      <Reader />
+      <div class="flow">
+        <div class="flow-step"><Reader /></div>
+        <div class="flow-join" aria-hidden="true"></div>
+        <div class="flow-step">
+          <h3 class="flow-title">Then every listing is read against your words.</h3>
+          <p class="flow-lede">What it states, what it states differently and what it leaves out, with where each answer came from. There is no match score: a missing answer is never counted as a fit.</p>
+          <ListingDemo />
+          <ul class="facts">
+            <li><Mark tone="fit" /><span><b>Source and date</b> on every listing</span></li>
+            <li><Mark tone="fit" /><span><b>Current only:</b> checked in the last 7 days</span></li>
+            <li><Mark tone="fit" /><span><b>One listing per job:</b> copies merged</span></li>
+            <li><Mark tone="unknown" /><span><b>Not every job:</b> Linkbot says what it checked</span></li>
+          </ul>
+        </div>
+        <div class="flow-join" aria-hidden="true"></div>
+        <div class="flow-step flow-watch">
+          <h3 class="flow-title">And it keeps watching, quietly.</h3>
+          <p class="flow-lede">Save what you searched, and Linkbot is built to check it again once a day while it’s active, marking what’s new for your next visit. Pause it any time. No email or push alerts yet.</p>
+          <p class="flow-status"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Built, being proven in testing</span> <a class="link" href="/how-it-works#keep">How watching works<Icon name="arrow" /></a></p>
+        </div>
+      </div>
+      <p class="cta-row"><a class="btn btn-secondary" href={app('#/search')}>Explore current listings<Icon name="arrow" /></a></p>
     </div>
   </section>
 
-  <!-- 4. Demonstration: a listing, explained -->
-  <section class="band" id="results" aria-labelledby="results-title">
+  <!-- 5. Privacy and control. -->
+  <section class="band story control" data-tone="ink" id="control" data-stage="control" aria-labelledby="control-title">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">How it explains a listing</p>
-        <h2 id="results-title">Every listing comes with its reasons.</h2>
-        <p>Linkbot compares each listing with your words, not with you. It shows what the listing actually says, where it says it, and what it leaves out. There is no match score: a missing answer is never counted as a fit.</p>
-      </div>
-      <ListingDemo />
-      <ul class="facts facts-row">
-        <li><Mark tone="fit" /><span><b>Source and date</b> on every listing, with a link to the original.</span></li>
-        <li><Mark tone="fit" /><span><b>Current only:</b> listings checked in the last 7 days.</span></li>
-        <li><Mark tone="fit" /><span><b>One listing per job:</b> copies from other boards are merged.</span></li>
-        <li><Mark tone="unknown" /><span><b>Not every job:</b> Linkbot says how many listings it checked, and that its sources are not everything.</span></li>
-      </ul>
-      <p class="cta-row"><a class="btn btn-secondary" href={app('#/search')}>Explore current listings <Icon name="arrow" /></a></p>
-    </div>
-  </section>
-
-  <!-- 5. Demonstration: watching -->
-  <section class="band" data-tone="sand" id="watching" aria-labelledby="watching-title">
-    <div class="wrap split watch-split">
-      <div class="section-head">
-        <p class="eyebrow">How it saves you the next search</p>
-        <h2 id="watching-title">Save a direction. Come back to what’s new.</h2>
-        <p>A search is one look. Watching keeps a search going in your private account: Linkbot checks it once a day while it’s active and marks what’s new since your last visit.</p>
-        <ul class="facts">
-          <li><Mark tone="fit" /><span><b>One check a day</b> for each direction you watch, while it’s active.</span></li>
-          <li><Mark tone="fit" /><span><b>Pause and resume</b> whenever you like. Paused means no checks.</span></li>
-          <li><Mark tone="fit" /><span><b>A quick review</b> after two weeks, then weekly; until you confirm, checks stop. Watching ends after 90 days.</span></li>
-          <li><Mark tone="unknown" /><span><b>No email or push alerts yet.</b> You see what changed when you come back.</span></li>
-        </ul>
-        <p class="ladder-status-line"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Built, being proven in testing</span></p>
-        <p class="aside">Watching needs a free account, because what you save has to be kept somewhere only you can open. Searching never does.</p>
-      </div>
-      <WatchDemo />
-    </div>
-  </section>
-
-  <!-- 6. Demonstration: separate decisions -->
-  <section class="band control" data-tone="ink" id="control" aria-labelledby="control-title">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">How you stay in control</p>
+        <p class="eyebrow">Privacy and control</p>
         <h2 id="control-title">Being a good fit doesn’t make you visible.</h2>
         <p>Finding a job, matching it, keeping it, sharing details and applying are five separate decisions. None of them happens because another one did.</p>
       </div>
-      <Ladder />
+      <div class="control-ladder"><Ladder /></div>
       <aside class="standing" aria-labelledby="standing-title">
         <h3 id="standing-title">Once, or as a standing rule</h3>
-        <p>You can share details one time, or set a standing rule: specific details, for one named recipient, for a limited time. Every share under the rule gets a receipt, and you can revoke the rule whenever you want. Linkbot never creates a rule for you.</p>
-        <p class="ladder-status-line"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Built, tested in staging</span> <a class="link" href="/privacy#sharing">How sharing works<Icon name="arrow" /></a></p>
+        <p>You can share details one time, or set a rule: specific details, for one named recipient, for a limited time. Every share under it gets a receipt, and you can revoke it whenever you want. Linkbot never creates a rule for you.</p>
+        <p class="standing-meta"><span class="status" data-tone="built"><Mark tone="tradeoff" size={10} />Built, tested in staging</span> <a class="link" href="/privacy#sharing">How sharing works<Icon name="arrow" /></a></p>
       </aside>
     </div>
   </section>
 
-  <!-- 7. What works today -->
-  <section class="band" data-tone="mist" id="today" aria-labelledby="today-title">
+  <!-- What works today (the honest status), then the next action. -->
+  <section class="band story" id="today" data-stage="today" aria-labelledby="today-title">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">What it can genuinely do</p>
-        <h2 id="today-title">Here’s what works today, and what doesn’t yet.</h2>
+        <h2 id="today-title">What works today, and what doesn’t yet.</h2>
         <p>Linkbot is early. You should know exactly which parts you can rely on now.</p>
       </div>
       <Today />
     </div>
   </section>
 
-  <!-- 8. Next step -->
-  <section class="band close" data-tone="sun" aria-labelledby="close-title">
-    <div class="wrap close-grid">
-      <div class="close-copy">
-        <h2 id="close-title">Start with a few words.</h2>
-        <p>No account, no profile, nothing stored. You’ll see current listings and their reasons in seconds.</p>
-      </div>
-      <SearchForm id="q-close" size="band" label="What work are you looking for?" />
-    </div>
-    <div class="wrap close-hiring">
-      <p><b>Hiring?</b> Linkbot works for recruiting agencies and companies too, without a directory of people. <a class="link-ink" href="/hiring">See how hiring works<Icon name="arrow" /></a></p>
+  <!-- 6. The natural next action. -->
+  <section class="band close" data-tone="sun" data-stage="action" aria-labelledby="close-title">
+    <div class="wrap close-inner">
+      <h2 id="close-title">Start with a few words.</h2>
+      <p class="close-lede">No account, no profile, nothing stored. You’ll see current listings and their reasons in seconds.</p>
+      <SearchForm id="q-close" size="monumental" hint="Short phrases, separated by commas." />
+      <p class="close-hiring"><b>Hiring?</b> Linkbot works for recruiting agencies and companies too, without a directory of people. <a class="link-ink" href="/hiring">See how hiring works<Icon name="arrow" /></a></p>
     </div>
   </section>
 </Base>
 
 <style>
-  .hero { padding-block: clamp(36px, 6vw, 88px) clamp(48px, 6vw, 72px); }
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
-  @media (min-width: 64rem) { .hero-grid { grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr); } }
-  .hero-copy { display: grid; gap: clamp(18px, 2.4vw, 26px); justify-items: start; }
+  /* Every section shares one centre line: heads, figures and actions are composed on it. */
+  .section-head { margin-inline: auto; justify-items: center; text-align: center; max-width: 44rem; }
+  .section-head p { max-width: 38em; }
+  .story .section-head { margin-bottom: clamp(36px, 5vw, 64px); }
+
+  /* 1. The hero: monumental and calm. */
+  .hero { position: relative; display: grid; align-items: center; min-height: calc(100svh - 72px); padding-block: clamp(40px, 8vh, 96px) clamp(40px, 6vh, 72px);
+    background: radial-gradient(ellipse 62% 46% at 50% 44%, color-mix(in srgb, var(--sun-wash) 70%, transparent), transparent 72%); }
+  .hero-inner { display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.6vh, 28px); }
+  .hero h1 { font-size: clamp(2.75rem, 1.1rem + 6.6vw, 7.25rem); letter-spacing: -.048em; line-height: .96; }
   .h1-line { display: block; }
-  @media (min-width: 40rem) { .h1-line { white-space: nowrap; } }
-  .hero-caption { margin-top: 18px; font-size: var(--size-micro); color: var(--ink-3); max-width: 46ch; }
+  .hero-lede { max-width: 34em; text-wrap: balance; }
+  .hero-search { width: 100%; display: grid; justify-items: center; margin-top: clamp(4px, 1.4vh, 16px); }
+  .hero-next { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); margin-top: clamp(8px, 3vh, 32px); font-size: var(--size-small); font-weight: 600; color: var(--ink-2); text-decoration: none; }
+  .hero-next:hover { color: var(--ink); }
 
-  .shift { display: grid; gap: 0; margin-top: clamp(32px, 4vw, 48px); border-top: 2px solid var(--ink); }
-  .shift li { display: grid; grid-template-columns: 12rem minmax(0, 1fr) minmax(0, 1.25fr); gap: 12px clamp(20px, 3vw, 40px); align-items: baseline; padding: clamp(20px, 3vw, 28px) 0; border-bottom: 1px solid var(--line-strong); }
-  .shift-benefit { font-size: 1.25rem; font-weight: 650; letter-spacing: -.015em; color: var(--ink); }
-  .shift-old { font-size: 1rem; color: var(--ink-3); }
-  .shift-old s { text-decoration: none; background: linear-gradient(var(--ink-3), var(--ink-3)) no-repeat 0 58% / 100% 1.5px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-  @media (prefers-reduced-motion: no-preference) {
-    .js .shift li .shift-old s { background-size: 0% 1.5px; transition: background-size 520ms var(--ease); }
-    .js .shift li.is-in .shift-old s { background-size: 100% 1.5px; }
-    .js .shift li.is-in .hl { transition-delay: 420ms; }
-  }
-  .drawn .shift-old s { background-size: 100% 1.5px !important; }
-  .shift-new { font-size: 1.125rem; line-height: 1.5; color: var(--ink-2); }
-  .shift-new .hl { font-weight: 640; color: var(--ink); }
-  @media (max-width: 56rem) { .shift li { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
-
-  .facts { display: grid; gap: 12px; margin-top: 6px; }
-  .facts li { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 12px; align-items: baseline; font-size: var(--size-small); color: var(--ink-2); }
+  /* 4. One vertical flow: the reading, the listing, watching. */
+  .flow { display: grid; justify-items: center; gap: 0; }
+  .flow-step { display: grid; justify-items: center; gap: 16px; width: min(100%, 60rem); text-align: center; }
+  .flow-step > :global(.reader) { width: min(100%, 52rem); text-align: left; }
+  .flow-step > :global(.listing) { width: 100%; text-align: left; }
+  .flow-join { width: 2px; height: clamp(40px, 6vw, 64px); background: linear-gradient(var(--line-ink), var(--line-ink)) center / 2px 100% no-repeat; }
+  .flow-title { font-size: clamp(1.4rem, 1.2rem + .8vw, 1.9rem); letter-spacing: -.025em; max-width: 24ch; }
+  .flow-lede { max-width: 40em; color: var(--ink-2); }
+  .flow-status { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 18px; }
+  .facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 26px; margin-top: 4px; }
+  .facts li { display: inline-flex; align-items: baseline; gap: 10px; font-size: var(--size-small); color: var(--ink-2); }
   .facts b { color: var(--ink); font-weight: 650; }
-  .facts-row { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 28px; margin-top: clamp(28px, 4vw, 40px); }
-  @media (max-width: 56rem) { .facts-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 30rem) { .facts-row { grid-template-columns: minmax(0, 1fr); } }
-  .aside { font-size: var(--size-small); color: var(--ink-3) !important; }
-  @media (min-width: 64rem) {
-    .sticky-head { position: sticky; top: 104px; }
-    /* Watching: the explanation reads first (and comes first for screen readers and on phones);
-       on wide screens it sits to the right of the week. It holds no controls, so focus order is unchanged. */
-    .watch-split { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
-    .watch-split > .section-head { order: 2; }
-  }
-  #results .section-head, #control .section-head, #today .section-head { margin-bottom: clamp(28px, 4vw, 44px); }
-  .cta-row { margin-top: 28px; }
-  .ladder-status-line { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-size: inherit !important; }
-  .standing { display: grid; gap: 10px; max-width: 52rem; margin-top: 28px; padding: 4px 0 4px 24px; border-left: 4px solid var(--sun); }
-  .standing p { font-size: var(--size-small); }
-  /* The one deep band: the privacy promise, with the decisions on paper inside it. */
+  .cta-row { display: flex; justify-content: center; margin-top: clamp(32px, 5vw, 56px); }
+
+  /* 5. The one deep band. */
   .control { --on-ink-2: color-mix(in srgb, var(--paper) 74%, var(--ink)); }
   .control .section-head p, .control .standing p, .control .eyebrow { color: var(--on-ink-2); }
   .control h2, .control .standing h3 { color: var(--paper); }
+  .control-ladder { width: min(100%, 64rem); margin-inline: auto; }
   .control :global(.ladder) { border-color: transparent; }
+  .standing { display: grid; justify-items: center; gap: 10px; max-width: 44rem; margin: clamp(32px, 4vw, 48px) auto 0; text-align: center; }
+  .standing p { font-size: var(--size-small); }
+  .standing-meta { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px 18px; }
   .control .standing :global(.status) { background: color-mix(in srgb, var(--paper) 14%, var(--ink)); color: var(--paper); }
   .control .standing :global(.status .mark) { color: var(--paper); }
   .control .standing :global(.link) { color: var(--paper); text-decoration-color: color-mix(in srgb, var(--paper) 55%, var(--ink)); }
   .control :global(:focus-visible) { outline-color: var(--sun); }
   .control :global(.ladder :focus-visible) { outline-color: var(--cobalt); }
 
-  .close { padding-block: clamp(64px, 8vw, 104px) clamp(40px, 5vw, 56px); }
-  .close-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px 64px; align-items: center; }
-  @media (min-width: 64rem) { .close-grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); } }
-  .close-copy { display: grid; gap: 12px; }
-  .close-copy p { font-size: var(--size-lede); color: var(--ink); max-width: 30em; }
-  .close :global(.search-hint), .close :global(.search-label) { color: var(--ink); }
-  .close-hiring { margin-top: clamp(40px, 5vw, 56px); padding-top: 20px; border-top: 1px solid var(--sun-line); }
-  .close-hiring p { font-size: var(--size-small); }
+  /* 6. The close: the search again, on the same centre line. */
+  .close { padding-block: clamp(72px, 9vw, 120px) clamp(48px, 6vw, 72px); }
+  .close-inner { display: grid; justify-items: center; text-align: center; gap: 18px; }
+  .close-inner h2 { font-size: clamp(2.25rem, 1.4rem + 3.4vw, 4.25rem); }
+  .close-lede { font-size: var(--size-lede); max-width: 30em; }
+  .close :global(.search-hint) { color: var(--ink); }
+  .close-hiring { max-width: 46rem; margin-top: clamp(24px, 4vw, 40px); padding-top: 20px; border-top: 1px solid var(--sun-line); font-size: var(--size-small); }
   .link-ink { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); font-weight: 650; color: var(--ink); }
+
+  @media (max-width: 40rem) {
+    .hero { min-height: auto; padding-block: 36px 40px; }
+    .hero h1 { font-size: clamp(2.5rem, 11.5vw, 3.4rem); }
+    .facts { display: grid; justify-content: start; text-align: left; }
+  }
 </style>

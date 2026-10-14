@@ -1,11 +1,11 @@
 ---
 import { app } from '../lib/links';
 import Icon from './Icon.astro';
-interface Props { current?: string }
-const { current } = Astro.props;
+interface Props { current?: string; quiet?: boolean }
+const { current, quiet = false } = Astro.props;
 const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy', 'Privacy'], ['/hiring', 'Hiring']];
 ---
-<header class="masthead" data-masthead>
+<header class="masthead" data-masthead data-quiet={quiet ? '' : undefined}>
   <div class="wrap masthead-inner">
     <a class="brand" href="/"><span>Linkbot</span></a>
     <nav class="nav" aria-label="Main">
@@ -25,6 +25,11 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
 <style>
   .masthead { position: sticky; top: 0; z-index: 30; background: var(--paper); border-bottom: 1px solid transparent; transition: border-color var(--base); }
   .masthead[data-scrolled] { border-bottom-color: var(--line); }
+  /* Home: nothing in the header competes with the hero's search; the action returns once it has scrolled away. */
+  /* The action keeps its box (nothing moves); until the hero has scrolled away it is quiet text. */
+  .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta { background: transparent; color: var(--ink-2); }
+  .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+  .masthead-cta { transition: background var(--base) var(--ease), color var(--base); }
   .masthead-inner { display: flex; align-items: center; gap: 12px clamp(20px, 3vw, 40px); min-height: 72px; }
   .brand { display: inline-flex; align-items: center; min-height: var(--target); font-size: 1.625rem; font-weight: 700; letter-spacing: -.035em; line-height: 1; text-decoration: none; color: var(--ink); }
   .brand span { padding: 0 .08em; margin: 0 -.08em; background: linear-gradient(transparent 0 54%, var(--sun) 54% 94%, transparent 94%); }
@@ -62,6 +67,10 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
     const update = () => masthead.toggleAttribute('data-scrolled', window.scrollY > 8);
     update();
     addEventListener('scroll', update, { passive: true });
+    const hero = document.querySelector('[data-hero-search]');
+    if (masthead.hasAttribute('data-quiet') && hero && 'IntersectionObserver' in window)
+      new IntersectionObserver(([entry]) => masthead.toggleAttribute('data-hero-gone', !entry.isIntersecting)).observe(hero);
+    else masthead.setAttribute('data-hero-gone', '');
   }
   if (menu) {
     document.addEventListener('pointerdown', event => { if (menu.open && !menu.contains(event.target as Node)) menu.open = false; });

@@ -51,7 +51,9 @@ import { LISTING } from '../data/content';
   .listing-row:hover { border-color: var(--ink); }
   .listing-row[aria-pressed='true'] { border-color: var(--ink); box-shadow: inset 4px 0 0 var(--ink); }
   .listing-ask, .listing-says > span { display: grid; gap: 2px; min-width: 0; }
-  .listing-ask b { font-weight: 620; background: var(--mark-low); justify-self: start; }
+  .listing-ask { display: block; }
+  .listing-ask b { display: inline; font-weight: 620; background: var(--mark-low); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .listing-ask small { display: block; margin-top: 2px; }
   .listing-row small { font-size: var(--size-micro); color: var(--ink-2); line-height: 1.4; }
   .listing-says { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 10px; align-items: baseline; }
   .listing-says b { font-weight: 620; }

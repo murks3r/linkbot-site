@@ -24,13 +24,13 @@ const lines = role.text.split('\n').map((line, index, all) => {
   path="/hiring" crumbs={[['Hiring', '/hiring']]}>
 
   <section class="hero" aria-labelledby="hiring-title">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Hiring with Linkbot</p>
-        <h1 id="hiring-title" data-draw><span class="h1-line">Say <span class="hl">who you need</span>.</span> <span class="h1-line">See the evidence.</span></h1>
-        <p class="lede">For recruiting agencies and companies. Linkbot reads a role description into requirements you can correct, and shows every candidate or application with its evidence: what’s stated, what differs and what’s still unknown.</p>
-        <p class="hero-actions"><a class="btn btn-primary" href="#paths">Choose your path<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Try reading a role first<Icon name="arrow" /></a></p>
-      </div>
+    <div class="wrap hero-inner">
+      <p class="eyebrow">Hiring with Linkbot</p>
+      <h1 id="hiring-title" data-draw><span class="h1-line">Say <span class="hl">who you need</span>.</span> <span class="h1-line">See the evidence.</span></h1>
+      <p class="lede">For recruiting agencies and companies. Linkbot reads a role description into requirements you can correct, and shows every candidate or application with its evidence: what’s stated, what differs and what’s still unknown.</p>
+      <p class="hero-actions"><a class="btn btn-primary" href="#paths">Choose your path<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Try reading a role first<Icon name="arrow" /></a></p>
+    </div>
+    <div class="wrap role-wrap">
       <figure class="card role" data-draw>
         <figcaption class="card-label"><span>A role description</span><span>Read by Linkbot</span></figcaption>
         <div class="card-body">
@@ -48,7 +48,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
 
   <section class="band" data-tone="mist" aria-labelledby="differ-title">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head centred">
         <h2 id="differ-title">What changes when you hire with Linkbot</h2>
       </div>
       <ul class="differ">
@@ -62,7 +62,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
 
   <section class="band" id="paths" aria-labelledby="paths-title">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head centred">
         <h2 id="paths-title">Two ways in, kept separate</h2>
         <p>Same product, separate authority. An agency works with the candidates it already has; a company works with its own roles and the applications people send. Switching between them never mixes data.</p>
       </div>
@@ -102,8 +102,8 @@ const lines = role.text.split('\n').map((line, index, all) => {
   </section>
 
   <section class="band" data-tone="sand" aria-labelledby="before-title">
-    <div class="wrap split">
-      <div class="section-head">
+    <div class="wrap before">
+      <div class="section-head centred">
         <h2 id="before-title">Before you receive anything</h2>
         <p>What a company or agency has to do first, and what isn’t available. Stated plainly, so nobody is surprised.</p>
       </div>
@@ -126,14 +126,15 @@ const lines = role.text.split('\n').map((line, index, all) => {
 </Base>
 
 <style>
-  .hero { padding-block: clamp(40px, 7vw, 96px) clamp(48px, 7vw, 96px); }
-  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 6vw, 72px); align-items: center; }
-  @media (min-width: 64rem) { .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); } }
-  .hero-copy { display: grid; gap: clamp(18px, 2.4vw, 26px); justify-items: start; }
+  .hero { padding-block: clamp(48px, 8vw, 112px) clamp(48px, 7vw, 96px); }
+  .hero-inner { display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.4vw, 26px); }
+  .hero-inner .lede { max-width: 38em; text-wrap: balance; }
+  .role-wrap { display: grid; justify-items: center; margin-top: clamp(40px, 6vw, 72px); }
+  .role { width: min(100%, 40rem); }
   .h1-line { display: block; }
   @media (min-width: 40rem) { .h1-line { white-space: nowrap; } }
   h1 { font-size: clamp(2.5rem, 1.1rem + 4.4vw, 4.75rem); }
-  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 24px; }
   .role { box-shadow: var(--shadow-stage); }
   .role-text { display: grid; gap: 4px; font-size: 1.125rem; line-height: 1.45; }
   .role-title { font-size: 1.375rem; font-weight: 620; letter-spacing: -.015em; }
@@ -166,7 +167,11 @@ const lines = role.text.split('\n').map((line, index, all) => {
   .rules h3 { font-size: 1.125rem; }
   .rules p { margin-top: 6px; font-size: var(--size-small); color: var(--ink-2); }
   .close-hire { padding-top: clamp(64px, 8vw, 104px); }
-  .close-grid { display: grid; gap: 20px; justify-items: start; }
+  .close-grid { display: grid; gap: 20px; justify-items: center; text-align: center; }
+  .close-grid .hero-actions { justify-content: center; }
+  .section-head.centred { margin-inline: auto; justify-items: center; text-align: center; }
+  .before { display: grid; justify-items: center; gap: clamp(28px, 4vw, 44px); }
+  .before .rules { width: min(100%, 48rem); }
   .close-grid h2 { max-width: 22ch; }
   .close-note { font-size: var(--size-small); }
 </style>

@@ -124,7 +124,67 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       await context.close();
     }
 
-    // ── 2. Journeys on the home page (motion allowed, as most visitors see it) ──
+    // ── 2. The owner's composition (Concept A3): a centred, monumental hero and one centred,
+    //       progressing argument: value → problem → response → intelligence → control → action. ──
+    {
+      const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+      const page = await context.newPage();
+      await page.goto(origin + '/', { waitUntil: 'networkidle' });
+      await page.evaluate(() => document.fonts.ready);
+      for (const width of [1440, 1024, 390, 320]) {
+        await page.setViewportSize({ width, height: HEIGHTS[width] });
+        await page.evaluate(() => { scrollTo(0, 0); return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); });
+        const hero = await page.evaluate(() => {
+          const box = el => { const r = el.getBoundingClientRect(); return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, mid: (r.left + r.right) / 2, width: r.width }; };
+          const h1 = document.querySelector('.hero h1'), lede = document.querySelector('.hero .lede'), field = document.querySelector('.hero .search-box'), eyebrow = document.querySelector('.hero .eyebrow');
+          const blocks = [...document.querySelector('.hero-inner').children];
+          const h = h1.getBoundingClientRect();
+          return { vw: innerWidth, vh: innerHeight, h1: box(h1), lede: box(lede), field: box(field), eyebrow: box(eyebrow),
+            align: [h1, lede].map(e => getComputedStyle(e).textAlign), h1Size: parseFloat(getComputedStyle(h1).fontSize),
+            beside: blocks.filter(e => { const r = e.getBoundingClientRect(); return e !== h1 && r.bottom > h.top + 1 && r.top < h.bottom - 1; }).length,
+            text: h1.innerText, mark: [...h1.querySelectorAll('.hl')].map(e => e.textContent),
+            ctaFilled: getComputedStyle(document.querySelector('.masthead-cta')).backgroundColor !== 'rgba(0, 0, 0, 0)' };
+        });
+        check(hero.text === 'Find work.\nKeep your privacy.' && hero.mark.join() === 'Keep your privacy.', `${width}: the headline is the owner's baseline (${JSON.stringify(hero.text)})`);
+        for (const [name, b] of Object.entries({ eyebrow: hero.eyebrow, h1: hero.h1, lede: hero.lede, field: hero.field }))
+          check(Math.abs(b.mid - hero.vw / 2) <= 2, `${width}: hero ${name} is centred (mid ${Math.round(b.mid)} of ${hero.vw})`);
+        check(hero.align.every(a => a === 'center'), `${width}: headline and sentence are centred text`);
+        check(hero.beside === 0, `${width}: nothing sits beside the headline (no two-column hero)`);
+        check(hero.field.top < hero.vh && hero.field.bottom <= hero.vh, `${width}: the search is in the first viewport`);
+        check(hero.field.width >= (width >= 1024 ? 720 : hero.vw - 48), `${width}: the search is wide (${Math.round(hero.field.width)} px)`);
+        check(hero.h1Size >= (width >= 1024 ? 80 : 40), `${width}: the headline is monumental (${hero.h1Size} px)`);
+        check(!hero.ctaFilled, `${width}: the header's action stays quiet while the hero's search is in view`);
+      }
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.locator('#q-close').scrollIntoViewIfNeeded();
+      await page.waitForTimeout(200);
+      check(await page.evaluate(() => getComputedStyle(document.querySelector('.masthead-cta')).backgroundColor !== 'rgba(0, 0, 0, 0)'), 'once the hero has scrolled away, the header offers the search action');
+      const story = await page.evaluate(() => [...document.querySelectorAll('main > section')].map(s => ({ stage: s.dataset.stage,
+        head: (() => { const h = s.querySelector('h1, h2'); const r = h.getBoundingClientRect(); return { align: getComputedStyle(h).textAlign, mid: (r.left + r.right) / 2 }; })() })));
+      check(JSON.stringify(story.map(s => s.stage)) === JSON.stringify(['value', 'problem', 'response', 'intelligence', 'control', 'today', 'action']),
+        `the home argues in order: value → problem → response → intelligence → control → today → action (${story.map(s => s.stage)})`);
+      for (const s of story) check(s.head.align === 'center' && Math.abs(s.head.mid - 720) <= 2, `${s.stage}: its heading sits on the page's centre line`);
+      const pairs = await page.evaluate(() => [[...document.querySelectorAll('.loop-list li h3')].map(h => h.textContent), [...document.querySelectorAll('.unwind-list li h3')].map(h => h.textContent)]);
+      check(pairs[0].length === 6 && pairs[1].length === 6, 'six problems, each answered in the same order');
+      check(await page.evaluate(() => document.querySelector('[data-unwind]').dataset.state) === 'line', 'reduced motion: the answers are simply there');
+      await context.close();
+      // With motion: the loop unwinds into the line when it comes into view, then the answers appear.
+      const moving = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
+      const mp = await moving.newPage();
+      await mp.goto(origin + '/', { waitUntil: 'networkidle' });
+      check(await mp.evaluate(() => document.querySelector('[data-unwind]').dataset.state) === 'loop', 'with motion, the answer section starts as the loop');
+      check(await mp.evaluate(() => getComputedStyle(document.querySelector('.unwind-list li')).opacity) === '0', 'the answers wait until the loop has unwound');
+      await mp.locator('[data-unwind]').scrollIntoViewIfNeeded();
+      await mp.waitForFunction(() => document.querySelector('[data-unwind]').dataset.state === 'line', null, { timeout: 8000 });
+      await mp.waitForTimeout(900);
+      check(await mp.evaluate(() => getComputedStyle(document.querySelector('.unwind-list li:last-child')).opacity) === '1', 'then they are all shown');
+      await mp.getByRole('button', { name: 'Show the loop again' }).click();
+      check(await mp.evaluate(() => document.querySelector('[data-unwind]').dataset.state) === 'loop', 'the transformation can be replayed');
+      await moving.close();
+      report.journeys.composition = 'centred hero at 1440/1024/390/320, narrative order, centred heads, quiet header, loop → line';
+    }
+
+    // ── 3. Journeys on the home page (motion allowed, as most visitors see it) ──
     const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
     const page = await context.newPage();
     await page.goto(origin + '/', { waitUntil: 'networkidle' });
@@ -177,7 +237,8 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
     check(/doesn’t mention management/.test(await page.locator('[data-listing] [data-status]').innerText()), 'the status explains the unknown');
     report.journeys.listing = 'stated, differs, not stated';
 
-    // Demonstration 3: the count follows the last visit and pausing.
+    // Demonstration 3 (on How it works now): the count follows the last visit and pausing.
+    await page.goto(origin + '/how-it-works', { waitUntil: 'networkidle' });
     const count = () => page.locator('[data-watch] [data-count]').innerText();
     const visit = day => page.locator('[data-watch]').getByRole('button', { name: day });
     await visit('Monday').click(); check(await count() === '4', 'four new since Monday');
@@ -189,6 +250,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
     report.journeys.watching = 'last visit, pause';
 
     // Demonstration 4: five separate decisions, each with its status.
+    await page.goto(origin + '/', { waitUntil: 'networkidle' });
     const steps = page.getByRole('tablist', { name: 'Five separate decisions' }).getByRole('tab');
     check(await steps.count() === 5, 'five decisions');
     await steps.nth(3).click();
@@ -196,7 +258,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
     report.journeys.decisions = 'five steps, status';
     await context.close();
 
-    // ── 3. Crawl files ──
+    // ── 4. Crawl files ──
     const robots = await (await fetch(origin + '/robots.txt')).text();
     const sitemap = await (await fetch(origin + '/sitemap-0.xml')).text();
     const preview = /Disallow: \//.test(robots);

@@ -1,0 +1,104 @@
+---
+/* The problem, as one centred picture: six familiar difficulties of job discovery around a loop,
+   because each one feeds the next. Three sit to the right of the loop and three to its left, in
+   reading order clockwise from the top; each carries a small recognisable artefact. The ordered
+   list is the content (assistive technology and phones read it in order); the ring is
+   illustration. */
+import { PROBLEMS } from '../data/story';
+const R = 150, C = 200, GAP = 8;
+const point = (deg: number, r = R) => [C + r * Math.cos((deg - 90) * Math.PI / 180), C + r * Math.sin((deg - 90) * Math.PI / 180)];
+const arcs = PROBLEMS.map((_, i) => {
+  const a = i * 60 + GAP, b = (i + 1) * 60 - GAP;
+  const [x1, y1] = point(a), [x2, y2] = point(b);
+  return `M${x1.toFixed(1)} ${y1.toFixed(1)}A${R} ${R} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+});
+// Node k sits between arc k-1 and arc k: at 0°, 60°, … so that nodes 1–3 face the right column.
+const nodes = PROBLEMS.map((_, i) => point(i * 60 + 30));
+const SIDE = ['right', 'right', 'right', 'left', 'left', 'left'];
+const ROW = [1, 2, 3, 3, 2, 1];
+---
+<div class="loop" data-loop data-draw>
+  <div class="loop-ring" aria-hidden="true">
+    <svg class="loop-svg" viewBox="0 0 400 400" focusable="false">
+      <defs><marker id="loop-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="currentColor" stroke-width="1.6" /></marker></defs>
+      {arcs.map((d, i) => <path class="loop-arc" d={d} pathLength="1" marker-end="url(#loop-arrow)" style={`--i:${i}`} />)}
+      {nodes.map(([x, y], i) => <g class="loop-node" style={`--i:${i}`}><circle cx={x} cy={y} r="17" /><text x={x} y={y + 6}>{i + 1}</text></g>)}
+    </svg>
+    <div class="loop-you"><span class="loop-dot"></span><b>You</b><small>looking for your next job</small></div>
+  </div>
+  <ol class="loop-list">
+    {PROBLEMS.map((p, i) => <li data-side={SIDE[i]} style={`--i:${i}; --row:${ROW[i]}`}>
+      <span class="loop-n" aria-hidden="true">{i + 1}</span>
+      <div class="loop-text">
+        <h3>{p.title}</h3>
+        <p>{p.text}</p>
+        <p class="loop-link">{p.link}</p>
+      </div>
+      <div class="loop-art" data-art={p.id} aria-hidden="true">
+        {p.id === 'scattered' && <><span>Job board</span><span>Career page</span><span>Recruiter</span></>}
+        {p.id === 'repeat' && <><span class="loop-pill">backend engineer, remote</span><i>searched 12× this month</i></>}
+        {p.id === 'fit' && <><span class="loop-q">Remote?</span><span class="loop-q">Salary?</span><span class="loop-q">Team?</span></>}
+        {p.id === 'visible' && <><span class="loop-switch"><span></span></span><i>Open to offers</i></>}
+        {p.id === 'messages' && <><span class="loop-bubble">Hi! Exciting role in sales…</span><i>14 unread</i></>}
+        {p.id === 'contact' && <><span class="loop-bubble" data-tone="unknown">Quick call this week?</span><i>someone you don’t know</i></>}
+      </div>
+    </li>)}
+  </ol>
+</div>
+
+<style>
+  /* Desktop: a symmetric diagram, the loop on the centre line with three problems either side. */
+  .loop { display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, 30vw, 400px) minmax(0, 1fr); grid-template-rows: repeat(3, auto); column-gap: clamp(24px, 3vw, 48px); align-items: center; }
+  .loop-ring { grid-column: 2; grid-row: 1 / span 3; position: relative; aspect-ratio: 1; }
+  .loop-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; color: var(--ink); }
+  .loop-arc { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+  .loop-node circle { fill: var(--sun); stroke: var(--ink); stroke-width: 2; }
+  .loop-node text { font: 700 15px var(--font); text-anchor: middle; fill: var(--ink); }
+  .loop-you { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 2px; text-align: center; }
+  .loop-you b { font-size: 1.375rem; font-weight: 650; }
+  .loop-you small { font-size: var(--size-micro); color: var(--ink-2); max-width: 10em; }
+  .loop-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--cobalt); margin-bottom: 6px; box-shadow: 0 0 0 6px var(--cobalt-wash); }
+  .loop-list { display: contents; }
+  .loop-list li { grid-row: var(--row); display: grid; gap: 8px 12px; padding: 14px 0; }
+  .loop-list li[data-side='right'] { grid-column: 3; grid-template-columns: 30px minmax(0, 1fr); justify-items: start; text-align: left; }
+  .loop-list li[data-side='left'] { grid-column: 1; grid-template-columns: minmax(0, 1fr) 30px; justify-items: end; text-align: right; }
+  .loop-list li[data-side='left'] .loop-n { grid-column: 2; grid-row: 1; }
+  .loop-list li[data-side='left'] .loop-text, .loop-list li[data-side='left'] .loop-art { grid-column: 1; }
+  .loop-list li[data-side='left'] .loop-text { grid-row: 1; }
+  .loop-list li[data-side='right'] .loop-art { grid-column: 2; }
+  .loop-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--sun); border: 2px solid var(--ink); font-size: 14px; font-weight: 700; }
+  .loop-text { display: grid; gap: 4px; max-width: 26rem; }
+  .loop-list h3 { font-size: 1.125rem; }
+  .loop-list p { font-size: var(--size-small); color: var(--ink-2); }
+  .loop-list .loop-link { font-weight: 600; color: var(--ink-3); }
+  /* Small, recognisable artefacts (illustration only). */
+  .loop-art { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); }
+  .loop-list li[data-side='left'] .loop-art { justify-content: flex-end; }
+  .loop-art i { font-style: normal; font-size: 12px; font-weight: 600; color: var(--ink-3); }
+  .loop-art[data-art='scattered'] span { padding: 3px 8px; border: 1px solid var(--line-strong); border-radius: var(--r-1); background: var(--paper); font-weight: 600; color: var(--ink); }
+  .loop-art[data-art='scattered'] span::after { content: ' · Backend Engineer'; font-weight: 500; color: var(--ink-3); }
+  .loop-pill { padding: 4px 10px; border: 1px solid var(--line-ink); border-radius: 999px; background: var(--paper); color: var(--ink); white-space: nowrap; }
+  .loop-q { padding: 2px 6px; outline: 1px dashed var(--line-ink); outline-offset: -1px; color: var(--ink-2); }
+  .loop-switch { width: 38px; height: 22px; border-radius: 999px; background: var(--cobalt); position: relative; flex: none; }
+  .loop-switch span { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--paper); }
+  .loop-bubble { padding: 6px 10px; border-radius: var(--r-2); background: var(--sand-2); color: var(--ink); }
+  .loop-bubble[data-tone='unknown'] { background: var(--paper); border: 1px dashed var(--line-ink); }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .loop .loop-arc { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 420ms var(--ease) calc(var(--i) * 240ms); }
+    :global(.js) .loop .loop-node, :global(.js) .loop .loop-list li { opacity: 0; transition: opacity 380ms var(--ease) calc(var(--i, 0) * 240ms + 160ms); }
+    :global(.js) .loop.is-in .loop-arc { stroke-dashoffset: 0; }
+    :global(.js) .loop.is-in .loop-node, :global(.js) .loop.is-in .loop-list li { opacity: 1; }
+  }
+  :global(.drawn) .loop .loop-arc { stroke-dashoffset: 0 !important; }
+  :global(.drawn) .loop .loop-node, :global(.drawn) .loop .loop-list li { opacity: 1 !important; }
+  /* Narrower: the loop on top, the six problems as one ordered list under it. */
+  @media (max-width: 63.9375rem) {
+    .loop { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; justify-items: center; row-gap: 8px; }
+    .loop-ring { grid-column: 1; grid-row: auto; width: min(100%, 340px); }
+    .loop-list { display: grid; width: min(100%, 36rem); }
+    .loop-list li, .loop-list li[data-side] { grid-column: 1; grid-row: auto; grid-template-columns: 30px minmax(0, 1fr); justify-items: start; text-align: left; border-top: 1px solid var(--line-strong); }
+    .loop-list li[data-side='left'] .loop-n { grid-column: 1; }
+    .loop-list li[data-side='left'] .loop-text, .loop-list li[data-side='left'] .loop-art, .loop-list li .loop-art { grid-column: 2; }
+    .loop-list li[data-side='left'] .loop-art { justify-content: flex-start; }
+  }
+</style>
