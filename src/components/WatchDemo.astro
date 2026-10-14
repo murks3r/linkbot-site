@@ -9,11 +9,13 @@ const FOUND: Record<number, string[]> = { 1: ['Backend Engineer, Payments', 'Pla
 ---
 <div class="watch" data-watch>
   <div class="watch-controls">
-    <fieldset class="watch-visit">
-      <legend>Your last visit</legend>
-      {[0, 2, 4].map((day, index) => <label><input type="radio" name="watch-visit" value={day} checked={index === 1} /><span>{['Monday', 'Wednesday', 'Friday'][index]}</span></label>)}
-    </fieldset>
-    <label class="watch-pause"><input type="checkbox" data-pause /><span>Pause from Thursday</span></label>
+    <div class="watch-visit">
+      <p id="watch-visit-label">Your last visit</p>
+      <div role="group" aria-labelledby="watch-visit-label">
+        {[0, 2, 4].map((day, index) => <button type="button" data-visit-day={day} aria-pressed={index === 1 ? 'true' : 'false'}>{['Monday', 'Wednesday', 'Friday'][index]}</button>)}
+      </div>
+    </div>
+    <button type="button" class="watch-pause" aria-pressed="false" data-pause><span class="watch-switch" aria-hidden="true"></span>Pause from Thursday</button>
   </div>
   <ol class="watch-week" aria-label="One example week of a watched direction" data-week>
     {DAYS.map((name, day) => <li data-day={day} data-found={(FOUND[day] ?? []).length} data-since={day > 2 ? '' : undefined} data-visit={day === 2 ? '' : undefined}>
@@ -27,7 +29,7 @@ const FOUND: Record<number, string[]> = { 1: ['Backend Engineer, Payments', 'Pla
     <ul class="watch-list" data-list>
       {Object.entries(FOUND).map(([day, titles]) => titles.map(title => <li data-from={day} hidden={Number(day) <= 2}><span class="watch-tag">New</span>{title}</li>))}
     </ul>
-    <p class="watch-paused" data-paused hidden>Paused on Thursday: no checks from then on, so nothing new was found. Resume any time.</p>
+    <p class="watch-paused" data-paused-note hidden>Paused on Thursday: no checks from then on, so nothing new was found. Resume any time.</p>
   </div>
   <p class="watch-caption">An example week. Each square is the day’s check; each yellow mark is a new listing it found.</p>
 </div>
@@ -35,15 +37,18 @@ const FOUND: Record<number, string[]> = { 1: ['Backend Engineer, Payments', 'Pla
 <style>
   .watch { display: grid; gap: 18px; padding: clamp(20px, 3vw, 32px); border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--paper); }
   .watch-controls { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
-  .watch-visit { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; border: 0; }
-  .watch-visit legend { width: 100%; margin-bottom: 6px; font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
-  .watch-visit label { position: relative; }
-  .watch-visit input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-  .watch-visit span { display: inline-flex; align-items: center; min-height: var(--target); padding: 0 14px; border: 1px solid var(--line-strong); border-radius: var(--r-2); font-size: var(--size-small); font-weight: 600; color: var(--ink-2); }
-  .watch-visit input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-  .watch-visit input:focus-visible + span { outline: 2px solid var(--cobalt); outline-offset: 2px; }
-  .watch-pause { display: inline-flex; align-items: center; gap: 10px; min-height: var(--target); font-size: var(--size-small); font-weight: 600; cursor: pointer; }
-  .watch-pause input { width: 22px; height: 22px; margin: 0; accent-color: var(--ink); }
+  .watch-visit { display: grid; gap: 6px; }
+  .watch-visit p { font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
+  .watch-visit [role='group'] { display: flex; flex-wrap: wrap; gap: 6px; }
+  .watch-visit button { display: inline-flex; align-items: center; min-height: var(--target); padding: 0 14px; border: 1px solid var(--line-strong); border-radius: var(--r-2); background: var(--paper); font-size: var(--size-small); font-weight: 600; color: var(--ink-2); }
+  .watch-visit button:hover { border-color: var(--ink); color: var(--ink); }
+  .watch-visit button[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .watch-pause { display: inline-flex; align-items: center; gap: 10px; min-height: var(--target); padding: 0 14px 0 10px; border: 1px solid var(--line-strong); border-radius: var(--r-2); background: var(--paper); font-size: var(--size-small); font-weight: 600; color: var(--ink); }
+  .watch-pause:hover { border-color: var(--ink); }
+  .watch-switch { position: relative; width: 34px; height: 20px; border-radius: 999px; background: var(--line-ink); transition: background var(--fast); }
+  .watch-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--paper); transition: transform var(--fast) var(--ease); }
+  .watch-pause[aria-pressed='true'] .watch-switch { background: var(--ink); }
+  .watch-pause[aria-pressed='true'] .watch-switch::after { transform: translateX(14px); }
   .watch-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
   .watch-week li { display: grid; justify-items: center; align-content: start; gap: 8px; padding: 10px 2px 12px; border-radius: var(--r-2); transition: background var(--base); }
   .watch-week li[data-since] { background: var(--mist); }
@@ -70,10 +75,10 @@ const FOUND: Record<number, string[]> = { 1: ['Backend Engineer, Payments', 'Pla
   const NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   for (const demo of document.querySelectorAll<HTMLElement>('[data-watch]')) {
     const days = [...demo.querySelectorAll<HTMLElement>('[data-day]')];
-    const pause = demo.querySelector<HTMLInputElement>('[data-pause]');
+    const pause = demo.querySelector<HTMLButtonElement>('[data-pause]');
     const update = () => {
-      const visit = Number(demo.querySelector<HTMLInputElement>('input[name="watch-visit"]:checked')?.value ?? 2);
-      const paused = !!pause?.checked, pausedFrom = 3;
+      const visit = Number(demo.querySelector<HTMLElement>('[data-visit-day][aria-pressed="true"]')?.dataset.visitDay ?? 2);
+      const paused = pause?.getAttribute('aria-pressed') === 'true', pausedFrom = 3;
       let count = 0;
       for (const li of days) {
         const day = Number(li.dataset.day), off = paused && day >= pausedFrom;
@@ -88,10 +93,14 @@ const FOUND: Record<number, string[]> = { 1: ['Backend Engineer, Payments', 'Pla
       const c = demo.querySelector('[data-count]'), w = demo.querySelector('[data-count-word]');
       if (c) c.textContent = String(count);
       if (w) w.textContent = `new since your last visit on ${NAMES[visit]}`;
-      const note = demo.querySelector<HTMLElement>('[data-paused]');
+      const note = demo.querySelector<HTMLElement>('[data-paused-note]');
       if (note) note.hidden = !paused;
     };
-    demo.addEventListener('change', update);
+    demo.querySelectorAll<HTMLButtonElement>('[data-visit-day]').forEach(button => button.addEventListener('click', () => {
+      demo.querySelectorAll('[data-visit-day]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+      update();
+    }));
+    pause?.addEventListener('click', () => { pause.setAttribute('aria-pressed', String(pause.getAttribute('aria-pressed') !== 'true')); update(); });
     update();
   }
 </script>
