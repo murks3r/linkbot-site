@@ -1,0 +1,110 @@
+---
+/* Demonstration 4: from relevance to control. Found → matched → interested → shared → applied
+   are five separate states, each a separate decision, and the product's status for each is
+   stated plainly. "Who can see what" uses the evidence squares: solid = sees it, split = sees
+   only what you chose, dashed = sees nothing. */
+import Mark from './Mark.astro';
+type Tone = 'fit' | 'tradeoff' | 'unknown';
+type Status = { tone: 'live' | 'built' | 'next'; text: string };
+const STEPS: { id: string; name: string; title: string; decide: string; you: string; linkbot: string; employer: string; employerTone: Tone; status: Status[]; note?: string }[] = [
+  { id: 'found', name: 'Found', title: 'A listing appears in your search.', decide: 'You decide whether to look closer.',
+    you: 'The listing, and why it appeared.', linkbot: 'Your search words, while the search runs. A search without an account isn’t stored.',
+    employer: 'Nothing. Searching and viewing send nothing to anyone.', employerTone: 'unknown', status: [{ tone: 'live', text: 'In the product now' }] },
+  { id: 'matched', name: 'Matched', title: 'A new listing fits a direction you saved.', decide: 'Linkbot finds it. Nothing else happens.',
+    you: 'It’s marked as new when you come back.', linkbot: 'Your saved direction: Linkbot reads it to check new listings against it, which is the work you asked for.',
+    employer: 'Nothing. A match is not a disclosure, and not a sign of anyone’s interest.', employerTone: 'unknown',
+    status: [{ tone: 'built', text: 'Built, being proven' }], note: 'Matching people privately with companies that are hiring is in development. It is not live, and nobody is matched with you today.' },
+  { id: 'interested', name: 'Interested', title: 'You keep it, privately.', decide: 'You decide: save it, or let it go.',
+    you: 'Your saved jobs, in your account.', linkbot: 'What you saved, kept for you.',
+    employer: 'Nothing. Saving is private; no employer can see who saved a job.', employerTone: 'unknown',
+    status: [{ tone: 'live', text: 'In the product now' }], note: 'An employer showing interest in you could only come through private matching, which isn’t live.' },
+  { id: 'shared', name: 'Shared', title: 'You share chosen details with one named recipient.', decide: 'You decide what, with whom and for how long: once, or as a standing rule.',
+    you: 'A receipt for every share: who received what, and when.', linkbot: 'Exactly the details you chose, passed to that recipient and recorded.',
+    employer: 'Only the named recipient, and only the details you chose, from then on. You can revoke access later; copies already received aren’t recalled.', employerTone: 'tradeoff',
+    status: [{ tone: 'built', text: 'Built, tested in staging' }] },
+  { id: 'applied', name: 'Applied', title: 'You apply.', decide: 'You decide, every time. Linkbot never applies for you.',
+    you: 'Most listings: you apply on the original site, and Linkbot sends nothing.', linkbot: 'For a role a company publishes on Linkbot: the details you confirm, sent as your application.',
+    employer: 'Your application, as you sent it.', employerTone: 'fit',
+    status: [{ tone: 'live', text: 'Apply on the original site: now' }, { tone: 'built', text: 'One-click on Linkbot: built, waiting for companies' }] },
+];
+const mark = (tone: Status['tone']): Tone => tone === 'live' ? 'fit' : tone === 'built' ? 'tradeoff' : 'unknown';
+---
+<div class="ladder" data-ladder>
+  <div class="ladder-track" role="tablist" aria-label="Five separate decisions">
+    {STEPS.map((step, index) => <button type="button" role="tab" id={`step-${step.id}`} aria-controls={`step-panel-${step.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1}>
+      <span class="ladder-n" aria-hidden="true">{index + 1}</span><span>{step.name}</span>
+    </button>)}
+  </div>
+  {STEPS.map((step, index) => <section class="ladder-panel" role="tabpanel" id={`step-panel-${step.id}`} aria-labelledby={`step-${step.id}`} hidden={index !== 0}>
+    <div class="ladder-head">
+      <h3>{step.title}</h3>
+      <p>{step.decide}</p>
+      <p class="ladder-status">{step.status.map(s => <span class="status" data-tone={s.tone}><Mark tone={mark(s.tone)} size={10} />{s.text}</span>)}</p>
+    </div>
+    <dl class="ladder-sees">
+      <div><dt><Mark tone="fit" />You</dt><dd>{step.you}</dd></div>
+      <div><dt><Mark tone="tradeoff" />Linkbot</dt><dd>{step.linkbot}</dd></div>
+      <div data-tone={step.employerTone}><dt><Mark tone={step.employerTone} />An employer</dt><dd>{step.employer}</dd></div>
+    </dl>
+    {step.note && <p class="ladder-note">{step.note}</p>}
+  </section>)}
+  <p class="ladder-key"><span><Mark tone="fit" size={10} />sees this</span><span><Mark tone="tradeoff" size={10} />sees only what you chose or asked it to use</span><span><Mark tone="unknown" size={10} />sees nothing</span></p>
+</div>
+
+<style>
+  .ladder { display: grid; gap: 0; border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--paper); color: var(--ink); overflow: clip; }
+  .ladder-track { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-bottom: 1px solid var(--line); background: var(--sand); }
+  .ladder-track button { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 84px; padding: 14px 6px 12px; border: 0; background: none; font-size: var(--size-small); font-weight: 620; color: var(--ink-2); }
+  .ladder-track button:not(:last-child)::after { content: ''; position: absolute; top: 28px; left: calc(50% + 18px); right: calc(-50% + 18px); height: 2px; background: var(--line-ink); }
+  .ladder-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--line-ink); background: var(--paper); font-size: var(--size-micro); font-weight: 700; }
+  .ladder-track button:hover { color: var(--ink); }
+  .ladder-track button[aria-selected='true'] { color: var(--ink); background: var(--paper); box-shadow: inset 0 -3px 0 var(--cobalt); }
+  .ladder-track button[aria-selected='true'] .ladder-n { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .ladder-panel { display: grid; gap: 20px; padding: clamp(20px, 3vw, 32px); }
+  .ladder-head { display: grid; gap: 8px; }
+  .ladder-head h3 { font-size: clamp(1.35rem, 1.2rem + .6vw, 1.7rem); }
+  .ladder-head p { color: var(--ink-2); }
+  .ladder-status { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .ladder-sees { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 0; border-top: 2px solid var(--ink); }
+  .ladder-sees > div { display: grid; gap: 6px; align-content: start; padding: 14px 16px 4px 0; }
+  .ladder-sees > div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+  .ladder-sees dt { display: flex; align-items: center; gap: 8px; font-size: var(--size-micro); font-weight: 700; letter-spacing: .02em; }
+  .ladder-sees dd { margin: 0; font-size: var(--size-small); color: var(--ink-2); }
+  .ladder-sees > div[data-tone='unknown'] dd { color: var(--ink); font-weight: 560; }
+  .ladder-note { padding: 12px 14px; border-radius: var(--r-2); background: var(--mist); font-size: var(--size-small); }
+  .ladder-key { display: flex; flex-wrap: wrap; gap: 6px 22px; padding: 12px clamp(20px, 3vw, 32px); border-top: 1px solid var(--line); font-size: var(--size-micro); color: var(--ink-3); }
+  .ladder-key span { display: inline-flex; align-items: center; gap: 8px; }
+  @media (max-width: 48rem) {
+    .ladder-sees { grid-template-columns: minmax(0, 1fr); }
+    .ladder-sees > div, .ladder-sees > div + div { padding: 12px 0 2px; border-left: 0; border-top: 1px solid var(--line); }
+    .ladder-sees > div:first-child { border-top: 0; }
+  }
+  @media (max-width: 30rem) {
+    .ladder-track button { min-height: 76px; padding-inline: 2px; font-size: 12.5px; }
+    .ladder-track button:not(:last-child)::after { left: calc(50% + 16px); right: calc(-50% + 16px); }
+  }
+</style>
+
+<script>
+  for (const ladder of document.querySelectorAll<HTMLElement>('[data-ladder]')) {
+    const tabs = [...ladder.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const show = (tab: HTMLButtonElement, focus = false) => {
+      for (const other of tabs) {
+        const on = other === tab;
+        other.setAttribute('aria-selected', String(on)); other.tabIndex = on ? 0 : -1;
+        const panel = ladder.querySelector<HTMLElement>(`#${other.getAttribute('aria-controls')}`);
+        if (panel) panel.hidden = !on;
+      }
+      if (focus) tab.focus();
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => show(tab));
+      tab.addEventListener('keydown', event => {
+        const next = event.key === 'ArrowRight' ? (index + 1) % tabs.length : event.key === 'ArrowLeft' ? (index - 1 + tabs.length) % tabs.length
+          : event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : -1;
+        if (next < 0) return;
+        event.preventDefault(); show(tabs[next], true);
+      });
+    });
+  }
+</script>
