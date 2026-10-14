@@ -1,0 +1,223 @@
+---
+/* The homepage story (Concept A4): many openings → your priorities → the openings that fit →
+   your decision, told on one sticky stage.
+
+   Every visual state is a function of scroll position (--p, 0 → 1), never a one-shot trigger:
+   scrolling back plays it backwards, a jump or a fast fling lands on the right frame, and nothing
+   that has appeared is lost. Only opacity, colour and transform change, so nothing reflows.
+   Without scripts, with reduced motion, or on a screen too short for a stage, it is simply its
+   final, complete state at normal height, and the text never depends on the motion.
+
+   Truthfulness: the words and how they are read are the app's interpreter's own (readings.json,
+   "story", recorded at an app commit); the openings and the opened listing are an illustration,
+   and the figure says so. Softened openings never drop below 3:1 at their size. */
+import Mark from './Mark.astro';
+import { reading, LEVEL, STORY } from '../data/content';
+const words = reading(STORY.words);
+const STEPS = ['Say what matters to you.', 'Linkbot reads each opening against it.', 'You see why, and you decide.'];
+---
+<div class="clarity" data-clarity>
+  <div class="clarity-track" data-clarity-track>
+    <div class="clarity-stage" data-clarity-stage>
+      <div class="wrap clarity-grid" data-clarity-grid>
+        <div class="clarity-side">
+          <ol class="clarity-steps">
+            {STEPS.map((step, index) => <li data-step={index + 1}><span class="clarity-n" aria-hidden="true">{index + 1}</span><span>{step}</span></li>)}
+          </ol>
+          <div class="clarity-rail" aria-hidden="true"><span></span></div>
+        </div>
+        <figure class="clarity-figure" aria-labelledby="clarity-caption" data-clarity-figure>
+          <div class="clarity-query">
+            <p class="clarity-box"><span class="clarity-empty" aria-hidden="true">What matters to you?</span><span class="clarity-words">{words.text}</span></p>
+            <ul class="clarity-read" aria-label="How Linkbot reads these words">
+              {words.criteria.map(c => <li class="chip">{c.label}<small>{LEVEL[c.level ?? 'prefer']}</small></li>)}
+            </ul>
+          </div>
+          <ul class="clarity-field" aria-hidden="true">
+            {STORY.openings.map(o => <li data-fit={o.fit ? '' : undefined} data-open={o.open ? '' : undefined}>{o.title}</li>)}
+          </ul>
+          <section class="clarity-listing" aria-labelledby="clarity-listing-title">
+            <p class="clarity-kicker">Example listing</p>
+            <h3 id="clarity-listing-title">{STORY.listing.title}</h3>
+            <p class="clarity-facts">{STORY.listing.facts}</p>
+            <dl class="clarity-rows">
+              {STORY.listing.rows.map(row => <div data-tone={row.tone}>
+                <dt>{row.ask}</dt>
+                <dd><Mark tone={row.tone} /><span><b>{row.says}</b> {row.where}</span></dd>
+              </div>)}
+            </dl>
+            <p class="clarity-decide">Yours to decide: keep it, apply where it was published, or let it go.</p>
+          </section>
+          <figcaption id="clarity-caption">Illustration: the openings and the listing are examples. The words are read by Linkbot’s own interpreter.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ── The complete, static story (no scripts, reduced motion, short screens) ───────────── */
+  .clarity { --p: 1; --header: 72px; }
+  .clarity-stage {
+    /* Three beats, each a ramp of progress: the words arrive, the field focuses, one opens. */
+    --k1: clamp(0, (var(--p) - .04) / .16, 1);
+    --k2: clamp(0, (var(--p) - .32) / .18, 1);
+    --k3: clamp(0, (var(--p) - .6) / .16, 1);
+  }
+  .clarity-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 88px); align-items: start; }
+  .clarity-side { position: relative; padding-left: 28px; }
+  .clarity.is-live .clarity-grid { align-items: center; }
+  .clarity-steps { display: grid; gap: clamp(20px, 3.4vh, 36px); counter-reset: none; }
+  .clarity-steps li { --s: 1; display: grid; grid-template-columns: 1.6em minmax(0, 1fr); align-items: baseline; gap: 4px;
+    font-family: var(--display); font-stretch: 106%; font-size: clamp(1.5rem, 1.1rem + 1.1vw, 2.125rem); font-weight: 440; letter-spacing: -.022em; line-height: 1.12; text-wrap: balance;
+    color: color-mix(in srgb, var(--ink) calc(71% + 29% * var(--s)), var(--paper)); }
+  .clarity-n { font-family: var(--text); font-size: .5em; font-weight: 650; letter-spacing: 0; color: inherit; position: relative; top: -.2em; }
+  .clarity-rail { display: none; }
+
+  .clarity-figure { position: relative; display: grid; gap: 22px; align-content: start; min-width: 0; }
+  .clarity-query { display: grid; gap: 12px; justify-items: start; }
+  .clarity-box { position: relative; display: flex; align-items: center; width: 100%; min-height: 60px; padding: 0 24px; border: 1.5px solid var(--green); border-radius: var(--pill); background: var(--surface);
+    font-size: clamp(1rem, .95rem + .3vw, 1.1875rem); font-weight: 520; letter-spacing: -.005em; }
+  /* The prompt leaves before the words arrive, so the two never overlap. */
+  .clarity-empty { position: absolute; left: 24px; right: 24px; color: var(--ink-3); font-weight: 400; opacity: clamp(0, 1 - var(--k1) * 4, 1); }
+  .clarity-words { --w: clamp(0, (var(--k1) - .25) / .35, 1); opacity: var(--w); transform: translateX(calc((1 - var(--w)) * 10px)); }
+  .clarity-read { display: flex; flex-wrap: wrap; gap: 8px; }
+  .clarity-read .chip { min-height: 32px; padding: 3px 12px; font-size: .875rem; }
+  .clarity-read li { --c: clamp(0, var(--k1) * 2.4 - .9, 1); opacity: var(--c); transform: translateY(calc((1 - var(--c)) * 8px)); }
+  .clarity-read li:nth-child(2) { --c: clamp(0, var(--k1) * 2.4 - 1.1, 1); }
+  .clarity-read li:nth-child(3) { --c: clamp(0, var(--k1) * 2.4 - 1.25, 1); }
+  .clarity-read li:nth-child(4) { --c: clamp(0, var(--k1) * 2.4 - 1.4, 1); }
+
+  /* The openings: near full ink at first; as the field focuses, the ones that don't fit soften
+     and step back a little, while the four that fit stay. The softening stops at a floor that
+     keeps every opening legible: 58 % ink (3.5:1) where the openings are large text (24 px and
+     up), 71 % ink (5:1) where they are smaller. */
+  .clarity-field { --from: 86%; --floor: 58%; display: flex; flex-wrap: wrap; gap: .3em 0; margin: 0; padding: 4px 0 0;
+    font-family: var(--display); font-stretch: 104%; font-size: 1.5rem; font-weight: 400; letter-spacing: -.016em; line-height: 1.3; }
+  .clarity-field li { color: color-mix(in srgb, var(--ink) calc(var(--from) - (var(--from) - var(--floor)) * var(--k2)), var(--paper));
+    transform: scale(calc(1 - .035 * var(--k2) - .02 * var(--k3))); transform-origin: 0 60%; }
+  .clarity-field li:nth-child(n+29) { display: none; }
+  .clarity-field li:not(:last-child)::after { content: '·'; display: inline-block; margin: 0 .42em; color: var(--line-strong); }
+  .clarity-field li[data-fit] { color: var(--ink); transform: none; }
+  .clarity-field li[data-fit]:not([data-open]) { color: color-mix(in srgb, var(--ink) calc(100% - 14% * var(--k3)), var(--paper)); }
+
+  /* One opening, read against the words: what it states, and what it doesn't. */
+  .clarity-listing { position: relative; width: 100%; display: grid; gap: 4px; padding: 22px 26px 20px;
+    background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-3); }
+  .clarity-kicker { font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
+  .clarity-listing h3 { font-family: var(--display); font-stretch: 104%; font-size: 1.375rem; font-weight: 520; letter-spacing: -.02em; line-height: 1.2; }
+  .clarity-facts { font-size: var(--size-small); color: var(--ink-2); }
+  .clarity-rows { display: grid; margin: 12px 0 0; border-top: 1.5px solid var(--ink); }
+  .clarity-rows > div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 2px 14px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: var(--size-small); }
+  .clarity-rows dt { font-weight: 650; }
+  .clarity-rows dd { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 10px; align-items: baseline; margin: 0; color: var(--ink-2); }
+  .clarity-rows dd b { color: var(--ink); font-weight: 650; }
+  .clarity-rows > div[data-tone='unknown'] dd b { color: var(--ink-2); font-weight: 560; }
+  .clarity-decide { margin-top: 10px; font-size: var(--size-small); font-weight: 560; color: var(--ink); }
+  .clarity-figure figcaption { font-size: var(--size-micro); color: var(--ink-3); }
+
+  /* ── The live stage: sticky, scroll-linked ─────────────────────────────────────────────── */
+  .clarity.is-live .clarity-track { height: calc(100svh - var(--header) + 230svh); }
+  .clarity.is-live .clarity-stage { position: sticky; top: var(--header); height: calc(100svh - var(--header)); display: grid; align-items: center; overflow: clip; }
+  .clarity.is-live .clarity-steps li[data-step='1'] { --s: clamp(0, (var(--p) - .02) / .05, 1); }
+  .clarity.is-live .clarity-steps li[data-step='2'] { --s: clamp(0, (var(--p) - .3) / .05, 1); }
+  .clarity.is-live .clarity-steps li[data-step='3'] { --s: clamp(0, (var(--p) - .58) / .05, 1); }
+  .clarity.is-live .clarity-rail { display: block; position: absolute; left: 0; top: .35em; bottom: .35em; width: 2px; background: var(--line); }
+  .clarity.is-live .clarity-rail span { display: block; height: 100%; background: var(--ink); transform-origin: 50% 0; transform: scaleY(var(--p)); }
+  /* The field keeps room for the sheet (measured), so the sheet covers openings, never the words. */
+  .clarity.is-live .clarity-field { min-height: var(--field-min, 0px); align-content: flex-start; }
+  /* On the stage, the opened listing rises over the softened field like a sheet: fully opaque from
+     its first pixel (revealed from its lower edge, never faded through the words behind it), with
+     a margin of paper around it. */
+  .clarity.is-live .clarity-listing { position: absolute; left: 0; right: 0; bottom: 30px; z-index: 1; box-shadow: 0 0 0 14px var(--paper), var(--shadow-float);
+    clip-path: inset(calc((1 - var(--k3)) * (100% + 48px) - 48px) -48px -96px -48px);
+    transform: translateY(calc((1 - var(--k3)) * 36px)); }
+
+  /* Shorter screens show fewer openings; the four that fit always come early. */
+  @media (max-height: 860px) { .clarity-field li:nth-child(n+23) { display: none; } }
+  @media (max-height: 760px) { .clarity-field li:nth-child(n+17) { display: none; } }
+
+  @media (max-width: 64rem) {
+    .clarity-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; align-content: center; }
+    .clarity-side { padding-left: 20px; }
+    .clarity-steps { gap: 10px; }
+    .clarity-steps li { font-size: clamp(1.125rem, 1rem + .9vw, 1.5rem); }
+    .clarity.is-live .clarity-listing { bottom: 26px; }
+    .clarity-rows > div { grid-template-columns: 8.5rem minmax(0, 1fr); }
+  }
+  @media (max-width: 52rem) { .clarity { --header: 64px; } }
+  @media (max-width: 40rem) {
+    .clarity-figure { gap: 16px; }
+    .clarity-box { min-height: 52px; padding: 8px 18px; border-radius: var(--r-3); font-size: 1rem; line-height: 1.35; }
+    .clarity-empty { left: 18px; }
+    /* Phones: smaller openings, so their floor is 5:1, and fewer of them. */
+    .clarity-field { --from: 100%; --floor: 71%; font-size: 1.125rem; gap: .35em 0; }
+    .clarity-field li:nth-child(n+13) { display: none; }
+    .clarity-read { gap: 6px; }
+    .clarity-read .chip { min-height: 30px; padding: 2px 10px; font-size: .8125rem; }
+    .clarity-listing { padding: 16px 16px 14px; }
+    .clarity.is-live .clarity-listing { bottom: 22px; }
+    .clarity-listing h3 { font-size: 1.125rem; }
+    .clarity-rows { margin-top: 8px; }
+    .clarity-rows > div { grid-template-columns: 6.75rem minmax(0, 1fr); gap: 0 10px; padding: 7px 0; font-size: .84375rem; }
+    .clarity-decide { margin-top: 8px; }
+  }
+  @media (max-width: 22.5rem) {
+    .clarity-steps li { font-size: 1.0625rem; }
+    .clarity-rows > div { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+
+<script>
+  /* The stage reads the scroll position and writes one number (--p); CSS derives every state
+     from it. The page itself scrolls natively: nothing is hijacked, snapped or eased behind the
+     reader's back. */
+  for (const root of document.querySelectorAll<HTMLElement>('[data-clarity]')) {
+    const track = root.querySelector<HTMLElement>('[data-clarity-track]'), stage = root.querySelector<HTMLElement>('[data-clarity-stage]');
+    const grid = root.querySelector<HTMLElement>('[data-clarity-grid]'), figure = root.querySelector<HTMLElement>('[data-clarity-figure]');
+    const field = root.querySelector<HTMLElement>('.clarity-field'), listing = root.querySelector<HTMLElement>('.clarity-listing'), caption = root.querySelector<HTMLElement>('figcaption');
+    if (!track || !stage || !grid || !figure || !field || !listing || !caption) continue;
+    const steps = [...root.querySelectorAll<HTMLElement>('[data-step]')];
+    const BEATS = [.02, .3, .58];
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+    let live = false, start = 0, span = 1, frame = 0, current = -1;
+    const measure = () => {
+      const header = parseFloat(getComputedStyle(stage).top) || 0;
+      start = track.getBoundingClientRect().top + scrollY - header;
+      span = Math.max(1, track.offsetHeight - stage.offsetHeight);
+    };
+    const render = () => {
+      frame = 0;
+      const p = Math.min(1, Math.max(0, (scrollY - start) / span));
+      stage.style.setProperty('--p', p.toFixed(4));
+      const step = BEATS.reduce((found, at, index) => p >= at ? index : found, -1);
+      if (step !== current) { current = step; steps.forEach((li, index) => index === step ? li.setAttribute('aria-current', 'step') : li.removeAttribute('aria-current')); }
+    };
+    const queue = () => { if (live && !frame) frame = requestAnimationFrame(render); };
+    /* The sheet needs the field to be at least as tall as the part of the sheet that rises over it,
+       so it never covers the words above. If the stage still can't hold everything on this screen,
+       the complete static story is shown instead: nothing is ever cut off. */
+    const room = () => {
+      figure.style.removeProperty('--field-min');
+      const gap = parseFloat(getComputedStyle(figure).rowGap) || 0, below = parseFloat(getComputedStyle(listing).bottom) || 0;
+      figure.style.setProperty('--field-min', `${Math.ceil(listing.offsetHeight + 14 + below - caption.offsetHeight - gap)}px`);
+      return grid.offsetHeight <= stage.clientHeight - 8;
+    };
+    const mode = () => {
+      let want = !still.matches && innerHeight >= 560;
+      if (want) { root.classList.add('is-live'); want = room(); }
+      if (want !== live || !want) {
+        live = want; root.classList.toggle('is-live', live);
+        if (!live) { cancelAnimationFrame(frame); frame = 0; current = -1; stage.style.removeProperty('--p'); figure.style.removeProperty('--field-min'); steps.forEach(li => li.removeAttribute('aria-current')); }
+      }
+      if (live) { measure(); render(); }
+    };
+    mode();
+    addEventListener('scroll', queue, { passive: true });
+    addEventListener('resize', mode);
+    addEventListener('pageshow', mode);
+    still.addEventListener('change', mode);
+    document.fonts?.ready.then(mode);
+    if ('ResizeObserver' in window) new ResizeObserver(() => { if (live) { measure(); queue(); } }).observe(document.body);
+  }
+</script>

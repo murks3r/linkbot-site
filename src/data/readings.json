@@ -1,6 +1,6 @@
 {
   "generator": "murks3r/linkbot tools/site/readings.ts",
-  "commit": "c618e526e10cc2811bef5ebbb073bf3843110800",
+  "commit": "36385b4c9ca6d5a59e60b18a0a7c97bd822c8115",
   "interpreterChanged": false,
   "readings": [
     {
@@ -280,6 +280,68 @@
           "reason": "unsupported"
         }
       ]
+    },
+    {
+      "id": "story",
+      "label": "Story",
+      "text": "Product designer, hybrid, more research, no agency work",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "tone": "read",
+          "quote": "Product designer"
+        },
+        {
+          "start": 18,
+          "end": 24,
+          "tone": "read",
+          "quote": "hybrid"
+        },
+        {
+          "start": 26,
+          "end": 39,
+          "tone": "read",
+          "quote": "more research"
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "tone": "read",
+          "quote": "no agency work"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Product designer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Product designer"
+        },
+        {
+          "label": "Hybrid",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "hybrid"
+        },
+        {
+          "label": "more research",
+          "dimension": "task",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "more research"
+        },
+        {
+          "label": "agency work",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no agency work"
+        }
+      ],
+      "unused": []
     }
   ],
   "roles": [
