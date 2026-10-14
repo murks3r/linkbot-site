@@ -66,13 +66,16 @@ button { cursor: pointer; }
 .band[data-tone='sand'] { background: var(--sand); }
 .band[data-tone='sun'] { background: var(--sun); }
 .band[data-tone='ink'] { background: var(--ink); color: var(--paper); }
-.band + .band:not([data-tone]) { padding-top: 0; }
+/* Two plain bands in a row share their spacing; after a coloured band the full spacing returns. */
+.band:not([data-tone]) + .band:not([data-tone]) { padding-top: 0; }
 .lede { font-size: var(--size-lede); line-height: 1.5; color: var(--ink-2); max-width: 40em; }
 .prose { max-width: var(--prose); }
 .prose > * + * { margin-top: 1em; }
 .prose p, .muted { color: var(--ink-2); }
 .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: var(--size-micro); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
-.eyebrow::before { content: ''; width: 18px; height: 8px; background: var(--sun); }
+.eyebrow::before { content: ''; width: 18px; height: 8px; background: var(--sun); flex: none; }
+/* On the centre line the mark sits above the label, so a wrapped label never strands it. */
+.section-head .eyebrow, .hero .eyebrow, .page-hero .eyebrow, .eyebrow[data-centred] { flex-direction: column; gap: 10px; text-align: center; }
 .section-head { display: grid; gap: 18px; max-width: 46rem; }
 .section-head p { font-size: var(--size-lede); color: var(--ink-2); }
 .split { display: grid; gap: clamp(32px, 5vw, 72px); grid-template-columns: minmax(0, 1fr); }

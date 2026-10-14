@@ -5,8 +5,8 @@
    without scripts opens the app's search without sending the words anywhere. */
 import { app, searchWith } from '../lib/links';
 import Icon from './Icon.astro';
-interface Props { id: string; examples?: string[]; size?: 'hero' | 'band'; label?: string }
-const { id, examples = [], size = 'hero', label = 'What work are you looking for?' } = Astro.props;
+interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental'; label?: string; hint?: string }
+const { id, examples = [], size = 'hero', label = 'What work are you looking for?', hint = 'Short phrases, separated by commas. No account needed, and searches aren’t stored.' } = Astro.props;
 ---
 <form class="search" data-size={size} action={app('#/search')} method="get" data-handoff={app('#/search')} role="search" aria-label="Search jobs in Linkbot">
   <label class="search-label" for={id}>{label}</label>
@@ -16,7 +16,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
       placeholder="Backend engineer, remote, no management" aria-describedby={`${id}-hint`} />
     <button class="btn btn-primary" type="submit"><span>Search jobs</span><Icon name="arrow" /></button>
   </div>
-  <p class="search-hint" id={`${id}-hint`} data-hint>Short phrases, separated by commas. No account needed, and searches aren’t stored.</p>
+  <p class="search-hint" id={`${id}-hint`} data-hint>{hint}</p>
   {examples.length > 0 && <p class="search-try"><span>Try</span>{examples.map(example => <a href={searchWith(example)}>{example}</a>)}</p>}
 </form>
 
@@ -36,6 +36,14 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   .search-try a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-ink); text-underline-offset: 5px; }
   .search-try a:hover { text-decoration-color: var(--ink); }
   .search[data-size='band'] .search-box { border-color: var(--ink); }
+  /* The hero: one wide field on the page's centre line, the label for assistive technology only. */
+  .search[data-size='monumental'] { max-width: 54rem; justify-items: center; text-align: center; gap: 14px; }
+  .search[data-size='monumental'] .search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .search[data-size='monumental'] .search-box { width: 100%; min-height: 84px; padding: 8px 8px 8px 24px; border: 1.5px solid var(--ink); border-radius: var(--r-3); text-align: left; }
+  .search[data-size='monumental'] .search-box:focus-within { border-color: var(--cobalt); box-shadow: 0 0 0 4px var(--cobalt-wash); }
+  .search[data-size='monumental'] input { height: 64px; font-size: clamp(1.125rem, 1rem + .6vw, 1.4rem); }
+  .search[data-size='monumental'] .btn { min-height: 64px; padding: 0 28px; font-size: 1.0625rem; border-radius: var(--r-2); }
+  .search[data-size='monumental'] .search-try { justify-content: center; }
   @media (max-width: 30rem) {
     .search-box { flex-wrap: wrap; padding: 6px; }
     .search-box > :global(.icon) { display: none; }

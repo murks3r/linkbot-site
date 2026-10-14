@@ -4,6 +4,7 @@ import Toc from '../components/Toc.astro';
 import Mark from '../components/Mark.astro';
 import Icon from '../components/Icon.astro';
 import SearchForm from '../components/SearchForm.astro';
+import WatchDemo from '../components/WatchDemo.astro';
 const SECTIONS: [string, string][] = [['say', 'Say what matters'], ['see', 'See what fits'], ['keep', 'Keep what’s worth keeping'], ['decide', 'Decide what happens next'], ['next', 'What’s next: private matching']];
 const LEVELS: [string, string, string][] = [
   ['Prefer', 'Where you start for anything you want.', 'Listings that state it are shown higher.'],
@@ -78,6 +79,8 @@ const LEVELS: [string, string, string][] = [
           <li><Mark tone="unknown" size={14} /><div><b>Alerts</b><p>There are no email or push alerts yet. You see what changed when you come back.</p></div></li>
         </ul>
         <p class="note">Signing in leaves the page you were on, so the search itself is cleared; what you chose to save or watch is confirmed after you sign in.</p>
+        <h3 id="watching">A week of watching, in practice</h3>
+        <WatchDemo />
       </section>
 
       <section id="decide" aria-labelledby="decide-title">
@@ -110,8 +113,9 @@ const LEVELS: [string, string, string][] = [
 
 <style>
   .page-hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 56px); }
-  .page-hero .wrap { display: grid; gap: 20px; }
-  .page-hero h1 { font-size: clamp(2.4rem, 1.2rem + 3.8vw, 4.25rem); max-width: 18ch; }
+  .page-hero .wrap { display: grid; gap: 20px; justify-items: center; text-align: center; }
+  .page-hero .lede { text-wrap: balance; }
+  .page-hero h1 { font-size: clamp(2.4rem, 1.2rem + 3.8vw, 4.5rem); max-width: 18ch; }
   .doc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); padding-bottom: var(--band); }
   @media (min-width: 64rem) { .doc { grid-template-columns: 15rem minmax(0, 1fr); } }
   .doc-body { display: grid; gap: clamp(56px, 7vw, 88px); max-width: 48rem; }

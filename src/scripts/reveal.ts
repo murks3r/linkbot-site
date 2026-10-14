@@ -1,6 +1,7 @@
 /* Draws a highlighter pass when its element comes into view (adds .is-in once). The marks mean
    something (what was read, what is stated), so they never depend on scrolling: without
    IntersectionObserver, or under reduced motion, they are simply there. */
+(window as unknown as { __lbReady: boolean }).__lbReady = true;  // the page's scripts run: no blanket fallback
 const targets = [...document.querySelectorAll<HTMLElement>('[data-draw]')];
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (still || !('IntersectionObserver' in window)) targets.forEach(el => el.classList.add('is-in'));
