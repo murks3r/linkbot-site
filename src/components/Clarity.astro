@@ -98,8 +98,11 @@ const STEPS = ['Say what matters to you.', 'Linkbot reads each opening against i
     transform: scale(calc(1 - .035 * var(--k2) - .02 * var(--k3))); transform-origin: 0 60%; }
   .clarity-field li:nth-child(n+29) { display: none; }
   .clarity-field li:not(:last-child)::after { content: '·'; display: inline-block; margin: 0 .42em; color: var(--line-strong); }
-  .clarity-field li[data-fit] { color: var(--ink); transform: none; }
-  .clarity-field li[data-fit]:not([data-open]) { color: color-mix(in srgb, var(--ink) calc(100% - 14% * var(--k3)), var(--paper)); }
+  /* The four that fit start in the same tone as the rest (nothing is given away) and come forward
+     to full ink as the field focuses. */
+  .clarity-field li[data-fit] { color: color-mix(in srgb, var(--ink) calc(var(--from) + (100% - var(--from)) * var(--k2)), var(--paper)); transform: none; }
+  /* Once one opens, the other three step back a little. */
+  .clarity-field li[data-fit]:not([data-open]) { color: color-mix(in srgb, var(--ink) calc(var(--from) + (100% - var(--from)) * var(--k2) - 14% * var(--k3)), var(--paper)); }
 
   /* One opening, read against the words: what it states, and what it doesn't. */
   .clarity-listing { position: relative; width: 100%; display: grid; gap: 4px; padding: 22px 26px 20px;
