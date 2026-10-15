@@ -1,44 +1,27 @@
 ---
-/* The atmosphere every page with a sky lies on (Concept A6).
+/* The light and the paper every page lies on (Concepts A6–A7).
 
-   Three layers, all behind the content and none carrying text:
-   1. still gradients of the seven proven pigments: what a browser without WebGL or without
-      scripts shows, and the first paint for everyone;
-   2. the living field (src/scripts/atmosphere.ts, loaded by the page that has it), drawn into a
-      small canvas over them;
-   3. the grain: fractal noise drawn by an inline SVG pattern (no image is loaded, so it passes a
-      strict img-src), finer on dense screens so a grain is about one device pixel, blended with
-      soft-light so it textures the light without darkening it.
-   The grain's tiles are defined once here; a deep band can reuse them by reference.
-   Every page has the grain (the paper's texture is part of the identity); only the home has the
-   living field. */
+   Behind the content, carrying no text:
+   1. the light (home only): still gradients of the seven proven pigments, which a browser without
+      WebGL or scripts shows and everyone sees first, and over them the living field
+      (src/scripts/atmosphere.ts, loaded by the page that has it), drawn into a small canvas;
+   2. the paper (every page): a real paper texture (fine tooth, fibres and specks, from the
+      founder's Resource Boy noise textures, levelled and made seamless) printed with multiply, so
+      white stays white and only the material shows. It is one layer the size of the page and
+      scrolls with it, so it tiles as the page grows; on dense screens it is drawn at one texture
+      pixel per device pixel. It is an image on our own origin, so a strict img-src holds.
+   The paper sits between the light and everything that carries words: text is never printed over. */
 interface Props { mode?: 'living' | 'paper' }
 const { mode = 'paper' } = Astro.props;
 ---
-<div class="air" data-air={mode === 'living' ? '' : undefined} data-mode={mode} aria-hidden="true">
-  {mode === 'living' && <div class="air-still"></div>}
-  {mode === 'living' && <canvas class="air-field" width="32" height="32"></canvas>}
-  <svg class="grain" focusable="false" aria-hidden="true">
-    <defs>
-      <filter id="grain-coarse" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency=".82" numOctaves="3" stitchTiles="stitch" seed="11" />
-        <feColorMatrix type="matrix" values=".33 .33 .33 0 0  .33 .33 .33 0 0  .33 .33 .33 0 0  0 0 0 0 1" />
-        <feComponentTransfer><feFuncR type="linear" slope="2.2" intercept="-.6" /><feFuncG type="linear" slope="2.2" intercept="-.6" /><feFuncB type="linear" slope="2.2" intercept="-.6" /></feComponentTransfer>
-      </filter>
-      <filter id="grain-fine" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="1.35" numOctaves="3" stitchTiles="stitch" seed="11" />
-        <feColorMatrix type="matrix" values=".33 .33 .33 0 0  .33 .33 .33 0 0  .33 .33 .33 0 0  0 0 0 0 1" />
-        <feComponentTransfer><feFuncR type="linear" slope="2.2" intercept="-.6" /><feFuncG type="linear" slope="2.2" intercept="-.6" /><feFuncB type="linear" slope="2.2" intercept="-.6" /></feComponentTransfer>
-      </filter>
-      <pattern id="grain-tile-coarse" width="256" height="256" patternUnits="userSpaceOnUse"><rect width="256" height="256" filter="url(#grain-coarse)" /></pattern>
-      <pattern id="grain-tile-fine" width="256" height="256" patternUnits="userSpaceOnUse"><rect width="256" height="256" filter="url(#grain-fine)" /></pattern>
-    </defs>
-    <rect class="grain-coarse" width="100%" height="100%" fill="url(#grain-tile-coarse)" />
-    <rect class="grain-fine" width="100%" height="100%" fill="url(#grain-tile-fine)" />
-  </svg>
-</div>
+{mode === 'living' && <div class="air" data-air aria-hidden="true">
+  <div class="air-still"></div>
+  <canvas class="air-field" width="32" height="32"></canvas>
+</div>}
+<div class="paper" data-paper aria-hidden="true"></div>
 
 <style is:global>
+  body { position: relative; }
   .air { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: var(--paper); }
   .air > * { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .air-still { background:
@@ -51,9 +34,9 @@ const { mode = 'paper' } = Astro.props;
       var(--paper); }
   .air-field { opacity: 0; transition: opacity 1.2s ease; }
   .air.is-drawn .air-field { opacity: 1; }
-  .grain { mix-blend-mode: soft-light; opacity: .9; }
-  .grain .grain-fine { display: none; }
-  @media (min-resolution: 1.5dppx) { .grain .grain-coarse { display: none; } .grain .grain-fine { display: inline; } }
+  .paper { position: absolute; inset: 0; z-index: 0; pointer-events: none; mix-blend-mode: multiply;
+    background: url('/material/paper.webp') 0 0 / 1024px 1024px repeat; }
+  @media (min-resolution: 1.5dppx) { .paper { background-size: 512px 512px; } }
   @media (prefers-reduced-motion: reduce) { .air-field { transition: none; } }
-  @media (forced-colors: active) { .air { display: none; } }
+  @media (forced-colors: active) { .air, .paper { display: none; } }
 </style>

@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import SearchForm from '../components/SearchForm.astro';
-import Clarity from '../components/Clarity.astro';
-import Glass from '../components/Glass.astro';
+import Halo from '../components/Halo.astro';
+import Signal from '../components/Signal.astro';
+import Yours from '../components/Yours.astro';
 import Icon from '../components/Icon.astro';
 import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
 ---
@@ -10,9 +11,10 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
   description="Say what matters in a few words. Linkbot reads current job listings against them and shows why each one fits, or doesn’t. No account needed."
   path="/" quietHeader sky>
 
-  <!-- 1. The opening viewport: one focal unit (the headline, the search, the pink action) on the
-       living atmosphere; three plain promises at its foot. -->
+  <!-- 1. The opening viewport: the search is the centre of everything. The headline sits close
+       above it, the pink action inside it, criteria people give Linkbot float around it. -->
   <section class="hero" data-stage="value" aria-labelledby="hero-title">
+    <Halo />
     <div class="hero-focal">
       <h1 id="hero-title"><span class="h1-line">Find work that fits.</span> <span class="h1-line">Keep your privacy.</span></h1>
       <div class="hero-search" data-hero-search>
@@ -29,17 +31,15 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
     </div>
   </section>
 
-  <!-- 2. The story: your words become clarity (one continuous scene). -->
+  <!-- 2. The story: from openings everywhere to the right ones, step by step. -->
   <div id="story" class="story" data-stage="story">
-    <Clarity />
+    <Signal />
   </div>
 
-  <!-- 3. The night: privacy, as two sides of the glass. -->
-  <section class="night" data-stage="privacy" data-air-cover aria-label="Your privacy">
-    <div class="night-ground" data-decor aria-hidden="true"></div>
-    <svg class="night-grain" aria-hidden="true" focusable="false"><rect class="grain-coarse" width="100%" height="100%" fill="url(#grain-tile-coarse)" /><rect class="grain-fine" width="100%" height="100%" fill="url(#grain-tile-fine)" /></svg>
-    <Glass />
-  </section>
+  <!-- 3. Privacy, in the same bright world: what you see, and what an employer sees. -->
+  <div class="story" data-stage="privacy">
+    <Yours />
+  </div>
 
   <!-- 4. The invitation: the question the story leaves you with, and the search again. -->
   <section class="band start" data-stage="start" aria-labelledby="start-title">
@@ -54,16 +54,23 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
 <script>import '../scripts/atmosphere';</script>
 
 <style>
-  /* 1. The hero. The focal unit starts high enough that the search sits just above the middle of
-     the viewport (its optical centre); the promises keep to the foot. */
-  .hero { position: relative; min-height: calc(100svh - var(--header)); display: grid; grid-template-rows: 1fr auto; padding: clamp(48px, 15vh, 150px) var(--gutter) 0; }
-  .hero-focal { display: grid; justify-items: center; align-content: start; gap: clamp(26px, 3.6vh, 38px); text-align: center; }
-  /* One weight and one colour on both lines: the composition is balanced by measure, not by
-     softening a line. */
-  .hero h1 { max-width: 15ch; font-weight: 560; }
+  /* 1. The hero. The headline is set close above the search and narrower than the field, so the
+     field is the largest, brightest, sharpest thing on the screen. The pair is placed by the
+     field: its centre falls a little below the middle of the space under the header (where the
+     eye rests; mathematically centred reads high), whatever the screen. */
+  .hero { position: relative; isolation: isolate; min-height: calc(100svh - var(--header)); display: grid; grid-template-rows: 1fr auto;
+    --h1-size: clamp(2.1rem, 1.25rem + 2.5vw, 3.5rem); --h1-gap: clamp(20px, 3vh, 30px); --field-h: 76px;
+    padding: max(28px, calc((100svh - var(--header)) * .515 - var(--h1-size) * 2.04 - var(--h1-gap) - var(--field-h) / 2)) var(--gutter) 0; }
+  .hero-focal { position: relative; z-index: 1; display: grid; justify-items: center; align-content: start; gap: var(--h1-gap); text-align: center; }
+  /* One weight and one colour on both lines. */
+  .hero h1 { max-width: 17ch; font-size: var(--h1-size); font-weight: 560; letter-spacing: -.034em; line-height: 1.02; }
   .h1-line { display: block; }
-  .hero-search { width: 100%; display: grid; justify-items: center; }
-  .hero-foot { display: grid; justify-items: center; gap: 18px; padding-bottom: clamp(18px, 3vh, 28px); }
+  .hero-search { position: relative; width: 100%; display: grid; justify-items: center; }
+  /* A pool of light behind the field: it lifts it off the colour around it (never wider than the
+     hero, so nothing overflows the page). */
+  .hero-search::before { content: ''; position: absolute; left: 50%; top: 50%; width: min(64rem, calc(100% + 2 * var(--gutter))); height: 260%; transform: translate(-50%, -50%); z-index: -1; pointer-events: none;
+    background: radial-gradient(closest-side, rgb(255 253 249 / .85), rgb(255 253 249 / .45) 45%, transparent 100%); }
+  .hero-foot { position: relative; z-index: 1; display: grid; justify-items: center; gap: 16px; padding-bottom: clamp(16px, 2.6vh, 26px); }
   .promises { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; font-size: var(--size-small); font-weight: 560; color: var(--ink-2); }
   .promises li { display: inline-flex; align-items: center; }
   .promises li + li::before { content: ''; width: 4px; height: 4px; margin: 0 18px; border-radius: 50%; background: currentColor; opacity: .7; }
@@ -74,30 +81,15 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
   @keyframes cue { 0% { transform: scaleY(0); opacity: 0; } 30% { opacity: 1; } 70% { transform: scaleY(1); opacity: 1; } 99% { transform: scaleY(1) translateY(10px); opacity: 0; } 100% { transform: scaleY(1); opacity: 1; } }
   .hero-cue:hover { color: var(--ink); }
 
-  /* 3. The night: a deep band lit from within by three proven dark tints, with the paper's grain.
-     Its edges dissolve into the atmosphere rather than cut it. */
-  /* The fades live inside the band's own padding, so no text of a neighbouring section ever sits on
-     a half-dark ground. */
-  .night { position: relative; isolation: isolate; padding-block: var(--fade); color: var(--on-green); --fade: clamp(96px, 16vh, 160px); }
-  .night-ground { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: var(--green);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%); }
-  /* The grain on the night is gentler (soft-light is strongest on mid-tones) and follows the
-     band's own fades, so the edges never read as static. */
-  .night-grain { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; mix-blend-mode: soft-light; opacity: .6; pointer-events: none;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 calc(var(--fade) * 1.4), #000 calc(100% - var(--fade) * 1.4), transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, #000 calc(var(--fade) * 1.4), #000 calc(100% - var(--fade) * 1.4), transparent 100%); }
-  .night-grain .grain-fine { display: none; }
-  @media (min-resolution: 1.5dppx) { .night-grain .grain-coarse { display: none; } .night-grain .grain-fine { display: inline; } }
-
   /* 4. The start: back on the centre line. */
-  .start { padding-block: clamp(140px, 16vw, 240px) clamp(80px, 10vw, 140px); }
+  .start { padding-block: clamp(64px, 8vw, 128px) clamp(80px, 10vw, 140px); }
   .start-inner { display: grid; justify-items: center; text-align: center; gap: clamp(24px, 3vw, 36px); }
   .start h2 { max-width: 16ch; }
   .start-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 28px; margin-top: clamp(16px, 3vw, 32px); font-size: var(--size-small); }
 
+  /* Phones: the action sits under the field (62 px), so the field's own centre is placed. */
+  @media (max-width: 30rem) { .hero { --field-h: 62px; } }
   @media (max-width: 40rem) {
-    .hero { padding-top: clamp(40px, 12vh, 110px); }
     .promises { flex-direction: column; align-items: center; gap: 4px; font-size: var(--size-micro); }
     .promises li + li::before { display: none; }
   }

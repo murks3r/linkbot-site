@@ -7,11 +7,17 @@
    correct after a jump, a fling or a resize. Nothing is triggered once, so nothing resets, and
    the page keeps its native scrolling: no wheel or touch event is intercepted.
 
+   The numbers are written on the stage, or on the element inside it marked data-scene-vars (A7):
+   custom properties are inherited, so every element beneath the one they are written on is styled
+   again on every frame; a scene keeps heavy decoration outside that element and, if it asks
+   (data-scene-paint), is handed the beat values after each paint (the scene:paint event) to move
+   it directly.
+
    A scene goes live only when the visitor allows motion and the stage fits the viewport (measured).
    Otherwise it keeps its complete, static final state at normal height, which is also what a
    browser without scripts shows. */
 type Beat = [number, number];
-type Scene = { root: HTMLElement; stage: HTMLElement; beats: Beat[]; captions: HTMLElement[]; live: boolean; start: number; span: number; beat: number; last: number };
+type Scene = { root: HTMLElement; stage: HTMLElement; vars: HTMLElement; paints: boolean; beats: Beat[]; captions: HTMLElement[]; live: boolean; start: number; span: number; beat: number; last: number };
 
 const smooth = (t: number) => { const x = Math.min(1, Math.max(0, t)); return x * x * (3 - 2 * x); };
 const still = matchMedia('(prefers-reduced-motion: reduce)');
@@ -19,7 +25,8 @@ const scenes: Scene[] = [...document.querySelectorAll<HTMLElement>('[data-scene]
   const stage = root.querySelector<HTMLElement>('[data-scene-stage]');
   if (!stage) return [];
   const beats = (root.dataset.beats ?? '').split(',').filter(Boolean).map(b => b.split(':').map(Number) as Beat);
-  return [{ root, stage, beats, captions: [...root.querySelectorAll<HTMLElement>('[data-caption]')], live: false, start: 0, span: 1, beat: -1, last: -1 }];
+  const vars = root.querySelector<HTMLElement>('[data-scene-vars]') ?? stage;
+  return [{ root, stage, vars, paints: root.hasAttribute('data-scene-paint'), beats, captions: [...root.querySelectorAll<HTMLElement>('[data-caption]')], live: false, start: 0, span: 1, beat: -1, last: -1 }];
 });
 let frame = 0;
 
@@ -33,11 +40,12 @@ function measure(scene: Scene) {
 function paint(scene: Scene, p: number) {
   if (p === scene.last) return;  // far scenes stay at 0 or 1 and are painted once
   scene.last = p;
-  const s = scene.stage.style;
+  const s = scene.vars.style, values: number[] = [];
   s.setProperty('--p', p.toFixed(4));
   let at = -1;
   scene.beats.forEach(([from, to], i) => {
-    s.setProperty(`--b${i + 1}`, smooth((p - from) / Math.max(.0001, to - from)).toFixed(4));
+    values.push(smooth((p - from) / Math.max(.0001, to - from)));
+    s.setProperty(`--b${i + 1}`, values[i].toFixed(4));
     // A beat begins a hair later than its range when coming from the one before, and ends a hair
     // later going back, so a reader resting on a boundary never sees the statement flicker.
     const edge = i === 0 ? from : i === scene.beat + 1 ? from + .004 : i === scene.beat ? from - .004 : from;
@@ -48,6 +56,7 @@ function paint(scene: Scene, p: number) {
     scene.root.dataset.beat = String(at + 1);
     scene.captions.forEach((c, i) => i === at ? c.setAttribute('aria-current', 'step') : c.removeAttribute('aria-current'));
   }
+  if (scene.paints) scene.root.dispatchEvent(new CustomEvent('scene:paint', { detail: values }));
 }
 
 function render() {
@@ -71,13 +80,20 @@ function fits(scene: Scene) {
   return ask.detail.ok;
 }
 
+/* The caption zone is as tall as the tallest statement, measured live, so no statement ever runs
+   under the figure below it. */
+function captions(scene: Scene) {
+  const zone = scene.captions[0]?.parentElement;
+  if (zone) zone.style.setProperty('--cap-h', `${Math.ceil(Math.max(...scene.captions.map(c => c.offsetHeight)))}px`);
+}
+
 function mode() {
   for (const scene of scenes) {
     let want = !still.matches && innerHeight >= 540;
-    if (want) { scene.root.classList.add('is-live'); want = fits(scene); }
+    if (want) { scene.root.classList.add('is-live'); captions(scene); want = fits(scene); }
     scene.root.classList.toggle('is-live', want);
     if (!want) {
-      ['--p', ...scene.beats.map((_, i) => `--b${i + 1}`)].forEach(name => scene.stage.style.removeProperty(name));
+      ['--p', ...scene.beats.map((_, i) => `--b${i + 1}`)].forEach(name => scene.vars.style.removeProperty(name));
       scene.captions.forEach(c => c.removeAttribute('aria-current'));
       delete scene.root.dataset.beat;
       scene.beat = -1; scene.last = -1;
@@ -98,4 +114,10 @@ if (scenes.length) {
   still.addEventListener('change', mode);
   document.fonts?.ready.then(mode);
   if ('ResizeObserver' in window) new ResizeObserver(() => { scenes.forEach(s => s.live && measure(s)); queue(); }).observe(document.body);
+  // Whether any of a scene's track is on screen: a scene's own decorative loops run only then
+  // (data-on, written only when it changes).
+  if ('IntersectionObserver' in window) {
+    const seen = new IntersectionObserver(entries => entries.forEach(e => e.target.toggleAttribute('data-on', e.isIntersecting)), { rootMargin: '0px 0px -2px 0px' });
+    scenes.forEach(s => seen.observe(s.root));
+  }
 }

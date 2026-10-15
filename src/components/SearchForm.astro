@@ -48,20 +48,22 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   .search[data-size='monumental'] input { height: 62px; font-size: clamp(1.125rem, 1rem + .55vw, 1.375rem); }
   .search[data-size='monumental'] .btn { min-height: 62px; padding: 0 30px; font-size: 1.0625rem; }
   .search[data-size='monumental'] .search-try { justify-content: center; }
-  /* The focal search (Concept A6): a little smaller than A5's, drawn precisely. A hairline that
-     holds 3:1 against the page, a soft lift, the pink action the only filled control. Hover
-     darkens the line; focus draws the green ring and a quiet halo. Nothing about it moves with the
-     pointer except the light inside the action. */
-  .search[data-size='focal'] { max-width: 40rem; justify-items: center; text-align: center; gap: 14px; }
+  /* The focal search (Concepts A6–A7). In A7 it is the largest object on the opening screen: wider
+     and taller than A6's, drawn with a crisp ink ring rather than a hairline, lifted off the colour
+     by a deeper shadow, the placeholder set a step larger, and the pink action the only filled
+     control. Hover deepens the lift; focus draws the green ring and a quiet halo. Nothing about it
+     moves with the pointer except the light inside the action. */
+  .search[data-size='focal'] { max-width: 46rem; justify-items: center; text-align: center; gap: 14px; }
   .search[data-size='focal'] .search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .search[data-size='focal'] .search-box { width: 100%; min-height: 64px; padding: 6px; border: 0; text-align: left;
-    box-shadow: 0 0 0 1px var(--line-ink), 0 1px 1px rgb(18 58 44 / .04), 0 10px 24px -12px rgb(18 58 44 / .2), 0 30px 60px -30px rgb(18 58 44 / .24);
+  .search[data-size='focal'] .search-box { width: 100%; min-height: 76px; padding: 8px; border: 0; text-align: left;
+    box-shadow: 0 0 0 1.5px var(--ink), 0 1px 1px rgb(18 58 44 / .06), 0 14px 30px -14px rgb(18 58 44 / .3), 0 40px 80px -36px rgb(18 58 44 / .34);
     transition: box-shadow var(--base) var(--ease); }
-  .search[data-size='focal'] .search-box:hover { box-shadow: 0 0 0 1px var(--ink-2), 0 1px 1px rgb(18 58 44 / .05), 0 12px 28px -12px rgb(18 58 44 / .24), 0 34px 70px -30px rgb(18 58 44 / .3); }
-  .search[data-size='focal'] .search-box:focus-within { box-shadow: 0 0 0 1.5px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 9%, transparent), 0 12px 28px -12px rgb(18 58 44 / .24), 0 34px 70px -30px rgb(18 58 44 / .3); }
-  .search[data-size='focal'] .search-field { padding-left: 16px; }
-  .search[data-size='focal'] input { height: 52px; font-size: 1.125rem; }
-  .search[data-size='focal'] .btn { position: relative; overflow: hidden; min-height: 52px; padding: 0 22px 0 24px; font-size: 1rem; isolation: isolate;
+  .search[data-size='focal'] .search-box:hover { box-shadow: 0 0 0 1.5px var(--ink), 0 1px 1px rgb(18 58 44 / .07), 0 16px 34px -14px rgb(18 58 44 / .34), 0 46px 90px -36px rgb(18 58 44 / .4); }
+  .search[data-size='focal'] .search-box:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 7px color-mix(in srgb, var(--green) 10%, transparent), 0 16px 34px -14px rgb(18 58 44 / .34), 0 46px 90px -36px rgb(18 58 44 / .4); }
+  .search[data-size='focal'] .search-field { padding-left: 20px; }
+  .search[data-size='focal'] .search-field > :global(.icon) { color: var(--ink-2); }
+  .search[data-size='focal'] input { height: 60px; font-size: 1.1875rem; }
+  .search[data-size='focal'] .btn { position: relative; overflow: hidden; min-height: 60px; padding: 0 28px 0 30px; font-size: 1.0625rem; isolation: isolate;
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 1px 2px rgb(18 58 44 / .12); transition: background-color var(--fast) var(--ease), box-shadow var(--base) var(--ease), transform var(--fast) var(--ease); }
   .search[data-size='focal'] .btn:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 6px 16px -6px color-mix(in srgb, var(--pink-press) 90%, transparent); }
   .search[data-size='focal'] .btn:active { transform: scale(.975); }
@@ -77,11 +79,11 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
     .search .search-field:focus-within { box-shadow: 0 0 0 4px var(--green-wash); }
     .search input, .search[data-size='monumental'] input { height: 56px; padding: 0 10px; font-size: 1.0625rem; }
     .search .btn, .search[data-size='monumental'] .btn { min-height: 56px; width: 100%; }
-    .search[data-size='focal'] .search-box, .search[data-size='focal'] .search-box:hover, .search[data-size='focal'] .search-box:focus-within { box-shadow: none; }
-    .search[data-size='focal'] .search-field { min-height: 58px; border: 0; box-shadow: 0 0 0 1px var(--line-ink), 0 10px 24px -12px rgb(18 58 44 / .2); }
-    .search[data-size='focal'] .search-field:focus-within { box-shadow: 0 0 0 1.5px var(--green), 0 0 0 5px color-mix(in srgb, var(--green) 9%, transparent); }
-    .search[data-size='focal'] input { height: 54px; font-size: 1.0625rem; }
-    .search[data-size='focal'] .btn { min-height: 54px; width: 100%; padding: 0 22px; }
+    .search[data-size='focal'] .search-box, .search[data-size='focal'] .search-box:hover, .search[data-size='focal'] .search-box:focus-within { padding: 0; box-shadow: none; }
+    .search[data-size='focal'] .search-field { min-height: 62px; border: 0; box-shadow: 0 0 0 1.5px var(--ink), 0 12px 26px -12px rgb(18 58 44 / .28), 0 30px 60px -30px rgb(18 58 44 / .3); }
+    .search[data-size='focal'] .search-field:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 10%, transparent); }
+    .search[data-size='focal'] input { height: 58px; font-size: 1.125rem; }
+    .search[data-size='focal'] .btn { min-height: 58px; width: 100%; padding: 0 22px; }
     .search-try { gap: 0 16px; }
   }
 </style>
