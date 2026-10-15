@@ -189,13 +189,15 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
   /* 2. Each phrase travels to its criterion, one after another, and hands over to the chip. */
   :global(.js) .clarity.is-live .ph { transform-origin: 0 0; --t: clamp(0, (var(--b2) - var(--di) * .13) / .52, 1); --m: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
     transform: translate(calc(var(--dx, 0px) * var(--m)), calc(var(--dy, 0px) * var(--m))) scale(calc(1 + (var(--k, 1) - 1) * var(--m)));
-    opacity: calc(1 - clamp(0, (var(--b2) - .9) * 12, 1)); }
+    opacity: calc(1 - clamp(0, (var(--b2) - .86) * 16, 1)); }
   :global(.js) .clarity.is-live .wd[data-drop] { opacity: calc(var(--w) * (1 - clamp(0, var(--b2) * 2.4, 1))); }
   :global(.js) .clarity.is-live .cm { opacity: calc(clamp(0, var(--b1) * 11 - 9.6, 1) * (1 - clamp(0, var(--b2) * 5, 1))); }
   /* The criteria sit where the sentence was, then lift into the lens: the search they now are. */
   :global(.js) .clarity.is-live .clarity-lens { position: absolute; left: 0; right: 0; top: calc(7cqh + 1.5em); width: fit-content; max-width: 100%; margin-inline: auto; padding: 0 0 0 0;
     transform: translateY(calc(var(--lift, 0px) * -1 * var(--b3))); }
-  :global(.js) .clarity.is-live .clarity-read { position: relative; z-index: 1; opacity: clamp(0, (var(--b2) - .86) * 10, 1); max-width: min(100cqw, 46rem); }
+  /* The phrase (display type) leaves before the chip (text type) arrives, so two typefaces are
+     never seen on top of each other. */
+  :global(.js) .clarity.is-live .clarity-read { position: relative; z-index: 1; opacity: clamp(0, (var(--b2) - .9) * 14, 1); max-width: min(100cqw, 46rem); }
   :global(.js) .clarity.is-live .lens-frame { display: grid; align-items: center; position: absolute; inset: -9px -12px -9px -46px; padding-left: 18px; border-radius: var(--pill); background: var(--surface); color: var(--ink-2);
     opacity: var(--b3); transform: scaleX(calc(.96 + .04 * var(--b3)));
     box-shadow: 0 0 0 1px var(--line-ink), 0 18px 40px -22px rgb(18 58 44 / .35); }

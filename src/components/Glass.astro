@@ -135,11 +135,12 @@ const SHARED: [string, string][] = [['Work mode', 'Hybrid'], ['Location', 'Lisbo
     background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / .5) 50%, transparent 70%) no-repeat; background-size: 250% 100%;
     background-position: calc(100% - var(--turn) * 100%) 0; opacity: calc(var(--arc) * .8); }
   /* 3: three details defrost, one after another; "nothing" gives way to exactly what was shared. */
-  :global(.js) .glass.is-live .glass-nothing { opacity: calc(1 - clamp(0, var(--b3) * 4, 1)); }
+  /* "Nothing" leaves before what was shared arrives: the two never overlap. */
+  :global(.js) .glass.is-live .glass-nothing { opacity: calc(1 - clamp(0, var(--b3) * 8, 1)); }
   :global(.js) .glass.is-live .glass-back { display: grid; }
   :global(.js) .glass.is-live .glass-back > .glass-nothing, :global(.js) .glass.is-live .glass-back > .glass-shared { grid-area: 2 / 1; }
-  :global(.js) .glass.is-live .glass-shared { opacity: clamp(0, var(--b3) * 4, 1); }
-  :global(.js) .glass.is-live .glass-shared li { --v: clamp(0, var(--b3) * 5 - var(--j) * .6, 1); filter: blur(calc((1 - var(--v)) * 8px)); opacity: calc(.3 + .7 * var(--v)); transform: translateY(calc((1 - var(--v)) * 6px)); }
+  :global(.js) .glass.is-live .glass-shared { opacity: clamp(0, (var(--b3) - .12) * 6, 1); }
+  :global(.js) .glass.is-live .glass-shared li { --v: clamp(0, (var(--b3) - .1) * 6 - var(--j) * .5, 1); filter: blur(calc((1 - var(--v)) * 8px)); opacity: calc(.3 + .7 * var(--v)); transform: translateY(calc((1 - var(--v)) * 6px)); }
   :global(.js) .glass.is-live .glass-receipt { opacity: clamp(0, (var(--b3) - .2) * 5, 1); }
   :global(.js) .glass.is-live .glass-legend { position: absolute; left: 0; right: 0; bottom: 16px; margin-inline: auto; }
   @media (max-width: 52rem) {
