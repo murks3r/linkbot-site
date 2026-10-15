@@ -366,7 +366,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       const state = i => mp.evaluate(i => {
         const root = document.querySelectorAll('[data-scene]')[i], s = root.querySelector('[data-scene-stage]'), r = s.getBoundingClientRect();
         const on = [...root.querySelectorAll('[data-caption]')].map(c => Math.round(Number(getComputedStyle(c).opacity) * 100) / 100);
-        return { p: Number(s.style.getPropertyValue('--p')), beat: root.dataset.beat ?? null, pinned: Math.abs(r.top - parseFloat(getComputedStyle(s).top)) < 2, on,
+        return { p: Number((root.querySelector('[data-scene-vars]') ?? s).style.getPropertyValue('--p')), beat: root.dataset.beat ?? null, pinned: Math.abs(r.top - parseFloat(getComputedStyle(s).top)) < 2, on,
           current: [...root.querySelectorAll('[data-caption]')].findIndex(c => c.getAttribute('aria-current') === 'step') }; }, i);
       const names = ['signal', 'yours'];
       for (let i = 0; i < 2; i++) {

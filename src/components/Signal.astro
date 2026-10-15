@@ -69,17 +69,17 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
   { ask: words.criteria[3].label, level: LEVEL[words.criteria[3].level ?? 'avoid'], tone: 'unknown', says: 'Not stated', where: 'Linkbot doesn’t guess' },
 ];
 ---
-<section class="scene signal" data-scene data-beats="0:.11,.14:.25,.28:.39,.42:.53,.56:.67,.7:.82,.85:1" style="--beats: 7; --beat: 92svh" aria-labelledby="signal-caption-1">
+<section class="scene signal" data-scene data-scene-paint data-beats="0:.11,.14:.25,.28:.39,.42:.53,.56:.67,.7:.82,.85:1" style="--beats: 7; --beat: 92svh" aria-labelledby="signal-caption-1">
   <div class="scene-stage" data-scene-stage>
-    <div class="scene-inner signal-inner">
+    <ul class="sg-noise" aria-hidden="true">
+      {NOISE.map(([title, place, x, y, z, r], i) => <li class="sg-ghost" data-away data-x={x} data-y={y} data-z={z} data-r={r} style={`--d: ${11 + (i * 5) % 8}s; --dl: -${(i * 3) % 9}s`}><i><b>{title}</b><small>{place}</small></i></li>)}
+      {CARDS.map((c, i) => <li class="sg-ghost" data-card data-x={SCATTER[c.id][0]} data-y={SCATTER[c.id][1]} data-z={SCATTER[c.id][2]} data-r={SCATTER[c.id][3]} data-slot={c.slots[0]} style={`--d: ${12 + (i * 3) % 7}s; --dl: -${(i * 2) % 7}s`}><i><b>{c.title}</b><small>{c.place}</small></i></li>)}
+    </ul>
+    <div class="scene-inner signal-inner" data-scene-vars>
       <ol class="captions">
         {CAPTIONS.map(([title, body], i) => <li class="caption" data-caption id={`signal-caption-${i + 1}`}><h2>{title}</h2><small>{body}</small></li>)}
       </ol>
       <figure class="signal-figure" aria-labelledby="signal-legend">
-        <ul class="sg-noise" aria-hidden="true">
-          {NOISE.map(([title, place, x, y, z, r], i) => <li class="sg-ghost" data-away style={`--x: ${x}; --y: ${y}; --z: ${z}; --r: ${r}deg; --d: ${11 + (i * 5) % 8}s; --dl: -${(i * 3) % 9}s`}><i><b>{title}</b><small>{place}</small></i></li>)}
-          {CARDS.map((c, i) => <li class="sg-ghost" data-card style={`--x: ${SCATTER[c.id][0]}; --y: ${SCATTER[c.id][1]}; --z: ${SCATTER[c.id][2]}; --r: ${SCATTER[c.id][3]}deg; --slot: ${c.slots[0]}; --d: ${12 + (i * 3) % 7}s; --dl: -${(i * 2) % 7}s`}><i><b>{c.title}</b><small>{c.place}</small></i></li>)}
-        </ul>
         <div class="sg-lens" data-lens>
           <span class="sg-icon" aria-hidden="true"><Icon name="search" size={18} /></span>
           <div class="sg-stack">
@@ -116,7 +116,50 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
     figure.style.setProperty('--lens-h', `${lens.offsetHeight}px`);
     // How far the first opening opens: its reasons' own height (they wrap differently by width).
     figure.style.setProperty('--xh', `${why.scrollHeight}px`);
+    layout();
   };
+
+  /* The noise, moved by the beats directly: each opening's place, turn, scale and opacity are a
+     function of beats 1-3, written on it after each paint of the scene (scene:paint). The layer lies
+     over the figure; its geometry and the list's are measured here, never on a frame. */
+  const noise = scene?.querySelector<HTMLElement>('.sg-noise');
+  const ghosts = noise ? [...noise.querySelectorAll<HTMLElement>('.sg-ghost')].map(el => ({ el, x: Number(el.dataset.x) / 100, y: Number(el.dataset.y) / 100, z: Number(el.dataset.z), r: Number(el.dataset.r), slot: el.dataset.slot === undefined ? -1 : Number(el.dataset.slot), shown: true })) : [];
+  let box = { w: 0, h: 0, left: 0, top: 0, row: 0 }, beats = [0, 0, 0];
+  const clamp = (v: number) => Math.min(1, Math.max(0, v));
+  function place() {
+    const [b1, b2, b3] = beats;
+    if (!scene?.classList.contains('is-live') || b3 >= 1) return;
+    const { w, h } = box, spread = b2 * (1 - b3), t = clamp((b3 - .1) * 3), m = t * t * (3 - 2 * t);
+    for (const g of ghosts) {
+      if (!g.shown) continue;
+      const sx = g.x * w * .8 + (g.x - .5) * w * .14 * spread, sy = .04 * h + g.y * h * .8 + (g.y - .46) * h * .12 * spread, drift = (b1 + b2) * (-14 - 46 * (1 - g.z));
+      let x = sx, y = sy + drift, turn = g.r * (1 + b1 * 1.6), lean = g.r * 2.2, scale = 1 - .32 * g.z, opacity = (.92 - .4 * g.z) * (1 - .45 * b2);
+      if (g.slot >= 0) {
+        // One of the seven: it faces you and lands on its row of the list.
+        x += (box.left - x) * m; y += (box.top + g.slot * box.row - y) * m;
+        turn *= 1 - m; lean *= (1 - b2 * .5) * (1 - m); scale = 1 - .32 * g.z * (1 - m);
+        opacity = (.92 - .4 * g.z) * (1 - .45 * b2 * (1 - m)) * (1 - clamp((b3 - .4) * 9));
+      } else {
+        // Work of another kind: it falls away.
+        y += b3 * .18 * h; turn += g.r * b3; opacity *= 1 - clamp(b3 * 2.6);
+      }
+      g.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${turn.toFixed(2)}deg) rotateY(${lean.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+      g.el.style.opacity = opacity.toFixed(3);
+    }
+  }
+  function layout() {
+    if (!scene || !noise || !scene.classList.contains('is-live')) return;
+    const stage = scene.querySelector<HTMLElement>('[data-scene-stage]')!, figure = scene.querySelector<HTMLElement>('.signal-figure')!, card = scene.querySelector<HTMLElement>('.sg-card:not([data-card="a"])')!;
+    const sr = stage.getBoundingClientRect(), fr = figure.getBoundingClientRect(), css = getComputedStyle(figure), px = (n: string) => parseFloat(css.getPropertyValue(n)) || 0;
+    Object.assign(noise.style, { left: `${fr.left - sr.left}px`, top: `${fr.top - sr.top}px`, width: `${fr.width}px`, height: `${fr.height}px` });
+    box = { w: fr.width, h: fr.height, left: (fr.width - card.offsetWidth) / 2, top: px('--lens-h') + px('--gap-top'), row: card.offsetHeight + px('--row-gap') };
+    for (const g of ghosts) g.shown = getComputedStyle(g.el).display !== 'none';
+    // The beats as last painted (a page opened mid-story is painted before this script listens).
+    const vars = scene.querySelector<HTMLElement>('[data-scene-vars]')!;
+    beats = [1, 2, 3].map(i => parseFloat(vars.style.getPropertyValue(`--b${i}`)) || 0);
+    place();
+  }
+  scene?.addEventListener('scene:paint', event => { beats = (event as CustomEvent<number[]>).detail.slice(0, 3); place(); });
   addEventListener('scenes:mode', size);
   document.fonts?.ready.then(size);
   scene?.addEventListener('scene:fits', event => {
@@ -188,22 +231,14 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
 
   /* 1. The noise: openings at depths, turning as the page scrolls (and breathing on their own);
      2. they step back from the words; 3. those for other work fall away, the rest face you and
-     settle into the list (decorative copies: the real list appears as they land). */
-  :global(.js) .signal.is-live .sg-noise { display: block; position: absolute; inset: 0; overflow: clip; perspective: 1000px;
+     settle into the list (decorative copies: the real list appears as they land). They lie outside
+     the element the beats are written on, over the figure (placed by the script below), and the
+     script moves each one from the beats: inherited beat values would restyle every one of them
+     on every frame. After the third beat they are gone. */
+  :global(.js) .signal.is-live .sg-noise { display: block; position: absolute; overflow: clip; pointer-events: none; perspective: 1000px;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 88%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 88%, transparent); }
-  :global(.js) .signal.is-live .sg-ghost { position: absolute; left: 0; top: 0; --near: calc(1 - var(--z));
-    --spread: calc(var(--b2) * (1 - var(--b3)));
-    --sx: calc(var(--x) * 1cqw * .8 + (var(--x) - 50) * 1cqw * .14 * var(--spread));
-    --sy: calc(4cqh + var(--y) * 1cqh * .8 + (var(--y) - 46) * 1cqh * .12 * var(--spread));
-    --drift: calc((var(--b1) + var(--b2)) * (-14px - 46px * var(--near)));
-    transform: translate(var(--sx), calc(var(--sy) + var(--drift))) rotate(calc(var(--r) * (1 + var(--b1) * 1.6))) rotateY(calc(var(--r) * 2.2 * (1 - var(--b2) * .5))) scale(calc(1 - .32 * var(--z)));
-    opacity: calc((.92 - .4 * var(--z)) * (1 - .45 * var(--b2)) * (1 - clamp(0, var(--b3) * 2.6, 1))); }
-  :global(.js) .signal.is-live .sg-ghost[data-card] { --tx: calc((100cqw - var(--L)) / 2); --ty: calc(var(--list-top) + var(--slot) * (var(--rowh) + var(--row-gap)));
-    --t: clamp(0, (var(--b3) - .1) * 3, 1); --m: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
-    transform: translate(calc(var(--sx) + (var(--tx) - var(--sx)) * var(--m)), calc(var(--sy) + var(--drift) + (var(--ty) - var(--sy) - var(--drift)) * var(--m)))
-      rotate(calc(var(--r) * (1 + var(--b1) * 1.6) * (1 - var(--m)))) rotateY(calc(var(--r) * 2.2 * (1 - var(--b2) * .5) * (1 - var(--m)))) scale(calc(1 - .32 * var(--z) * (1 - var(--m))));
-    opacity: calc((.92 - .4 * var(--z)) * (1 - .45 * var(--b2) * (1 - var(--m))) * (1 - clamp(0, (var(--b3) - .4) * 9, 1))); }
-  :global(.js) .signal.is-live .sg-ghost[data-away] { transform: translate(var(--sx), calc(var(--sy) + var(--drift) + var(--b3) * 18cqh)) rotate(calc(var(--r) * (1 + var(--b1) * 1.6 + var(--b3)))) rotateY(calc(var(--r) * 2.2)) scale(calc(1 - .32 * var(--z))); }
+  :global(.js) .signal.is-live:not([data-beat='1']):not([data-beat='2']):not([data-beat='3']) .sg-noise { display: none; }
+  :global(.js) .signal.is-live .sg-ghost { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity; }
   :global(.js) .signal.is-live .sg-ghost i { display: inline-flex; align-items: baseline; gap: 10px; padding: 10px 15px; border-radius: 14px; font-style: normal; white-space: nowrap;
     background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 1px rgb(18 58 44 / .12), 0 14px 28px -16px rgb(18 58 44 / .38);
