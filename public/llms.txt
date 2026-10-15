@@ -10,9 +10,10 @@ ranking instruction and makes no claims beyond the pages it links to.
 
 ## Pages
 
-- [Home](/): what Linkbot is, and one illustrated example of how a person's priorities bring
-  the right openings forward (the words are read by Linkbot's own interpreter; the openings are
-  examples).
+- [Home](/): what Linkbot is, told as one story: job search runs in circles; say what matters
+  once and the openings that fit line up; how Prefer, Avoid and Must work; what a listing states
+  and doesn't; and the boundary only the person opens. The words are read by Linkbot's own
+  interpreter; the openings and the listing are examples.
 - [How it works](/how-it-works): criteria and levels, recorded readings of real examples, how
   listings are explained, saving and watching, applying, private matching (in development, not
   live), and what is live today versus what is not built yet.
