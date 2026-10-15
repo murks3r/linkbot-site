@@ -49,7 +49,7 @@
   /* A8: the search field is a rounded rectangle, no longer a pill (the founder's call); the radius
      is one token, with the switcher's steps below. Buttons and chips stay pills unless the
      variant [data-v-controls='follow'] makes them follow. */
-  --field-r: 14px; --control-r: var(--pill);
+  --field-r: 16px; --control-r: var(--pill);
   --target: 44px;
   --ease: cubic-bezier(.2, .7, .2, 1); --ease-out: cubic-bezier(.16, 1, .3, 1); --fast: 140ms; --base: 240ms;
   --header: 72px; --beat: 100svh;
@@ -58,6 +58,7 @@
 }
 @media (prefers-reduced-motion: reduce) { :root { --fast: 0ms; --base: 0ms; } }
 html[data-v-radius='10'] { --field-r: 10px; }
+html[data-v-radius='16'] { --field-r: 16px; }
 html[data-v-radius='20'] { --field-r: 20px; }
 html[data-v-radius='pill'] { --field-r: 999px; }
 html[data-v-controls='follow'] { --control-r: var(--field-r); }
