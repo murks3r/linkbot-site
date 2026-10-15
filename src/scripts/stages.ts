@@ -1,4 +1,4 @@
-/* The scroll engine behind every pinned scene (Concept A5).
+/* The scroll engine behind every pinned scene (Concept A5, kept in A6).
 
    A scene is a tall track with a sticky stage inside it. As the page scrolls through the track,
    the engine writes one number to the stage, --p (0 → 1), and one eased value per beat,
@@ -21,9 +21,6 @@ const scenes: Scene[] = [...document.querySelectorAll<HTMLElement>('[data-scene]
   const beats = (root.dataset.beats ?? '').split(',').filter(Boolean).map(b => b.split(':').map(Number) as Beat);
   return [{ root, stage, beats, captions: [...root.querySelectorAll<HTMLElement>('[data-caption]')], live: false, start: 0, span: 1, beat: -1, last: -1 }];
 });
-/* The sky is the one thing that follows the whole page; its number is written on the sky alone,
-   never on the root, because a custom property set on <html> invalidates every element's style. */
-const sky = document.querySelector<HTMLElement>('.sky');
 let frame = 0;
 
 function header(stage: HTMLElement) { return parseFloat(getComputedStyle(stage).top) || 0; }
@@ -41,7 +38,10 @@ function paint(scene: Scene, p: number) {
   let at = -1;
   scene.beats.forEach(([from, to], i) => {
     s.setProperty(`--b${i + 1}`, smooth((p - from) / Math.max(.0001, to - from)).toFixed(4));
-    if (p >= from) at = i;
+    // A beat begins a hair later than its range when coming from the one before, and ends a hair
+    // later going back, so a reader resting on a boundary never sees the statement flicker.
+    const edge = i === 0 ? from : i === scene.beat + 1 ? from + .004 : i === scene.beat ? from - .004 : from;
+    if (p >= edge) at = i;
   });
   if (at !== scene.beat) {
     scene.beat = at;
@@ -52,10 +52,8 @@ function paint(scene: Scene, p: number) {
 
 function render() {
   frame = 0;
-  const y = scrollY, vh = innerHeight;
+  const y = scrollY;
   for (const scene of scenes) if (scene.live) paint(scene, Math.min(1, Math.max(0, (y - scene.start) / scene.span)));
-  // The sky follows the whole page's progress, gently.
-  sky?.style.setProperty('--scroll', (y / Math.max(1, document.documentElement.scrollHeight - vh)).toFixed(4));
 }
 
 function queue() { if (!frame) frame = requestAnimationFrame(render); }
@@ -83,6 +81,8 @@ function mode() {
     if (want) measure(scene);
   }
   render();
+  // Scenes that measure their own geometry (where a phrase lands, how far a lens lifts) do it now.
+  dispatchEvent(new Event('scenes:mode'));
 }
 
 if (scenes.length) {

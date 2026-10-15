@@ -8,6 +8,7 @@ import textUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-norma
 import SEO from '../components/SEO.astro';
 import Masthead from '../components/Masthead.astro';
 import Footer from '../components/Footer.astro';
+import Air from '../components/Air.astro';
 interface Props { title: string; description: string; path: string; crumbs?: [string, string][]; quietHeader?: boolean; sky?: boolean }
 const { title, description, path, crumbs, quietHeader = false, sky = false } = Astro.props;
 ---
@@ -28,7 +29,7 @@ const { title, description, path, crumbs, quietHeader = false, sky = false } = A
   </head>
   <body data-sky={sky ? '' : undefined}>
     <a class="skip" href="#main">Skip to content</a>
-    {sky && <div class="sky" aria-hidden="true"></div>}
+    <Air mode={sky ? 'living' : 'paper'} />
     <Masthead current={path} quiet={quietHeader} />
     <main id="main" tabindex="-1"><slot /></main>
     <Footer />
@@ -37,7 +38,6 @@ const { title, description, path, crumbs, quietHeader = false, sky = false } = A
 </html>
 <style is:global>
   main { outline: none; }
-  /* The sky lies under the whole page; everything else is composed above it. */
-  body[data-sky] .sky { position: fixed; z-index: 0; }
-  body[data-sky] main, body[data-sky] footer { position: relative; z-index: 1; }
+  /* The atmosphere lies under the whole page; everything else is composed above it. */
+  main, footer { position: relative; z-index: 1; }
 </style>
