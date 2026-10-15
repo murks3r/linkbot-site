@@ -172,16 +172,17 @@ button { cursor: pointer; }
 .js .scene.is-live .scene-inner { align-content: start; }
 /* A8: the live statement sits in a zone with clear air above it (the founder: it nearly fell out
    of the picture) and is centred in that zone, with room beneath before the figure. */
-.js .scene.is-live .captions { position: relative; display: block; width: min(100%, 46rem); margin-inline: auto; margin-top: clamp(16px, 4.5vh, 48px); margin-bottom: clamp(18px, 3.5vh, 36px); height: var(--cap-h, clamp(112px, 17vh, 150px)); }
+.js .scene.is-live .captions { position: relative; display: grid; align-items: center; width: min(100%, 46rem); margin-inline: auto; margin-top: clamp(12px, 3vh, 36px); margin-bottom: clamp(12px, 2.5vh, 28px); height: var(--cap-h, clamp(112px, 17vh, 150px)); }
 .js .scene.is-live .caption + .caption { padding-top: 0; border-top: 0; }
 /* Live, the statement of the current beat comes into focus when its beat begins and leaves when
    the next begins (a short, eased transition in time, both ways), so a statement is never left
    half-faded wherever the reader stops. Statically all of them read in order. */
-.js .scene.is-live .caption { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: grid; align-content: center; opacity: 0; transform: translateY(14px); filter: blur(6px); pointer-events: none;
+.js .scene.is-live .caption { grid-area: 1 / 1; align-self: center; opacity: 0; transform: translateY(14px); filter: blur(6px); pointer-events: none;
   transition: opacity .45s var(--ease-out), transform .7s var(--ease-out), filter .45s var(--ease-out); }
 .js .scene.is-live .caption[aria-current='step'] { opacity: 1; transform: none; filter: none; pointer-events: auto; transition-delay: .14s; }
 @media (prefers-reduced-motion: reduce) { .js .scene.is-live .caption { transition: none; } }
-@media (max-width: 52rem) { .js .scene.is-live .caption small { font-size: var(--size-small); line-height: 1.45; } .js .scene.is-live .captions { margin-top: clamp(10px, 2.5vh, 28px); margin-bottom: 14px; } }
+@media (max-width: 52rem) { .js .scene.is-live .caption small { font-size: var(--size-small); line-height: 1.45; } .js .scene.is-live .captions { margin-top: 0; margin-bottom: 8px; } }
 /* Short screens have no air to spare: the zone keeps A7's margins there, and the statement is still centred in it. */
-@media (max-height: 47.5rem) { .js .scene.is-live .captions { margin-top: 10px; margin-bottom: 12px; } }
+/* Short screens (1280 × 720 laptops): a wider zone keeps a statement to two lines, and tighter margins. */
+@media (max-height: 47.5rem) { .js .scene.is-live .captions.captions { width: min(100%, 54rem); max-width: 54rem; margin-top: 8px; margin-bottom: 10px; } }
 @media (max-width: 52rem) { :root { --header: 64px; } }

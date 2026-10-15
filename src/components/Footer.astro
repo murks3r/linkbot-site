@@ -38,7 +38,7 @@ const year = new Date().getUTCFullYear();
   nav a:hover { text-decoration: underline; text-decoration-color: var(--green-line); }
   .footer-legal { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 20px; border-top: 1px solid var(--line-strong); color: var(--ink-3); }
   .footer-links { display: inline-flex; gap: 20px; }
-  .footer-links a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 4px; }
+  .footer-links a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 4px; }
   @media (max-width: 48rem) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
   @media (max-width: 22.5rem) { .footer-inner { grid-template-columns: 1fr; } }
 </style>

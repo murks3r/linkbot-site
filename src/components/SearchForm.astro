@@ -101,7 +101,11 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
     .search[data-size='focal'] .search-field:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 10%, transparent); }
     .search[data-size='focal'] input { height: 58px; font-size: 1.125rem; }
     .search[data-size='focal'] .btn { min-height: 58px; width: 100%; padding: 0 22px; }
-    /* Phones: the place stacks under the words as its own field. */
+    /* Phones: the place stacks under the words as its own field, and shares its row with the action,
+       so the whole search stays as tall as A7's field and action did (the hero keeps its foot). */
+    .search[data-place] .search-box { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+    .search[data-place] .search-field { grid-column: 1 / -1; }
+    .search[data-place] .btn, .search[data-size='focal'][data-place] .btn { width: auto; padding: 0 18px; }
     .search .search-place { flex: none; min-height: 62px; margin: 0; padding: 0 6px 0 16px; border: 0; border-radius: var(--field-r); background: var(--surface); box-shadow: 0 0 0 1.5px var(--line-ink), 0 12px 26px -12px rgb(18 58 44 / .24); }
     .search .search-place:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 10%, transparent); }
     .search[data-size='focal'] .search-place input { height: 58px; font-size: 1.0625rem; }

@@ -250,11 +250,11 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       // fingerprint once, on your side of the privacy chapter, and nowhere else.
       const material = await page.evaluate(() => {
         const paper = document.querySelector('[data-paper]'), s = getComputedStyle(paper), main = getComputedStyle(document.querySelector('main'));
-        return { height: paper.getBoundingClientRect().height, page: document.documentElement.scrollHeight, blend: s.mixBlendMode, image: s.backgroundImage, repeat: s.backgroundRepeat, z: Number(s.zIndex), mainZ: Number(main.zIndex), hidden: paper.getAttribute('aria-hidden'),
+        return { height: paper.getBoundingClientRect().height, page: document.documentElement.scrollHeight, innerH: innerHeight, blend: s.mixBlendMode, image: s.backgroundImage, repeat: s.backgroundRepeat, z: Number(s.zIndex), mainZ: Number(main.zIndex), position: s.position, events: s.pointerEvents, hidden: paper.getAttribute('aria-hidden'),
           prints: [...document.querySelectorAll('img[src*="/material/print"]')].map(i => i.closest('.yr-you') ? 'yours' : i.closest('section, div')?.className), calm: [...document.querySelectorAll('[data-air-calm]')].map(e => e.className.split(' ')[1]) };
       });
-      check(material.height >= material.page - 2 && /paper\.webp/.test(material.image) && material.repeat === 'repeat' && material.blend === 'multiply' && material.hidden === 'true', `the paper covers the whole page, tiles as it grows and prints with multiply (${JSON.stringify(material)})`);
-      check(material.z < material.mainZ, 'the paper lies beneath every word');
+      check(material.height >= material.innerH - 2 && /paper\.webp/.test(material.image) && material.repeat === 'repeat' && material.blend === 'multiply' && material.hidden === 'true', `the paper covers the whole view (fixed, so every scrolled page), tiles and prints with multiply (${JSON.stringify(material)})`);
+      check(material.z > material.mainZ && material.position === 'fixed' && material.events === 'none', `the paper lies over the whole page, fixed, never in the way of a pointer (${JSON.stringify(material)})`);
       check(JSON.stringify(material.prints) === JSON.stringify(['yours']), `the fingerprint appears once, on your side of the privacy chapter (${material.prints})`);
       check(JSON.stringify(material.calm) === JSON.stringify(['yours']), `only the privacy chapter calms the light (${material.calm})`);
       await context.close();
