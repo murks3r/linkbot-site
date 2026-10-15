@@ -3,13 +3,13 @@
 The crawlable public pages for Linkbot: what it is, how it works, how privacy works, and hiring.
 The product itself (search, interpretation, results, saving, watching, permissions, the agency
 and company workspaces) runs in the app, `murks3r/linkbot`, served under `/talent`. The site
-explains; the app executes. Concept A5 ("orbit") — draft, not published.
+explains; the app executes. Concept A6 ("focus") — draft, not published.
 
 ## Pages
 
 | Route | What it does |
 |---|---|
-| `/` | a working first search at the optical centre; then the story on four pinned scenes driven by scroll position (the loop becomes a line; what matters to you; one opening explained; the boundary), the hinge, and a contextual start |
+| `/` | a working first search at the optical centre of a living atmosphere, with three plain promises at its foot; then the story as one pinned scene (your words come into focus, become criteria and a lens, and the openings that fit come into focus with their reasons and a Must); the night, where privacy is two sides of the glass; and a contextual start |
 | `/how-it-works` | criteria and levels with recorded readings, how a listing is explained, saving and watching, applying, private matching (in development), what's live today |
 | `/privacy` | what happens to what you type, save and share; the five separate decisions; limits; what Linkbot doesn't claim |
 | `/hiring` | for recruiting agencies and companies: explanation first, then each path with a working next step |
@@ -27,14 +27,22 @@ explains; the app executes. Concept A5 ("orbit") — draft, not published.
   readings recorded from the app's own interpreter, with the commit that produced them:
   `npx tsx tools/site/readings.ts > <site>/src/data/readings.json` (run in the app).
 - **One vocabulary.** Levels, evidence words and reasons come from the app's copy (`src/data/content.ts`).
-- **The scenes** (`src/components/Orbit.astro`, `Priorities.astro`, `Evidence.astro`,
-  `Boundary.astro`) are pinned stages driven by `src/scripts/stages.ts`: one number per scene
-  (`--p`) and one eased value per beat (`--b1` …) are written from the scroll position, and CSS
-  derives every state, so each scene reverses, survives jumps, flings and resizes, and never
-  hijacks scrolling. Without scripts, under reduced motion, or on any screen that cannot hold a
-  stage (measured live), a scene is its complete final state at normal height. The words are read
-  by the app's interpreter (the `story` reading); the openings and the listing are illustrations
-  and say so.
+- **The atmosphere** (`src/components/Air.astro`, `src/scripts/atmosphere.ts`): the palette's
+  seven proven pigments as a slow, domain-warped field of light drawn by WebGL into a small
+  canvas, mixed with the paper in linear light (no pixel darker than the darkest pigment). It
+  moves on its own, parts around a mouse pointer, and drifts with the page; at most 30 frames a
+  second, nothing while the tab is hidden or a deep band covers it, one still frame under reduced
+  motion, still gradients without WebGL or scripts. It writes no style anywhere. Every page has
+  the paper's grain: fractal noise drawn by an inline SVG pattern (no image is loaded), finer on
+  dense screens, blended with soft-light.
+- **The scenes** (`src/components/Clarity.astro`, `Glass.astro`) are pinned stages driven by
+  `src/scripts/stages.ts`: one number per scene (`--p`) and one eased value per beat (`--b1` …)
+  are written on the stage from the scroll position, and CSS derives every illustration, so each
+  scene reverses, survives jumps, flings and resizes, and never hijacks scrolling. Each beat's
+  statement comes into focus when its beat begins (a short transition, both ways). Without
+  scripts, under reduced motion, or on any screen that cannot hold a stage (measured live), a
+  scene is its complete final state at normal height. The words are read by the app's
+  interpreter (the `story` reading); the openings are illustrations and say so.
 
 ## Configuration
 

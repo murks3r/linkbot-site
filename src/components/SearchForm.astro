@@ -6,7 +6,7 @@
 import { app, searchWith } from '../lib/links';
 import { HERO_PLACEHOLDER } from '../data/content';
 import Icon from './Icon.astro';
-interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental'; label?: string; placeholder?: string; describedBy?: string }
+interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental' | 'focal'; label?: string; placeholder?: string; describedBy?: string }
 const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = HERO_PLACEHOLDER, describedBy } = Astro.props;
 ---
 <form class="search" data-size={size} action={app('#/search')} method="get" data-handoff={app('#/search')} role="search" aria-label="Search jobs in Linkbot">
@@ -16,7 +16,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
       <Icon name="search" size={18} />
       <input id={id} type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="2000" placeholder={placeholder} aria-describedby={describedBy} />
     </span>
-    <button class="btn btn-primary" type="submit"><span>Search</span><Icon name="arrow" /></button>
+    <button class="btn btn-primary" type="submit" data-lit={size === 'focal' ? '' : undefined}>{size === 'focal' && <span class="btn-light" data-decor aria-hidden="true"></span>}<span>Search</span><Icon name="arrow" /></button>
   </div>
   <p class="search-alert" id={`${id}-alert`} data-alert hidden></p>
   {examples.length > 0 && <ul class="search-try" aria-label="Examples">{examples.map(example => <li><a href={searchWith(example)}>{example}</a></li>)}</ul>}
@@ -48,6 +48,28 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   .search[data-size='monumental'] input { height: 62px; font-size: clamp(1.125rem, 1rem + .55vw, 1.375rem); }
   .search[data-size='monumental'] .btn { min-height: 62px; padding: 0 30px; font-size: 1.0625rem; }
   .search[data-size='monumental'] .search-try { justify-content: center; }
+  /* The focal search (Concept A6): a little smaller than A5's, drawn precisely. A hairline that
+     holds 3:1 against the page, a soft lift, the pink action the only filled control. Hover
+     darkens the line; focus draws the green ring and a quiet halo. Nothing about it moves with the
+     pointer except the light inside the action. */
+  .search[data-size='focal'] { max-width: 40rem; justify-items: center; text-align: center; gap: 14px; }
+  .search[data-size='focal'] .search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .search[data-size='focal'] .search-box { width: 100%; min-height: 64px; padding: 6px; border: 0; text-align: left;
+    box-shadow: 0 0 0 1px var(--line-ink), 0 1px 1px rgb(18 58 44 / .04), 0 10px 24px -12px rgb(18 58 44 / .2), 0 30px 60px -30px rgb(18 58 44 / .24);
+    transition: box-shadow var(--base) var(--ease); }
+  .search[data-size='focal'] .search-box:hover { box-shadow: 0 0 0 1px var(--ink-2), 0 1px 1px rgb(18 58 44 / .05), 0 12px 28px -12px rgb(18 58 44 / .24), 0 34px 70px -30px rgb(18 58 44 / .3); }
+  .search[data-size='focal'] .search-box:focus-within { box-shadow: 0 0 0 1.5px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 9%, transparent), 0 12px 28px -12px rgb(18 58 44 / .24), 0 34px 70px -30px rgb(18 58 44 / .3); }
+  .search[data-size='focal'] .search-field { padding-left: 16px; }
+  .search[data-size='focal'] input { height: 52px; font-size: 1.125rem; }
+  .search[data-size='focal'] .btn { position: relative; overflow: hidden; min-height: 52px; padding: 0 22px 0 24px; font-size: 1rem; isolation: isolate;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 1px 2px rgb(18 58 44 / .12); transition: background-color var(--fast) var(--ease), box-shadow var(--base) var(--ease), transform var(--fast) var(--ease); }
+  .search[data-size='focal'] .btn:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 6px 16px -6px color-mix(in srgb, var(--pink-press) 90%, transparent); }
+  .search[data-size='focal'] .btn:active { transform: scale(.975); }
+  /* The light inside the action follows the hand while it is over it. */
+  .search .btn-light { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity var(--base) var(--ease);
+    background: radial-gradient(90px circle at var(--lx, 50%) var(--ly, 50%), rgb(255 255 255 / .55), transparent 70%); }
+  .search .btn[data-lit]:hover .btn-light { opacity: 1; }
+  .search[data-size='focal'] .search-try { justify-content: center; }
   /* Phones: the words get the whole width, and the action sits under them, where the thumb is. */
   @media (max-width: 30rem) {
     .search .search-box, .search[data-size='monumental'] .search-box { flex-direction: column; align-items: stretch; gap: 10px; min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
@@ -55,6 +77,11 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
     .search .search-field:focus-within { box-shadow: 0 0 0 4px var(--green-wash); }
     .search input, .search[data-size='monumental'] input { height: 56px; padding: 0 10px; font-size: 1.0625rem; }
     .search .btn, .search[data-size='monumental'] .btn { min-height: 56px; width: 100%; }
+    .search[data-size='focal'] .search-box, .search[data-size='focal'] .search-box:hover, .search[data-size='focal'] .search-box:focus-within { box-shadow: none; }
+    .search[data-size='focal'] .search-field { min-height: 58px; border: 0; box-shadow: 0 0 0 1px var(--line-ink), 0 10px 24px -12px rgb(18 58 44 / .2); }
+    .search[data-size='focal'] .search-field:focus-within { box-shadow: 0 0 0 1.5px var(--green), 0 0 0 5px color-mix(in srgb, var(--green) 9%, transparent); }
+    .search[data-size='focal'] input { height: 54px; font-size: 1.0625rem; }
+    .search[data-size='focal'] .btn { min-height: 54px; width: 100%; padding: 0 22px; }
     .search-try { gap: 0 16px; }
   }
 </style>
@@ -80,5 +107,15 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
       location.href = searchWith(words);
     });
     input?.addEventListener('input', clear);
+  }
+  // The light inside the focal action: its position is written on the button alone, while the hand
+  // is over it.
+  for (const button of document.querySelectorAll<HTMLElement>('.search .btn[data-lit]')) {
+    button.addEventListener('pointermove', event => {
+      if (event.pointerType !== 'mouse') return;
+      const r = button.getBoundingClientRect();
+      button.style.setProperty('--lx', `${Math.round(event.clientX - r.left)}px`);
+      button.style.setProperty('--ly', `${Math.round(event.clientY - r.top)}px`);
+    }, { passive: true });
   }
 </script>

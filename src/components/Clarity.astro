@@ -1,0 +1,283 @@
+---
+/* The story's main scene (Concept A6): your words become clarity.
+
+   One continuous pinned sequence, six beats, so the visitor's words never leave the screen:
+   1. the sentence comes into focus, word by word;
+   2. each phrase travels to the criterion Linkbot read from it (the interpreter's own reading,
+      recorded at a commit): "no agency work" arrives as "agency work · Avoid";
+   3. the criteria become the search (the lens), and a field of openings appears behind it, out of
+      focus, at different depths;
+   4. the four that fit come into focus and line up; the rest step back;
+   5. the reasons: what each one states, and where; what it doesn't say, shown as such;
+   6. a Must, set by the person: openings that state otherwise are hidden, what doesn't say stays.
+
+   Focus is the language: soft is "not for you", sharp is "this matters". Everything is a function
+   of scroll position (src/scripts/stages.ts writes --b1 … --b6 on the stage). Without scripts,
+   under reduced motion or on a screen that cannot hold the stage, the scene is its complete final
+   state: the words, how they were read, the four that fit with their reasons, the Must.
+   The openings are illustrations and say so; the levels and evidence words are the product's own. */
+import Mark from './Mark.astro';
+import Icon from './Icon.astro';
+import { reading, LEVEL, ORBIT } from '../data/content';
+
+const words = reading('story');
+/* The sentence, phrase by phrase (one per span the interpreter read), word by word. Words before
+   the criterion's label are dropped in the reading ("no" becomes the level Avoid); the first word
+   of the label is where the phrase lands on its chip. */
+let n = 0;
+const phrases = words.spans.map((span, i) => {
+  const text = words.text.slice(span.start, span.end);
+  const label = words.criteria[i].label;
+  const from = text.toLowerCase().indexOf(label.toLowerCase());
+  const tokens = text.split(' ');
+  let offset = 0;
+  return { i, criterion: words.criteria[i], tokens: tokens.map(token => {
+    const at = offset; offset += token.length + 1;
+    return { token, k: n++, drop: from > 0 && at < from, anchor: from > 0 && at === from };
+  }) };
+});
+const fits = ORBIT.ring.filter(o => o.fit);
+/* The field: openings that don't fit, placed by hand at depths (z: 0 near … 1 far). Phones show
+   the first six. */
+const FIELD: [string, number, number, number][] = [
+  ['Data engineer', .58, .02, .2], ['Account executive', .9, .2, .75], ['UX writer', .3, .32, .9],
+  ['Backend engineer', .02, .6, .62], ['Product designer, agency', .46, .55, .14], ['Site reliability engineer', .92, .66, .5],
+  ['Brand designer', .64, .84, .86], ['Customer success lead', .98, .97, .38], ['Growth marketer', .22, .04, .96],
+];
+/* Where the four that fit wait in the field before they come into focus. */
+const SCATTER: [number, number, number][] = [[.06, .2, .5], [.74, .4, .34], [.16, .84, .26], [.4, .97, .6]];
+const CAPTIONS: [string, string][] = [
+  ['Say it the way you’d say it.', 'A few words are enough. No filters to learn, no profile to fill in.'],
+  ['Linkbot reads what you mean.', 'Each phrase becomes a criterion, with how much it matters to you. “No agency work” becomes something to avoid.'],
+  ['Every opening is read against your words.', 'Listings checked in the last seven days, each with its source and date.'],
+  ['What fits comes into focus.', 'Four state what you asked for. The rest step back, and nothing disappears.'],
+  ['You can see why.', 'What each listing states, and where. What it doesn’t say is shown too, and never counted as a fit.'],
+  ['A Must is yours to set.', 'Make “Hybrid” a Must and openings that state otherwise are hidden; those that don’t say stay, marked. Linkbot never sets a Must for you.'],
+];
+const must = words.criteria.findIndex(c => c.label === 'Hybrid');
+---
+<section class="scene clarity" data-scene data-beats="0:.14,.17:.33,.36:.49,.52:.68,.71:.84,.87:1" style="--beats: 6; --beat: 90svh" aria-labelledby="clarity-caption-1">
+  <div class="scene-stage" data-scene-stage>
+    <div class="scene-inner clarity-inner">
+      <ol class="captions">
+        {CAPTIONS.map(([title, body], i) => <li class="caption" data-caption id={`clarity-caption-${i + 1}`}><h2>{title}</h2><small>{body}</small></li>)}
+      </ol>
+      <figure class="clarity-figure" aria-labelledby="clarity-legend">
+        <p class="clarity-sentence" data-sentence><span class="sr">The words: </span>{phrases.map((phrase, i) => <><span class="ph" data-i={phrase.i} style={`--di: ${phrase.i}`}>{phrase.tokens.map((t, j) => <><span class="wd" style={`--i: ${t.k}`} data-drop={t.drop ? '' : undefined} data-anchor={t.anchor ? '' : undefined}>{t.token}</span>{j < phrase.tokens.length - 1 ? ' ' : ''}</>)}{i < phrases.length - 1 && <span class="cm">,</span>}</span>{i < phrases.length - 1 ? ' ' : ''}</>)}</p>
+        <div class="clarity-lens" data-lens>
+          <span class="lens-frame" aria-hidden="true"><Icon name="search" size={16} /></span>
+          <ul class="clarity-read" aria-label="How Linkbot read these words">
+            {words.criteria.map((c, i) => <li class="chip" data-i={i} data-level={c.level} data-must={i === must ? '' : undefined}><span class="chip-label">{c.label}</span><small><span class="chip-soft">{LEVEL[c.level ?? 'prefer']}</span>{i === must && <span class="chip-hard">Must</span>}</small></li>)}
+          </ul>
+        </div>
+        <ul class="clarity-field" aria-hidden="true">
+          {FIELD.map(([title, x, y, z], i) => <li class="op" style={`--x: ${x}; --y: ${y}; --z: ${z}; --dur: ${19 + (i * 7) % 11}s; --delay: -${(i * 5) % 13}s`}><i><span>{title}</span></i></li>)}
+        </ul>
+        <ol class="clarity-list" aria-label="The four that fit, and why">
+          {fits.map((o, j) => <li class="fit" style={`--row: ${j}; --x: ${SCATTER[j][0]}; --y: ${SCATTER[j][1]}; --z: ${SCATTER[j][2]}`} data-unsaid={o.hybrid ? undefined : ''}>
+            <span class="fit-ghost" aria-hidden="true">{o.title}</span>
+            <span class="fit-title">{o.title}<small>{o.place}</small></span>
+            <span class="fit-why">
+              <span data-tone={o.hybrid ? 'fit' : 'unknown'}><Mark tone={o.hybrid ? 'fit' : 'unknown'} size={10} />Hybrid {o.hybrid ? <b>{o.hybrid}</b> : <b>not stated</b>}</span>
+              <span data-tone="fit"><Mark tone="fit" size={10} />Research <b>{o.research}</b></span>
+            </span>
+          </li>)}
+        </ol>
+        <p class="clarity-hidden"><Mark tone="unknown" size={10} />One hidden: it states on-site. One stays, marked: it doesn’t say.</p>
+        <figcaption id="clarity-legend" class="clarity-legend">Illustration: the openings are examples. The words are read by Linkbot’s own interpreter.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Where each phrase lands on its chip, and how far the criteria lift into the lens: measured
+     with the scene's transforms neutralised, whenever the scene goes live or its layout changes. */
+  const scene = document.querySelector<HTMLElement>('.clarity');
+  const stage = scene?.querySelector<HTMLElement>('[data-scene-stage]');
+  /* Layout offsets ignore transforms, so the scene's own motion never has to be switched off to
+     measure it: every position is read in one pass (sentence and lens are positioned in the
+     figure; phrases in the sentence; words in their phrase; labels in the criteria list, itself in
+     the lens). */
+  function measure() {
+    if (!scene || !stage || !scene.classList.contains('is-live')) return;
+    const figure = scene.querySelector<HTMLElement>('.clarity-figure')!, sentence = scene.querySelector<HTMLElement>('[data-sentence]')!;
+    const lens = scene.querySelector<HTMLElement>('[data-lens]')!, list = lens.querySelector<HTMLElement>('.clarity-read')!;
+    const reads = [...scene.querySelectorAll<HTMLElement>('.ph')].map(ph => {
+      const anchor = ph.querySelector<HTMLElement>('[data-anchor]') ?? ph.querySelector<HTMLElement>('.wd')!;
+      const label = scene.querySelector<HTMLElement>(`.chip[data-i="${ph.dataset.i}"] .chip-label`)!;
+      // A transformed phrase is its words' offset parent (it is in Chromium); otherwise both share the sentence.
+      const own = anchor.offsetParent === ph;
+      return { ph, px: sentence.offsetLeft + ph.offsetLeft, py: sentence.offsetTop + ph.offsetTop, ax: own ? anchor.offsetLeft : anchor.offsetLeft - ph.offsetLeft, ay: own ? anchor.offsetTop : anchor.offsetTop - ph.offsetTop, ah: anchor.offsetHeight,
+        bx: lens.offsetLeft + list.offsetLeft + label.offsetLeft, by: lens.offsetTop + list.offsetTop + label.offsetTop, bh: label.offsetHeight,
+        k: parseFloat(getComputedStyle(label).fontSize) / parseFloat(getComputedStyle(anchor).fontSize) };
+    });
+    const lift = lens.offsetTop, lensH = lens.offsetHeight + 18;
+    for (const r of reads) {
+      r.ph.style.setProperty('--k', r.k.toFixed(4));
+      r.ph.style.setProperty('--dx', `${(r.bx - r.px - r.ax * r.k).toFixed(1)}px`);
+      r.ph.style.setProperty('--dy', `${(r.by - r.py - r.ay * r.k + (r.bh - r.ah * r.k) / 2).toFixed(1)}px`);
+    }
+    lens.style.setProperty('--lift', `${lift.toFixed(1)}px`);
+    figure.style.setProperty('--lens-h', `${lensH}px`);
+  }
+
+  addEventListener('scenes:mode', measure);
+  document.fonts?.ready.then(measure);
+  /* The finished state (the lens at the top, four rows with their reasons, the Must's note, the
+     legend) must fit the stage; otherwise the scene stays complete and static. */
+  scene?.addEventListener('scene:fits', event => {
+    const figure = scene.querySelector<HTMLElement>('.clarity-figure')!, lens = scene.querySelector<HTMLElement>('[data-lens]')!;
+    const note = scene.querySelector<HTMLElement>('.clarity-hidden')!, legend = scene.querySelector<HTMLElement>('.clarity-legend')!;
+    const css = getComputedStyle(figure), px = (name: string) => parseFloat(css.getPropertyValue(name)) || 0;
+    const lensH = lens.offsetHeight + 18;
+    figure.style.setProperty('--lens-h', `${lensH}px`);
+    const need = lensH + px('--list-gap') + 4 * (px('--rowh-1') + 8) + note.offsetHeight + 8 + legend.offsetHeight + 12;
+    if (need > figure.clientHeight) (event as CustomEvent<{ ok: boolean }>).detail.ok = false;
+  });
+
+  /* The hand moves the far openings less than the near ones (depth); never the words or the list. */
+  const field = scene?.querySelector<HTMLElement>('.clarity-field');
+  const fine = matchMedia('(pointer: fine)'), still = matchMedia('(prefers-reduced-motion: reduce)');
+  let tx = 0, ty = 0, mx = 0, my = 0, raf = 0;
+  function follow() {
+    mx += (tx - mx) * .08; my += (ty - my) * .08;
+    field!.style.setProperty('--mx', mx.toFixed(3)); field!.style.setProperty('--my', my.toFixed(3));
+    raf = Math.abs(tx - mx) + Math.abs(ty - my) > .002 ? requestAnimationFrame(follow) : 0;
+  }
+  if (field) addEventListener('pointermove', event => {
+    if (event.pointerType !== 'mouse' || !fine.matches || still.matches || !scene!.classList.contains('is-live')) return;
+    const r = stage!.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > innerHeight) return;
+    tx = event.clientX / innerWidth * 2 - 1; ty = event.clientY / innerHeight * 2 - 1;
+    if (!raf) raf = requestAnimationFrame(follow);
+  }, { passive: true });
+</script>
+
+<style>
+  /* ── Static: the complete final state (no scripts, reduced motion, a stage that cannot fit). ── */
+  .clarity-inner { display: grid; gap: 28px; padding: 24px var(--gutter) 40px; }
+  .clarity .captions { max-width: 46rem; margin-inline: auto; text-align: center; }
+  .clarity .captions h2 { font-size: inherit; font-weight: inherit; letter-spacing: inherit; line-height: inherit; }
+  .clarity .captions small { max-width: 36em; margin-inline: auto; }
+  .clarity-figure { display: grid; gap: 18px; justify-items: center; width: min(100%, 40rem); margin-inline: auto; }
+  .clarity-sentence { font-family: var(--display); font-stretch: 100%; font-weight: 520; font-size: clamp(1.75rem, 1rem + 2.6vw, 3.25rem); line-height: 1.12; letter-spacing: -.035em; text-align: center; text-wrap: balance; color: var(--ink); }
+  .ph, .wd, .cm { display: inline-block; }
+  .clarity-lens { position: relative; display: grid; justify-items: center; }
+  .lens-frame { display: none; }
+  .clarity-read { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .clarity-read .chip { transition: none; }
+  .chip-label { font-weight: 600; }
+  .chip small { display: inline-grid; }
+  .chip small > span { grid-area: 1 / 1; }
+  .chip-hard { opacity: 0; }
+  .clarity-field, .fit-ghost { display: none; }
+  .clarity-list { display: grid; gap: 8px; width: 100%; }
+  .fit { display: grid; gap: 4px; padding: 11px 16px; border: 1px solid var(--line-ink); border-radius: var(--r-2); background: var(--surface); }
+  .fit-title { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; font-size: .9375rem; font-weight: 650; line-height: 1.3; }
+  .fit-title small { font-size: var(--size-micro); font-weight: 560; color: var(--ink-2); }
+  .fit-why { display: flex; flex-wrap: wrap; gap: 2px 16px; font-size: var(--size-micro); color: var(--ink-2); }
+  .fit-why > span { display: inline-flex; align-items: center; gap: 6px; }
+  .fit-why b { font-weight: 600; color: var(--ink); }
+  .fit-why [data-tone='unknown'] b { font-weight: 560; color: var(--ink-2); }
+  .clarity-hidden { display: flex; gap: 8px; align-items: baseline; justify-self: start; max-width: 100%; padding: 8px 12px; border: 1px dashed var(--line-ink); border-radius: var(--r-2); background: var(--surface); font-size: var(--size-micro); color: var(--ink-2); }
+  .clarity-hidden :global(.mark) { flex: none; transform: translateY(1px); }
+  .clarity-legend { font-size: var(--size-micro); color: var(--ink-2); text-align: center; }
+  /* Statically the Must is already set: the chip says so. */
+  :global(html:not(.js)) .chip[data-must], .clarity:not(.is-live) .chip[data-must] { background: var(--green); border-color: var(--green); color: var(--on-green); }
+  :global(html:not(.js)) .chip[data-must] small, .clarity:not(.is-live) .chip[data-must] small { color: var(--on-green-2); border-left-color: var(--green-rule); }
+  :global(html:not(.js)) .chip[data-must] .chip-soft, .clarity:not(.is-live) .chip[data-must] .chip-soft { opacity: 0; }
+  :global(html:not(.js)) .chip[data-must] .chip-hard, .clarity:not(.is-live) .chip[data-must] .chip-hard { opacity: 1; }
+
+  /* ── Live: one stage, a size container, every state derived from the beats. ── */
+  :global(.js) .clarity.is-live .clarity-inner { gap: 0; padding: 16px var(--gutter) 0; height: 100%; grid-template-rows: auto minmax(0, 1fr); }
+  :global(.js) .clarity.is-live .clarity-figure { position: relative; display: block; width: 100%; height: 100%; container-type: size; }
+  /* 1. The words come into focus, one after another. */
+  :global(.js) .clarity.is-live .clarity-sentence { position: absolute; left: 0; right: 0; top: 7cqh; width: min(100%, 18ch); margin-inline: auto; font-size: clamp(2rem, 1rem + 3vw, 3.6rem); }
+  :global(.js) .clarity.is-live .wd { --w: clamp(0, (var(--b1) - var(--i) * .045) * 10 + .3, 1); opacity: var(--w); filter: blur(calc((1 - var(--w)) * 10px)); transform: translateY(calc((1 - var(--w)) * .26em)); }
+  /* 2. Each phrase travels to its criterion, one after another, and hands over to the chip. */
+  :global(.js) .clarity.is-live .ph { transform-origin: 0 0; --t: clamp(0, (var(--b2) - var(--di) * .13) / .52, 1); --m: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
+    transform: translate(calc(var(--dx, 0px) * var(--m)), calc(var(--dy, 0px) * var(--m))) scale(calc(1 + (var(--k, 1) - 1) * var(--m)));
+    opacity: calc(1 - clamp(0, (var(--b2) - .86) * 16, 1)); }
+  :global(.js) .clarity.is-live .wd[data-drop] { opacity: calc(var(--w) * (1 - clamp(0, var(--b2) * 2.4, 1))); }
+  :global(.js) .clarity.is-live .cm { opacity: calc(clamp(0, var(--b1) * 11 - 9.6, 1) * (1 - clamp(0, var(--b2) * 5, 1))); }
+  /* The criteria sit where the sentence was, then lift into the lens: the search they now are. */
+  :global(.js) .clarity.is-live .clarity-lens { position: absolute; left: 0; right: 0; top: calc(7cqh + 1.5em); width: fit-content; max-width: 100%; margin-inline: auto; padding: 0 0 0 0;
+    transform: translateY(calc(var(--lift, 0px) * -1 * var(--b3))); }
+  /* The phrase (display type) leaves before the chip (text type) arrives, so two typefaces are
+     never seen on top of each other. */
+  :global(.js) .clarity.is-live .clarity-read { position: relative; z-index: 1; opacity: clamp(0, (var(--b2) - .9) * 14, 1); max-width: min(100cqw, 46rem); }
+  :global(.js) .clarity.is-live .lens-frame { display: grid; align-items: center; position: absolute; inset: -9px -12px -9px -46px; padding-left: 18px; border-radius: var(--pill); background: var(--surface); color: var(--ink-2);
+    opacity: var(--b3); transform: scaleX(calc(.96 + .04 * var(--b3)));
+    box-shadow: 0 0 0 1px var(--line-ink), 0 18px 40px -22px rgb(18 58 44 / .35); }
+  /* 6. Hybrid becomes a Must, quickly (a filled chip's crossfade passes through unreadable mid-tones). */
+  :global(.js) .clarity.is-live .chip[data-must] { --h: clamp(0, (var(--b6) - .15) * 10, 1); background: color-mix(in srgb, var(--surface) calc(100% - 100% * var(--h)), var(--green)); border-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--h)), var(--green)); color: color-mix(in srgb, var(--ink) calc(100% - 100% * var(--h)), var(--on-green)); }
+  :global(.js) .clarity.is-live .chip[data-must] small { color: color-mix(in srgb, var(--ink-2) calc(100% - 100% * var(--h)), var(--on-green-2)); border-left-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--h)), var(--green-rule)); }
+  :global(.js) .clarity.is-live .chip[data-must] .chip-soft { opacity: calc(1 - var(--h)); }
+  :global(.js) .clarity.is-live .chip[data-must] .chip-hard { opacity: var(--h); }
+
+  /* 3–4. The field: openings at depths, out of focus, drifting; when the four come into focus the
+     rest go softer and step back. The hand shifts near ones more than far ones. */
+  :global(.js) .clarity.is-live .clarity-field { display: block; position: absolute; left: 0; right: 0; top: var(--field-top); bottom: 36px; container-type: size; --mx: 0; --my: 0; }
+  :global(.js) .clarity.is-live .op { position: absolute; left: 0; top: 0; --recede: var(--b4);
+    transform: translate(calc(var(--x) * (100cqw - 220px) + var(--mx) * (6px + 24px * (1 - var(--z)))), calc(var(--y) * (100cqh - 44px) + var(--my) * (4px + 16px * (1 - var(--z)))))
+               scale(calc(1 - .32 * var(--z) - .08 * var(--recede)));
+    transform-origin: 0 0;
+    opacity: calc(var(--b3) * (.8 - .42 * var(--recede)));
+    filter: blur(calc((1.6 + 6.4 * var(--z) + 4 * var(--recede)) * 1px)); }
+  :global(.js) .clarity.is-live .op i { display: block; font-style: normal; animation: clarity-drift var(--dur, 22s) ease-in-out var(--delay, 0s) infinite alternate; animation-play-state: paused; }
+  /* The openings drift only while the field is on the stage (beats 3–6). */
+  :global(.js) .clarity.is-live:is([data-beat='3'], [data-beat='4'], [data-beat='5'], [data-beat='6']) .op i { animation-play-state: running; }
+  :global(.js) .clarity.is-live .op span { display: block; width: max-content; padding: 9px 15px; border-radius: 12px; background: color-mix(in srgb, var(--surface) 78%, transparent); font-size: .9375rem; font-weight: 600; color: var(--ink-2); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .7), 0 12px 30px -18px rgb(18 58 44 / .28); }
+  @keyframes clarity-drift { from { transform: translate(-6px, -4px); } to { transform: translate(6px, 5px); } }
+
+  /* 3–5. The four that fit: their place is the list; until they come into focus they wait in the
+     field, out of focus, as titles. Then they travel home and sharpen; then their reasons appear. */
+  :global(.js) .clarity.is-live .clarity-list { display: block; position: absolute; inset: 0; pointer-events: none; }
+  /* The list's rows unfold when the reasons arrive (beat 5); until then they hold one line. */
+  :global(.js) .clarity.is-live .clarity-figure { --r5: clamp(0, var(--b5) * 2.2, 1); --rowh-0: 44px; --rowh-1: 66px; --rowh: calc(var(--rowh-0) + (var(--rowh-1) - var(--rowh-0)) * var(--r5));
+    --list-gap: 18px; --list-top: calc(var(--lens-h, 80px) + var(--list-gap)); --field-top: calc(var(--lens-h, 80px) + 26px); --L: min(36rem, 100cqw); }
+  :global(.js) .clarity.is-live .fit { position: absolute; left: calc((100cqw - var(--L)) / 2); top: calc(var(--list-top) + var(--row) * (var(--rowh) + 8px)); width: var(--L); min-height: var(--rowh);
+    --sx: calc(var(--x) * (100cqw - 300px)); --sy: calc(var(--field-top, 110px) + var(--y) * (100cqh - var(--field-top, 110px) - 80px));
+    --t: clamp(0, (var(--b4) - var(--row) * .07) / .24, 1); --line: calc(var(--t) * var(--t) * (3 - 2 * var(--t))); --real: clamp(0, var(--line) * 5, 1);
+    transform: translate(calc((var(--sx) - (100cqw - var(--L)) / 2) * (1 - var(--line))), calc((var(--sy) - var(--list-top) - var(--row) * (var(--rowh) + 8px)) * (1 - var(--line))))
+               scale(calc(1 - .3 * var(--z) * (1 - var(--line))));
+    transform-origin: 0 0;
+    opacity: calc(var(--b3) * (.8 + .2 * var(--line)));
+    filter: blur(calc((1.6 + 6.4 * var(--z)) * (1 - var(--line)) * 1px));
+    border-color: color-mix(in srgb, transparent calc(100% - 100% * var(--line)), var(--line-ink)); background: color-mix(in srgb, transparent calc(100% - 100% * var(--line)), var(--surface)); }
+  /* Out of focus in the field, each of the four is a decorative copy (the real row is not yet
+     legible, so it is not yet shown); as it travels home the copy gives way to the row itself,
+     which sharpens on arrival. */
+  :global(.js) .clarity.is-live .fit-ghost { display: block; position: absolute; left: 0; top: 0; width: max-content; padding: 9px 15px; border-radius: 12px; font-size: .9375rem; font-weight: 600; color: var(--ink-2);
+    background: color-mix(in srgb, var(--surface) 78%, transparent); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .7), 0 12px 30px -18px rgb(18 58 44 / .28); opacity: calc(1 - var(--real)); }
+  :global(.js) .clarity.is-live .fit-title { opacity: var(--real); }
+  :global(.js) .clarity.is-live .fit-title small { opacity: var(--r5); }
+  /* 5. The reasons unfold beneath each title. */
+  :global(.js) .clarity.is-live .fit-why { max-height: calc(var(--r5) * 2.8em); overflow: hidden; opacity: var(--r5); }
+  /* 6. The Must: what doesn't say stays, marked; one hidden, said so. */
+  :global(.js) .clarity.is-live .fit[data-unsaid] { border-style: solid; outline: 1px dashed color-mix(in srgb, transparent calc(100% - 100% * var(--b6)), var(--ink-2)); outline-offset: 3px; }
+  :global(.js) .clarity.is-live .clarity-hidden { position: absolute; left: calc((100cqw - var(--L)) / 2); top: calc(var(--list-top) + 4 * (var(--rowh) + 8px) + 2px); width: var(--L);
+    --n: clamp(0, (var(--b6) - .15) * 4, 1); opacity: var(--n); transform: translateY(calc((1 - var(--n)) * 8px)); }
+  :global(.js) .clarity.is-live .clarity-legend { position: absolute; left: 0; right: 0; bottom: 10px; opacity: clamp(0, var(--b3) * 3, 1); }
+
+  @media (max-width: 52rem) {
+    :global(.js) .clarity.is-live .clarity-sentence { top: 5cqh; font-size: clamp(1.75rem, 1rem + 4vw, 2.5rem); width: min(100%, 15ch); }
+    :global(.js) .clarity.is-live .clarity-read .chip { min-height: 30px; padding: 2px 11px; font-size: .8125rem; }
+    :global(.js) .clarity.is-live .lens-frame { inset: -8px -10px -8px -10px; padding-left: 0; }
+    :global(.js) .clarity.is-live .lens-frame :global(.icon) { display: none; }
+    :global(.js) .clarity.is-live .clarity-legend { font-size: .75rem; }
+    :global(.js) .clarity.is-live .op:nth-child(n + 7) { display: none; }
+    :global(.js) .clarity.is-live .op { transform: translate(calc(var(--x) * (100cqw - 170px) + var(--mx) * 0px), calc(var(--y) * (100cqh - 40px))) scale(calc(1 - .32 * var(--z) - .08 * var(--recede))); }
+    :global(.js) .clarity.is-live .op span { font-size: .8125rem; padding: 7px 11px; }
+    /* Phones: one reason per row (Hybrid's, which the Must acts on); the place stays in the
+       static version and on wider screens. */
+    :global(.js) .clarity.is-live .clarity-figure { --rowh-0: 38px; --rowh-1: 56px; --list-gap: 12px; }
+    :global(.js) .clarity.is-live .clarity-hidden { padding: 6px 10px; }
+    :global(.js) .clarity.is-live .fit-title small, :global(.js) .clarity.is-live .fit-why > span + span { display: none; }
+    :global(.js) .clarity.is-live .fit { --sx: calc(var(--x) * max(0px, 100cqw - 270px)); padding: 8px 12px; gap: 2px; }
+    :global(.js) .clarity.is-live .fit-title { font-size: .875rem; }
+    :global(.js) .clarity.is-live .fit-ghost { font-size: .8125rem; padding: 7px 11px; }
+    :global(.js) .clarity.is-live .fit-why { gap: 0 12px; max-height: calc(var(--r5) * 2.2em); }
+  }
+</style>

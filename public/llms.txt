@@ -10,10 +10,12 @@ ranking instruction and makes no claims beyond the pages it links to.
 
 ## Pages
 
-- [Home](/): what Linkbot is, told as one story: job search runs in circles; say what matters
-  once and the openings that fit line up; how Prefer, Avoid and Must work; what a listing states
-  and doesn't; and the boundary only the person opens. The words are read by Linkbot's own
-  interpreter; the openings and the listing are examples.
+- [Home](/): what Linkbot is, told as one story: say what you want in your own words; Linkbot
+  reads them as criteria with levels (Prefer, Avoid, Must); the openings that fit come into focus
+  with what each states, and what it doesn't; and privacy as two sides of the glass: clear to
+  the person, nothing for employers to see, and only the details the person chooses shared with
+  one named recipient (sharing is in staging). The words are read by Linkbot's own interpreter;
+  the openings are examples.
 - [How it works](/how-it-works): criteria and levels, recorded readings of real examples, how
   listings are explained, saving and watching, applying, private matching (in development, not
   live), and what is live today versus what is not built yet.
