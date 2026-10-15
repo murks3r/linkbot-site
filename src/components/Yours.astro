@@ -37,7 +37,7 @@ const CAPTIONS: [string, string][] = [
       </ol>
       <figure class="yours-figure" aria-labelledby="yours-legend">
         <div class="yr-card yr-you" role="group" aria-label="What you see">
-          <img class="yr-print" src="/material/print.webp" alt="" width="357" height="480" loading="lazy" decoding="async" />
+          <span class="yr-ink" aria-hidden="true"><img class="yr-print" src="/material/print.webp" alt="" width="357" height="480" loading="lazy" decoding="async" /></span>
           <p class="yr-label">What you see</p>
           <ul class="yr-chips" aria-label="Your search">
             {words.criteria.map(c => <li class="chip" data-must={c.label === 'Hybrid' ? '' : undefined}><span>{c.label}</span><small>{c.label === 'Hybrid' ? 'Must' : LEVEL[c.level ?? 'prefer']}</small></li>)}
@@ -104,7 +104,9 @@ const CAPTIONS: [string, string][] = [
   .yr-card { position: relative; display: grid; align-content: start; gap: 14px; min-height: 22rem; padding: 24px 26px; border-radius: 24px; overflow: hidden; }
   .yr-you { background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 1px rgb(18 58 44 / .14), 0 28px 56px -32px rgb(18 58 44 / .45); }
-  /* Your fingerprint: you. Inked in the corner of your side, and only there. */
+  /* Your fingerprint: you. Inked in the corner of your side, and only there (its own layer clips
+     it to the card, so the card's content never overflows). */
+  .yr-ink { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; pointer-events: none; }
   .yr-print { position: absolute; right: -12px; top: -22px; width: 138px; height: auto; opacity: .26; transform: rotate(-14deg); pointer-events: none; mix-blend-mode: multiply; }
   .yr-them { background: color-mix(in srgb, var(--surface) 58%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.15); backdrop-filter: blur(18px) saturate(1.15);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .85), 0 0 0 1px rgb(18 58 44 / .12), 0 28px 56px -32px rgb(18 58 44 / .35); }
@@ -169,8 +171,8 @@ const CAPTIONS: [string, string][] = [
   :global(.js) .yours.is-live .yr-you { z-index: 2; }
   @media (max-width: 52rem) {
     /* Phones: the two sides stacked and compact (your criteria were the last scene's subject). */
-    :global(.js) .yours.is-live .yours-figure { row-gap: 14px; padding-top: 0; }
-    :global(.js) .yours.is-live .yr-card { min-height: 0; padding: 12px 15px; gap: 8px; }
+    :global(.js) .yours.is-live .yours-figure { row-gap: 12px; padding-top: 0; }
+    :global(.js) .yours.is-live .yr-card { min-height: 0; padding: 12px 15px; gap: 6px; }
     :global(.js) .yours.is-live .yr-chips { display: none; }
     :global(.js) .yours.is-live .yr-fits li { padding: 6px 10px; font-size: .8125rem; }
     :global(.js) .yours.is-live .yr-kept, :global(.js) .yours.is-live .yr-receipt { font-size: var(--size-micro); }

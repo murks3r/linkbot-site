@@ -189,7 +189,7 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
   /* 1. The noise: openings at depths, turning as the page scrolls (and breathing on their own);
      2. they step back from the words; 3. those for other work fall away, the rest face you and
      settle into the list (decorative copies: the real list appears as they land). */
-  :global(.js) .signal.is-live .sg-noise { display: block; position: absolute; inset: 0; perspective: 1000px;
+  :global(.js) .signal.is-live .sg-noise { display: block; position: absolute; inset: 0; overflow: clip; perspective: 1000px;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 88%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 88%, transparent); }
   :global(.js) .signal.is-live .sg-ghost { position: absolute; left: 0; top: 0; --near: calc(1 - var(--z));
     --spread: calc(var(--b2) * (1 - var(--b3)));
@@ -237,7 +237,8 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
 
   /* 3–7. The list: each opening's place moves with the beats (settled within the first half of each
      beat), the hidden ones leave, the first opens to its reasons. */
-  :global(.js) .signal.is-live .sg-list { display: block; position: absolute; inset: 0; pointer-events: none; }
+  /* Clipped to the figure: rows that fold away beneath the opened one never reach past it. */
+  :global(.js) .signal.is-live .sg-list { display: block; position: absolute; inset: 0; overflow: clip; pointer-events: none; }
   :global(.js) .signal.is-live .sg-card { position: absolute; left: calc((100cqw - var(--L)) / 2); top: 0; width: var(--L); min-height: var(--rowh); padding: 0 16px; display: flex; flex-wrap: wrap; align-items: center; align-content: center; justify-content: space-between; gap: 2px 14px;
     --e4: clamp(0, var(--b4) * 2.4, 1); --e5: clamp(0, var(--b5) * 2.4, 1); --e6: clamp(0, var(--b6) * 2.4, 1);
     --slot: calc(var(--s3) + (var(--s4) - var(--s3)) * var(--e4) + (var(--s5) - var(--s4)) * var(--e5) + (var(--s6) - var(--s5)) * var(--e6));
@@ -260,7 +261,7 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
   :global(.js) .signal.is-live .sg-card[data-card='a'] { align-content: start; padding-top: 12px; padding-bottom: calc(12px * var(--e7)); }
   :global(.js) .signal.is-live .sg-card[data-card='a'] .sg-title, :global(.js) .signal.is-live .sg-card[data-card='a'] .sg-tag { min-height: calc(var(--rowh) - 24px); display: inline-flex; align-items: center; }
   :global(.js) .signal.is-live .sg-hidden { position: absolute; left: calc((100cqw - var(--L)) / 2); top: 0; width: var(--L);
-    transform: translateY(calc(var(--list-top) + 5 * (var(--rowh) + var(--row-gap)) + var(--shift) + 4px));
+    transform: translateY(calc(var(--list-top) + 5 * (var(--rowh) + var(--row-gap)) + var(--shift) * (1 - var(--fold, 0)) + 4px));
     opacity: calc(clamp(0, (var(--b6) - .1) * 4, 1) * (1 - var(--fold, 0))); }
   :global(.js) .signal.is-live .sg-legend { position: absolute; left: 0; right: 0; bottom: 10px; }
 

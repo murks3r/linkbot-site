@@ -58,7 +58,7 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
      field is the largest, brightest, sharpest thing on the screen. The pair is placed by the
      field: its centre falls a little below the middle of the space under the header (where the
      eye rests; mathematically centred reads high), whatever the screen. */
-  .hero { position: relative; isolation: isolate; overflow-x: clip; min-height: calc(100svh - var(--header)); display: grid; grid-template-rows: 1fr auto;
+  .hero { position: relative; isolation: isolate; min-height: calc(100svh - var(--header)); display: grid; grid-template-rows: 1fr auto;
     --h1-size: clamp(2.1rem, 1.25rem + 2.5vw, 3.5rem); --h1-gap: clamp(20px, 3vh, 30px); --field-h: 76px;
     padding: max(28px, calc((100svh - var(--header)) * .515 - var(--h1-size) * 2.04 - var(--h1-gap) - var(--field-h) / 2)) var(--gutter) 0; }
   .hero-focal { position: relative; z-index: 1; display: grid; justify-items: center; align-content: start; gap: var(--h1-gap); text-align: center; }
@@ -66,8 +66,9 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
   .hero h1 { max-width: 17ch; font-size: var(--h1-size); font-weight: 560; letter-spacing: -.034em; line-height: 1.02; }
   .h1-line { display: block; }
   .hero-search { position: relative; width: 100%; display: grid; justify-items: center; }
-  /* A pool of light behind the field: it lifts it off the colour around it. */
-  .hero-search::before { content: ''; position: absolute; left: 50%; top: 50%; width: min(64rem, 120%); height: 260%; transform: translate(-50%, -50%); z-index: -1; pointer-events: none;
+  /* A pool of light behind the field: it lifts it off the colour around it (never wider than the
+     hero, so nothing overflows the page). */
+  .hero-search::before { content: ''; position: absolute; left: 50%; top: 50%; width: min(64rem, calc(100% + 2 * var(--gutter))); height: 260%; transform: translate(-50%, -50%); z-index: -1; pointer-events: none;
     background: radial-gradient(closest-side, rgb(255 253 249 / .85), rgb(255 253 249 / .45) 45%, transparent 100%); }
   .hero-foot { position: relative; z-index: 1; display: grid; justify-items: center; gap: 16px; padding-bottom: clamp(16px, 2.6vh, 26px); }
   .promises { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; font-size: var(--size-small); font-weight: 560; color: var(--ink-2); }
