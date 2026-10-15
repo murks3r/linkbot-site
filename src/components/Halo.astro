@@ -60,7 +60,7 @@ const v = (name: string, at?: At) => (at ? `--o-${name}: ${at[0]}px; --y-${name}
       raf = 0;
       if (still.matches) return;
       const h = halo.offsetHeight || innerHeight, p = Math.min(1, Math.max(0, scrollY / h));
-      if (p !== last) { last = p; halo.style.setProperty('--hp', p.toFixed(4)); }
+      if (p !== last) { last = p; halo.style.setProperty('--hp', p.toFixed(4)); halo.toggleAttribute('data-rest', p >= 1); }
       mx += (tx - mx) * .1; my += (ty - my) * .1;
       halo.style.setProperty('--mx', mx.toFixed(3)); halo.style.setProperty('--my', my.toFixed(3));
       if (Math.abs(tx - mx) + Math.abs(ty - my) > .002) raf = requestAnimationFrame(tick);
@@ -96,6 +96,8 @@ const v = (name: string, at?: At) => (at ? `--o-${name}: ${at[0]}px; --y-${name}
   .halo-chip[data-level='must'] small { color: var(--on-green-2); border-left-color: var(--green-rule); }
   @media (prefers-reduced-motion: no-preference) {
     :global(.js) .halo-chip i { animation: halo-float var(--d) ease-in-out infinite alternate; }
+    /* Scrolled away, they rest. */
+    .halo[data-rest] .halo-chip i { animation-play-state: paused; }
   }
   @keyframes halo-float { from { transform: perspective(600px) rotateX(9deg) rotateY(-11deg) translateY(-5px); } to { transform: perspective(600px) rotateX(-7deg) rotateY(12deg) translateY(6px); } }
   /* Narrower screens: fewer chips, placed above the headline and below the action. */

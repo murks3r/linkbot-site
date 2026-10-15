@@ -105,4 +105,10 @@ if (scenes.length) {
   still.addEventListener('change', mode);
   document.fonts?.ready.then(mode);
   if ('ResizeObserver' in window) new ResizeObserver(() => { scenes.forEach(s => s.live && measure(s)); queue(); }).observe(document.body);
+  // Whether any of a scene's track is on screen: a scene's own decorative loops run only then
+  // (data-on, written only when it changes).
+  if ('IntersectionObserver' in window) {
+    const seen = new IntersectionObserver(entries => entries.forEach(e => e.target.toggleAttribute('data-on', e.isIntersecting)), { rootMargin: '0px 0px -2px 0px' });
+    scenes.forEach(s => seen.observe(s.root));
+  }
 }

@@ -14,8 +14,10 @@
    calm around the privacy chapter instead of switching to another colour world: warm pigments
    step back and sky, sage and leaf step forward, gradually, as that chapter comes into view.
 
-   Costs and courtesy: at most 30 frames a second; nothing is drawn while the tab is hidden; under
-   reduced motion one still frame is drawn and the pointer is ignored. The only output is the canvas: no style is written anywhere, so the
+   Costs and courtesy: 30 frames a second, and the main thread is woken only for those (a timer,
+   then the next animation frame), not at every display refresh: every wake also carries the page's
+   own CSS animations, so this halves their cost too. Nothing is drawn while the tab is hidden;
+   under reduced motion one still frame is drawn and the pointer is ignored. The only output is the canvas: no style is written anywhere, so the
    document is never invalidated. Without WebGL the static gradients beneath it remain. */
 
 const VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
@@ -127,7 +129,7 @@ export function atmosphere(root: HTMLElement) {
   const calm = document.querySelector<HTMLElement>('[data-air-calm]');
   let mood = 0;
   const ptr = { x: .5, y: .55, z: 0, tx: .5, ty: .55, tz: 0, seen: 0 };
-  let w = 0, h = 0, raf = 0, last = 0, clock = 37, lastY = -1;
+  let w = 0, h = 0, raf = 0, timer = 0, last = 0, clock = 37, lastY = -1;
 
   function size() {
     const nw = Math.max(32, Math.round(innerWidth / 4)), nh = Math.max(32, Math.round(innerHeight / 4));
@@ -150,10 +152,11 @@ export function atmosphere(root: HTMLElement) {
     if (calm) { const r = calm.getBoundingClientRect(), h = innerHeight; mood = Math.max(0, Math.min(1, Math.min(h - r.top, r.bottom) / h)); }
   }
   function tick(now: number) {
-    raf = requestAnimationFrame(tick);
+    raf = 0;
     const dt = now - last;
-    if (dt < 31) return;
     last = now;
+    // The next frame about 33 ms on (a timer to just before it, then the display's next frame).
+    timer = window.setTimeout(() => { timer = 0; raf = requestAnimationFrame(tick); }, 24);
     const step = Math.min(dt, 100) / 1000;
     clock += step * TEMPO;
     const k = 1 - Math.exp(-step / .28);
@@ -163,9 +166,9 @@ export function atmosphere(root: HTMLElement) {
     check();
     draw();
   }
-  const running = () => !!raf;
-  function start() { if (!raf && !still.matches && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(tick); } }
-  function stop() { cancelAnimationFrame(raf); raf = 0; }
+  const running = () => !!raf || !!timer;
+  function start() { if (!running() && !still.matches && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(tick); } }
+  function stop() { cancelAnimationFrame(raf); clearTimeout(timer); raf = timer = 0; }
   function mode() {
     stop(); size(); ptr.z = ptr.tz = 0; draw(); start();
     root.dataset.air = still.matches ? 'still' : document.hidden ? 'paused' : 'live';
