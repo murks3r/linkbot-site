@@ -1,0 +1,115 @@
+---
+/* What people tell Linkbot, floating around the search (Concept A7).
+
+   A handful of criteria, each one a real reading of Linkbot's interpreter (recorded with the
+   readings), shown as tactile paper chips with their level: what you might type, and what Linkbot
+   makes of it. Together they say what the field is for before a word is read: the work, how you
+   want to work, what you'd rather not do, and a hard line (a Must, which only you set). They float
+   at different depths around the field and turn and drift as the page scrolls away (the principle
+   of the founder's Magic Spoon reference: real objects in motion around the one thing that
+   matters); the hand moves the near ones more than the far ones; nothing moves under reduced
+   motion. Placement keeps one centred axis: each chip is anchored to the centre line (never to a
+   screen edge it could cross), sits above the headline, beside the field where the screen is wide
+   enough, or below it, and never touches the words, the field or the promises (tested). Decorative:
+   the field and its label carry the meaning for assistive technology. */
+import record from '../data/readings.json';
+import { LEVEL } from '../data/content';
+
+/* Criteria from recorded readings and examples only: every label here is something the interpreter
+   reads. One is shown as a Must: a level the person sets, never Linkbot. */
+const pick = (id: string, label: string) => {
+  const source = [...record.readings, ...record.examples].find(r => r.id === id);
+  const c = source?.criteria.find(x => x.label === label);
+  if (!c) throw Error(`no recorded criterion ${label} in ${id}`);
+  return c;
+};
+/* side: which side of the centre line; z: depth (0 near … 1 far); r: resting turn; d: breath.
+   Positions per layout, as [distance of the chip's inner edge from the centre line in px, height in
+   the hero in %]: w wide (≥ 75rem), x extra-wide only (≥ 90rem), m tablets (40–75rem), p phones. */
+type At = [number, number];
+const CHIPS: { c: ReturnType<typeof pick>; level?: string; side: 'l' | 'r'; z: number; r: number; d: number; w?: At; x?: At; m?: At; p?: At; tall?: boolean }[] = [
+  { c: pick('phrases', 'management'), side: 'l', z: .45, r: -5, d: 11, w: [250, 13], m: [130, 13], p: [-24, 11] },
+  { c: pick('rewrite', 'more autonomy'), side: 'r', z: .5, r: 4, d: 13, w: [220, 9], m: [110, 17], p: [-14, 21] },
+  { c: pick('avoid', 'on-call'), side: 'l', z: .1, r: 3, d: 12, w: [404, 47] },
+  { c: pick('story', 'more research'), side: 'r', z: .15, r: -4, d: 14, w: [404, 50] },
+  /* The Must sits below the action, so the eye meets the words, the field and the action first. */
+  { c: pick('phrases', 'Remote'), level: 'must', side: 'l', z: .3, r: 5, d: 10, w: [170, 74], m: [120, 72], p: [-6, 71], tall: true },
+  { c: pick('story', 'agency work'), side: 'r', z: .4, r: -6, d: 15, w: [130, 70], m: [100, 77], p: [-16, 77], tall: true },
+  { c: pick('start-2', 'more mentoring'), side: 'l', z: .85, r: 8, d: 13, x: [470, 24] },
+  { c: pick('story', 'Product designer'), side: 'r', z: .8, r: -7, d: 11, x: [440, 80] },
+];
+const v = (name: string, at?: At) => (at ? `--o-${name}: ${at[0]}px; --y-${name}: ${at[1]}%;` : '');
+---
+<div class="halo" data-halo aria-hidden="true">
+  {CHIPS.map(({ c, level, side, z, r, d, w, x, m, p, tall }) => {
+    const lv = level ?? c.level ?? 'prefer';
+    const wide = w ?? x;
+    return <span class="halo-chip" data-side={side} data-level={lv} data-xl={x ? '' : undefined} data-m={m ? '' : undefined} data-p={p ? '' : undefined} data-tall={tall ? '' : undefined}
+      style={`${v('w', wide)} ${v('m', m)} ${v('p', p)} --z: ${z}; --r: ${r}deg; --d: ${d}s`}><i><b>{c.label}</b><small>{LEVEL[lv]}</small></i></span>;
+  })}
+</div>
+
+<script>
+  /* The scroll turns and lifts the chips (written on the halo alone, only while the hero is near
+     the view), and the hand moves the near ones more than the far ones. */
+  const halo = document.querySelector<HTMLElement>('[data-halo]');
+  const still = matchMedia('(prefers-reduced-motion: reduce)'), fine = matchMedia('(pointer: fine)');
+  if (halo) {
+    let raf = 0, tx = 0, ty = 0, mx = 0, my = 0, last = -1;
+    const tick = () => {
+      raf = 0;
+      if (still.matches) return;
+      const h = halo.offsetHeight || innerHeight, p = Math.min(1, Math.max(0, scrollY / h));
+      if (p !== last) { last = p; halo.style.setProperty('--hp', p.toFixed(4)); }
+      mx += (tx - mx) * .1; my += (ty - my) * .1;
+      halo.style.setProperty('--mx', mx.toFixed(3)); halo.style.setProperty('--my', my.toFixed(3));
+      if (Math.abs(tx - mx) + Math.abs(ty - my) > .002) raf = requestAnimationFrame(tick);
+    };
+    const queue = () => { if (!raf && scrollY < innerHeight * 1.5) raf = requestAnimationFrame(tick); };
+    addEventListener('scroll', queue, { passive: true });
+    addEventListener('pointermove', event => {
+      if (event.pointerType !== 'mouse' || !fine.matches || still.matches || scrollY > innerHeight) return;
+      tx = event.clientX / innerWidth * 2 - 1; ty = event.clientY / innerHeight * 2 - 1; queue();
+    }, { passive: true });
+    queue();
+  }
+</script>
+
+<style>
+  .halo { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: clip; --hp: 0; --mx: 0; --my: 0; }
+  .halo-chip { position: absolute; top: var(--y-w); --o: var(--o-w);
+    --near: calc(1 - var(--z));
+    transform: translateY(-50%)
+      translate(calc(var(--mx) * (4px + 22px * var(--near))), calc(var(--my) * (3px + 14px * var(--near)) - var(--hp) * (40px + 160px * var(--near))))
+      rotate(calc(var(--r) + var(--hp) * var(--r) * 3))
+      scale(calc(1.06 - .32 * var(--z)));
+    opacity: calc((1 - .4 * var(--z)) * (1 - var(--hp) * .9)); }
+  .halo-chip[data-side='l'] { right: calc(50% + var(--o)); transform-origin: right center; }
+  .halo-chip[data-side='r'] { left: calc(50% + var(--o)); transform-origin: left center; }
+  /* Each chip floats on its own slow breath: a tilt in depth and a lift, never a spin. */
+  .halo-chip i { display: inline-flex; align-items: center; gap: 10px; padding: 10px 17px; border-radius: var(--pill); font-style: normal; white-space: nowrap;
+    background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
+    box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 0 0 1px rgb(18 58 44 / .16), 0 12px 26px -14px rgb(18 58 44 / .38), 0 2px 4px -2px rgb(18 58 44 / .2);
+    font-size: 1rem; font-weight: 620; letter-spacing: -.005em; color: var(--ink); }
+  .halo-chip small { padding-left: 10px; border-left: 1px solid var(--line-strong); font-size: .8125rem; font-weight: 600; color: var(--ink-2); }
+  .halo-chip[data-level='must'] i { background: var(--green); color: var(--on-green); box-shadow: 0 0 0 1px var(--green), 0 12px 26px -14px rgb(18 58 44 / .5); }
+  .halo-chip[data-level='must'] small { color: var(--on-green-2); border-left-color: var(--green-rule); }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .halo-chip i { animation: halo-float var(--d) ease-in-out infinite alternate; }
+  }
+  @keyframes halo-float { from { transform: perspective(600px) rotateX(9deg) rotateY(-11deg) translateY(-5px); } to { transform: perspective(600px) rotateX(-7deg) rotateY(12deg) translateY(6px); } }
+  /* Narrower screens: fewer chips, placed above the headline and below the action. */
+  @media (max-width: 90rem) { .halo-chip[data-xl] { display: none; } }
+  @media (max-width: 75rem) {
+    .halo-chip { top: var(--y-m); --o: var(--o-m); }
+    .halo-chip:not([data-m]) { display: none; }
+  }
+  @media (max-width: 40rem) {
+    .halo-chip { top: var(--y-p); --o: var(--o-p); }
+    .halo-chip:not([data-p]) { display: none; }
+    .halo-chip i { padding: 7px 13px; gap: 8px; font-size: .875rem; }
+    .halo-chip small { padding-left: 8px; font-size: .75rem; }
+  }
+  /* Short screens have no room below the action. */
+  @media (max-width: 75rem) and (max-height: 47.5rem) { .halo-chip[data-tall] { display: none; } }
+</style>

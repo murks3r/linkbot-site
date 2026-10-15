@@ -1,0 +1,284 @@
+---
+/* The story's main scene (Concept A7): from noise to the right openings, step by step, exactly as
+   Linkbot works.
+
+   One pinned scene, seven beats, every motion a step of the product:
+   1. openings everywhere: tactile cards, turning in depth as the page scrolls (noise);
+   2. your words: typed into a field like the one at the top of the page;
+   3. read as criteria: the sentence becomes four criteria with their levels; the openings stop
+      turning, face you and settle into a list under them (the ones for other work fall away);
+   4. Prefer: openings that state hybrid rise, each showing where it says so; those that state
+      on-site sink;
+   5. Avoid: the opening that mentions agency clients drops to the bottom, still there;
+   6. Must (only you set it): hybrid becomes a Must; the two that state on-site are hidden and
+      counted; the one that doesn't say stays, marked as not stated;
+   7. why: the first opening opens to show what it states and where, and what it doesn't say.
+
+   Everything is a function of scroll position (src/scripts/stages.ts writes --b1 … --b7 on the
+   stage), and every real text is settled by the middle of its beat. Without scripts, under
+   reduced motion or where the finished state cannot fit the screen, the scene is that finished
+   state: the words, how they were read, the ordered list with its marks, the hidden note, the
+   reasons. The words and their reading are the interpreter's own (recorded); the openings are
+   illustrations and say so; the levels and their effects are the product's own. */
+import Mark from './Mark.astro';
+import Icon from './Icon.astro';
+import { reading, LEVEL } from '../data/content';
+
+const words = reading('story');
+const must = words.criteria.findIndex(c => c.label === 'Hybrid');
+const avoid = words.criteria.findIndex(c => c.level === 'avoid');
+/* The openings (illustrative). slots: their place in the list after the words are read (3), after
+   Prefer (4), after Avoid (5), after Must (6; -1 = hidden). */
+type Card = { id: string; title: string; place: string; slots: [number, number, number, number]; tag: { beat: 4 | 5 | 6; tone: 'fit' | 'tradeoff' | 'unknown'; text: string } };
+const CARDS: Card[] = [
+  { id: 'a', title: 'Senior product designer, health app', place: 'Lisbon', slots: [2, 0, 0, 0], tag: { beat: 4, tone: 'fit', text: 'Hybrid: “three days a week in the studio”' } },
+  { id: 'b', title: 'Product designer, research team', place: 'Berlin', slots: [5, 1, 1, 1], tag: { beat: 4, tone: 'fit', text: 'Hybrid: “two days in Berlin”' } },
+  { id: 'c', title: 'Product designer, public transport', place: 'Vienna', slots: [6, 2, 2, 2], tag: { beat: 4, tone: 'fit', text: 'Hybrid: “hybrid, Vienna”' } },
+  { id: 'd', title: 'Product designer, climate data', place: 'Remote (EU)', slots: [3, 4, 3, 3], tag: { beat: 6, tone: 'unknown', text: 'Hybrid not stated: kept, marked' } },
+  { id: 'e', title: 'Product designer, agency', place: 'Hamburg', slots: [0, 3, 6, 4], tag: { beat: 5, tone: 'tradeoff', text: 'States “agency clients”: moved down' } },
+  { id: 'f', title: 'Product designer, fintech', place: 'Frankfurt', slots: [1, 5, 4, -1], tag: { beat: 4, tone: 'tradeoff', text: 'States “five days in the office”' } },
+  { id: 'g', title: 'UX designer, online shop', place: 'Munich', slots: [4, 6, 5, -1], tag: { beat: 4, tone: 'tradeoff', text: 'States “on-site, Munich”' } },
+];
+const final = CARDS.filter(c => c.slots[3] >= 0).sort((x, y) => x.slots[3] - y.slots[3]);
+const hidden = CARDS.filter(c => c.slots[3] < 0);
+/* The noise: other openings, decorative, at depths (x, y in the figure, z 0 near … 1 far, turn). */
+const NOISE: [string, string, number, number, number, number][] = [
+  ['Data engineer', 'Remote', 6, 8, .3, -14], ['Account executive', 'Berlin', 78, 6, .7, 11], ['Backend engineer', 'Paris', 62, 78, .2, -8],
+  ['Brand designer', 'Hybrid', 2, 50, .8, 16], ['Customer success lead', 'Madrid', 84, 44, .5, -12], ['UX writer', 'London', 34, 2, .9, 9],
+  ['Growth marketer', 'Remote (EU)', 20, 90, .6, 13], ['Site reliability engineer', 'Zurich', 68, 28, .85, -17], ['Data analyst', 'Amsterdam', 44, 96, .75, 7],
+  ['Sales manager', 'Vienna', 90, 84, .65, -9], ['Recruiter', 'Munich', 52, 52, .95, 12], ['Frontend developer', 'Remote', 26, 60, .7, -11],
+  ['Office manager', 'Lisbon', 10, 30, .9, 8], ['Copywriter', 'Hamburg', 92, 20, .8, 15],
+];
+/* Where the seven wait in the noise before they settle (x, y, z, turn). */
+const SCATTER: Record<string, [number, number, number, number]> = {
+  a: [16, 32, .4, 12], b: [74, 58, .3, -10], c: [40, 66, .55, 8], d: [88, 18, .65, -15], e: [28, 18, .2, -9], f: [58, 12, .5, 14], g: [12, 76, .45, -12],
+};
+const CAPTIONS: [string, string][] = [
+  ['New openings every day. Most aren’t for you.', 'Listings from many places, each written its own way. Finding the few that fit is the hard part.'],
+  ['Say what would make a move worth it.', 'In your own words: the work, how you want to work, what you’d rather not do. No filters to learn, no profile to fill in.'],
+  ['Linkbot reads it as criteria.', 'Each phrase becomes something it looks for, with how much it matters: Prefer, Avoid or Must. You can change any of them.'],
+  ['Prefer brings up what states it.', 'Openings that state hybrid rise, each showing where it says so. Openings that state on-site sink. Nothing disappears.'],
+  ['Avoid sends down what states it.', 'The opening that mentions agency clients drops to the bottom. It is still there if you want to look.'],
+  ['A Must is a hard line, and only you draw it.', 'Make hybrid a Must: openings that state on-site are hidden and counted; the one that doesn’t say stays, marked as not stated.'],
+  ['Every fit shows its reasons.', 'What each opening states and where, and what it doesn’t say: shown as not stated, never counted as a fit.'],
+];
+const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; where: string }[] = [
+  { ask: words.criteria[0].label, level: LEVEL[words.criteria[0].level ?? 'prefer'], tone: 'fit', says: 'Mentioned', where: 'in the title' },
+  { ask: 'Hybrid', level: 'Must', tone: 'fit', says: 'Hybrid', where: '“three days a week in the studio”' },
+  { ask: words.criteria[2].label, level: LEVEL[words.criteria[2].level ?? 'prefer'], tone: 'fit', says: 'Mentioned', where: '“you’ll run your own research”' },
+  { ask: words.criteria[3].label, level: LEVEL[words.criteria[3].level ?? 'avoid'], tone: 'unknown', says: 'Not stated', where: 'Linkbot doesn’t guess' },
+];
+---
+<section class="scene signal" data-scene data-beats="0:.11,.14:.25,.28:.39,.42:.53,.56:.67,.7:.82,.85:1" style="--beats: 7; --beat: 92svh" aria-labelledby="signal-caption-1">
+  <div class="scene-stage" data-scene-stage>
+    <div class="scene-inner signal-inner">
+      <ol class="captions">
+        {CAPTIONS.map(([title, body], i) => <li class="caption" data-caption id={`signal-caption-${i + 1}`}><h2>{title}</h2><small>{body}</small></li>)}
+      </ol>
+      <figure class="signal-figure" aria-labelledby="signal-legend">
+        <ul class="sg-noise" aria-hidden="true">
+          {NOISE.map(([title, place, x, y, z, r], i) => <li class="sg-ghost" data-away style={`--x: ${x}; --y: ${y}; --z: ${z}; --r: ${r}deg; --d: ${11 + (i * 5) % 8}s; --dl: -${(i * 3) % 9}s`}><i><b>{title}</b><small>{place}</small></i></li>)}
+          {CARDS.map((c, i) => <li class="sg-ghost" data-card style={`--x: ${SCATTER[c.id][0]}; --y: ${SCATTER[c.id][1]}; --z: ${SCATTER[c.id][2]}; --r: ${SCATTER[c.id][3]}deg; --slot: ${c.slots[0]}; --d: ${12 + (i * 3) % 7}s; --dl: -${(i * 2) % 7}s`}><i><b>{c.title}</b><small>{c.place}</small></i></li>)}
+        </ul>
+        <div class="sg-lens" data-lens>
+          <span class="sg-icon" aria-hidden="true"><Icon name="search" size={18} /></span>
+          <div class="sg-stack">
+            <p class="sg-sentence"><span class="sr">The words: </span><span class="sg-typed">{words.text}</span></p>
+            <ul class="sg-chips" aria-label="How Linkbot read these words">
+              {words.criteria.map((c, i) => <li class="chip" data-k={i} data-level={c.level} data-must={i === must ? '' : undefined} data-avoid={i === avoid ? '' : undefined} style={`--k: ${i}`}><span class="chip-label">{c.label}</span><small><span class="chip-soft">{LEVEL[c.level ?? 'prefer']}</span>{i === must && <span class="chip-hard">Must</span>}</small></li>)}
+            </ul>
+          </div>
+        </div>
+        <ol class="sg-list" aria-label="The openings, in the order your words put them">
+          {[...final, ...hidden].map(c => <li class="sg-card" data-card={c.id} data-hidden={c.slots[3] < 0 ? '' : undefined} data-tagbeat={c.tag.beat} style={`--s3: ${c.slots[0]}; --s4: ${c.slots[1]}; --s5: ${c.slots[2]}; --s6: ${c.slots[3] < 0 ? c.slots[2] : c.slots[3]}`}>
+            <span class="sg-title"><b>{c.title}</b><small>{c.place}</small></span>
+            <span class="sg-tag" data-tone={c.tag.tone}><Mark tone={c.tag.tone} size={10} />{c.tag.text}</span>
+            {c.id === 'a' && <dl class="sg-why" aria-label="Why it fits">
+              {WHY.map(w => <div data-tone={w.tone}><dt>{w.ask}<small>{w.level}</small></dt><dd><Mark tone={w.tone} size={10} /><span><b>{w.says}</b> {w.where}</span></dd></div>)}
+              <p class="sg-coverage"><Mark tone="fit" size={10} />Checked today · the source and date are on every listing</p>
+            </dl>}
+          </li>)}
+        </ol>
+        <p class="sg-hidden"><Mark tone="unknown" size={10} />2 hidden by Hybrid (Must): they state on-site</p>
+        <figcaption id="signal-legend" class="sg-legend">Illustration: the openings are examples. The words are read by Linkbot’s own interpreter.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* The lens's height (it wraps on small screens), for where the list begins; and the finished
+     state must fit the stage, or the scene stays complete and static. */
+  const scene = document.querySelector<HTMLElement>('.signal');
+  const size = () => {
+    if (!scene) return;
+    const figure = scene.querySelector<HTMLElement>('.signal-figure')!, lens = scene.querySelector<HTMLElement>('[data-lens]')!, why = scene.querySelector<HTMLElement>('.sg-why')!;
+    figure.style.setProperty('--lens-h', `${lens.offsetHeight}px`);
+    // How far the first opening opens: its reasons' own height (they wrap differently by width).
+    figure.style.setProperty('--xh', `${why.scrollHeight}px`);
+  };
+  addEventListener('scenes:mode', size);
+  document.fonts?.ready.then(size);
+  scene?.addEventListener('scene:fits', event => {
+    size();
+    const figure = scene.querySelector<HTMLElement>('.signal-figure')!, css = getComputedStyle(figure), px = (n: string) => parseFloat(css.getPropertyValue(n)) || 0;
+    const legend = scene.querySelector<HTMLElement>('.sg-legend')!, note = scene.querySelector<HTMLElement>('.sg-hidden')!, why = scene.querySelector<HTMLElement>('.sg-why')!;
+    // Every moment must fit: all seven rows (beats 3-5); five and the note (6); the first opened to
+    // its reasons with the rest below it (7). Where that last one cannot fit, the rest fold away
+    // beneath the opened one instead; where even that cannot, the scene stays static.
+    const rowh = scene.querySelector<HTMLElement>('.sg-card:not([data-card="a"])')!.offsetHeight, row = rowh + px('--row-gap');
+    const top = px('--lens-h') + px('--gap-top'), foot = legend.offsetHeight + 12, open = why.scrollHeight + 12, room = figure.clientHeight;
+    const list = Math.max(top + 7 * row, top + 5 * row + note.offsetHeight + 10) + foot;
+    const unfolded = top + 5 * row + open + note.offsetHeight + 10 + foot, folded = top + rowh + open + foot;
+    figure.toggleAttribute('data-fold', unfolded > room);
+    if (list > room || folded > room) (event as CustomEvent<{ ok: boolean }>).detail.ok = false;
+  });
+</script>
+
+<style>
+  /* ── Static: the finished state (no scripts, reduced motion, a stage that cannot fit). ── */
+  .signal-inner { display: grid; gap: 28px; padding: 24px var(--gutter) 40px; }
+  .signal .captions { max-width: 46rem; margin-inline: auto; text-align: center; }
+  .signal .captions h2 { font-size: inherit; font-weight: inherit; letter-spacing: inherit; line-height: inherit; }
+  .signal .captions small { max-width: 36em; margin-inline: auto; }
+  .signal-figure { display: grid; gap: 16px; justify-items: center; width: min(100%, 40rem); margin-inline: auto; }
+  .sg-noise { display: none; }
+  .sg-lens { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px 10px 18px; border-radius: 28px; background: var(--surface);
+    box-shadow: 0 0 0 1.5px var(--ink), 0 18px 40px -22px rgb(18 58 44 / .4); }
+  .sg-icon { flex: none; display: grid; color: var(--ink-2); }
+  .sg-stack { display: grid; flex: 1; min-width: 0; gap: 8px; }
+  .sg-sentence { align-self: center; font-size: 1.0625rem; font-weight: 520; color: var(--ink); }
+  .sg-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sg-chips .chip { min-height: 32px; padding: 3px 12px; font-size: .875rem; transition: none; }
+  .chip small { display: inline-grid; }
+  .chip small > span { grid-area: 1 / 1; }
+  .chip-hard { opacity: 0; }
+  .sg-list { display: grid; gap: 8px; width: 100%; }
+  .sg-card { display: grid; gap: 4px; padding: 11px 16px; border-radius: 14px;
+    background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 1px rgb(18 58 44 / .14), 0 12px 26px -18px rgb(18 58 44 / .4); }
+  .sg-card[data-hidden] { display: none; }
+  .sg-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 12px; }
+  .sg-title b { font-size: .9375rem; font-weight: 650; }
+  .sg-title small { font-size: var(--size-micro); font-weight: 560; color: var(--ink-2); }
+  .sg-tag { display: inline-flex; align-items: center; gap: 7px; font-size: var(--size-micro); color: var(--ink-2); }
+  .sg-tag[data-tone='fit'] { color: var(--ink); font-weight: 560; }
+  .sg-why { display: grid; margin: 8px 0 2px; border-top: 1.5px solid var(--ink); }
+  .sg-why > div { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: 2px 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: var(--size-micro); }
+  .sg-why dt { font-weight: 650; display: flex; flex-wrap: wrap; gap: 0 8px; align-items: baseline; }
+  .sg-why dt small { font-weight: 560; color: var(--ink-2); }
+  .sg-why dd { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 8px; align-items: baseline; margin: 0; color: var(--ink-2); }
+  .sg-why dd b { color: var(--ink); font-weight: 650; }
+  .sg-why > div[data-tone='unknown'] dd b { color: var(--ink-2); font-weight: 560; }
+  .sg-coverage { display: flex; gap: 8px; align-items: baseline; padding-top: 6px; font-size: var(--size-micro); color: var(--ink-2); }
+  .sg-hidden { display: flex; gap: 8px; align-items: baseline; justify-self: start; padding: 7px 12px; border: 1px dashed var(--line-ink); border-radius: var(--r-2); background: var(--surface); font-size: var(--size-micro); color: var(--ink-2); }
+  .sg-hidden :global(.mark), .sg-tag :global(.mark), .sg-coverage :global(.mark) { flex: none; transform: translateY(1px); }
+  .sg-legend { font-size: var(--size-micro); color: var(--ink-2); text-align: center; }
+  /* Statically, the Must is set. */
+  :global(html:not(.js)) .chip[data-must], .signal:not(.is-live) .chip[data-must] { background: var(--green); border-color: var(--green); color: var(--on-green); }
+  :global(html:not(.js)) .chip[data-must] small, .signal:not(.is-live) .chip[data-must] small { color: var(--on-green-2); border-left-color: var(--green-rule); }
+  :global(html:not(.js)) .chip[data-must] .chip-soft, .signal:not(.is-live) .chip[data-must] .chip-soft { opacity: 0; }
+  :global(html:not(.js)) .chip[data-must] .chip-hard, .signal:not(.is-live) .chip[data-must] .chip-hard { opacity: 1; }
+
+  /* ── Live: one stage, a size container; every state derived from the beats. ── */
+  :global(.js) .signal.is-live .signal-inner { gap: 0; padding: 16px var(--gutter) 0; height: 100%; grid-template-rows: auto minmax(0, 1fr); }
+  :global(.js) .signal.is-live .signal-figure { position: relative; display: block; width: 100%; height: 100%; container-type: size;
+    --L: min(44rem, 100cqw); --rowh: clamp(46px, 5.8vh, 56px); --row-gap: 6px; --gap-top: 18px; --list-top: calc(var(--lens-h, 56px) + var(--gap-top));
+    --e7: clamp(0, var(--b7) * 2.4, 1); --open: calc(var(--e7) * var(--xh, 180px)); --shift: calc(var(--e7) * (var(--xh, 180px) + 12px)); }
+
+  /* 1. The noise: openings at depths, turning as the page scrolls (and breathing on their own);
+     2. they step back from the words; 3. those for other work fall away, the rest face you and
+     settle into the list (decorative copies: the real list appears as they land). */
+  :global(.js) .signal.is-live .sg-noise { display: block; position: absolute; inset: 0; perspective: 1000px;
+    -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 88%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 88%, transparent); }
+  :global(.js) .signal.is-live .sg-ghost { position: absolute; left: 0; top: 0; --near: calc(1 - var(--z));
+    --spread: calc(var(--b2) * (1 - var(--b3)));
+    --sx: calc(var(--x) * 1cqw * .8 + (var(--x) - 50) * 1cqw * .14 * var(--spread));
+    --sy: calc(4cqh + var(--y) * 1cqh * .8 + (var(--y) - 46) * 1cqh * .12 * var(--spread));
+    --drift: calc((var(--b1) + var(--b2)) * (-14px - 46px * var(--near)));
+    transform: translate(var(--sx), calc(var(--sy) + var(--drift))) rotate(calc(var(--r) * (1 + var(--b1) * 1.6))) rotateY(calc(var(--r) * 2.2 * (1 - var(--b2) * .5))) scale(calc(1 - .32 * var(--z)));
+    opacity: calc((.92 - .4 * var(--z)) * (1 - .45 * var(--b2)) * (1 - clamp(0, var(--b3) * 2.6, 1))); }
+  :global(.js) .signal.is-live .sg-ghost[data-card] { --tx: calc((100cqw - var(--L)) / 2); --ty: calc(var(--list-top) + var(--slot) * (var(--rowh) + var(--row-gap)));
+    --t: clamp(0, (var(--b3) - .1) * 3, 1); --m: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
+    transform: translate(calc(var(--sx) + (var(--tx) - var(--sx)) * var(--m)), calc(var(--sy) + var(--drift) + (var(--ty) - var(--sy) - var(--drift)) * var(--m)))
+      rotate(calc(var(--r) * (1 + var(--b1) * 1.6) * (1 - var(--m)))) rotateY(calc(var(--r) * 2.2 * (1 - var(--b2) * .5) * (1 - var(--m)))) scale(calc(1 - .32 * var(--z) * (1 - var(--m))));
+    opacity: calc((.92 - .4 * var(--z)) * (1 - .45 * var(--b2) * (1 - var(--m))) * (1 - clamp(0, (var(--b3) - .4) * 9, 1))); }
+  :global(.js) .signal.is-live .sg-ghost[data-away] { transform: translate(var(--sx), calc(var(--sy) + var(--drift) + var(--b3) * 18cqh)) rotate(calc(var(--r) * (1 + var(--b1) * 1.6 + var(--b3)))) rotateY(calc(var(--r) * 2.2)) scale(calc(1 - .32 * var(--z))); }
+  :global(.js) .signal.is-live .sg-ghost i { display: inline-flex; align-items: baseline; gap: 10px; padding: 10px 15px; border-radius: 14px; font-style: normal; white-space: nowrap;
+    background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 1px rgb(18 58 44 / .12), 0 14px 28px -16px rgb(18 58 44 / .38);
+    font-size: .9375rem; font-weight: 620; color: var(--ink); animation: sg-breathe var(--d) ease-in-out var(--dl) infinite alternate; animation-play-state: paused; }
+  :global(.js) .signal.is-live .sg-ghost small { font-size: .8125rem; font-weight: 560; color: var(--ink-2); }
+  :global(.js) .signal.is-live:is([data-beat='1'], [data-beat='2'], [data-beat='3']) .sg-ghost i { animation-play-state: running; }
+  @keyframes sg-breathe { from { transform: perspective(700px) rotateX(8deg) translateY(-4px); } to { transform: perspective(700px) rotateX(-6deg) translateY(5px); } }
+
+  /* 2. The words: a field like the one at the top of the page, typed by the scroll; 3. read as
+     criteria in place, then lifted to the top, where they stay as the search. */
+  :global(.js) .signal.is-live .sg-lens { position: absolute; left: 0; right: 0; top: 0; width: min(46rem, 100cqw); margin-inline: auto;
+    --lift: calc(38cqh * (1 - clamp(0, (var(--b3) - .12) * 3.2, 1)));
+    transform: translateY(var(--lift)) scale(calc(.96 + .04 * var(--b2)));
+    opacity: clamp(0, var(--b2) * 4, 1); z-index: 2; }
+  :global(.js) .signal.is-live .sg-stack { gap: 0; }
+  :global(.js) .signal.is-live .sg-stack > * { grid-area: 1 / 1; }
+  :global(.js) .signal.is-live .sg-sentence { font-size: clamp(1rem, .9rem + .5vw, 1.1875rem);
+    clip-path: inset(0 calc((1 - clamp(0, var(--b2) * 2.4 - .15, 1)) * 100%) 0 0); opacity: calc(1 - clamp(0, var(--b3) * 7, 1)); }
+  /* Read one phrase at a time: each criterion arrives in turn, its level a moment after it. */
+  :global(.js) .signal.is-live .sg-chips .chip { --in: clamp(0, (var(--b3) - .05 - var(--k) * .035) * 9, 1);
+    opacity: var(--in); transform: translateY(calc((1 - var(--in)) * 8px)) scale(calc(.94 + .06 * var(--in))); }
+  :global(.js) .signal.is-live .sg-chips .chip small { opacity: clamp(0, (var(--b3) - .1 - var(--k) * .035) * 9, 1); }
+  /* The chip a beat is about: a ring (Prefer, Avoid); then the Must, flipped quickly (a filled
+     chip's crossfade passes through unreadable mid-tones). */
+  :global(.js) .signal.is-live .chip[data-must] { box-shadow: 0 0 0 calc(var(--b4) * (1 - var(--b5)) * 2px) var(--ink); }
+  :global(.js) .signal.is-live .chip[data-avoid] { box-shadow: 0 0 0 calc(var(--b5) * (1 - var(--b6)) * 2px) var(--ink); }
+  :global(.js) .signal.is-live .chip[data-must] { --h: clamp(0, (var(--b6) - .08) * 10, 1); background: color-mix(in srgb, var(--surface) calc(100% - 100% * var(--h)), var(--green)); border-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--h)), var(--green)); color: color-mix(in srgb, var(--ink) calc(100% - 100% * var(--h)), var(--on-green)); }
+  :global(.js) .signal.is-live .chip[data-must] small { color: color-mix(in srgb, var(--ink-2) calc(100% - 100% * var(--h)), var(--on-green-2)); border-left-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--h)), var(--green-rule)); }
+  :global(.js) .signal.is-live .chip[data-must] .chip-soft { opacity: calc(1 - var(--h)); }
+  :global(.js) .signal.is-live .chip[data-must] .chip-hard { opacity: var(--h); }
+
+  /* 3–7. The list: each opening's place moves with the beats (settled within the first half of each
+     beat), the hidden ones leave, the first opens to its reasons. */
+  :global(.js) .signal.is-live .sg-list { display: block; position: absolute; inset: 0; pointer-events: none; }
+  :global(.js) .signal.is-live .sg-card { position: absolute; left: calc((100cqw - var(--L)) / 2); top: 0; width: var(--L); min-height: var(--rowh); padding: 0 16px; display: flex; flex-wrap: wrap; align-items: center; align-content: center; justify-content: space-between; gap: 2px 14px;
+    --e4: clamp(0, var(--b4) * 2.4, 1); --e5: clamp(0, var(--b5) * 2.4, 1); --e6: clamp(0, var(--b6) * 2.4, 1);
+    --slot: calc(var(--s3) + (var(--s4) - var(--s3)) * var(--e4) + (var(--s5) - var(--s4)) * var(--e5) + (var(--s6) - var(--s5)) * var(--e6));
+    transform: translateY(calc(var(--list-top) + var(--slot) * (var(--rowh) + var(--row-gap)) + var(--below, 0) * var(--shift)));
+    opacity: calc(clamp(0, (var(--b3) - .36) * 8, 1) * (1 - var(--fold, 0))); }
+  :global(.js) .signal.is-live .sg-card:not([data-card='a']) { --below: 1; }
+  /* Where the opened reasons and the rest cannot both fit, the rest fold away beneath them. */
+  :global(.js) .signal.is-live [data-fold] .sg-card:not([data-card='a']), :global(.js) .signal.is-live [data-fold] .sg-hidden { --fold: var(--e7); }
+  :global(.js) .signal.is-live .sg-card[data-hidden] { display: flex; opacity: calc(clamp(0, (var(--b3) - .36) * 8, 1) * (1 - clamp(0, var(--b6) * 3.2, 1)));
+    transform: translateY(calc(var(--list-top) + var(--slot) * (var(--rowh) + var(--row-gap)))) translateX(calc(clamp(0, var(--b6) * 3.2, 1) * 48px)); }
+  :global(.js) .signal.is-live .sg-title { gap: 0 10px; justify-content: start; }
+  :global(.js) .signal.is-live .sg-title b { font-size: 1rem; }
+  :global(.js) .signal.is-live .sg-title small, :global(.js) .signal.is-live .sg-tag { font-size: .875rem; }
+  :global(.js) .signal.is-live .sg-tag { opacity: 0; }
+  :global(.js) .signal.is-live .sg-card[data-tagbeat='4'] .sg-tag { opacity: clamp(0, var(--b4) * 3, 1); }
+  :global(.js) .signal.is-live .sg-card[data-tagbeat='5'] .sg-tag { opacity: clamp(0, var(--b5) * 3, 1); }
+  :global(.js) .signal.is-live .sg-card[data-tagbeat='6'] .sg-tag { opacity: clamp(0, var(--b6) * 3, 1); }
+  :global(.js) .signal.is-live .sg-card[data-card='d'] { outline: 1px dashed color-mix(in srgb, transparent calc(100% - 100% * clamp(0, var(--b6) * 3, 1)), var(--ink-2)); outline-offset: 3px; }
+  :global(.js) .signal.is-live .sg-why { flex-basis: 100%; overflow: hidden; margin: 0; max-height: var(--open); opacity: clamp(0, (var(--b7) - .1) * 4, 1); }
+  :global(.js) .signal.is-live .sg-card[data-card='a'] { align-content: start; padding-top: 12px; padding-bottom: calc(12px * var(--e7)); }
+  :global(.js) .signal.is-live .sg-card[data-card='a'] .sg-title, :global(.js) .signal.is-live .sg-card[data-card='a'] .sg-tag { min-height: calc(var(--rowh) - 24px); display: inline-flex; align-items: center; }
+  :global(.js) .signal.is-live .sg-hidden { position: absolute; left: calc((100cqw - var(--L)) / 2); top: 0; width: var(--L);
+    transform: translateY(calc(var(--list-top) + 5 * (var(--rowh) + var(--row-gap)) + var(--shift) + 4px));
+    opacity: calc(clamp(0, (var(--b6) - .1) * 4, 1) * (1 - var(--fold, 0))); }
+  :global(.js) .signal.is-live .sg-legend { position: absolute; left: 0; right: 0; bottom: 10px; }
+
+  @media (max-width: 52rem) {
+    :global(.js) .signal.is-live .signal-figure { --rowh: 56px; --row-gap: 6px; --gap-top: 12px; }
+    :global(.js) .signal.is-live .sg-icon { display: none; }
+    /* The first opening's title and mark sit on two lines here, in the same row height. */
+    :global(.js) .signal.is-live .sg-card[data-card='a'] { padding-top: 9px; row-gap: 2px; }
+    :global(.js) .signal.is-live .sg-card[data-card='a'] .sg-title, :global(.js) .signal.is-live .sg-card[data-card='a'] .sg-tag { min-height: 0; }
+    :global(.js) .signal.is-live .sg-lens { padding: 9px 10px 9px 14px; }
+    :global(.js) .signal.is-live .sg-card { padding: 0 12px; }
+    :global(.js) .signal.is-live .sg-title b { font-size: .875rem; }
+    :global(.js) .signal.is-live .sg-tag { font-size: var(--size-micro); }
+    :global(.js) .signal.is-live .sg-title small { display: none; }
+    :global(.js) .signal.is-live .sg-ghost i { font-size: .8125rem; padding: 8px 12px; }
+    :global(.js) .signal.is-live .sg-ghost:nth-child(n + 8):not([data-card]) { display: none; }
+    :global(.js) .signal.is-live .sg-chips .chip { min-height: 28px; padding: 2px 9px; gap: 6px; font-size: .78rem; }
+    :global(.js) .signal.is-live .sg-chips .chip small { padding-left: 6px; font-size: .72rem; }
+    :global(.js) .signal.is-live .sg-why > div { grid-template-columns: 6.5rem minmax(0, 1fr); }
+  }
+</style>

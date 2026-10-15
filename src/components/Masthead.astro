@@ -27,15 +27,6 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
   /* Over the sky the bar is paper with a little of the sky through it. */
   :global(body[data-sky]) .masthead { background: color-mix(in srgb, var(--paper) 78%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
   .masthead[data-scrolled] { border-bottom-color: var(--line); }
-  /* Over the night (the privacy chapter) the bar turns to night too, so it never sits on the deep
-     band as a grey strip. */
-  .masthead { transition: border-color var(--base), background-color var(--base) var(--ease), color var(--base) var(--ease); }
-  .masthead[data-over='night'], :global(body[data-sky]) .masthead[data-over='night'] { background: color-mix(in srgb, var(--green) 84%, transparent); border-bottom-color: rgb(251 248 241 / .12); }
-  .masthead[data-over='night'] .brand, .masthead[data-over='night'] .nav a:hover, .masthead[data-over='night'] .nav a[aria-current='page'] { color: var(--on-green); }
-  .masthead[data-over='night'] .nav a { color: var(--on-green-2); }
-  .masthead[data-over='night'] .menu summary { color: var(--on-green); border-color: var(--green-rule); }
-  .masthead[data-over='night'][data-quiet]:not([data-hero-gone]) .masthead-cta { color: var(--on-green-2); }
-  .brand, .nav a, .menu summary { transition: color var(--base) var(--ease), border-color var(--fast); }
   /* Home: nothing in the header competes with the hero's search. The action keeps its box (nothing
      moves) and is quiet text until the hero's search has scrolled away. */
   .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta { background: transparent; color: var(--ink-2); }
@@ -83,23 +74,6 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
     if (masthead.hasAttribute('data-quiet') && hero && 'IntersectionObserver' in window)
       new IntersectionObserver(([entry]) => masthead.toggleAttribute('data-hero-gone', !entry.isIntersecting)).observe(hero);
     else masthead.setAttribute('data-hero-gone', '');
-    // Whether a deep band lies under the bar: observed against a root as tall as the bar.
-    const bands = document.querySelectorAll('[data-air-cover]');
-    let watch: IntersectionObserver | undefined;
-    const observe = () => {
-      watch?.disconnect();
-      if (!bands.length || !('IntersectionObserver' in window)) return;
-      const bar = masthead.getBoundingClientRect().height;
-      watch = new IntersectionObserver(entries => {
-        for (const entry of entries) entry.target.toggleAttribute('data-under-bar', entry.isIntersecting);
-        if ([...bands].some(b => b.hasAttribute('data-under-bar'))) masthead.dataset.over = 'night';
-        else delete masthead.dataset.over;
-      }, { rootMargin: `0px 0px -${Math.max(0, innerHeight - bar)}px 0px` });
-      bands.forEach(b => watch!.observe(b));
-    };
-    observe();
-    let resized = 0;
-    addEventListener('resize', () => { clearTimeout(resized); resized = window.setTimeout(observe, 150); });
   }
   if (menu) {
     document.addEventListener('pointerdown', event => { if (menu.open && !menu.contains(event.target as Node)) menu.open = false; });

@@ -1,0 +1,187 @@
+---
+/* The privacy chapter (Concept A7), in the same bright world: what you see, and what an employer
+   sees, side by side.
+
+   Left, your side: your words as the search, the openings that fit, what you saved, and your
+   fingerprint inked in the corner (you: your identity). Right, an employer's side: frosted glass
+   with nothing on it. Three beats, each motion a fact of the product:
+   1. what you see is yours: your search, your fits, what you saved; the other side is empty;
+   2. a fit tells no one: a new fit arrives on your side (the rows make room for it); on theirs
+      only a line arrives: no message when something fits (finding is not sharing, and it is not
+      applying);
+   3. you decide what is shared, and with whom: three chosen details slide out from under your
+      card, across, into theirs, for one named recipient; your fingerprint stays on your side and
+      theirs shows an empty slot where it would be (no name, no contact details); a receipt
+      appears on your side.
+   The states and their status are the product's own: searching without an account, saving and
+   watching with one are live; sharing is built and tested in staging, not yet live with
+   employers; private matching is in development. Nothing here claims encryption, anonymity, or
+   that Linkbot itself cannot see what it stores. The fingerprint is a picture of "you", not a
+   feature: Linkbot takes no fingerprints. */
+import Mark from './Mark.astro';
+import { reading, LEVEL } from '../data/content';
+const words = reading('story');
+const FITS = ['Senior product designer, health app', 'Product designer, research team', 'Product designer, public transport'];
+const SHARED: [string, string][] = [['Work mode', 'Hybrid'], ['Location', 'Lisbon'], ['Skills', 'Research, prototyping']];
+const CAPTIONS: [string, string][] = [
+  ['What you see is yours.', 'Search without an account and nothing is kept. With one, your saved openings and watched searches are there for you, not for employers.'],
+  ['A fit tells no one.', 'Linkbot can find that an opening fits you without telling the employer. Fitting is not sharing, and it is not applying.'],
+  ['You decide what is shared, and with whom.', 'Choose details for one named recipient, once or by a rule you set. Your name and contact details stay with you, and every share leaves a receipt.'],
+];
+---
+<section class="scene yours" data-scene data-air-calm data-beats="0:.28,.34:.62,.68:1" style="--beats: 3; --beat: 95svh" aria-labelledby="yours-caption-1">
+  <div class="scene-stage" data-scene-stage>
+    <div class="scene-inner yours-inner">
+      <ol class="captions">
+        {CAPTIONS.map(([title, body], i) => <li class="caption" data-caption id={`yours-caption-${i + 1}`}><h2>{title}</h2><small>{body}</small></li>)}
+      </ol>
+      <figure class="yours-figure" aria-labelledby="yours-legend">
+        <div class="yr-card yr-you" role="group" aria-label="What you see">
+          <img class="yr-print" src="/material/print.webp" alt="" width="357" height="480" loading="lazy" decoding="async" />
+          <p class="yr-label">What you see</p>
+          <ul class="yr-chips" aria-label="Your search">
+            {words.criteria.map(c => <li class="chip" data-must={c.label === 'Hybrid' ? '' : undefined}><span>{c.label}</span><small>{c.label === 'Hybrid' ? 'Must' : LEVEL[c.level ?? 'prefer']}</small></li>)}
+          </ul>
+          <ol class="yr-fits" aria-label="Openings that fit">
+            {FITS.map((t, i) => <li data-new={i === 0 ? '' : undefined}><Mark tone="fit" size={10} /><span>{t}</span>{i === 0 && <small>New fit</small>}</li>)}
+          </ol>
+          <p class="yr-kept"><Mark tone="fit" size={10} /><span>Saved: {FITS[1]}<span class="yr-watch"> · You watch this search</span></span></p>
+          <p class="yr-receipt"><Mark tone="fit" size={10} />Receipt: work mode, location and skills, to one named recipient, today</p>
+        </div>
+        <div class="yr-card yr-them" role="group" aria-label="What an employer sees">
+          <p class="yr-label">What an employer sees</p>
+          <div class="yr-nothing">
+            <b>Nothing.</b>
+            <p>No profile, no name, no search.</p>
+            <p class="yr-silent">No message when something fits.</p>
+          </div>
+          <div class="yr-shared">
+            <p class="yr-to">When you choose: shared with one named recipient</p>
+            <ul>{SHARED.map(([k, v]) => <li><small>{k}</small><b>{v}</b></li>)}</ul>
+            <p class="yr-none"><span class="yr-slot" aria-hidden="true"><i></i></span>No name, no contact details.</p>
+          </div>
+        </div>
+        <ul class="yr-travel" aria-hidden="true">{SHARED.map(([k, v]) => <li><small>{k}</small><b>{v}</b></li>)}</ul>
+        <figcaption id="yours-legend" class="yr-legend">Searching, saving and watching work today. Sharing is tested in staging, not yet live with employers. Private matching is in development.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* Measured, not assumed: how far the rows move to make room for the new fit, and where the
+     shared details start (under your card) and land (on the employer's rows). Then both cards and
+     the legend must fit the stage, or the scene stays complete and static. */
+  const yours = document.querySelector<HTMLElement>('.yours');
+  const geometry = () => {
+    if (!yours?.classList.contains('is-live')) return;
+    const figure = yours.querySelector<HTMLElement>('.yours-figure')!, fresh = yours.querySelector<HTMLElement>('.yr-fits li[data-new]')!;
+    const you = yours.querySelector<HTMLElement>('.yr-you')!, rows = yours.querySelector<HTMLElement>('.yr-shared ul')!;
+    const f = figure.getBoundingClientRect(), y = you.getBoundingClientRect(), r = rows.getBoundingClientRect();
+    const set = (name: string, px: number) => figure.style.setProperty(name, `${Math.round(px)}px`);
+    set('--fit-step', fresh.offsetHeight + (parseFloat(getComputedStyle(fresh.parentElement!).rowGap) || 0));
+    set('--travel-top', r.top - f.top); set('--travel-from', y.left - f.left + (y.width - r.width) / 2); set('--travel-to', r.left - f.left); set('--travel-w', r.width);
+  };
+  addEventListener('scenes:mode', geometry);
+  document.fonts?.ready.then(geometry);
+  yours?.addEventListener('scene:fits', event => {
+    geometry();
+    const figure = yours.querySelector<HTMLElement>('.yours-figure')!, you = yours.querySelector<HTMLElement>('.yr-you')!, them = yours.querySelector<HTMLElement>('.yr-them')!, legend = yours.querySelector<HTMLElement>('.yr-legend')!;
+    const stacked = getComputedStyle(figure).getPropertyValue('--stacked').trim() === '1';
+    const gap = parseFloat(getComputedStyle(figure).rowGap) || 0;
+    const need = (stacked ? you.offsetHeight + gap + them.offsetHeight : Math.max(you.offsetHeight, them.offsetHeight)) + gap + legend.offsetHeight + 8;
+    if (need > figure.clientHeight) (event as CustomEvent<{ ok: boolean }>).detail.ok = false;
+  });
+</script>
+
+<style>
+  /* ── Static: both sides, the shared details and the receipt shown. ── */
+  .yours-inner { display: grid; gap: 28px; padding: 24px var(--gutter) 40px; }
+  .yours .captions { max-width: 46rem; margin-inline: auto; text-align: center; }
+  .yours .captions h2 { font-size: inherit; font-weight: inherit; letter-spacing: inherit; line-height: inherit; }
+  .yours .captions small { max-width: 36em; margin-inline: auto; }
+  .yours-figure { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px clamp(32px, 6vw, 96px); width: min(100%, 64rem); margin-inline: auto; --stacked: 0; }
+  .yr-card { position: relative; display: grid; align-content: start; gap: 14px; min-height: 22rem; padding: 24px 26px; border-radius: 24px; overflow: hidden; }
+  .yr-you { background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 1px rgb(18 58 44 / .14), 0 28px 56px -32px rgb(18 58 44 / .45); }
+  /* Your fingerprint: you. Inked in the corner of your side, and only there. */
+  .yr-print { position: absolute; right: -12px; top: -22px; width: 138px; height: auto; opacity: .26; transform: rotate(-14deg); pointer-events: none; mix-blend-mode: multiply; }
+  .yr-them { background: color-mix(in srgb, var(--surface) 58%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.15); backdrop-filter: blur(18px) saturate(1.15);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .85), 0 0 0 1px rgb(18 58 44 / .12), 0 28px 56px -32px rgb(18 58 44 / .35); }
+  .yr-label { position: relative; font-size: var(--size-micro); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+  .yr-chips { position: relative; display: flex; flex-wrap: wrap; gap: 6px; padding-right: 72px; }
+  .yr-chips .chip { min-height: 30px; padding: 3px 11px; font-size: .875rem; }
+  .yr-chips .chip[data-must] { background: var(--green); border-color: var(--green); color: var(--on-green); }
+  .yr-chips .chip[data-must] small { color: var(--on-green-2); border-left-color: var(--green-rule); }
+  .yr-fits { position: relative; display: grid; gap: 7px; }
+  .yr-fits li { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-radius: var(--r-2); background: var(--surface); box-shadow: 0 0 0 1px var(--line-strong); font-size: .9375rem; font-weight: 600; }
+  .yr-fits li small { flex: none; margin-left: auto; white-space: nowrap; padding: 1px 9px; border-radius: var(--pill); background: var(--green); color: var(--on-green); font-size: .75rem; font-weight: 650; }
+  .yr-kept, .yr-receipt { position: relative; display: flex; gap: 8px; align-items: baseline; font-size: var(--size-small); color: var(--ink-2); }
+  .yr-kept :global(.mark), .yr-receipt :global(.mark), .yr-fits :global(.mark) { flex: none; }
+  .yr-receipt { color: var(--ink); font-weight: 560; }
+  .yr-nothing { display: grid; align-content: start; gap: 6px; padding-top: 8px; font-size: var(--size-small); color: var(--ink-2); }
+  .yr-nothing b { margin-bottom: 4px; font-family: var(--display); font-stretch: 100%; font-size: clamp(2rem, 1.4rem + 1.6vw, 2.75rem); font-weight: 560; letter-spacing: -.03em; line-height: 1.05; color: var(--ink); }
+  .yr-silent { color: var(--ink); font-weight: 560; }
+  .yr-shared { display: grid; align-content: start; gap: 10px; }
+  .yr-to { font-size: var(--size-small); font-weight: 650; }
+  .yr-shared ul, .yr-travel { display: grid; gap: 7px; }
+  .yr-shared li, .yr-travel li { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); align-items: baseline; gap: 10px; padding: 10px 14px; border-radius: var(--r-2); background: var(--surface); box-shadow: 0 0 0 1px var(--line-strong), 0 8px 18px -12px rgb(18 58 44 / .35); font-size: .9375rem; }
+  .yr-shared li small, .yr-travel li small { font-size: .75rem; font-weight: 650; color: var(--ink-2); }
+  .yr-shared li b, .yr-travel li b { font-weight: 650; }
+  /* Where your fingerprint would be: an empty slot. Your identity is not among the details. */
+  .yr-none { display: flex; align-items: center; gap: 12px; font-size: var(--size-small); font-weight: 560; color: var(--ink); }
+  .yr-slot { position: relative; flex: none; display: grid; width: 30px; height: 38px; border: 1.5px dashed var(--line-ink); border-radius: 50% / 44%; overflow: hidden; }
+  .yr-slot i { background: url('/material/print.webp') center / 88% auto no-repeat; opacity: .12; }
+  .yr-travel { display: none; }
+  .yr-legend { grid-column: 1 / -1; max-width: 44em; margin-inline: auto; font-size: var(--size-micro); color: var(--ink-2); text-align: center; }
+  @media (max-width: 52rem) {
+    .yours-figure { grid-template-columns: minmax(0, 1fr); --stacked: 1; }
+    .yr-card { min-height: 0; padding: 18px 20px; }
+    .yr-print { width: 112px; right: -14px; top: -20px; }
+    .yr-chips { padding-right: 52px; }
+  }
+
+  /* ── Live: the two sides on one stage; the new fit arrives, the details travel across. ── */
+  :global(.js) .yours.is-live .yours-inner { gap: 0; padding: 16px var(--gutter) 0; height: 100%; grid-template-rows: auto minmax(0, 1fr); }
+  :global(.js) .yours.is-live .yours-figure { align-content: start; height: 100%; padding-top: 8px; --n: clamp(0, (var(--b2) - .02) * 3.4, 1); }
+  :global(.js) .yours.is-live .yr-card { min-height: min(24rem, 48vh); }
+  /* 2. A new fit arrives on your side: the rows below make room for it (moved, not reflowed). */
+  :global(.js) .yours.is-live .yr-fits li[data-new] { opacity: var(--n); transform: translateY(calc((1 - var(--n)) * -10px)) scale(calc(.97 + .03 * var(--n)));
+    --f: clamp(0, (var(--b2) - .1) * 3, 1); box-shadow: 0 0 0 calc(1px + var(--f) * 1px) color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--f)), var(--ink)), 0 0 calc(var(--f) * 26px) calc(var(--f) * 2px) color-mix(in srgb, var(--lb-air-sun) calc(100% * var(--f)), transparent); }
+  :global(.js) .yours.is-live :is(.yr-fits li:not([data-new]), .yr-kept, .yr-receipt) { transform: translateY(calc((var(--n) - 1) * var(--fit-step, 44px))); }
+  :global(.js) .yours.is-live .yr-fits li small { opacity: clamp(0, (var(--b2) - .1) * 3, 1); }
+  /* …and on theirs, only this. */
+  :global(.js) .yours.is-live .yr-silent { opacity: clamp(0, (var(--b2) - .12) * 4, 1); }
+  /* 3. "Nothing" leaves before the details arrive; the receipt follows them. */
+  :global(.js) .yours.is-live .yr-them { display: grid; }
+  :global(.js) .yours.is-live .yr-them > .yr-nothing, :global(.js) .yours.is-live .yr-them > .yr-shared { grid-area: 2 / 1; }
+  :global(.js) .yours.is-live .yr-nothing { opacity: calc(1 - clamp(0, var(--b3) * 8, 1)); }
+  :global(.js) .yours.is-live .yr-shared { opacity: clamp(0, (var(--b3) - .14) * 6, 1); }
+  :global(.js) .yours.is-live .yr-shared li { opacity: clamp(0, (var(--b3) - .3) * 8, 1); }
+  :global(.js) .yours.is-live .yr-none { opacity: clamp(0, (var(--b3) - .3) * 6, 1); }
+  :global(.js) .yours.is-live .yr-receipt { opacity: clamp(0, (var(--b3) - .26) * 6, 1); }
+  /* The travelling copies slide out from under your card, across the gap, onto the shared rows of
+     theirs (their geometry measured above). Your fingerprint does not move. */
+  :global(.js) .yours.is-live .yr-travel { display: grid; position: absolute; z-index: 1; top: var(--travel-top, 0); width: var(--travel-w, 40%);
+    --t: clamp(0, (var(--b3) - .02) * 3.2, 1); --m: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
+    left: calc(var(--travel-from, 0px) + (var(--travel-to, 0px) - var(--travel-from, 0px)) * var(--m));
+    opacity: calc(clamp(0, var(--b3) * 12, 1) * (1 - clamp(0, (var(--b3) - .3) * 8, 1))); }
+  :global(.js) .yours.is-live .yr-you { z-index: 2; }
+  @media (max-width: 52rem) {
+    /* Phones: the two sides stacked and compact (your criteria were the last scene's subject). */
+    :global(.js) .yours.is-live .yours-figure { row-gap: 14px; padding-top: 0; }
+    :global(.js) .yours.is-live .yr-card { min-height: 0; padding: 12px 15px; gap: 8px; }
+    :global(.js) .yours.is-live .yr-chips { display: none; }
+    :global(.js) .yours.is-live .yr-fits li { padding: 6px 10px; font-size: .8125rem; }
+    :global(.js) .yours.is-live .yr-kept, :global(.js) .yours.is-live .yr-receipt { font-size: var(--size-micro); }
+    :global(.js) .yours.is-live .yr-watch { display: none; }
+    :global(.js) .yours.is-live .yr-nothing { padding-top: 0; gap: 2px; }
+    :global(.js) .yours.is-live .yr-nothing b { font-size: 1.75rem; }
+    :global(.js) .yours.is-live .yr-shared { gap: 8px; }
+    :global(.js) .yours.is-live .yr-shared ul { display: flex; flex-wrap: wrap; gap: 6px; }
+    :global(.js) .yours.is-live .yr-shared li { display: inline-flex; align-items: baseline; gap: 6px; padding: 6px 11px; font-size: .875rem; }
+    :global(.js) .yours.is-live .yr-slot { width: 24px; height: 30px; }
+    /* Stacked: the details simply arrive in the lower card. */
+    :global(.js) .yours.is-live .yr-travel { display: none; }
+  }
+</style>

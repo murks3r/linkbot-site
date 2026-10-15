@@ -34,6 +34,8 @@
   --size-hero: clamp(2.25rem, 1.1rem + 3.9vw, 4.75rem);
   --size-h2: clamp(1.9rem, 1.1rem + 2.6vw, 3.5rem);
   --size-statement: clamp(1.75rem, 1rem + 2.4vw, 3.25rem);
+  /* A story's statements (A7): a step below the hero's headline, so the opening stays the peak. */
+  --size-caption: clamp(1.5rem, 1.05rem + 1.75vw, 2.75rem);
   --size-h3: clamp(1.2rem, 1.1rem + .4vw, 1.45rem);
   --size-lede: clamp(1.125rem, 1.04rem + .4vw, 1.375rem);
   --size-body: 1.0625rem; --size-small: .9375rem; --size-micro: .8125rem;
@@ -146,7 +148,7 @@ button { cursor: pointer; }
 /* Captions: one owns the top of the stage at a time when live (the zone keeps its height, so the
    figure below never moves); all of them read in order when static. */
 .captions { display: grid; gap: 12px; }
-.caption { font-family: var(--display); font-stretch: 102%; font-size: var(--size-statement); font-weight: 540; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
+.caption { font-family: var(--display); font-stretch: 102%; font-size: var(--size-caption); font-weight: 540; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
 .caption small { display: block; margin-top: 10px; font-family: var(--text); font-size: var(--size-body); font-weight: 400; letter-spacing: 0; line-height: 1.5; color: var(--ink-2); }
 .js .scene.is-live .scene-inner { align-content: start; }
 .js .scene.is-live .captions { position: relative; display: block; width: min(100%, 46rem); margin-inline: auto; height: var(--cap-h, clamp(112px, 17vh, 150px)); }
@@ -157,5 +159,5 @@ button { cursor: pointer; }
   transition: opacity .45s var(--ease-out), transform .7s var(--ease-out), filter .45s var(--ease-out); }
 .js .scene.is-live .caption[aria-current='step'] { opacity: 1; transform: none; filter: none; pointer-events: auto; transition-delay: .14s; }
 @media (prefers-reduced-motion: reduce) { .js .scene.is-live .caption { transition: none; } }
-@media (max-width: 52rem) { .js .scene.is-live .captions { --cap-h: clamp(150px, 23vh, 196px); } }
+@media (max-width: 52rem) { .js .scene.is-live .caption small { font-size: var(--size-small); line-height: 1.45; } }
 @media (max-width: 52rem) { :root { --header: 64px; } }

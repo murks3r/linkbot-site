@@ -71,10 +71,17 @@ function fits(scene: Scene) {
   return ask.detail.ok;
 }
 
+/* The caption zone is as tall as the tallest statement, measured live, so no statement ever runs
+   under the figure below it. */
+function captions(scene: Scene) {
+  const zone = scene.captions[0]?.parentElement;
+  if (zone) zone.style.setProperty('--cap-h', `${Math.ceil(Math.max(...scene.captions.map(c => c.offsetHeight)))}px`);
+}
+
 function mode() {
   for (const scene of scenes) {
     let want = !still.matches && innerHeight >= 540;
-    if (want) { scene.root.classList.add('is-live'); want = fits(scene); }
+    if (want) { scene.root.classList.add('is-live'); captions(scene); want = fits(scene); }
     scene.root.classList.toggle('is-live', want);
     if (!want) {
       ['--p', ...scene.beats.map((_, i) => `--b${i + 1}`)].forEach(name => scene.stage.style.removeProperty(name));
