@@ -65,7 +65,9 @@ html[data-v-controls='follow'] { --control-r: var(--field-r); }
 /* ── Base ───────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 88px; background: var(--paper); }
+/* A8: anchors land below the header, and below the folded "On this page" bar on narrow screens. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: var(--anchor-top); background: var(--paper); --anchor-top: calc(var(--header) + 24px); }
+@media (max-width: 63.99rem) { html { --anchor-top: calc(var(--header) + 64px); } }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--size-body)/1.6 var(--text); font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-wrap: break-word; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
