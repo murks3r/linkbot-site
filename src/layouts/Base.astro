@@ -8,8 +8,8 @@ import textUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-norma
 import SEO from '../components/SEO.astro';
 import Masthead from '../components/Masthead.astro';
 import Footer from '../components/Footer.astro';
-interface Props { title: string; description: string; path: string; crumbs?: [string, string][]; quietHeader?: boolean }
-const { title, description, path, crumbs, quietHeader = false } = Astro.props;
+interface Props { title: string; description: string; path: string; crumbs?: [string, string][]; quietHeader?: boolean; sky?: boolean }
+const { title, description, path, crumbs, quietHeader = false, sky = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -22,17 +22,22 @@ const { title, description, path, crumbs, quietHeader = false } = Astro.props;
     <meta name="theme-color" content="#fbf8f1" />
     <meta name="color-scheme" content="light" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- Scripts mark the page so enhancements (the scroll-linked story) can take over from the
+    <!-- Scripts mark the page so enhancements (the scroll-driven scenes) can take over from the
          complete, static version every page ships with. -->
     <script is:inline>document.documentElement.classList.add('js')</script>
   </head>
-  <body>
+  <body data-sky={sky ? '' : undefined}>
     <a class="skip" href="#main">Skip to content</a>
+    {sky && <div class="sky" aria-hidden="true"></div>}
     <Masthead current={path} quiet={quietHeader} />
     <main id="main" tabindex="-1"><slot /></main>
     <Footer />
+    <script>import '../scripts/stages';</script>
   </body>
 </html>
 <style is:global>
   main { outline: none; }
+  /* The sky lies under the whole page; everything else is composed above it. */
+  body[data-sky] .sky { position: fixed; z-index: 0; }
+  body[data-sky] main, body[data-sky] footer { position: relative; z-index: 1; }
 </style>

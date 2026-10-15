@@ -6,15 +6,15 @@
 import { app, searchWith } from '../lib/links';
 import { HERO_PLACEHOLDER } from '../data/content';
 import Icon from './Icon.astro';
-interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental'; label?: string; placeholder?: string }
-const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = HERO_PLACEHOLDER } = Astro.props;
+interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental'; label?: string; placeholder?: string; describedBy?: string }
+const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = HERO_PLACEHOLDER, describedBy } = Astro.props;
 ---
 <form class="search" data-size={size} action={app('#/search')} method="get" data-handoff={app('#/search')} role="search" aria-label="Search jobs in Linkbot">
   <label class="search-label" for={id}>{label}</label>
   <div class="search-box">
     <span class="search-field">
       <Icon name="search" size={18} />
-      <input id={id} type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="2000" placeholder={placeholder} />
+      <input id={id} type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="2000" placeholder={placeholder} aria-describedby={describedBy} />
     </span>
     <button class="btn btn-primary" type="submit"><span>Search</span><Icon name="arrow" /></button>
   </div>
@@ -25,10 +25,10 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
 <style>
   .search { display: grid; gap: 12px; width: 100%; max-width: 46rem; }
   .search-label { font-size: var(--size-small); font-weight: 650; }
-  .search-box { display: flex; align-items: center; gap: 8px; min-height: 68px; padding: 6px; border: 1.5px solid var(--line-ink); border-radius: var(--pill); background: var(--surface);
-    transition: border-color var(--fast), box-shadow var(--base) var(--ease); }
+  .search-box { display: flex; align-items: center; gap: 8px; min-height: 68px; padding: 6px; border: 1.5px solid var(--line-ink); border-radius: var(--pill); background: var(--surface); box-shadow: var(--shadow-field);
+    transition: border-color var(--fast), box-shadow var(--base) var(--ease), transform var(--base) var(--ease); }
   .search-box:hover { border-color: var(--ink-2); }
-  .search-box:focus-within { border-color: var(--green); box-shadow: 0 0 0 4px var(--green-wash); }
+  .search-box:focus-within { border-color: var(--green); box-shadow: 0 0 0 4px var(--green-wash), var(--shadow-field); }
   .search-field { display: flex; align-items: center; flex: 1; min-width: 0; padding-left: 16px; }
   .search-field > :global(.icon) { flex: none; color: var(--ink-3); }
   .search input { flex: 1; min-width: 0; height: 54px; padding: 0 12px; border: 0; outline: none; background: transparent; font-size: clamp(1.0625rem, 1rem + .35vw, 1.2rem); font-weight: 500; letter-spacing: -.005em; color: var(--ink); }
@@ -43,6 +43,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   .search[data-size='monumental'] { max-width: 52rem; justify-items: center; text-align: center; gap: 14px; }
   .search[data-size='monumental'] .search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .search[data-size='monumental'] .search-box { width: 100%; min-height: 80px; padding: 8px; border-color: var(--green); text-align: left; }
+  .search[data-size='monumental'] .search-box:focus-within { transform: translateY(-1px); }
   .search[data-size='monumental'] .search-field { padding-left: 22px; }
   .search[data-size='monumental'] input { height: 62px; font-size: clamp(1.125rem, 1rem + .55vw, 1.375rem); }
   .search[data-size='monumental'] .btn { min-height: 62px; padding: 0 30px; font-size: 1.0625rem; }
@@ -62,7 +63,8 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   import { searchWith } from '../lib/links';
   for (const form of document.querySelectorAll<HTMLFormElement>('form[data-handoff]')) {
     const input = form.querySelector('input'), alert = form.querySelector<HTMLElement>('[data-alert]');
-    const clear = () => { if (alert && !alert.hidden) { alert.hidden = true; alert.textContent = ''; alert.removeAttribute('role'); input?.removeAttribute('aria-invalid'); input?.removeAttribute('aria-describedby'); } };
+    if (input) input.dataset.describedBy = input.getAttribute('aria-describedby') ?? '';
+    const clear = () => { if (alert && !alert.hidden) { alert.hidden = true; alert.textContent = ''; alert.removeAttribute('role'); input?.removeAttribute('aria-invalid'); if (input) { if (input.dataset.describedBy) input.setAttribute('aria-describedby', input.dataset.describedBy); else input.removeAttribute('aria-describedby'); } } };
     form.addEventListener('submit', event => {
       event.preventDefault();
       const words = input?.value.trim() ?? '';
@@ -70,7 +72,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
         if (alert && input) {
           alert.textContent = 'Add a few words first, such as a role and how you want to work.';
           alert.hidden = false; alert.setAttribute('role', 'alert');
-          input.setAttribute('aria-invalid', 'true'); input.setAttribute('aria-describedby', alert.id);
+          input.setAttribute('aria-invalid', 'true'); input.setAttribute('aria-describedby', [alert.id, input.dataset.describedBy].filter(Boolean).join(' '));
         }
         input?.focus();
         return;

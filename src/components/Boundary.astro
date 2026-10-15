@@ -1,0 +1,105 @@
+---
+/* Scene 4 (Concept A5): the boundary.
+
+   The ring returns, now as the person's own boundary. Inside it: the words, the openings that
+   fit, what was saved. Outside it: employers, and nothing. Three beats: searching sends nothing;
+   saving is private and there is no profile to be found; and only the person opens the boundary,
+   to one named recipient, with exactly the details they choose, with a receipt. The states and
+   their status are the product's own: searching and saving are live; sharing is built and tested
+   in staging, not yet live with employers; private matching is in development and not on this
+   page. Nothing here claims encryption or anonymity. */
+import Mark from './Mark.astro';
+import { reading, ORBIT } from '../data/content';
+const words = reading('story');
+const fits = ORBIT.ring.filter(o => o.fit);
+/* A caption leaves in the first fifth of the next beat and the next one rises after that, so one
+   statement is ever on the stage; statically all are on. */
+const on = (i: number, n: number) => {
+  const rise = i === 0 ? '1' : `clamp(0, (var(--b${i + 1}, 1) - .2) * 3.4, 1)`;
+  const fall = i < n - 1 ? `(1 - clamp(0, var(--b${i + 2}, 0) * 5, 1))` : '1';
+  return `calc(${rise} * ${fall})`;
+};
+const CAPTIONS: [string, string][] = [
+  ['Searching sends nothing to anyone.', 'No account is needed to search, and a search without one isn’t stored. No employer is told.'],
+  ['Nothing to be found.', 'There is no public profile and no directory of people. What you save is yours alone.'],
+  ['Only you open it.', 'Share chosen details with one named recipient, once or by a rule you set, each time with a receipt. Matching is never consent, and applying is a separate step.'],
+];
+---
+<section class="scene boundary" data-scene data-beats="0:.3,.34:.64,.68:1" style="--beats: 3" aria-labelledby="boundary-caption-1">
+  <div class="scene-stage" data-scene-stage>
+    <div class="scene-inner boundary-inner">
+      <ol class="captions boundary-captions">
+        {CAPTIONS.map(([title, body], i) => <li class="caption" data-caption style={`--on: ${on(i, CAPTIONS.length)}`} id={`boundary-caption-${i + 1}`}><h2>{title}</h2><small>{body}</small></li>)}
+      </ol>
+      <figure class="boundary-figure" aria-labelledby="boundary-legend">
+        <div class="boundary-space">
+          <svg class="boundary-ring" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+            <circle class="ring-line" cx="200" cy="200" r="184" pathLength="100" />
+            <circle class="ring-gap" cx="200" cy="200" r="184" pathLength="100" />
+          </svg>
+          <div class="boundary-inside">
+            <p class="boundary-you"><span>You</span>{words.text}</p>
+            <ul class="boundary-saved" aria-label="Saved, privately">
+              {fits.slice(0, 2).map((o, j) => <li style={`--j: ${j}`}><Mark tone="fit" size={10} />{o.title}<small>saved</small></li>)}
+            </ul>
+          </div>
+          <div class="boundary-outside">
+            <p class="boundary-them"><span>An employer sees</span><b>Nothing.</b></p>
+          </div>
+          <div class="boundary-share" aria-live="polite">
+            <p class="boundary-share-card"><span>To one named recipient</span><b>Work mode, location, two skills</b><small>No name, no contact details</small></p>
+            <p class="boundary-receipt"><Mark tone="fit" size={10} />Receipt: what was shared, with whom, when</p>
+          </div>
+        </div>
+        <figcaption id="boundary-legend" class="boundary-legend">Sharing is built and tested in staging; not yet live with employers. Private matching is in development and not live.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .boundary { --D: min(420px, 76vw, 50vh); }
+  .boundary-inner { display: grid; gap: 24px; padding: 24px var(--gutter) 32px; }
+  .boundary-captions { max-width: 46rem; margin-inline: auto; text-align: center; }
+  .boundary-captions h2 { font-size: inherit; font-weight: inherit; letter-spacing: inherit; line-height: inherit; }
+  .boundary-captions small { max-width: 36em; margin-inline: auto; }
+  .boundary-figure { display: grid; gap: 12px; justify-items: center; }
+  .boundary-space { position: relative; width: min(100%, 60rem); height: calc(var(--D) + 48px); display: grid; place-items: center; }
+  .boundary-ring { position: absolute; width: var(--D); height: var(--D); left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-20deg); overflow: visible; }
+  .ring-line { fill: none; stroke: var(--ink); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+  /* Beat 3: a segment of the boundary opens, drawn as a gap in the stroke. */
+  .ring-gap { fill: none; stroke: var(--paper); stroke-width: 6; vector-effect: non-scaling-stroke; stroke-dasharray: calc(var(--b3, 1) * 10) 100; stroke-dashoffset: 5; }
+  .boundary-inside { position: relative; display: grid; gap: 10px; justify-items: center; width: calc(var(--D) - 72px); text-align: center; }
+  .boundary-you { display: grid; gap: 4px; font-size: var(--size-small); font-weight: 560; color: var(--ink); }
+  .boundary-you span { font-size: var(--size-micro); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+  .boundary-saved { display: grid; gap: 6px; width: 100%; }
+  .boundary-saved li { --v: clamp(0, var(--b2, 1) * 3 - var(--j) * .5, 1); display: flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid var(--line-strong); border-radius: var(--r-2); background: var(--surface); font-size: .8125rem; font-weight: 600; text-align: left;
+    opacity: var(--v); transform: translateY(calc((1 - var(--v)) * 8px)); }
+  .boundary-saved small { margin-left: auto; font-size: .75rem; font-weight: 500; color: var(--ink-3); }
+  .boundary-outside { position: absolute; right: 0; top: 50%; transform: translateY(calc(-50% - 56px)); width: calc(50% - var(--D) / 2 - 24px); display: grid; justify-items: start; }
+  .boundary-them { display: grid; gap: 2px; font-family: var(--display); font-stretch: 102%; font-size: 1.5rem; font-weight: 540; letter-spacing: -.025em; color: var(--ink-3); }
+  .boundary-them span { font-family: var(--text); font-size: var(--size-micro); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; }
+  /* Beat 3: one chosen card crosses the boundary to the right, and its receipt stays inside. */
+  .boundary-share { position: absolute; left: 50%; top: 50%; width: min(260px, 60vw); display: grid; gap: 8px;
+    transform: translate(calc(-50% + var(--b3, 1) * (var(--D) / 2 + 150px)), calc(-50% + 48px)); opacity: clamp(0, var(--b3, 1) * 2.5, 1); }
+  .boundary-share-card { display: grid; gap: 2px; padding: 10px 14px; border: 1px solid var(--green); border-radius: var(--r-2); background: var(--surface); font-size: .8125rem; box-shadow: var(--shadow-field); }
+  .boundary-share-card span { font-size: .75rem; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  .boundary-share-card b { font-weight: 650; }
+  .boundary-share-card small { font-size: .75rem; color: var(--ink-2); }
+  .boundary-receipt { display: inline-flex; align-items: center; gap: 8px; font-size: .75rem; color: var(--ink-2); transform: translate(calc(var(--b3, 1) * (var(--D) / -2 - 150px)), 10px); }
+  .boundary-legend { font-size: var(--size-micro); color: var(--ink-3); text-align: center; max-width: 40em; }
+  :global(.js) .boundary.is-live .boundary-inner { gap: 0; padding-top: 16px; }
+  @media (max-width: 52rem) {
+    .boundary { --D: min(300px, 78vw, 44vh); }
+    .boundary-space { height: calc(var(--D) + 120px); }
+    /* On a phone, what is outside the boundary sits beneath it, in flow. */
+    .boundary-space { grid-template-rows: var(--D) auto auto; align-items: start; justify-items: center; height: auto; row-gap: 14px; }
+    .boundary-ring { top: calc(var(--D) / 2); }
+    .boundary-inside { align-self: center; }
+    .boundary-outside { position: static; transform: none; width: auto; justify-items: center; }
+    .boundary-them { font-size: 1.125rem; text-align: center; }
+    .boundary-share { position: static; width: min(240px, 72vw); transform: translateY(calc((1 - var(--b3, 1)) * 12px)); }
+    .boundary-receipt { transform: none; }
+    .js .boundary.is-live .boundary-captions { height: clamp(140px, 22vh, 190px); }
+  }
+</style>

@@ -1,10 +1,11 @@
-/* Linkbot's public site — Concept A4, "two inks on warm paper".
+/* Linkbot's public site — Concept A5, "orbit".
    One palette with the app (palette.css is copied from the app's generated tokens). Warm paper is
-   the ground; one deep flat green is the ink (text, rules, focus, the one deep band); pink is the
-   spot colour, kept for the primary action. Emphasis comes from weight, scale and tone (full ink
-   against softened ink), never from a marker. Two families: Archivo, set expanded, for display;
-   Figtree for reading. Evidence and product status use the app's three square marks (solid,
-   split, dashed), never colour alone. */
+   the ground, lit by a soft sky of three tints (blush, sage, dawn) under fine grain; one deep flat
+   green is the ink (text, rules, focus, the one deep band); pink is the spot colour, kept for the
+   primary action. Emphasis comes from weight, scale and tone, never from a marker. Two families:
+   Archivo for display, Figtree for reading. Evidence and product status use the app's three
+   square marks (solid, split, dashed), never colour alone. The story is told on pinned scenes
+   driven by scroll position (src/scripts/stages.ts). */
 
 /* Metric-matched fallbacks while the web fonts load (measured against Arial: Archivo at 112 %
    width is 1.121× Arial's advance, Figtree 1.002×; ascent and descent from the fonts), so the
@@ -20,14 +21,17 @@
   --green-wash: var(--lb-forest-wash); --green-line: var(--lb-forest-line); --green-rule: var(--lb-forest-rule);
   --on-green: var(--lb-on-forest); --on-green-2: var(--lb-on-forest-2);
   --pink: var(--lb-pink); --pink-hover: var(--lb-pink-hover); --pink-press: var(--lb-pink-press); --on-pink: var(--lb-on-pink);
+  --blush: var(--lb-blush); --sage: var(--lb-sage); --dawn: var(--lb-dawn);
   --line: var(--lb-line); --line-strong: var(--lb-line-strong); --line-ink: var(--lb-line-ink);
   --sand: var(--lb-sand); --sand-2: var(--lb-sand-2); --mist: var(--lb-mist);
   --warn: var(--lb-warn); --warn-wash: var(--lb-warn-wash);
 
   --display: 'Archivo Variable', 'Archivo Fallback', 'Helvetica Neue', Arial, system-ui, sans-serif;
   --text: 'Figtree Variable', 'Figtree Fallback', 'Helvetica Neue', Arial, system-ui, sans-serif;
-  --size-hero: clamp(2.5rem, .8rem + 6.6vw, 7.25rem);
-  --size-h2: clamp(2rem, 1.15rem + 3.3vw, 4.25rem);
+  /* The headline is composed, not monumental: it must never push the search out of the focal area. */
+  --size-hero: clamp(2.25rem, 1.1rem + 3.9vw, 4.75rem);
+  --size-h2: clamp(1.9rem, 1.1rem + 2.6vw, 3.5rem);
+  --size-statement: clamp(1.75rem, 1rem + 2.4vw, 3.25rem);
   --size-h3: clamp(1.2rem, 1.1rem + .4vw, 1.45rem);
   --size-lede: clamp(1.125rem, 1.04rem + .4vw, 1.375rem);
   --size-body: 1.0625rem; --size-small: .9375rem; --size-micro: .8125rem;
@@ -36,7 +40,9 @@
   --r-1: 6px; --r-2: 10px; --r-3: 16px; --pill: 999px;
   --target: 44px;
   --ease: cubic-bezier(.2, .7, .2, 1); --fast: 140ms; --base: 240ms;
+  --header: 72px; --beat: 100svh;
   --shadow-float: 0 1px 2px rgb(18 58 44 / .06), 0 18px 48px rgb(18 58 44 / .12);
+  --shadow-field: 0 1px 2px rgb(18 58 44 / .04), 0 24px 60px -28px rgb(18 58 44 / .28);
 }
 @media (prefers-reduced-motion: reduce) { :root { --fast: 0ms; --base: 0ms; } }
 
@@ -48,8 +54,8 @@ body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--s
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-wrap: break-word; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
-h1, h2 { font-family: var(--display); font-stretch: 108%; font-weight: 480; line-height: 1.04; letter-spacing: -.028em; text-wrap: balance; }
-h1 { font-size: var(--size-hero); font-stretch: 112%; font-weight: 460; letter-spacing: -.035em; line-height: .98; }
+h1, h2 { font-family: var(--display); font-stretch: 102%; font-weight: 540; line-height: 1.04; letter-spacing: -.032em; text-wrap: balance; }
+h1 { font-size: var(--size-hero); font-weight: 560; letter-spacing: -.036em; line-height: 1; }
 h2 { font-size: var(--size-h2); }
 h3 { font-family: var(--text); font-size: var(--size-h3); font-weight: 650; letter-spacing: -.012em; line-height: 1.25; text-wrap: balance; }
 p { text-wrap: pretty; }
@@ -127,3 +133,42 @@ button { cursor: pointer; }
   .chip { forced-color-adjust: none; background: Canvas; color: CanvasText; border-color: CanvasText; }
   .btn { border: 1px solid ButtonText; }
 }
+
+/* ── The sky: the page's atmosphere ──────────────────────────────────────── */
+/* Three soft tints (every one proven for 7:1 ink) laid on the paper as wide, pre-softened radial
+   gradients, under a fine grain. The whole layer sits behind the content and never carries text
+   itself. With motion allowed it drifts very slowly and follows the page's progress (--scroll);
+   under reduced motion it is still. */
+.sky { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.sky::before { content: ''; position: absolute; inset: 0; background-size: 140% 140%; background-position: center; background:
+    radial-gradient(42% 38% at calc(50% + var(--sky-x, 0%)) calc(42% + var(--sky-y, 0%)), var(--blush) 0%, transparent 70%),
+    radial-gradient(36% 34% at 14% 86%, var(--sage) 0%, transparent 70%),
+    radial-gradient(34% 30% at 86% 10%, var(--dawn) 0%, transparent 70%);
+  background-size: 140% 140%; background-position: center;
+  transform: translate3d(calc(var(--scroll, 0) * -3%), calc(var(--scroll, 0) * 4%), 0); }
+.sky::after { content: ''; position: absolute; inset: 0; opacity: .08; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+@media (prefers-reduced-motion: no-preference) {
+  .js .sky::before { animation: sky-drift 28s ease-in-out infinite alternate; }
+}
+@keyframes sky-drift { from { --sky-x: -3%; --sky-y: -2%; } to { --sky-x: 3%; --sky-y: 2%; } }
+@property --sky-x { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --sky-y { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+
+/* ── Scenes: pinned stages driven by scroll position ─────────────────────── */
+.scene { position: relative; }
+.scene-stage { position: relative; }
+.js .scene.is-live { height: calc(100svh + var(--beats, 3) * var(--beat)); }
+.js .scene.is-live .scene-stage { position: sticky; top: var(--header); height: calc(100svh - var(--header)); overflow: clip; }
+.scene-inner { position: relative; width: 100%; }
+.js .scene.is-live .scene-inner { position: absolute; inset: 0; display: grid; align-content: center; }
+/* Captions: one owns the top of the stage at a time when live (the zone keeps its height, so the
+   figure below never moves); all of them read in order when static. */
+.captions { display: grid; gap: 12px; }
+.caption { font-family: var(--display); font-stretch: 102%; font-size: var(--size-statement); font-weight: 540; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
+.caption small { display: block; margin-top: 10px; font-family: var(--text); font-size: var(--size-body); font-weight: 400; letter-spacing: 0; line-height: 1.5; color: var(--ink-2); }
+.js .scene.is-live .scene-inner { align-content: start; }
+.js .scene.is-live .captions { position: relative; display: block; width: min(100%, 46rem); margin-inline: auto; height: var(--cap-h, clamp(112px, 17vh, 150px)); }
+.js .scene.is-live .caption { position: absolute; left: 0; right: 0; top: 0; opacity: var(--on, 0); transform: translateY(calc((1 - var(--on, 0)) * 14px)); }
+@media (max-width: 52rem) { .js .scene.is-live .captions { --cap-h: clamp(140px, 22vh, 190px); } }
+@media (max-width: 52rem) { :root { --header: 64px; } }

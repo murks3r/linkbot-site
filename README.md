@@ -3,13 +3,13 @@
 The crawlable public pages for Linkbot: what it is, how it works, how privacy works, and hiring.
 The product itself (search, interpretation, results, saving, watching, permissions, the agency
 and company workspaces) runs in the app, `murks3r/linkbot`, served under `/talent`. The site
-explains; the app executes. Concept A4 ("two inks on warm paper") — draft, not published.
+explains; the app executes. Concept A5 ("orbit") — draft, not published.
 
 ## Pages
 
 | Route | What it does |
 |---|---|
-| `/` | a working first search, one scroll-linked story (many openings → your priorities → the ones that fit → your decision), trust, and a contextual start |
+| `/` | a working first search at the optical centre; then the story on four pinned scenes driven by scroll position (the loop becomes a line; what matters to you; one opening explained; the boundary), the hinge, and a contextual start |
 | `/how-it-works` | criteria and levels with recorded readings, how a listing is explained, saving and watching, applying, private matching (in development), what's live today |
 | `/privacy` | what happens to what you type, save and share; the five separate decisions; limits; what Linkbot doesn't claim |
 | `/hiring` | for recruiting agencies and companies: explanation first, then each path with a working next step |
@@ -27,11 +27,14 @@ explains; the app executes. Concept A4 ("two inks on warm paper") — draft, not
   readings recorded from the app's own interpreter, with the commit that produced them:
   `npx tsx tools/site/readings.ts > <site>/src/data/readings.json` (run in the app).
 - **One vocabulary.** Levels, evidence words and reasons come from the app's copy (`src/data/content.ts`).
-- **The homepage story** (`src/components/Clarity.astro`) is a sticky stage whose every state is a
-  function of scroll position (one number, `--p`), so it reverses, survives jumps and resizes, and
-  never hijacks scrolling. Without scripts, with reduced motion or on a short screen it is its
-  complete final state at normal height. The words are read by the app's interpreter (the `story`
-  reading); the openings and the listing are an illustration and say so.
+- **The scenes** (`src/components/Orbit.astro`, `Priorities.astro`, `Evidence.astro`,
+  `Boundary.astro`) are pinned stages driven by `src/scripts/stages.ts`: one number per scene
+  (`--p`) and one eased value per beat (`--b1` …) are written from the scroll position, and CSS
+  derives every state, so each scene reverses, survives jumps, flings and resizes, and never
+  hijacks scrolling. Without scripts, under reduced motion, or on any screen that cannot hold a
+  stage (measured live), a scene is its complete final state at normal height. The words are read
+  by the app's interpreter (the `story` reading); the openings and the listing are illustrations
+  and say so.
 
 ## Configuration
 
