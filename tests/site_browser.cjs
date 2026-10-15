@@ -184,7 +184,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         check(centre >= .5 && centre <= .56, `${width}: the field sits at the optical centre, just below the middle (${(centre * 100).toFixed(1)} % of the space under the header)`);
         // Dominant: the widest, tallest and highest-contrast object of the opening viewport.
         if (width >= 1024) {
-          check(hero.field.width >= 700 && hero.field.width <= 760, `${width}: the search is wider than A6's 640 px (${Math.round(hero.field.width)} px)`);
+          check(hero.field.width >= 700 && hero.field.width <= 810, `${width}: the search is wider than A6's 640 px (${Math.round(hero.field.width)} px)`);
           check(hero.field.height >= 72 && hero.field.height <= 80, `${width}: the search is taller than A6's 64 px (${Math.round(hero.field.height)} px)`);
           check(hero.field.width >= hero.h1.width * 1.5, `${width}: the search is half again as wide as the headline (${Math.round(hero.field.width)} vs ${Math.round(hero.h1.width)})`);
           check(hero.btn.height >= 56, `${width}: the pink action is a full, large target (${Math.round(hero.btn.height)} px)`);

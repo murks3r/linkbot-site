@@ -6,16 +6,21 @@
 import { app, searchWith } from '../lib/links';
 import { HERO_PLACEHOLDER } from '../data/content';
 import Icon from './Icon.astro';
-interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental' | 'focal'; label?: string; placeholder?: string; describedBy?: string }
-const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = HERO_PLACEHOLDER, describedBy } = Astro.props;
+interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental' | 'focal'; label?: string; placeholder?: string; describedBy?: string; place?: boolean }
+const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = HERO_PLACEHOLDER, describedBy, place = false } = Astro.props;
 ---
-<form class="search" data-size={size} action={app('#/search')} method="get" data-handoff={app('#/search')} role="search" aria-label="Search jobs in Linkbot">
+<form class="search" data-size={size} data-place={place ? '' : undefined} action={app('#/search')} method="get" data-handoff={app('#/search')} role="search" aria-label="Search jobs in Linkbot">
   <label class="search-label" for={id}>{label}</label>
   <div class="search-box">
     <span class="search-field">
       <Icon name="search" size={18} />
       <input id={id} type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="2000" placeholder={placeholder} aria-describedby={describedBy} />
     </span>
+    {place && <span class="search-place">
+      <label class="search-place-label" for={`${id}-place`}>Where?</label>
+      <Icon name="pin" size={18} />
+      <input id={`${id}-place`} type="text" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="search" maxlength="60" placeholder="City or country, optional" data-place-input />
+    </span>}
     <button class="btn btn-primary" type="submit" data-lit={size === 'focal' ? '' : undefined}>{size === 'focal' && <span class="btn-light" data-decor aria-hidden="true"></span>}<span>Search</span><Icon name="arrow" /></button>
   </div>
   <p class="search-alert" id={`${id}-alert`} data-alert hidden></p>
@@ -34,6 +39,16 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   .search input { flex: 1; min-width: 0; height: 54px; padding: 0 12px; border: 0; outline: none; background: transparent; font-size: clamp(1.0625rem, 1rem + .35vw, 1.2rem); font-weight: 500; letter-spacing: -.005em; color: var(--ink); }
   .search input::placeholder { color: var(--ink-3); opacity: 1; font-weight: 400; }
   .search .btn { min-height: 54px; flex: none; }
+  /* A8: the place, a narrower split beside the words: what, and where. Two real labelled inputs in
+     one shell; a hairline parts them; the place is optional. */
+  .search-place { display: flex; align-items: center; flex: 0 1 13.5rem; min-width: 9rem; padding-left: 12px; border-left: 1.5px solid var(--line-strong); }
+  /* With a place beside the words the field is a little wider, so the placeholder still reads. */
+  .search[data-size='focal'][data-place] { max-width: 50rem; }
+  .search-place-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .search-place > :global(.icon) { flex: none; color: var(--ink-3); }
+  .search-place input { font-size: 1.0625rem; }
+  .search[data-size='focal'] .search-place input { height: 60px; font-size: 1.0625rem; }
+  .search[data-size='focal'] .search-place { margin-left: 4px; }
   .search-alert { font-size: var(--size-small); font-weight: 600; color: var(--warn); }
   .search-try { display: flex; flex-wrap: wrap; align-items: center; gap: 0 22px; font-size: var(--size-small); }
   .search-try a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 5px; transition: color var(--fast), text-decoration-color var(--fast); }
@@ -86,6 +101,10 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
     .search[data-size='focal'] .search-field:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 10%, transparent); }
     .search[data-size='focal'] input { height: 58px; font-size: 1.125rem; }
     .search[data-size='focal'] .btn { min-height: 58px; width: 100%; padding: 0 22px; }
+    /* Phones: the place stacks under the words as its own field. */
+    .search .search-place { flex: none; min-height: 62px; margin: 0; padding: 0 6px 0 16px; border: 0; border-radius: var(--field-r); background: var(--surface); box-shadow: 0 0 0 1.5px var(--line-ink), 0 12px 26px -12px rgb(18 58 44 / .24); }
+    .search .search-place:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 10%, transparent); }
+    .search[data-size='focal'] .search-place input { height: 58px; font-size: 1.0625rem; }
     .search-try { gap: 0 16px; }
   }
 </style>
@@ -93,7 +112,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
 <script>
   import { searchWith } from '../lib/links';
   for (const form of document.querySelectorAll<HTMLFormElement>('form[data-handoff]')) {
-    const input = form.querySelector('input'), alert = form.querySelector<HTMLElement>('[data-alert]');
+    const input = form.querySelector<HTMLInputElement>('input:not([data-place-input])'), placeInput = form.querySelector<HTMLInputElement>('[data-place-input]'), alert = form.querySelector<HTMLElement>('[data-alert]');
     if (input) input.dataset.describedBy = input.getAttribute('aria-describedby') ?? '';
     const clear = () => { if (alert && !alert.hidden) { alert.hidden = true; alert.textContent = ''; alert.removeAttribute('role'); input?.removeAttribute('aria-invalid'); if (input) { if (input.dataset.describedBy) input.setAttribute('aria-describedby', input.dataset.describedBy); else input.removeAttribute('aria-describedby'); } } };
     form.addEventListener('submit', event => {
@@ -108,7 +127,11 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
         input?.focus();
         return;
       }
-      location.href = searchWith(words);
+      // The place is handed over as its own part of the words: the app's interpreter reads a
+      // comma-separated part that names a place as a place criterion (and asks when several
+      // places share the name). No service is called from here.
+      const place = placeInput?.value.replace(/[,\s]+$/g, '').trim() ?? '';
+      location.href = searchWith(place ? `${words.replace(/[,\s]+$/g, '')}, ${place}` : words);
     });
     input?.addEventListener('input', clear);
   }
