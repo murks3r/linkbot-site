@@ -4,6 +4,10 @@ import Mark from '../components/Mark.astro';
 import Icon from '../components/Icon.astro';
 import record from '../data/readings.json';
 import { app } from '../lib/links';
+import Toc from '../components/Toc.astro';
+import Badge from '../components/Badge.astro';
+import Draft from '../components/Draft.astro';
+const SECTIONS: [string, string][] = [['why', 'Why Linkbot'], ['how', 'How it works'], ['never', 'What you never get'], ['paths', 'Two ways in'], ['faq', 'Questions'], ['start', 'Get started']];
 const role = record.roles[0];
 const commit = record.commit.slice(0, 7);
 // Mark, in the brief itself, the words the role reader took each field from (located, not interpreted).
@@ -20,15 +24,16 @@ const lines = role.text.split('\n').map((line, index, all) => {
 });
 ---
 <Base title="Hiring with Linkbot: evidence, not exposure"
-  description="For recruiting agencies and companies: Linkbot reads a role into requirements you can correct and shows candidates with their evidence. No people directory."
+  description="For companies and recruiting agencies: your role reaches the people whose own words fit it; applications arrive with the details they chose and the reasons. No directory of people."
   path="/hiring" crumbs={[['Hiring', '/hiring']]}>
 
   <section class="hero" aria-labelledby="hiring-title">
     <div class="wrap hero-inner">
       <p class="eyebrow">Hiring with Linkbot</p>
       <h1 id="hiring-title"><span class="h1-line">Say who you need.</span> <span class="h1-line h1-soft">See the evidence.</span></h1>
-      <p class="lede">For recruiting agencies and companies. Linkbot reads a role description into requirements you can correct, and shows every candidate or application with its evidence: what’s stated, what differs and what’s still unknown.</p>
-      <p class="hero-actions"><a class="btn btn-primary" href="#paths">Choose your path<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Try reading a role first<Icon name="arrow" /></a></p>
+      <p class="lede">For companies and recruiting agencies. Your role reaches the people whose own words fit it. Applications arrive with the details they chose and the reasons on both sides. No directory of people, nobody contacted for you.</p>
+      <p class="hero-actions"><a class="btn btn-primary" href="#start" data-hiring-cta>Get started<Icon name="arrow" /></a><a class="link" href={app('#/find-talent')}>Try reading a role first<Icon name="arrow" /></a></p>
+      <p class="hero-pay"><Draft>Nothing to pay until you hire.</Draft> People never pay to be found.</p>
     </div>
     <div class="wrap role-wrap">
       <figure class="card role">
@@ -46,19 +51,41 @@ const lines = role.text.split('\n').map((line, index, all) => {
     </div>
   </section>
 
-  <section class="band" data-tone="mist" aria-labelledby="differ-title">
-    <div class="wrap">
-      <div class="section-head centred">
-        <h2 id="differ-title">What changes when you hire with Linkbot</h2>
-      </div>
-      <ul class="differ">
-        <li><h3>Evidence, not a score</h3><p>Every candidate or application shows what’s stated about each requirement, what differs and what’s unknown. Ranking is a suggestion; the decision is yours.</p></li>
-        <li><h3>No directory of people</h3><p>There is no searchable talent database. Agencies work their own candidate pool; companies see only what people choose to send.</p></li>
-        <li><h3>Every decision on record</h3><p>Shortlists, interest checks and introductions are separate, logged decisions, with who made them and when.</p></li>
-        <li><h3>Nobody contacted for you</h3><p>Linkbot sends no messages on your behalf and never discloses an agency’s candidate profiles.</p></li>
-      </ul>
+  <div class="wrap doc hiring-doc">
+    <Toc items={SECTIONS} label="On this page" />
+    <div class="doc-body hiring-body">
+      <section id="why" aria-labelledby="why-title">
+        <h2 id="why-title">Why companies use Linkbot</h2>
+        <ul class="benefits">
+          <li><Mark tone="fit" size={14} /><div><h3>Reach that fits, not reach that shouts</h3><p>A published role is shown to people whose own criteria it meets: the work, the place, how they want to work, what they'd rather avoid. It isn't blasted to a database or sold as an ad. <Draft>Targeting is the fit between your role and their words</Draft>, never access to data they didn't share.</p></div></li>
+          <li><Mark tone="fit" size={14} /><div><h3>Less time on the wrong people</h3><p>Every application shows what's stated about each requirement, what differs and what's still unknown, so a shortlist is a reading, not a guess. Ranking suggests; you decide.</p></div></li>
+          <li><Mark tone="fit" size={14} /><div><h3>Nothing to pay until you hire</h3><p><Draft>Publishing a role and reading applications costs nothing; a fee is due when you hire through Linkbot.</Draft> People never pay to be found, and nobody can buy a better place in anyone's results.</p></div></li>
+        </ul>
+      </section>
+
+      <section id="how" aria-labelledby="how-title">
+        <h2 id="how-title">How it works</h2>
+        <ol class="steps">
+          <li><span class="step-n">1</span><div><h3>Describe the role</h3><p>In text or structured fields: requirements, work mode, country. Linkbot reads it into requirements you can correct; what the description doesn't say stays unknown, never guessed.</p></div></li>
+          <li><span class="step-n">2</span><div><h3>It's published after review</h3><p>A role appears in people's searches after an independent role-category review. It reaches those whose words fit, and only there.</p></div></li>
+          <li><span class="step-n">3</span><div><h3>Applications arrive, deliberately</h3><p>A person chooses exactly which confirmed details to send. You see what they sent, with its evidence and a receipt. Names and contact details are not part of an application until they choose to add them.</p></div></li>
+        </ol>
+      </section>
+
+      <section id="never" aria-labelledby="never-title">
+        <div class="never-head">
+          <div><h2 id="never-title">What you never get</h2><p>This is what makes people trust the other side of Linkbot, and it is why they say yes to the right role.</p></div>
+          <Badge size={150} />
+        </div>
+        <ul class="never">
+          <li><Mark tone="unknown" size={14} /><div><h3>No directory of people</h3><p>There is no searchable talent database and no profile browsing. You see a person when they send you something.</p></div></li>
+          <li><Mark tone="unknown" size={14} /><div><h3>No inferred interest</h3><p>A match is not a disclosure, not a sign of interest and not permission to contact anyone. Interest and introductions are never inferred from a ranking.</p></div></li>
+          <li><Mark tone="unknown" size={14} /><div><h3>Nobody contacted for you</h3><p>Linkbot sends no messages on your behalf and never discloses an agency's candidate profiles.</p></div></li>
+          <li><Mark tone="tradeoff" size={14} /><div><h3>Private matching isn't live yet</h3><p>Being matched privately with people who opted in, and asking them first, is in development. Today no company is matched with Linkbot's users without their action.</p></div></li>
+        </ul>
+      </section>
     </div>
-  </section>
+  </div>
 
   <section class="band" id="paths" aria-labelledby="paths-title">
     <div class="wrap">
@@ -101,32 +128,59 @@ const lines = role.text.split('\n').map((line, index, all) => {
     </div>
   </section>
 
-  <section class="band" data-tone="sand" aria-labelledby="before-title">
-    <div class="wrap before">
-      <div class="section-head centred">
-        <h2 id="before-title">Before you receive anything</h2>
-        <p>What a company or agency has to do first, and what isn’t available. Stated plainly, so nobody is surprised.</p>
-      </div>
-      <ul class="rules">
-        <li><Mark tone="fit" /><div><h3>You’re invited and you sign in</h3><p>Access is by invitation during the pilot; there is no self-registration. Your organisation membership is checked on every request: navigation alone never grants access.</p></div></li>
-        <li><Mark tone="fit" /><div><h3>People decide what you see</h3><p>A company sees an application only when a person sends one, with the details they chose. An agency sees only its own imported candidates.</p></div></li>
-        <li><Mark tone="unknown" /><div><h3>Private matching isn’t live</h3><p>Being matched privately with people who opted in, and asking them first, is in development. Today no company is matched with Linkbot’s users, and nothing about a person is shared because of a match.</p></div></li>
-        <li><Mark tone="unknown" /><div><h3>No connected ATS or CRM yet</h3><p>Imports stay explicit and reviewable: an agency adds its pool itself. Connecting an existing system isn’t available in the pilot.</p></div></li>
-      </ul>
-    </div>
-  </section>
 
-  <section class="band close-hire" aria-labelledby="next-title">
+  <div class="wrap doc hiring-doc">
+    <div></div>
+    <div class="doc-body hiring-body">
+      <section id="faq" aria-labelledby="faq-title">
+        <h2 id="faq-title">Questions companies ask</h2>
+        <dl class="faq">
+          <div><dt>What does it cost?</dt><dd><Draft>Nothing until you hire. A fee is due when you hire someone through Linkbot; the amount is being set and you will see it before anything is charged.</Draft> Searching, saving and watching are free for people, always.</dd></div>
+          <div><dt>Who can see our role?</dt><dd>People whose own criteria your role meets see it in their results, with the reasons. Nobody is sent your role unasked; Linkbot doesn't email people about roles.</dd></div>
+          <div><dt>Can we browse candidates?</dt><dd>No. There is no directory and no profile search. Agencies work with the candidates they already have and imported themselves; companies see applications people chose to send.</dd></div>
+          <div><dt>How do you know a role "fits"?</dt><dd>By reading, not guessing: what the role states about each of a person's criteria, what differs, and what it doesn't say. "Not stated" is shown as such and never counted as a fit.</dd></div>
+          <div><dt>Does Linkbot connect to our ATS?</dt><dd>Not in the pilot. Imports stay explicit and reviewable; an agency adds its own pool. Connecting an existing system isn't available yet.</dd></div>
+          <div><dt>How do we get access?</dt><dd>Linkbot is in a pilot with invited organisations and isn't taking self-sign-ups yet. If you're invited, your workspace is one sign-in away; your organisation membership is checked on every request.</dd></div>
+        </dl>
+      </section>
+    </div>
+  </div>
+
+  <section class="band close-hire" id="start" aria-labelledby="next-title">
     <div class="wrap close-grid">
       <h2 id="next-title">Already invited? Your workspace is one sign-in away.</h2>
       <p class="hero-actions"><a class="btn btn-green" href={app('#/agency')}>Agency workspace<Icon name="arrow" /></a><a class="btn btn-secondary" href={app('#/employer')}>Company workspace<Icon name="arrow" /></a></p>
-      <p class="muted close-note">Not invited yet? Linkbot is in a pilot with invited organisations and isn’t taking sign-ups. Looking for work instead? <a href="/">Start here</a>.</p>
+      <p class="muted close-note">Not invited yet? Linkbot is in a pilot with invited organisations and isn't taking sign-ups. Looking for work instead? <a href="/">Start here</a>.</p>
     </div>
   </section>
 </Base>
 
 <style>
-  .hero { padding-block: clamp(48px, 8vw, 112px) clamp(48px, 7vw, 96px); }
+  .hero { padding-block: clamp(48px, 8vw, 112px) clamp(32px, 5vw, 64px); }
+  .hero-pay { font-size: var(--size-small); font-weight: 600; color: var(--ink-2); }
+  /* The long page: On this page beside the text, as on How it works. */
+  .hiring-doc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); padding-block: clamp(24px, 4vw, 48px) 0; }
+  @media (min-width: 64rem) { .hiring-doc { grid-template-columns: 15rem minmax(0, 1fr); } }
+  .hiring-body { display: grid; gap: var(--space-section); max-width: 48rem; min-width: 0; padding-bottom: var(--space-section); }
+  .hiring-body section { display: grid; gap: var(--space-head); scroll-margin-top: var(--anchor-top); }
+  .hiring-body h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem); }
+  .hiring-body p { color: var(--ink-2); max-width: var(--measure); }
+  .benefits, .never { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .benefits li, .never li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .benefits h3, .never h3, .steps h3 { font-size: 1.125rem; margin-bottom: 6px; }
+  .benefits p, .never p, .steps p, .faq dd { font-size: var(--size-small); }
+  .steps { display: grid; gap: 0; counter-reset: none; }
+  .steps li { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .steps li:last-child { border-bottom: 1px solid var(--line); }
+  .step-n { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--line-ink); background: var(--surface); font-size: var(--size-micro); font-weight: 700; color: var(--ink-2); }
+  .never-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 20px 32px; }
+  .never-head > div { display: grid; gap: var(--space-head); }
+  @media (max-width: 36rem) { .never-head { grid-template-columns: minmax(0, 1fr); } }
+  .faq { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .faq > div { display: grid; gap: 6px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .faq dt { font-weight: 650; }
+  .faq dd { margin: 0; color: var(--ink-2); }
+  .doc-body a:not(.link):not(.btn) { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--green-line); }
   .hero-inner { display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.4vw, 26px); }
   .hero-inner .lede { max-width: 38em; text-wrap: balance; }
   .role-wrap { display: grid; justify-items: center; margin-top: clamp(40px, 6vw, 72px); }
@@ -136,7 +190,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
   @media (min-width: 40rem) { .h1-line { white-space: nowrap; } }
   h1 { font-size: clamp(2.5rem, 1.1rem + 4.4vw, 4.75rem); }
   .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 24px; }
-  .role { box-shadow: var(--shadow-stage); }
+  .role { box-shadow: var(--shadow-float); }
   /* The brief as written, softened; the words the role reader took each field from in full ink. */
   .role-text { display: grid; gap: 4px; font-size: 1.125rem; line-height: 1.45; color: var(--ink-3); }
   .role-text .read { color: var(--ink); font-weight: 650; }
