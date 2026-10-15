@@ -61,6 +61,16 @@ const SHARED: [string, string][] = [['Work mode', 'Hybrid'], ['Location', 'Lisbo
   </div>
 </section>
 
+<script>
+  /* The card, at its tallest side, and the legend must fit the stage; otherwise the scene stays
+     complete and static (both sides shown, one after the other). */
+  const glass = document.querySelector<HTMLElement>('.glass');
+  glass?.addEventListener('scene:fits', event => {
+    const figure = glass.querySelector<HTMLElement>('.glass-figure')!, card = glass.querySelector<HTMLElement>('.glass-card')!, legend = glass.querySelector<HTMLElement>('.glass-legend')!;
+    if (card.offsetHeight + legend.offsetHeight + 40 > figure.clientHeight) (event as CustomEvent<{ ok: boolean }>).detail.ok = false;
+  });
+</script>
+
 <style>
   /* ── Static: both sides, side by side (stacked on phones), the shared details clear. ── */
   .glass { color: var(--on-green); }

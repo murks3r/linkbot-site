@@ -61,9 +61,14 @@ function queue() { if (!frame) frame = requestAnimationFrame(render); }
 /* A scene is live when motion is allowed and its stage really fits the viewport (its content
    measured live, so nothing can be cut off). */
 function fits(scene: Scene) {
-  const inner = scene.stage.firstElementChild as HTMLElement | null;
+  const inner = scene.stage.querySelector<HTMLElement>(':scope > .scene-inner');
   // The inner box fills the stage; what matters is whether its content overflows it.
-  return !!inner && inner.scrollHeight <= scene.stage.clientHeight + 1 && scene.stage.scrollHeight <= scene.stage.clientHeight + 1;
+  if (!inner || inner.scrollHeight > scene.stage.clientHeight + 1 || scene.stage.scrollHeight > scene.stage.clientHeight + 1) return false;
+  // A scene whose finished state is laid out differently (rows that travel home, a card that turns)
+  // is asked too, while its live layout is in effect, whether that state fits.
+  const ask = new CustomEvent('scene:fits', { detail: { ok: true } });
+  scene.root.dispatchEvent(ask);
+  return ask.detail.ok;
 }
 
 function mode() {

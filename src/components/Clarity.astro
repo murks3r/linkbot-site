@@ -83,8 +83,8 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
             </span>
           </li>)}
         </ol>
-        <p class="clarity-hidden"><Mark tone="unknown" size={10} />1 hidden by Hybrid (Must): it states on-site. Product designer, climate data stays, marked: it doesn’t say.</p>
-        <figcaption id="clarity-legend" class="clarity-legend">Illustration: the openings are examples. The words and how they were read are recorded from Linkbot’s interpreter.</figcaption>
+        <p class="clarity-hidden"><Mark tone="unknown" size={10} />One hidden: it states on-site. One stays, marked: it doesn’t say.</p>
+        <figcaption id="clarity-legend" class="clarity-legend">Illustration: the openings are examples. The words are read by Linkbot’s own interpreter.</figcaption>
       </figure>
     </div>
   </div>
@@ -110,10 +110,22 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
     }
     const figure = scene.querySelector<HTMLElement>('.clarity-figure')!;
     lens.style.setProperty('--lift', `${(lens.getBoundingClientRect().top - figure.getBoundingClientRect().top).toFixed(1)}px`);
+    figure.style.setProperty('--lens-h', `${lens.offsetHeight + 18}px`);
     stage.toggleAttribute('data-measure', false);
   }
   addEventListener('scenes:mode', measure);
   document.fonts?.ready.then(measure);
+  /* The finished state (the lens at the top, four rows with their reasons, the Must's note, the
+     legend) must fit the stage; otherwise the scene stays complete and static. */
+  scene?.addEventListener('scene:fits', event => {
+    const figure = scene.querySelector<HTMLElement>('.clarity-figure')!, lens = scene.querySelector<HTMLElement>('[data-lens]')!;
+    const note = scene.querySelector<HTMLElement>('.clarity-hidden')!, legend = scene.querySelector<HTMLElement>('.clarity-legend')!;
+    const css = getComputedStyle(figure), px = (name: string) => parseFloat(css.getPropertyValue(name)) || 0;
+    const lensH = lens.offsetHeight + 18;
+    figure.style.setProperty('--lens-h', `${lensH}px`);
+    const need = lensH + px('--list-gap') + 4 * (px('--rowh-1') + 8) + note.offsetHeight + 8 + legend.offsetHeight + 12;
+    if (need > figure.clientHeight) (event as CustomEvent<{ ok: boolean }>).detail.ok = false;
+  });
 
   /* The hand moves the far openings less than the near ones (depth); never the words or the list. */
   const field = scene?.querySelector<HTMLElement>('.clarity-field');
@@ -196,7 +208,7 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
 
   /* 3–4. The field: openings at depths, out of focus, drifting; when the four come into focus the
      rest go softer and step back. The hand shifts near ones more than far ones. */
-  :global(.js) .clarity.is-live .clarity-field { display: block; position: absolute; left: 0; right: 0; top: var(--field-top); bottom: 36px; --field-top: clamp(84px, 13cqh, 120px); container-type: size; --mx: 0; --my: 0; }
+  :global(.js) .clarity.is-live .clarity-field { display: block; position: absolute; left: 0; right: 0; top: var(--field-top); bottom: 36px; container-type: size; --mx: 0; --my: 0; }
   :global(.js) .clarity.is-live .op { position: absolute; left: 0; top: 0; --recede: var(--b4);
     transform: translate(calc(var(--x) * (100cqw - 220px) + var(--mx) * (6px + 24px * (1 - var(--z)))), calc(var(--y) * (100cqh - 44px) + var(--my) * (4px + 16px * (1 - var(--z)))))
                scale(calc(1 - .32 * var(--z) - .08 * var(--recede)));
@@ -211,7 +223,8 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
      field, out of focus, as titles. Then they travel home and sharpen; then their reasons appear. */
   :global(.js) .clarity.is-live .clarity-list { display: block; position: absolute; inset: 0; pointer-events: none; }
   /* The list's rows unfold when the reasons arrive (beat 5); until then they hold one line. */
-  :global(.js) .clarity.is-live .clarity-figure { --r5: clamp(0, var(--b5) * 2.2, 1); --rowh: calc(44px + 22px * var(--r5)); --list-top: clamp(96px, 15cqh, 136px); --L: min(36rem, 100cqw); }
+  :global(.js) .clarity.is-live .clarity-figure { --r5: clamp(0, var(--b5) * 2.2, 1); --rowh-0: 44px; --rowh-1: 66px; --rowh: calc(var(--rowh-0) + (var(--rowh-1) - var(--rowh-0)) * var(--r5));
+    --list-gap: 18px; --list-top: calc(var(--lens-h, 80px) + var(--list-gap)); --field-top: calc(var(--lens-h, 80px) + 26px); --L: min(36rem, 100cqw); }
   :global(.js) .clarity.is-live .fit { position: absolute; left: calc((100cqw - var(--L)) / 2); top: calc(var(--list-top) + var(--row) * (var(--rowh) + 8px)); width: var(--L); min-height: var(--rowh);
     --sx: calc(var(--x) * (100cqw - 300px)); --sy: calc(var(--field-top, 110px) + var(--y) * (100cqh - var(--field-top, 110px) - 80px));
     --t: clamp(0, (var(--b4) - var(--row) * .07) / .24, 1); --line: calc(var(--t) * var(--t) * (3 - 2 * var(--t))); --real: clamp(0, var(--line) * 5, 1);
@@ -232,7 +245,7 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
   :global(.js) .clarity.is-live .fit-why { max-height: calc(var(--r5) * 2.8em); overflow: hidden; opacity: var(--r5); }
   /* 6. The Must: what doesn't say stays, marked; one hidden, said so. */
   :global(.js) .clarity.is-live .fit[data-unsaid] { border-style: solid; outline: 1px dashed color-mix(in srgb, transparent calc(100% - 100% * var(--b6)), var(--ink-2)); outline-offset: 3px; }
-  :global(.js) .clarity.is-live .clarity-hidden { position: absolute; left: calc((100cqw - var(--L)) / 2); top: calc(var(--list-top) + 4 * (var(--rowh) + 8px) + 6px); width: var(--L);
+  :global(.js) .clarity.is-live .clarity-hidden { position: absolute; left: calc((100cqw - var(--L)) / 2); top: calc(var(--list-top) + 4 * (var(--rowh) + 8px) + 2px); width: var(--L);
     --n: clamp(0, (var(--b6) - .15) * 4, 1); opacity: var(--n); transform: translateY(calc((1 - var(--n)) * 8px)); }
   :global(.js) .clarity.is-live .clarity-legend { position: absolute; left: 0; right: 0; bottom: 10px; opacity: clamp(0, var(--b3) * 3, 1); }
 
@@ -241,14 +254,18 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
     :global(.js) .clarity.is-live .clarity-read .chip { min-height: 30px; padding: 2px 11px; font-size: .8125rem; }
     :global(.js) .clarity.is-live .lens-frame { inset: -8px -10px -8px -10px; padding-left: 0; }
     :global(.js) .clarity.is-live .lens-frame :global(.icon) { display: none; }
-    :global(.js) .clarity.is-live .clarity-field { --field-top: clamp(96px, 16cqh, 128px); }
+    :global(.js) .clarity.is-live .clarity-legend { font-size: .75rem; }
     :global(.js) .clarity.is-live .op:nth-child(n + 7) { display: none; }
     :global(.js) .clarity.is-live .op { transform: translate(calc(var(--x) * (100cqw - 170px) + var(--mx) * 0px), calc(var(--y) * (100cqh - 40px))) scale(calc(1 - .32 * var(--z) - .08 * var(--recede))); }
     :global(.js) .clarity.is-live .op span { font-size: .8125rem; padding: 7px 11px; }
-    :global(.js) .clarity.is-live .clarity-figure { --rowh: calc(40px + 36px * var(--r5)); --list-top: clamp(104px, 17cqh, 140px); }
-    :global(.js) .clarity.is-live .fit { --sx: calc(var(--x) * max(0px, 100cqw - 270px)); padding: 9px 12px; }
+    /* Phones: one reason per row (Hybrid's, which the Must acts on); the place stays in the
+       static version and on wider screens. */
+    :global(.js) .clarity.is-live .clarity-figure { --rowh-0: 38px; --rowh-1: 56px; --list-gap: 12px; }
+    :global(.js) .clarity.is-live .clarity-hidden { padding: 6px 10px; }
+    :global(.js) .clarity.is-live .fit-title small, :global(.js) .clarity.is-live .fit-why > span + span { display: none; }
+    :global(.js) .clarity.is-live .fit { --sx: calc(var(--x) * max(0px, 100cqw - 270px)); padding: 8px 12px; gap: 2px; }
     :global(.js) .clarity.is-live .fit-title { font-size: .875rem; }
     :global(.js) .clarity.is-live .fit-ghost { font-size: .8125rem; padding: 7px 11px; }
-    :global(.js) .clarity.is-live .fit-why { gap: 0 12px; max-height: calc(var(--r5) * 4.6em); }
+    :global(.js) .clarity.is-live .fit-why { gap: 0 12px; max-height: calc(var(--r5) * 2.2em); }
   }
 </style>

@@ -372,6 +372,30 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         const s = await state(0);
         check(g.live && s.current === 3 && Math.abs(s.p - p) < .01 && s.pinned, `${w}×${h}: after resizing, the fourth beat is still the fourth beat (${JSON.stringify(s)})`);
       }
+      // Every beat at three sizes: nothing visible leaves the stage, and nothing covers the legend
+      // (a scene whose finished state cannot fit a screen stays static there instead).
+      for (const [w, h] of [[360, 740], [390, 844], [1280, 720]]) {
+        await mp.setViewportSize({ width: w, height: h }); await frame(); await frame();
+        for (let i = 0; i < 2; i++) {
+          const g = await geometry(i);
+          if (!g.live) continue;
+          for (const [k, [a, z]] of g.beats.entries()) {
+            await mp.evaluate(y => scrollTo(0, y), Math.round(g.start + g.span * (a + z) / 2)); await settle();
+            const issues = await mp.evaluate(i => {
+              const t = document.querySelectorAll('[data-scene]')[i], s = t.querySelector('[data-scene-stage]'), sr = s.getBoundingClientRect();
+              const visible = e => { let o = 1; for (let x = e; x && x !== s; x = x.parentElement) { const cs = getComputedStyle(x); if (cs.visibility === 'hidden' || cs.display === 'none') return false; o *= Number(cs.opacity); } return o > .05; };
+              const legend = t.querySelector('figcaption'), lr = legend && visible(legend) ? legend.getBoundingClientRect() : null;
+              const items = [...t.querySelectorAll('.caption h2, .caption small, .chip, .fit, .clarity-hidden, .glass-face, .glass-shared li, .clarity-sentence')].filter(e => !e.closest('[aria-hidden="true"]') && visible(e) && e.getBoundingClientRect().height > 0);
+              const out = [];
+              for (const e of items) { const r = e.getBoundingClientRect();
+                if (r.bottom > sr.bottom + 1 || r.top < sr.top - 1) out.push(`${e.className.split(' ')[0] || e.localName} leaves the stage`);
+                if (lr && !legend.contains(e) && r.bottom > lr.top + 1 && r.top < lr.bottom - 1 && r.right > lr.left && r.left < lr.right) out.push(`${e.className.split(' ')[0] || e.localName} covers the legend`); }
+              return [...new Set(out)];
+            }, i);
+            check(issues.length === 0, `${w}×${h} ${names[i]} beat ${k + 1}: ${issues.join('; ')}`);
+          }
+        }
+      }
       // A screen too short for a stage gets the complete story instead.
       await mp.setViewportSize({ width: 844, height: 390 }); await frame(); await frame();
       check(await mp.evaluate(() => [...document.querySelectorAll('[data-scene]')].every(s => !s.classList.contains('is-live'))), 'a short landscape screen gets the static story');
