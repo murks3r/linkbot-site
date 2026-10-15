@@ -1,10 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import SearchForm from '../components/SearchForm.astro';
-import Orbit from '../components/Orbit.astro';
-import Priorities from '../components/Priorities.astro';
-import Evidence from '../components/Evidence.astro';
-import Boundary from '../components/Boundary.astro';
+import Clarity from '../components/Clarity.astro';
+import Glass from '../components/Glass.astro';
 import Icon from '../components/Icon.astro';
 import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
 ---
@@ -12,79 +10,94 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
   description="Say what matters in a few words. Linkbot reads current job listings against them and shows why each one fits, or doesn’t. No account needed."
   path="/" quietHeader sky>
 
-  <!-- 1. The opening viewport: one focal composition. The headline and the search are one unit, the
-       search at the optical centre, the pink action the only filled control, one line beneath it. -->
+  <!-- 1. The opening viewport: one focal unit (the headline, the search, the pink action) on the
+       living atmosphere; three plain promises at its foot. -->
   <section class="hero" data-stage="value" aria-labelledby="hero-title">
-    <div class="wrap hero-inner">
-      <h1 id="hero-title"><span class="h1-line">Find work that fits.</span> <span class="h1-line h1-soft">Keep your privacy.</span></h1>
+    <div class="hero-focal">
+      <h1 id="hero-title"><span class="h1-line">Find work that fits.</span> <span class="h1-line">Keep your privacy.</span></h1>
       <div class="hero-search" data-hero-search>
-        <SearchForm id="q-hero" size="monumental" describedBy="hero-note" />
+        <SearchForm id="q-hero" size="focal" />
       </div>
-      <p class="hero-note" id="hero-note">Say what matters in a few words. Linkbot reads current listings against them and shows why each one fits, or doesn’t.</p>
     </div>
-    <a class="hero-cue" href="#story" aria-label="Read how Linkbot works"><Icon name="down" /></a>
+    <div class="hero-foot">
+      <ul class="promises" aria-label="Before you search">
+        <li>No account needed to search</li>
+        <li>See why each job fits</li>
+        <li>Employers aren’t told you’re looking</li>
+      </ul>
+      <a class="hero-cue" href="#story" aria-label="See how it works"><span data-decor aria-hidden="true"></span></a>
+    </div>
   </section>
 
-  <!-- 2–5. The story, on pinned scenes driven by scroll position: the loop becomes a line; what
-       matters to you; one opening explained; the boundary. -->
+  <!-- 2. The story: your words become clarity (one continuous scene). -->
   <div id="story" class="story" data-stage="story">
-    <Orbit />
-    <Priorities />
-    <Evidence />
+    <Clarity />
   </div>
 
-  <!-- The hinge into privacy: the one deep band. -->
-  <section class="band hinge" data-tone="green" data-stage="trust" aria-labelledby="hinge-title">
-    <div class="wrap hinge-inner">
-      <h2 id="hinge-title">Being a good fit doesn’t make you visible.</h2>
-      <p>Finding, matching, keeping, sharing and applying are five separate decisions. None of them happens because another one did.</p>
-    </div>
+  <!-- 3. The night: privacy, as two sides of the glass. -->
+  <section class="night" data-stage="privacy" data-air-cover aria-label="Your privacy">
+    <div class="night-ground" data-decor aria-hidden="true"></div>
+    <svg class="night-grain" aria-hidden="true" focusable="false"><rect class="grain-coarse" width="100%" height="100%" fill="url(#grain-tile-coarse)" /><rect class="grain-fine" width="100%" height="100%" fill="url(#grain-tile-fine)" /></svg>
+    <Glass />
   </section>
 
-  <div class="story" data-stage="boundary">
-    <Boundary />
-  </div>
-
-  <!-- 6. The invitation: the question the story leaves you with, and the search again. -->
+  <!-- 4. The invitation: the question the story leaves you with, and the search again. -->
   <section class="band start" data-stage="start" aria-labelledby="start-title">
     <div class="wrap start-inner">
       <h2 id="start-title">What would make your next move worth it?</h2>
-      <SearchForm id="q-start" size="monumental" placeholder={START_PLACEHOLDER} examples={START_EXAMPLES} />
+      <SearchForm id="q-start" size="focal" placeholder={START_PLACEHOLDER} examples={START_EXAMPLES} />
       <p class="start-links"><a class="link" href="/how-it-works">How it works<Icon name="arrow" /></a><a class="link" href="/privacy">How your privacy works<Icon name="arrow" /></a><a class="link" href="/hiring">Hiring?<Icon name="arrow" /></a></p>
     </div>
   </section>
 </Base>
 
+<script>import '../scripts/atmosphere';</script>
+
 <style>
-  /* 1. The hero. The block starts high enough that the search sits near the optical centre
-     (about 45 % of the viewport), with the headline composed above it and air below. */
-  .hero { position: relative; min-height: calc(100svh - var(--header)); display: grid; align-content: start; padding-top: clamp(56px, 13vh, 140px); padding-bottom: 96px; }
-  .hero-inner { display: grid; justify-items: center; text-align: center; gap: clamp(22px, 3.2vh, 34px); }
-  .hero h1 { max-width: 14ch; }
+  /* 1. The hero. The focal unit starts high enough that the search sits just above the middle of
+     the viewport (its optical centre); the promises keep to the foot. */
+  .hero { position: relative; min-height: calc(100svh - var(--header)); display: grid; grid-template-rows: 1fr auto; padding: clamp(48px, 15vh, 150px) var(--gutter) 0; }
+  .hero-focal { display: grid; justify-items: center; align-content: start; gap: clamp(26px, 3.6vh, 38px); text-align: center; }
+  /* One weight and one colour on both lines: the composition is balanced by measure, not by
+     softening a line. */
+  .hero h1 { max-width: 15ch; font-weight: 560; }
   .h1-line { display: block; }
-  .h1-soft { font-weight: 320; color: var(--ink-2); }
   .hero-search { width: 100%; display: grid; justify-items: center; }
-  .hero-note { max-width: 30em; font-size: var(--size-body); line-height: 1.5; color: var(--ink-2); text-wrap: balance; }
-  .hero-cue { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); display: grid; place-items: center; width: var(--target); height: var(--target); border-radius: 50%; color: var(--ink-3); text-decoration: none; transition: color var(--fast), transform var(--base) var(--ease); }
-  .hero-cue:hover { color: var(--ink); transform: translate(-50%, 3px); }
-  @media (prefers-reduced-motion: no-preference) { :global(.js) .hero-cue :global(.icon) { animation: cue 2.4s var(--ease) infinite; } }
-  @keyframes cue { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  .hero-foot { display: grid; justify-items: center; gap: 18px; padding-bottom: clamp(18px, 3vh, 28px); }
+  .promises { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 0; font-size: var(--size-small); font-weight: 560; color: var(--ink-2); }
+  .promises li { display: inline-flex; align-items: center; }
+  .promises li + li::before { content: ''; width: 4px; height: 4px; margin: 0 18px; border-radius: 50%; background: currentColor; opacity: .7; }
+  .hero-cue { position: relative; display: grid; place-items: center; width: var(--target); height: var(--target); color: var(--ink-2); }
+  .hero-cue span { width: 1px; height: 28px; background: linear-gradient(currentColor, transparent); transform-origin: 0 0; }
+  @media (prefers-reduced-motion: no-preference) { :global(.js) .hero-cue span { animation: cue 2.8s var(--ease) infinite; } }
+  @keyframes cue { 0% { transform: scaleY(0); opacity: 0; } 30% { opacity: 1; } 70% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1) translateY(10px); opacity: 0; } }
+  .hero-cue:hover { color: var(--ink); }
 
-  /* The hinge: the one deep band, composed off the centre line. */
-  .hinge { padding-block: clamp(80px, 12vw, 160px); }
-  .hinge-inner { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 112px); align-items: end; }
-  .hinge h2 { font-size: clamp(2.25rem, 1.2rem + 3.4vw, 4.25rem); color: var(--on-green); }
-  .hinge p { font-size: var(--size-lede); color: var(--on-green-2); max-width: 30em; }
+  /* 3. The night: a deep band lit from within by three proven dark tints, with the paper's grain.
+     Its edges dissolve into the atmosphere rather than cut it. */
+  /* The fades live inside the band's own padding, so no text of a neighbouring section ever sits on
+     a half-dark ground. */
+  .night { position: relative; isolation: isolate; padding-block: var(--fade); color: var(--on-green); --fade: clamp(96px, 16vh, 160px); }
+  .night-ground { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: var(--green);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%); }
+  /* The grain on the night is gentler (soft-light is strongest on mid-tones) and follows the
+     band's own fades, so the edges never read as static. */
+  .night-grain { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; mix-blend-mode: soft-light; opacity: .6; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 calc(var(--fade) * 1.4), #000 calc(100% - var(--fade) * 1.4), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 calc(var(--fade) * 1.4), #000 calc(100% - var(--fade) * 1.4), transparent 100%); }
+  .night-grain .grain-fine { display: none; }
+  @media (min-resolution: 1.5dppx) { .night-grain .grain-coarse { display: none; } .night-grain .grain-fine { display: inline; } }
 
-  /* 6. The start: back on the centre line. */
-  .start { padding-block: clamp(96px, 14vw, 200px) clamp(80px, 10vw, 140px); }
+  /* 4. The start: back on the centre line. */
+  .start { padding-block: clamp(140px, 16vw, 240px) clamp(80px, 10vw, 140px); }
   .start-inner { display: grid; justify-items: center; text-align: center; gap: clamp(24px, 3vw, 36px); }
   .start h2 { max-width: 16ch; }
   .start-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 28px; margin-top: clamp(16px, 3vw, 32px); font-size: var(--size-small); }
 
-  @media (max-width: 64rem) { .hinge-inner { grid-template-columns: minmax(0, 1fr); align-items: start; } }
   @media (max-width: 40rem) {
-    .hero { padding-top: clamp(48px, 12vh, 110px); padding-bottom: 80px; }
-    .hero-note { font-size: var(--size-small); }
+    .hero { padding-top: clamp(40px, 12vh, 110px); }
+    .promises { flex-direction: column; align-items: center; gap: 4px; font-size: var(--size-micro); }
+    .promises li + li::before { display: none; }
   }
 </style>
