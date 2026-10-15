@@ -8,7 +8,7 @@ export const AXES: { id: string; label: string; values: [string, string][] }[] =
   { id: 'radius', label: 'Search field', values: [['16', 'Rounded 16 px'], ['10', 'Rounded 10 px'], ['20', 'Rounded 20 px'], ['pill', 'Pill (A7)']] },
   { id: 'controls', label: 'Buttons and chips', values: [['keep', 'Stay pills'], ['follow', 'Follow the field']] },
   { id: 'palette', label: 'Palette', values: [['a7', 'A7, refined'], ['moss', 'Moss and blush'], ['ink', 'Ink and coral']] },
-  { id: 'type', label: 'Type', values: [['archivo', 'Archivo + Figtree (A7)'], ['pair-b', 'Pair B'], ['pair-c', 'Pair C']] },
+  { id: 'type', label: 'Type', values: [['archivo', 'Archivo + Figtree (A7)'], ['pair-b', 'Audex + Figtree'], ['pair-c', 'Arcticons Sans + Figtree']] },
   { id: 'badge', label: 'Badge text', values: [['yours', 'Your words. Your data. Your call.'], ['sees', 'Nobody sees you unless you say yes'], ['fit', 'A fit tells no one (under counsel review)']] },
 ];
 export const DEFAULTS = Object.fromEntries(AXES.map(a => [a.id, a.values[0][0]]));
