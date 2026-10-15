@@ -19,7 +19,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
     {place && <span class="search-place">
       <label class="search-place-label" for={`${id}-place`}>Where?</label>
       <Icon name="pin" size={18} />
-      <input id={`${id}-place`} type="text" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="search" maxlength="60" placeholder="City or country, optional" data-place-input />
+      <input id={`${id}-place`} type="text" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="search" maxlength="60" placeholder="City or country" data-place-input />
     </span>}
     <button class="btn btn-primary" type="submit" data-lit={size === 'focal' ? '' : undefined}>{size === 'focal' && <span class="btn-light" data-decor aria-hidden="true"></span>}<span>Search</span><Icon name="arrow" /></button>
   </div>
@@ -41,7 +41,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   .search .btn { min-height: 54px; flex: none; }
   /* A8: the place, a narrower split beside the words: what, and where. Two real labelled inputs in
      one shell; a hairline parts them; the place is optional. */
-  .search-place { display: flex; align-items: center; flex: 0 1 12rem; min-width: 9rem; padding-left: 12px; border-left: 1.5px solid var(--line-strong); }
+  .search-place { display: flex; align-items: center; flex: 0 1 11rem; min-width: 9rem; padding-left: 12px; border-left: 1.5px solid var(--line-strong); }
   /* With a place beside the words the field is a little wider, so the placeholder still reads. */
   .search[data-size='focal'][data-place] { max-width: 50rem; }
   .search-place-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
