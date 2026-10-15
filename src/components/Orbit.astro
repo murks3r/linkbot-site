@@ -1,0 +1,146 @@
+---
+/* Scene 1 (Concept A5): the loop becomes a line.
+
+   Fourteen openings circle the person on two orbits, near and far, turning at different speeds.
+   As the visitor scrolls, the orbits turn (chapter A: job search runs in circles), then the
+   person's words arrive at the centre, read by Linkbot's own interpreter, the orbits spread and
+   soften, and the four openings that fit leave their orbits and line up beneath the words
+   (chapter B: the loop straightens into a list). Five beats, every one a function of scroll
+   position (--p, --b1 … --b5 from src/scripts/stages.ts).
+
+   Without scripts, with reduced motion or on a screen the stage cannot hold, the scene is its
+   complete final state: the words, their reading, the four that fit, the rest faded, and the five
+   statements in order. The openings are illustrative and the caption says so. */
+import { reading, LEVEL, ORBIT } from '../data/content';
+const words = reading('story');
+const ring = ORBIT.ring;
+const fits = ring.filter(o => o.fit);
+const count = (r: 1 | 2) => ring.filter(o => o.ring === r).length;
+const index = (o: (typeof ring)[number]) => ring.filter(x => x.ring === o.ring).indexOf(o);
+/* A caption rises quickly with its beat and falls as the next one starts; statically all are on. */
+const on = (i: number, n: number) => {
+  const rise = i === 0 ? '1' : `clamp(0, var(--b${i + 1}, 1) * 3, 1)`;
+  const fall = i < n - 1 ? `(1 - clamp(0, var(--b${i + 2}, 0) * 3, 1))` : '1';
+  return `calc(${rise} * ${fall})`;
+};
+const CAPTIONS: [string, string][] = [
+  ['Job search runs in circles.', 'Boards, career pages, recruiters: the same openings, over and over.'],
+  ['Everywhere. Every week. The same search.', 'You explain what you want again and again, and still can’t tell what fits.'],
+  ['And still: which one is right for you?', 'There’s no shortage of openings. The hard part is knowing which one is worth your next move.'],
+  ['Say what matters, once.', 'A few words. Linkbot reads them into criteria you can see and change.'],
+  ['Four fit. The rest step back.', 'Every opening is read against your words, not against you. Nothing is scored.'],
+];
+---
+<section class="scene orbit" data-scene data-beats="0:.2,.2:.4,.4:.58,.58:.78,.78:1" style="--beats: 5" aria-labelledby="orbit-caption-1">
+  <div class="scene-stage" data-scene-stage>
+    <div class="scene-inner orbit-inner">
+      <ol class="captions orbit-captions">
+        {CAPTIONS.map(([title, body], i) => <li class="caption" data-caption style={`--on: ${on(i, CAPTIONS.length)}`} id={`orbit-caption-${i + 1}`}><h2>{title}</h2><small>{body}</small></li>)}
+      </ol>
+      <figure class="orbit-figure" aria-labelledby="orbit-legend">
+        <div class="orbit-space">
+          <div class="orbit-path" data-ring="1" aria-hidden="true"></div>
+          <div class="orbit-path" data-ring="2" aria-hidden="true"></div>
+          <ul class="orbit-ring" aria-hidden="true">
+            {ring.map(o => <li class="orbit-card" data-ring={o.ring} data-fit={o.fit ? '' : undefined} style={`--i: ${index(o)}; --n: ${count(o.ring)}${o.fit ? `; --j: ${fits.indexOf(o)}` : ''}`}>
+              <b>{o.title}</b>{o.fit && <small>{o.place} · hybrid</small>}
+            </li>)}
+          </ul>
+          <span class="orbit-you" aria-hidden="true"><i></i>You</span>
+          <div class="orbit-words">
+            <p class="orbit-field"><span class="orbit-typed">{words.text}</span></p>
+            <ul class="orbit-read" aria-label="How Linkbot reads these words">
+              {words.criteria.map((c, i) => <li class="chip" style={`--k: ${i}`}>{c.label}<small>{LEVEL[c.level ?? 'prefer']}</small></li>)}
+            </ul>
+          </div>
+        </div>
+        <p class="sr">The four that fit: {fits.map(o => o.title).join('; ')}.</p>
+        <figcaption id="orbit-legend" class="orbit-legend">Illustration: the openings are examples. The words are read by Linkbot’s own interpreter.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Radii keep every card and path inside the space at every width (so nothing is ever cut), and the
+     static space is tall enough for the final list below the centre. */
+  .orbit { --R1: min(190px, 18vw); --R2: min(330px, 30vw); --squash: .8; --card: 172px; --row: min(440px, 88vw); --rowh: 46px; --gap: 8px; --centre: 52%; --centre-n: .52; }
+  /* The beats are written on the stage, so anything derived from them must live inside it: as the
+     words arrive the orbits spread and soften; as the four leave, the rest fade. */
+  .orbit-space { --spread: calc(1 + .14 * var(--b4, 1)); --soften: var(--b4, 1); --fade: var(--b5, 1); }
+  .orbit-inner { display: grid; gap: 24px; padding: 24px var(--gutter) 32px; }
+  .orbit-captions { max-width: 46rem; margin-inline: auto; text-align: center; }
+  .orbit-captions h2 { font-size: inherit; font-weight: inherit; letter-spacing: inherit; line-height: inherit; }
+  .orbit-captions small { max-width: 34em; margin-inline: auto; }
+  .orbit-figure { display: grid; gap: 12px; justify-items: center; }
+  .orbit-space { --space-h: max(calc(var(--R2) * 2 * var(--squash) + 120px), calc((118px + 4 * (var(--rowh) + var(--gap)) + 36px) / (1 - var(--centre-n)))); position: relative; width: min(100%, 64rem); height: var(--space-h); overflow: clip;
+    /* As the list forms it may need more room below the centre than the space has: the whole
+       composition lifts by exactly that much (zero when it fits), so the last row is never cut off. */
+    --need: calc(var(--space-h) * var(--centre-n) + 118px + 4 * (var(--rowh) + var(--gap)) + 36px);
+    --lift: max(0px, calc(var(--need) - var(--space-h))); --lift-now: calc(var(--b5, 1) * var(--lift)); }
+
+  /* The orbits themselves, drawn faintly, so the loop reads at a glance. */
+  .orbit-path { position: absolute; left: 50%; top: var(--centre); border: 1px solid var(--line-strong); border-radius: 50%; transform: translate(-50%, calc(-50% - var(--lift-now))) scale(var(--spread)); opacity: calc(1 - .85 * var(--fade)); }
+  .orbit-path[data-ring='1'] { width: calc(var(--R1) * 2); height: calc(var(--R1) * 2 * var(--squash)); }
+  .orbit-path[data-ring='2'] { width: calc(var(--R2) * 2); height: calc(var(--R2) * 2 * var(--squash)); }
+
+  /* Cards: position from the angle, which the beats turn (the far orbit turns slower, so the two
+     move against each other). Each card is a function of --p. */
+  .orbit-ring { position: absolute; left: 50%; top: var(--centre); width: 0; height: 0; }
+  .orbit-card { --speed: 1; --spin: calc((var(--b1, 1) + var(--b2, 1) + var(--b3, 1)) * 140deg * var(--speed)); --a: calc(var(--i) * 360deg / var(--n) - 90deg + var(--spin));
+    --m: 0; --x: calc(cos(var(--a)) * var(--R) * var(--spread) * (1 - var(--m))); --y: calc(sin(var(--a)) * var(--R) * var(--squash) * var(--spread) * (1 - var(--m)) + var(--ly, 0px) * var(--m) - var(--lift-now));
+    position: absolute; left: 0; top: 0; width: max-content; max-width: var(--card); padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--r-2); background: var(--surface); box-shadow: 0 1px 2px rgb(18 58 44 / .04);
+    font-size: .8125rem; line-height: 1.3; color: var(--ink-2); text-align: left; white-space: nowrap;
+    transform: translate(-50%, -50%) translate(var(--x), var(--y)) scale(calc(var(--depth, 1) - .1 * var(--fade)));
+    opacity: calc(var(--near, 1) * (1 - .3 * var(--soften)) * (1 - .78 * var(--fade))); }
+  .orbit-card[data-ring='1'] { --R: var(--R1); --speed: 1.3; z-index: 1; }
+  .orbit-card[data-ring='2'] { --R: var(--R2); --speed: .85; --depth: .94; --near: .9; }
+  .orbit-card b { display: block; font-weight: 600; color: inherit; }
+  .orbit-card small { display: block; margin-top: 2px; font-size: .75rem; color: var(--ink-3); }
+  /* The four that fit: full ink, two lines on the orbit, and they travel to the list beneath the words. */
+  .orbit-card[data-fit] { --m: var(--b5, 1); --ly: calc(118px + var(--j) * (var(--rowh) + var(--gap))); white-space: normal; width: calc(var(--card) + (var(--row) - var(--card)) * var(--m)); max-width: none;
+    color: var(--ink); border-color: color-mix(in srgb, var(--line) calc(100% - 100% * var(--m)), var(--line-ink)); box-shadow: 0 1px 2px rgb(18 58 44 / .06), 0 10px 24px -16px rgb(18 58 44 / calc(.3 * (1 - var(--m))));
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px; opacity: 1; transform: translate(-50%, -50%) translate(var(--x), var(--y)); z-index: 3; }
+  .orbit-card[data-fit] b { white-space: nowrap; }
+  .orbit-card[data-fit] small { flex: none; margin: 0; opacity: var(--m); }
+  .orbit-card[data-fit][data-ring='2'] { --depth: 1; --near: 1; }
+
+  /* The person at the centre, then the person's words. */
+  .orbit-you { position: absolute; left: 50%; top: var(--centre); transform: translate(-50%, calc(-50% - var(--lift-now))); display: grid; justify-items: center; gap: 6px; font-size: var(--size-micro); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3);
+    opacity: calc(1 - var(--b4, 1)); z-index: 2; }
+  .orbit-you i { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); }
+  .orbit-words { --w: clamp(0, var(--b4, 1) * 4, 1); position: absolute; left: 50%; top: var(--centre); transform: translate(-50%, calc(-50% - var(--lift-now))) scale(calc(.96 + .04 * var(--w))); width: min(100%, 40rem); display: grid; gap: 10px; justify-items: center; z-index: 4;
+    opacity: var(--w); }
+  .orbit-field { width: min(100%, 36rem); min-height: 66px; display: flex; align-items: center; padding: 0 24px; border: 1.5px solid var(--green); border-radius: var(--pill); background: var(--surface); box-shadow: var(--shadow-field);
+    font-size: clamp(1rem, .95rem + .3vw, 1.1875rem); font-weight: 520; letter-spacing: -.005em; }
+  /* The words are revealed as the visitor scrolls, as if typed; backwards they are untyped. */
+  .orbit-typed { clip-path: inset(0 calc((1 - var(--b4, 1)) * 100%) 0 0); white-space: nowrap; }
+  .orbit-read { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  /* The reading appears chip by chip in the last third of the beat, and is complete at its end. */
+  .orbit-read .chip { --c: clamp(0, (var(--b4, 1) - .66 - var(--k) * .06) * 8, 1); min-height: 32px; padding: 3px 12px; font-size: .8125rem; opacity: var(--c); transform: translateY(calc((1 - var(--c)) * 8px)); }
+  .orbit-legend { font-size: var(--size-micro); color: var(--ink-3); text-align: center; }
+
+  /* Live: captions own the top of the stage, one at a time; the figure fills the rest. */
+  :global(.js) .orbit.is-live .orbit-inner { gap: 0; padding-top: 16px; }
+  :global(.js) .orbit.is-live .orbit-space { --space-h: min(calc(100svh - var(--header) - var(--cap-h, clamp(112px, 17vh, 150px)) - 72px), calc(var(--R2) * 2 * var(--squash) + 160px)); }
+  :global(.js) .orbit.is-live .orbit-legend { position: absolute; left: 0; right: 0; bottom: 8px; }
+
+  @media (max-width: 52rem) {
+    .orbit { --R1: min(108px, 28vw); --R2: min(136px, 35vw); --squash: .9; --card: 128px; --rowh: 42px; --gap: 6px; --centre: 47%; --centre-n: .47; }
+    .orbit-space { --need: calc(var(--space-h) * var(--centre-n) + 120px + 4 * (var(--rowh) + var(--gap)) + 36px); --space-h: max(calc(var(--R2) * 2 * var(--squash) + 120px), calc((120px + 4 * (var(--rowh) + var(--gap)) + 36px) / (1 - var(--centre-n)))); }
+    /* On a phone the near orbit is narrower than the words, so it steps back further as they arrive. */
+    .orbit-space { --spread: calc(1 + .15 * var(--b4, 1)); --soften: calc(var(--b4, 1) * 2.4); }
+    .orbit-card { opacity: calc(var(--near, 1) * max(.12, 1 - .3 * var(--soften)) * (1 - .78 * var(--fade))); }
+    .orbit-card { padding: 6px 9px; font-size: .75rem; white-space: normal; }
+    /* The far orbit becomes dots, the near one keeps its chips. */
+    .orbit-card[data-ring='2']:not([data-fit]) { width: 10px; height: 10px; padding: 0; border-radius: 50%; background: var(--line-ink); border: 0; box-shadow: none; }
+    .orbit-card[data-ring='2']:not([data-fit]) b { display: none; }
+    .orbit-card[data-fit] { --ly: calc(120px + var(--j) * (var(--rowh) + var(--gap))); }
+    .orbit-card[data-fit] b { white-space: normal; }
+    .orbit-card[data-fit] small { display: none; }
+    .orbit-words { width: min(100%, 22rem); }
+    .orbit-field { min-height: 54px; padding: 8px 16px; font-size: .9375rem; border-radius: var(--r-3); }
+    .orbit-typed { white-space: normal; }
+    .orbit-read .chip { min-height: 28px; padding: 2px 10px; font-size: .75rem; }
+  }
+</style>

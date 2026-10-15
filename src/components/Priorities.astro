@@ -1,0 +1,115 @@
+---
+/* Scene 2 (Concept A5): what matters to you.
+
+   The composition scene 1 ended with (the words, their reading, the openings that fit) continues,
+   and three beats explain the mechanics one criterion at a time, each with its consequence shown
+   on the list: Prefer brings listings up, Avoid sends them down, and a Must, which only the person
+   can set, hides what states otherwise while what doesn't say stays, marked. The levels and their
+   effects are the product's own (frontend/src/i18n/en.ts levelHints). The openings are examples. */
+import Mark from './Mark.astro';
+import { reading, LEVEL, ORBIT } from '../data/content';
+const words = reading('story');
+const fits = ORBIT.ring.filter(o => o.fit);
+const agency = ORBIT.ring.find(o => o.agency)!;
+/* A caption rises quickly with its beat and falls as the next one starts; statically all are on. */
+const on = (i: number, n: number) => {
+  const rise = i === 0 ? '1' : `clamp(0, var(--b${i + 1}, 1) * 3, 1)`;
+  const fall = i < n - 1 ? `(1 - clamp(0, var(--b${i + 2}, 0) * 3, 1))` : '1';
+  return `calc(${rise} * ${fall})`;
+};
+const CAPTIONS: [string, string][] = [
+  ['Prefer moves listings up.', '“Hybrid” is a preference: openings that state it come up, with where they say so. Nothing disappears.'],
+  ['Avoid moves them down.', '“No agency work” is an Avoid: an opening that states agency work goes down the list. It is still there.'],
+  ['A Must is yours to set.', 'Make “Hybrid” a Must and openings that state otherwise are hidden. Those that don’t say stay, marked. Linkbot never sets a Must for you.'],
+];
+---
+<section class="scene priorities" data-scene data-beats="0:.3,.34:.64,.68:1" style="--beats: 3" aria-labelledby="priorities-caption-1">
+  <div class="scene-stage" data-scene-stage>
+    <div class="scene-inner priorities-inner">
+      <ol class="captions priorities-captions">
+        {CAPTIONS.map(([title, body], i) => <li class="caption" data-caption style={`--on: ${on(i, CAPTIONS.length)}`} id={`priorities-caption-${i + 1}`}><h2>{title}</h2><small>{body}</small></li>)}
+      </ol>
+      <figure class="priorities-figure" aria-labelledby="priorities-legend">
+        <p class="priorities-field"><span>{words.text}</span></p>
+        <ul class="priorities-read" aria-label="How Linkbot reads these words">
+          {words.criteria.map((c, i) => <li class="chip" data-k={i} data-must={c.label === 'Hybrid' ? '' : undefined}>
+            <span class="chip-label">{c.label}</span>
+            <small class="chip-level"><span class="chip-soft">{LEVEL[c.level ?? 'prefer']}</span><span class="chip-hard">Must</span></small>
+          </li>)}
+        </ul>
+        <ol class="priorities-list">
+          {fits.map((o, j) => <li class="priorities-row" data-j={j} data-hybrid={o.hybrid ? '' : undefined} data-unsaid={o.hybrid ? undefined : ''}>
+            <b>{o.title}</b>
+            <span class="row-evidence" data-tone={o.hybrid ? 'fit' : 'unknown'}><Mark tone={o.hybrid ? 'fit' : 'unknown'} size={10} />{o.hybrid ?? 'Hybrid not stated'}</span>
+          </li>)}
+          <li class="priorities-slot">
+            <div class="priorities-row priorities-row-avoid">
+              <b>{agency.title}</b>
+              <span class="row-evidence" data-tone="tradeoff"><Mark tone="tradeoff" size={10} />states {agency.agency}: moved down</span>
+            </div>
+            <p class="priorities-hidden"><Mark tone="unknown" size={10} />1 hidden by Hybrid (Must): it states on-site</p>
+          </li>
+        </ol>
+        <figcaption id="priorities-legend" class="priorities-legend">Illustration. The levels and what they do are the product’s own.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .priorities { --rowh: 46px; --gap: 8px; }
+  .priorities-inner { display: grid; gap: 24px; padding: 24px var(--gutter) 32px; }
+  .priorities-captions { max-width: 46rem; margin-inline: auto; text-align: center; }
+  .priorities-captions h2 { font-size: inherit; font-weight: inherit; letter-spacing: inherit; line-height: inherit; }
+  .priorities-captions small { max-width: 36em; margin-inline: auto; }
+  .priorities-figure { display: grid; gap: 10px; justify-items: center; width: min(100%, 40rem); margin-inline: auto; }
+  .priorities-field { width: min(100%, 36rem); min-height: 66px; display: flex; align-items: center; padding: 0 24px; border: 1.5px solid var(--green); border-radius: var(--pill); background: var(--surface); box-shadow: var(--shadow-field);
+    font-size: clamp(1rem, .95rem + .3vw, 1.1875rem); font-weight: 520; letter-spacing: -.005em; }
+  .priorities-read { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .priorities-read .chip { min-height: 32px; padding: 3px 12px; font-size: .8125rem; transition: none; }
+  /* The chip the beat explains comes forward; the others soften. */
+  .priorities-read .chip[data-k='1'] { --f: max(var(--b1, 1), var(--b3, 1)); }
+  .priorities-read .chip[data-k='3'] { --f: var(--b2, 1); }
+  .priorities-read .chip[data-k='0'], .priorities-read .chip[data-k='2'] { --f: 0; }
+  .priorities-read .chip { --dim: clamp(0, var(--b1, 1) * 2, 1); color: color-mix(in srgb, var(--ink) calc(100% - 28% * var(--dim) * (1 - var(--f))), var(--paper)); transform: scale(calc(1 + .06 * var(--f))); }
+  .priorities-read .chip[data-k='1'] { border-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--f)), var(--green)); }
+  .priorities-read .chip[data-k='3'] { border-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--f)), var(--green)); }
+  /* Hybrid becomes a Must in the third beat: the chip fills green, its level reads Must. */
+  /* Hybrid becomes a Must early in the third beat, quickly (a crossfade of a filled chip passes
+     through unreadable mid-tones, so the flip takes a tenth of the beat). */
+  .priorities-read .chip[data-must] { --h: clamp(0, (var(--b3, 1) - .2) * 10, 1); background: color-mix(in srgb, var(--surface) calc(100% - 100% * var(--h)), var(--green)); color: color-mix(in srgb, var(--ink) calc(100% - 100% * var(--h)), var(--on-green)); }
+  .chip-level { position: relative; display: inline-grid; }
+  .priorities-read .chip[data-must] .chip-level { color: color-mix(in srgb, var(--ink-2) calc(100% - 100% * var(--h)), var(--on-green-2)); }
+  .chip-level > span { grid-area: 1 / 1; }
+  .chip-hard { opacity: var(--h, 0); }
+  .chip[data-must] .chip-soft { opacity: calc(1 - var(--h, 0)); }
+  .chip[data-must] .chip-level { border-left-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--h)), var(--green-rule)); }
+
+  .priorities-list { position: relative; width: 100%; display: grid; gap: var(--gap); margin-top: 8px; }
+  .priorities-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-height: var(--rowh); padding: 9px 14px; border: 1px solid var(--line-ink); border-radius: var(--r-2); background: var(--surface); font-size: .8125rem; line-height: 1.3; color: var(--ink); }
+  .priorities-row b { font-weight: 600; }
+  .row-evidence { flex: none; display: inline-flex; align-items: center; gap: 6px; font-size: .75rem; color: var(--ink-2); opacity: var(--e, 1); transform: translateX(calc((1 - var(--e, 1)) * 8px)); }
+  /* Beat 1: the evidence for Hybrid appears on the rows that state it. */
+  .priorities-row[data-hybrid] .row-evidence { --e: clamp(0, var(--b1, 1) * 2.5, 1); }
+  .priorities-row[data-unsaid] .row-evidence { --e: clamp(0, max(var(--b1, 1), var(--b3, 1)) * 2.5, 1); color: var(--ink-3); }
+  /* The last slot holds two states in the same box, so nothing reflows or clips. Beat 2: the agency
+     opening enters there, softened and marked as moved down. Beat 3: a Must hides what states
+     otherwise, so the row gives way to a note that says what was hidden and why. */
+  .priorities-slot { display: grid; }
+  .priorities-slot > * { grid-area: 1 / 1; }
+  .priorities-row-avoid { --v: clamp(0, var(--b2, 1) * 2.5, 1); --hide: clamp(0, var(--b3, 1) * 4, 1); opacity: calc(var(--v) * (1 - var(--hide))); transform: translateY(calc((1 - var(--v)) * -16px)); border-style: dashed; color: var(--ink-2); pointer-events: none; }
+  .priorities-row-avoid .row-evidence { --e: var(--v); }
+  .priorities-hidden { --n: clamp(0, var(--b3, 1) * 4, 1); display: inline-flex; align-items: center; justify-self: start; align-self: center; gap: 8px; padding: 6px 12px; border: 1px dashed var(--line-ink); border-radius: var(--r-2); font-size: .75rem; color: var(--ink-2); opacity: var(--n); transform: translateY(calc((1 - var(--n)) * 8px)); }
+  .priorities-legend { font-size: var(--size-micro); color: var(--ink-3); text-align: center; }
+
+  :global(.js) .priorities.is-live .priorities-inner { gap: 0; padding-top: 16px; }
+  :global(.js) .priorities.is-live .priorities-figure { align-self: start; }
+  @media (max-width: 52rem) {
+    .priorities { --rowh: 44px; --gap: 6px; }
+    .priorities-field { min-height: 54px; padding: 8px 16px; font-size: .9375rem; border-radius: var(--r-3); }
+    .priorities-field span { white-space: normal; }
+    .priorities-read .chip { min-height: 28px; padding: 2px 10px; font-size: .75rem; }
+    .priorities-row { flex-direction: column; align-items: start; gap: 2px; padding: 7px 12px; }
+    .js .priorities.is-live .priorities-captions { height: clamp(140px, 22vh, 190px); }
+  }
+</style>

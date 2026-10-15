@@ -89,3 +89,27 @@ export const STORY = {
     ],
   },
 };
+
+/** The orbit (Concept A5): fourteen openings circle the person on two orbits (six near, eight
+    far); four fit the words. Every title is illustrative and the page says so. On phones the
+    near orbit shows chips and the far one dots. Each fit carries what it states for the criteria
+    the story explains (hybrid, research, agency work), in the app's evidence words. */
+export const ORBIT = {
+  ring: [
+    { ring: 1, title: 'Data engineer' },
+    { ring: 1, title: 'Senior product designer, health app', fit: true, place: 'Lisbon', hybrid: '“three days a week in the studio”', research: '“you’ll run your own research”' },
+    { ring: 1, title: 'UX writer' },
+    { ring: 1, title: 'Product designer, research team', fit: true, place: 'Berlin', hybrid: '“two days in Berlin”', research: 'in the title' },
+    { ring: 1, title: 'Backend engineer' },
+    { ring: 1, title: 'Product designer, agency', agency: '“agency clients”' },
+    { ring: 2, title: 'Account executive' },
+    { ring: 2, title: 'Growth marketer' },
+    { ring: 2, title: 'Product designer, public transport', fit: true, place: 'Vienna', hybrid: '“hybrid, Vienna”', research: '“discovery and field research”' },
+    { ring: 2, title: 'Site reliability engineer' },
+    { ring: 2, title: 'Brand designer' },
+    { ring: 2, title: 'Product designer, climate data', fit: true, place: 'Remote (EU)', hybrid: null, research: '“research-led”' },
+    { ring: 2, title: 'Customer success lead' },
+    { ring: 2, title: 'Motion designer' },
+  ] as { ring: 1 | 2; title: string; fit?: boolean; place?: string; hybrid?: string | null; research?: string | null; agency?: string | null }[],
+};
+
