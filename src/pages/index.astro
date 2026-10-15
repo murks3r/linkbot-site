@@ -69,8 +69,9 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
   .promises li + li::before { content: ''; width: 4px; height: 4px; margin: 0 18px; border-radius: 50%; background: currentColor; opacity: .7; }
   .hero-cue { position: relative; display: grid; place-items: center; width: var(--target); height: var(--target); color: var(--ink-2); }
   .hero-cue span { width: 1px; height: 28px; background: linear-gradient(currentColor, transparent); transform-origin: 0 0; }
-  @media (prefers-reduced-motion: no-preference) { :global(.js) .hero-cue span { animation: cue 2.8s var(--ease) infinite; } }
-  @keyframes cue { 0% { transform: scaleY(0); opacity: 0; } 30% { opacity: 1; } 70% { transform: scaleY(1); opacity: 1; } 100% { transform: scaleY(1) translateY(10px); opacity: 0; } }
+  /* The cue draws itself three times, then rests: a hint, not a loop. */
+  @media (prefers-reduced-motion: no-preference) { :global(.js) .hero-cue span { animation: cue 2.8s var(--ease) 1.2s 3 both; } }
+  @keyframes cue { 0% { transform: scaleY(0); opacity: 0; } 30% { opacity: 1; } 70% { transform: scaleY(1); opacity: 1; } 99% { transform: scaleY(1) translateY(10px); opacity: 0; } 100% { transform: scaleY(1); opacity: 1; } }
   .hero-cue:hover { color: var(--ink); }
 
   /* 3. The night: a deep band lit from within by three proven dark tints, with the paper's grain.

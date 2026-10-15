@@ -95,24 +95,33 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
      with the scene's transforms neutralised, whenever the scene goes live or its layout changes. */
   const scene = document.querySelector<HTMLElement>('.clarity');
   const stage = scene?.querySelector<HTMLElement>('[data-scene-stage]');
+  /* Layout offsets ignore transforms, so the scene's own motion never has to be switched off to
+     measure it: every position is read in one pass (sentence and lens are positioned in the
+     figure; phrases in the sentence; words in their phrase; labels in the criteria list, itself in
+     the lens). */
   function measure() {
     if (!scene || !stage || !scene.classList.contains('is-live')) return;
-    stage.toggleAttribute('data-measure', true);
-    const lens = scene.querySelector<HTMLElement>('[data-lens]')!;
-    for (const ph of scene.querySelectorAll<HTMLElement>('.ph')) {
+    const figure = scene.querySelector<HTMLElement>('.clarity-figure')!, sentence = scene.querySelector<HTMLElement>('[data-sentence]')!;
+    const lens = scene.querySelector<HTMLElement>('[data-lens]')!, list = lens.querySelector<HTMLElement>('.clarity-read')!;
+    const reads = [...scene.querySelectorAll<HTMLElement>('.ph')].map(ph => {
       const anchor = ph.querySelector<HTMLElement>('[data-anchor]') ?? ph.querySelector<HTMLElement>('.wd')!;
       const label = scene.querySelector<HTMLElement>(`.chip[data-i="${ph.dataset.i}"] .chip-label`)!;
-      const a = anchor.getBoundingClientRect(), b = label.getBoundingClientRect(), p = ph.getBoundingClientRect();
-      const k = parseFloat(getComputedStyle(label).fontSize) / parseFloat(getComputedStyle(anchor).fontSize);
-      ph.style.setProperty('--k', k.toFixed(4));
-      ph.style.setProperty('--dx', `${(b.left - p.left - (a.left - p.left) * k).toFixed(1)}px`);
-      ph.style.setProperty('--dy', `${(b.top - p.top - (a.top - p.top) * k + (b.height - a.height * k) / 2).toFixed(1)}px`);
+      // A transformed phrase is its words' offset parent (it is in Chromium); otherwise both share the sentence.
+      const own = anchor.offsetParent === ph;
+      return { ph, px: sentence.offsetLeft + ph.offsetLeft, py: sentence.offsetTop + ph.offsetTop, ax: own ? anchor.offsetLeft : anchor.offsetLeft - ph.offsetLeft, ay: own ? anchor.offsetTop : anchor.offsetTop - ph.offsetTop, ah: anchor.offsetHeight,
+        bx: lens.offsetLeft + list.offsetLeft + label.offsetLeft, by: lens.offsetTop + list.offsetTop + label.offsetTop, bh: label.offsetHeight,
+        k: parseFloat(getComputedStyle(label).fontSize) / parseFloat(getComputedStyle(anchor).fontSize) };
+    });
+    const lift = lens.offsetTop, lensH = lens.offsetHeight + 18;
+    for (const r of reads) {
+      r.ph.style.setProperty('--k', r.k.toFixed(4));
+      r.ph.style.setProperty('--dx', `${(r.bx - r.px - r.ax * r.k).toFixed(1)}px`);
+      r.ph.style.setProperty('--dy', `${(r.by - r.py - r.ay * r.k + (r.bh - r.ah * r.k) / 2).toFixed(1)}px`);
     }
-    const figure = scene.querySelector<HTMLElement>('.clarity-figure')!;
-    lens.style.setProperty('--lift', `${(lens.getBoundingClientRect().top - figure.getBoundingClientRect().top).toFixed(1)}px`);
-    figure.style.setProperty('--lens-h', `${lens.offsetHeight + 18}px`);
-    stage.toggleAttribute('data-measure', false);
+    lens.style.setProperty('--lift', `${lift.toFixed(1)}px`);
+    figure.style.setProperty('--lens-h', `${lensH}px`);
   }
+
   addEventListener('scenes:mode', measure);
   document.fonts?.ready.then(measure);
   /* The finished state (the lens at the top, four rows with their reasons, the Must's note, the
@@ -201,7 +210,6 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
   :global(.js) .clarity.is-live .lens-frame { display: grid; align-items: center; position: absolute; inset: -9px -12px -9px -46px; padding-left: 18px; border-radius: var(--pill); background: var(--surface); color: var(--ink-2);
     opacity: var(--b3); transform: scaleX(calc(.96 + .04 * var(--b3)));
     box-shadow: 0 0 0 1px var(--line-ink), 0 18px 40px -22px rgb(18 58 44 / .35); }
-  :global(.js) .clarity.is-live [data-measure] .ph, :global(.js) .clarity.is-live [data-measure] .clarity-lens { transform: none !important; }
   /* 6. Hybrid becomes a Must, quickly (a filled chip's crossfade passes through unreadable mid-tones). */
   :global(.js) .clarity.is-live .chip[data-must] { --h: clamp(0, (var(--b6) - .15) * 10, 1); background: color-mix(in srgb, var(--surface) calc(100% - 100% * var(--h)), var(--green)); border-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--h)), var(--green)); color: color-mix(in srgb, var(--ink) calc(100% - 100% * var(--h)), var(--on-green)); }
   :global(.js) .clarity.is-live .chip[data-must] small { color: color-mix(in srgb, var(--ink-2) calc(100% - 100% * var(--h)), var(--on-green-2)); border-left-color: color-mix(in srgb, var(--line-strong) calc(100% - 100% * var(--h)), var(--green-rule)); }
@@ -217,7 +225,9 @@ const must = words.criteria.findIndex(c => c.label === 'Hybrid');
     transform-origin: 0 0;
     opacity: calc(var(--b3) * (.8 - .42 * var(--recede)));
     filter: blur(calc((1.6 + 6.4 * var(--z) + 4 * var(--recede)) * 1px)); }
-  :global(.js) .clarity.is-live .op i { display: block; font-style: normal; animation: clarity-drift var(--dur, 22s) ease-in-out var(--delay, 0s) infinite alternate; }
+  :global(.js) .clarity.is-live .op i { display: block; font-style: normal; animation: clarity-drift var(--dur, 22s) ease-in-out var(--delay, 0s) infinite alternate; animation-play-state: paused; }
+  /* The openings drift only while the field is on the stage (beats 3–6). */
+  :global(.js) .clarity.is-live:is([data-beat='3'], [data-beat='4'], [data-beat='5'], [data-beat='6']) .op i { animation-play-state: running; }
   :global(.js) .clarity.is-live .op span { display: block; width: max-content; padding: 9px 15px; border-radius: 12px; background: color-mix(in srgb, var(--surface) 78%, transparent); font-size: .9375rem; font-weight: 600; color: var(--ink-2); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .7), 0 12px 30px -18px rgb(18 58 44 / .28); }
   @keyframes clarity-drift { from { transform: translate(-6px, -4px); } to { transform: translate(6px, 5px); } }
 
