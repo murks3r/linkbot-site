@@ -4,6 +4,7 @@ import Toc from '../components/Toc.astro';
 import Mark from '../components/Mark.astro';
 import Icon from '../components/Icon.astro';
 import Ladder from '../components/Ladder.astro';
+import Badge from '../components/Badge.astro';
 import { app } from '../lib/links';
 const SECTIONS: [string, string][] = [['search', 'When you search'], ['save', 'When you save or watch'], ['employers', 'What employers can’t see'], ['decisions', 'Five separate decisions'], ['sharing', 'When you share'], ['change', 'Changing your mind'], ['site', 'This website'], ['claims', 'What we don’t claim']];
 ---
@@ -11,10 +12,13 @@ const SECTIONS: [string, string][] = [['search', 'When you search'], ['save', 'W
   description="What happens to what you type, save and share on Linkbot: searches aren’t stored, and nothing reaches an employer without your decision."
   path="/privacy" crumbs={[['How your privacy works', '/privacy']]}>
   <section class="page-hero">
-    <div class="wrap">
-      <p class="eyebrow">How your privacy works</p>
-      <h1><span class="h1-line">Private by default.</span> <span class="h1-line h1-soft">Shared only when you decide.</span></h1>
-      <p class="lede">No lock icons and no absolute promises. Here is what Linkbot does with what you type, save and share, what it never does, and where the limits are.</p>
+    <div class="wrap hero-with-badge">
+      <div>
+        <p class="eyebrow">How your privacy works</p>
+        <h1><span class="h1-line">Private by default.</span> <span class="h1-line h1-soft">Shared only when you decide.</span></h1>
+        <p class="lede">No absolute promises. Here is what Linkbot does with what you type, save and share, what it never does, and where the limits are.</p>
+      </div>
+      <Badge class="hero-badge" size={176} />
     </div>
   </section>
 
@@ -100,6 +104,10 @@ const SECTIONS: [string, string][] = [['search', 'When you search'], ['save', 'W
 </Base>
 
 <style>
+  /* A8: the badge turns beside the words on wide screens, and sits under them on narrow ones. */
+  .hero-with-badge { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 24px clamp(24px, 5vw, 72px); }
+  .hero-with-badge > div { display: grid; gap: var(--space-head); }
+  @media (max-width: 48rem) { .hero-with-badge { grid-template-columns: minmax(0, 1fr); justify-items: start; } .hero-badge { --badge-size: 132px !important; } }
   .page-hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 56px); }
   .page-hero .wrap { display: grid; gap: 20px; justify-items: center; text-align: center; }
   .page-hero .lede { text-wrap: balance; }

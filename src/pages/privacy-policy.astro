@@ -1,0 +1,28 @@
+---
+/* Privacy policy (Concept A8): the formal policy page, linked from the footer, as a clearly
+   marked placeholder until counsel supplies the text. The plain-language explanation of how
+   privacy works in the product lives at /privacy and is complete. */
+import Base from '../layouts/Base.astro';
+---
+<Base title="Privacy policy · Linkbot" description="The formal privacy policy for Linkbot’s website and product. The text is being prepared; how privacy works in the product is explained in plain language." path="/privacy-policy" crumbs={[['Privacy policy', '/privacy-policy']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Privacy policy</p>
+      <h1>The formal policy</h1>
+      <p class="lede">What this website and the product process, on what basis, for how long, and your rights. For how privacy works in the product, in plain language, see <a href="/privacy">how your privacy works</a>.</p>
+    </div>
+  </section>
+  <div class="wrap doc-one">
+    <div class="placeholder" role="note" aria-label="Placeholder">
+      <p class="eyebrow">Placeholder · counsel to supply</p>
+      <p>The formal privacy policy (controller, purposes and legal bases, retention, recipients, rights, contact of the data protection officer if any) will be supplied by counsel before launch. Nothing is shown here until then, because a legal statement may not be drafted by guesswork.</p>
+      <p>What is already true and tested is on <a href="/privacy">how your privacy works</a>: this website sets no cookies and uses no third-party analytics; a search without an account is not stored; nothing reaches an employer without your decision.</p>
+    </div>
+  </div>
+</Base>
+<style>
+  .doc-one { padding-bottom: var(--band); max-width: 48rem; }
+  .placeholder { display: grid; gap: var(--space-head); padding: 24px 26px; border: 1.5px dashed var(--line-ink); border-radius: var(--r-3); background: var(--surface); }
+  .placeholder p:not(.eyebrow) { color: var(--ink-2); max-width: var(--measure); }
+  .placeholder a, .lede a { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--green-line); }
+</style>
