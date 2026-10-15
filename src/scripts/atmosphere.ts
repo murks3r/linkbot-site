@@ -1,4 +1,4 @@
-/* The living atmosphere (Concept A6).
+/* The living atmosphere (Concepts A6–A7).
 
    A slow, domain-warped field of light over the paper, drawn by WebGL into a small canvas (about a
    quarter of the screen's resolution: the field is soft by nature, and the browser's upscale
@@ -9,10 +9,13 @@
 
    The field moves on its own (seconds, not scroll), parts gently around a mouse pointer, and
    drifts upward a little as the page scrolls, slower than the content, so it reads as far away.
+   A7 makes it plainly visible (stronger pigments, a quicker tempo, wider paths, little clearing
+   around the search, so the white field stands out against colour) and lets its mood cool and
+   calm around the privacy chapter instead of switching to another colour world: warm pigments
+   step back and sky, sage and leaf step forward, gradually, as that chapter comes into view.
 
-   Costs and courtesy: at most 30 frames a second; nothing is drawn while the tab is hidden or
-   while a deep band covers the whole viewport; under reduced motion one still frame is drawn and
-   the pointer is ignored. The only output is the canvas: no style is written anywhere, so the
+   Costs and courtesy: at most 30 frames a second; nothing is drawn while the tab is hidden; under
+   reduced motion one still frame is drawn and the pointer is ignored. The only output is the canvas: no style is written anywhere, so the
    document is never invalidated. Without WebGL the static gradients beneath it remain. */
 
 const VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
@@ -26,8 +29,8 @@ uniform vec3 uPaper;
 uniform vec3 uCol[7];
 uniform vec4 uOrb[7];
 uniform vec4 uPath[7];
-uniform float uCover;
 uniform vec3 uClear;
+uniform float uMood;
 float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
 float vnoise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.-2.*f);
   return mix(mix(hash(i),hash(i+vec2(1.,0.)),u.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),u.x),u.y);}
@@ -50,16 +53,17 @@ void main(){
     float fi=float(i);
     vec2 c=uOrb[i].xy+uPath[i].xy*vec2(sin(t*uPath[i].z+fi*1.7+uScroll*2.1),cos(t*uPath[i].w+fi*2.3-uScroll*1.3));
     vec2 e=w-c;
-    float g=exp(-dot(e,e)/(uOrb[i].z*uOrb[i].z))*uOrb[i].w;
+    float warm=i==0||i==1||i==2||i==6?1.:0.;
+    float g=exp(-dot(e,e)/(uOrb[i].z*uOrb[i].z))*uOrb[i].w*mix(1.-.5*uMood,1.+.7*uMood,1.-warm);
     acc+=uCol[i]*g;tot+=g;
   }
   vec3 tint=acc/max(tot,1e-4);
-  float cover=uCover*(1.-exp(-tot*1.7));
+  float cover=1.-exp(-tot*1.7);
   vec2 cl=vec2((uv.x-.5)*asp,uv.y-uClear.y);
   cover*=1.-uClear.z*exp(-dot(cl,cl)/(uClear.x*uClear.x));
   float veil=fbm(w*1.45+vec2(t*.016,-t*.01));
   cover*=.88+.26*smoothstep(.3,.7,veil);
-  vec3 col=mix(uPaper,tint,clamp(cover,0.,uCover));
+  vec3 col=mix(uPaper,tint,clamp(cover,0.,1.));
   vec2 ld=normalize(vec2(.8,-.6));
   float band=exp(-pow(dot(p-vec2(sin(t*.013)*.9,cos(t*.009)*.3),ld),2.)/.09);
   col=mix(col,vec3(1.,.992,.975),band*.3);
@@ -71,18 +75,18 @@ void main(){
    amplitude and frequency of a slow Lissajous path). Warm light above, cool air below, the centre
    kept clear for the words. Pink stays in a far corner, away from the one pink action. */
 const LAYOUT: Record<string, [number, number, number, number, number, number, number, number]> = {
-  sun: [-.62, .34, .42, 1, .16, .1, .031, .027],
-  peach: [.58, .36, .38, .9, .14, .12, .024, .033],
-  coral: [.74, -.18, .3, .8, .12, .14, .037, .022],
-  sky: [-.7, -.34, .4, 1, .15, .1, .026, .029],
-  sage: [.12, -.52, .44, 1, .2, .08, .019, .035],
-  leaf: [-.2, -.62, .26, .8, .18, .07, .041, .024],
-  rose: [.92, .58, .26, .7, .1, .06, .028, .039],
+  sun: [-.6, .32, .46, 1, .24, .14, .031, .027],
+  peach: [.56, .34, .42, .95, .2, .17, .024, .033],
+  coral: [.72, -.2, .34, .85, .17, .2, .037, .022],
+  sky: [-.68, -.32, .44, 1, .22, .15, .026, .029],
+  sage: [.12, -.5, .48, 1, .28, .12, .019, .035],
+  leaf: [-.22, -.6, .3, .85, .25, .1, .041, .024],
+  rose: [.92, .58, .26, .7, .12, .08, .028, .039],
 };
 
-/* The field's tempo: slow enough to read over, quick enough to be seen living (about 5–8 % of a
-   patch of sky changes visibly in three seconds; nothing ever jumps). */
-const TEMPO = 1.35;
+/* The field's tempo: slow enough to read over, quick enough to be plainly seen living (A6's 1.35
+   was too faint for the founder); nothing ever jumps. */
+const TEMPO = 2.1;
 
 const lin = (c: number) => (c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4);
 const rgb = (hex: string) => { const h = hex.trim().replace('#', ''); return [0, 2, 4].map(i => lin(parseInt(h.slice(i, i + 2), 16) / 255)); };
@@ -113,14 +117,17 @@ export function atmosphere(root: HTMLElement) {
   gl.uniform3fv(U('uCol'), names.flatMap(n => rgb(css.getPropertyValue(`--lb-air-${n}`) || '#fbf8f1')));
   gl.uniform4fv(U('uOrb'), names.flatMap(n => LAYOUT[n].slice(0, 4)));
   gl.uniform4fv(U('uPath'), names.flatMap(n => LAYOUT[n].slice(4)));
-  gl.uniform1f(U('uCover'), .92);
-  gl.uniform3fv(U('uClear'), [.34, .55, .5]);
+  // Only a little clearing, centred on the search (just below the middle): colour around it, so
+  // the white field is the brightest, sharpest thing in the first viewport.
+  gl.uniform3fv(U('uClear'), [.26, .47, .2]);
+  const uMood = U('uMood');
 
   const still = matchMedia('(prefers-reduced-motion: reduce)');
   const fine = matchMedia('(pointer: fine)');
-  const covers = [...document.querySelectorAll<HTMLElement>('[data-air-cover]')];
+  const calm = document.querySelector<HTMLElement>('[data-air-calm]');
+  let mood = 0;
   const ptr = { x: .5, y: .55, z: 0, tx: .5, ty: .55, tz: 0, seen: 0 };
-  let w = 0, h = 0, raf = 0, last = 0, clock = 37, lastY = -1, covered = false;
+  let w = 0, h = 0, raf = 0, last = 0, clock = 37, lastY = -1;
 
   function size() {
     const nw = Math.max(32, Math.round(innerWidth / 4)), nh = Math.max(32, Math.round(innerHeight / 4));
@@ -132,13 +139,15 @@ export function atmosphere(root: HTMLElement) {
     gl!.uniform1f(u.time, clock);
     gl!.uniform3f(u.pointer, ptr.x, ptr.y, ptr.z);
     gl!.uniform1f(u.scroll, Math.min(1, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight)));
+    gl!.uniform1f(uMood, mood);
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
   }
   function check() {
     // Reading rectangles only when the page has moved; nothing has been written this frame.
     if (scrollY === lastY) return;
     lastY = scrollY;
-    covered = covers.some(c => { const r = c.getBoundingClientRect(); return r.top <= 0 && r.bottom >= innerHeight; });
+    // The calm: 1 while the privacy chapter fills the view, easing to 0 a viewport away from it.
+    if (calm) { const r = calm.getBoundingClientRect(), h = innerHeight; mood = Math.max(0, Math.min(1, Math.min(h - r.top, r.bottom) / h)); }
   }
   function tick(now: number) {
     raf = requestAnimationFrame(tick);
@@ -152,7 +161,7 @@ export function atmosphere(root: HTMLElement) {
     if (now - ptr.seen > 2600) ptr.tz = 0;
     ptr.z += (ptr.tz - ptr.z) * (1 - Math.exp(-step / .6));
     check();
-    if (!covered) draw();
+    draw();
   }
   const running = () => !!raf;
   function start() { if (!raf && !still.matches && !document.hidden) { last = performance.now(); raf = requestAnimationFrame(tick); } }
