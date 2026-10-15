@@ -21,9 +21,12 @@ const { items, label } = Astro.props;
     const fold = toc.querySelector<HTMLDetailsElement>('[data-toc-fold]')!, current = toc.querySelector<HTMLElement>('[data-toc-current]')!;
     const sections = links.map(a => document.getElementById(a.hash.slice(1))).filter((s): s is HTMLElement => !!s);
     const still = matchMedia('(prefers-reduced-motion: reduce)'), narrow = matchMedia('(max-width: 63.99rem)');
-    // Narrow screens: folded by default, unfolded on wide ones (where it is a sidebar).
-    const foldByWidth = () => { fold.open = !narrow.matches; };
+    // Narrow screens: folded by default, unfolded on wide ones (where it is a sidebar). On wide ones
+    // the label is not a toggle: no tab stop, and Enter or a click cannot fold the sidebar away.
+    const summary = fold.querySelector<HTMLElement>('summary')!;
+    const foldByWidth = () => { fold.open = !narrow.matches; summary.tabIndex = narrow.matches ? 0 : -1; };
     foldByWidth(); narrow.addEventListener('change', foldByWidth);
+    summary.addEventListener('click', event => { if (!narrow.matches) event.preventDefault(); });
     // The section in view: the last one whose top has passed the reading line.
     const mark = (id: string) => {
       for (const a of links) { const on = a.hash === '#' + id; a.toggleAttribute('aria-current', on); if (on) a.setAttribute('aria-current', 'true'); }
