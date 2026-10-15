@@ -34,9 +34,16 @@ const { mode = 'paper' } = Astro.props;
       var(--paper); }
   .air-field { opacity: 0; transition: opacity 1.2s ease; }
   .air.is-drawn .air-field { opacity: 1; }
-  .paper { position: absolute; inset: 0; z-index: 0; pointer-events: none; mix-blend-mode: multiply;
-    background: url('/material/paper.webp') 0 0 / 1024px 1024px repeat; }
-  @media (min-resolution: 1.5dppx) { .paper { background-size: 512px 512px; } }
+  /* A8: the paper lies over the whole page, header and footer included (z above them, below the
+     preview's panel), so one material runs through everything and no bar can differ from the page
+     (multiply: the paper's tooth prints a few levels onto letters, unseen). It is fixed over the
+     viewport by default (the content scrolls beneath it, the material stays where paper would);
+     the A7 behaviour (it scrolls with the page) is the variant [data-v-noise='scroll']. A fixed
+     layer, never background-attachment (unreliable on iOS). */
+  .paper { position: fixed; inset: 0; z-index: 40; pointer-events: none; mix-blend-mode: multiply;
+    background: url('/material/paper.webp') 0 0 / var(--paper-size, 1024px) var(--paper-size, 1024px) repeat; }
+  html[data-v-noise='scroll'] .paper { position: absolute; }
+  @media (min-resolution: 1.5dppx) { :root { --paper-size: 512px; } }
   @media (prefers-reduced-motion: reduce) { .air-field { transition: none; } }
   @media (forced-colors: active) { .air, .paper { display: none; } }
 </style>

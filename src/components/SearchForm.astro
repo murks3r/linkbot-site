@@ -25,7 +25,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
 <style>
   .search { display: grid; gap: 12px; width: 100%; max-width: 46rem; }
   .search-label { font-size: var(--size-small); font-weight: 650; }
-  .search-box { display: flex; align-items: center; gap: 8px; min-height: 68px; padding: 6px; border: 1.5px solid var(--line-ink); border-radius: var(--pill); background: var(--surface); box-shadow: var(--shadow-field);
+  .search-box { display: flex; align-items: center; gap: 8px; min-height: 68px; padding: 6px; border: 1.5px solid var(--line-ink); border-radius: var(--field-r); background: var(--surface); box-shadow: var(--shadow-field);
     transition: border-color var(--fast), box-shadow var(--base) var(--ease), transform var(--base) var(--ease); }
   .search-box:hover { border-color: var(--ink-2); }
   .search-box:focus-within { border-color: var(--green); box-shadow: 0 0 0 4px var(--green-wash), var(--shadow-field); }
@@ -63,7 +63,9 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   .search[data-size='focal'] .search-field { padding-left: 20px; }
   .search[data-size='focal'] .search-field > :global(.icon) { color: var(--ink-2); }
   .search[data-size='focal'] input { height: 60px; font-size: 1.1875rem; }
-  .search[data-size='focal'] .btn { position: relative; overflow: hidden; min-height: 60px; padding: 0 28px 0 30px; font-size: 1.0625rem; isolation: isolate;
+  /* Inside a rounded field the action's corners follow the field's (a pill inside a pill, a
+     softer rectangle inside a rectangle). */
+  .search[data-size='focal'] .btn { position: relative; overflow: hidden; min-height: 60px; padding: 0 28px 0 30px; font-size: 1.0625rem; isolation: isolate; border-radius: max(var(--control-r), min(var(--field-r), calc(var(--field-r) - 6px)));
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 1px 2px rgb(18 58 44 / .12); transition: background-color var(--fast) var(--ease), box-shadow var(--base) var(--ease), transform var(--fast) var(--ease); }
   .search[data-size='focal'] .btn:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 6px 16px -6px color-mix(in srgb, var(--pink-press) 90%, transparent); }
   .search[data-size='focal'] .btn:active { transform: scale(.975); }
@@ -75,7 +77,7 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
   /* Phones: the words get the whole width, and the action sits under them, where the thumb is. */
   @media (max-width: 30rem) {
     .search .search-box, .search[data-size='monumental'] .search-box { flex-direction: column; align-items: stretch; gap: 10px; min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
-    .search .search-field { min-height: 60px; padding: 0 6px 0 16px; border: 1.5px solid var(--green); border-radius: var(--pill); background: var(--surface); transition: box-shadow var(--base) var(--ease); }
+    .search .search-field { min-height: 60px; padding: 0 6px 0 16px; border: 1.5px solid var(--green); border-radius: var(--field-r); background: var(--surface); transition: box-shadow var(--base) var(--ease); }
     .search .search-field:focus-within { box-shadow: 0 0 0 4px var(--green-wash); }
     .search input, .search[data-size='monumental'] input { height: 56px; padding: 0 10px; font-size: 1.0625rem; }
     .search .btn, .search[data-size='monumental'] .btn { min-height: 56px; width: 100%; }

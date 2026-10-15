@@ -26,8 +26,9 @@ const year = new Date().getUTCFullYear();
 </footer>
 
 <style>
-  .footer { background: var(--sand); }
-  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding-block: 64px 36px; font-size: var(--size-small); }
+  /* A8: no fill of its own, so the page's ground runs on; a rule above it is all that marks it. */
+  .footer { background: transparent; border-top: 1px solid var(--line-strong); }
+  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding-block: 56px 36px; font-size: var(--size-small); }
   .footer-brand { display: grid; gap: 8px; align-content: start; }
   .footer-brand p { max-width: 30ch; color: var(--ink-2); }
   .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-stretch: 112%; font-size: 1.5rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; text-decoration: none; justify-self: start; }
