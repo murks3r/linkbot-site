@@ -210,7 +210,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         check(hero.halo.chips.every(c => c.left >= 0 && c.right <= hero.vw && c.top >= hero.header && c.bottom <= hero.vh), `${width}: every floating criterion is wholly on screen`);
       }
       await page.setViewportSize({ width: 1440, height: 900 });
-      await page.locator('#q-start').scrollIntoViewIfNeeded();
+      await page.locator('[data-start-cta]').scrollIntoViewIfNeeded();
       await page.waitForTimeout(200);
       check(await page.evaluate(() => getComputedStyle(document.querySelector('.masthead-cta')).backgroundColor !== 'rgba(0, 0, 0, 0)'), 'once the hero has scrolled away, the header offers the search action');
       const stages = await page.evaluate(() => [...document.querySelectorAll('main > [data-stage]')].map(s => s.dataset.stage));
@@ -490,12 +490,13 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
     check(handed.hash === '#/search?q=' + encodeURIComponent('Backend engineer, remote, no management'), `handoff fragment ${handed.hash}`);
     report.journeys.handoff = handed.pathname + handed.hash;
     await page.goto(origin + '/', { waitUntil: 'networkidle' });
-    const examples = await page.locator('.search-try a').evaluateAll(as => as.map(a => a.getAttribute('href')));
+    const examples = await page.locator('.start-try a').evaluateAll(as => as.map(a => a.getAttribute('href')));
     check(examples.length === 3 && examples.every(h => h.startsWith('/talent#/search?q=')), `example links ${examples}`);
-    await page.locator('#q-start').fill('Data engineer, remote');
-    await page.locator('#q-start').press('Enter');
+    // A8: the invitation is one plain call to action, no second field.
+    check(await page.locator('.start input').count() === 0 && await page.locator('[data-start-cta]').count() === 1, 'the closing section has one call to action and no field');
+    await page.locator('[data-start-cta]').click();
     await page.waitForURL(/\/talent/);
-    check(new URL(page.url()).hash === '#/search?q=' + encodeURIComponent('Data engineer, remote'), 'the closing search hands off too');
+    check(new URL(page.url()).hash === '#/search', 'the closing action opens the search');
 
     // The reading demonstration (How it works): tabs, keyboard, the rewrite and the Must switch.
     await page.goto(origin + '/how-it-works', { waitUntil: 'networkidle' });

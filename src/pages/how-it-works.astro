@@ -129,9 +129,9 @@ const LEVELS: [string, string, string][] = [
   .h1-soft { font-weight: 300; color: var(--ink-2); }
   .doc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); padding-bottom: var(--band); }
   @media (min-width: 64rem) { .doc { grid-template-columns: 15rem minmax(0, 1fr); } }
-  .doc-body { display: grid; gap: clamp(56px, 7vw, 88px); max-width: 48rem; }
+  .doc-body { display: grid; gap: var(--space-section); max-width: 48rem; }
   .doc-body, .doc-body section { min-width: 0; }
-  .doc-body section { display: grid; gap: 16px; scroll-margin-top: 96px; }
+  .doc-body section { display: grid; gap: var(--space-head); scroll-margin-top: 96px; }
   .doc-body h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem); }
   .doc-body h3 { margin-top: 12px; }
   .doc-body p { color: var(--ink-2); }

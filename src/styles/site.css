@@ -41,6 +41,10 @@
   --size-body: 1.0625rem; --size-small: .9375rem; --size-micro: .8125rem;
   --page: 1240px; --gutter: clamp(16px, 4vw, 48px); --prose: 62ch;
   --band: clamp(96px, 12vw, 176px);
+  /* A8: one spacing scale, so nothing is set tight by accident: between sections, between a
+     heading and its text, between statements, and the measure of running text. */
+  --space-section: clamp(72px, 9vw, 136px); --space-block: clamp(32px, 4vw, 56px); --space-head: clamp(14px, 1.6vw, 22px); --space-para: 1em;
+  --measure: 62ch; --lh-body: 1.6; --lh-tight: 1.1;
   --r-1: 6px; --r-2: 10px; --r-3: 16px; --pill: 999px;
   /* A8: the search field is a rounded rectangle, no longer a pill (the founder's call); the radius
      is one token, with the switcher's steps below. Buttons and chips stay pills unless the
@@ -154,20 +158,27 @@ button { cursor: pointer; }
 .scene-inner { position: relative; width: 100%; }
 .js .scene.is-live .scene-inner { position: absolute; inset: 0; display: grid; align-content: center; }
 /* Captions: one owns the top of the stage at a time when live (the zone keeps its height, so the
-   figure below never moves); all of them read in order when static. */
-.captions { display: grid; gap: 12px; }
+   figure below never moves); all of them read in order when static, each statement its own block,
+   clearly apart (A8). */
+.captions { display: grid; gap: var(--space-block); }
+.caption + .caption { padding-top: var(--space-block); border-top: 1px solid var(--line); }
 .caption { font-family: var(--display); font-stretch: 102%; font-size: var(--size-caption); font-weight: 540; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
 /* The statement's body in full ink: it is read over the living light and the paper, so it keeps its
    contrast even against the paper's darkest fibres. */
-.caption small { display: block; margin-top: 10px; font-family: var(--text); font-size: var(--size-body); font-weight: 400; letter-spacing: 0; line-height: 1.5; color: var(--ink); }
+.caption small { display: block; margin-top: var(--space-head); max-width: var(--measure); margin-inline: auto; font-family: var(--text); font-size: var(--size-body); font-weight: 400; letter-spacing: 0; line-height: var(--lh-body); color: var(--ink); }
 .js .scene.is-live .scene-inner { align-content: start; }
-.js .scene.is-live .captions { position: relative; display: block; width: min(100%, 46rem); margin-inline: auto; margin-bottom: 14px; height: var(--cap-h, clamp(112px, 17vh, 150px)); }
+/* A8: the live statement sits in a zone with clear air above it (the founder: it nearly fell out
+   of the picture) and is centred in that zone, with room beneath before the figure. */
+.js .scene.is-live .captions { position: relative; display: block; width: min(100%, 46rem); margin-inline: auto; margin-top: clamp(16px, 4.5vh, 48px); margin-bottom: clamp(18px, 3.5vh, 36px); height: var(--cap-h, clamp(112px, 17vh, 150px)); }
+.js .scene.is-live .caption + .caption { padding-top: 0; border-top: 0; }
 /* Live, the statement of the current beat comes into focus when its beat begins and leaves when
    the next begins (a short, eased transition in time, both ways), so a statement is never left
    half-faded wherever the reader stops. Statically all of them read in order. */
-.js .scene.is-live .caption { position: absolute; left: 0; right: 0; top: 0; opacity: 0; transform: translateY(14px); filter: blur(6px); pointer-events: none;
+.js .scene.is-live .caption { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: grid; align-content: center; opacity: 0; transform: translateY(14px); filter: blur(6px); pointer-events: none;
   transition: opacity .45s var(--ease-out), transform .7s var(--ease-out), filter .45s var(--ease-out); }
 .js .scene.is-live .caption[aria-current='step'] { opacity: 1; transform: none; filter: none; pointer-events: auto; transition-delay: .14s; }
 @media (prefers-reduced-motion: reduce) { .js .scene.is-live .caption { transition: none; } }
-@media (max-width: 52rem) { .js .scene.is-live .caption small { font-size: var(--size-small); line-height: 1.45; } }
+@media (max-width: 52rem) { .js .scene.is-live .caption small { font-size: var(--size-small); line-height: 1.45; } .js .scene.is-live .captions { margin-top: clamp(10px, 2.5vh, 28px); margin-bottom: 14px; } }
+/* Short screens have no air to spare: the zone keeps A7's margins there, and the statement is still centred in it. */
+@media (max-height: 47.5rem) { .js .scene.is-live .captions { margin-top: 10px; margin-bottom: 12px; } }
 @media (max-width: 52rem) { :root { --header: 64px; } }
