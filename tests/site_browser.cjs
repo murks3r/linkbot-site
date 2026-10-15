@@ -94,8 +94,8 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       for (const id of meta.anchors) check(meta.ids.includes(id), `${route}: in-page link #${id} has no target`);
       check(foreign.length === 0, `${route}: third-party requests ${foreign.join(', ')}`);
       // Emphasis is weight, scale and tone. No highlighter, marker or painted underline anywhere:
-      // the only gradients are the atmosphere's and the night's (layers that carry no text of their
-      // own, marked data-decor), and no <mark> has a fill.
+      // the only gradients are the atmosphere's (layers that carry no text of their own, marked
+      // data-decor), and no <mark> has a fill.
       const markers = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(e => {
         const s = getComputedStyle(e);
         const text = [...e.childNodes].some(n => n.nodeType === Node.TEXT_NODE && /\S/.test(n.data));
@@ -137,9 +137,10 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       await context.close();
     }
 
-    // ── 2. The composition (Concept A6): one focal opening viewport on a living atmosphere, then
-    //       the story (your words become clarity), the night (two sides of the glass), the
-    //       invitation. ──
+    // ── 2. The composition (Concept A7): the search at the centre of the opening viewport, the
+    //       criteria people give Linkbot around it, one bright living world with a real paper
+    //       layer, then the story as the product works (Signal), privacy in the same light
+    //       (Yours), the invitation. ──
     {
       const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
       const page = await context.newPage();
@@ -151,17 +152,19 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         const hero = await page.evaluate(() => {
           const box = el => { const r = el.getBoundingClientRect(); return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, mid: (r.left + r.right) / 2, midY: (r.top + r.bottom) / 2, width: r.width, height: r.height }; };
           const h1 = document.querySelector('.hero h1'), field = document.querySelector('.hero .search-box'), btn = document.querySelector('.hero .btn-primary');
-          const input = document.getElementById('q-hero'), fieldBox = width => (innerWidth <= 480 ? input.closest('.search-field') : field);
+          const input = document.getElementById('q-hero'), fieldBox = () => (innerWidth <= 480 ? input.closest('.search-field') : field);
           const lines = [...h1.querySelectorAll('.h1-line')].map(l => { const s = getComputedStyle(l); return { weight: s.fontWeight, color: s.color, size: s.fontSize, stretch: s.fontStretch }; });
           const focal = [...document.querySelector('.hero-focal').children], h = h1.getBoundingClientRect();
           const fills = [...document.querySelectorAll('.hero a, .hero button')].filter(e => getComputedStyle(e).backgroundColor !== 'rgba(0, 0, 0, 0)').map(e => e.innerText.trim());
           const promises = [...document.querySelectorAll('.hero .promises li')];
-          return { vw: innerWidth, vh: innerHeight, h1: box(h1), field: box(field), input: box(fieldBox()), btn: box(btn),
+          const chips = [...document.querySelectorAll('.halo-chip')].filter(c => getComputedStyle(c).display !== 'none').map(c => ({ text: c.innerText.replace(/\s+/g, ' ').trim(), level: c.dataset.level, ...box(c.querySelector('i')) }));
+          return { vw: innerWidth, vh: innerHeight, header: document.querySelector('[data-masthead]').getBoundingClientRect().bottom, h1: box(h1), field: box(field), input: box(fieldBox()), btn: box(btn),
             align: getComputedStyle(h1).textAlign, h1Size: parseFloat(getComputedStyle(h1).fontSize), lines,
             beside: focal.filter(e => { const r = e.getBoundingClientRect(); return e !== h1 && r.bottom > h.top + 1 && r.top < h.bottom - 1; }).length,
             text: h1.innerText, fills, order: focal.map(e => e.className.split(' ')[0] || e.localName),
             describedBy: input.getAttribute('aria-describedby'), placeholder: input.placeholder,
             promises: promises.map(p => ({ text: p.textContent.trim(), ...box(p), size: parseFloat(getComputedStyle(p).fontSize) })),
+            halo: { hidden: document.querySelector('.halo')?.getAttribute('aria-hidden'), chips },
             ctaFilled: getComputedStyle(document.querySelector('.masthead-cta')).backgroundColor !== 'rgba(0, 0, 0, 0)' };
         });
         check(hero.text === 'Find work that fits.\nKeep your privacy.', `${width}: the headline (${JSON.stringify(hero.text)})`);
@@ -171,29 +174,40 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
           check(Math.abs(b.mid - hero.vw / 2) <= 2, `${width}: hero ${name} is centred (mid ${Math.round(b.mid)} of ${hero.vw})`);
         check(hero.align === 'center', `${width}: the headline is centred text`);
         check(hero.beside === 0, `${width}: nothing sits beside the headline`);
-        // The focal unit is the headline and the search, and nothing else: no sentence beneath the field.
+        // Headline, field and action are one composition: the headline, then the search, nothing more.
         check(JSON.stringify(hero.order) === JSON.stringify(['h1', 'hero-search']), `${width}: the focal unit is the headline, then the search, and nothing more (${hero.order})`);
         check(hero.describedBy === null && hero.placeholder.length > 0, `${width}: no note describes the field; the placeholder guides (${hero.describedBy})`);
-        // The search: in the first viewport near its optical centre, smaller than A5's (80 px tall,
-        // up to 832 px wide) yet still the widest thing in the hero.
+        // The field is placed, not the pair: its centre falls a little below the middle of the space
+        // under the header (mathematically centred reads high), on every screen.
         check(hero.field.top < hero.vh && hero.field.bottom <= hero.vh, `${width}: the search is in the first viewport`);
-        const centre = width >= 1024 ? hero.field.midY / hero.vh : (hero.input.top + hero.btn.bottom) / 2 / hero.vh;
-        check(centre >= .34 && centre <= .56, `${width}: the search sits near the optical centre (${Math.round(centre * 100)} % of the viewport)`);
+        const centre = (hero.input.midY - hero.header) / (hero.vh - hero.header);
+        check(centre >= .5 && centre <= .56, `${width}: the field sits at the optical centre, just below the middle (${(centre * 100).toFixed(1)} % of the space under the header)`);
+        // Dominant: the widest, tallest and highest-contrast object of the opening viewport.
         if (width >= 1024) {
-          check(hero.field.width >= 560 && hero.field.width <= 660, `${width}: the search is a little narrower than A5's and still wide (${Math.round(hero.field.width)} px)`);
-          check(hero.field.height >= 58 && hero.field.height <= 68, `${width}: the search is lower than A5's 80 px (${Math.round(hero.field.height)} px)`);
-          check(hero.field.width > hero.h1.width, `${width}: the search is the widest element of the focal unit`);
+          check(hero.field.width >= 700 && hero.field.width <= 760, `${width}: the search is wider than A6's 640 px (${Math.round(hero.field.width)} px)`);
+          check(hero.field.height >= 72 && hero.field.height <= 80, `${width}: the search is taller than A6's 64 px (${Math.round(hero.field.height)} px)`);
+          check(hero.field.width >= hero.h1.width * 1.5, `${width}: the search is half again as wide as the headline (${Math.round(hero.field.width)} vs ${Math.round(hero.h1.width)})`);
+          check(hero.btn.height >= 56, `${width}: the pink action is a full, large target (${Math.round(hero.btn.height)} px)`);
         } else {
-          check(hero.input.width >= hero.vw - 48 && hero.input.height >= 52 && hero.input.height <= 62, `${width}: on a phone the field takes the width (${Math.round(hero.input.width)} × ${Math.round(hero.input.height)})`);
-          check(hero.btn.height >= 48 && hero.btn.top >= hero.input.bottom, `${width}: the action sits under the field, a full-size target`);
+          check(hero.input.width >= hero.vw - 34 && hero.input.height >= 58 && hero.input.height <= 66, `${width}: on a phone the field takes the width (${Math.round(hero.input.width)} × ${Math.round(hero.input.height)})`);
+          check(hero.btn.height >= 54 && hero.btn.top >= hero.input.bottom, `${width}: the action sits under the field, a full-size target`);
         }
-        check(hero.h1Size >= (width >= 1024 ? 56 : width * .09) && hero.h1Size <= (width >= 1024 ? 80 : 48), `${width}: the headline is composed, not monumental (${hero.h1Size} px)`);
+        check(hero.h1Size >= (width >= 1024 ? 40 : width * .075) && hero.h1Size <= (width >= 1024 ? 58 : 40), `${width}: the headline is a step below the field, not monumental (${hero.h1Size} px)`);
         check(hero.h1.bottom < hero.field.top, `${width}: the headline sits above the search`);
         check(JSON.stringify(hero.fills) === JSON.stringify(['Search']), `${width}: the pink Search is the hero's only filled action (${hero.fills})`);
         check(!hero.ctaFilled, `${width}: the header's action stays quiet while the hero's search is in view`);
         // The promises: three plain lines at the foot, secondary to the search (smaller, apart from it).
         check(hero.promises.length === 3 && hero.promises.map(p => p.text).join(' | ') === 'No account needed to search | See why each job fits | Employers aren’t told you’re looking', `${width}: the three promises (${hero.promises.map(p => p.text).join(' | ')})`);
-        check(hero.promises.every(p => p.bottom <= hero.vh && p.top > hero.btn.bottom + hero.vh * .12 && p.size <= 15), `${width}: the promises keep to the foot of the first viewport, small and apart from the search`);
+        check(hero.promises.every(p => p.bottom <= hero.vh && p.top > hero.btn.bottom + Math.min(hero.vh * .1, 56) && p.size <= 15), `${width}: the promises keep to the foot of the first viewport, small and apart from the search`);
+        // Around the field: criteria people give Linkbot, with their levels; decorative, and never on
+        // the words, the field, the action or the promises, nor past the screen's edge.
+        const hit = (a, b, m = 8) => a.right + m > b.left && a.left - m < b.right && a.bottom + m > b.top && a.top - m < b.bottom;
+        const clear = [hero.h1, hero.field, hero.input, hero.btn, ...hero.promises];
+        check(hero.halo.hidden === 'true', `${width}: the floating criteria are decorative (aria-hidden)`);
+        check(hero.halo.chips.length >= (width >= 1024 ? 4 : 2), `${width}: criteria float around the search (${hero.halo.chips.length})`);
+        check(hero.halo.chips.every(c => /(Prefer|Avoid|Must)$/.test(c.text)) && hero.halo.chips.some(c => c.level === 'must') === (width !== 320 || hero.halo.chips.some(c => c.level === 'must')), `${width}: each shows its level (${hero.halo.chips.map(c => c.text).join(', ')})`);
+        check(hero.halo.chips.every(c => !clear.some(b => hit(c, b))), `${width}: no floating criterion touches the headline, the field, the action or the promises`);
+        check(hero.halo.chips.every(c => c.left >= 0 && c.right <= hero.vw && c.top >= hero.header && c.bottom <= hero.vh), `${width}: every floating criterion is wholly on screen`);
       }
       await page.setViewportSize({ width: 1440, height: 900 });
       await page.locator('#q-start').scrollIntoViewIfNeeded();
@@ -202,27 +216,47 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       const stages = await page.evaluate(() => [...document.querySelectorAll('main > [data-stage]')].map(s => s.dataset.stage));
       check(JSON.stringify(stages) === JSON.stringify(['value', 'story', 'privacy', 'start']), `the home runs value → story → privacy → start (${stages})`);
       const scenes = await page.evaluate(() => [...document.querySelectorAll('[data-scene]')].map(s => ({ name: s.className.split(' ')[1], beats: s.dataset.beats.split(',').length, captions: [...s.querySelectorAll('[data-caption] h2')].map(h => h.textContent), live: s.classList.contains('is-live') })));
-      check(JSON.stringify(scenes.map(s => [s.name, s.beats])) === JSON.stringify([['clarity', 6], ['glass', 3]]), `two scenes with their beats (${JSON.stringify(scenes.map(s => [s.name, s.beats]))})`);
+      check(JSON.stringify(scenes.map(s => [s.name, s.beats])) === JSON.stringify([['signal', 7], ['yours', 3]]), `two scenes with their beats (${JSON.stringify(scenes.map(s => [s.name, s.beats]))})`);
       check(scenes.every(s => s.captions.length === s.beats && !s.live), 'reduced motion: every scene is static, with one statement per beat, all readable in order');
-      check(scenes[0].captions[0] === 'Say it the way you’d say it.' && scenes[0].captions[3] === 'What fits comes into focus.' && scenes[1].captions.join(' | ') === 'Clear to you. | Frosted to everyone else. | Clear only where you choose.', `solution first: words → clarity → privacy (${scenes.map(s => s.captions.join(' | ')).join(' / ')})`);
+      check(scenes[0].captions.join(' | ') === 'New openings every day. Most aren’t for you. | Say what would make a move worth it. | Linkbot reads it as criteria. | Prefer brings up what states it. | Avoid sends down what states it. | A Must is a hard line, and only you draw it. | Every fit shows its reasons.', `the story is the product, step by step (${scenes[0].captions.join(' | ')})`);
+      check(scenes[1].captions.join(' | ') === 'What you see is yours. | A fit tells no one. | You decide what is shared, and with whom.', `privacy, in three facts (${scenes[1].captions.join(' | ')})`);
       const home = await page.evaluate(() => document.querySelector('main').innerText);
       check(!/What works today|short phrases|Write it in|runs in circles/i.test(home), 'no status section, no writing instructions and no problem-first loop on the home page');
       check(/Illustration/.test(home) && /interpreter/.test(home), 'the illustrations say they are illustrations, and the words are credited to the interpreter');
-      check(/tested in staging/.test(home) && /in development and not live/.test(home), 'sharing and private matching carry their real status');
+      check(/tested in staging, not yet live/.test(home) && /Private matching is in development/.test(home), 'sharing and private matching carry their real status');
+      check(/not sharing, and it is not applying/.test(home) && /No name, no contact details/.test(home), 'matching is not disclosure and not applying; identity is never among the shared details');
       check(!/encrypt|anonym|zero.knowledge|on your device|nobody can see|guarantee/i.test(home), 'no claim of encryption, anonymity, local-only processing or guarantees');
       // Reduced motion: the final states are simply there.
-      const still = await page.evaluate(() => ({
-        chips: [...document.querySelectorAll('.clarity-read .chip')].map(c => c.textContent.replace(/\s+/g, ' ').trim()),
-        must: getComputedStyle(document.querySelector('.clarity-read .chip[data-must]')).backgroundColor === getComputedStyle(document.querySelector('.clarity-read .chip[data-must]')).getPropertyValue('--green').trim() || getComputedStyle(document.querySelector('.clarity-read .chip[data-must] .chip-hard')).opacity === '1',
-        fits: [...document.querySelectorAll('.clarity-list .fit')].map(f => getComputedStyle(f).opacity + '/' + getComputedStyle(f.querySelector('.fit-why')).opacity),
-        faces: [...document.querySelectorAll('.glass-face')].map(f => { const r = f.getBoundingClientRect(); return r.width > 100 && getComputedStyle(f).backfaceVisibility; }),
-        shared: [...document.querySelectorAll('.glass-shared li')].map(l => getComputedStyle(l).opacity + '/' + getComputedStyle(l).filter),
-        air: document.querySelector('[data-air]')?.dataset.air, words: document.querySelector('.clarity-sentence').textContent.replace('The words: ', '').replace(/\s+/g, ' ').trim() }));
+      const still = await page.evaluate(() => {
+        const vis = e => !!e && getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden' && Number(getComputedStyle(e).opacity) === 1;
+        const must = document.querySelector('.sg-chips .chip[data-must]');
+        return {
+          words: document.querySelector('.sg-sentence .sg-typed').textContent.replace(/\s+/g, ' ').trim(),
+          chips: [...document.querySelectorAll('.sg-chips .chip')].map(c => c.querySelector('.chip-label').textContent),
+          must: getComputedStyle(must.querySelector('.chip-hard')).opacity === '1' && getComputedStyle(must.querySelector('.chip-soft')).opacity === '0',
+          list: [...document.querySelectorAll('.sg-card')].filter(vis).map(c => c.dataset.card).join(''),
+          hidden: [...document.querySelectorAll('.sg-card[data-hidden]')].filter(c => getComputedStyle(c).display !== 'none').length,
+          why: [...document.querySelectorAll('.sg-why > div')].filter(vis).length, note: vis(document.querySelector('.sg-hidden')),
+          shared: [...document.querySelectorAll('.yr-shared li')].filter(vis).length, receipt: vis(document.querySelector('.yr-receipt')), fresh: vis(document.querySelector('.yr-fits li[data-new]')),
+          nothing: vis(document.querySelector('.yr-nothing')), slot: vis(document.querySelector('.yr-slot')),
+          air: document.querySelector('[data-air]')?.dataset.air };
+      });
       check(still.words === 'Product designer, hybrid, more research, no agency work', `the words are the recorded reading's own (${still.words})`);
-      check(still.chips.length === 4 && still.must, `reduced motion: the words are read and the Must is set (${still.chips.join(' | ')})`);
-      check(still.fits.length === 4 && still.fits.every(f => f === '1/1'), `reduced motion: the four that fit and their reasons are simply there (${still.fits})`);
-      check(still.faces.length === 2 && still.faces.every(Boolean) && still.shared.every(s => s === '1/none'), `reduced motion: both sides of the glass and the shared details are there (${still.faces} ${still.shared})`);
+      check(still.chips.join(' | ') === 'Product designer | Hybrid | more research | agency work' && still.must, `reduced motion: the words are read and the Must is set (${still.chips.join(' | ')})`);
+      check(still.list === 'abcde' && still.hidden === 0 && still.note && still.why === 4, `reduced motion: five in order, two hidden and counted, the reasons shown (${JSON.stringify(still)})`);
+      check(still.shared === 3 && still.receipt && still.fresh && still.nothing && still.slot, `reduced motion: both sides, the new fit, the shared details, the empty identity slot and the receipt are there (${JSON.stringify(still)})`);
       check(still.air === 'still', `reduced motion: the atmosphere draws one still frame (${still.air})`);
+      // The material: one paper layer the size of the page, printed beneath every word; the
+      // fingerprint once, on your side of the privacy chapter, and nowhere else.
+      const material = await page.evaluate(() => {
+        const paper = document.querySelector('[data-paper]'), s = getComputedStyle(paper), main = getComputedStyle(document.querySelector('main'));
+        return { height: paper.getBoundingClientRect().height, page: document.documentElement.scrollHeight, blend: s.mixBlendMode, image: s.backgroundImage, repeat: s.backgroundRepeat, z: Number(s.zIndex), mainZ: Number(main.zIndex), hidden: paper.getAttribute('aria-hidden'),
+          prints: [...document.querySelectorAll('img[src*="/material/print"]')].map(i => i.closest('.yr-you') ? 'yours' : i.closest('section, div')?.className), calm: [...document.querySelectorAll('[data-air-calm]')].map(e => e.className.split(' ')[1]) };
+      });
+      check(material.height >= material.page - 2 && /paper\.webp/.test(material.image) && material.repeat === 'repeat' && material.blend === 'multiply' && material.hidden === 'true', `the paper covers the whole page, tiles as it grows and prints with multiply (${JSON.stringify(material)})`);
+      check(material.z < material.mainZ, 'the paper lies beneath every word');
+      check(JSON.stringify(material.prints) === JSON.stringify(['yours']), `the fingerprint appears once, on your side of the privacy chapter (${material.prints})`);
+      check(JSON.stringify(material.calm) === JSON.stringify(['yours']), `only the privacy chapter calms the light (${material.calm})`);
       await context.close();
 
       // Without scripts, everything is there too, and the search never sends the words.
@@ -234,9 +268,9 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(await bp.locator('#q-hero').count() === 1 && await bp.locator('#q-hero').getAttribute('name') === null, 'without scripts the search is there and never sends the words (no name)');
       await bare.close();
 
-      // ── The atmosphere, measured in pixels: it lives when the page is left alone, it is calm,
-      //    the grain is visible, the hand never moves the search, and nothing is written on the
-      //    document's root while it runs. ──
+      // ── The atmosphere and the paper, measured in pixels: alive when the page is left alone, yet
+      //    calm; colourful and bright; the paper plainly visible; the hand never moves the search;
+      //    nothing written on the document's root while it runs. ──
       const living = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2, reducedMotion: 'no-preference' });
       const lp = await living.newPage();
       await lp.addInitScript(() => {
@@ -250,25 +284,47 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       await lp.waitForTimeout(1600);
       const air = await lp.evaluate(() => ({ state: document.querySelector('[data-air]').dataset.air, drawn: document.querySelector('.air').classList.contains('is-drawn') }));
       check(air.state === 'live' && air.drawn, `with motion the atmosphere is live (${JSON.stringify(air)})`);
-      // A strip of sky with no content in it (left of the focal unit, above the promises).
-      const sky = { x: 40, y: 300, width: 300, height: 360 };
-      const pixels = async () => { const png = await lp.screenshot({ clip: sky }); return png; };
-      const a = await pixels(); await lp.waitForTimeout(3000); const b = await pixels();
-      const motion = await lp.evaluate(async ([a, b]) => {
+      // A strip of sky with no content in it (the left edge, between the header and the foot).
+      const sky = { x: 16, y: 150, width: 120, height: 560 };
+      const measure = (a, b) => lp.evaluate(async ([a, b]) => {
         const load = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + src; });
         const [ia, ib] = await Promise.all([load(a), load(b)]);
         const c = document.createElement('canvas'); c.width = ia.width; c.height = ia.height; const g = c.getContext('2d', { willReadFrequently: true });
         g.drawImage(ia, 0, 0); const da = g.getImageData(0, 0, c.width, c.height).data; g.drawImage(ib, 0, 0); const db = g.getImageData(0, 0, c.width, c.height).data;
-        let changed = 0, sum = 0; const n = da.length / 4;
-        for (let i = 0; i < da.length; i += 4) { const d = (Math.abs(da[i] - db[i]) + Math.abs(da[i + 1] - db[i + 1]) + Math.abs(da[i + 2] - db[i + 2])) / 3; sum += d; if (d > 2) changed++; }
-        // The grain: high-frequency energy (each pixel against the mean of its 3 × 3 neighbourhood).
+        let changed = 0, sum = 0, chroma = 0; const n = da.length / 4;
+        for (let i = 0; i < da.length; i += 4) { const d = (Math.abs(da[i] - db[i]) + Math.abs(da[i + 1] - db[i + 1]) + Math.abs(da[i + 2] - db[i + 2])) / 3; sum += d; if (d > 2) changed++; chroma += Math.max(da[i], da[i + 1], da[i + 2]) - Math.min(da[i], da[i + 1], da[i + 2]); }
+        // The paper: high-frequency energy (each pixel against the mean of its 3 × 3 neighbourhood).
         let e = 0, m = 0; const w = c.width, h = c.height, lum = i => .2126 * da[i] + .7152 * da[i + 1] + .0722 * da[i + 2];
         for (let y = 1; y < h - 1; y += 2) for (let x = 1; x < w - 1; x += 2) { const i = (y * w + x) * 4; let s = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) s += lum(((y + dy) * w + x + dx) * 4); const d = lum(i) - s / 9; e += d * d; m++; }
-        return { changed: changed / n * 100, mean: sum / n, grain: Math.sqrt(e / m) };
+        return { changed: changed / n * 100, mean: sum / n, chroma: chroma / n, grain: Math.sqrt(e / m) };
       }, [a.toString('base64'), b.toString('base64')]);
-      check(motion.changed >= 2 && motion.mean <= 6, `left alone, the atmosphere moves visibly but calmly (${motion.changed.toFixed(1)} % of a sky strip changed in 3 s, mean ${motion.mean.toFixed(2)} levels)`);
-      check(motion.grain >= 4, `the grain is visible on the light sky at 2×, clearly stronger than A5's 2.4 (${motion.grain.toFixed(2)} levels of fine texture)`);
-      report.atmosphere = { changedIn3s: +motion.changed.toFixed(1), meanDelta: +motion.mean.toFixed(2), grain: +motion.grain.toFixed(2) };
+      const pixels = () => lp.screenshot({ clip: sky });
+      const a = await pixels(); await lp.waitForTimeout(3000); const b = await pixels();
+      const motion = await measure(a, b);
+      // A6, measured the same way: 7 % of the strip changed in 3 s (mean 1.1 levels), chroma 28.6,
+      // fine texture 5.3; A7 at its commit: about 76 %, 3.5 levels, 32.8, 6.9.
+      check(motion.changed >= 30 && motion.mean <= 8, `left alone, the atmosphere moves plainly but calmly (${motion.changed.toFixed(1)} % of a sky strip changed in 3 s, mean ${motion.mean.toFixed(2)} levels; A6: 7 %, 1.1)`);
+      check(motion.chroma >= 30, `the light is coloured, not grey (mean chroma ${motion.chroma.toFixed(1)})`);
+      check(motion.grain >= 6, `the paper is plainly visible at 2× (${motion.grain.toFixed(2)} levels of fine texture; A6's grain: 5.3)`);
+      report.atmosphere = { changedIn3s: +motion.changed.toFixed(1), meanDelta: +motion.mean.toFixed(2), chroma: +motion.chroma.toFixed(1), grain: +motion.grain.toFixed(2) };
+      // One bright world: at the hero, in the story and in the privacy chapter the viewport stays
+      // light (no night, no colour-world jump).
+      const levels = [];
+      for (const at of ['.hero', '.signal', '.yours', '.start']) {
+        await lp.evaluate(s => { const e = document.querySelector(s); scrollTo(0, e.getBoundingClientRect().top + scrollY + (s === '.hero' || s === '.start' ? 0 : e.offsetHeight * .3)); }, at);
+        await lp.waitForTimeout(700);
+        const png = await lp.screenshot({ scale: 'css' });
+        levels.push(await lp.evaluate(async src => {
+          const img = await new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + src; });
+          const c = document.createElement('canvas'); c.width = 144; c.height = 90; const g = c.getContext('2d'); g.drawImage(img, 0, 0, 144, 90);
+          const d = g.getImageData(0, 0, 144, 90).data; let s = 0, dark = 0; for (let k = 0; k < d.length; k += 4) { const l = (.2126 * d[k] + .7152 * d[k + 1] + .0722 * d[k + 2]); s += l; if (l < 120) dark++; }
+          return { mean: s / (d.length / 4), dark: dark / (d.length / 4) };
+        }, png.toString('base64')));
+      }
+      check(levels.every(l => l.mean >= 200 && l.dark <= .06), `one bright world from the hero to the invitation (${levels.map(l => `${l.mean.toFixed(0)}/${(l.dark * 100).toFixed(1)}%`).join(', ')})`);
+      check(Math.max(...levels.map(l => l.mean)) - Math.min(...levels.map(l => l.mean)) <= 24, 'no chapter jumps to another light level');
+      report.brightness = levels.map(l => +l.mean.toFixed(1));
+      await lp.evaluate(() => scrollTo(0, 0)); await lp.waitForTimeout(400);
       // The hand: the search never moves, and the page's root is never written to.
       const before = await lp.evaluate(() => JSON.stringify(document.querySelector('.hero .search-box').getBoundingClientRect()));
       for (let x = 100; x <= 1340; x += 31) { await lp.mouse.move(x, 420 + Math.sin(x / 140) * 260); await lp.waitForTimeout(12); }
@@ -280,8 +336,9 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(await lp.evaluate(() => window.__rootWrites) === 0, `nothing is written on <html> or <body> while the page idles, scrolls and follows the hand (${await lp.evaluate(() => window.__rootWrites)} writes)`);
       // A hidden tab: the field stops drawing; visible again, it continues.
       await lp.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => true }); document.dispatchEvent(new Event('visibilitychange')); });
+      await lp.waitForTimeout(300);
       const h1 = await pixels(); await lp.waitForTimeout(1500); const h2 = await pixels();
-      check(await lp.evaluate(() => document.querySelector('[data-air]').dataset.air) === 'paused' && h1.equals(h2), 'while the tab is hidden nothing is drawn');
+      check(await lp.evaluate(() => document.querySelector('[data-air]').dataset.air) === 'paused' && (await measure(h1, h2)).mean < .3, 'while the tab is hidden nothing is drawn');
       await lp.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => false }); document.dispatchEvent(new Event('visibilitychange')); });
       check(await lp.evaluate(() => document.querySelector('[data-air]').dataset.air) === 'live', 'visible again, the atmosphere continues');
       await living.close();
@@ -311,7 +368,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         const on = [...root.querySelectorAll('[data-caption]')].map(c => Math.round(Number(getComputedStyle(c).opacity) * 100) / 100);
         return { p: Number(s.style.getPropertyValue('--p')), beat: root.dataset.beat ?? null, pinned: Math.abs(r.top - parseFloat(getComputedStyle(s).top)) < 2, on,
           current: [...root.querySelectorAll('[data-caption]')].findIndex(c => c.getAttribute('aria-current') === 'step') }; }, i);
-      const names = ['clarity', 'glass'];
+      const names = ['signal', 'yours'];
       for (let i = 0; i < 2; i++) {
         const g = await geometry(i);
         check(g.live, `${names[i]}: live with motion at 1440×900`);
@@ -372,12 +429,14 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         const s = await state(0);
         check(g.live && s.current === 3 && Math.abs(s.p - p) < .01 && s.pinned, `${w}×${h}: after resizing, the fourth beat is still the fourth beat (${JSON.stringify(s)})`);
       }
-      // Every beat at three sizes: nothing visible leaves the stage, and nothing covers the legend
-      // (a scene whose finished state cannot fit a screen stays static there instead).
-      for (const [w, h] of [[360, 740], [390, 844], [1280, 720]]) {
+      // Every beat at five sizes: nothing visible leaves the stage, nothing covers the legend or the
+      // statement, and no row of the list covers another (a scene whose finished state cannot fit a
+      // screen stays static there instead). Both scenes are live from 360 × 800 phones up.
+      for (const [w, h] of [[360, 800], [390, 844], [1024, 768], [1280, 720], [1440, 900]]) {
         await mp.setViewportSize({ width: w, height: h }); await frame(); await frame();
         for (let i = 0; i < 2; i++) {
           const g = await geometry(i);
+          check(g.live, `${w}×${h}: ${names[i]} is live`);
           if (!g.live) continue;
           for (const [k, [a, z]] of g.beats.entries()) {
             await mp.evaluate(y => scrollTo(0, y), Math.round(g.start + g.span * (a + z) / 2)); await settle();
@@ -385,11 +444,16 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
               const t = document.querySelectorAll('[data-scene]')[i], s = t.querySelector('[data-scene-stage]'), sr = s.getBoundingClientRect();
               const visible = e => { let o = 1; for (let x = e; x && x !== s; x = x.parentElement) { const cs = getComputedStyle(x); if (cs.visibility === 'hidden' || cs.display === 'none') return false; o *= Number(cs.opacity); } return o > .05; };
               const legend = t.querySelector('figcaption'), lr = legend && visible(legend) ? legend.getBoundingClientRect() : null;
-              const items = [...t.querySelectorAll('.caption h2, .caption small, .chip, .fit, .clarity-hidden, .glass-face, .glass-shared li, .clarity-sentence')].filter(e => !e.closest('[aria-hidden="true"]') && visible(e) && e.getBoundingClientRect().height > 0);
+              const cap = t.querySelector('.caption[aria-current]'), cr = cap ? cap.getBoundingClientRect() : null;
+              const items = [...t.querySelectorAll('.caption h2, .caption small, .chip, .sg-lens, .sg-card, .sg-hidden, .yr-card, .yr-fits li, .yr-shared li, .yr-kept, .yr-receipt')].filter(e => !e.closest('[aria-hidden="true"]') && visible(e) && e.getBoundingClientRect().height > 0);
+              const hit = (r, q) => r.bottom > q.top + 1 && r.top < q.bottom - 1 && r.right > q.left + 1 && r.left < q.right - 1;
               const out = [];
-              for (const e of items) { const r = e.getBoundingClientRect();
-                if (r.bottom > sr.bottom + 1 || r.top < sr.top - 1) out.push(`${e.className.split(' ')[0] || e.localName} leaves the stage`);
-                if (lr && !legend.contains(e) && r.bottom > lr.top + 1 && r.top < lr.bottom - 1 && r.right > lr.left && r.left < lr.right) out.push(`${e.className.split(' ')[0] || e.localName} covers the legend`); }
+              for (const e of items) { const r = e.getBoundingClientRect(), name = e.className.split(' ')[0] || e.localName;
+                if (r.bottom > sr.bottom + 1 || r.top < sr.top - 1) out.push(`${name} leaves the stage`);
+                if (lr && !legend.contains(e) && hit(r, lr)) out.push(`${name} covers the legend`);
+                if (cr && !cap.contains(e) && hit(r, cr)) out.push(`${name} covers the statement`); }
+              const rows = items.filter(e => e.matches('.sg-lens, .sg-card, .sg-hidden'));
+              for (let x = 0; x < rows.length; x++) for (let y = x + 1; y < rows.length; y++) if (hit(rows[x].getBoundingClientRect(), rows[y].getBoundingClientRect())) out.push(`${rows[x].dataset.card ?? rows[x].className.split(' ')[0]} covers ${rows[y].dataset.card ?? rows[y].className.split(' ')[0]}`);
               return [...new Set(out)];
             }, i);
             check(issues.length === 0, `${w}×${h} ${names[i]} beat ${k + 1}: ${issues.join('; ')}`);
@@ -397,10 +461,12 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         }
       }
       // A screen too short for a stage gets the complete story instead.
-      await mp.setViewportSize({ width: 844, height: 390 }); await frame(); await frame();
-      check(await mp.evaluate(() => [...document.querySelectorAll('[data-scene]')].every(s => !s.classList.contains('is-live'))), 'a short landscape screen gets the static story');
+      for (const [w, h] of [[844, 390], [375, 667]]) {
+        await mp.setViewportSize({ width: w, height: h }); await frame(); await frame();
+        check(await mp.evaluate(() => [...document.querySelectorAll('[data-scene]')].every(s => !s.classList.contains('is-live'))), `${w}×${h}: a screen too short for the stages gets the static story`);
+      }
       await moving.close();
-      report.journeys.composition = 'focal hero at 1440/1024/390/320 (balanced headline, smaller field, no note, three promises); a living atmosphere (moves when idle, calm, visible grain, still under reduced motion, paused when hidden, the hand never moves the search, nothing written on the root); value → story → privacy → start; two scenes static (no JS, reduced motion, short screen) and live (beats, reverse, jump, fling, resize, contrast per beat, statements over the real background)';
+      report.journeys.composition = 'A7 hero at 1440/1024/390/320 (the field placed at the optical centre and dominant, balanced headline a step below it, criteria floating clear of everything, three promises); the paper over the whole page beneath the words, the fingerprint once; a living atmosphere (plainly moving when idle, calm, coloured, one bright world, still under reduced motion, paused when hidden, the hand never moves the search, nothing written on the root); value → story → privacy → start; two scenes static (no JS, reduced motion, short screens) and live from 360 × 800 (beats, reverse, jump, fling, resize, contrast per beat, statements over the real background, no row over another)';
     }
 
     // ── 3. Journeys (motion allowed, as most visitors see it) ──
