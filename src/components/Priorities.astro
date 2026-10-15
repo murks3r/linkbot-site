@@ -11,10 +11,11 @@ import { reading, LEVEL, ORBIT } from '../data/content';
 const words = reading('story');
 const fits = ORBIT.ring.filter(o => o.fit);
 const agency = ORBIT.ring.find(o => o.agency)!;
-/* A caption rises quickly with its beat and falls as the next one starts; statically all are on. */
+/* A caption leaves in the first fifth of the next beat and the next one rises after that, so one
+   statement is ever on the stage; statically all are on. */
 const on = (i: number, n: number) => {
-  const rise = i === 0 ? '1' : `clamp(0, var(--b${i + 1}, 1) * 3, 1)`;
-  const fall = i < n - 1 ? `(1 - clamp(0, var(--b${i + 2}, 0) * 3, 1))` : '1';
+  const rise = i === 0 ? '1' : `clamp(0, (var(--b${i + 1}, 1) - .2) * 3.4, 1)`;
+  const fall = i < n - 1 ? `(1 - clamp(0, var(--b${i + 2}, 0) * 5, 1))` : '1';
   return `calc(${rise} * ${fall})`;
 };
 const CAPTIONS: [string, string][] = [
