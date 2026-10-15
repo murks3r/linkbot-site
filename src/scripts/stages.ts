@@ -11,7 +11,7 @@
    Otherwise it keeps its complete, static final state at normal height, which is also what a
    browser without scripts shows. */
 type Beat = [number, number];
-type Scene = { root: HTMLElement; stage: HTMLElement; beats: Beat[]; captions: HTMLElement[]; live: boolean; start: number; span: number; beat: number };
+type Scene = { root: HTMLElement; stage: HTMLElement; beats: Beat[]; captions: HTMLElement[]; live: boolean; start: number; span: number; beat: number; last: number };
 
 const smooth = (t: number) => { const x = Math.min(1, Math.max(0, t)); return x * x * (3 - 2 * x); };
 const still = matchMedia('(prefers-reduced-motion: reduce)');
@@ -19,8 +19,11 @@ const scenes: Scene[] = [...document.querySelectorAll<HTMLElement>('[data-scene]
   const stage = root.querySelector<HTMLElement>('[data-scene-stage]');
   if (!stage) return [];
   const beats = (root.dataset.beats ?? '').split(',').filter(Boolean).map(b => b.split(':').map(Number) as Beat);
-  return [{ root, stage, beats, captions: [...root.querySelectorAll<HTMLElement>('[data-caption]')], live: false, start: 0, span: 1, beat: -1 }];
+  return [{ root, stage, beats, captions: [...root.querySelectorAll<HTMLElement>('[data-caption]')], live: false, start: 0, span: 1, beat: -1, last: -1 }];
 });
+/* The sky is the one thing that follows the whole page; its number is written on the sky alone,
+   never on the root, because a custom property set on <html> invalidates every element's style. */
+const sky = document.querySelector<HTMLElement>('.sky');
 let frame = 0;
 
 function header(stage: HTMLElement) { return parseFloat(getComputedStyle(stage).top) || 0; }
@@ -31,6 +34,8 @@ function measure(scene: Scene) {
 }
 
 function paint(scene: Scene, p: number) {
+  if (p === scene.last) return;  // far scenes stay at 0 or 1 and are painted once
+  scene.last = p;
   const s = scene.stage.style;
   s.setProperty('--p', p.toFixed(4));
   let at = -1;
@@ -48,14 +53,9 @@ function paint(scene: Scene, p: number) {
 function render() {
   frame = 0;
   const y = scrollY, vh = innerHeight;
-  for (const scene of scenes) {
-    if (!scene.live) continue;
-    // Only scenes near the viewport are painted; the rest hold their last state.
-    if (scene.start - vh > y || scene.start + scene.span + vh < y) continue;
-    paint(scene, Math.min(1, Math.max(0, (y - scene.start) / scene.span)));
-  }
+  for (const scene of scenes) if (scene.live) paint(scene, Math.min(1, Math.max(0, (y - scene.start) / scene.span)));
   // The sky follows the whole page's progress, gently.
-  document.documentElement.style.setProperty('--scroll', (y / Math.max(1, document.documentElement.scrollHeight - vh)).toFixed(4));
+  sky?.style.setProperty('--scroll', (y / Math.max(1, document.documentElement.scrollHeight - vh)).toFixed(4));
 }
 
 function queue() { if (!frame) frame = requestAnimationFrame(render); }
@@ -77,7 +77,7 @@ function mode() {
       ['--p', ...scene.beats.map((_, i) => `--b${i + 1}`)].forEach(name => scene.stage.style.removeProperty(name));
       scene.captions.forEach(c => c.removeAttribute('aria-current'));
       delete scene.root.dataset.beat;
-      scene.beat = -1;
+      scene.beat = -1; scene.last = -1;
     }
     scene.live = want;
     if (want) measure(scene);
