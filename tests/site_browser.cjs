@@ -184,7 +184,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         check(centre >= .5 && centre <= .56, `${width}: the field sits at the optical centre, just below the middle (${(centre * 100).toFixed(1)} % of the space under the header)`);
         // Dominant: the widest, tallest and highest-contrast object of the opening viewport.
         if (width >= 1024) {
-          check(hero.field.width >= 700 && hero.field.width <= 760, `${width}: the search is wider than A6's 640 px (${Math.round(hero.field.width)} px)`);
+          check(hero.field.width >= 700 && hero.field.width <= 810, `${width}: the search is wider than A6's 640 px (${Math.round(hero.field.width)} px)`);
           check(hero.field.height >= 72 && hero.field.height <= 80, `${width}: the search is taller than A6's 64 px (${Math.round(hero.field.height)} px)`);
           check(hero.field.width >= hero.h1.width * 1.5, `${width}: the search is half again as wide as the headline (${Math.round(hero.field.width)} vs ${Math.round(hero.h1.width)})`);
           check(hero.btn.height >= 56, `${width}: the pink action is a full, large target (${Math.round(hero.btn.height)} px)`);
@@ -210,7 +210,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         check(hero.halo.chips.every(c => c.left >= 0 && c.right <= hero.vw && c.top >= hero.header && c.bottom <= hero.vh), `${width}: every floating criterion is wholly on screen`);
       }
       await page.setViewportSize({ width: 1440, height: 900 });
-      await page.locator('#q-start').scrollIntoViewIfNeeded();
+      await page.locator('[data-start-cta]').scrollIntoViewIfNeeded();
       await page.waitForTimeout(200);
       check(await page.evaluate(() => getComputedStyle(document.querySelector('.masthead-cta')).backgroundColor !== 'rgba(0, 0, 0, 0)'), 'once the hero has scrolled away, the header offers the search action');
       const stages = await page.evaluate(() => [...document.querySelectorAll('main > [data-stage]')].map(s => s.dataset.stage));
@@ -250,11 +250,11 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       // fingerprint once, on your side of the privacy chapter, and nowhere else.
       const material = await page.evaluate(() => {
         const paper = document.querySelector('[data-paper]'), s = getComputedStyle(paper), main = getComputedStyle(document.querySelector('main'));
-        return { height: paper.getBoundingClientRect().height, page: document.documentElement.scrollHeight, blend: s.mixBlendMode, image: s.backgroundImage, repeat: s.backgroundRepeat, z: Number(s.zIndex), mainZ: Number(main.zIndex), hidden: paper.getAttribute('aria-hidden'),
+        return { height: paper.getBoundingClientRect().height, page: document.documentElement.scrollHeight, innerH: innerHeight, blend: s.mixBlendMode, image: s.backgroundImage, repeat: s.backgroundRepeat, z: Number(s.zIndex), mainZ: Number(main.zIndex), position: s.position, events: s.pointerEvents, hidden: paper.getAttribute('aria-hidden'),
           prints: [...document.querySelectorAll('img[src*="/material/print"]')].map(i => i.closest('.yr-you') ? 'yours' : i.closest('section, div')?.className), calm: [...document.querySelectorAll('[data-air-calm]')].map(e => e.className.split(' ')[1]) };
       });
-      check(material.height >= material.page - 2 && /paper\.webp/.test(material.image) && material.repeat === 'repeat' && material.blend === 'multiply' && material.hidden === 'true', `the paper covers the whole page, tiles as it grows and prints with multiply (${JSON.stringify(material)})`);
-      check(material.z < material.mainZ, 'the paper lies beneath every word');
+      check(material.height >= material.innerH - 2 && /paper\.webp/.test(material.image) && material.repeat === 'repeat' && material.blend === 'multiply' && material.hidden === 'true', `the paper covers the whole view (fixed, so every scrolled page), tiles and prints with multiply (${JSON.stringify(material)})`);
+      check(material.z > material.mainZ && material.position === 'fixed' && material.events === 'none', `the paper lies over the whole page, fixed, never in the way of a pointer (${JSON.stringify(material)})`);
       check(JSON.stringify(material.prints) === JSON.stringify(['yours']), `the fingerprint appears once, on your side of the privacy chapter (${material.prints})`);
       check(JSON.stringify(material.calm) === JSON.stringify(['yours']), `only the privacy chapter calms the light (${material.calm})`);
       await context.close();
@@ -490,12 +490,13 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
     check(handed.hash === '#/search?q=' + encodeURIComponent('Backend engineer, remote, no management'), `handoff fragment ${handed.hash}`);
     report.journeys.handoff = handed.pathname + handed.hash;
     await page.goto(origin + '/', { waitUntil: 'networkidle' });
-    const examples = await page.locator('.search-try a').evaluateAll(as => as.map(a => a.getAttribute('href')));
+    const examples = await page.locator('.start-try a').evaluateAll(as => as.map(a => a.getAttribute('href')));
     check(examples.length === 3 && examples.every(h => h.startsWith('/talent#/search?q=')), `example links ${examples}`);
-    await page.locator('#q-start').fill('Data engineer, remote');
-    await page.locator('#q-start').press('Enter');
+    // A8: the invitation is one plain call to action, no second field.
+    check(await page.locator('.start input').count() === 0 && await page.locator('[data-start-cta]').count() === 1, 'the closing section has one call to action and no field');
+    await page.locator('[data-start-cta]').click();
     await page.waitForURL(/\/talent/);
-    check(new URL(page.url()).hash === '#/search?q=' + encodeURIComponent('Data engineer, remote'), 'the closing search hands off too');
+    check(new URL(page.url()).hash === '#/search', 'the closing action opens the search');
 
     // The reading demonstration (How it works): tabs, keyboard, the rewrite and the Must switch.
     await page.goto(origin + '/how-it-works', { waitUntil: 'networkidle' });

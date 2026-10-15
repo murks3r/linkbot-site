@@ -113,10 +113,15 @@ export function atmosphere(root: HTMLElement) {
   const u = { res: U('uRes'), time: U('uTime'), pointer: U('uPointer'), scroll: U('uScroll') };
 
   // The pigments are the palette's own tokens, so the proof in the palette covers what is drawn.
-  const css = getComputedStyle(document.documentElement);
   const names = Object.keys(LAYOUT);
-  gl.uniform3fv(U('uPaper'), rgb(css.getPropertyValue('--lb-cream') || '#fbf8f1'));
-  gl.uniform3fv(U('uCol'), names.flatMap(n => rgb(css.getPropertyValue(`--lb-air-${n}`) || '#fbf8f1')));
+  const pigments = () => {
+    const css = getComputedStyle(document.documentElement);
+    gl.uniform3fv(U('uPaper'), rgb(css.getPropertyValue('--lb-cream') || '#fbf8f1'));
+    gl.uniform3fv(U('uCol'), names.flatMap(n => rgb(css.getPropertyValue(`--lb-air-${n}`) || '#fbf8f1')));
+  };
+  pigments();
+  // The preview's switcher can change the palette after load (Concept A8); production never fires this.
+  addEventListener('variants:change', pigments);
   gl.uniform4fv(U('uOrb'), names.flatMap(n => LAYOUT[n].slice(0, 4)));
   gl.uniform4fv(U('uPath'), names.flatMap(n => LAYOUT[n].slice(4)));
   // Only a little clearing, centred on the search (just below the middle): colour around it, so

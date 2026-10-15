@@ -1,0 +1,25 @@
+---
+/* Imprint (Concept A8): the page exists and is linked, so the site is complete; the legal text
+   itself is a placeholder until the founder or counsel supplies it. Nothing here is invented. */
+import Base from '../layouts/Base.astro';
+---
+<Base title="Imprint · Linkbot" description="Legal notice for Linkbot’s public website: provider details and contact. The text is being prepared." path="/imprint" crumbs={[['Imprint', '/imprint']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">Imprint</p>
+      <h1>Legal notice</h1>
+      <p class="lede">Provider details and contact for this website.</p>
+    </div>
+  </section>
+  <div class="wrap doc-one">
+    <div class="placeholder" role="note" aria-label="Placeholder">
+      <p class="eyebrow">Placeholder · founder to confirm</p>
+      <p>The legal notice (provider name and address, represented by, contact, register and VAT details, responsible for content) will be supplied by the founder or counsel before launch. No details are shown here until then, because none may be invented.</p>
+    </div>
+  </div>
+</Base>
+<style>
+  .doc-one { padding-bottom: var(--band); max-width: 48rem; }
+  .placeholder { display: grid; gap: var(--space-head); padding: 24px 26px; border: 1.5px dashed var(--line-ink); border-radius: var(--r-3); background: var(--surface); }
+  .placeholder p:not(.eyebrow) { color: var(--ink-2); max-width: var(--measure); }
+</style>

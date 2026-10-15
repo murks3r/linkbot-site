@@ -21,13 +21,14 @@ const year = new Date().getUTCFullYear();
       <a href="/hiring#agencies">Recruiting agencies</a>
       <a href="/hiring#companies">Companies</a>
     </nav>
-    <p class="footer-legal">© {year} Linkbot. This site sets no cookies and uses no third-party analytics or tracking.</p>
+    <p class="footer-legal"><span>© {year} Linkbot. This site sets no cookies and uses no third-party analytics or tracking.</span><span class="footer-links"><a href="/imprint">Imprint</a><a href="/privacy-policy">Privacy policy</a></span></p>
   </div>
 </footer>
 
 <style>
-  .footer { background: var(--sand); }
-  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding-block: 64px 36px; font-size: var(--size-small); }
+  /* A8: no fill of its own, so the page's ground runs on; a rule above it is all that marks it. */
+  .footer { background: transparent; border-top: 1px solid var(--line-strong); }
+  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding-block: 56px 36px; font-size: var(--size-small); }
   .footer-brand { display: grid; gap: 8px; align-content: start; }
   .footer-brand p { max-width: 30ch; color: var(--ink-2); }
   .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-stretch: 112%; font-size: 1.5rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; text-decoration: none; justify-self: start; }
@@ -35,7 +36,9 @@ const year = new Date().getUTCFullYear();
   h2 { margin-bottom: 6px; font-family: var(--text); font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; color: var(--ink-3); }
   nav a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink); text-decoration: none; }
   nav a:hover { text-decoration: underline; text-decoration-color: var(--green-line); }
-  .footer-legal { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line-strong); color: var(--ink-3); }
+  .footer-legal { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 20px; border-top: 1px solid var(--line-strong); color: var(--ink-3); }
+  .footer-links { display: inline-flex; gap: 20px; }
+  .footer-links a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 4px; }
   @media (max-width: 48rem) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
   @media (max-width: 22.5rem) { .footer-inner { grid-template-columns: 1fr; } }
 </style>

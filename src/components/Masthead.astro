@@ -23,10 +23,13 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
 </header>
 
 <style>
-  .masthead { position: sticky; top: 0; z-index: 30; background: var(--paper); border-bottom: 1px solid transparent; transition: border-color var(--base); }
-  /* Over the sky the bar is paper with a little of the sky through it. */
-  :global(body[data-sky]) .masthead { background: color-mix(in srgb, var(--paper) 78%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-  .masthead[data-scrolled] { border-bottom-color: var(--line); }
+  /* A8: the bar is seamless. It has no fill of its own, so the page's ground (the paper colour or
+     the living light) runs through it unchanged, and the paper layer prints over it as over
+     everything else. While content passes beneath, only a blur, never a tint, keeps the words
+     readable. No rule marks its edge. */
+  .masthead { position: sticky; top: 0; z-index: 30; background: transparent; }
+  .masthead::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); opacity: 0; transition: opacity var(--base); }
+  .masthead[data-scrolled]::before { opacity: 1; }
   /* Home: nothing in the header competes with the hero's search. The action keeps its box (nothing
      moves) and is quiet text until the hero's search has scrolled away. */
   .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta { background: transparent; color: var(--ink-2); }
@@ -67,6 +70,7 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
   const masthead = document.querySelector<HTMLElement>('[data-masthead]');
   const menu = document.querySelector<HTMLDetailsElement>('[data-menu]');
   if (masthead) {
+    // Scrolled, the bar blurs what passes beneath it.
     const update = () => masthead.toggleAttribute('data-scrolled', window.scrollY > 8);
     update();
     addEventListener('scroll', update, { passive: true });

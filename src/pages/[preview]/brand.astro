@@ -1,0 +1,126 @@
+---
+/* The brand board (Concept A8), preview only: /__preview/brand. It exists in a build only when
+   PUBLIC_PREVIEW_VARIANTS=1 (getStaticPaths returns no route otherwise), so production never
+   carries it. It lays the founder's open choices side by side: the three palettes with their
+   proven contrasts, the type pairs, the field radii, the badge lines, buttons and chips, and one
+   sample section, all live on the switcher's current choice. Every swatch is the real token. */
+import Base from '../../layouts/Base.astro';
+import SearchForm from '../../components/SearchForm.astro';
+import Badge from '../../components/Badge.astro';
+import { AXES } from '../../lib/variants';
+import contrast from '../../../tools/brand-a8-contrast.json';
+export function getStaticPaths() { return import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1' ? [{ params: { preview: '__preview' } }] : []; }
+const palettes = Object.entries(contrast) as [string, { name: string; tokens: Record<string, string>; pairs: { label: string; ratio: number; min: number }[]; lowest: number }][];
+const SWATCHES = ['--paper', '--surface', '--sand', '--green-wash', '--blush', '--line-strong', '--line-ink', '--ink-3', '--ink-2', '--ink', '--pink', '--pink-hover', '--lb-air-sun', '--lb-air-peach', '--lb-air-coral', '--lb-air-rose', '--lb-air-sky', '--lb-air-sage', '--lb-air-leaf'];
+const WHY: Record<string, { why: string; strengths: string[]; weaknesses: string[] }> = {
+  a7: { why: 'The direction the founder likes, kept: warm paper, one deep organic green as ink and action, pink for the one primary action. Refined only around it: field radius, spacing, the paper layer.', strengths: ['proven in A5–A7 and in the app', 'warm paper carries the material', 'pink reads as the one action'], weaknesses: ['the green is close to black at text sizes', 'the atmosphere does most of the colour work'] },
+  moss: { why: 'The same family, one step more organic: a cooler, mossier green with more life in it, a lighter stone paper, the pink warmed towards blush so it sits closer to the green.', strengths: ['more visibly green in large surfaces', 'calmer paper for long pages', 'blush and moss read as one world'], weaknesses: ['less contrast between paper and the action pink', 'the greener ink costs a little at small sizes (still 7:1)'] },
+  ink: { why: 'The bolder sibling: the green goes deeper towards ink-black for authority, the paper a touch whiter, the pink shifts to a coral with more energy against the dark ink. For a brand that wants to feel more editorial.', strengths: ['strongest text contrast', 'coral and ink feel decisive', 'whiter paper lets the pigments sing'], weaknesses: ['less warmth in the ground', 'coral competes with the atmosphere’s coral and peach', 'furthest from what the founder has seen'] },
+};
+const TYPE = [
+  { key: 'archivo', name: 'Archivo + Figtree', note: 'A7’s pair. Archivo’s width axis gives headlines their stance; Figtree reads warm and even at text sizes. Both OFL, both already self-hosted.', family: "'Archivo Variable', 'Archivo Fallback', sans-serif", weight: 540, stretch: '102%', tracking: '-.032em' },
+  { key: 'pair-b', name: 'Audex + Figtree', note: 'Audex (GGBotNet, OFL 1.1, via resourceboy.com): geometric with a technical edge, one regular weight. Decisive at display sizes; too mechanical for text, so Figtree stays.', family: "'Audex Subset', 'Archivo Fallback', sans-serif", weight: 400, stretch: 'normal', tracking: '-.012em' },
+  { key: 'pair-c', name: 'Arcticons Sans + Figtree', note: 'Arcticons Sans (Arcticons Team, OFL 1.1, via resourceboy.com): semi-condensed, monolinear, rounded. Quiet and friendly; headlines fit on fewer lines. One weight, so Figtree stays for text.', family: "'Arcticons Sans Subset', 'Archivo Fallback', sans-serif", weight: 400, stretch: 'normal', tracking: '-.006em' },
+];
+const RADII = [['16', 'Rounded 16 px', '16px'], ['10', 'Rounded 10 px', '10px'], ['20', 'Rounded 20 px', '20px'], ['pill', 'Pill (A7)', '999px']];
+const LINES = AXES.find(a => a.id === 'badge')!.values;
+---
+<Base title="Brand board · Linkbot preview" description="Concept A8’s brand board: palettes, type pairs, field radii and badge lines side by side, for the founder’s decision. Preview only." path="/__preview/brand" quietHeader>
+  <article class="board">
+    <header class="board-head wrap">
+      <p class="eyebrow">Preview only · Concept A8</p>
+      <h1>Brand board</h1>
+      <p class="lede">Everything below is live on the switcher’s current choice (bottom right). The first option of every axis is the recommendation; the address carries the choice, copy it to share. Nothing on this page exists in a production build.</p>
+    </header>
+
+    <section class="wrap" id="palettes" aria-labelledby="palettes-h">
+      <h2 id="palettes-h">Palettes</h2>
+      <p class="muted">Each palette is derived from four anchors the way the app’s own palette is, and every pair the site uses is proven: ink on every ground 7:1, secondary inks 4.5:1, text on green and on pink 4.5:1, lines 3:1 (tools/brand-a8.mjs; the proof is brand-a8-contrast.json).</p>
+      <div class="palettes">
+        {palettes.map(([key, p]) => <div class="palette" data-palette={key}>
+          <h3>{p.name} <small>{key === 'a7' ? 'recommended' : 'alternative'}</small></h3>
+          <ul class="swatches" aria-label={`${p.name} swatches`}>{SWATCHES.map(t => <li style={`background:${p.tokens[t]}`} title={`${t} ${p.tokens[t]}`}><span>{t.replace('--lb-air-', 'air ').replace('--', '')}</span></li>)}</ul>
+          <p class="muted">{WHY[key].why}</p>
+          <dl class="pros"><dt>Strengths</dt><dd>{WHY[key].strengths.join(' · ')}</dd><dt>Weaknesses</dt><dd>{WHY[key].weaknesses.join(' · ')}</dd><dt>Proof</dt><dd>{p.pairs.length} pairs pass; lowest ratio {p.lowest.toFixed(2)} (a spot pair with no text minimum); ink on paper {p.pairs.find(x => x.label === 'ink on --paper')?.ratio}:1.</dd></dl>
+        </div>)}
+      </div>
+    </section>
+
+    <section class="wrap" id="type" aria-labelledby="type-h">
+      <h2 id="type-h">Type</h2>
+      <p class="muted">Of the fonts on resourceboy.com, two carry a licence that allows commercial use, web embedding, self-hosting and subsetting (SIL OFL 1.1); both are single-weight, so they are offered for display only, with Figtree kept for text. The one serif that qualified (Asoka) is out by the design owner’s standing verdict (no serif, no italics).</p>
+      <div class="types">{TYPE.map(t => <div class="type-card" data-type={t.key}>
+        <p class="type-sample" style={`font-family:${t.family};font-weight:${t.weight};font-stretch:${t.stretch};letter-spacing:${t.tracking}`}>Say what you want.<br />See what fits.</p>
+        <p class="type-text">Your words become the criteria. Every ranking reason is shown, nothing about you leaves this device until you say so, and a fit tells no one.</p>
+        <h3>{t.name} <small>{t.key === 'archivo' ? 'recommended' : 'alternative'}</small></h3>
+        <p class="muted">{t.note}</p>
+      </div>)}</div>
+    </section>
+
+    <section class="wrap" id="field" aria-labelledby="field-h">
+      <h2 id="field-h">The search field</h2>
+      <p class="muted">The founder asked for a rounded rectangle instead of the pill. Three radii and the pill, with the place split; buttons and chips stay pills unless the switcher says “follow the field”. The live one below follows the switcher.</p>
+      <div class="radii">{RADII.map(([key, label, px]) => <div class="radius-card" style={`--field-r:${px}`}><SearchForm id={`q-r-${key}`} size="hero" place /><p class="muted">{label}{key === '16' ? ' · recommended' : ''}</p></div>)}</div>
+      <div class="live"><SearchForm id="q-live" size="focal" place /><p class="muted">Live: the switcher’s radius, controls and palette.</p></div>
+    </section>
+
+    <section class="wrap" id="controls" aria-labelledby="controls-h">
+      <h2 id="controls-h">Buttons and chips</h2>
+      <div class="controls">
+        <a class="btn btn-primary" href="#controls">Explore jobs</a>
+        <a class="btn" href="#controls">How it works</a>
+        <span class="chip" data-level="must">Remote<small>Must</small></span>
+        <span class="chip">Berlin<small>Prefer</small></span>
+        <span class="chip" data-level="never">Agencies<small>Never</small></span>
+      </div>
+    </section>
+
+    <section class="wrap" id="badge" aria-labelledby="badge-h">
+      <h2 id="badge-h">The rotating badge</h2>
+      <p class="muted">Text on a circle, one slow turn every 24 s, paused while unseen, still under reduced motion. The live one takes the switcher’s line; the three lines are shown statically beside it. Only the first is an approved working line (Notion 06); “A fit tells no one” is under counsel’s review and is never the default.</p>
+      <div class="badges">
+        <div class="badge-card"><Badge size={168} /><p class="muted">Live</p></div>
+        {LINES.map(([key, label]) => <div class="badge-card" data-badge-line={key}><p class="badge-line">{label}</p><p class="muted">{key === 'yours' ? 'approved working line · recommended' : key === 'fit' ? 'option · counsel to confirm' : 'option'}</p></div>)}
+      </div>
+    </section>
+
+    <section class="wrap" id="sample" aria-labelledby="sample-h">
+      <h2 id="sample-h">A sample section</h2>
+      <p class="muted">The spacing and type scale in use: measure 60–75 characters, section, block and heading spaces from the tokens.</p>
+      <div class="sample">
+        <p class="eyebrow">How it works</p>
+        <h2>Your words become the criteria.</h2>
+        <p>Type what you want the way you would say it to a friend. Linkbot reads it into criteria you can see and change: what must hold, what you prefer, what you never want. Every ranking reason is shown next to the listing it explains.</p>
+        <p>Nothing about you leaves this device until you decide it should. A fit tells no one; the employer learns of you only when you answer.</p>
+        <a class="btn btn-primary" href="#sample">Explore jobs</a>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .board { padding-block: var(--space-section); display: grid; gap: var(--space-section); }
+  .board-head { display: grid; gap: var(--space-head); }
+  .board section { display: grid; gap: var(--space-block); }
+  .muted { color: var(--ink-2); max-width: var(--measure); }
+  .palettes, .types { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: var(--space-block); }
+  .palette, .type-card, .radius-card, .badge-card { display: grid; gap: 12px; align-content: start; padding: 20px; border: 1px solid var(--line); border-radius: var(--r-3); background: color-mix(in srgb, var(--surface) 70%, transparent); }
+  .palette h3 small, .type-card h3 small { margin-left: 8px; font-size: var(--size-micro); font-weight: 560; color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.5rem, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+  .swatches li { aspect-ratio: 1; border-radius: var(--r-2); border: 1px solid rgb(0 0 0 / .08); display: grid; align-items: end; }
+  .swatches li span { font-size: .5625rem; line-height: 1.1; padding: 3px 4px; background: rgb(255 255 255 / .75); color: #123a2c; border-radius: 0 0 var(--r-2) var(--r-2); }
+  .pros { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: var(--size-small); }
+  .pros dt { font-weight: 650; } .pros dd { margin: 0; color: var(--ink-2); }
+  .type-sample { margin: 0; font-size: clamp(1.9rem, 1rem + 2.6vw, 2.8rem); line-height: 1.06; text-wrap: balance; }
+  .type-text { margin: 0; font-family: var(--text); font-size: var(--size-body); line-height: var(--lh-body); }
+  .radii { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); gap: var(--space-block); }
+  .radius-card { padding: 20px 20px 16px; }
+  .live { display: grid; gap: 12px; justify-items: center; padding-top: var(--space-block); }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .badges { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: var(--space-block); }
+  .badge-card { justify-items: center; text-align: center; min-height: 14rem; align-content: center; }
+  .badge-line { margin: 0; font-family: var(--display); font-size: var(--size-h3); font-weight: 540; font-stretch: 102%; letter-spacing: -.02em; text-wrap: balance; }
+  .sample { display: grid; gap: var(--space-para); max-width: var(--measure); padding: var(--space-block) 0; border-top: 1px solid var(--line); }
+  .sample h2 { margin-bottom: var(--space-head); }
+  .sample .btn { justify-self: start; }
+</style>

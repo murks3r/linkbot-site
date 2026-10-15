@@ -5,7 +5,8 @@ import Halo from '../components/Halo.astro';
 import Signal from '../components/Signal.astro';
 import Yours from '../components/Yours.astro';
 import Icon from '../components/Icon.astro';
-import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
+import { START_EXAMPLES } from '../data/content';
+import { app, searchWith } from '../lib/links';
 ---
 <Base title="Linkbot: find work that fits, keep your privacy"
   description="Say what matters in a few words. Linkbot reads current job listings against them and shows why each one fits, or doesn’t. No account needed."
@@ -18,7 +19,7 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
     <div class="hero-focal">
       <h1 id="hero-title"><span class="h1-line">Find work that fits.</span> <span class="h1-line">Keep your privacy.</span></h1>
       <div class="hero-search" data-hero-search>
-        <SearchForm id="q-hero" size="focal" />
+        <SearchForm id="q-hero" size="focal" place />
       </div>
     </div>
     <div class="hero-foot">
@@ -41,11 +42,14 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
     <Yours />
   </div>
 
-  <!-- 4. The invitation: the question the story leaves you with, and the search again. -->
+  <!-- 4. The invitation (A8): one plain call to action, no second field. The three recorded
+       examples stay as a way in without typing. -->
   <section class="band start" data-stage="start" aria-labelledby="start-title">
     <div class="wrap start-inner">
-      <h2 id="start-title">What would make your next move worth it?</h2>
-      <SearchForm id="q-start" size="focal" placeholder={START_PLACEHOLDER} examples={START_EXAMPLES} />
+      <h2 id="start-title">Ready when you are.</h2>
+      <p class="start-lede">Search current openings now. No account, no profile, and nobody is told you’re looking.</p>
+      <a class="btn btn-primary start-cta" href={app('#/search')} data-start-cta>Explore jobs<Icon name="arrow" /></a>
+      <ul class="start-try" aria-label="Or start from an example">{START_EXAMPLES.map(example => <li><a href={searchWith(example)}>{example}</a></li>)}</ul>
       <p class="start-links"><a class="link" href="/how-it-works">How it works<Icon name="arrow" /></a><a class="link" href="/privacy">How your privacy works<Icon name="arrow" /></a><a class="link" href="/hiring">Hiring?<Icon name="arrow" /></a></p>
     </div>
   </section>
@@ -85,11 +89,17 @@ import { START_EXAMPLES, START_PLACEHOLDER } from '../data/content';
   .start { padding-block: clamp(64px, 8vw, 128px) clamp(80px, 10vw, 140px); }
   .start-inner { display: grid; justify-items: center; text-align: center; gap: clamp(24px, 3vw, 36px); }
   .start h2 { max-width: 16ch; }
+  .start-lede { max-width: 34em; margin-top: calc(var(--space-head) - var(--space-block) / 2); font-size: var(--size-lede); line-height: 1.5; color: var(--ink-2); }
+  .start-cta { min-height: 60px; padding: 0 32px; font-size: 1.0625rem; }
+  .start-try { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 22px; font-size: var(--size-small); }
+  .start-try a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 5px; }
+  .start-try a:hover { color: var(--ink); text-decoration-color: currentColor; }
   .start-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 28px; margin-top: clamp(16px, 3vw, 32px); font-size: var(--size-small); }
 
   /* Phones: the action sits under the field (62 px), so the field's own centre is placed. */
   @media (max-width: 30rem) { .hero { --field-h: 62px; } }
   @media (max-width: 40rem) {
+    .hero-foot { padding-top: 6px; }
     .promises { flex-direction: column; align-items: center; gap: 4px; font-size: var(--size-micro); }
     .promises li + li::before { display: none; }
   }
