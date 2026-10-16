@@ -1,0 +1,436 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 760" overflow="visible">
+<!--
+  Begegnung (encounter), Concept A9 direction W4: the source of the home story's illustration.
+  Own drawing (SVG primitives and filters, no third-party art). This file is never shipped as is:
+  art/bake.cjs renders every <g data-layer> on its own, crops it, and writes it to
+  public/directions/begegnung/ as WebP at two resolutions, plus layers.json (each layer's box in
+  these drawing units). The page only composites those images (opacity and transform), so no SVG
+  filter ever runs in a visitor's browser.
+  Coordinates: the canvas is 900 × 760 units; the company's sleeves run on to x = 1800 so they
+  always reach the edge of the screen (an arm from beyond the frame, never a disembodied hand).
+  Drawn first in the storyboard (concept-a9/w4/storyboard/src/frame.html), cleaned into layers here.
+-->
+  <defs>
+    <!-- Watercolour wash: wobbly edge, mottled pigment, a darker rim where the water dried, granulation. -->
+    <filter id="f-wc" filterUnits="userSpaceOnUse" x="-60" y="-60" width="1960" height="880" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="3" seed="3" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="shape"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.013" numOctaves="2" seed="8" result="mott"/>
+      <feColorMatrix in="mott" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.25 0 0 0 1.36" result="mottA"/>
+      <feComposite in="shape" in2="mottA" operator="in" result="wash"/>
+      <feMorphology in="shape" operator="erode" radius="2" result="inner"/>
+      <feComposite in="shape" in2="inner" operator="out" result="rim"/>
+      <feColorMatrix in="rim" type="matrix" values="0.72 0 0 0 0  0 0.72 0 0 0  0 0 0.72 0 0  0 0 0 0.62 0" result="rimD"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="2" seed="13" result="gran"/>
+      <feColorMatrix in="gran" type="matrix" values="0 0 0 0 0.1  0 0 0 0 0.14  0 0 0 0 0.12  1.1 0 0 0 -0.62" result="granA"/>
+      <feComposite in="granA" in2="shape" operator="in" result="granIn"/>
+      <feMerge><feMergeNode in="wash"/><feMergeNode in="rimD"/><feMergeNode in="granIn"/></feMerge>
+    </filter>
+    <!-- The same wash without mottling, for hands: opaque, with rim and grain. -->
+    <filter id="f-wcs" filterUnits="userSpaceOnUse" x="-60" y="-60" width="1960" height="880" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="3" result="warp"/>
+      <feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="shape"/>
+      <feMorphology in="shape" operator="erode" radius="1.6" result="inner"/>
+      <feComposite in="shape" in2="inner" operator="out" result="rim"/>
+      <feColorMatrix in="rim" type="matrix" values="0.72 0 0 0 0  0 0.72 0 0 0  0 0 0.72 0 0  0 0 0 0.7 0" result="rimD"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="2" seed="13" result="gran"/>
+      <feColorMatrix in="gran" type="matrix" values="0 0 0 0 0.1  0 0 0 0 0.14  0 0 0 0 0.12  1.1 0 0 0 -0.62" result="granA"/>
+      <feComposite in="granA" in2="shape" operator="in" result="granIn"/>
+      <feMerge><feMergeNode in="shape"/><feMergeNode in="rimD"/><feMergeNode in="granIn"/></feMerge>
+    </filter>
+    <!-- Pencil: a slightly wandering, broken line. -->
+    <filter id="f-pencil" filterUnits="userSpaceOnUse" x="-60" y="-60" width="1960" height="880">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="5" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="1" seed="9" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.9 0 0 0 1.9" result="ga"/>
+      <feComposite in="d" in2="ga" operator="in"/>
+    </filter>
+    <!-- The veil: a glaze of white paint (a Lasur), feathered, with vertical brush fibres. Not a garment. -->
+    <filter id="f-mist" filterUnits="userSpaceOnUse" x="-60" y="-60" width="1020" height="880">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="3" seed="21" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="34" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="5" result="soft"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.08 0.006" numOctaves="2" seed="4" result="fib"/>
+      <feColorMatrix in="fib" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -0.62 0 0 0 1.16" result="fibA"/>
+      <feComposite in="soft" in2="fibA" operator="in" result="veil"/>
+      <feMorphology in="d" operator="erode" radius="3" result="inner"/>
+      <feComposite in="d" in2="inner" operator="out" result="rim"/>
+      <feGaussianBlur in="rim" stdDeviation="1.2" result="rimS"/>
+      <feColorMatrix in="rimS" type="matrix" values="0.84 0 0 0 0  0 0.86 0 0 0  0 0 0.85 0 0  0 0 0 0.5 0" result="rimD"/>
+      <feMerge><feMergeNode in="veil"/><feMergeNode in="rimD"/></feMerge>
+    </filter>
+    <!-- A bloom: the cauliflower edge watercolour makes when wet colour runs into wet paper. -->
+    <filter id="f-bloom" filterUnits="userSpaceOnUse" x="-60" y="-60" width="1020" height="880" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" seed="2" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="18" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feMorphology in="d" operator="erode" radius="3" result="inner"/>
+      <feComposite in="d" in2="inner" operator="out" result="rim"/>
+      <feColorMatrix in="rim" type="matrix" values="0.86 0 0 0 0  0 0.62 0 0 0  0 0 0.72 0 0  0 0 0 0.9 0" result="rimD"/>
+      <feGaussianBlur in="d" stdDeviation="1.1" result="ds"/>
+      <feMerge><feMergeNode in="ds"/><feMergeNode in="rimD"/></feMerge>
+    </filter>
+    <filter id="f-veilstroke" filterUnits="userSpaceOnUse" x="-60" y="-60" width="1020" height="880">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="17" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="30" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.09 0.008" numOctaves="2" seed="6" result="fib"/>
+      <feColorMatrix in="fib" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.6 0 0 0 1.5" result="fibA"/>
+      <feComposite in="d" in2="fibA" operator="in" result="dry"/>
+      <feGaussianBlur in="dry" stdDeviation="2.2"/>
+    </filter>
+    <!-- The colour behind the person: watercolour washes with dried edges (not a gradient orb). -->
+    <filter id="f-halo" filterUnits="userSpaceOnUse" x="-200" y="-200" width="1300" height="1160" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="31" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="46" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="2.2" result="ds"/>
+      <feMorphology in="d" operator="erode" radius="4" result="inner"/>
+      <feComposite in="d" in2="inner" operator="out" result="rim"/>
+      <feGaussianBlur in="rim" stdDeviation="1.2" result="rimS"/>
+      <feColorMatrix in="rimS" type="matrix" values="0.86 0 0 0 0  0 0.8 0 0 0  0 0 0.8 0 0  0 0 0 0.75 0" result="rimD"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="12" result="mott"/>
+      <feColorMatrix in="mott" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.1 0 0 0 1.25" result="mottA"/>
+      <feComposite in="ds" in2="mottA" operator="in" result="wash"/>
+      <feMerge><feMergeNode in="wash"/><feMergeNode in="rimD"/></feMerge>
+    </filter>
+    <filter id="f-glow" filterUnits="userSpaceOnUse" x="-60" y="-60" width="1020" height="880"><feGaussianBlur stdDeviation="11"/></filter>
+    <filter id="f-soft" filterUnits="userSpaceOnUse" x="-60" y="-60" width="1020" height="880"><feGaussianBlur stdDeviation="3.5"/></filter>
+
+    <radialGradient id="g-mist" cx="50%" cy="38%" r="62%">
+      <stop offset="0" stop-color="#fdfcf9" stop-opacity=".95"/>
+      <stop offset=".62" stop-color="#f5f4f0" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#ecebe6" stop-opacity=".62"/>
+    </radialGradient>
+    <linearGradient id="g-fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#fff"/><stop offset=".86" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity=".06"/>
+    </linearGradient>
+    <mask id="m-fade" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="760"><rect x="0" y="100" width="900" height="620" fill="url(#g-fade)"/></mask>
+    <radialGradient id="g-lit" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#fff7d6"/><stop offset=".5" stop-color="#fedf86"/><stop offset="1" stop-color="#f5b56c"/>
+    </radialGradient>
+    <radialGradient id="g-glow"><stop offset="0" stop-color="#fed371" stop-opacity=".9"/><stop offset="1" stop-color="#fed371" stop-opacity="0"/></radialGradient>
+
+    <!-- A mitten hand, wrist at the origin, pointing along +x, thumb up (−y). -->
+    <path id="mitt" d="M-4 -11 C10 -14 30 -14 40 -9 C48 -5 50 5 44 10 C34 15 10 14 -4 11 Z"/>
+    <path id="thumb" d="M12 -10 C15 -22 25 -27 31 -23 C35 -19 29 -13 22 -9 Z"/>
+    <!-- The chair, line drawing (facing left), reused for the dashed second chair. -->
+    <g id="chair-lines">
+      <path d="M802 452 L814 450 L816 700 M804 452 L804 700"/>
+      <path d="M818 446 L830 444 L832 690"/>
+      <path d="M806 470 L828 466 M806 504 L828 500"/>
+      <path d="M700 576 L806 576 L822 566 L716 566 Z"/>
+      <path d="M700 576 L700 586 L806 586 L806 576"/>
+      <path d="M704 586 L708 700 M714 586 L716 700"/>
+      <path d="M722 576 L726 690"/>
+    </g>
+    <!-- A paper lantern, body centred at the origin. -->
+    <g id="lantern-lines">
+      <path d="M-8 -46 Q0 -57 8 -46 M0 -46 L0 -39"/>
+      <rect x="-13" y="-39" width="26" height="7" rx="2"/>
+      <ellipse cx="0" cy="0" rx="29" ry="33"/>
+      <path d="M-28 -14 Q0 -7 28 -14 M-29 0 Q0 7 29 0 M-28 14 Q0 21 28 14"/>
+      <rect x="-11" y="32" width="22" height="7" rx="2"/>
+    </g>
+    <g id="lantern-paper"><ellipse rx="29" ry="33" fill="#f3f0e7"/><rect x="-13" y="-39" width="26" height="7" rx="2" fill="#5d6a63"/><rect x="-11" y="32" width="22" height="7" rx="2" fill="#5d6a63"/></g>
+  </defs>
+
+  <!-- S4: colour blooms behind the person (and only behind the person). -->
+  <g data-layer="halo" data-k=".35" filter="url(#f-halo)">
+    <circle cx="246" cy="410" r="168" fill="#fdc192" opacity=".42"/>
+    <circle cx="344" cy="300" r="118" fill="#fdcfd9" opacity=".55"/>
+    <circle cx="176" cy="540" r="122" fill="#9cdcb8" opacity=".42"/>
+    <circle cx="282" cy="196" r="84" fill="#fed371" opacity=".45"/>
+  </g>
+
+  <!-- Your own place: a pool of warm grey paint on the ground. -->
+  <g data-layer="ground" data-k=".6">
+    <g filter="url(#f-wc)"><path d="M20 701 C220 692 640 692 880 702 C700 714 220 716 20 709 Z" fill="#ebe8e1" opacity=".4"/></g>
+    <g filter="url(#f-wc)"><ellipse cx="225" cy="703" rx="215" ry="23" fill="#e4e0d5" opacity=".7"/></g>
+    <g filter="url(#f-wc)" opacity=".5"><ellipse cx="262" cy="701" rx="92" ry="9" fill="#a3a59d"/><ellipse cx="110" cy="703" rx="50" ry="7" fill="#a3a59d"/></g>
+  </g>
+
+  <!-- The stool, with the sweater that is always kept. -->
+  <g data-layer="stool">
+    <g filter="url(#f-wc)">
+      <rect x="64" y="584" width="88" height="13" rx="5" fill="#cbbfab"/>
+      <path d="M74 597 L68 700 L77 700 L83 597 Z M133 597 L139 700 L148 700 L142 597 Z" fill="#c2b5a0"/>
+      <path d="M104 597 L104 694 L112 694 L112 597 Z" fill="#b9ad99" opacity=".6"/>
+      <rect x="76" y="648" width="64" height="6" rx="3" fill="#c2b5a0"/>
+    </g>
+    <g filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="64" y="584" width="88" height="13" rx="5"/>
+      <path d="M74 597 L68 700 M83 597 L77 700 M133 597 L139 700 M142 597 L148 700 M76 651 L140 651"/>
+    </g>
+    <rect x="67" y="557" width="82" height="27" rx="7" fill="#dbd7cd" filter="url(#f-wc)"/>
+    <g filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.7" stroke-linecap="round"><rect x="67" y="557" width="82" height="27" rx="7"/><path d="M73 571 Q108 575 143 571"/></g>
+  </g>
+  <!-- Folded on the stool until you choose to wear them (S4). -->
+  <g data-layer="fold-coat">
+    <rect x="71" y="533" width="74" height="25" rx="7" fill="#cbd6cf" filter="url(#f-wc)"/>
+    <g filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="71" y="533" width="74" height="25" rx="7"/><path d="M95 533 L108 546 L121 533"/></g>
+  </g>
+  <g data-layer="fold-scarf">
+    <rect x="80" y="516" width="56" height="18" rx="6" fill="#e3d4d8" filter="url(#f-wc)"/>
+    <g filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.6" stroke-linecap="round"><rect x="80" y="516" width="56" height="18" rx="6"/><path d="M86 534 v5 M93 534 v5 M100 534 v5"/></g>
+  </g>
+
+  <!-- The role: an empty chair. No face, no name, no number. -->
+  <g data-layer="chair">
+    <ellipse cx="764" cy="703" rx="72" ry="8" fill="#a3a59d" opacity=".42" filter="url(#f-wc)"/>
+    <g filter="url(#f-wc)">
+      <path d="M818 446 L830 444 L832 690 L821 690 Z" fill="#d8cfbf"/>
+      <path d="M716 566 L822 566 L806 576 L700 576 Z" fill="#d3c8b5"/>
+      <path d="M722 576 L728 576 L730 690 L725 690 Z" fill="#d8cfbf"/>
+      <path d="M806 470 L828 466 L828 476 L806 480 Z M806 504 L828 500 L828 510 L806 514 Z" fill="#cfc4b0"/>
+      <path d="M802 452 L814 450 L816 700 L804 700 Z" fill="#c4b8a3"/>
+      <path d="M700 576 L806 576 L806 586 L700 586 Z" fill="#c4b8a3"/>
+      <path d="M704 586 L714 586 L716 700 L708 700 Z" fill="#c4b8a3"/>
+    </g>
+    <use href="#chair-lines" filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- S4: a second chair, only a dashed outline: where the conversation continues is an open question. -->
+  <g data-layer="chair2">
+    <use href="#chair-lines" transform="translate(1344 0) scale(-1 1)" fill="none" stroke="#4f6b5f" stroke-width="1.8" stroke-dasharray="7 6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Your words, as paper lanterns at your feet. Lit only where the listing states them and they fit. -->
+  <g data-layer="lantern12">
+    <g transform="translate(446 650)">
+      <use href="#lantern-paper" filter="url(#f-wc)"/>
+      <use href="#lantern-lines" filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.6" stroke-linecap="round"/>
+      <text y="4" text-anchor="middle" font-family="Figtree Variable" font-weight="700" font-size="11.5" fill="#4c4224">Remote</text>
+    </g>
+    <g transform="translate(526 650)">
+      <use href="#lantern-paper" filter="url(#f-wc)"/>
+      <use href="#lantern-lines" filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.6" stroke-linecap="round"/>
+      <text y="4" text-anchor="middle" font-family="Figtree Variable" font-weight="700" font-size="10.5" fill="#4c4224">Research</text>
+    </g>
+  </g>
+  <g data-layer="lantern-glow" data-k=".4">
+    <circle cx="446" cy="644" r="70" fill="url(#g-glow)" filter="url(#f-glow)" opacity=".85"/>
+    <circle cx="526" cy="644" r="70" fill="url(#g-glow)" filter="url(#f-glow)" opacity=".85"/>
+    <ellipse cx="446" cy="692" rx="50" ry="8" fill="#fed371" opacity=".6" filter="url(#f-soft)"/>
+    <ellipse cx="526" cy="692" rx="50" ry="8" fill="#fed371" opacity=".6" filter="url(#f-soft)"/>
+  </g>
+  <g data-layer="lantern12-lit">
+    <g transform="translate(446 650)">
+      <use href="#lantern-paper" filter="url(#f-wc)"/>
+      <ellipse rx="29" ry="33" fill="url(#g-lit)" filter="url(#f-wc)"/>
+      <use href="#lantern-lines" filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.6" stroke-linecap="round"/>
+      <text y="4" text-anchor="middle" font-family="Figtree Variable" font-weight="700" font-size="11.5" fill="#4c4224">Remote</text>
+    </g>
+    <g transform="translate(526 650)">
+      <use href="#lantern-paper" filter="url(#f-wc)"/>
+      <ellipse rx="29" ry="33" fill="url(#g-lit)" filter="url(#f-wc)"/>
+      <use href="#lantern-lines" filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.6" stroke-linecap="round"/>
+      <text y="4" text-anchor="middle" font-family="Figtree Variable" font-weight="700" font-size="10.5" fill="#4c4224">Research</text>
+    </g>
+  </g>
+  <g data-layer="lantern3">
+    <g transform="translate(606 650)">
+      <use href="#lantern-paper" filter="url(#f-wc)"/>
+      <use href="#lantern-lines" filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.6" stroke-linecap="round"/>
+      <text y="4" text-anchor="middle" font-family="Figtree Variable" font-weight="700" font-size="9.5" fill="#4c4224">No on-call</text>
+    </g>
+  </g>
+  <!-- The listing doesn't say: the lantern stays open (dashed, a question mark), never lit. -->
+  <g data-layer="lantern3-open">
+    <g transform="translate(606 650)">
+      <use href="#lantern-lines" fill="none" stroke="#4f6b5f" stroke-width="1.6" stroke-dasharray="4 4" stroke-linecap="round"/>
+      <text y="-2" text-anchor="middle" font-family="Figtree Variable" font-weight="700" font-size="22" fill="#37584c">?</text>
+      <text y="16" text-anchor="middle" font-family="Figtree Variable" font-weight="650" font-size="9.5" fill="#37584c">No on-call</text>
+    </g>
+  </g>
+
+  <!-- S3: pink blooms where the hands meet, behind them. -->
+  <g data-layer="clasp-bloom" filter="url(#f-bloom)">
+    <circle cx="510" cy="428" r="54" fill="#ff9dbb" opacity=".88"/>
+    <circle cx="556" cy="390" r="17" fill="#ffb3c9" opacity=".85"/>
+    <circle cx="466" cy="470" r="13" fill="#ffb3c9" opacity=".8"/>
+    <circle cx="548" cy="478" r="9" fill="#ffc2d3" opacity=".8"/>
+  </g>
+
+  <!-- You, unpainted: a pencil figure study on paper (S1–S3, under the veil), with the left arm hanging. -->
+  <g data-layer="sketch">
+    <g filter="url(#f-wc)" opacity=".95">
+      <ellipse cx="262" cy="200" rx="33" ry="40" fill="#e3e1d9"/>
+      <path d="M255 234 L256 262 L271 262 L271 234 Z" fill="#e3e1d9"/>
+      <path d="M254 258 C238 264 220 268 212 282 C209 300 211 318 214 332 C219 378 225 408 223 430 C219 462 213 504 206 560 C240 572 288 572 320 560 C314 504 307 462 304 430 C302 408 308 378 312 332 C315 318 315 300 310 280 C302 266 288 262 272 258 Z" fill="#dedcd3"/>
+      <path d="M219 560 L218 684 L238 684 L240 560 Z M276 560 L282 684 L302 684 L298 560 Z" fill="#e3e1d9"/>
+    </g>
+    <g filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="262" cy="200" rx="33" ry="40"/>
+      <path d="M255 236 L256 260 M271 236 L271 259"/>
+      <path d="M254 258 C238 264 220 268 212 282 C209 300 211 318 214 332 C219 378 225 408 223 430 C219 462 213 504 206 560 C240 572 288 572 320 560 C314 504 307 462 304 430 C302 408 308 378 312 332 C315 318 315 300 310 280 C302 266 288 262 272 258 Z"/>
+      <path d="M219 566 L218 684 M240 566 L238 684 M276 566 L282 684 M298 566 L302 684"/>
+      <path d="M206 689 C210 682 230 681 238 688 C234 694 212 695 206 689 Z M284 688 C292 681 312 682 318 690 C312 696 290 696 284 688 Z"/>
+      <path d="M238 300 C250 306 276 306 288 300" opacity=".5"/>
+    </g>
+    <path d="M214 292 C206 330 202 362 204 392 C206 422 208 452 210 480" fill="none" stroke="#56635c" stroke-width="19" stroke-linecap="round" filter="url(#f-pencil)"/>
+    <path d="M214 292 C206 330 202 362 204 392 C206 422 208 452 210 480" fill="none" stroke="#e3e1d9" stroke-width="15.5" stroke-linecap="round"/>
+    <g transform="translate(210 484) rotate(92) scale(.95)"><use href="#mitt" fill="#e3e1d9"/><use href="#thumb" fill="#e3e1d9"/><use href="#mitt" fill="none" stroke="#56635c" stroke-width="2.1" filter="url(#f-pencil)"/><use href="#thumb" fill="none" stroke="#56635c" stroke-width="2.1" filter="url(#f-pencil)"/></g>
+  </g>
+  <!-- the right arm at rest (S1, S2) -->
+  <g data-layer="arm-rest">
+    <path d="M308 292 C318 330 322 362 322 392 C322 422 320 452 318 480" fill="none" stroke="#56635c" stroke-width="19" stroke-linecap="round" filter="url(#f-pencil)"/>
+    <path d="M308 292 C318 330 322 362 322 392 C322 422 320 452 318 480" fill="none" stroke="#e3e1d9" stroke-width="15.5" stroke-linecap="round"/>
+    <g transform="translate(318 484) rotate(86) scale(.95)"><use href="#mitt" fill="#e3e1d9"/><use href="#thumb" fill="#e3e1d9"/><use href="#mitt" fill="none" stroke="#56635c" stroke-width="2.1" filter="url(#f-pencil)"/><use href="#thumb" fill="none" stroke="#56635c" stroke-width="2.1" filter="url(#f-pencil)"/></g>
+  </g>
+  <!-- the same right arm, rotated about the shoulder (308, 292) by the page: your own hand moves (S3).
+       A wisp of the veil trails along it. Its hand is a layer of its own, so the clasp can take over. -->
+  <g data-layer="arm-reach">
+    <path d="M308 292 C318 330 322 362 322 392 C322 410 321 426 320 446" fill="none" stroke="#ffffff" stroke-width="34" stroke-linecap="round" opacity=".7" filter="url(#f-veilstroke)"/>
+    <path d="M308 292 C318 330 322 362 322 392 C322 422 320 452 318 480" fill="none" stroke="#56635c" stroke-width="22" stroke-linecap="round" filter="url(#f-pencil)"/>
+    <path d="M308 292 C318 330 322 362 322 392 C322 422 320 452 318 480" fill="none" stroke="#ebe9e2" stroke-width="18.5" stroke-linecap="round"/>
+  </g>
+  <g data-layer="arm-reach-mitt">
+    <g transform="translate(318 484) rotate(86) scale(1.05)"><use href="#mitt" fill="#efede6" filter="url(#f-wcs)"/><use href="#thumb" fill="#efede6" filter="url(#f-wcs)"/><use href="#mitt" fill="none" stroke="#56635c" stroke-width="2" filter="url(#f-pencil)"/><use href="#thumb" fill="none" stroke="#56635c" stroke-width="2" filter="url(#f-pencil)"/></g>
+  </g>
+
+  <!-- S3: the clasp. Your hand (light, still unpainted) takes the open hand, which barely moved. Both thumbs on top. -->
+  <g data-layer="clasp">
+    <g transform="translate(506 428)">
+      <g transform="translate(-50 2) rotate(-4) scale(1.32)">
+        <use href="#mitt" fill="#f1efe8" filter="url(#f-wcs)"/><use href="#thumb" fill="#f1efe8" filter="url(#f-wcs)"/>
+        <use href="#mitt" fill="none" stroke="#56635c" stroke-width="1.5" filter="url(#f-pencil)"/><use href="#thumb" fill="none" stroke="#56635c" stroke-width="1.5" filter="url(#f-pencil)"/>
+      </g>
+      <g transform="translate(46 0) rotate(6) scale(-1.36 1.36)">
+        <use href="#mitt" fill="#406a59" filter="url(#f-wcs)"/><use href="#thumb" fill="#4f7a68" filter="url(#f-wcs)"/>
+        <use href="#mitt" fill="none" stroke="#1e3a30" stroke-width="1.2" filter="url(#f-pencil)"/><use href="#thumb" fill="none" stroke="#1e3a30" stroke-width="1.2" filter="url(#f-pencil)"/>
+        <path d="M30 -6 C38 -6 44 -2 46 4 M26 2 C34 2 40 6 42 10" fill="none" stroke="#1e3a30" stroke-width="1" opacity=".6"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- You, painted (S4; still there under the veil in S5): colour only on what you chose to wear.
+       Three layers, so the colour can bloom in turn: the coat, the face and hair, the scarf. -->
+  <g data-layer="paint-coat">
+    <path d="M219 590 L218 684 L238 684 L240 590 Z M276 590 L282 684 L302 684 L298 590 Z" fill="#f1efe8" filter="url(#f-wc)"/>
+    <g filter="url(#f-pencil)" fill="none" stroke="#56635c" stroke-width="1.9" stroke-linecap="round"><path d="M219 596 L218 684 M240 596 L238 684 M276 596 L282 684 M298 596 L302 684"/></g>
+    <path d="M206 689 C210 682 230 681 238 688 C234 694 212 695 206 689 Z M284 688 C292 681 312 682 318 690 C312 696 290 696 284 688 Z" fill="#1e4436" filter="url(#f-wc)"/>
+    <g filter="url(#f-wc)">
+      <path d="M252 256 C236 262 218 266 208 282 C204 302 206 322 206 334 C204 392 200 452 196 520 C194 556 190 584 186 604 C230 618 296 618 338 604 C334 584 330 556 328 520 C324 452 320 392 318 334 C318 322 320 302 314 280 C304 266 288 262 272 256 Z" fill="#a6d8b9"/>
+      <path d="M252 256 C236 262 218 266 208 282 C204 302 206 322 206 334 C204 392 200 452 196 520 C194 556 190 584 186 604 C204 610 222 613 238 614 C236 520 236 420 240 330 C242 300 248 274 252 256 Z" fill="#5f9a7e" opacity=".38"/>
+      <path d="M300 268 C312 284 314 306 314 334 C316 392 320 452 324 520 C326 556 330 584 334 604 C326 607 318 609 310 610 C306 520 302 420 300 330 Z" fill="#78ae92" opacity=".32"/>
+    </g>
+    <g filter="url(#f-pencil)" fill="none" stroke="#2f4a3e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M252 256 C236 262 218 266 208 282 C204 302 206 322 206 334 C204 392 200 452 196 520 C194 556 190 584 186 604 C230 618 296 618 338 604 C334 584 330 556 328 520 C324 452 320 392 318 334 C318 322 320 302 314 280 C304 266 288 262 272 256 Z"/>
+      <path d="M262 262 L266 612 M248 258 L262 316 M276 258 L263 316 M206 470 L236 470 M296 470 L326 470"/>
+    </g>
+    <g fill="#2f4a3e"><circle cx="273" cy="360" r="2.8"/><circle cx="274" cy="410" r="2.8"/><circle cx="275" cy="460" r="2.8"/></g>
+  </g>
+  <!-- neck, face, cheeks: the palette's dawn; a painted picture of you, not a photo -->
+  <g data-layer="paint-face">
+    <g filter="url(#f-wc)"><path d="M255 234 L256 262 L271 262 L271 234 Z" fill="#f5dcc4"/><ellipse cx="263" cy="202" rx="31" ry="38" fill="#fbe5cf"/></g>
+    <g filter="url(#f-soft)" opacity=".55"><circle cx="249" cy="216" r="7" fill="#ff9dbb"/><circle cx="282" cy="216" r="7" fill="#ff9dbb"/></g>
+    <path filter="url(#f-wc)" fill="#1e4436" d="M228 220 C222 176 244 154 266 154 C290 154 306 174 300 220 C299 232 297 242 293 251 C292 232 290 214 286 204 C280 192 272 186 262 184 C250 186 240 196 236 208 C233 220 233 236 234 251 C230 242 229 232 228 220 Z"/>
+    <path d="M248 168 C258 161 272 161 284 168" fill="none" stroke="#3f6b5a" stroke-width="3.5" stroke-linecap="round" opacity=".7" filter="url(#f-pencil)"/>
+    <g fill="#123a2c"><circle cx="255" cy="207" r="2.9"/><circle cx="276" cy="207" r="2.9"/></g>
+    <path d="M257 222 Q266 229 277 221" fill="none" stroke="#123a2c" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <g data-layer="paint-scarf">
+    <g filter="url(#f-wc)">
+      <path d="M244 246 C254 258 274 258 284 246 C290 252 290 262 285 268 C272 276 254 276 242 268 C237 262 238 252 244 246 Z" fill="#ff9dbb"/>
+      <path d="M274 268 C282 304 280 344 288 382 C282 388 272 388 266 384 C262 348 262 308 258 272 Z" fill="#ff9dbb"/>
+      <path d="M248 262 C258 268 272 268 282 262" fill="none" stroke="#e9809f" stroke-width="2.6" opacity=".7"/>
+    </g>
+  </g>
+  <!-- painted arms: S4 (the right hand at rest; the left one holds the lifted veil, drawn with it) -->
+  <g data-layer="arms4">
+    <path d="M214 292 C206 330 202 362 204 392 C206 422 208 452 210 480" fill="none" stroke="#2f4a3e" stroke-width="20" stroke-linecap="round" filter="url(#f-pencil)"/>
+    <path d="M214 292 C206 330 202 362 204 392 C206 422 208 452 210 480" fill="none" stroke="#93cbaa" stroke-width="16.5" stroke-linecap="round" filter="url(#f-wc)"/>
+    <path d="M308 292 C318 330 322 362 322 392 C322 422 320 452 318 480" fill="none" stroke="#2f4a3e" stroke-width="20" stroke-linecap="round" filter="url(#f-pencil)"/>
+    <path d="M308 292 C318 330 322 362 322 392 C322 422 320 452 318 480" fill="none" stroke="#a9dabc" stroke-width="16.5" stroke-linecap="round" filter="url(#f-wc)"/>
+    <g transform="translate(318 484) rotate(86) scale(.95)"><use href="#mitt" fill="#fbe5cf" filter="url(#f-wc)"/><use href="#thumb" fill="#fbe5cf" filter="url(#f-wc)"/><use href="#mitt" fill="none" stroke="#56635c" stroke-width="2" filter="url(#f-pencil)"/></g>
+  </g>
+  <!-- painted arms: S5 (the left hand raised, drawing the veil back; the right at rest) -->
+  <g data-layer="arms5">
+    <path d="M214 292 C196 316 180 350 168 390" fill="none" stroke="#93cbaa" stroke-width="16.5" stroke-linecap="round" filter="url(#f-wc)"/>
+    <path d="M308 292 C318 330 322 362 322 392 C322 422 320 452 318 480" fill="none" stroke="#a9dabc" stroke-width="16.5" stroke-linecap="round" filter="url(#f-wc)"/>
+  </g>
+
+  <!-- The veil (S1–S3, again in S5): a glaze of white paint around you, not a garment. It hides you
+       from employers; Linkbot is never drawn blind. Only your own hand lifts it and draws it back. -->
+  <g data-layer="veil" data-k=".5" mask="url(#m-fade)">
+    <path filter="url(#f-mist)" fill="url(#g-mist)" d="M262 112 C302 106 342 128 356 166 C378 196 398 248 392 300 C404 360 396 430 384 490 C380 540 388 600 396 650 C342 664 186 664 132 650 C140 600 148 540 144 490 C130 430 122 360 134 300 C128 248 148 196 170 166 C184 128 222 110 262 112 Z"/>
+    <ellipse cx="262" cy="206" rx="52" ry="60" fill="#fbfaf6" opacity=".7" filter="url(#f-halo)"/>
+    <ellipse cx="262" cy="206" rx="44" ry="52" fill="#faf9f5" opacity=".55" filter="url(#f-mist)"/>
+    <g filter="url(#f-veilstroke)" fill="none" stroke-linecap="round">
+      <path d="M170 210 C220 190 300 186 360 214" stroke="#ffffff" stroke-width="44" opacity=".34"/>
+      <path d="M150 330 C220 300 310 300 380 336" stroke="#ffffff" stroke-width="40" opacity=".26"/>
+      <path d="M150 450 C220 430 310 432 378 462" stroke="#ffffff" stroke-width="36" opacity=".2"/>
+      <path d="M262 136 C262 260 260 400 262 560" stroke="#ffffff" stroke-width="40" opacity=".18"/>
+    </g>
+    <g filter="url(#f-soft)" fill="none" stroke-linecap="round" opacity=".5">
+      <path d="M352 280 C372 350 376 430 366 520" stroke="#b9c0bb" stroke-width="8" opacity=".5"/>
+      <path d="M176 260 C156 330 152 410 160 500" stroke="#c4cac6" stroke-width="7" opacity=".45"/>
+    </g>
+  </g>
+  <!-- S4: the veil, lifted by your own hand, hangs from it like a cloth (the hand is drawn with it). -->
+  <g data-layer="veil-held" data-k=".5">
+    <path filter="url(#f-mist)" fill="url(#g-mist)" d="M206 486 C184 524 154 574 142 630 C136 662 144 692 166 702 C188 688 198 646 206 604 C212 568 216 524 206 486 Z"/>
+    <path filter="url(#f-mist)" fill="url(#g-mist)" opacity=".85" d="M214 488 C236 522 246 570 236 622 C226 594 220 556 212 520 Z"/>
+    <g filter="url(#f-soft)" fill="none" stroke="#a2aba5" stroke-width="1.5" opacity=".55" stroke-linecap="round"><path d="M200 500 C188 548 170 600 160 690"/><path d="M208 504 C204 556 196 610 186 684"/></g>
+  </g>
+  <g data-layer="veil-hand">
+    <g transform="translate(210 484) rotate(92) scale(.95)"><use href="#mitt" fill="#fbe5cf" filter="url(#f-wc)"/><use href="#thumb" fill="#fbe5cf" filter="url(#f-wc)"/><use href="#mitt" fill="none" stroke="#56635c" stroke-width="2" filter="url(#f-pencil)"/></g>
+  </g>
+  <!-- S5: your own hand draws the veil back. Head and face are covered again: from now on, nothing more is shown. -->
+  <g data-layer="veil-head" data-k=".5">
+    <ellipse cx="263" cy="204" rx="58" ry="66" fill="#fbfaf6" opacity=".92" filter="url(#f-halo)"/>
+    <ellipse cx="263" cy="204" rx="50" ry="58" fill="#f8f7f3" opacity=".9" filter="url(#f-mist)"/>
+    <path d="M206 250 C240 240 290 242 324 256 C330 290 330 330 320 360 C290 372 236 372 204 360 C196 330 198 290 206 250 Z" fill="#f8f7f3" opacity=".7" filter="url(#f-mist)"/>
+  </g>
+  <g data-layer="pinch">
+    <path d="M166 382 C196 360 214 330 228 300 C236 340 230 380 214 410 C200 420 182 414 166 404 Z" fill="#f7f6f2" opacity=".9" filter="url(#f-mist)"/>
+    <g filter="url(#f-soft)" fill="none" stroke-linecap="round"><path d="M172 396 C206 380 232 336 250 290" stroke="#ffffff" stroke-width="8" opacity=".9"/><path d="M172 396 C214 410 242 446 268 500" stroke="#ffffff" stroke-width="7" opacity=".9"/><path d="M176 392 C204 372 222 344 236 314 M178 402 C210 414 236 444 256 484" stroke="#a9b1ac" stroke-width="1.5" opacity=".6"/></g>
+    <!-- the arm that draws it back shows faintly through the glaze; the hand on the veil's edge is in front -->
+    <g opacity=".42" filter="url(#f-soft)"><path d="M214 292 C196 316 180 350 168 390" fill="none" stroke="#5f9a7e" stroke-width="17" stroke-linecap="round"/></g>
+    <g transform="translate(160 398) rotate(-16) scale(.95)"><use href="#mitt" fill="#fbe5cf" filter="url(#f-wc)"/><use href="#thumb" fill="#fbe5cf" filter="url(#f-wc)"/><use href="#mitt" fill="none" stroke="#56635c" stroke-width="2" filter="url(#f-pencil)"/><use href="#thumb" fill="none" stroke="#56635c" stroke-width="2" filter="url(#f-pencil)"/></g>
+  </g>
+
+  <!-- The company's side: a sleeve with its cuff, from beyond the frame, at the role. It waits; it does
+       not reach for you. The far run of the sleeve (beyond x 1000, off the stage) is a soft layer of
+       its own; the near part fades into it. Its open hand is a layer of its own, so the clasp can take
+       over; in S4 the same sleeve carries the hand turned palm up. -->
+  <mask id="m-near" maskUnits="userSpaceOnUse" x="560" y="0" width="520" height="760"><rect x="560" y="0" width="520" height="760" fill="url(#g-near)"/></mask>
+  <linearGradient id="g-near" gradientUnits="userSpaceOnUse" x1="560" y1="0" x2="1080" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".72" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <g data-layer="co-sleeve-tail" data-k=".35">
+    <path d="M1800 96 L940 316 L940 384 L1800 236 Z" fill="#2e5144" filter="url(#f-wc)"/>
+    <path d="M1800 116 L940 326 L940 348 L1800 160 Z" fill="#5b8273" opacity=".38" filter="url(#f-wc)"/>
+  </g>
+  <g data-layer="co-sleeve" mask="url(#m-near)">
+    <g filter="url(#f-wc)">
+      <path d="M1080 280 L940 316 C830 348 720 382 612 401 C602 403 598 411 598 420 C598 429 604 437 614 438 C720 432 830 410 940 384 L1080 360 Z" fill="#2e5144"/>
+      <path d="M1080 292 L940 326 C840 354 740 384 640 402 C740 396 840 374 940 348 L1080 318 Z" fill="#5b8273" opacity=".38"/>
+      <path d="M596 401 L613 398 L617 441 L599 440 Z" fill="#f4efe3"/>
+    </g>
+    <g filter="url(#f-pencil)" fill="none" stroke="#1e3a30" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1080 280 L940 316 C830 348 720 382 613 398 M617 441 C720 432 830 410 940 384 L1080 360"/>
+      <path d="M596 401 L613 398 L617 441 L599 440 Z"/>
+    </g>
+  </g>
+  <g data-layer="co-mitt">
+    <g transform="translate(598 421) scale(-1.15 1.15)">
+      <use href="#mitt" fill="#406a59" filter="url(#f-wcs)"/><use href="#thumb" fill="#4f7a68" filter="url(#f-wcs)"/>
+      <use href="#mitt" fill="none" stroke="#1e3a30" stroke-width="1.4" filter="url(#f-pencil)"/><use href="#thumb" fill="none" stroke="#1e3a30" stroke-width="1.4" filter="url(#f-pencil)"/>
+      <path d="M26 -3 L42 -3 M25 4 L41 4" stroke="#1e3a30" stroke-width="1.1" opacity=".55" fill="none"/>
+    </g>
+  </g>
+  <!-- S4: the company's hand, palm up (drawn where the sleeve's cuff is in S3; the page moves it with
+       the sleeve): on it lies only what you handed over (the bloom, its own layer). -->
+  <g data-layer="co-palm-hand">
+    <g transform="translate(598 421.5) scale(-1.2 1.2)">
+      <path d="M-4 -8 C8 -10 24 -10 34 -8 C44 -6 52 -10 58 -16 C62 -19 66 -16 64 -11 C60 -2 52 8 38 11 C22 14 6 13 -4 9 Z" fill="#406a59" filter="url(#f-wc)"/>
+      <path d="M10 -9 C16 -18 28 -20 36 -16 C32 -12 22 -10 14 -8 Z" fill="#4f7a68" filter="url(#f-wc)"/>
+      <g fill="none" stroke="#1e3a30" stroke-width="1.3" stroke-linecap="round" filter="url(#f-pencil)">
+        <path d="M-4 -8 C8 -10 24 -10 34 -8 C44 -6 52 -10 58 -16 C62 -19 66 -16 64 -11 C60 -2 52 8 38 11 C22 14 6 13 -4 9 Z"/>
+        <path d="M10 -9 C16 -18 28 -20 36 -16 C32 -12 22 -10 14 -8"/><path d="M42 -2 C50 -4 56 -9 61 -13 M38 4 C47 2 55 -2 61 -7" opacity=".6"/>
+      </g>
+    </g>
+  </g>
+  <!-- What you handed over: a small pink bloom. On the open palm in S4; set down on the chair in S5,
+       where it stays (it moves away from you, never back). Drawn at the seat. -->
+  <g data-layer="bloom" filter="url(#f-bloom)">
+    <circle cx="752" cy="560" r="15" fill="#ff9dbb"/><circle cx="768" cy="563" r="8" fill="#ffb3c9"/><circle cx="738" cy="554" r="6" fill="#ffb3c9"/>
+  </g>
+</svg>

@@ -1,0 +1,707 @@
+{
+ "quality": 0.72,
+ "scales": {
+  "1x": 0.84,
+  "15x": 1.26
+ },
+ "total_bytes": {
+  "1x": 211742,
+  "15x": 395970
+ },
+ "boxes": {
+  "halo": {
+   "x": 50.5,
+   "y": 103.5,
+   "w": 423.5,
+   "h": 568.5
+  },
+  "ground": {
+   "x": 8.5,
+   "y": 677.5,
+   "w": 872,
+   "h": 52
+  },
+  "stool": {
+   "x": 61.5,
+   "y": 554,
+   "w": 93.5,
+   "h": 149
+  },
+  "fold-coat": {
+   "x": 68,
+   "y": 530.5,
+   "w": 79,
+   "h": 30
+  },
+  "fold-scarf": {
+   "x": 77.5,
+   "y": 512,
+   "w": 61,
+   "h": 29
+  },
+  "chair": {
+   "x": 692,
+   "y": 441,
+   "w": 146,
+   "h": 271
+  },
+  "chair2": {
+   "x": 509.5,
+   "y": 442.5,
+   "w": 136.5,
+   "h": 260
+  },
+  "lantern12": {
+   "x": 414.5,
+   "y": 596,
+   "w": 142.5,
+   "h": 96
+  },
+  "lantern-glow": {
+   "x": 364,
+   "y": 562,
+   "w": 243.5,
+   "h": 163.5
+  },
+  "lantern12-lit": {
+   "x": 414.5,
+   "y": 596,
+   "w": 142.5,
+   "h": 96
+  },
+  "lantern3": {
+   "x": 575.5,
+   "y": 596,
+   "w": 62.5,
+   "h": 96
+  },
+  "lantern3-open": {
+   "x": 575.5,
+   "y": 596,
+   "w": 62.5,
+   "h": 95
+  },
+  "clasp-bloom": {
+   "x": 449,
+   "y": 367,
+   "w": 129,
+   "h": 126.5
+  },
+  "sketch": {
+   "x": 192,
+   "y": 157.5,
+   "w": 130.5,
+   "h": 538.5
+  },
+  "arm-rest": {
+   "x": 297,
+   "y": 281,
+   "w": 48,
+   "h": 251
+  },
+  "arm-reach": {
+   "x": 286,
+   "y": 265,
+   "w": 63,
+   "h": 227.5
+  },
+  "arm-reach-mitt": {
+   "x": 302,
+   "y": 476,
+   "w": 46.5,
+   "h": 60.5
+  },
+  "clasp": {
+   "x": 448,
+   "y": 388.5,
+   "w": 113.5,
+   "h": 60.5
+  },
+  "paint-coat": {
+   "x": 183,
+   "y": 253.5,
+   "w": 156.5,
+   "h": 442
+  },
+  "paint-face": {
+   "x": 226.5,
+   "y": 152.5,
+   "w": 78,
+   "h": 111.5
+  },
+  "paint-scarf": {
+   "x": 236.5,
+   "y": 246,
+   "w": 54.5,
+   "h": 142.5
+  },
+  "arms4": {
+   "x": 191,
+   "y": 280,
+   "w": 154.5,
+   "h": 252
+  },
+  "arms5": {
+   "x": 157,
+   "y": 282.5,
+   "w": 175,
+   "h": 208.5
+  },
+  "veil": {
+   "x": 116.5,
+   "y": 98.5,
+   "w": 294.5,
+   "h": 579
+  },
+  "veil-held": {
+   "x": 126.5,
+   "y": 477.5,
+   "w": 129,
+   "h": 229
+  },
+  "veil-hand": {
+   "x": 192.5,
+   "y": 477.5,
+   "w": 42.5,
+   "h": 54.5
+  },
+  "veil-head": {
+   "x": 184,
+   "y": 129.5,
+   "w": 160.5,
+   "h": 250.5
+  },
+  "pinch": {
+   "x": 151,
+   "y": 276,
+   "w": 129,
+   "h": 235
+  },
+  "co-sleeve-tail": {
+   "x": 937,
+   "y": 94,
+   "w": 864.5,
+   "h": 292
+  },
+  "co-sleeve": {
+   "x": 593,
+   "y": 278.5,
+   "w": 487.5,
+   "h": 164.5
+  },
+  "co-mitt": {
+   "x": 541,
+   "y": 390.5,
+   "w": 64,
+   "h": 48.5
+  },
+  "co-palm-hand": {
+   "x": 517.5,
+   "y": 397,
+   "w": 87.5,
+   "h": 43
+  },
+  "bloom": {
+   "x": 725,
+   "y": 539,
+   "w": 53.5,
+   "h": 43
+  }
+ },
+ "files": {
+  "halo": {
+   "1x": {
+    "file": "halo-1x.webp",
+    "w": 124,
+    "h": 167,
+    "bytes": 8566
+   },
+   "15x": {
+    "file": "halo-15x.webp",
+    "w": 186,
+    "h": 250,
+    "bytes": 17214
+   }
+  },
+  "ground": {
+   "1x": {
+    "file": "ground-1x.webp",
+    "w": 439,
+    "h": 26,
+    "bytes": 5512
+   },
+   "15x": {
+    "file": "ground-15x.webp",
+    "w": 659,
+    "h": 39,
+    "bytes": 10424
+   }
+  },
+  "stool": {
+   "1x": {
+    "file": "stool-1x.webp",
+    "w": 78,
+    "h": 125,
+    "bytes": 6202
+   },
+   "15x": {
+    "file": "stool-15x.webp",
+    "w": 117,
+    "h": 187,
+    "bytes": 11258
+   }
+  },
+  "fold-coat": {
+   "1x": {
+    "file": "fold-coat-1x.webp",
+    "w": 66,
+    "h": 25,
+    "bytes": 2192
+   },
+   "15x": {
+    "file": "fold-coat-15x.webp",
+    "w": 99,
+    "h": 37,
+    "bytes": 3886
+   }
+  },
+  "fold-scarf": {
+   "1x": {
+    "file": "fold-scarf-1x.webp",
+    "w": 51,
+    "h": 24,
+    "bytes": 1682
+   },
+   "15x": {
+    "file": "fold-scarf-15x.webp",
+    "w": 76,
+    "h": 36,
+    "bytes": 2798
+   }
+  },
+  "chair": {
+   "1x": {
+    "file": "chair-1x.webp",
+    "w": 122,
+    "h": 227,
+    "bytes": 9832
+   },
+   "15x": {
+    "file": "chair-15x.webp",
+    "w": 183,
+    "h": 341,
+    "bytes": 18986
+   }
+  },
+  "chair2": {
+   "1x": {
+    "file": "chair2-1x.webp",
+    "w": 114,
+    "h": 218,
+    "bytes": 3780
+   },
+   "15x": {
+    "file": "chair2-15x.webp",
+    "w": 171,
+    "h": 327,
+    "bytes": 5632
+   }
+  },
+  "lantern12": {
+   "1x": {
+    "file": "lantern12-1x.webp",
+    "w": 119,
+    "h": 80,
+    "bytes": 7372
+   },
+   "15x": {
+    "file": "lantern12-15x.webp",
+    "w": 179,
+    "h": 120,
+    "bytes": 13996
+   }
+  },
+  "lantern-glow": {
+   "1x": {
+    "file": "lantern-glow-1x.webp",
+    "w": 81,
+    "h": 54,
+    "bytes": 2896
+   },
+   "15x": {
+    "file": "lantern-glow-15x.webp",
+    "w": 122,
+    "h": 82,
+    "bytes": 4870
+   }
+  },
+  "lantern12-lit": {
+   "1x": {
+    "file": "lantern12-lit-1x.webp",
+    "w": 119,
+    "h": 80,
+    "bytes": 6924
+   },
+   "15x": {
+    "file": "lantern12-lit-15x.webp",
+    "w": 179,
+    "h": 120,
+    "bytes": 12774
+   }
+  },
+  "lantern3": {
+   "1x": {
+    "file": "lantern3-1x.webp",
+    "w": 52,
+    "h": 80,
+    "bytes": 3836
+   },
+   "15x": {
+    "file": "lantern3-15x.webp",
+    "w": 78,
+    "h": 120,
+    "bytes": 7382
+   }
+  },
+  "lantern3-open": {
+   "1x": {
+    "file": "lantern3-open-1x.webp",
+    "w": 52,
+    "h": 79,
+    "bytes": 2046
+   },
+   "15x": {
+    "file": "lantern3-open-15x.webp",
+    "w": 78,
+    "h": 119,
+    "bytes": 2862
+   }
+  },
+  "clasp-bloom": {
+   "1x": {
+    "file": "clasp-bloom-1x.webp",
+    "w": 108,
+    "h": 106,
+    "bytes": 4840
+   },
+   "15x": {
+    "file": "clasp-bloom-15x.webp",
+    "w": 162,
+    "h": 159,
+    "bytes": 8072
+   }
+  },
+  "sketch": {
+   "1x": {
+    "file": "sketch-1x.webp",
+    "w": 109,
+    "h": 452,
+    "bytes": 28862
+   },
+   "15x": {
+    "file": "sketch-15x.webp",
+    "w": 164,
+    "h": 678,
+    "bytes": 56908
+   }
+  },
+  "arm-rest": {
+   "1x": {
+    "file": "arm-rest-1x.webp",
+    "w": 40,
+    "h": 210,
+    "bytes": 2954
+   },
+   "15x": {
+    "file": "arm-rest-15x.webp",
+    "w": 60,
+    "h": 316,
+    "bytes": 4496
+   }
+  },
+  "arm-reach": {
+   "1x": {
+    "file": "arm-reach-1x.webp",
+    "w": 52,
+    "h": 191,
+    "bytes": 4026
+   },
+   "15x": {
+    "file": "arm-reach-15x.webp",
+    "w": 79,
+    "h": 286,
+    "bytes": 7130
+   }
+  },
+  "arm-reach-mitt": {
+   "1x": {
+    "file": "arm-reach-mitt-1x.webp",
+    "w": 39,
+    "h": 50,
+    "bytes": 1518
+   },
+   "15x": {
+    "file": "arm-reach-mitt-15x.webp",
+    "w": 58,
+    "h": 76,
+    "bytes": 2204
+   }
+  },
+  "clasp": {
+   "1x": {
+    "file": "clasp-1x.webp",
+    "w": 95,
+    "h": 50,
+    "bytes": 2306
+   },
+   "15x": {
+    "file": "clasp-15x.webp",
+    "w": 143,
+    "h": 76,
+    "bytes": 3436
+   }
+  },
+  "paint-coat": {
+   "1x": {
+    "file": "paint-coat-1x.webp",
+    "w": 131,
+    "h": 371,
+    "bytes": 29928
+   },
+   "15x": {
+    "file": "paint-coat-15x.webp",
+    "w": 197,
+    "h": 556,
+    "bytes": 61162
+   }
+  },
+  "paint-face": {
+   "1x": {
+    "file": "paint-face-1x.webp",
+    "w": 65,
+    "h": 93,
+    "bytes": 4990
+   },
+   "15x": {
+    "file": "paint-face-15x.webp",
+    "w": 98,
+    "h": 140,
+    "bytes": 9420
+   }
+  },
+  "paint-scarf": {
+   "1x": {
+    "file": "paint-scarf-1x.webp",
+    "w": 45,
+    "h": 119,
+    "bytes": 3352
+   },
+   "15x": {
+    "file": "paint-scarf-15x.webp",
+    "w": 68,
+    "h": 179,
+    "bytes": 5826
+   }
+  },
+  "arms4": {
+   "1x": {
+    "file": "arms4-1x.webp",
+    "w": 129,
+    "h": 211,
+    "bytes": 7996
+   },
+   "15x": {
+    "file": "arms4-15x.webp",
+    "w": 194,
+    "h": 317,
+    "bytes": 14778
+   }
+  },
+  "arms5": {
+   "1x": {
+    "file": "arms5-1x.webp",
+    "w": 147,
+    "h": 175,
+    "bytes": 5086
+   },
+   "15x": {
+    "file": "arms5-15x.webp",
+    "w": 220,
+    "h": 262,
+    "bytes": 9122
+   }
+  },
+  "veil": {
+   "1x": {
+    "file": "veil-1x.webp",
+    "w": 123,
+    "h": 243,
+    "bytes": 11292
+   },
+   "15x": {
+    "file": "veil-15x.webp",
+    "w": 185,
+    "h": 364,
+    "bytes": 20972
+   }
+  },
+  "veil-held": {
+   "1x": {
+    "file": "veil-held-1x.webp",
+    "w": 54,
+    "h": 96,
+    "bytes": 3482
+   },
+   "15x": {
+    "file": "veil-held-15x.webp",
+    "w": 81,
+    "h": 144,
+    "bytes": 5938
+   }
+  },
+  "veil-hand": {
+   "1x": {
+    "file": "veil-hand-1x.webp",
+    "w": 35,
+    "h": 45,
+    "bytes": 1838
+   },
+   "15x": {
+    "file": "veil-hand-15x.webp",
+    "w": 53,
+    "h": 68,
+    "bytes": 3100
+   }
+  },
+  "veil-head": {
+   "1x": {
+    "file": "veil-head-1x.webp",
+    "w": 67,
+    "h": 105,
+    "bytes": 4084
+   },
+   "15x": {
+    "file": "veil-head-15x.webp",
+    "w": 101,
+    "h": 157,
+    "bytes": 7328
+   }
+  },
+  "pinch": {
+   "1x": {
+    "file": "pinch-1x.webp",
+    "w": 108,
+    "h": 197,
+    "bytes": 6416
+   },
+   "15x": {
+    "file": "pinch-15x.webp",
+    "w": 162,
+    "h": 296,
+    "bytes": 11302
+   }
+  },
+  "co-sleeve-tail": {
+   "1x": {
+    "file": "co-sleeve-tail-1x.webp",
+    "w": 254,
+    "h": 85,
+    "bytes": 7070
+   },
+   "15x": {
+    "file": "co-sleeve-tail-15x.webp",
+    "w": 381,
+    "h": 128,
+    "bytes": 13442
+   }
+  },
+  "co-sleeve": {
+   "1x": {
+    "file": "co-sleeve-1x.webp",
+    "w": 409,
+    "h": 138,
+    "bytes": 15520
+   },
+   "15x": {
+    "file": "co-sleeve-15x.webp",
+    "w": 614,
+    "h": 207,
+    "bytes": 30832
+   }
+  },
+  "co-mitt": {
+   "1x": {
+    "file": "co-mitt-1x.webp",
+    "w": 53,
+    "h": 40,
+    "bytes": 1310
+   },
+   "15x": {
+    "file": "co-mitt-15x.webp",
+    "w": 80,
+    "h": 61,
+    "bytes": 1602
+   }
+  },
+  "co-palm-hand": {
+   "1x": {
+    "file": "co-palm-hand-1x.webp",
+    "w": 73,
+    "h": 36,
+    "bytes": 2378
+   },
+   "15x": {
+    "file": "co-palm-hand-15x.webp",
+    "w": 110,
+    "h": 54,
+    "bytes": 4362
+   }
+  },
+  "bloom": {
+   "1x": {
+    "file": "bloom-1x.webp",
+    "w": 44,
+    "h": 36,
+    "bytes": 1654
+   },
+   "15x": {
+    "file": "bloom-15x.webp",
+    "w": 67,
+    "h": 54,
+    "bytes": 2456
+   }
+  }
+ },
+ "stills": {
+  "1": {
+   "file": "station-1-1x.webp",
+   "w": 756,
+   "h": 638,
+   "bytes": 79020
+  },
+  "2": {
+   "file": "station-2-1x.webp",
+   "w": 756,
+   "h": 638,
+   "bytes": 92766
+  },
+  "3": {
+   "file": "station-3-1x.webp",
+   "w": 756,
+   "h": 638,
+   "bytes": 110262
+  },
+  "4": {
+   "file": "station-4-1x.webp",
+   "w": 756,
+   "h": 638,
+   "bytes": 96392
+  },
+  "5": {
+   "file": "station-5-1x.webp",
+   "w": 756,
+   "h": 638,
+   "bytes": 81438
+  }
+ }
+}
