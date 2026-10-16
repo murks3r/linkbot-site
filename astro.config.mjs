@@ -14,7 +14,7 @@ const site = process.env.SITE_URL || 'https://linkbot.org';
 const PREVIEW_TILES = ['material/noise-d1-light.webp', 'material/noise-d3-dense.webp', 'material/paper.webp'];
 const previewTilesOnly = {
   name: 'linkbot-preview-tiles',
-  hooks: { 'astro:build:done': async ({ dir }) => { if (process.env.PUBLIC_PREVIEW_VARIANTS !== '1') for (const file of PREVIEW_TILES) await rm(new URL(file, dir), { force: true }); } },
+  hooks: { 'astro:build:done': async (/** @type {{ dir: URL }} */ { dir }) => { if (process.env.PUBLIC_PREVIEW_VARIANTS !== '1') for (const file of PREVIEW_TILES) await rm(new URL(file, dir), { force: true }); } },
 };
 
 export default defineConfig({
