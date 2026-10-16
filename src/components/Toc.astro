@@ -97,9 +97,8 @@ const { items, label } = Astro.props;
       background: var(--noise-tile) 0 0 / var(--noise-scale) var(--noise-scale) repeat; }
     /* As the header's grain (Masthead.astro): on the scroll timeline, with or without reduced motion. */
     @supports (animation-timeline: scroll()) {
-      .toc-grain { animation: toc-grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-range: 0px var(--grain-range, 100%); animation-iteration-count: var(--grain-turns, 1); }
+      .toc-grain { animation: lb-grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-range: 0px var(--grain-range, 100%); animation-iteration-count: var(--grain-turns, 1); }
     }
-    @keyframes toc-grain-follow { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--noise-scale))); } }
     .toc summary { display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; }
     .toc summary::after { content: ''; width: 8px; height: 8px; margin-left: auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); transition: transform var(--base) var(--ease); }
     .toc-fold[open] summary::after { transform: rotate(-135deg); }

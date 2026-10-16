@@ -109,6 +109,10 @@ html[data-v-controls='follow'] { --control-r: var(--field-r); }
   --cap-fade: 160px;
 }
 @media (min-resolution: 1.5dppx) { :root { --noise-scale: 512px; } }
+/* A plate's grain follows the page's (the header's and On this page's, src/scripts/grain.ts): one tile
+   per turn on the root scroll timeline. The same name as in Search Jobs, so the shared audit knows the
+   one alignment it exempts under reduced motion (it is not motion; grain.ts says why). */
+@keyframes lb-grain-follow { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--noise-scale))); } }
 /* The preview's density stages (switcher axis `density`; d2 is the default and ships). d0 is the
    paper A7 and A8 shipped, kept byte for byte. */
 html[data-v-density='d1'] { --noise-tile: url('/material/noise-d1-light.webp'); }
