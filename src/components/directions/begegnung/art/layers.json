@@ -5,8 +5,8 @@
   "15x": 1.26
  },
  "total_bytes": {
-  "1x": 211742,
-  "15x": 395970
+  "1x": 215372,
+  "15x": 398316
  },
  "boxes": {
   "halo": {
@@ -88,10 +88,16 @@
    "h": 126.5
   },
   "sketch": {
-   "x": 192,
+   "x": 203,
    "y": 157.5,
-   "w": 130.5,
+   "w": 119.5,
    "h": 538.5
+  },
+  "arm-left": {
+   "x": 192,
+   "y": 282,
+   "w": 43,
+   "h": 250
   },
   "arm-rest": {
    "x": 297,
@@ -159,6 +165,18 @@
    "w": 129,
    "h": 229
   },
+  "lift-grip": {
+   "x": 157.5,
+   "y": 417.5,
+   "w": 80,
+   "h": 142.5
+  },
+  "arm-lift": {
+   "x": 179,
+   "y": 266.5,
+   "w": 64,
+   "h": 270.5
+  },
   "veil-hand": {
    "x": 192.5,
    "y": 477.5,
@@ -173,9 +191,21 @@
   },
   "pinch": {
    "x": 151,
-   "y": 276,
+   "y": 278,
    "w": 129,
-   "h": 235
+   "h": 233
+  },
+  "thread-a": {
+   "x": 319,
+   "y": 513,
+   "w": 111.5,
+   "h": 22.5
+  },
+  "thread-b": {
+   "x": 424,
+   "y": 395,
+   "w": 124,
+   "h": 127.5
   },
   "co-sleeve-tail": {
    "x": 937,
@@ -212,15 +242,15 @@
   "halo": {
    "1x": {
     "file": "halo-1x.webp",
-    "w": 124,
-    "h": 167,
-    "bytes": 8566
+    "w": 106,
+    "h": 143,
+    "bytes": 7338
    },
    "15x": {
     "file": "halo-15x.webp",
-    "w": 186,
-    "h": 250,
-    "bytes": 17214
+    "w": 160,
+    "h": 214,
+    "bytes": 13800
    }
   },
   "ground": {
@@ -312,27 +342,27 @@
     "file": "lantern12-1x.webp",
     "w": 119,
     "h": 80,
-    "bytes": 7372
+    "bytes": 7168
    },
    "15x": {
     "file": "lantern12-15x.webp",
     "w": 179,
     "h": 120,
-    "bytes": 13996
+    "bytes": 13760
    }
   },
   "lantern-glow": {
    "1x": {
     "file": "lantern-glow-1x.webp",
-    "w": 81,
-    "h": 54,
-    "bytes": 2896
+    "w": 61,
+    "h": 41,
+    "bytes": 1980
    },
    "15x": {
     "file": "lantern-glow-15x.webp",
-    "w": 122,
-    "h": 82,
-    "bytes": 4870
+    "w": 92,
+    "h": 61,
+    "bytes": 3144
    }
   },
   "lantern12-lit": {
@@ -340,13 +370,13 @@
     "file": "lantern12-lit-1x.webp",
     "w": 119,
     "h": 80,
-    "bytes": 6924
+    "bytes": 6760
    },
    "15x": {
     "file": "lantern12-lit-15x.webp",
     "w": 179,
     "h": 120,
-    "bytes": 12774
+    "bytes": 12648
    }
   },
   "lantern3": {
@@ -354,13 +384,13 @@
     "file": "lantern3-1x.webp",
     "w": 52,
     "h": 80,
-    "bytes": 3836
+    "bytes": 3750
    },
    "15x": {
     "file": "lantern3-15x.webp",
     "w": 78,
     "h": 120,
-    "bytes": 7382
+    "bytes": 7206
    }
   },
   "lantern3-open": {
@@ -368,13 +398,13 @@
     "file": "lantern3-open-1x.webp",
     "w": 52,
     "h": 79,
-    "bytes": 2046
+    "bytes": 1822
    },
    "15x": {
     "file": "lantern3-open-15x.webp",
     "w": 78,
     "h": 119,
-    "bytes": 2862
+    "bytes": 2564
    }
   },
   "clasp-bloom": {
@@ -394,15 +424,29 @@
   "sketch": {
    "1x": {
     "file": "sketch-1x.webp",
-    "w": 109,
+    "w": 100,
     "h": 452,
-    "bytes": 28862
+    "bytes": 27398
    },
    "15x": {
     "file": "sketch-15x.webp",
-    "w": 164,
+    "w": 150,
     "h": 678,
-    "bytes": 56908
+    "bytes": 54842
+   }
+  },
+  "arm-left": {
+   "1x": {
+    "file": "arm-left-1x.webp",
+    "w": 21,
+    "h": 126,
+    "bytes": 1786
+   },
+   "15x": {
+    "file": "arm-left-15x.webp",
+    "w": 32,
+    "h": 189,
+    "bytes": 2632
    }
   },
   "arm-rest": {
@@ -520,15 +564,15 @@
   "arms5": {
    "1x": {
     "file": "arms5-1x.webp",
-    "w": 147,
-    "h": 175,
-    "bytes": 5086
+    "w": 88,
+    "h": 105,
+    "bytes": 2668
    },
    "15x": {
     "file": "arms5-15x.webp",
-    "w": 220,
-    "h": 262,
-    "bytes": 9122
+    "w": 132,
+    "h": 157,
+    "bytes": 4364
    }
   },
   "veil": {
@@ -559,6 +603,34 @@
     "bytes": 5938
    }
   },
+  "lift-grip": {
+   "1x": {
+    "file": "lift-grip-1x.webp",
+    "w": 40,
+    "h": 71,
+    "bytes": 2364
+   },
+   "15x": {
+    "file": "lift-grip-15x.webp",
+    "w": 60,
+    "h": 107,
+    "bytes": 3252
+   }
+  },
+  "arm-lift": {
+   "1x": {
+    "file": "arm-lift-1x.webp",
+    "w": 53,
+    "h": 227,
+    "bytes": 4722
+   },
+   "15x": {
+    "file": "arm-lift-15x.webp",
+    "w": 80,
+    "h": 340,
+    "bytes": 7908
+   }
+  },
   "veil-hand": {
    "1x": {
     "file": "veil-hand-1x.webp",
@@ -576,43 +648,71 @@
   "veil-head": {
    "1x": {
     "file": "veil-head-1x.webp",
-    "w": 67,
-    "h": 105,
-    "bytes": 4084
+    "w": 53,
+    "h": 84,
+    "bytes": 2976
    },
    "15x": {
     "file": "veil-head-15x.webp",
-    "w": 101,
-    "h": 157,
-    "bytes": 7328
+    "w": 80,
+    "h": 126,
+    "bytes": 5274
    }
   },
   "pinch": {
    "1x": {
     "file": "pinch-1x.webp",
     "w": 108,
-    "h": 197,
-    "bytes": 6416
+    "h": 195,
+    "bytes": 7606
    },
    "15x": {
     "file": "pinch-15x.webp",
     "w": 162,
-    "h": 296,
-    "bytes": 11302
+    "h": 293,
+    "bytes": 13866
+   }
+  },
+  "thread-a": {
+   "1x": {
+    "file": "thread-a-1x.webp",
+    "w": 93,
+    "h": 18,
+    "bytes": 1176
+   },
+   "15x": {
+    "file": "thread-a-15x.webp",
+    "w": 140,
+    "h": 28,
+    "bytes": 1512
+   }
+  },
+  "thread-b": {
+   "1x": {
+    "file": "thread-b-1x.webp",
+    "w": 104,
+    "h": 107,
+    "bytes": 1756
+   },
+   "15x": {
+    "file": "thread-b-15x.webp",
+    "w": 156,
+    "h": 160,
+    "bytes": 2362
    }
   },
   "co-sleeve-tail": {
    "1x": {
     "file": "co-sleeve-tail-1x.webp",
-    "w": 254,
-    "h": 85,
-    "bytes": 7070
+    "w": 217,
+    "h": 73,
+    "bytes": 5518
    },
    "15x": {
     "file": "co-sleeve-tail-15x.webp",
-    "w": 381,
-    "h": 128,
-    "bytes": 13442
+    "w": 326,
+    "h": 110,
+    "bytes": 10412
    }
   },
   "co-sleeve": {
@@ -677,31 +777,31 @@
    "file": "station-1-1x.webp",
    "w": 756,
    "h": 638,
-   "bytes": 79020
+   "bytes": 88080
   },
   "2": {
    "file": "station-2-1x.webp",
    "w": 756,
    "h": 638,
-   "bytes": 92766
+   "bytes": 93404
   },
   "3": {
    "file": "station-3-1x.webp",
    "w": 756,
    "h": 638,
-   "bytes": 110262
+   "bytes": 99770
   },
   "4": {
    "file": "station-4-1x.webp",
    "w": 756,
    "h": 638,
-   "bytes": 96392
+   "bytes": 90730
   },
   "5": {
    "file": "station-5-1x.webp",
    "w": 756,
    "h": 638,
-   "bytes": 81438
+   "bytes": 82740
   }
  }
 }

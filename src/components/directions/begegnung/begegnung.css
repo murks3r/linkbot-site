@@ -47,11 +47,12 @@
 
 /* Words inside the picture: the status where the picture shows something not live. They repeat the
    station's own words (aria-hidden), on a surface, in full ink. */
-.begegnung-tag { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+.begegnung-tag { position: absolute; left: var(--x); top: var(--y); transform: translate(var(--tx), -50%); --tx: -50%; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
   padding: 6px 12px; border-radius: var(--pill); background: rgb(255 253 249 / .94); box-shadow: 0 0 0 1px rgb(18 58 44 / .16), 0 8px 18px -10px rgb(18 58 44 / .35);
   font-size: var(--size-micro); font-weight: 650; line-height: 1.25; color: var(--ink); pointer-events: none; }
-.begegnung-tag--left { transform: translate(0, -50%); }
-.begegnung-tag--right { transform: translate(-100%, -50%); }
+/* which edge of a label sits on its point; a station may anchor a label differently on phones (scene.ts) */
+.begegnung-tag--left { --tx: 0; }
+.begegnung-tag--right { --tx: -100%; }
 .begegnung-tag--two { display: grid; gap: 3px; width: max-content; max-width: 250px; white-space: normal; padding: 8px 12px; border-radius: var(--r-3); text-align: left; }
 .begegnung-tag small { display: inline-flex; align-items: center; gap: 7px; font-size: .75rem; font-weight: 650; }
 @media (max-width: 63.99rem) {
@@ -59,6 +60,8 @@
   .begegnung-tag--two { max-width: 190px; padding: 7px 10px; }
   .begegnung-tag small { font-size: .6875rem; }
 }
+/* The narrowest phones: a two-line label keeps inside the frame (verification m5). */
+@media (max-width: 22.5rem) { .begegnung-tag--two { max-width: 168px; } }
 
 /* Tablets and wide screens in the flow (reduced motion, short screens, no scripts): words beside the picture. */
 @media (min-width: 64rem) {

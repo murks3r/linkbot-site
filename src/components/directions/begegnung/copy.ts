@@ -33,7 +33,7 @@ export const STATIONS: Station[] = [
     title: 'Private by default. Shared only when you decide.', claimTitle: 'S1 station line (privacy.astro:18)',
     body: 'Search without an account. Nothing is stored. Employers aren’t told you’re looking.', claimBody: 'S1.1, S1.4',
     plates: [{ status: 'open', text: 'Could your data stay only on your side?', sub: 'Not yet: what you keep lives in your Linkbot account.', claim: 'S1.7 (NOT BUILT, only as an open question)' }],
-    alt: 'Illustration: a person stands inside a veil of white paint, in their own place. The veil stands for this: employers aren’t told you’re looking. Their folded things rest on a stool beside them, and three paper lanterns with their words stand unlit at their feet. The other side of the picture is empty.',
+    alt: 'Illustration: a person stands inside a veil of white paint, in their own place. The veil stands for this: employers aren’t told you’re looking. Their folded things rest on a stool beside them, and three paper lanterns, their words, stand unlit at their feet. Far across the floor stands an empty chair, a role, with no face and no name.',
   },
   {
     n: 2,
@@ -45,7 +45,7 @@ export const STATIONS: Station[] = [
       { mark: 'dashed', text: 'No on-call: not stated, stays open' },
     ],
     plates: [],
-    alt: 'Illustration: an empty chair appears on the other side, for a role, with no face and no name. Two lanterns light up, Remote and Research: the listing states them, and they fit. The third, No on-call, stays unlit and dashed, with a question mark: the listing does not say. The person stays inside the veil.',
+    alt: 'Illustration: by the empty chair, the role, an open hand in a green sleeve comes into view and waits; it does not move. Then two lanterns light up, Remote and Research: the listing states them, and they fit. The third, No on-call, stays unlit and dashed, with a question mark: the listing does not say. The hand still does not move, and the person stays inside the veil.',
   },
   {
     n: 3,
@@ -57,7 +57,7 @@ export const STATIONS: Station[] = [
       { status: 'tested', text: 'Sharing is a separate decision you confirm: once, or by a standing rule you set.', claim: 'S3 station line, its TESTED half (S3.3, S3.4)' },
       { status: 'dev', text: 'If a company’s role fits you, only you are asked. Nothing reaches the company until you say yes. Then it answers.', claim: 'S3.5 (IN DEVELOPMENT), the row’s page line verbatim' },
     ],
-    alt: 'Illustration: an open hand in a green sleeve, with its cuff, waits at the chair on the other side; it does not reach out. The person’s own hand comes out of the veil and takes it. Only then does the other hand move, a little. Where the hands meet, pink paint blooms. Labelled: in development, not live.',
+    alt: 'Illustration: the open hand in its green sleeve, with its cuff, has waited at the chair all along; it does not reach out. The person’s own hand comes out of the veil and takes it. Only then does the other hand move, a little. Where the hands meet, pink paint blooms. Labelled: in development, not live.',
   },
   {
     n: 4,
@@ -65,7 +65,7 @@ export const STATIONS: Station[] = [
     title: 'Then it gets personal, if you want it to.', claimTitle: 'S4.2, set under its label (a paraphrase bounded by the row)',
     body: 'You decide whether to add your name, and how the company can reach you.', claimBody: 'S4.2 (IN DEVELOPMENT), verbatim after its label',
     plates: [{ status: 'open', text: 'Where does the conversation continue after both sides say yes?', claim: 'S4.3 (NOT BUILT inside Linkbot, only as an open question)' }],
-    alt: 'Illustration: the person lifts the veil with their own hand and holds it like a cloth. Only then does their face appear, painted, not a photo, and colour blooms on what they chose to wear: a green coat and a pink scarf. A sweater stays folded on the stool, labelled not shared. On the other side, the hand turns palm up and holds only a small pink bloom: what the person handed over. A second chair, a dashed outline with a question mark, stands open. Labelled: in development, not live.',
+    alt: 'Illustration: on the other side, the hand turns palm up and holds only a small pink bloom, what the person handed over; a thin pink line runs from the person’s hand to it. The person raises their own hand to the top of the veil, takes hold of it and draws it down and off; it hangs from their hand like a cloth. Only then does their face appear, painted, not a photo, and colour blooms on what they chose to wear: a green coat and a pink scarf. A sweater stays folded on the stool, labelled not shared. A second chair, a dashed outline with a question mark, stands open. Labelled: in development, not live.',
   },
   {
     n: 5,
@@ -73,8 +73,10 @@ export const STATIONS: Station[] = [
     body: 'Pause, edit or close a watched search any time. Remove a saved job.', claimBody: 'S5.1, S5.2 ("any time" only here, S5.7)',
     plates: [
       { status: 'tested', text: 'Revoke a rule or access you gave. It stops access from that moment on. Copies already received aren’t recalled.', claim: 'S5.3 (TESTED), verbatim' },
+      // Verification M3: the picture revokes the introduction of S3/S4, which is S5.5 (IN DEVELOPMENT).
+      { status: 'dev', text: 'Turn it off, decline privately, or revoke an introduction.', claim: 'S5.5 (IN DEVELOPMENT), the row’s page line verbatim after its label' },
       { status: 'open', text: 'When can I delete everything Linkbot holds about me?', sub: 'Not built yet.', claim: 'S5.6 (NOT BUILT, as an open question)' },
     ],
-    alt: 'Illustration: the person draws the veil back over themselves with their own hand. The other hand has gone. The small pink bloom it was given stays on the chair and does not come back, labelled: copies already received aren’t recalled. The lanterns stand unlit again.',
+    alt: 'Illustration: the person draws the veil back over themselves with their own hand, and the thin pink line between them and the other hand is cut. The other hand draws back, labelled: in development, not live. It keeps the small pink bloom it was given; nothing comes back, labelled: copies already received aren’t recalled. The lanterns stand unlit again.',
   },
 ];

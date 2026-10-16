@@ -9,7 +9,7 @@
    phone), 1.5× is for dense wide screens. Soft layers (data-k, the veil and the halo) are baked at
    that fraction of the resolution: they are blurred by nature. art/layers.json records each layer's box in
    drawing units and its files' sizes. Also five finished pictures, one per station, for browsers
-   without scripts (<noscript>), at 1×.
+   without scripts (<noscript>), at 1× (without the sleeve, which the page lays beneath them).
 
    The drawing uses the site's own Figtree (from node_modules). No third-party art. */
 import { chromium } from 'playwright';
@@ -93,12 +93,15 @@ for (const { id, k } of ids) {
   console.log(id.padEnd(16), JSON.stringify(box), files[id]['1x'].bytes, files[id]['15x'].bytes);
 }
 
-// 3. The five finished pictures, for browsers without scripts: every layer at its station's state.
+// 3. The five finished pictures, for browsers without scripts: every layer at its station's state,
+//    except the company's sleeve: the page lays that under the still as its own layer, so it runs on
+//    past the frame to the screen's edge (Story.astro, verification m4).
+const NOT_IN_STILL = ['co-sleeve-tail', 'co-sleeve'];
 const stills = {};
 for (const k of STATIONS) {
-  const states = Object.fromEntries(LAYERS.map(p => [p.id, value(p, k)]));
+  const states = Object.fromEntries(LAYERS.filter(p => !NOT_IN_STILL.includes(p.id)).map(p => [p.id, value(p, k)]));
   const prepare = { fn: ([states, origins]) => { for (const g of document.querySelectorAll('[data-layer]')) { const v = states[g.dataset.layer]; g.style.visibility = v && v.o > .001 ? 'visible' : 'hidden'; g.style.opacity = v ? v.o : 0;
-    const o = origins[g.dataset.layer]; g.style.transformBox = 'view-box'; g.style.transformOrigin = o ? `${o[0]}px ${o[1]}px` : '0 0'; g.style.transform = v ? `translate(${v.x}px, ${v.y}px) rotate(${v.r}deg) scale(${v.s})` : ''; } },
+    const o = origins[g.dataset.layer]; g.style.transformBox = 'view-box'; g.style.transformOrigin = o ? `${o[0]}px ${o[1]}px` : '0 0'; g.style.transform = v ? `translate(${v.x}px, ${v.y}px) rotate(${v.r}deg) scale(${v.s}, ${v.s * v.q})` : ''; } },
     arg: [states, Object.fromEntries(LAYERS.filter(p => p.origin).map(p => [p.id, p.origin]))] };
   const webp = await inPage(await render(SCALES['1x'], { x: 0, y: 0, w: 900, h: 760 }, prepare), 'webp');
   const file = `station-${k}-1x.webp`;

@@ -35,6 +35,14 @@ const layer = (p: Part, end?: number) => {
   return { class: `begegnung-l begegnung-l--${p.id}`, alt: '', width: f['1x'].w, height: f['1x'].h, decoding: 'async' as const,
     'data-src': BASE + f['1x'].file, 'data-src2': BASE + f['15x'].file, 'data-end': end === undefined ? undefined : value(p, end).o > .001 ? '1' : '0' };
 };
+/* The claims row of every line (copy.ts) is written into preview builds only, for review; a production
+   page carries no internal notes (verification m8). */
+const claim = (row: string) => import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1' ? row : undefined;
+/* Without scripts, each station shows its finished picture (a still baked from the same layers). The
+   company's sleeve is not in the still: it runs on past the frame to the screen's edge as the layer it is,
+   beneath the still, so it is an arm from beyond the screen there too (verification m4). */
+const SLEEVES = ['co-sleeve-tail', 'co-sleeve'];
+const sleeves = (k: number) => partsOf(k, LAYERS).filter(p => SLEEVES.includes(p.id) && value(p, k).o > .001);
 const tagClass = (t: (typeof TAGS)[number]) => `begegnung-tag begegnung-l--${t.id}${t.sub ? ' begegnung-tag--two' : ''} begegnung-tag--${t.align ?? 'center'}`;
 const plateClass = (p: Plate) => `begegnung-plate begegnung-plate--${p.status}`;
 ---
@@ -55,11 +63,11 @@ const plateClass = (p: Plate) => `begegnung-plate begegnung-plate--${p.status}`;
         <li class={`begegnung-station begegnung-v${s.n}`} data-station={s.n}>
           <div class="begegnung-words">
             {s.over && <p class="begegnung-status"><Mark tone="unknown" />{STATUS[s.over]}</p>}
-            <h2 class="begegnung-title" data-claim={s.claimTitle}>{s.title}</h2>
-            {s.body && <p class="begegnung-body" data-claim={s.claimBody}>{s.body}</p>}
+            <h2 class="begegnung-title" data-claim={claim(s.claimTitle)}>{s.title}</h2>
+            {s.body && <p class="begegnung-body" data-claim={claim(s.claimBody ?? '')}>{s.body}</p>}
             {s.legend && <ul class="begegnung-legend" aria-label="What the lanterns mean">{s.legend.map(l => <li><Mark tone={l.mark === 'solid' ? 'fit' : 'unknown'} />{l.text}</li>)}</ul>}
             {s.plates.map(p => (
-              <div class={plateClass(p)} data-claim={p.claim}>
+              <div class={plateClass(p)} data-claim={claim(p.claim)}>
                 {p.status === 'open'
                   ? <p class="begegnung-status"><span class="begegnung-q" aria-hidden="true">?</span>{STATUS.open}</p>
                   : <p class="begegnung-status"><Mark tone={tone[p.status]} />{STATUS[p.status]}</p>}
@@ -70,9 +78,9 @@ const plateClass = (p: Plate) => `begegnung-plate begegnung-plate--${p.status}`;
           <p class="begegnung-alt">{s.alt}</p>
           <div class="begegnung-frame" role="img" aria-label={s.alt}>
             <div class="begegnung-canvas" aria-hidden="true">
+              <noscript>{sleeves(s.n).map(p => <img class={`begegnung-l begegnung-l--${p.id}`} src={BASE + files[p.id]['1x'].file} alt="" width={files[p.id]['1x'].w} height={files[p.id]['1x'].h} loading="lazy" decoding="async" />)}<img class="begegnung-still" src={BASE + baked.stills[String(s.n) as '1'].file} alt="" width={baked.stills[String(s.n) as '1'].w} height={baked.stills[String(s.n) as '1'].h} loading="lazy" decoding="async" /></noscript>
               {partsOf(s.n, LAYERS).map(p => <img {...layer(p, s.n)} />)}
               {partsOf(s.n, TAGS).map(t => <span class={tagClass(t)}>{t.status && !t.sub && <Mark tone={t.status === 'tested' ? 'tradeoff' : 'unknown'} size={11} />}{t.text}{t.sub && <small><Mark tone="tradeoff" size={11} />{t.sub}</small>}</span>)}
-              <noscript><img class="begegnung-still" src={BASE + baked.stills[String(s.n) as '1'].file} alt="" width={baked.stills[String(s.n) as '1'].w} height={baked.stills[String(s.n) as '1'].h} loading="lazy" decoding="async" /></noscript>
             </div>
           </div>
         </li>
