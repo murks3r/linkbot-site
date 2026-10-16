@@ -116,8 +116,10 @@ html[data-v-density='d0'] { --noise-tile: url('/material/paper.webp'); }
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 /* A8: anchors land below the header, and below the folded "On this page" bar on narrow screens. */
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: var(--anchor-top); background: var(--paper); --anchor-top: calc(var(--header) + 24px); }
-@media (max-width: 63.99rem) { html { --anchor-top: calc(var(--header) + 64px); } }
+/* A9: and below the header's feather (or, on narrow subpages, the stuck bar's), so a focused control or an
+   anchor never lands where passing content fades out (WCAG 2.4.11). */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: var(--anchor-top); background: var(--paper); --anchor-top: calc(var(--header) + var(--feather) + 8px); }
+@media (max-width: 63.99rem) { html { --anchor-top: calc(var(--header) + 48px + var(--feather) + 8px); } }
 body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--size-body)/1.6 var(--text); font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-wrap: break-word; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
