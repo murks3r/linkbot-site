@@ -89,6 +89,14 @@ html[data-v-controls='follow'] { --control-r: var(--field-r); }
   --noise-tile: url('/material/noise-d2-medium.webp');
   --noise-opacity: 1;
   --noise-scale: 1024px;
+  /* The seamless header (A9 W1 part 2, evidence header.md): the header carries a plate that copies
+     the ground exactly (the wash colour, and the same noise tile shifted with the scroll so its
+     grain continues the page's), feathered into the page over --feather. Beneath the header and
+     its feather the ground is the plain wash (the cap, Air.astro), so the copy is exact on every
+     page and at every scroll position; below that the atmosphere comes back over --cap-fade. */
+  --feather: 28px;
+  --cap-solid: calc(var(--header) + var(--feather) + 8px);
+  --cap-fade: 160px;
 }
 @media (min-resolution: 1.5dppx) { :root { --noise-scale: 512px; } }
 /* The preview's density stages (switcher axis `density`; d2 is the default and ships). d0 is the

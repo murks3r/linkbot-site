@@ -59,10 +59,17 @@ function paint(scene: Scene, p: number) {
   if (scene.paints) scene.root.dispatchEvent(new CustomEvent('scene:paint', { detail: values }));
 }
 
+/* A9: while a live stage is pinned under the header, nothing scrolls beneath the header's plate (the
+   stage clips its own content at the same line), so the plate's feather, which fades passing
+   content, would only veil the top of the stage: the header is told, and drops it (Masthead.astro). */
+const masthead = document.querySelector<HTMLElement>('[data-masthead]');
+
 function render() {
   frame = 0;
   const y = scrollY;
-  for (const scene of scenes) if (scene.live) paint(scene, Math.min(1, Math.max(0, (y - scene.start) / scene.span)));
+  let pinned = false;
+  for (const scene of scenes) if (scene.live) { const p = Math.min(1, Math.max(0, (y - scene.start) / scene.span)); if (p > 0 && p < 1) pinned = true; paint(scene, p); }
+  if (masthead && masthead.hasAttribute('data-stage-pinned') !== pinned) masthead.toggleAttribute('data-stage-pinned', pinned);
 }
 
 function queue() { if (!frame) frame = requestAnimationFrame(render); }
