@@ -73,14 +73,14 @@ const STATUS = {
               </div>
             </div>
             {WORDS.map(([side, word, kind]) => <p class={`puzzle-word puzzle-a puzzle-word-${side}`}><b>{word}</b><small>{kind}</small></p>)}
-            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p>
+            <p class="puzzle-note puzzle-note-dish">Yours<span>What you save and watch is private to your account.</span></p><!-- S1.5 -->
           </div>
-          <figcaption class="sr" id="puzzle-s1-alt">Illustration: a white porcelain jigsaw piece lies face down in a shallow dish, noted “Yours, in your Linkbot account”. Your words Data engineer, Remote, No on-call and Berlin have given its four edges their shape. Its coloured side faces down; only a thin coloured line shows at its edge. Nothing moves towards the other side. The words are the search field’s example, as Linkbot’s interpreter reads it.</figcaption>
+          <figcaption class="sr" id="puzzle-s1-alt">Illustration: a white porcelain jigsaw piece lies face down in a shallow dish, noted “Yours”: what you save and watch is private to your account. Your words Data engineer, Remote, No on-call and Berlin have given its four edges their shape. Its coloured side faces down; only a thin coloured line shows at its edge. Nothing moves towards the other side. The words are the search field’s example, as Linkbot’s interpreter reads it.</figcaption>
         </figure>
       </div>
     </div>
     <div class="puzzle-notes">
-      <p class="puzzle-plate" data-side="you"><span class="status"><Mark tone={STATUS.live.tone} />{STATUS.live.label}</span>Searching, viewing and saving jobs never send anything to an employer.</p><!-- S1.4 -->
+      <p class="puzzle-plate" data-side="you"><span class="status"><Mark tone={STATUS.live.tone} />{STATUS.live.label}</span>Searching, viewing and saving jobs never send anything to an employer. Linkbot reads what it works on, and says so.</p><!-- S1.4, S1.5 -->
       <div class="puzzle-plate puzzle-question" data-side="apart">
         <span class="puzzle-glyph puzzle-glyph-dish" aria-hidden="true"><Fragment set:html={obj('unmade-dish', 340, 250)} /></span>
         <p><span class="status"><Mark tone={STATUS.none.tone} />{STATUS.none.label}</span><b>Could your data stay only on your side?</b> Not yet: what you keep lives in your Linkbot account.</p><!-- S1.7 -->
@@ -104,7 +104,7 @@ const STATUS = {
               <div class="puzzle-shadow"><Fragment set:html={piece('shadow-contact')} /></div>
               <div class="puzzle-layer"><Fragment set:html={piece('back')} /></div>
             </div>
-            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p>
+            <p class="puzzle-note puzzle-note-dish">Yours</p><!-- a search: no account needed (S1.1) -->
             <div class="puzzle-o puzzle-board puzzle-a puzzle-s2-board">
               <Fragment set:html={obj('board-listing', 524, 534)} />
               <span class="puzzle-engr puzzle-engr-top">Remote</span>
@@ -119,7 +119,7 @@ const STATUS = {
             </div>
             <p class="puzzle-meet puzzle-a puzzle-s2-meet">Linkbot compares your words with the listing</p><!-- S2.1, S2.3 -->
           </div>
-          <figcaption class="sr" id="puzzle-s2-alt">Illustration: on the right, a porcelain board noted “A job listing”, with one opening. Its edges are marked Remote, Berlin and Data engineer; one edge is dashed with a question mark, because the listing doesn’t state on-call, so it stays open. In the middle, where the outline of your piece and the outline of the opening meet, a note says: Linkbot compares your words with the listing. They match on three edges; the on-call edge stays dashed. Your piece stays face down in your dish, and the board shows no name and no sign of you.</figcaption>
+          <figcaption class="sr" id="puzzle-s2-alt">Illustration: on the right, a porcelain board noted “A job listing”, with one opening. Its edges are marked Remote, Berlin and Data engineer; one edge is dashed with a question mark, because the listing doesn’t state on-call, so it stays open. In the middle, where the outline of your piece and the outline of the opening meet, a note says: Linkbot compares your words with the listing. They match on three edges; the on-call edge stays dashed. Your piece stays face down in your dish, noted Yours, and the board shows no name and no sign of you.</figcaption>
         </figure>
       </div>
     </div>
@@ -140,7 +140,7 @@ const STATUS = {
         <figure class="puzzle-fig" aria-labelledby="puzzle-s3-alt">
           <div class="puzzle-comp" aria-hidden="true">
             <div class="puzzle-o puzzle-dish"><Fragment set:html={obj('dish-small', 460, 370)} /></div>
-            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p>
+            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p><!-- a watched search (S1.5, S2.4) -->
             <div class="puzzle-o puzzle-board">
               <Fragment set:html={obj('board-role', 524, 534)} />
               <span class="puzzle-q puzzle-q-edge">?</span>

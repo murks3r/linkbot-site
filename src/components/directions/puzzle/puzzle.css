@@ -122,7 +122,7 @@
 .puzzle-pause { position: absolute; left: 50%; top: 50%; width: 12px; height: 14px; translate: -50% -50%; border-left: 3.5px solid var(--puzzle-ink); border-right: 3.5px solid var(--puzzle-ink); }
 
 /* ── Compositions (wide) ───────────────────────────────────────────────────────────────────── */
-.puzzle-s1 { --cw: 9; --ch: 5; --smax: 96px; }
+.puzzle-s1 { --cw: 9; --ch: 5.1; --smax: 96px; }
 .puzzle-s1 .puzzle-dish { --x: 2.8; --y: 1.1; }
 .puzzle-s1 .puzzle-at-dish { --x: 4; --y: 1.85; }
 .puzzle-s1 .puzzle-note-dish { --x: 2.6; --y: 4.45; --w: 3.8; }
@@ -158,12 +158,12 @@
 /* ── Compositions (phones: dish above, board below) ───────────────────────────────────────── */
 @media (max-width: 40rem) {
   .puzzle-st { --cw: 5.8; --ch: 8.9; --smax: 64px; --run: 110svh; }
-  .puzzle-s1 { --cw: 5.8; --ch: 4.9; }
+  .puzzle-s1 { --cw: 5.8; --ch: 5.3; }
   .puzzle-copy h2 { max-width: 16ch; }
   .puzzle-lede { font-size: var(--size-small); line-height: 1.45; }
   .puzzle-s1 .puzzle-dish { --x: 1.2; --y: 1.05; }
   .puzzle-s1 .puzzle-at-dish { --x: 2.4; --y: 1.8; }
-  .puzzle-s1 .puzzle-note-dish { --x: .9; --y: 4.3; --w: 4; }
+  .puzzle-s1 .puzzle-note-dish { --x: .5; --y: 4.3; --w: 4.8; }
   .puzzle-word-left { --x: 0; --y: 2.0; --w: 1.12; }
   .puzzle-word-right { --x: 4.7; --y: 2.0; --w: 1.12; }
   .puzzle-word-top { --x: 1.7; --y: .2; --w: 2.4; }
@@ -196,7 +196,7 @@
    the right of the thread wrap within the picture. */
 @media (max-width: 22.4rem) {
   .puzzle-tag-add, .puzzle-tag-stop { --x: 3.02; max-width: calc(2.76 * var(--S)); padding-right: 8px; }
-  .puzzle-s1 { --ch: 5.4; }
+  .puzzle-s1 { --ch: 5.9; }
   .puzzle-s1 .puzzle-dish { --y: 1.35; }
   .puzzle-s1 .puzzle-at-dish { --y: 2.1; }
   .puzzle-s1 .puzzle-note-dish { --y: 4.75; }
