@@ -13,11 +13,14 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
       {NAV.map(([href, label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
     </nav>
     <a class="btn btn-primary masthead-cta" data-size="sm" href={app('#/search')}>Search jobs</a>
+    <a class="masthead-signin" href={app('#/saved')}>Sign in</a>
     <details class="menu" data-menu>
       <summary><span>Menu</span><Icon name="down" /></summary>
       <nav class="menu-panel" aria-label="Main">
         {NAV.map(([href, label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
         <a href={app('#/saved')}>My radar</a>
+        <span class="menu-rule" aria-hidden="true"></span>
+        <a href={app('#/saved')}>Sign in</a>
       </nav>
     </details>
   </div>
@@ -62,6 +65,13 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
   .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta { background: transparent; color: var(--ground-ink-2); }
   .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 4px; }
   .masthead-cta { transition: background-color var(--base) var(--ease), color var(--base); }
+  /* One header for site and app (W1 part 3, review R6): Search Jobs' header carries the session, so the
+     site's carries the same Sign in in the same place and the same shape (an outlined pill 12 px after
+     the action; in the Menu on phones). Here it opens My radar, which asks to sign in. */
+  .masthead-signin { flex: none; display: inline-flex; align-items: center; min-height: var(--target); margin-left: calc(12px - clamp(20px, 3vw, 44px)); padding: 0 18px; border: 1px solid var(--line-ink); border-radius: var(--pill);
+    font-size: var(--size-small); font-weight: 620; line-height: 1; color: var(--ink); text-decoration: none; white-space: nowrap; transition: background var(--fast), border-color var(--fast); }
+  .masthead-signin:hover { background: var(--green-wash); border-color: var(--green); }
+  .menu-rule { height: 1px; margin: 6px 4px; background: var(--line); }
   .masthead-inner { display: flex; align-items: center; gap: 12px clamp(20px, 3vw, 44px); min-height: 72px; }
   .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-stretch: 112%; font-size: 1.5rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; text-decoration: none; color: var(--ink); }
   .nav { display: flex; gap: 4px clamp(20px, 2.6vw, 36px); margin-left: auto; }
@@ -81,7 +91,7 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
   .menu-panel a[aria-current='page'] { background: var(--green-wash); font-weight: 650; }
   @media (max-width: 52rem) {
     .masthead-inner { min-height: 64px; }
-    .nav { display: none; }
+    .nav, .masthead-signin { display: none; }
     .masthead-cta { margin-left: auto; }
     .menu { display: block; }
   }
