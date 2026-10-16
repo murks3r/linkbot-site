@@ -7,8 +7,8 @@
 
    Where scroll-driven animations exist (and motion is welcome), the shift runs on the compositor in
    step with the scroll itself: a linear animation on the root scroll timeline with one turn per tile
-   height, so the plate needs only the number of turns over the page's scroll range (--grain-turns),
-   written here when the page's height or the view changes, never while scrolling. Elsewhere, and
+   height over a range of whole tiles (--grain-turns, --grain-range), written here when the page's
+   height or the view changes, never while scrolling. Elsewhere, and
    under reduced motion (where no animation may run), the shift is written on scroll. Nothing is ever
    written on <html> or <body>. */
 const hosts = new Set<HTMLElement>();
@@ -23,8 +23,11 @@ function measure() {
   const first = grains()[0];
   const size = first ? parseFloat(getComputedStyle(first).backgroundSize) : NaN;
   tile = Number.isFinite(size) && size > 0 ? size : 1024;
-  const root = document.documentElement, range = Math.max(1, root.scrollHeight - root.clientHeight);
-  for (const host of hosts) host.style.setProperty('--grain-turns', String(range / tile));
+  // The timeline's range is set in whole tiles, in pixels, past the page's end (animation-range), so
+  // the shift is exactly -(scrollY mod tile) whatever the compositor's own idea of the page's scroll
+  // range (in the app a fractional height once misaligned the grain by a fraction of a pixel).
+  const root = document.documentElement, turns = Math.ceil(Math.max(1, root.scrollHeight - root.clientHeight) / tile) + 1;
+  for (const host of hosts) { host.style.setProperty('--grain-turns', String(turns)); host.style.setProperty('--grain-range', `${turns * tile}px`); }
   shift();
 }
 

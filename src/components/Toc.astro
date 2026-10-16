@@ -97,7 +97,7 @@ const { items, label } = Astro.props;
       background: var(--noise-tile) 0 0 / var(--noise-scale) var(--noise-scale) repeat; }
     @media (prefers-reduced-motion: no-preference) {
       @supports (animation-timeline: scroll()) {
-        .toc-grain { animation: toc-grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-iteration-count: var(--grain-turns, 1); }
+        .toc-grain { animation: toc-grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-range: 0px var(--grain-range, 100%); animation-iteration-count: var(--grain-turns, 1); }
       }
     }
     @keyframes toc-grain-follow { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--noise-scale))); } }

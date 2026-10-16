@@ -52,7 +52,7 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
      reduced motion, the script writes the same shift on scroll. */
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: scroll()) {
-      .masthead-grain { animation: grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-iteration-count: var(--grain-turns, 1); }
+      .masthead-grain { animation: grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-range: 0px var(--grain-range, 100%); animation-iteration-count: var(--grain-turns, 1); }
     }
   }
   @keyframes grain-follow { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--noise-scale))); } }
