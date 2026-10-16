@@ -58,8 +58,9 @@
 .puzzle-layer, .puzzle-shadow, .puzzle-lifter, .puzzle-flip, .puzzle-face, .puzzle-glint { position: absolute; inset: 0; }
 .puzzle-layer > .puzzle-svg, .puzzle-shadow > .puzzle-svg, .puzzle-face > .puzzle-svg, .puzzle-glint > .puzzle-svg, .puzzle-glyph > .puzzle-svg {
   left: calc(var(--S) * -.4); top: calc(var(--S) * -.4); width: calc(var(--S) * 1.8); height: calc(var(--S) * 1.9); }
-.puzzle-dish { --w: 3.4; --h: 2.5; }
-.puzzle-dish > .puzzle-svg { left: calc(var(--S) * -.6); top: calc(var(--S) * -.6); width: calc(var(--S) * 4.6); height: calc(var(--S) * 3.7); }
+/* The dish, scaled by --D (phones make it smaller in S2–S5, for room between dish and board). */
+.puzzle-dish { --D: 1; --w: calc(3.4 * var(--D)); --h: calc(2.5 * var(--D)); }
+.puzzle-dish > .puzzle-svg { left: calc(var(--S) * var(--D) * -.6); top: calc(var(--S) * var(--D) * -.6); width: calc(var(--S) * var(--D) * 4.6); height: calc(var(--S) * var(--D) * 3.7); }
 .puzzle-board { --w: 3.84; --h: 3.84; }
 .puzzle-board > .puzzle-svg { left: calc(var(--S) * -.7); top: calc(var(--S) * -.7); width: calc(var(--S) * 5.24); height: calc(var(--S) * 5.34); }
 .puzzle-lifter { perspective: calc(var(--S) * 7); }
@@ -93,8 +94,10 @@
 
 /* Tags: glazed porcelain tags with a pointed end, never a pill, never a dot (review m2): the
    person's acts in pink glaze, the company's role in deep green glaze. Picture labels, not
-   controls: no pointer, no focus, the default cursor. */
-.puzzle-tag { position: absolute; left: calc(var(--x) * var(--S)); top: calc(var(--y) * var(--S)); display: block; padding: 5px 12px 6px 18px; max-width: calc((var(--cw) - var(--x)) * var(--S));
+   controls: no pointer, no focus, the default cursor. A tag may reach past the picture to 12 px
+   short of the screen's edge (the picture is centred on the screen), and wraps there, so larger
+   text spacing never pushes it off screen. */
+.puzzle-tag { position: absolute; left: calc(var(--x) * var(--S)); top: calc(var(--y) * var(--S)); display: block; padding: 5px 12px 6px 18px; max-width: calc(50vw + (var(--cw) / 2 - var(--x)) * var(--S) - 12px);
   font-size: clamp(.75rem, calc(var(--S) * .15), .8125rem); font-weight: 680; line-height: 1.2; color: var(--puzzle-ink); background: var(--puzzle-glaze-pink); cursor: default;
   clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
   box-shadow: inset 0 1.5px 0 rgb(255 255 255 / .75), inset 0 -2px 0 rgb(214 100 140 / .32), inset 6px 0 10px -6px rgb(255 255 255 / .6); }
@@ -166,28 +169,28 @@
   .puzzle-word-top { --x: 1.7; --y: .2; --w: 2.4; }
   .puzzle-word-bottom { --x: 1.7; --y: 3.62; --w: 2.4; }
 
-  .puzzle-st:not(.puzzle-s1) .puzzle-dish { --x: 1.2; --y: .5; }
-  .puzzle-st:not(.puzzle-s1) .puzzle-at-dish { --x: 2.4; --y: 1.25; }
+  .puzzle-st:not(.puzzle-s1) .puzzle-dish { --D: .8; --x: 1.54; --y: .5; }
+  .puzzle-st:not(.puzzle-s1) .puzzle-at-dish { --x: 2.4; --y: 1.0; }
   .puzzle-st:not(.puzzle-s1) .puzzle-note-dish { --x: .4; --y: 0; --w: 5; }
   .puzzle-board { --x: .98; --y: 4.45; }
   .puzzle-note-board { --x: 0; --y: 8.4; --w: 5.8; }
   .puzzle-at-open { --x: 2.4; --y: 5.87; }
-  .puzzle-at-meet { --x: 2.4; --y: 3.22; }
-  .puzzle-meet { --x: 3.85; --y: 3.12; --w: 1.95; text-align: left; }
+  .puzzle-at-meet { --x: 2.4; --y: 2.97; }
+  .puzzle-meet { --x: 3.85; --y: 2.82; --w: 1.95; text-align: left; }
   .puzzle-tag-role { --x: 1.12; --y: 4.25; }
-  .puzzle-thread { --x: 2.89; --y: 2.86; --w: auto; width: 2px; height: calc(2.82 * var(--S)); transform-origin: 50% 0; }
-  .puzzle-tag-yes { --x: .25; --y: 3.12; }
-  .puzzle-tag-add { --x: 3.08; --y: 3.12; }
-  .puzzle-bead { --x: 2.9; --y: 2.86; --bx: 0; --by: 2.82; }
+  .puzzle-thread { --x: 2.89; --y: 2.56; --w: auto; width: 2px; height: calc(3.12 * var(--S)); transform-origin: 50% 0; }
+  .puzzle-tag-yes { --x: .25; --y: 2.78; }
+  .puzzle-tag-add { --x: 3.08; --y: 2.78; }
+  .puzzle-bead { --x: 2.9; --y: 2.56; --bx: 0; --by: 3.12; }
   .puzzle-thread-near { height: calc(.42 * var(--S)); transform: scaleY(.35); }
-  .puzzle-thread-far { --x: 2.89; --y: 3.42; height: calc(2.26 * var(--S)); }
-  .puzzle-snip { --x: 2.9; --y: 3.32; }
-  .puzzle-tag-stop { --x: 3.08; --y: 3.12; }
-  .puzzle-tag-watch { --x: .1; --y: 3.12; max-width: calc(2.6 * var(--S)); }
+  .puzzle-thread-far { --x: 2.89; --y: 3.12; height: calc(2.56 * var(--S)); }
+  .puzzle-snip { --x: 2.9; --y: 3.02; }
+  .puzzle-tag-stop { --x: 3.08; --y: 2.78; }
+  .puzzle-tag-watch { --x: .1; --y: 2.78; max-width: calc(2.6 * var(--S)); }
   .puzzle-engr-top, .puzzle-engr-left, .puzzle-engr-bottom { display: none; }
-  .puzzle-s3-move { --mx: 0; --my: -4.62; }
+  .puzzle-s3-move { --mx: 0; --my: -4.87; }
   .puzzle-s2-yours { --mx: 0; --my: -1.97; }
-  .puzzle-s2-open { --mx: 0; --my: 2.65; }
+  .puzzle-s2-open { --mx: 0; --my: 2.9; }
 }
 /* Below 360 px the side words no longer fit beside the dish: two above, two below; the tags on
    the right of the thread wrap within the picture. */
