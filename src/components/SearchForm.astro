@@ -111,6 +111,16 @@ const { id, examples = [], size = 'hero', label = 'What work are you looking for
     .search[data-size='focal'] .search-place input { height: 58px; font-size: 1.0625rem; }
     .search-try { gap: 0 16px; }
   }
+  /* A9 (phones, A8's residuals): at 360 px the words' example reads in full at 17 px; at 320 px the
+     action drops its arrow, so the place's example ("City or country") reads in full beside it. At
+     320 px the words' example is still a few words too long for a 16 px field (smaller type would
+     make iOS zoom on focus): it stays cut, the field's label names the field. */
+  @media (max-width: 22.5rem) {
+    .search[data-size='focal'] input { font-size: 1.0625rem; }
+    .search[data-size='focal'][data-place] .btn { padding: 0 16px; gap: 0; }
+    .search[data-size='focal'][data-place] .btn :global(.icon) { display: none; }
+    .search .search-place { padding-left: 12px; }
+  }
 </style>
 
 <script>
