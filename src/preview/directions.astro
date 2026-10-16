@@ -1,0 +1,131 @@
+---
+/* The A9 comparison overview (founder G5, integration), preview only: /__preview/directions. Its route is
+   injected only in PUBLIC_PREVIEW_VARIANTS=1 builds (astro.config.mjs), so a production build compiles
+   neither this page nor the images it imports (tests/variants.test.mjs proves it on dist/).
+
+   One card per finished direction: the contact sheet and two frames (captured from this comparison build,
+   reduced motion = each station's end state, by the integration's tools/capture_stations.cjs and
+   compose_sheets.cjs), metaphor and style in two lines each, the links, and the direction's one-page
+   rationale (rendered, copied from its evidence folder). Then W1's foundation: the noise board and the two
+   structure variants (described here; their sketches stay in the evidence folder, not shipped). */
+import Base from '../layouts/Base.astro';
+import Mark from '../components/Mark.astro';
+import { DIRECTIONS } from '../lib/variants';
+import { Content as BegegnungRationale } from './directions/begegnung/rationale.md';
+import { Content as PuzzleRationale } from './directions/puzzle/rationale.md';
+import begegnungSheet from './directions/begegnung/contact.webp';
+import begegnungS3 from './directions/begegnung/frame-s3-desktop.webp';
+import begegnungS4 from './directions/begegnung/frame-s4-phone.webp';
+import puzzleSheet from './directions/puzzle/contact.webp';
+import puzzleS3 from './directions/puzzle/frame-s3-desktop.webp';
+import puzzleS4 from './directions/puzzle/frame-s4-phone.webp';
+
+const EVIDENCE = '~/Desktop/linkbot-design-evidence/concept-a9';
+const CARDS = {
+  begegnung: {
+    preview: 'https://linkbot-concept-a2-preview-2878bwb0r-geoprocure.vercel.app', deployment: 'dpl_J8283LSKAJkkorPeV3HQbzrtcU5w', heads: 'app 5966f25 · site 2a6a87b', folder: 'w4',
+    metaphor: ['A veiled person in their own place, an empty chair for the role, and a company’s open hand that waits and never reaches first.', 'The picture’s order is the idea: compared before being known, and known only when the person’s own hand moves and lifts the veil.'],
+    style: ['Painterly watercolour on the paper grain: an unpainted pencil figure is “not yet anyone”, and colour blooms only on what the person puts on.', 'Own SVG drawing baked into 38 layers on a pinned stage (layout only), loaded after the largest paint; vignettes in the flow on phones and under reduced motion.'],
+    sheet: begegnungSheet, s3: begegnungS3, s4: begegnungS4, Rationale: BegegnungRationale,
+  },
+  puzzle: {
+    preview: 'https://linkbot-concept-a2-preview-p3rmabf9m-geoprocure.vercel.app', deployment: 'dpl_35dTK9QBoafnpM619FJ8FEytKjAr', heads: 'app 92975e7 · site 47fdf8a', folder: 'w5',
+    metaphor: ['Shape, not picture: your words shape your piece, a company’s role is an opening, and Linkbot compares the shapes while the piece lies face down.', 'Only the person moves, turns over or cuts access; the edge a listing doesn’t state stays an open bay, so the board is never completed.'],
+    style: ['Bisque and glaze: matte white porcelain relief on the grain, modelled by light alone; colour arrives as glaze, only on what the person turns over.', 'Fourteen SVG files generated at build time and CSS keyframes on each station’s scroll timeline, on a sticky stage; static end states under reduced motion.'],
+    sheet: puzzleSheet, s3: puzzleS3, s4: puzzleS4, Rationale: PuzzleRationale,
+  },
+} as const;
+const cards = DIRECTIONS.map(d => ({ ...d, ...CARDS[d.key as keyof typeof CARDS] }));
+---
+<Base title="Directions · Linkbot preview" description="Concept A9’s comparison: the finished directions side by side, with their pictures, rationale and links. Preview only." path="/__preview/directions" quietHeader>
+  <article class="dv">
+    <header class="dv-head wrap">
+      <p class="eyebrow">Preview only · Concept A9 · founder G5 · interim, not accepted</p>
+      <h1>The directions</h1>
+      <p class="lede">Each direction tells the same five stations (S1 your data, S2 a fit unseen by employers, S3 a yes from both sides, S4 then it gets personal, S5 change your mind) on W1’s foundation, in the home’s story slot. Its home differs from <a class="link" href="/">the default home</a> only in that slot, and its moment continues in Search Jobs. The switcher (bottom right, “Direction”) opens any of them and keeps the other axes. Nothing on this page exists in a production build.</p>
+    </header>
+
+    {cards.map(card => <section class="dv-card wrap" id={card.key} aria-labelledby={`dv-${card.key}`}>
+      <div class="dv-title">
+        <h2 id={`dv-${card.key}`}>{card.label}</h2>
+        <p class="dv-links">
+          <a class="btn btn-primary" data-size="sm" href={`/__preview/home/${card.key}`}>Its home</a>
+          <a class="link" href={`/talent?direction=${card.key}#/search`}>Its moment in Search Jobs</a>
+          <a class="link" href={card.preview} rel="noreferrer">Its own interim preview</a>
+        </p>
+      </div>
+      <dl class="dv-lines">
+        <div><dt>Metaphor</dt><dd>{card.metaphor.map(line => <p>{line}</p>)}</dd></div>
+        <div><dt>Style</dt><dd>{card.style.map(line => <p>{line}</p>)}</dd></div>
+      </dl>
+      <figure class="dv-sheet">
+        <div class="dv-scroll" tabindex="0" role="group" aria-label={`Contact sheet of ${card.name}, scrolls sideways on small screens`}><img src={card.sheet.src} width={card.sheet.width} height={card.sheet.height} loading="lazy" decoding="async" alt={`Contact sheet of ${card.name}: the five stations S1 to S5, each at its end state, at 1440 by 900 above and at 390 by 844 below.`} /></div>
+        <figcaption>Contact sheet: S1–S5 at their end states (reduced motion, which the direction proves equal to the animated end state), 1440 × 900 and 390 × 844, captured from this comparison build.</figcaption>
+      </figure>
+      <div class="dv-frames">
+        <figure><img src={card.s3.src} width={card.s3.width} height={card.s3.height} loading="lazy" decoding="async" alt={`${card.name}, station S3 on a wide screen.`} /><figcaption>S3, a yes from both sides · 1440 × 900</figcaption></figure>
+        <figure class="dv-phone"><img src={card.s4.src} width={card.s4.width} height={card.s4.height} loading="lazy" decoding="async" alt={`${card.name}, station S4 on a phone.`} /><figcaption>S4, then it gets personal · 390 × 844</figcaption></figure>
+      </div>
+      <details class="dv-rationale">
+        <summary>The one-page rationale ({card.worker}’s, as written)</summary>
+        <div class="dv-md"><card.Rationale /></div>
+      </details>
+      <p class="dv-source">Built by {card.worker} · final heads {card.heads} · its preview <code>{card.deployment}</code> · evidence <code>{EVIDENCE}/{card.folder}/</code> (README, storyboard, rationale, checks)</p>
+    </section>)}
+
+    <section class="wrap dv-note" aria-labelledby="dv-deferred">
+      <h2 id="dv-deferred"><Mark tone="unknown" size={14} />Not in this comparison</h2>
+      <p>W2 (Schloss: consent and control, clear line illustration) and W3 (Wallet: data held by the person, paper and collage) were deferred under the quota, as the founder’s rule for a tight budget asks (W1 and two finished directions rather than five halves). Their storyboards are incomplete, so their partial frames are not shown here; they stay in the evidence folder (<code>{EVIDENCE}/w2/</code>, <code>{EVIDENCE}/w3/</code>).</p>
+    </section>
+
+    <section class="wrap dv-w1" aria-labelledby="dv-foundation">
+      <h2 id="dv-foundation">W1’s foundation, under every direction</h2>
+      <ul class="plain dv-w1-list">
+        <li><a class="link" href="/__preview/noise">The noise board</a>: the four density stages side by side on the real ground (d2 is the recommendation; the switcher’s “Noise density” puts any stage on every page).</li>
+        <li><a class="link" href="/">The default home</a> with W1’s story, the seamless header, and Search Jobs on the same ground (<a class="link" href="/talent#/search">/talent</a>).</li>
+      </ul>
+      <h3>Two structure variants (founder A7, proposals only, nothing built)</h3>
+      <dl class="dv-lines">
+        <div><dt>A · One door</dt><dd><p>Keep the site as a site and remove the second front door: one header, one footer, one field and one name, “Search jobs”, for one way into the product.</p><p>The home tells the five stations in pictures, and the privacy page shows the facts for the same five stations; no URL changes, about 3–4.5 days.</p></dd></div>
+        <div><dt>B · The home is the product</dt><dd><p>There is no site in front of the product: the home is Search Jobs, with the field and the story S1–S5 below it, and results unfold in place.</p><p>Every other page becomes a chapter of the story; URLs and the release architecture change, about 2–3 weeks plus security and claims review.</p></dd></div>
+      </dl>
+      <p class="dv-source">The sketches and storyboards (1440 and 390) are in the evidence folder, <code>{EVIDENCE}/w1/structure/</code> (start with <code>png/overview-1440.png</code>); they are not part of this preview.</p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .dv { padding-block: clamp(32px, 5vw, 72px) var(--space-section); display: grid; gap: var(--space-section); }
+  .dv-head { display: grid; gap: var(--space-head); }
+  .dv-head h1 { font-size: var(--size-h2); }
+  .dv-head .lede { max-width: 62ch; color: var(--ground-ink-2); }
+  .dv-card { display: grid; gap: var(--space-block); }
+  .dv-title { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 24px; }
+  .dv-title h2 { font-size: var(--size-h2); }
+  .dv-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; font-size: var(--size-small); }
+  .dv-links .link { min-height: var(--target); display: inline-flex; align-items: center; }
+  .dv-lines { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-block); }
+  .dv-lines dt { font-size: var(--size-micro); font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--ground-ink-3); }
+  .dv-lines dd { margin: 6px 0 0; display: grid; gap: 6px; max-width: 60ch; color: var(--ink); }
+  .dv-sheet, .dv-frames figure { margin: 0; display: grid; gap: 8px; }
+  .dv-sheet img, .dv-frames img { display: block; width: 100%; height: auto; border-radius: var(--r-2); border: 1px solid var(--line-ink); background: var(--surface); }
+  .dv-scroll { overflow-x: auto; border-radius: var(--r-2); }
+  .dv-scroll img { min-width: 720px; }
+  figcaption { font-size: var(--size-micro); color: var(--ground-ink-2); }
+  .dv-frames { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); gap: var(--space-block); align-items: start; }
+  .dv-rationale { border: 1px solid var(--line-ink); border-radius: var(--r-3); background: var(--surface); }
+  .dv-rationale summary { min-height: var(--target); display: flex; align-items: center; padding: 0 18px; font-weight: 650; cursor: pointer; }
+  .dv-md { padding: 0 18px 18px; max-width: 72ch; display: grid; gap: 10px; color: var(--ink); font-size: var(--size-small); }
+  .dv-md :global(h3) { font-size: 1.05rem; margin-top: 10px; }
+  .dv-md :global(ul) { padding-left: 1.2em; list-style: disc; display: grid; gap: 4px; }
+  .dv-source { font-size: var(--size-micro); color: var(--ground-ink-2); overflow-wrap: anywhere; }
+  .dv-note, .dv-w1 { display: grid; gap: var(--space-head); }
+  .dv-note h2 { display: flex; align-items: center; gap: 10px; }
+  .dv-note p, .dv-w1-list li { max-width: 72ch; color: var(--ink); }
+  .dv-w1-list { display: grid; gap: 8px; }
+  .dv-w1 h3 { margin-top: var(--space-head); }
+  @media (max-width: 45rem) {
+    .dv-lines, .dv-frames { grid-template-columns: minmax(0, 1fr); }
+    .dv-phone { max-width: 260px; }
+  }
+</style>

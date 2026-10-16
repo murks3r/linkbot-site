@@ -22,15 +22,17 @@ const previewTilesOnly = {
 
 /* A9's comparison preview (founder G5, integration): the direction homes (/__preview/home/<key>, one
    page per finished direction, src/preview/home-<key>.astro; the keys are src/lib/variants.ts's
-   DIRECTIONS) are pages of preview builds only. Their routes are injected only when
-   PUBLIC_PREVIEW_VARIANTS=1, so a production build does not compile them at all: none of their
-   components or styles can reach dist. */
+   DIRECTIONS, and tests/variants.test.mjs checks that the two lists agree) and the overview
+   (/__preview/directions, src/preview/directions.astro) are pages of preview builds only. Their routes
+   are injected only when PUBLIC_PREVIEW_VARIANTS=1, so a production build does not compile them at all:
+   none of their components, styles or storyboard images can reach dist. */
 const COMPARISON = ['begegnung', 'puzzle'];
 const comparisonPages = {
   name: 'linkbot-a9-comparison',
   hooks: { 'astro:config:setup': (/** @type {{ injectRoute: (route: { pattern: string; entrypoint: string }) => void }} */ { injectRoute }) => {
     if (process.env.PUBLIC_PREVIEW_VARIANTS !== '1') return;
     for (const key of COMPARISON) injectRoute({ pattern: `/__preview/home/${key}`, entrypoint: `./src/preview/home-${key}.astro` });
+    injectRoute({ pattern: '/__preview/directions', entrypoint: './src/preview/directions.astro' });
   } },
 };
 
