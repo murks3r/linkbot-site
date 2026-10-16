@@ -51,7 +51,7 @@ const LINES = AXES.find(a => a.id === 'badge')!.values;
       <p class="muted">Of the fonts on resourceboy.com, two carry a licence that allows commercial use, web embedding, self-hosting and subsetting (SIL OFL 1.1); both are single-weight, so they are offered for display only, with Figtree kept for text. The one serif that qualified (Asoka) is out by the design owner’s standing verdict (no serif, no italics).</p>
       <div class="types">{TYPE.map(t => <div class="type-card" data-type={t.key}>
         <p class="type-sample" style={`font-family:${t.family};font-weight:${t.weight};font-stretch:${t.stretch};letter-spacing:${t.tracking}`}>Say what you want.<br />See what fits.</p>
-        <p class="type-text">Your words become the criteria. Every ranking reason is shown, nothing about you leaves this device until you say so, and a fit tells no one.</p>
+        <p class="type-text">Your words become the criteria. Every ranking reason is shown. Private by default, shared only when you decide, and a fit is not a disclosure.</p>
         <h3>{t.name} <small>{t.key === 'archivo' ? 'recommended' : 'alternative'}</small></h3>
         <p class="muted">{t.note}</p>
       </div>)}</div>
@@ -91,7 +91,7 @@ const LINES = AXES.find(a => a.id === 'badge')!.values;
         <p class="eyebrow">How it works</p>
         <h2>Your words become the criteria.</h2>
         <p>Type what you want the way you would say it to a friend. Linkbot reads it into criteria you can see and change: what must hold, what you prefer, what you never want. Every ranking reason is shown next to the listing it explains.</p>
-        <p>Nothing about you leaves this device until you decide it should. A fit tells no one; the employer learns of you only when you answer.</p>
+        <p>Private by default. Shared only when you decide. A fit is not a disclosure, and not a sign of anyone’s interest.</p>
         <a class="btn btn-primary" href="#sample">Explore jobs</a>
       </div>
     </section>

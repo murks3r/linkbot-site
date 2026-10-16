@@ -75,7 +75,7 @@ export const STATIONS: Station[] = [
       { status: 'tested', text: 'Revoke a rule or access you gave. It stops access from that moment on. Copies already received aren’t recalled.', claim: 'S5.3 (TESTED), verbatim' },
       // Verification M3: the picture revokes the introduction of S3/S4, which is S5.5 (IN DEVELOPMENT).
       { status: 'dev', text: 'Turn it off, decline privately, or revoke an introduction.', claim: 'S5.5 (IN DEVELOPMENT), the row’s page line verbatim after its label' },
-      { status: 'open', text: 'When can I delete everything Linkbot holds about me?', sub: 'Not built yet.', claim: 'S5.6 (NOT BUILT, as an open question)' },
+      { status: 'open', text: 'When can I delete my account and my data?', sub: 'Not built yet.', claim: 'S5.6 (NOT BUILT, as an open question)' },
     ],
     alt: 'Illustration: the person draws the veil back over themselves with their own hand, and the thin pink line between them and the other hand is cut. The other hand draws back, labelled: in development, not live. It keeps the small pink bloom it was given; nothing comes back, labelled: copies already received aren’t recalled. The lanterns stand unlit again.',
   },
