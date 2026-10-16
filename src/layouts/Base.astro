@@ -26,6 +26,10 @@ const { title, description, path, crumbs, quietHeader = false, sky = false } = A
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="preload" href={displayUrl} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={textUrl} as="font" type="font/woff2" crossorigin />
+    <!-- A9 (W1 part 3, review R1/R3): the ground's noise tile (site.css --noise-tile) is asked for with
+         the document, not after the stylesheet, so a page arriving from another page of the site or
+         from Search Jobs paints its grain in its first frame (with the tile cached, vercel.json). -->
+    <link rel="preload" href="/material/noise-d2-medium.webp" as="image" type="image/webp" />
     <SEO title={title} description={description} path={path} crumbs={crumbs} />
     <meta name="theme-color" content="#fbf8f1" />
     <meta name="color-scheme" content="light" />
