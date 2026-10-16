@@ -1,0 +1,14 @@
+---
+/* The A9 comparison preview (founder G5, integration), preview only: the home with direction W5's
+   story, puzzle (Shape, not picture), in the story slot, at /__preview/home/puzzle. The page exists only in
+   PUBLIC_PREVIEW_VARIANTS=1 builds: astro.config.mjs injects its route then and only then, so a
+   production build does not even compile it (A8's /__preview/brand reaches the same with an empty
+   getStaticPaths; here the stronger form keeps the direction's styles out of production too).
+   Everything but the slot is the default home's (components/Home.astro); the story is the
+   direction's own folder, unchanged (src/components/directions/puzzle/). */
+import Home from '../components/Home.astro';
+import Story from '../components/directions/puzzle/Story.astro';
+---
+<Home path="/__preview/home/puzzle" direction="puzzle" title="Linkbot preview: the home with the direction puzzle (Shape, not picture)">
+  <Story />
+</Home>

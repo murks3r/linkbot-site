@@ -1,0 +1,33 @@
+---
+/* Concept A9's comparison preview only: rendered by the direction homes (/__preview/home/<key>, which
+   exist only in PUBLIC_PREVIEW_VARIANTS=1 builds and set <html data-v-direction="<key>">). Every way
+   into the app from such a page carries ?direction=<key> (/talent?direction=<key>#…), so the
+   direction's moment continues in Search Jobs: the links and forms the page rendered at build time,
+   and the search's own hand-off (SearchForm.astro), which navigates from the browser. For the latter
+   this script takes over only a search with words, composing the address as SearchForm does (words,
+   then ", place"); an empty search is left to SearchForm's own alert. lib/links.ts stays as it is, so
+   a production build is unchanged. */
+---
+<script>
+  const key = document.documentElement.getAttribute('data-v-direction');
+  if (key && key !== 'none') {
+    const hand = (url: string) => url.replace(/^([^?#]*\/talent)(?=[#?]|$)/, `$1?direction=${encodeURIComponent(key)}`);
+    for (const link of document.querySelectorAll<HTMLAnchorElement>('a[href]')) {
+      const href = link.getAttribute('href') ?? '', next = hand(href);
+      if (next !== href) link.setAttribute('href', next);
+    }
+    for (const form of document.querySelectorAll<HTMLFormElement>('form[action]')) {
+      const action = form.getAttribute('action') ?? '', next = hand(action);
+      if (next !== action) form.setAttribute('action', next);
+    }
+    addEventListener('submit', event => {
+      const form = event.target instanceof HTMLFormElement && event.target.matches('form[data-handoff]') ? event.target : null;
+      const words = form?.querySelector<HTMLInputElement>('input:not([data-place-input])')?.value.trim() ?? '';
+      if (!form || !words) return;
+      event.preventDefault(); event.stopImmediatePropagation();
+      const place = form.querySelector<HTMLInputElement>('[data-place-input]')?.value.replace(/[,\s]+$/g, '').trim() ?? '';
+      const text = place ? `${words.replace(/[,\s]+$/g, '')}, ${place}` : words;
+      location.href = hand(`${(form.dataset.handoff ?? '/talent').replace(/#.*$/, '')}#/search?q=${encodeURIComponent(text)}`);
+    }, { capture: true });
+  }
+</script>

@@ -1,23 +1,26 @@
 ---
 /* The home page's composition (Concept A9 integration): the hero, the story slot and the invitation,
-   shared by the home (/, W1's default story, src/pages/index.astro) and, next, the comparison
-   preview's direction homes (preview builds only), so those pages differ only in the story they put
-   in the slot. Moved here unchanged from index.astro; the story block's markers stay
-   in index.astro (fundament v0 contracts.md). */
+   shared by the home (/, W1's default story, src/pages/index.astro) and the comparison preview's
+   direction homes (/__preview/home/<key>, preview builds only), so those pages differ only in the
+   story they put in the slot. Moved here unchanged from index.astro; the story block's markers stay
+   in index.astro (fundament v0 contracts.md). `direction` names a direction's home: the switcher's
+   direction axis shows it and the ways into the app hand it over (PreviewDirection.astro). */
 import Base from '../layouts/Base.astro';
 import SearchForm from './SearchForm.astro';
 import Halo from './Halo.astro';
 import Icon from './Icon.astro';
+import PreviewDirection from './PreviewDirection.astro';
 import { START_EXAMPLES } from '../data/content';
 import { app, searchWith } from '../lib/links';
-interface Props { path?: string; title?: string; description?: string }
+interface Props { path?: string; title?: string; description?: string; direction?: string }
 const {
   path = '/',
   title = 'Linkbot: find work that fits, keep your privacy',
   description = 'Say what matters in a few words. Linkbot reads current job listings against them and shows why each one fits, or doesn’t. No account needed.',
+  direction,
 } = Astro.props;
 ---
-<Base title={title} description={description} path={path} quietHeader sky>
+<Base title={title} description={description} path={path} quietHeader sky direction={direction}>
 
   <!-- 1. The opening viewport: the search is the centre of everything. The headline sits close
        above it, the pink action inside it, criteria people give Linkbot float around it. -->
@@ -58,6 +61,7 @@ const {
       <p class="start-links"><a class="link" href="/how-it-works">How it works<Icon name="arrow" /></a><a class="link" href="/privacy">How your privacy works<Icon name="arrow" /></a><a class="link" href="/hiring">Hiring?<Icon name="arrow" /></a></p>
     </div>
   </section>
+  {direction && <PreviewDirection />}
 </Base>
 
 <script>import '../scripts/atmosphere';</script>

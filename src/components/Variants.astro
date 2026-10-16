@@ -9,7 +9,7 @@ import { AXES, DEFAULTS } from '../lib/variants';
   <summary><span>Variants</span></summary>
   <form class="variants-form" data-variants-form>
     {AXES.map(axis => <label><span>{axis.label}</span><select name={axis.id} data-axis={axis.id}>{axis.values.map(([value, label]) => <option value={value} selected={value === DEFAULTS[axis.id]}>{label}</option>)}</select></label>)}
-    <p class="variants-note">The first option of each axis is the recommendation. The address carries the choice; copy it to share.</p>
+    <p class="variants-note">The first option of each axis is the recommendation. The address carries the choice; copy it to share. A direction opens its own home (<a href="/__preview/directions">all directions</a>).</p>
     <button type="button" data-variants-reset>Back to the recommendation</button>
   </form>
 </details>
@@ -18,21 +18,26 @@ import { AXES, DEFAULTS } from '../lib/variants';
   import { AXES, DEFAULTS } from '../lib/variants';
   const root = document.documentElement, form = document.querySelector<HTMLFormElement>('[data-variants-form]');
   const current = () => Object.fromEntries(AXES.map(a => [a.id, root.dataset['v' + a.id[0].toUpperCase() + a.id.slice(1)] ?? DEFAULTS[a.id]]));
+  /* The direction axis (A9 comparison) is a page, not a query value: /__preview/home/<key>, or / for
+     none. Choosing another one opens that page with the other axes in its address. */
+  const page = root.getAttribute('data-v-direction') ?? DEFAULTS.direction;
   const apply = (choice: Record<string, string>) => {
     const url = new URL(location.href);
     for (const axis of AXES) {
       const value = axis.values.some(([v]) => v === choice[axis.id]) ? choice[axis.id] : DEFAULTS[axis.id];
       root.setAttribute(`data-v-${axis.id}`, value);
-      if (value === DEFAULTS[axis.id]) url.searchParams.delete(axis.id); else url.searchParams.set(axis.id, value);
+      if (axis.id === 'direction' || value === DEFAULTS[axis.id]) url.searchParams.delete(axis.id); else url.searchParams.set(axis.id, value);
       const select = form?.querySelector<HTMLSelectElement>(`[data-axis="${axis.id}"]`);
       if (select) select.value = value;
     }
+    const direction = root.getAttribute('data-v-direction') ?? DEFAULTS.direction;
+    if (direction !== page) { location.assign(`${direction === 'none' ? '/' : `/__preview/home/${direction}`}${url.search}`); return; }
     history.replaceState(null, '', url);
     dispatchEvent(new CustomEvent('variants:change', { detail: current() }));
   };
   apply(current());
   form?.addEventListener('change', () => apply(Object.fromEntries(AXES.map(a => [a.id, form.querySelector<HTMLSelectElement>(`[data-axis="${a.id}"]`)!.value]))));
-  form?.querySelector('[data-variants-reset]')?.addEventListener('click', () => apply({ ...DEFAULTS }));
+  form?.querySelector('[data-variants-reset]')?.addEventListener('click', () => apply({ ...DEFAULTS, direction: page }));
 </script>
 
 <style>
