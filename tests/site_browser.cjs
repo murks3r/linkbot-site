@@ -47,7 +47,12 @@ function serve() {
 function motionRecorder() {
   window.__motion = [];
   const note = (kind, target) => window.__motion.push(`${kind} on ${target?.localName ?? '?'}${target?.classList?.length ? '.' + [...target.classList].join('.') : ''}`);
-  document.addEventListener('animationstart', event => note(`animation ${event.animationName}`, event.target), true);
+  // A9 W1 part 3 (review R4): the plates' grain-follow animations run on the scroll timeline under reduced
+  // motion too. They are not motion: they keep a plate's grain still against the page's grain while the
+  // page scrolls (nothing moves that the scroll does not move). Exempt by name only; any other
+  // animation under reduced motion still fails, and section 2b proves the plates stay aligned.
+  const SCROLL_ALIGNMENTS = new Set(['grain-follow', 'toc-grain-follow']);
+  document.addEventListener('animationstart', event => { if (!SCROLL_ALIGNMENTS.has(event.animationName)) note(`animation ${event.animationName}`, event.target); }, true);
   document.addEventListener('transitionrun', event => note(`transition ${event.propertyName}`, event.target), true);
 }
 

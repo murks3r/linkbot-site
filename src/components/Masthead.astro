@@ -51,12 +51,13 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
     background: var(--noise-tile) 0 0 / var(--noise-scale) var(--noise-scale) repeat; }
   /* The grain follows the scroll on the compositor where scroll-driven animations exist: one turn per
      tile height, --grain-turns turns over the page's whole scroll range (written by the script below
-     when the page's height changes), so the shift is always -(scrollY mod tile). Elsewhere, and under
-     reduced motion, the script writes the same shift on scroll. */
-  @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: scroll()) {
-      .masthead-grain { animation: grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-range: 0px var(--grain-range, 100%); animation-iteration-count: var(--grain-turns, 1); }
-    }
+     when the page's height changes), so the shift is always -(scrollY mod tile). Elsewhere the script
+     writes the same shift on scroll. Also under reduced motion (W1 part 3, review R4): this is not
+     motion. It holds the plate's grain still against the page's grain while the page scrolls, so
+     nothing moves that the scroll itself does not move; the script path ran one frame behind the
+     scroll there and showed a smoother band at the header's edge while scrolling. */
+  @supports (animation-timeline: scroll()) {
+    .masthead-grain { animation: grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-range: 0px var(--grain-range, 100%); animation-iteration-count: var(--grain-turns, 1); }
   }
   @keyframes grain-follow { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--noise-scale))); } }
   @media (forced-colors: active) { .masthead-plate { display: none; } }

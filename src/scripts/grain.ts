@@ -5,18 +5,19 @@
    content; a sticky plate does not. So the plate's grain is shifted by -(scrollY mod tile), and its
    texels line up with the page's texels at every scroll position: the eye sees one sheet.
 
-   Where scroll-driven animations exist (and motion is welcome), the shift runs on the compositor in
-   step with the scroll itself: a linear animation on the root scroll timeline with one turn per tile
-   height over a range of whole tiles (--grain-turns, --grain-range), written here when the page's
-   height or the view changes, never while scrolling. Elsewhere, and
-   under reduced motion (where no animation may run), the shift is written on scroll. Nothing is ever
-   written on <html> or <body>. */
+   Where scroll-driven animations exist, the shift runs on the compositor in step with the scroll
+   itself: a linear animation on the root scroll timeline with one turn per tile height over a range
+   of whole tiles (--grain-turns, --grain-range), written here when the page's height or the view
+   changes, never while scrolling. That holds under reduced motion too (W1 part 3, review R4): it is
+   not motion, it keeps the plate's grain still against the page's while the page scrolls; a write on
+   scroll runs one frame behind a threaded scroll, and the feather then mixes two grains. Without
+   scroll-driven animations (Firefox today) the shift is written on scroll. Nothing is ever written on
+   <html> or <body>. */
 const hosts = new Set<HTMLElement>();
 const scrollDriven = typeof CSS !== 'undefined' && CSS.supports('animation-timeline: scroll()');
-const still = matchMedia('(prefers-reduced-motion: reduce)');
 let tile = 1024, raf = 0, started = false;
 
-const onCompositor = () => scrollDriven && !still.matches;
+const onCompositor = () => scrollDriven;
 const grains = () => [...hosts].flatMap(host => [...host.querySelectorAll<HTMLElement>('[data-grain]')]);
 
 function measure() {
@@ -48,7 +49,6 @@ export function followGrain(host: HTMLElement) {
     if ('ResizeObserver' in window) new ResizeObserver(measure).observe(document.documentElement);
     addEventListener('resize', measure, { passive: true });
     addEventListener('scroll', queue, { passive: true });
-    still.addEventListener('change', () => { for (const grain of grains()) grain.style.removeProperty('transform'); measure(); });
   }
   measure();
 }
