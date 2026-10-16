@@ -80,7 +80,7 @@ html[data-v-controls='follow'] { --control-r: var(--field-r); }
   --z-air: 0; --z-noise: 1; --z-content: 2;
   /* Founder A4: far less colourful, towards white and grey; colour only where the story needs it. */
   --air-saturation: .35;
-  --wash: rgb(248 247 244); --wash-opacity: .62;
+  --wash: var(--lb-wash); --wash-opacity: .62;
   /* 0 … 1. Written by src/scripts/atmosphere.ts on the atmosphere alone, from the sections that
      carry data-air-reveal; never set on <html> or <body>. Effective wash: --wash-opacity × (1 − .7 ×
      --air-reveal); the pigments regain saturation towards 1 in the same proportion. */
