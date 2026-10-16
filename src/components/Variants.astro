@@ -50,5 +50,14 @@ import { AXES, DEFAULTS } from '../lib/variants';
   .variants select { min-height: 32px; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: var(--r-1); background: var(--paper); font: inherit; color: inherit; }
   .variants-note { color: var(--ink-2); font-weight: 400; }
   .variants button { min-height: 32px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: var(--r-1); background: var(--paper); font: inherit; font-weight: 600; color: inherit; cursor: pointer; }
+  /* A9 integration (W5's finding F13: on phones the folded button covered story text): up to 400 px
+     the folded switcher is a narrow tab in the page's right gutter (16 px there), so it covers no
+     text; opened, it is the full panel as before. */
+  @media (max-width: 25rem) {
+    .variants:not([open]) { right: 0; bottom: max(24px, env(safe-area-inset-bottom)); }
+    .variants:not([open]) summary { justify-content: center; width: 14px; min-height: var(--target); padding: 0; border-right: 0; border-radius: var(--r-1) 0 0 var(--r-1); }
+    .variants:not([open]) summary span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .variants:not([open]) summary::before { content: ''; width: 3px; height: 15px; background: radial-gradient(circle, currentColor 1.3px, transparent 1.6px) 0 0 / 3px 5px; }
+  }
   @media print { .variants { display: none; } }
 </style>
