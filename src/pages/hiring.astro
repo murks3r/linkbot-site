@@ -157,14 +157,14 @@ const lines = role.text.split('\n').map((line, index, all) => {
 
 <style>
   .hero { padding-block: clamp(48px, 8vw, 112px) clamp(32px, 5vw, 64px); }
-  .hero-pay { font-size: var(--size-small); font-weight: 600; color: var(--ink-2); }
+  .hero-pay { font-size: var(--size-small); font-weight: 600; color: var(--ground-ink-2); }
   /* The long page: On this page beside the text, as on How it works. */
   .hiring-doc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); padding-block: clamp(24px, 4vw, 48px) 0; }
   @media (min-width: 64rem) { .hiring-doc { grid-template-columns: 15rem minmax(0, 1fr); } }
   .hiring-body { display: grid; gap: var(--space-section); max-width: 48rem; min-width: 0; padding-bottom: var(--space-section); }
   .hiring-body section { display: grid; gap: var(--space-head); scroll-margin-top: var(--anchor-top); }
   .hiring-body h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem); }
-  .hiring-body p { color: var(--ink-2); max-width: var(--measure); }
+  .hiring-body p { color: var(--ground-ink-2); max-width: var(--measure); }
   .benefits, .never { display: grid; gap: 0; border-top: 2px solid var(--ink); }
   .benefits li, .never li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
   .benefits h3, .never h3, .steps h3 { font-size: 1.125rem; margin-bottom: 6px; }
@@ -179,7 +179,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
   .faq { display: grid; gap: 0; border-top: 2px solid var(--ink); }
   .faq > div { display: grid; gap: 6px; padding: 16px 0; border-bottom: 1px solid var(--line); }
   .faq dt { font-weight: 650; }
-  .faq dd { margin: 0; color: var(--ink-2); }
+  .faq dd { margin: 0; color: var(--ground-ink-2); }
   .doc-body a:not(.link):not(.btn) { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--green-line); }
   .hero-inner { display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.4vw, 26px); }
   .hero-inner .lede { max-width: 38em; text-wrap: balance; }
@@ -204,7 +204,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
   .role-proof { padding: 12px 18px; border-top: 1px solid var(--line); font-size: var(--size-micro); color: var(--ink-3); }
   .differ { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px clamp(32px, 5vw, 72px); width: min(100%, 60rem); margin: clamp(28px, 4vw, 48px) auto 0; }
   .differ li { display: grid; gap: 8px; align-content: start; padding: 18px 0 22px; border-top: 1.5px solid var(--ink); }
-  .differ p { font-size: var(--size-small); color: var(--ink-2); }
+  .differ p { font-size: var(--size-small); color: var(--ground-ink-2); }
   @media (max-width: 36rem) { .differ { grid-template-columns: minmax(0, 1fr); } }
   .paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); margin-top: clamp(28px, 4vw, 44px); }
   @media (max-width: 56rem) { .paths { grid-template-columns: minmax(0, 1fr); } }
@@ -221,7 +221,7 @@ const lines = role.text.split('\n').map((line, index, all) => {
   .rules li { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 18px 0; border-top: 1px solid var(--line-strong); }
   .rules li :global(.mark) { margin-top: 6px; }
   .rules h3 { font-size: 1.125rem; }
-  .rules p { margin-top: 6px; font-size: var(--size-small); color: var(--ink-2); }
+  .rules p { margin-top: 6px; font-size: var(--size-small); color: var(--ground-ink-2); }
   .close-hire { padding-top: clamp(64px, 8vw, 104px); }
   .close-grid { display: grid; gap: 20px; justify-items: center; text-align: center; }
   .close-grid .hero-actions { justify-content: center; }

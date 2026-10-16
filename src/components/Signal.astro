@@ -216,7 +216,7 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
   .sg-coverage { display: flex; gap: 8px; align-items: baseline; padding-top: 6px; font-size: var(--size-micro); color: var(--ink-2); }
   .sg-hidden { display: flex; gap: 8px; align-items: baseline; justify-self: start; padding: 7px 12px; border: 1px dashed var(--line-ink); border-radius: var(--r-2); background: var(--surface); font-size: var(--size-micro); color: var(--ink-2); }
   .sg-hidden :global(.mark), .sg-tag :global(.mark), .sg-coverage :global(.mark) { flex: none; transform: translateY(1px); }
-  .sg-legend { font-size: var(--size-micro); color: var(--ink-2); text-align: center; }
+  .sg-legend { font-size: var(--size-micro); color: var(--ground-ink-2); text-align: center; }
   /* Statically, the Must is set. */
   :global(html:not(.js)) .chip[data-must], .signal:not(.is-live) .chip[data-must] { background: var(--green); border-color: var(--green); color: var(--on-green); }
   :global(html:not(.js)) .chip[data-must] small, .signal:not(.is-live) .chip[data-must] small { color: var(--on-green-2); border-left-color: var(--green-rule); }

@@ -19,6 +19,13 @@
   color-scheme: light;
   --paper: var(--lb-cream); --surface: var(--lb-white);
   --ink: var(--lb-ink); --ink-2: var(--lb-ink-2); --ink-3: var(--lb-ink-3);
+  /* A9 (W1 part 2, the ink audit; guardrail E, tokens.md): text on the open ground has the noise
+     beneath its letters. With the d2 tile there, --ink-2 small text falls to 3.97–4.7:1 at the 2nd
+     percentile of its background (the site test's method) and --ink-3 to 3.17–3.5:1; --ink keeps 6.3:1
+     or more. So secondary text on the open ground is set in --ink and steps back by size, weight and
+     case instead of tone; --ink-2 and --ink-3 stay for large text and for text on surfaces (cards,
+     fields, chips, plates). One token per role, so a lighter density stage can give the tone back. */
+  --ground-ink-2: var(--ink); --ground-ink-3: var(--ink);
   --green: var(--lb-forest); --green-hover: var(--lb-forest-hover); --green-press: var(--lb-forest-press);
   --green-wash: var(--lb-forest-wash); --green-line: var(--lb-forest-line); --green-rule: var(--lb-forest-rule);
   --on-green: var(--lb-on-forest); --on-green-2: var(--lb-on-forest-2);
@@ -124,14 +131,14 @@ button { cursor: pointer; }
 .band[data-tone='green'] { background: var(--green); color: var(--on-green); }
 /* Two plain bands in a row share their spacing; after a coloured band the full spacing returns. */
 .band:not([data-tone]) + .band:not([data-tone]) { padding-top: 0; }
-.lede { font-size: var(--size-lede); line-height: 1.5; color: var(--ink-2); max-width: 36em; }
+.lede { font-size: var(--size-lede); line-height: 1.5; color: var(--ground-ink-2); max-width: 36em; }
 .prose { max-width: var(--prose); }
 .prose > * + * { margin-top: 1em; }
-.prose p, .muted { color: var(--ink-2); }
+.prose p, .muted { color: var(--ground-ink-2); }
 /* A quiet label for help pages; the homepage needs none. */
-.eyebrow { font-size: var(--size-micro); font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.eyebrow { font-size: var(--size-micro); font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--ground-ink-3); }
 .section-head { display: grid; gap: 18px; max-width: 46rem; }
-.section-head p { font-size: var(--size-lede); color: var(--ink-2); }
+.section-head p { font-size: var(--size-lede); color: var(--ground-ink-2); }
 .stack { display: grid; gap: 20px; }
 
 /* Words Linkbot can't use: softened, never underlined or marked. */
@@ -161,7 +168,7 @@ button { cursor: pointer; }
 .mark { flex: none; color: var(--ink); }
 .mark[data-tone='unknown'] { color: var(--ink-3); }
 /* Product status, stated in words beside its square: no badge, no fill. */
-.status { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; font-size: var(--size-micro); font-weight: 650; line-height: 1.35; color: var(--ink-2); }
+.status { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; font-size: var(--size-micro); font-weight: 650; line-height: 1.35; color: var(--ground-ink-2); }
 .status[data-tone='next'] .mark { color: var(--ink-3); }
 
 /* ── Criteria chips: the person's words as Linkbot read them ──────────── */

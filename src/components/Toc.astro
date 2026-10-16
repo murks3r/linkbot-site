@@ -60,14 +60,17 @@ const { items, label } = Astro.props;
 
 <style>
   .toc { font-family: var(--text); }
-  .toc summary { list-style: none; cursor: default; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  /* A9: the label and the numbers lie on the open ground (the noise beneath), so they take --ink-2
+     (tokens.md: --ink-3 only on surfaces; measured in header.md / the site test). */
+  .toc summary { list-style: none; cursor: default; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ground-ink-2); }
   .toc summary::-webkit-details-marker { display: none; }
   .toc-current { display: none; }
   .toc ol { display: grid; gap: 0; margin-top: 10px; border-left: 2px solid var(--line-strong); }
-  .toc a { display: flex; align-items: center; gap: 10px; min-height: var(--target); padding: 4px 0 4px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: var(--size-small); font-weight: 580; color: var(--ink-2); text-decoration: none; transition: color var(--fast), border-color var(--fast); }
+  .toc a { display: flex; align-items: center; gap: 10px; min-height: var(--target); padding: 4px 0 4px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: var(--size-small); font-weight: 580; color: var(--ground-ink-2); text-decoration: none; transition: color var(--fast), border-color var(--fast); }
   .toc a:hover { color: var(--ink); border-left-color: var(--ink); }
   .toc a[aria-current] { color: var(--ink); font-weight: 650; border-left-color: var(--green); }
-  .toc a span { font-size: var(--size-micro); color: var(--ink-3); width: 1.2em; }
+  .toc a span { font-size: var(--size-micro); color: var(--ground-ink-2); width: 1.2em; }
+  .toc-plate { display: none; }
   @media (min-width: 64rem) { .toc { position: sticky; top: calc(var(--header) + 32px); align-self: start; max-height: calc(100svh - var(--header) - 48px); overflow: auto; } }
   /* Narrow screens: a compact fold that sticks under the header; the current section's name shows while folded. */
   @media (max-width: 63.99rem) {

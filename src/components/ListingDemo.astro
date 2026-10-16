@@ -50,7 +50,7 @@ import { LISTING } from '../data/content';
   mark { color: inherit; background: none; transition: color var(--base) var(--ease); }
   mark.is-on { color: var(--ink); }
   .listing-read { display: grid; gap: 10px; }
-  .listing-read-head { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: 16px; padding: 0 14px 8px; border-bottom: 1px solid var(--ink); font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
+  .listing-read-head { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: 16px; padding: 0 14px 8px; border-bottom: 1px solid var(--ink); font-size: var(--size-micro); font-weight: 650; color: var(--ground-ink-3); }
   .listing-rows { display: grid; gap: 8px; }
   .listing-row { width: 100%; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: 16px; align-items: start; min-height: 64px; padding: 14px 16px; border: 1px solid var(--line-strong); border-radius: var(--r-2); background: var(--surface); text-align: left; transition: border-color var(--fast), background-color var(--fast); }
   .listing-row:hover { border-color: var(--ink); }
@@ -63,7 +63,7 @@ import { LISTING } from '../data/content';
   .listing-says { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 10px; align-items: baseline; }
   .listing-says b { font-weight: 620; }
   .listing-row[data-tone='unknown'] .listing-says b { font-weight: 560; color: var(--ink-2); }
-  .listing-status { font-size: var(--size-small); color: var(--ink-2); min-height: 1.5em; }
+  .listing-status { font-size: var(--size-small); color: var(--ground-ink-2); min-height: 1.5em; }
   @media (max-width: 30rem) {
     .listing-read-head { display: none; }
     .listing-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
