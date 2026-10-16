@@ -40,9 +40,9 @@ const COLUMNS: { tone: 'fit' | 'tradeoff' | 'unknown'; title: string; lead: stri
   .today-col[data-tone='unknown'] { border-top-style: dashed; border-top-color: var(--line-ink); }
   .today-col h3 { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; }
   .today-col[data-tone='unknown'] :global(.mark) { color: var(--ink-3); }
-  .today-col p { font-size: var(--size-small); color: var(--ink-2); }
+  .today-col p { font-size: var(--size-small); color: var(--ground-ink-2); }
   .today-col ul { display: grid; gap: 0; margin-top: 4px; }
   .today-col li { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: var(--size-small); font-weight: 560; }
-  .today-col[data-tone='unknown'] li { color: var(--ink-2); font-weight: 500; }
+  .today-col[data-tone='unknown'] li { color: var(--ground-ink-2); font-weight: 500; }
   @media (max-width: 56rem) { .today { grid-template-columns: minmax(0, 1fr); } }
 </style>

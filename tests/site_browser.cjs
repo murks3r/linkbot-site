@@ -223,6 +223,9 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(story.stations.length === 5 && !story.pinned, `reduced motion: the story is five stations in the flow, not pinned (${JSON.stringify(story).slice(0, 200)})`);
       check(story.stations.map(s => s.title).join(' | ') === 'Private by default. Shared only when you decide. | Compared with your words, not with you. | A fit is not permission to contact you. | Then it gets personal, if you want it to. | Change your mind: pause, remove or revoke.', `the five stations S1–S5 (${story.stations.map(s => s.title).join(' | ')})`);
       check(story.stations.every(s => s.pic.startsWith('Illustration:')), 'every station’s picture says it is an illustration');
+      // A9 (W1): the default story never states "A fit tells no one" (an option only while counsel's reading
+      // is open, founder B).
+      check(!/tells no one/i.test(await page.evaluate(() => document.querySelector('main').innerText)), 'the default home never says "A fit tells no one"');
       const home = await page.evaluate(() => document.querySelector('main').innerText);
       check(!/What works today|short phrases|Write it in|runs in circles/i.test(home), 'no status section, no writing instructions and no problem-first loop on the home page');
       check(/Employers aren’t told you’re looking/.test(home) && /Compared with your words, not with you/.test(home), 'the story names who is not told: employers; a fit is with your words, not with you');
@@ -252,7 +255,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         const top = () => Math.round(noise.getBoundingClientRect().top);
         scrollTo(0, 0); const at0 = top(); scrollTo(0, 600); const at600 = top(); scrollTo(0, 0);
         return { parent: noise.parentElement.localName, bodyGroup: group(document.body), height: Math.round(noise.getBoundingClientRect().height), page: document.documentElement.scrollHeight, blend: s.mixBlendMode, image: s.backgroundImage, repeat: s.backgroundRepeat, position: s.position, events: s.pointerEvents, hidden: noise.getAttribute('aria-hidden'), at0, at600,
-          z: Number(s.zIndex), air: z('.air'), main: z('main'), footer: z('footer'), header: z('[data-masthead]'), washOver: document.querySelector('.air').lastElementChild?.matches('[data-wash]'),
+          z: Number(s.zIndex), air: z('.air'), main: z('main'), footer: z('footer'), header: z('[data-masthead]'), washOver: [...document.querySelector('.air').children].slice(-2).map(e => e.matches('[data-wash]') ? 'wash' : e.matches('[data-cap]') ? 'cap' : e.className).join(' ') === 'wash cap',
           looseBlends: [...document.querySelectorAll('body *')].filter(e => e !== noise && getComputedStyle(e).mixBlendMode !== 'normal' && ['main', 'footer', 'header', 'body', 'html'].includes(nearest(e))).map(e => e.className),
           prints: [...document.querySelectorAll('img[src*="/material/print"]')].map(i => i.closest('.yr-you') ? 'yours' : i.closest('section, div')?.className), calm: [...document.querySelectorAll('[data-air-calm]')].map(e => e.className.split(' ')[1]) };
       });
@@ -277,6 +280,115 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(inField < 1 && onGround >= 5, `the field is not printed by the noise, the open ground is (grain ${inField.toFixed(2)} inside the field, ${onGround.toFixed(2)} on the ground)`);
       check(JSON.stringify(material.calm) === JSON.stringify([]), `nothing calms the light; the story reveals colour instead (${material.calm})`);
       await context.close();
+
+      // ── 2b. Concept A9 (W1 part 2): the seamless header, the noise on short pages, and text on the
+      //        open ground, all measured in pixels with the noise beneath. ──
+      // In-page pixel statistics on a screenshot (decoded on a canvas; regions in device pixels).
+      const stats = (pg, bufs, job) => pg.evaluate(async ([srcs, job]) => {
+        const imgs = await Promise.all(srcs.map(src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + src; })));
+        const data = imgs.map(img => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0); return { w: c.width, h: c.height, d: g.getImageData(0, 0, c.width, c.height).data }; });
+        const L8 = (d, i) => .2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2];
+        const lin = v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }, rel = (d, i) => .2126 * lin(d[i]) + .7152 * lin(d[i + 1]) + .0722 * lin(d[i + 2]);
+        const strip = (im, y0, y1) => { let r = 0, g = 0, b = 0, n = 0, e = 0; for (let y = Math.max(0, y0); y < Math.min(im.h, y1); y++) for (let x = 0; x < im.w; x++) { const i = (y * im.w + x) * 4; r += im.d[i]; g += im.d[i + 1]; b += im.d[i + 2]; n++; if (x) e += Math.abs(L8(im.d, i) - L8(im.d, i - 4)); } return { r: r / n, g: g / n, b: b / n, t: e / n }; };
+        if (job.kind === 'seam') {
+          const [ground, bare] = data, a = strip(ground, job.edge - job.s - job.px, job.edge - job.px), z = strip(ground, job.edge + job.px, job.edge + job.s + job.px);
+          const fa = strip(ground, job.end - job.s - job.px, job.end - job.px), fz = strip(ground, job.end + job.px, job.end + job.s + job.px);
+          let delta = 0, n = 0; for (let y = 0; y < Math.min(ground.h, job.end); y++) for (let x = 0; x < ground.w; x++) { const i = (y * ground.w + x) * 4; delta += Math.max(Math.abs(ground.d[i] - bare.d[i]), Math.abs(ground.d[i + 1] - bare.d[i + 1]), Math.abs(ground.d[i + 2] - bare.d[i + 2])); n++; }
+          const step = (p, q) => Math.max(Math.abs(p.r - q.r), Math.abs(p.g - q.g), Math.abs(p.b - q.b)), ratio = (p, q) => (q.t + .5) / (p.t + .5);
+          return { copy: delta / n, edgeStep: step(a, z), edgeRatio: ratio(a, z), featherStep: step(fa, fz), featherRatio: ratio(fa, fz) };
+        }
+        if (job.kind === 'text') {
+          const [im] = data; return job.boxes.map(b => {
+            const [r, g, bl] = b.color.match(/\d+/g).map(Number), t = .2126 * lin(r) + .7152 * lin(g) + .0722 * lin(bl), ls = [];
+            for (let y = Math.max(0, Math.round(b.y * job.dpr)); y < Math.min(im.h, Math.round((b.y + b.h) * job.dpr)); y++) for (let x = Math.max(0, Math.round(b.x * job.dpr)); x < Math.min(im.w, Math.round((b.x + b.w) * job.dpr)); x++) ls.push(rel(im.d, (y * im.w + x) * 4));
+            if (ls.length < 10) return null; ls.sort((p, q) => p - q);
+            const c = l => (Math.max(t, l) + .05) / (Math.min(t, l) + .05);
+            return { ...b, ratio: Math.min(c(ls[Math.floor(ls.length * .02)]), c(ls[Math.floor(ls.length * .98)])) };
+          }).filter(Boolean);
+        }
+        if (job.kind === 'grain') { const [im] = data; let e = 0, m = 0; for (let y = Math.max(1, job.y0); y < Math.min(im.h - 1, job.y1); y++) for (let x = 1; x < im.w - 1; x += 2) { let t = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) t += L8(im.d, ((y + dy) * im.w + x + dx) * 4); const q = L8(im.d, (y * im.w + x) * 4) - t / 9; e += q * q; m++; } return Math.sqrt(e / m); }
+      }, [bufs.map(b => b.toString('base64')), job]);
+      const hideContent = 'main > *, footer > *, .halo { visibility: hidden !important; } .masthead-inner, [data-toc] details { visibility: hidden !important; }';
+      // The header: scrolled, a plate copies the ground exactly (with the plate removed, the grounds-only
+      // picture under the header and its feather is the same, so its grain continues the page's texel
+      // for texel), no colour step or texture change across its edge, and every header word keeps
+      // 4.5:1 over the real pixels with content passing beneath it.
+      for (const [route, width, dpr, y] of [['/', 1440, 1, 300], ['/', 390, 2, 1200], ['/privacy', 1440, 1, 1200], ['/privacy', 390, 2, 1200], ['/hiring', 1440, 2, 300]]) {
+        for (const motion of ['no-preference', 'reduce']) {
+          const ctx = await browser.newContext({ viewport: { width, height: HEIGHTS[width] }, deviceScaleFactor: dpr, reducedMotion: motion });
+          const pg = await ctx.newPage();
+          await pg.goto(origin + route, { waitUntil: 'networkidle' }); await pg.evaluate(() => document.fonts.ready);
+          await pg.evaluate(v => scrollTo(0, v), y); await pg.waitForTimeout(700);
+          const head = await pg.evaluate(() => { const h = document.querySelector('[data-masthead]'), r = h.getBoundingClientRect(), toc = document.querySelector('[data-toc][data-stuck]');
+            const edge = toc ? toc.getBoundingClientRect().bottom : r.bottom, plate = toc ? toc.querySelector('.toc-plate') : h.querySelector('.masthead-plate');
+            const words = [...h.querySelectorAll('a, summary')].filter(e => e.getClientRects().length && !e.closest('details:not([open]) > :not(summary)') && getComputedStyle(e).visibility === 'visible' && getComputedStyle(e).backgroundColor === 'rgba(0, 0, 0, 0)').map(e => { const g = document.createRange(); g.selectNodeContents(e); const b = g.getBoundingClientRect(); return { text: e.textContent.trim(), color: getComputedStyle(e).color, x: b.left, y: b.top, w: b.width, h: b.height }; });
+            return { scrolled: h.hasAttribute('data-scrolled'), opacity: getComputedStyle(h.querySelector('.masthead-plate')).opacity, edge, end: plate.getBoundingClientRect().bottom, words }; });
+          check(head.scrolled && head.opacity === '1', `${route}@${width} ${motion}: scrolled, the header shows its plate (${JSON.stringify({ scrolled: head.scrolled, opacity: head.opacity })})`);
+          const quiet = await pg.addStyleTag({ content: '[data-masthead] *, [data-masthead] *::before, [data-masthead] *::after { color: transparent !important; text-decoration-color: transparent !important; } [data-masthead] svg { visibility: hidden !important; }' });
+          await pg.waitForTimeout(100);
+          const words = await stats(pg, [await pg.screenshot()], { kind: 'text', dpr, boxes: head.words });
+          await quiet.evaluate(n => n.remove());
+          for (const w of words) check(w.ratio >= 4.5, `${route}@${width} ${motion} scrolled ${y}: the header's "${w.text}" keeps ${w.ratio.toFixed(2)}:1 over what passes beneath`);
+          const hidden = await pg.addStyleTag({ content: hideContent }); await pg.waitForTimeout(150);
+          const ground = await pg.screenshot();
+          const bare = await pg.addStyleTag({ content: '.masthead-plate, .toc-plate { display: none !important; }' }); await pg.waitForTimeout(150);
+          const without = await pg.screenshot();
+          await bare.evaluate(n => n.remove()); await hidden.evaluate(n => n.remove());
+          const seam = await stats(pg, [ground, without], { kind: 'seam', edge: Math.round(head.edge * dpr), end: Math.round(head.end * dpr), s: 6 * dpr, px: dpr });
+          check(seam.copy < .5, `${route}@${width} ${motion} scrolled ${y}: the plate is a copy of the ground, its grain aligned with the page's (mean |Δ| ${seam.copy.toFixed(3)} levels)`);
+          check(seam.edgeStep <= 2 && Math.abs(seam.edgeRatio - 1) <= .15 && seam.featherStep <= 2 && Math.abs(seam.featherRatio - 1) <= .15, `${route}@${width} ${motion} scrolled ${y}: no edge (colour step ${seam.edgeStep.toFixed(2)} / ${seam.featherStep.toFixed(2)} levels, texture ratio ${seam.edgeRatio.toFixed(3)} / ${seam.featherRatio.toFixed(3)})`);
+          report.header = report.header ?? []; report.header.push({ route, width, dpr, y, motion, copy: +seam.copy.toFixed(3), edgeStep: +seam.edgeStep.toFixed(2), edgeRatio: +seam.edgeRatio.toFixed(3), featherStep: +seam.featherStep.toFixed(2), featherRatio: +seam.featherRatio.toFixed(3), minWord: +Math.min(...words.map(w => w.ratio)).toFixed(2) });
+          await ctx.close();
+        }
+      }
+      // Short pages in tall windows: the noise reaches the bottom of the view (V1).
+      for (const [w, h] of [[1440, 1600], [2560, 1440]]) for (const route of ['/imprint', '/privacy-policy', '/does-not-exist']) {
+        const ctx = await browser.newContext({ viewport: { width: w, height: h }, reducedMotion: 'reduce' });
+        const pg = await ctx.newPage(); await pg.goto(origin + route, { waitUntil: 'networkidle' });
+        const cover = await pg.evaluate(() => ({ bottom: document.querySelector('[data-noise]').getBoundingClientRect().bottom, view: innerHeight }));
+        const hidden = await pg.addStyleTag({ content: hideContent }); await pg.waitForTimeout(100);
+        const grain = await stats(pg, [await pg.screenshot()], { kind: 'grain', y0: h - 120, y1: h - 4 });
+        await hidden.evaluate(n => n.remove());
+        check(cover.bottom >= cover.view - 1 && grain >= 5, `${route} at ${w}×${h}: the noise reaches the bottom of the view (layer bottom ${Math.round(cover.bottom)} of ${cover.view}; grain ${grain.toFixed(2)} in the last 120 px)`);
+        await ctx.close();
+      }
+      // Text on the open ground (guardrail E, tokens.md): every small text over the noise keeps 4.5:1
+      // (large text 3:1) against the 2nd and 98th percentile of the real pixels beneath it.
+      const groundBoxes = () => {
+        const alpha = v => { if (v === 'transparent') return 0; const m = v.match(/rgba?\(([^)]+)\)/); if (!m) return 1; const p = m[1].split(/[\s,/]+/).filter(Boolean); return p.length > 3 ? Number(p[3]) : 1; };
+        const top = document.querySelector('[data-masthead]').getBoundingClientRect().bottom + 30, out = [];
+        const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+          const e = n.parentElement; if (!n.data.trim() || !e || !e.closest('main, footer') || e.closest('[aria-hidden="true"], details:not([open]) > :not(summary)')) continue;
+          const c = getComputedStyle(e); if (c.visibility !== 'visible') continue;
+          let o = 1, surface = false; for (let a = e; a && a !== document.documentElement; a = a.parentElement) { const s = getComputedStyle(a); o *= Number(s.opacity); if (!surface && a.closest('main, footer') && (alpha(s.backgroundColor) > .5 || s.backgroundImage !== 'none' || s.backdropFilter !== 'none')) surface = true; }
+          if (o < .99 || surface) continue;
+          const size = parseFloat(c.fontSize), large = size >= 24 || (size >= 18.66 && Number(c.fontWeight) >= 700);
+          const g = document.createRange(); g.selectNodeContents(n);
+          for (const r of g.getClientRects()) if (r.width > 3 && r.height > 3 && r.top > top && r.bottom < innerHeight - 1 && r.left >= 0 && r.right <= innerWidth) out.push({ text: n.data.trim().slice(0, 40), color: c.color, large, x: r.left, y: r.top, w: r.width, h: r.height });
+        }
+        return out;
+      };
+      const textLow = [];
+      let textChecked = 0;
+      for (const [width, dpr] of [[1440, 1], [390, 2]]) for (const route of PAGES) {
+        const ctx = await browser.newContext({ viewport: { width, height: HEIGHTS[width] }, deviceScaleFactor: dpr, reducedMotion: 'reduce' });
+        const pg = await ctx.newPage(); await pg.goto(origin + route, { waitUntil: 'networkidle' }); await pg.evaluate(() => document.fonts.ready);
+        const full = await pg.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+        for (const at of [0, .2, .4, .6, .8, 1]) {
+          await pg.evaluate(v => scrollTo(0, v), Math.round(full * at)); await pg.waitForTimeout(250);
+          const boxes = await pg.evaluate(groundBoxes);
+          const quiet = await pg.addStyleTag({ content: '*, *::before, *::after { color: transparent !important; -webkit-text-fill-color: transparent !important; text-decoration-color: transparent !important; text-shadow: none !important; }' });
+          await pg.waitForTimeout(100);
+          const measured = await stats(pg, [await pg.screenshot()], { kind: 'text', dpr, boxes });
+          await quiet.evaluate(n => n.remove());
+          textChecked += measured.length;
+          for (const m of measured) if (m.ratio < (m.large ? 3 : 4.5)) textLow.push(`${route}@${width} "${m.text}" ${m.ratio.toFixed(2)}`);
+        }
+        await ctx.close();
+      }
+      check(textChecked > 300 && textLow.length === 0, `text on the open ground keeps its contrast over the noise (${textChecked} boxes; below: ${[...new Set(textLow)].slice(0, 6).join('; ')})`);
+      report.groundText = { checked: textChecked, below: textLow.length };
 
       // Without scripts, everything is there too, and the search never sends the words.
       const bare = await browser.newContext({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
@@ -346,6 +458,14 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(levels.every(l => l.mean >= 200 && l.dark <= .06), `one bright world from the hero to the invitation (${levels.map(l => `${l.mean.toFixed(0)}/${(l.dark * 100).toFixed(1)}%`).join(', ')})`);
       check(Math.max(...levels.map(l => l.mean)) - Math.min(...levels.map(l => l.mean)) <= 24, 'no chapter jumps to another light level');
       report.brightness = levels.map(l => +l.mean.toFixed(1));
+      // The colour hook (A9, slots.md): a section that asks for colour after load is seen and brings
+      // the colour back while it fills the view; removing its attribute brings the quiet back (V6).
+      await lp.evaluate(() => { const s = document.querySelector('.signal'); s.setAttribute('data-air-reveal', ''); scrollTo(0, s.getBoundingClientRect().top + scrollY + s.offsetHeight * .3); });
+      await lp.waitForTimeout(500);
+      const asked = await lp.evaluate(() => Number(getComputedStyle(document.querySelector('.air')).getPropertyValue('--air-reveal')));
+      await lp.evaluate(() => document.querySelector('.signal').removeAttribute('data-air-reveal')); await lp.waitForTimeout(400);
+      const released = await lp.evaluate(() => Number(getComputedStyle(document.querySelector('.air')).getPropertyValue('--air-reveal')));
+      check(asked >= .9 && released === 0, `a section that asks for colour later is seen, and one that stops asking is quiet again (--air-reveal ${asked} while asked, ${released} after)`);
       await lp.evaluate(() => scrollTo(0, 0)); await lp.waitForTimeout(400);
       // The hand: the search never moves, and the page's root is never written to.
       const before = await lp.evaluate(() => JSON.stringify(document.querySelector('.hero .search-box').getBoundingClientRect()));

@@ -8,6 +8,7 @@ interface Props { items: [string, string][]; label: string }
 const { items, label } = Astro.props;
 ---
 <nav class="toc" data-toc aria-label={label}>
+  <div class="toc-plate" aria-hidden="true"><div class="toc-grain" data-grain></div></div>
   <details class="toc-fold" data-toc-fold open>
     <summary><span>{label}</span><span class="toc-current" data-toc-current aria-hidden="true"></span></summary>
     <ol>{items.map(([id, text], index) => <li><a href={`#${id}`} data-toc-link><span>{index + 1}</span>{text}</a></li>)}</ol>
@@ -15,8 +16,18 @@ const { items, label } = Astro.props;
 </nav>
 
 <script>
+  import { followGrain } from '../scripts/grain';
   const toc = document.querySelector<HTMLElement>('[data-toc]');
   if (toc) {
+    // Narrow screens (A9): stuck under the header, the bar continues the header's plate (a copy of
+    // the ground with the page's grain) and the header's feather steps aside for its own.
+    const masthead = document.querySelector<HTMLElement>('[data-masthead]');
+    followGrain(toc);
+    const stick = () => {
+      const top = parseFloat(getComputedStyle(toc).top);
+      const stuck = narrow.matches && scrollY > 0 && Number.isFinite(top) && Math.abs(toc.getBoundingClientRect().top - top) < 1;
+      toc.toggleAttribute('data-stuck', stuck); masthead?.toggleAttribute('data-toc-stuck', stuck);
+    };
     const links = [...toc.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
     const fold = toc.querySelector<HTMLDetailsElement>('[data-toc-fold]')!, current = toc.querySelector<HTMLElement>('[data-toc-current]')!;
     const sections = links.map(a => document.getElementById(a.hash.slice(1))).filter((s): s is HTMLElement => !!s);
@@ -34,7 +45,7 @@ const { items, label } = Astro.props;
     };
     const line = () => (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 96) + 24;
     let raf = 0;
-    const spy = () => { raf = 0; const y = line(); let at = sections[0]; for (const s of sections) if (s.getBoundingClientRect().top <= y) at = s; if (at) mark(at.id); };
+    const spy = () => { raf = 0; stick(); const y = line(); let at = sections[0]; for (const s of sections) if (s.getBoundingClientRect().top <= y) at = s; if (at) mark(at.id); };
     addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(spy); }, { passive: true });
     spy();
     // A click: scroll there (quickly, eased), light the section, set the address, focus the heading.
@@ -60,18 +71,36 @@ const { items, label } = Astro.props;
 
 <style>
   .toc { font-family: var(--text); }
-  .toc summary { list-style: none; cursor: default; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  /* A9: the label, the links and the numbers lie on the open ground (the noise beneath), so they take
+     the ground's inks (site.css; tokens.md: --ink-3 only on surfaces; measured by the site test). */
+  .toc summary { list-style: none; cursor: default; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ground-ink-2); }
   .toc summary::-webkit-details-marker { display: none; }
   .toc-current { display: none; }
   .toc ol { display: grid; gap: 0; margin-top: 10px; border-left: 2px solid var(--line-strong); }
-  .toc a { display: flex; align-items: center; gap: 10px; min-height: var(--target); padding: 4px 0 4px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: var(--size-small); font-weight: 580; color: var(--ink-2); text-decoration: none; transition: color var(--fast), border-color var(--fast); }
+  .toc a { display: flex; align-items: center; gap: 10px; min-height: var(--target); padding: 4px 0 4px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: var(--size-small); font-weight: 580; color: var(--ground-ink-2); text-decoration: none; transition: color var(--fast), border-color var(--fast); }
   .toc a:hover { color: var(--ink); border-left-color: var(--ink); }
   .toc a[aria-current] { color: var(--ink); font-weight: 650; border-left-color: var(--green); }
-  .toc a span { font-size: var(--size-micro); color: var(--ink-3); width: 1.2em; }
+  .toc a span { font-size: var(--size-micro); color: var(--ground-ink-2); width: 1.2em; }
+  .toc-plate { display: none; }
   @media (min-width: 64rem) { .toc { position: sticky; top: calc(var(--header) + 32px); align-self: start; max-height: calc(100svh - var(--header) - 48px); overflow: auto; } }
   /* Narrow screens: a compact fold that sticks under the header; the current section's name shows while folded. */
   @media (max-width: 63.99rem) {
-    .toc { position: sticky; top: var(--header); z-index: 20; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter); background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    /* A9: no fill, no blur and no rule of its own. Stuck under the header it shows a plate that copies
+       the ground (as the header's: the plain wash and the page's grain, aligned with the scroll, the
+       grain's origin at the top of the view), feathered into the page beneath. */
+    .toc { position: sticky; top: var(--header); z-index: 20; isolation: isolate; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter); background: transparent; }
+    .toc-plate { display: block; position: absolute; left: 0; right: 0; top: 0; bottom: calc(-1 * var(--feather)); z-index: -1; overflow: hidden; pointer-events: none; background: var(--wash);
+      -webkit-mask-image: linear-gradient(#000 calc(100% - var(--feather)), transparent); mask-image: linear-gradient(#000 calc(100% - var(--feather)), transparent);
+      opacity: 0; transition: opacity var(--base); }
+    .toc[data-stuck] .toc-plate { opacity: 1; }
+    .toc-grain { position: absolute; left: 0; top: calc(-1 * var(--header)); width: 100%; height: calc(100% + var(--header) + var(--noise-scale)); opacity: var(--noise-opacity); mix-blend-mode: multiply;
+      background: var(--noise-tile) 0 0 / var(--noise-scale) var(--noise-scale) repeat; }
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: scroll()) {
+        .toc-grain { animation: toc-grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-range: 0px var(--grain-range, 100%); animation-iteration-count: var(--grain-turns, 1); }
+      }
+    }
+    @keyframes toc-grain-follow { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--noise-scale))); } }
     .toc summary { display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; }
     .toc summary::after { content: ''; width: 8px; height: 8px; margin-left: auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); transition: transform var(--base) var(--ease); }
     .toc-fold[open] summary::after { transform: rotate(-135deg); }

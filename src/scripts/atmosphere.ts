@@ -217,17 +217,22 @@ export function atmosphere(root: HTMLElement): Field | null {
 }
 
 /* The reveal hook (A9): sections carrying data-air-reveal raise --air-reveal on the atmosphere while
-   they are in view. Nothing is listened to when no section asks for colour. */
+   they are in view. The sections are found again whenever the attribute or the page's content
+   changes, so a section that asks later is seen, and one whose attribute is removed asks for
+   nothing (0). Scroll and resize are listened to only while at least one section asks. */
 export function reveal(root: HTMLElement, field: Field | null) {
-  const asks = [...document.querySelectorAll<HTMLElement>('[data-air-reveal]')];
-  if (!asks.length) return;
-  let raf = 0, last = -1;
-  const peak = (el: HTMLElement) => { const v = el.dataset.airReveal; const n = v === undefined || v.trim() === '' ? 1 : Number(v); return Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 1; };
+  let asks: HTMLElement[] = [], raf = 0, last = 0, listening = false;
+  const peak = (el: HTMLElement) => {
+    const v = el.getAttribute('data-air-reveal');
+    if (v === null) return 0;
+    const n = v.trim() === '' ? 1 : Number(v);
+    return Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 1;
+  };
   const update = () => {
     raf = 0;
     const h = innerHeight;
     let r = 0;
-    for (const el of asks) { const b = el.getBoundingClientRect(); r = Math.max(r, peak(el) * Math.max(0, Math.min(1, Math.min(h - b.top, b.bottom) / h))); }
+    for (const el of asks) { if (!el.isConnected) continue; const b = el.getBoundingClientRect(); r = Math.max(r, peak(el) * Math.max(0, Math.min(1, Math.min(h - b.top, b.bottom) / h))); }
     r = Math.round(r * 1000) / 1000;
     if (r === last) return;
     last = r;
@@ -235,11 +240,19 @@ export function reveal(root: HTMLElement, field: Field | null) {
     field?.reveal(r);
   };
   const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
-  addEventListener('scroll', queue, { passive: true });
-  addEventListener('resize', queue, { passive: true });
-  // A direction may change a section's peak as its own story moves (data-air-reveal is re-read).
-  new MutationObserver(queue).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['data-air-reveal'] });
-  update();
+  const collect = () => {
+    asks = [...document.querySelectorAll<HTMLElement>('[data-air-reveal]')];
+    const want = asks.length > 0;
+    if (want !== listening) {
+      listening = want;
+      if (want) { window.addEventListener('scroll', queue, { passive: true }); window.addEventListener('resize', queue, { passive: true }); }
+      else { window.removeEventListener('scroll', queue); window.removeEventListener('resize', queue); }
+    }
+    queue();
+  };
+  // A direction may add the attribute later, change a section's peak as its story moves, or remove it.
+  new MutationObserver(collect).observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['data-air-reveal'] });
+  collect();
 }
 
 const root = document.querySelector<HTMLElement>('[data-air]');

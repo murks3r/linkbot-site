@@ -134,14 +134,14 @@ const LEVELS: [string, string, string][] = [
   .doc-body section { display: grid; gap: var(--space-head); scroll-margin-top: var(--anchor-top); }
   .doc-body h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem); }
   .doc-body h3 { margin-top: 12px; }
-  .doc-body p { color: var(--ink-2); }
+  .doc-body p { color: var(--ground-ink-2); }
   .doc-body a:not(.link):not(.btn) { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--green-line); }
   .doc-body a:not(.link):not(.btn):hover { text-decoration-color: currentColor; }
-  .step { font-size: var(--size-micro); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3) !important; }
+  .step { font-size: var(--size-micro); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ground-ink-3) !important; }
   .kinds { display: grid; margin: 4px 0 0; border-top: 2px solid var(--ink); }
   .kinds > div { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
   .kinds dt { font-weight: 650; }
-  .kinds dd { margin: 0; color: var(--ink-2); }
+  .kinds dd { margin: 0; color: var(--ground-ink-2); }
   @media (max-width: 36rem) { .kinds > div { grid-template-columns: minmax(0, 1fr); } }
   .table { overflow-x: auto; border: 1px solid var(--line-strong); border-radius: var(--r-3); }
   table { width: 100%; border-collapse: collapse; font-size: var(--size-small); }
@@ -149,13 +149,13 @@ const LEVELS: [string, string, string][] = [
   thead th { font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); background: var(--sand); }
   tbody th { font-weight: 650; white-space: nowrap; }
   tbody tr:last-child > * { border-bottom: 0; }
-  td { color: var(--ink-2); }
+  td { color: var(--ground-ink-2); }
   .marks { display: grid; gap: 0; border-top: 2px solid var(--ink); }
   .marks li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
   .marks li :global(.mark) { position: relative; top: 2px; }
   .marks b { font-weight: 650; }
   .marks p { margin-top: 4px; font-size: var(--size-small); }
-  .plain { display: grid; gap: 8px; padding-left: 1.1em; list-style: disc; color: var(--ink-2); }
+  .plain { display: grid; gap: 8px; padding-left: 1.1em; list-style: disc; color: var(--ground-ink-2); }
   .note { padding: 14px 16px; border-radius: var(--r-2); background: var(--sand); font-size: var(--size-small); }
   .status-line { display: flex; }
   /* Inside the reading column the listing and its reading stack. */

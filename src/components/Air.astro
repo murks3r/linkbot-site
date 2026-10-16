@@ -20,7 +20,8 @@
       L0–L2 only: no word, field, button, card, chip or moving decoration is ever printed by it,
       and no component can drag it into its own stacking context. An image on our own origin, so a
       strict img-src holds.
-   L4 everything else: main and the footer (z --z-content, Base.astro), the header (z 30). */
+   L4 everything else: main and the footer (z --z-content, Base.astro), the header (z 30), whose
+      plate copies L0–L3 under it exactly (the cap below keeps that ground the plain wash). */
 interface Props { mode?: 'living' | 'paper' }
 const { mode = 'paper' } = Astro.props;
 const living = mode === 'living';
@@ -29,11 +30,14 @@ const living = mode === 'living';
   {living && <div class="air-still"></div>}
   {living && <canvas class="air-field" width="32" height="32"></canvas>}
   <div class="air-wash" data-wash></div>
+  <div class="air-cap" data-cap></div>
 </div>
 <div class="noise" data-noise aria-hidden="true"></div>
 
 <style is:global>
-  body { position: relative; }
+  /* The body is the noise's containing block: at least as tall as the view (a short page in a tall
+     window keeps its grain to the bottom of the screen, V1), otherwise as tall as the document. */
+  body { position: relative; min-height: 100vh; min-height: 100lvh; }
   /* L1 + L2: one fixed layer; the wash is its last child, so it lies over the light. */
   .air { position: fixed; inset: 0; z-index: var(--z-air); overflow: hidden; pointer-events: none; background: var(--paper); }
   .air > * { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -66,6 +70,10 @@ const living = mode === 'living';
   .air-field { opacity: 0; transition: opacity 1.2s ease; }
   .air.is-drawn .air-field { opacity: 1; }
   .air-wash { background: var(--wash); opacity: calc(var(--wash-opacity) * (1 - .7 * var(--air-reveal))); }
+  /* The cap (A9 W1 part 2): under the header and its feather the ground is the plain wash, whatever
+     the atmosphere or a reveal does below, so the header's plate (Masthead.astro) is an exact copy
+     of it; the atmosphere returns softly beneath. Fixed with the light, never moved. */
+  .air-cap { background: linear-gradient(var(--wash) var(--cap-solid), transparent calc(var(--cap-solid) + var(--cap-fade))); }
   /* L3: in the page flow (body is its containing block, so it is as tall as the document) and
      scrolling with it. Never fixed, never background-attachment. */
   .noise { position: absolute; inset: 0; z-index: var(--z-noise); pointer-events: none; mix-blend-mode: multiply; opacity: var(--noise-opacity);

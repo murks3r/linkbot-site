@@ -46,7 +46,7 @@ const { title, description, path, crumbs, quietHeader = false, sky = false } = A
     <main id="main" tabindex="-1"><slot /></main>
     <Footer />
     {variants && <Variants />}
-    <script>import '../scripts/stages';</script>
+    <script>import '../scripts/stages'; import '../scripts/transition';</script>
   </body>
 </html>
 <style is:global>
