@@ -33,7 +33,9 @@ const living = mode === 'living';
 <div class="noise" data-noise aria-hidden="true"></div>
 
 <style is:global>
-  body { position: relative; }
+  /* The body is the noise's containing block: at least as tall as the view (a short page in a tall
+     window keeps its grain to the bottom of the screen, V1), otherwise as tall as the document. */
+  body { position: relative; min-height: 100vh; min-height: 100lvh; }
   /* L1 + L2: one fixed layer; the wash is its last child, so it lies over the light. */
   .air { position: fixed; inset: 0; z-index: var(--z-air); overflow: hidden; pointer-events: none; background: var(--paper); }
   .air > * { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }

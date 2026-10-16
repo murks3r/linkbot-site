@@ -353,6 +353,14 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(levels.every(l => l.mean >= 200 && l.dark <= .06), `one bright world from the hero to the invitation (${levels.map(l => `${l.mean.toFixed(0)}/${(l.dark * 100).toFixed(1)}%`).join(', ')})`);
       check(Math.max(...levels.map(l => l.mean)) - Math.min(...levels.map(l => l.mean)) <= 24, 'no chapter jumps to another light level');
       report.brightness = levels.map(l => +l.mean.toFixed(1));
+      // The colour hook (A9, slots.md): a section that asks for colour after load is seen and brings
+      // the colour back while it fills the view; removing its attribute brings the quiet back (V6).
+      await lp.evaluate(() => { const s = document.querySelector('.signal'); s.setAttribute('data-air-reveal', ''); scrollTo(0, s.getBoundingClientRect().top + scrollY + s.offsetHeight * .3); });
+      await lp.waitForTimeout(500);
+      const asked = await lp.evaluate(() => Number(getComputedStyle(document.querySelector('.air')).getPropertyValue('--air-reveal')));
+      await lp.evaluate(() => document.querySelector('.signal').removeAttribute('data-air-reveal')); await lp.waitForTimeout(400);
+      const released = await lp.evaluate(() => Number(getComputedStyle(document.querySelector('.air')).getPropertyValue('--air-reveal')));
+      check(asked >= .9 && released === 0, `a section that asks for colour later is seen, and one that stops asking is quiet again (--air-reveal ${asked} while asked, ${released} after)`);
       await lp.evaluate(() => scrollTo(0, 0)); await lp.waitForTimeout(400);
       // The hand: the search never moves, and the page's root is never written to.
       const before = await lp.evaluate(() => JSON.stringify(document.querySelector('.hero .search-box').getBoundingClientRect()));
