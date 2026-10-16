@@ -4,8 +4,8 @@
    ground, modelled only by one light from the top left and its own soft shadows, never by an
    outline. Colour arrives as glaze, a change of material, and only on what the person turns over.
 
-   Everything here runs in the Astro frontmatter and ships as markup: one hidden <svg> of symbols
-   (defs()) that every station reuses with <use>, so no drawing code reaches the browser. Units: one
+   Everything here runs at build time (export.ts writes one standalone SVG file per object into
+   public/directions/puzzle/), so no drawing code reaches the browser. Units: one
    piece body is 100 × 100; the CSS sizes each object in multiples of the station's piece size --S.
    No meaning is carried by SVG text (there is none): every word in the story is HTML. */
 
@@ -184,7 +184,6 @@ function unmadeDish() {
 }
 
 /** viewBox and size (in piece units) of the dish and the board. */
-export const DISH = { w: 4.2, h: 3, vb: '-60 -60 540 440' };
 export const DISH_SMALL = { w: 3.4, h: 2.5, vb: '-60 -60 460 370' };
 function dish(id: string, W: number, H: number) {
   const r = Math.min(W, H) * .2, rim = Math.min(W, H) * .085, t = 7;
@@ -244,29 +243,30 @@ function board(id: string, role: boolean) {
     <path d="${right}" fill="none" stroke="${C.ink}" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round" opacity=".75"/>`;
 }
 
-/** The hidden sprite every station uses. Shared blur filters first (one set for the whole page). */
-export function defs() {
-  const filters = [['b07', .7], ['b09', .9], ['b10', 1], ['b16', 1.6], ['b18', 1.8], ['b32', 3.2], ['b36', 3.6], ['b4', 4], ['b5', 5], ['b16x', 14]]
-    .map(([n, s]) => blur(`puzzle-${n}`, s as number)).join('');
-  const sym = (id: string, vb: string, body: string) => `<symbol id="puzzle-${id}" viewBox="${vb}" overflow="visible">${body}</symbol>`;
-  const wedges = [
-    'M50 50L-400 -400H500Z', 'M50 50L500 -400V500Z', 'M50 50L500 500H-400Z', 'M50 50L-400 500V-400Z',
-  ].map((d, i) => `<clipPath id="puzzle-w${i}"><path d="${d}"/></clipPath>`).join('');
-  return `<svg class="puzzle-sprite" xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false"><defs>${filters}${wedges}</defs>
-    ${sym('back', pieceVB, pieceBack('puzzle-pb'))}
-    ${sym('glaze', pieceVB, pieceGlaze('puzzle-pg'))}
-    ${sym('glint', pieceVB, pieceGlint('puzzle-pgl'))}
-    ${sym('matte', pieceVB, pieceMatte('puzzle-pm'))}
-    ${sym('blank', pieceVB, blank('puzzle-bl'))}
-    ${sym('shadow-soft', pieceVB, shadowSoft())}
-    ${sym('shadow-contact', pieceVB, shadowContact())}
-    ${sym('outline-yours', pieceVB, outline(false))}
-    ${sym('outline-open', pieceVB, outline(true))}
-    ${sym('unmade', pieceVB, unmade('puzzle-um'))}
-    ${sym('unmade-dish', '-20 -20 340 250', unmadeDish())}
-    ${sym('dish', DISH.vb, dish('puzzle-d', DISH.w * S, DISH.h * S))}
-    ${sym('dish-small', DISH_SMALL.vb, dish('puzzle-ds', DISH_SMALL.w * S, DISH_SMALL.h * S))}
-    ${sym('board-listing', BOARD.vb, board('puzzle-bd', false))}
-    ${sym('board-role', BOARD.vb, board('puzzle-br', true))}
-  </svg>`;
+/** Every object as a standalone SVG file (public/directions/puzzle/<name>.svg, written by
+    export.ts). The stations draw them with <img>: one paint item each, rasterized once and cached,
+    so the page's living atmosphere (which repaints the view about 30 times a second) never has to
+    re-layerize the drawings' many filters and clips (measured: inline <use> symbols cost about
+    twice A8's idle main-thread time inside the story; checks/perf/). */
+const FILTERS = [['b07', .7], ['b09', .9], ['b10', 1], ['b16', 1.6], ['b18', 1.8], ['b32', 3.2], ['b36', 3.6], ['b4', 4], ['b5', 5], ['b16x', 14]] as const;
+export const VIEWBOX: Record<string, string> = {
+  back: pieceVB, glaze: pieceVB, glint: pieceVB, matte: pieceVB, blank: pieceVB, 'shadow-soft': pieceVB, 'shadow-contact': pieceVB,
+  'outline-yours': pieceVB, 'outline-open': pieceVB, unmade: pieceVB, 'unmade-dish': '-20 -20 340 250',
+  'dish-small': DISH_SMALL.vb, 'board-listing': BOARD.vb, 'board-role': BOARD.vb,
+};
+export function files(): Record<string, string> {
+  const bodies: Record<string, string> = {
+    back: pieceBack('pb'), glaze: pieceGlaze('pg'), glint: pieceGlint('pgl'), matte: pieceMatte('pm'), blank: blank('bl'),
+    'shadow-soft': shadowSoft(), 'shadow-contact': shadowContact(), 'outline-yours': outline(false), 'outline-open': outline(true),
+    unmade: unmade('um'), 'unmade-dish': unmadeDish(), 'dish-small': dish('ds', DISH_SMALL.w * S, DISH_SMALL.h * S),
+    'board-listing': board('bd', false), 'board-role': board('br', true),
+  };
+  const out: Record<string, string> = {};
+  for (const [name, body] of Object.entries(bodies)) {
+    const used = FILTERS.filter(([n]) => body.includes(`#puzzle-${n})`));
+    const [, , w, h] = VIEWBOX[name].split(' ');
+    out[name] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VIEWBOX[name]}" width="${w}" height="${h}">`
+      + (used.length ? `<defs>${used.map(([n, sd]) => blur(`puzzle-${n}`, sd)).join('')}</defs>` : '') + body.replace(/\s*\n\s*/g, '') + '</svg>\n';
+  }
+  return out;
 }

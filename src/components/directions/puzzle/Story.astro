@@ -18,7 +18,6 @@
    is simply its end state. Only transform and opacity animate. Nothing here is focusable. */
 import './puzzle.css';
 import Mark from '../../Mark.astro';
-import { defs } from './geometry';
 import { example } from '../../../data/content';
 import record from '../../../data/readings.json';
 
@@ -33,12 +32,15 @@ const WORDS: [string, string, string][] = [
   ['bottom', 'Berlin', 'Place'],           // the bottom notch: the place field
 ];
 
-/** One porcelain object from the sprite (geometry.ts). */
-const obj = (id: string, w: number, h: number) =>
-  `<svg class="puzzle-svg" viewBox="0 0 ${w} ${h}" aria-hidden="true" focusable="false"><use href="#puzzle-${id}" width="${w}" height="${h}"/></svg>`;
+/** One porcelain object: a standalone SVG file drawn at build time (geometry.ts, export.ts), shown
+    as an image, so the browser rasterizes it once and the atmosphere's frames never re-layerize it.
+    Decorative: empty alt; every figure has its text alternative. */
+const obj = (id: string, w: number, h: number, extra = '') =>
+  `<img class="puzzle-svg${extra}" src="/directions/puzzle/${id}.svg" alt="" width="${w}" height="${h}" decoding="async" loading="lazy" />`;
 const piece = (id: string) => obj(id, 180, 190);
-const wedge = (id: string, i: number) =>
-  `<svg class="puzzle-svg" viewBox="0 0 180 190" aria-hidden="true" focusable="false"><g clip-path="url(#puzzle-w${i})" transform="translate(40 40)"><use href="#puzzle-${id}" x="-40" y="-40" width="180" height="190"/></g></svg>`;
+/** S1: one quarter of a piece (the triangle from its middle to one edge, CSS clip-path), so each word
+    can give the piece its own edge by opacity alone. */
+const wedge = (id: string, i: number) => obj(id, 180, 190, ` puzzle-w${i}`);
 
 const STATUS = {
   live: { tone: 'fit' as const, label: 'In the product now' },
@@ -49,8 +51,6 @@ const STATUS = {
 };
 ---
 <section class="puzzle" data-direction="puzzle" data-stage="story" id="story" aria-label="How it works, in five steps">
-  <Fragment set:html={defs()} />
-
   <!-- S1 · Your data stays with you → "Your words give it shape." -->
   <article class="puzzle-st puzzle-s1" data-puzzle-st="1" aria-labelledby="puzzle-s1-title">
     <div class="puzzle-track">

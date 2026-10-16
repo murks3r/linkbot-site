@@ -29,7 +29,12 @@
      clip, not hidden: no scroll container, so the stages still stick to the page. */
   overflow-x: clip;
 }
-.puzzle-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* S1's quarters of a piece: the triangle from the body's middle (50 % across, 90/190 down the image)
+   through two of its corners to beyond the image (the image spans -40…140 × -40…150 piece units). */
+.puzzle-w0 { clip-path: polygon(50% 47.37%, -200% -189.47%, 300% -189.47%); }
+.puzzle-w1 { clip-path: polygon(50% 47.37%, 300% -189.47%, 300% 284.21%); }
+.puzzle-w2 { clip-path: polygon(50% 47.37%, 300% 284.21%, -200% 284.21%); }
+.puzzle-w3 { clip-path: polygon(50% 47.37%, -200% 284.21%, -200% -189.47%); }
 
 /* ── A station: a track (tall when live), its stage, and the plates after it ─────────────────── */
 .puzzle-st { position: relative; --cw: 11.6; --ch: 5.5; --smax: 104px; --run: 100svh; }
@@ -53,7 +58,7 @@
 
 /* Objects, placed in piece units. */
 .puzzle-o { position: absolute; left: calc(var(--x, 0) * var(--S)); top: calc(var(--y, 0) * var(--S)); width: calc(var(--w, 1) * var(--S)); height: calc(var(--h, 1) * var(--S)); }
-.puzzle-svg { position: absolute; display: block; max-width: none; overflow: visible; pointer-events: none; }
+.puzzle-svg { position: absolute; display: block; max-width: none; pointer-events: none; user-select: none; }
 /* A piece-sized layer: body 1 × 1, its drawing reaches .4 beyond (tabs, thickness, shadow). */
 .puzzle-layer, .puzzle-shadow, .puzzle-lifter, .puzzle-flip, .puzzle-face, .puzzle-glint { position: absolute; inset: 0; }
 .puzzle-layer > .puzzle-svg, .puzzle-shadow > .puzzle-svg, .puzzle-face > .puzzle-svg, .puzzle-glint > .puzzle-svg, .puzzle-glyph > .puzzle-svg {
