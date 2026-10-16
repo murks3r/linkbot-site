@@ -56,7 +56,7 @@ import { app, searchWith } from '../lib/links';
   <section class="band start" data-stage="start" data-air-reveal aria-labelledby="start-title">
     <div class="wrap start-inner">
       <h2 id="start-title">Ready when you are.</h2>
-      <p class="start-lede">Search current openings now. No account, no profile, and nobody is told you’re looking.</p>
+      <p class="start-lede">Search current openings now. No account, no profile, and employers aren’t told you’re looking.</p>
       <a class="btn btn-primary start-cta" href={app('#/search')} data-start-cta>Explore jobs<Icon name="arrow" /></a>
       <ul class="start-try" aria-label="Or start from an example">{START_EXAMPLES.map(example => <li><a href={searchWith(example)}>{example}</a></li>)}</ul>
       <p class="start-links"><a class="link" href="/how-it-works">How it works<Icon name="arrow" /></a><a class="link" href="/privacy">How your privacy works<Icon name="arrow" /></a><a class="link" href="/hiring">Hiring?<Icon name="arrow" /></a></p>
