@@ -47,11 +47,12 @@ function serve() {
 function motionRecorder() {
   window.__motion = [];
   const note = (kind, target) => window.__motion.push(`${kind} on ${target?.localName ?? '?'}${target?.classList?.length ? '.' + [...target.classList].join('.') : ''}`);
-  // A9 W1 part 3 (review R4): the plates' grain-follow animations run on the scroll timeline under reduced
-  // motion too. They are not motion: they keep a plate's grain still against the page's grain while the
-  // page scrolls (nothing moves that the scroll does not move). Exempt by name only; any other
-  // animation under reduced motion still fails, and section 2b proves the plates stay aligned.
-  const SCROLL_ALIGNMENTS = new Set(['grain-follow', 'toc-grain-follow']);
+  // A9 W1 part 3 (review R4): the plates' lb-grain-follow (header, On this page) runs on the scroll timeline
+  // under reduced motion too. It is not motion: it keeps a plate's grain still against the page's grain
+  // while the page scrolls (nothing moves that the scroll does not move). Exempt by name only (as in the
+  // app's quality audit, which this test also runs); any other animation under reduced motion still
+  // fails, and section 2b proves the plates stay aligned, settled and while scrolling.
+  const SCROLL_ALIGNMENTS = new Set(['lb-grain-follow']);
   document.addEventListener('animationstart', event => { if (!SCROLL_ALIGNMENTS.has(event.animationName)) note(`animation ${event.animationName}`, event.target); }, true);
   document.addEventListener('transitionrun', event => note(`transition ${event.propertyName}`, event.target), true);
 }
@@ -318,6 +319,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
             return { ...b, ratio: Math.min(c(ls[Math.floor(ls.length * .02)]), c(ls[Math.floor(ls.length * .98)])) };
           }).filter(Boolean);
         }
+        if (job.kind === 'feather') return data.map(im => { const k = im.w / job.cssW, f = strip(im, Math.round(job.f0 * k), Math.round(job.f1 * k)), g = strip(im, Math.round(job.g0 * k), Math.round(job.g1 * k)); return f.t / g.t; });
         if (job.kind === 'grain') { const [im] = data; let e = 0, m = 0; for (let y = Math.max(1, job.y0); y < Math.min(im.h - 1, job.y1); y++) for (let x = 1; x < im.w - 1; x += 2) { let t = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) t += L8(im.d, ((y + dy) * im.w + x + dx) * 4); const q = L8(im.d, (y * im.w + x) * 4) - t / 9; e += q * q; m++; } return Math.sqrt(e / m); }
       }, [bufs.map(b => b.toString('base64')), job]);
       const hideContent = 'main > *, footer > *, .halo { visibility: hidden !important; } .masthead-inner, [data-toc] details { visibility: hidden !important; }';
@@ -352,6 +354,28 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
           report.header = report.header ?? []; report.header.push({ route, width, dpr, y, motion, copy: +seam.copy.toFixed(3), edgeStep: +seam.edgeStep.toFixed(2), edgeRatio: +seam.edgeRatio.toFixed(3), featherStep: +seam.featherStep.toFixed(2), featherRatio: +seam.featherRatio.toFixed(3), minWord: +Math.min(...words.map(w => w.ratio)).toFixed(2) });
           await ctx.close();
         }
+      }
+      // While scrolling (W1 part 3, review R4): the plate's grain moves with the page in every frame, not
+      // only once the scroll has settled. A screencast during a wheel scroll, content and words hidden;
+      // in each frame the texture of the feather's middle against the open ground below it. Aligned
+      // grains keep the ratio near 1; a plate a frame behind the scroll mixes two grains there and the
+      // feather turns smoother (the review measured p10 0.73 and a third of the frames below 0.9 under
+      // reduced motion before the fix; 0.96 and 7 % with motion).
+      for (const motion of ['no-preference', 'reduce']) {
+        const ctx = await browser.newContext({ viewport: { width: 1440, height: HEIGHTS[1440] }, reducedMotion: motion });
+        const pg = await ctx.newPage(); await pg.goto(origin + '/privacy', { waitUntil: 'networkidle' });
+        await pg.addStyleTag({ content: hideContent }); await pg.evaluate(() => scrollTo(0, 400)); await pg.waitForTimeout(500);
+        const geo = await pg.evaluate(() => ({ bottom: document.querySelector('[data-masthead]').getBoundingClientRect().bottom, feather: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--feather')) || 28 }));
+        const cdp = await ctx.newCDPSession(pg), frames = [];
+        cdp.on('Page.screencastFrame', f => { frames.push(f.data); cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }).catch(() => {}); });
+        await cdp.send('Page.startScreencast', { format: 'png', everyNthFrame: 1 }); await pg.waitForTimeout(200);
+        await pg.mouse.move(720, 450); for (let i = 0; i < 30; i++) { await pg.mouse.wheel(0, 120); await pg.waitForTimeout(16); }
+        await pg.waitForTimeout(500); await cdp.send('Page.stopScreencast');
+        const ratios = (await stats(pg, frames.map(f => Buffer.from(f, 'base64')), { kind: 'feather', cssW: 1440, f0: geo.bottom + geo.feather * .35, f1: geo.bottom + geo.feather * .65, g0: geo.bottom + geo.feather + 20, g1: geo.bottom + geo.feather + 60 })).sort((a, z) => a - z);
+        const p10 = ratios[Math.floor(ratios.length * .1)], below = ratios.filter(r => r < .9).length / ratios.length;
+        check(ratios.length >= 20 && p10 >= .85 && below <= .15, `/privacy@1440 ${motion}: while scrolling the plate's grain stays aligned with the page's (${ratios.length} frames, feather texture p10 ${p10?.toFixed(3)}, ${Math.round(below * 100)} % of frames below 0.9)`);
+        report.scrolling = report.scrolling ?? []; report.scrolling.push({ motion, frames: ratios.length, p10: +p10?.toFixed(3), below90: +below.toFixed(3) });
+        await ctx.close();
       }
       // Short pages in tall windows: the noise reaches the bottom of the view (V1).
       for (const [w, h] of [[1440, 1600], [2560, 1440]]) for (const route of ['/imprint', '/privacy-policy', '/does-not-exist']) {
