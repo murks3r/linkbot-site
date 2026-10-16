@@ -29,3 +29,17 @@ test('a preview build carries the density axis and the noise board', { skip: !ex
   const board = readFileSync(new URL('__preview/noise.html', root), 'utf8');
   for (const stage of ['d0', 'd1', 'd2', 'd3']) assert.ok(board.includes(`data-stage-key="${stage}"`), `the board lacks ${stage}`);
 });
+
+/* A9 W1 part 3 (review R9): the badge's alternative lines ("A fit tells no one", "Nobody sees you …")
+   are preview options while counsel's reading is open (founder B, claims.md S2.3). No production page
+   carries them, not even hidden; the default line remains. */
+test('a production build renders only the badge’s default line', { skip: !existsSync(dist) && 'build the site first' }, () => {
+  const root = new URL('../dist/', import.meta.url);
+  let badges = 0;
+  for (const page of ['index.html', 'privacy.html', 'hiring.html', 'how-it-works.html']) {
+    const html = readFileSync(new URL(page, root), 'utf8').toUpperCase();
+    for (const line of ['A FIT TELLS NO ONE', 'NOBODY SEES YOU UNLESS YOU SAY YES']) assert.ok(!html.includes(line), `${page} carries “${line}”`);
+    if (html.includes('YOUR WORDS. YOUR DATA. YOUR CALL.')) badges++;
+  }
+  assert.ok(badges > 0, 'no page carries the badge’s default line');
+});

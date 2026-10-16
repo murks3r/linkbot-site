@@ -93,7 +93,9 @@ const v = (name: string, at?: At) => (at ? `--o-${name}: ${at[0]}px; --y-${name}
     background: var(--surface);
     box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 0 0 1px rgb(18 58 44 / .16), 0 12px 26px -14px rgb(18 58 44 / .38), 0 2px 4px -2px rgb(18 58 44 / .2);
     font-size: 1rem; font-weight: 620; letter-spacing: -.005em; color: var(--ink); }
-  .halo-chip small { padding-left: 10px; border-left: 1px solid var(--line-strong); font-size: .8125rem; font-weight: 600; color: var(--ink-2); }
+  /* A9 (W1 part 3, review R10): the chips float at 60–100 % opacity over the noise, so their level is
+     set in full ink (ink-2 fell to 4.34:1 at the darkest specks); it steps back by size and the rule. */
+  .halo-chip small { padding-left: 10px; border-left: 1px solid var(--line-strong); font-size: .8125rem; font-weight: 600; color: var(--ink); }
   .halo-chip[data-level='must'] i { background: var(--green); color: var(--on-green); box-shadow: 0 0 0 1px var(--green), 0 12px 26px -14px rgb(18 58 44 / .5); }
   .halo-chip[data-level='must'] small { color: var(--on-green-2); border-left-color: var(--green-rule); }
   @media (prefers-reduced-motion: no-preference) {

@@ -91,6 +91,12 @@ const STAGES: Stage[] = [
   .nb-sample :global(.search) { max-width: none; grid-template-columns: minmax(0, 1fr); }
   .nb-sample :global(.search-box) { min-width: 0; }
   .nb-sample :global(.search-label) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  /* Four panels in a row (W1 part 3, review R13): the action shows its arrow alone (its word stays its
+     accessible name), so the example reads in full in the narrow field. */
+  @media (min-width: 80.01rem) {
+    .nb-sample :global(.search .btn) { padding: 0 16px; }
+    .nb-sample :global(.search .btn > span) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  }
   .nb-chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .nb-card .card-body { display: grid; gap: 6px; font-size: var(--size-small); }
   .nb-quiet { color: var(--ink-2); }
