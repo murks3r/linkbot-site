@@ -1,0 +1,111 @@
+---
+/* The noise board (Concept A9, W1 part 2; founder A3: "Zeig mir zwei bis drei Dichtestufen
+   nebeneinander; die Dichte wird ein Token"), preview only: /__preview/noise. It exists in a build
+   only when PUBLIC_PREVIEW_VARIANTS=1 (getStaticPaths returns no route otherwise), so production
+   never carries it.
+
+   The four stages side by side, each on the real ground of a page (the paper with the wash over it,
+   exactly as every subpage lies on it) and with the real components above the noise: a headline,
+   text in the inks, the search field, criteria chips and a card. Each panel is a copy of that ground
+   with its own tile, the way the header's plate copies the page's (Masthead.astro), so the four can be
+   compared at once; the page around them carries the switcher's current stage. The figures are the
+   fundament's (fundament-v0/noise/stages.json, contrast-under-noise.txt) and the ink audit of W1. */
+import Base from '../../layouts/Base.astro';
+import SearchForm from '../../components/SearchForm.astro';
+export function getStaticPaths() { return import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1' ? [{ params: { preview: '__preview' } }] : []; }
+type Stage = { key: string; name: string; note: string; tile: string; made: string; mean: number; gt8: number; gt24: number; kb: number; ink: string; ink2: string; ink3: string };
+const STAGES: Stage[] = [
+  { key: 'd0', name: 'd0 · A7 paper', note: 'what A7 and A8 shipped', tile: '/material/paper.webp', made: 'paper 008 alone', mean: 7.75, gt8: 35, gt24: 9, kb: 172, ink: '11.08 / 8.78 / 7.31', ink2: '6.94 / 5.50 / 4.58', ink3: '5.13 / 4.07 / 3.38' },
+  { key: 'd1', name: 'd1 · light', note: 'denser than A7, still quiet', tile: '/material/noise-d1-light.webp', made: 'paper 008 × grain 011 at .55', mean: 14.31, gt8: 66, gt24: 17, kb: 187, ink: '10.33 / 8.30 / 6.95', ink2: '6.47 / 5.20 / 4.35', ink3: '4.79 / 3.84 / 3.22' },
+  { key: 'd2', name: 'd2 · medium', note: 'the A9 default (the token today)', tile: '/material/noise-d2-medium.webp', made: 'paper 008 × grain 009 at .60', mean: 17.86, gt8: 79, gt24: 26, kb: 200, ink: '9.98 / 7.91 / 6.54', ink2: '6.25 / 4.95 / 4.09', ink3: '4.62 / 3.66 / 3.03' },
+  { key: 'd3', name: 'd3 · dense', note: 'the most material', tile: '/material/noise-d3-dense.webp', made: 'paper 008 × grain 003 at .60', mean: 19.27, gt8: 73, gt24: 33, kb: 214, ink: '9.89 / 7.46 / 5.94', ink2: '6.19 / 4.67 / 3.72', ink3: '4.58 / 3.45 / 2.75' },
+];
+---
+<Base title="Noise density · Linkbot preview" description="Concept A9’s noise board: the four density stages side by side on the real ground, with the real components above the noise. Preview only." path="/__preview/noise">
+  <article class="nb">
+    <header class="nb-head wrap">
+      <p class="eyebrow">Preview only · Concept A9 · founder A3</p>
+      <h1>Noise density</h1>
+      <p class="lede">Four stages of the same paper grain, side by side on the ground every page lies on, with the real field, chips, card and text above the noise. The density is one token: <code>--noise-tile</code> picks the stage, <code>--noise-opacity</code> and <code>--noise-scale</code> (one texel per device pixel) stay as they are. The switcher (bottom right, “Noise density”) puts any stage on every page; the page around these panels shows the switcher’s current one.</p>
+    </header>
+
+    <section class="wrap" aria-labelledby="nb-stages-h">
+      <h2 id="nb-stages-h" class="sr">The four stages</h2>
+      <div class="nb-grid">
+        {STAGES.map(stage => <figure class="nb-panel" data-stage-key={stage.key} style={`--panel-tile: url('${stage.tile}')`} aria-labelledby={`nb-${stage.key}`}>
+          <div class="nb-ground" aria-hidden="true"><div class="nb-grain"></div></div>
+          <figcaption class="nb-label"><b id={`nb-${stage.key}`}>{stage.name}</b><span>{stage.note}</span></figcaption>
+          <div class="nb-sample">
+            <p class="nb-headline">Find work that fits.</p>
+            <p class="nb-text">Say what matters in a few words. Linkbot reads current listings against them and shows why each one fits, or doesn’t.</p>
+            <SearchForm id={`q-${stage.key}`} size="hero" label={`Search, on ${stage.name}`} placeholder="Designer" />
+            <ul class="nb-chips" aria-label="Criteria"><li class="chip" data-level="must">Remote<small>Must</small></li><li class="chip">Berlin<small>Prefer</small></li></ul>
+            <div class="card nb-card"><p class="card-label">What you see</p><div class="card-body"><p>Your search, your fits, what you saved.</p><p class="nb-quiet">Secondary text on a surface, in ink-2.</p></div></div>
+            <p class="nb-ink2">Ink-2 on the open ground would fall to {stage.ink2.split(' / ')[2]}:1 on the darkest specks, so text here is in ink.</p>
+          </div>
+          <dl class="nb-figures">
+            <div><dt>Made of</dt><dd>{stage.made}</dd></div>
+            <div><dt>Mean darkness</dt><dd>{stage.mean} of 255</dd></div>
+            <div><dt>Pixels darker by &gt; 8 / &gt; 24 levels</dt><dd>{stage.gt8} % / {stage.gt24} %</dd></div>
+            <div><dt>Tile (WebP, 1024 px)</dt><dd>{stage.kb} KB</dd></div>
+            <div><dt>Contrast, ink / ink-2 / ink-3 (median · 95th · 99.5th percentile)</dt><dd>{stage.ink}<br />{stage.ink2}<br />{stage.ink3}</dd></div>
+          </dl>
+          <p class="nb-open"><a class="link" href={`/?density=${stage.key}`}>The home with {stage.key}</a> · <a class="link" href={`/privacy?density=${stage.key}`}>a subpage</a></p>
+        </figure>)}
+      </div>
+    </section>
+
+    <section class="wrap nb-notes" aria-labelledby="nb-notes-h">
+      <h2 id="nb-notes-h">What the stages mean for the page</h2>
+      <ul class="plain">
+        <li>Every stage lies behind everything (founder A2): no field, chip, card or word is printed by it, and it scrolls with the content (A1). The header’s plate carries the same tile, so the header stays seamless at every stage.</li>
+        <li>Text on the open ground is set in --ink at every stage (W1’s ink audit: with d2 beneath, --ink-2 small text measured 3.97–4.7:1 against the darkest 2 % of its background, --ink 6.07:1 or more). At d0 and d1 --ink-2 would come closer to 4.5:1, but not safely; --ink-2 and --ink-3 stay for large text and for text on surfaces.</li>
+        <li>Recommendation, the founder decides: d2 (the token today). d3 adds more dark specks (33 % of pixels darker by more than 24 levels) for 14 KB more; d1 is the quieter step up from A7.</li>
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .nb { padding-block: clamp(32px, 5vw, 72px) var(--space-section); display: grid; gap: var(--space-block); }
+  .nb-head { display: grid; gap: var(--space-head); }
+  .nb-head h1 { font-size: var(--size-h2); }
+  .nb-head code { font-size: .9em; }
+  .nb-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.6vw, 24px); }
+  @media (max-width: 80rem) { .nb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 45rem) { .nb-grid { grid-template-columns: minmax(0, 1fr); } }
+  /* A panel is a copy of the subpage ground (the paper with the wash over it) with its own tile,
+     multiplied inside the panel's own group: the A8 lesson, the same as the header's plate. */
+  .nb-panel { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 18px; min-width: 0; margin: 0; padding: 18px clamp(14px, 1.4vw, 20px) 20px; }
+  /* The copy of the ground carries its own colour: the grain must multiply with an opaque backdrop
+     inside this group (a group with nothing in it blends with nothing and shows the bare tile). */
+  .nb-ground { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: color-mix(in srgb, var(--wash) calc(var(--wash-opacity) * 100%), var(--paper)); }
+  .nb-grain { position: absolute; inset: 0; mix-blend-mode: multiply; opacity: var(--noise-opacity); background: var(--panel-tile) 0 0 / var(--noise-scale) var(--noise-scale) repeat; }
+  html[data-v-density='d0'] .nb-panel[data-stage-key='d0'], html[data-v-density='d1'] .nb-panel[data-stage-key='d1'], html[data-v-density='d2'] .nb-panel[data-stage-key='d2'], html[data-v-density='d3'] .nb-panel[data-stage-key='d3'] { box-shadow: 0 0 0 2px var(--green); }
+  .nb-label { display: grid; gap: 2px; padding-bottom: 12px; border-bottom: 1px solid var(--line-strong); }
+  .nb-label b { font-family: var(--display); font-size: 1.375rem; font-weight: 560; letter-spacing: -.02em; }
+  .nb-label span { font-size: var(--size-small); color: var(--ground-ink-2); }
+  .nb-sample { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; min-width: 0; }
+  .nb-headline { font-family: var(--display); font-stretch: 102%; font-size: clamp(1.6rem, 1.2rem + 1vw, 2.1rem); font-weight: 560; letter-spacing: -.034em; line-height: 1.04; }
+  .nb-text { font-size: var(--size-small); color: var(--ground-ink-2); }
+  .nb-sample :global(.search) { max-width: none; grid-template-columns: minmax(0, 1fr); }
+  .nb-sample :global(.search-box) { min-width: 0; }
+  .nb-sample :global(.search-label) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  /* Four panels in a row (W1 part 3, review R13): the action shows its arrow alone (its word stays its
+     accessible name), so the example reads in full in the narrow field. */
+  @media (min-width: 80.01rem) {
+    .nb-sample :global(.search .btn) { padding: 0 16px; }
+    .nb-sample :global(.search .btn > span) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  }
+  .nb-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .nb-card .card-body { display: grid; gap: 6px; font-size: var(--size-small); }
+  .nb-quiet { color: var(--ink-2); }
+  .nb-ink2 { font-size: var(--size-micro); font-weight: 600; color: var(--ink); }
+  .nb-figures { display: grid; gap: 0; margin: 0; font-size: var(--size-micro); }
+  .nb-figures > div { display: grid; gap: 2px; padding: 8px 0; border-top: 1px solid var(--line); }
+  .nb-figures dt { font-weight: 650; color: var(--ground-ink-3); }
+  .nb-figures dd { margin: 0; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .nb-open { font-size: var(--size-small); }
+  .nb-notes { display: grid; gap: var(--space-head); max-width: calc(var(--measure) + 2 * var(--gutter)); }
+  .plain { display: grid; gap: 8px; padding-left: 1.1em; list-style: disc; color: var(--ground-ink-2); }
+</style>

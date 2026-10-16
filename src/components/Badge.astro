@@ -9,12 +9,15 @@
 interface Props { size?: number; class?: string }
 const { size = 168, class: cls } = Astro.props;
 const LINES: Record<string, string> = { yours: 'Your words. Your data. Your call.', sees: 'Nobody sees you unless you say yes.', fit: 'A fit tells no one.' };
+/* A9 (W1 part 3, review R9): the alternatives are preview options; a production build renders the
+   approved default alone, so no page carries the others even hidden (claims.md S2.3, founder B). */
+const shown: [string, string][] = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1' ? Object.entries(LINES) : [['yours', LINES.yours]];
 const r = 50 - 9;
 ---
 <span class:list={['badge', cls]} data-badge style={`--badge-size: ${size}px`} role="img" aria-label={LINES.yours}>
   <svg class="badge-ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
     <defs><path id="badge-path" d={`M50,50 m-${r},0 a${r},${r} 0 1,1 ${2 * r},0 a${r},${r} 0 1,1 -${2 * r},0`} /></defs>
-    {Object.entries(LINES).map(([key, line]) => <text class="badge-text" data-line={key}><textPath href="#badge-path" startOffset="0" textLength="252" lengthAdjust="spacing">{line.toUpperCase()}&nbsp;&nbsp;·&nbsp;&nbsp;</textPath></text>)}
+    {shown.map(([key, line]) => <text class="badge-text" data-line={key}><textPath href="#badge-path" startOffset="0" textLength="252" lengthAdjust="spacing">{line.toUpperCase()}&nbsp;&nbsp;·&nbsp;&nbsp;</textPath></text>)}
   </svg>
   <svg class="badge-lock" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="10.5" width="14" height="10" rx="2.2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /><circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none" /></svg>
 </span>

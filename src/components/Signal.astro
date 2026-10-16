@@ -198,7 +198,7 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
   .chip-hard { opacity: 0; }
   .sg-list { display: grid; gap: 8px; width: 100%; }
   .sg-card { display: grid; gap: 4px; padding: 11px 16px; border-radius: 14px;
-    background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
+    background: var(--surface);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 1px rgb(18 58 44 / .14), 0 12px 26px -18px rgb(18 58 44 / .4); }
   .sg-card[data-hidden] { display: none; }
   .sg-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 12px; }
@@ -216,7 +216,7 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
   .sg-coverage { display: flex; gap: 8px; align-items: baseline; padding-top: 6px; font-size: var(--size-micro); color: var(--ink-2); }
   .sg-hidden { display: flex; gap: 8px; align-items: baseline; justify-self: start; padding: 7px 12px; border: 1px dashed var(--line-ink); border-radius: var(--r-2); background: var(--surface); font-size: var(--size-micro); color: var(--ink-2); }
   .sg-hidden :global(.mark), .sg-tag :global(.mark), .sg-coverage :global(.mark) { flex: none; transform: translateY(1px); }
-  .sg-legend { font-size: var(--size-micro); color: var(--ink-2); text-align: center; }
+  .sg-legend { font-size: var(--size-micro); color: var(--ground-ink-2); text-align: center; }
   /* Statically, the Must is set. */
   :global(html:not(.js)) .chip[data-must], .signal:not(.is-live) .chip[data-must] { background: var(--green); border-color: var(--green); color: var(--on-green); }
   :global(html:not(.js)) .chip[data-must] small, .signal:not(.is-live) .chip[data-must] small { color: var(--on-green-2); border-left-color: var(--green-rule); }
@@ -240,7 +240,7 @@ const WHY: { ask: string; level: string; tone: 'fit' | 'unknown'; says: string; 
   :global(.js) .signal.is-live:not([data-beat='1']):not([data-beat='2']):not([data-beat='3']) .sg-noise { display: none; }
   :global(.js) .signal.is-live .sg-ghost { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity; }
   :global(.js) .signal.is-live .sg-ghost i { display: inline-flex; align-items: baseline; gap: 10px; padding: 10px 15px; border-radius: 14px; font-style: normal; white-space: nowrap;
-    background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
+    background: var(--surface);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 1px rgb(18 58 44 / .12), 0 14px 28px -16px rgb(18 58 44 / .38);
     font-size: .9375rem; font-weight: 620; color: var(--ink); animation: sg-breathe var(--d) ease-in-out var(--dl) infinite alternate; animation-play-state: paused; }
   :global(.js) .signal.is-live .sg-ghost small { font-size: .8125rem; font-weight: 560; color: var(--ink-2); }

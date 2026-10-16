@@ -6,40 +6,78 @@ const { current, quiet = false } = Astro.props;
 const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy', 'Privacy'], ['/hiring', 'Hiring']];
 ---
 <header class="masthead" data-masthead data-quiet={quiet ? '' : undefined}>
+  <div class="masthead-plate" aria-hidden="true"><div class="masthead-grain" data-grain></div></div>
   <div class="wrap masthead-inner">
     <a class="brand" href="/">Linkbot</a>
     <nav class="nav" aria-label="Main">
       {NAV.map(([href, label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
     </nav>
     <a class="btn btn-primary masthead-cta" data-size="sm" href={app('#/search')}>Search jobs</a>
+    <a class="masthead-signin" href={app('#/saved')}>Sign in</a>
     <details class="menu" data-menu>
       <summary><span>Menu</span><Icon name="down" /></summary>
       <nav class="menu-panel" aria-label="Main">
         {NAV.map(([href, label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
         <a href={app('#/saved')}>My radar</a>
+        <span class="menu-rule" aria-hidden="true"></span>
+        <a href={app('#/saved')}>Sign in</a>
       </nav>
     </details>
   </div>
 </header>
 
 <style>
-  /* A8: the bar is seamless. It has no fill of its own, so the page's ground (the paper colour or
-     the living light) runs through it unchanged, and the paper layer prints over it as over
-     everything else. While content passes beneath, only a blur, never a tint, keeps the words
-     readable. No rule marks its edge. */
+  /* A9 (founder A2; evidence header.md): the bar is seamless at the top and while scrolling, and its
+     words stay legible over whatever passes beneath. At the top it has no fill: the ground runs
+     through it. Scrolled, a plate fades in that is a copy of the ground itself: the plain wash
+     (under the header the ground is exactly that, Air.astro's cap) and the page's own noise tile,
+     shifted with the scroll so its grain continues the page's texel for texel. The plate hides the
+     content beneath the words and feathers into the page over --feather, so content fades out as it
+     passes under, and there is no edge: no rule, no tint, no blur. The grain multiplies with the
+     plate inside the plate's own group (the A8 lesson: a multiply needs an opaque backdrop in its
+     own stacking context, or it blends with nothing and paints white). */
   .masthead { position: sticky; top: 0; z-index: 30; background: transparent; }
-  .masthead::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); opacity: 0; transition: opacity var(--base); }
-  .masthead[data-scrolled]::before { opacity: 1; }
+  .masthead-plate { position: absolute; left: 0; right: 0; top: 0; bottom: calc(-1 * var(--feather)); z-index: -1; overflow: hidden; pointer-events: none; background: var(--wash);
+    -webkit-mask-image: linear-gradient(#000 calc(100% - var(--feather)), transparent); mask-image: linear-gradient(#000 calc(100% - var(--feather)), transparent);
+    opacity: 0; transition: opacity var(--base); }
+  .masthead[data-scrolled] .masthead-plate { opacity: 1; }
+  /* On a narrow subpage the "On this page" bar sticks right under the header and continues the plate
+     itself (Toc.astro), so the header's own feather steps aside for it. */
+  .masthead[data-toc-stuck] { --feather: 0px; }
+  /* While a scene's stage is pinned under the header nothing passes beneath it (the stage clips its
+     own content at the same line), so the feather would only veil the stage's top (stages.ts). */
+  .masthead[data-stage-pinned] { --feather: 0px; }
+  .masthead-grain { position: absolute; left: 0; top: 0; width: 100%; height: calc(100% + var(--noise-scale)); opacity: var(--noise-opacity); mix-blend-mode: multiply;
+    background: var(--noise-tile) 0 0 / var(--noise-scale) var(--noise-scale) repeat; }
+  /* The grain follows the scroll on the compositor where scroll-driven animations exist: one turn per
+     tile height, --grain-turns turns over the page's whole scroll range (written by the script below
+     when the page's height changes), so the shift is always -(scrollY mod tile). Elsewhere the script
+     writes the same shift on scroll. Also under reduced motion (W1 part 3, review R4): this is not
+     motion. It holds the plate's grain still against the page's grain while the page scrolls, so
+     nothing moves that the scroll itself does not move; the script path ran one frame behind the
+     scroll there and showed a smoother band at the header's edge while scrolling. */
+  @supports (animation-timeline: scroll()) {
+    .masthead-grain { animation: lb-grain-follow linear both; animation-duration: auto; animation-timeline: scroll(root block); animation-range: 0px var(--grain-range, 100%); animation-iteration-count: var(--grain-turns, 1); }
+  }
+  @media (forced-colors: active) { .masthead-plate { display: none; } }
   /* Home: nothing in the header competes with the hero's search. The action keeps its box (nothing
      moves) and is quiet text until the hero's search has scrolled away. */
-  .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta { background: transparent; color: var(--ink-2); }
+  .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta { background: transparent; color: var(--ground-ink-2); }
   .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 4px; }
   .masthead-cta { transition: background-color var(--base) var(--ease), color var(--base); }
+  /* One header for site and app (W1 part 3, review R6): Search Jobs' header carries the session, so the
+     site's carries the same Sign in in the same place and the same shape (an outlined pill 12 px after
+     the action; in the Menu on phones). Here it opens My radar, which asks to sign in. */
+  .masthead-signin { flex: none; display: inline-flex; align-items: center; min-height: var(--target); margin-left: calc(12px - clamp(20px, 3vw, 44px)); padding: 0 18px; border: 1px solid var(--line-ink); border-radius: var(--pill);
+    font-size: var(--size-small); font-weight: 620; line-height: 1; color: var(--ink); text-decoration: none; white-space: nowrap; transition: background var(--fast), border-color var(--fast); }
+  .masthead-signin:hover { background: var(--green-wash); border-color: var(--green); }
+  .menu-rule { height: 1px; margin: 6px 4px; background: var(--line); }
   .masthead-inner { display: flex; align-items: center; gap: 12px clamp(20px, 3vw, 44px); min-height: 72px; }
   .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-stretch: 112%; font-size: 1.5rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; text-decoration: none; color: var(--ink); }
   .nav { display: flex; gap: 4px clamp(20px, 2.6vw, 36px); margin-left: auto; }
-  .nav a { position: relative; display: inline-flex; align-items: center; min-height: var(--target); font-size: var(--size-small); font-weight: 560; color: var(--ink-2); text-decoration: none; transition: color var(--fast); }
-  .nav a:hover { color: var(--ink); }
+  /* Every destination is a 44 px target both ways (W1 part 3: "Hiring" alone is narrower), as in Search Jobs. */
+  .nav a { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: var(--target); min-height: var(--target); font-size: var(--size-small); font-weight: 560; color: var(--ground-ink-2); text-decoration: none; transition: color var(--fast), text-decoration-color var(--fast); }
+  .nav a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 6px; }
   .nav a[aria-current='page'] { color: var(--ink); font-weight: 650; }
   .nav a[aria-current='page']::after { content: ''; position: absolute; left: 0; right: 0; bottom: 8px; height: 1.5px; background: var(--green); }
   .menu { display: none; position: relative; }
@@ -54,7 +92,7 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
   .menu-panel a[aria-current='page'] { background: var(--green-wash); font-weight: 650; }
   @media (max-width: 52rem) {
     .masthead-inner { min-height: 64px; }
-    .nav { display: none; }
+    .nav, .masthead-signin { display: none; }
     .masthead-cta { margin-left: auto; }
     .menu { display: block; }
   }
@@ -67,13 +105,15 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
 </style>
 
 <script>
+  import { followGrain } from '../scripts/grain';
   const masthead = document.querySelector<HTMLElement>('[data-masthead]');
   const menu = document.querySelector<HTMLDetailsElement>('[data-menu]');
   if (masthead) {
-    // Scrolled, the bar blurs what passes beneath it.
+    // Scrolled, the plate (a copy of the ground) hides what passes beneath the words.
     const update = () => masthead.toggleAttribute('data-scrolled', window.scrollY > 8);
     update();
     addEventListener('scroll', update, { passive: true });
+    followGrain(masthead);
     const hero = document.querySelector('[data-hero-search]');
     if (masthead.hasAttribute('data-quiet') && hero && 'IntersectionObserver' in window)
       new IntersectionObserver(([entry]) => masthead.toggleAttribute('data-hero-gone', !entry.isIntersecting)).observe(hero);

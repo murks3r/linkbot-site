@@ -27,14 +27,19 @@ explains; the app executes. Concept A6 ("focus") — draft, not published.
   readings recorded from the app's own interpreter, with the commit that produced them:
   `npx tsx tools/site/readings.ts > <site>/src/data/readings.json` (run in the app).
 - **One vocabulary.** Levels, evidence words and reasons come from the app's copy (`src/data/content.ts`).
-- **The atmosphere** (`src/components/Air.astro`, `src/scripts/atmosphere.ts`): the palette's
-  seven proven pigments as a slow, domain-warped field of light drawn by WebGL into a small
-  canvas, mixed with the paper in linear light (no pixel darker than the darkest pigment). It
-  moves on its own, parts around a mouse pointer, and drifts with the page; at most 30 frames a
-  second, nothing while the tab is hidden or a deep band covers it, one still frame under reduced
-  motion, still gradients without WebGL or scripts. It writes no style anywhere. Every page has
-  the paper's grain: fractal noise drawn by an inline SVG pattern (no image is loaded), finer on
-  dense screens, blended with soft-light.
+- **The ground's layers** (Concept A9; `src/components/Air.astro`, tokens in `src/styles/site.css`),
+  bottom to top: L0 the paper colour; L1 the atmosphere (home only, `src/scripts/atmosphere.ts`):
+  the palette's seven proven pigments, desaturated to `--air-saturation` in linear light around
+  each pigment's own luminance, as a slow, domain-warped field of light drawn by WebGL into a small
+  canvas (at most 30 frames a second, nothing while the tab is hidden, one still frame under reduced
+  motion, still gradients without WebGL or scripts); L2 a wash (`--wash`, `--wash-opacity`) that a
+  section thins by carrying `data-air-reveal` (the script raises `--air-reveal` on the atmosphere
+  alone); L3 the noise: a paper grain tile (`--noise-tile`, density stages d0–d3 in
+  `public/material/`, d2 by default) printed with multiply, one element in the page flow as tall as
+  the document, so it scrolls with the content; L4 everything that carries words (main, the footer,
+  the header) above it, never printed by it. The tiles are processed derivatives of the founder's
+  Resource Boy noise textures (royalty-free, modification and web use allowed, no attribution
+  required; the pack files themselves never enter a repository).
 - **The scenes** (`src/components/Clarity.astro`, `Glass.astro`) are pinned stages driven by
   `src/scripts/stages.ts`: one number per scene (`--p`) and one eased value per beat (`--b1` …)
   are written on the stage from the scroll position, and CSS derives every illustration, so each

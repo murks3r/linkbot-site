@@ -6,11 +6,11 @@
    fingerprint inked in the corner (you: your identity). Right, an employer's side: frosted glass
    with nothing on it. Three beats, each motion a fact of the product:
    1. what you see is yours: your search, your fits, what you saved; the other side is empty;
-   2. a fit tells no one: a new fit arrives on your side (the rows make room for it); on theirs
+   2. a fit is not a disclosure: a new fit arrives on your side (the rows make room for it); on theirs
       only a line arrives: no message when something fits (finding is not sharing, and it is not
       applying);
-   3. you decide what is shared, and with whom: three chosen details slide out from under your
-      card, across, into theirs, for one named recipient; your fingerprint stays on your side and
+   3. sharing is a separate decision you confirm (shown here: once, for one named recipient): three
+      chosen details slide out from under your card, across, into theirs; your fingerprint stays on your side and
       theirs shows an empty slot where it would be (no name, no contact details); a receipt
       appears on your side.
    The states and their status are the product's own: searching without an account, saving and
@@ -25,8 +25,8 @@ const FITS = ['Senior product designer, health app', 'Product designer, research
 const SHARED: [string, string][] = [['Work mode', 'Hybrid'], ['Location', 'Lisbon'], ['Skills', 'Research, prototyping']];
 const CAPTIONS: [string, string][] = [
   ['What you see is yours.', 'Search without an account and nothing is kept. With one, your saved openings and watched searches are there for you, not for employers.'],
-  ['A fit tells no one.', 'Linkbot can find that an opening fits you without telling the employer. Fitting is not sharing, and it is not applying.'],
-  ['You decide what is shared, and with whom.', 'Choose details for one named recipient, once or by a rule you set. Your name and contact details stay with you, and every share leaves a receipt.'],
+  ['A fit is not a disclosure.', 'Linkbot can find that an opening fits you without telling the employer. Fitting is not sharing, and it is not applying.'],
+  ['Sharing is a separate decision.', 'You confirm it: once, for one named recipient, or by a standing rule you set. Names and contact details are not part of an application, and every share leaves a receipt.'],
 ];
 ---
 <section class="scene yours" data-scene data-air-calm data-beats="0:.28,.34:.62,.68:1" style="--beats: 3; --beat: 95svh" aria-labelledby="yours-caption-1">
@@ -102,7 +102,12 @@ const CAPTIONS: [string, string][] = [
   .yours .captions small { max-width: 36em; margin-inline: auto; }
   .yours-figure { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px clamp(32px, 6vw, 96px); width: min(100%, 64rem); margin-inline: auto; --stacked: 0; }
   .yr-card { position: relative; display: grid; align-content: start; gap: 14px; min-height: 22rem; padding: 24px 26px; border-radius: 24px; overflow: hidden; }
-  .yr-you { background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
+  /* A9: your side is a clean surface, theirs frosted glass over the blurred ground; the page's
+     noise lies behind both, never on them. */
+  /* Its own group (A9): the fingerprint's multiply blends inside the card. Without it the nearest
+     group would be main, and an isolated main cuts the frosted card's backdrop off from the ground
+     (measured: the employer's side then showed the unblurred noise). */
+  .yr-you { isolation: isolate; background: var(--surface);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), 0 0 0 1px rgb(18 58 44 / .14), 0 28px 56px -32px rgb(18 58 44 / .45); }
   /* Your fingerprint: you. Inked in the corner of your side, and only there (its own layer clips
      it to the card, so the card's content never overflows). */
@@ -135,7 +140,7 @@ const CAPTIONS: [string, string][] = [
   .yr-slot { position: relative; flex: none; display: grid; width: 30px; height: 38px; border: 1.5px dashed var(--line-ink); border-radius: 50% / 44%; overflow: hidden; }
   .yr-slot i { background: url('/material/print.webp') center / 88% auto no-repeat; opacity: .12; }
   .yr-travel { display: none; }
-  .yr-legend { grid-column: 1 / -1; max-width: 44em; margin-inline: auto; font-size: var(--size-micro); color: var(--ink-2); text-align: center; }
+  .yr-legend { grid-column: 1 / -1; max-width: 44em; margin-inline: auto; font-size: var(--size-micro); color: var(--ground-ink-2); text-align: center; }
   @media (max-width: 52rem) {
     .yours-figure { grid-template-columns: minmax(0, 1fr); --stacked: 1; }
     .yr-card { min-height: 0; padding: 18px 20px; }
