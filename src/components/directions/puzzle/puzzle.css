@@ -1,0 +1,349 @@
+/* Concept A9 · W5 · direction `puzzle`: the stations' layout, end states and motion.
+
+   Every selector is under [data-direction='puzzle'] or a puzzle- class, so the direction can sit
+   in one build with the others. Every station is composed in units of one piece, --S, so a single
+   number scales a whole picture: --S is the largest piece the station's figure can hold (container
+   units of the figure, capped by --smax). Two compositions: wide (dish left, board right) and, on
+   phones, tall (dish above, board below).
+
+   The default CSS is each station's END state: what a browser without scripts, a visitor who
+   prefers reduced motion, or a screen too small for the stage sees. Motion exists only on a
+   station that puzzle.ts marks live (data-puzzle-live): then its track becomes tall, its stage
+   sticks under the header (a layout only: the page scrolls natively), and each moving object
+   plays its keyframes against the station's own scroll timeline: `css` = a CSS view timeline on
+   the track (compositor-driven where the browser can), `js` = the same keyframes, paused, at a
+   negative delay read from --puzzle-p (written on the track by puzzle.ts from the scroll
+   position). Keyframes span the whole pin (0 % = the stage pins, 100 % = it lets go), and each act
+   finishes by 88 %, so every end state is reached while the stage is still fully in view, and
+   rests there. Only transform and opacity animate. */
+
+[data-direction='puzzle'] {
+  --puzzle-ink: var(--ink);
+  --puzzle-glaze-pink: #ffc8d9;
+  --puzzle-glaze-line: #ee86ad;
+  --puzzle-glaze-green: #1f4a3a;
+  --puzzle-bisque: #f6f2ea;
+  display: block;
+  padding-top: clamp(24px, 4vw, 56px);
+  /* Objects start a little outside their place (the listing slides in): never a sideways scroll.
+     clip, not hidden: no scroll container, so the stages still stick to the page. */
+  overflow-x: clip;
+}
+.puzzle-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ── A station: a track (tall when live), its stage, and the plates after it ─────────────────── */
+.puzzle-st { position: relative; --cw: 11.6; --ch: 5.5; --smax: 104px; --run: 100svh; }
+.puzzle-stage { position: relative; display: flex; flex-direction: column; gap: clamp(14px, 2.4vh, 28px);
+  width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; padding-block: clamp(40px, 6vw, 88px) clamp(12px, 2vh, 24px); }
+.puzzle-copy { display: grid; justify-items: center; gap: clamp(8px, 1.2vh, 14px); text-align: center; }
+.puzzle-over { display: inline-flex; align-items: baseline; gap: 10px; font-size: var(--size-micro); font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--puzzle-ink); }
+.puzzle-over b { font-family: var(--display); font-size: .9375rem; font-weight: 620; letter-spacing: 0; }
+.puzzle-copy h2 { max-width: 20ch; font-size: var(--size-caption); }
+/* W5 rule (measured over the d2 grain): small text on the open ground is full ink; ink-2 and lighter
+   only on surfaces. Hierarchy comes from size and weight. */
+.puzzle-lede { max-width: 40em; font-size: var(--size-body); line-height: 1.5; color: var(--puzzle-ink); }
+.puzzle-lede .status { display: flex; justify-content: center; margin-bottom: 4px; }
+[data-direction='puzzle'] .status { color: var(--puzzle-ink); }
+[data-direction='puzzle'] .status .mark[data-tone='unknown'] { color: var(--puzzle-ink); }
+
+/* The figure: a size container, so --S can be measured from it. Static: as wide as the page allows
+   at --smax, its height from the composition's own proportion. Live: whatever the stage leaves. */
+.puzzle-fig { position: relative; container: puzzle-fig / size; width: min(100%, calc(var(--smax) * var(--cw))); aspect-ratio: var(--cw) / var(--ch); margin-inline: auto; }
+.puzzle-comp { --S: min(100cqw / var(--cw), 100cqh / var(--ch), var(--smax)); position: absolute; left: 50%; top: 50%; width: calc(var(--cw) * var(--S)); height: calc(var(--ch) * var(--S)); translate: -50% -50%; }
+
+/* Objects, placed in piece units. */
+.puzzle-o { position: absolute; left: calc(var(--x, 0) * var(--S)); top: calc(var(--y, 0) * var(--S)); width: calc(var(--w, 1) * var(--S)); height: calc(var(--h, 1) * var(--S)); }
+.puzzle-svg { position: absolute; display: block; max-width: none; overflow: visible; pointer-events: none; }
+/* A piece-sized layer: body 1 × 1, its drawing reaches .4 beyond (tabs, thickness, shadow). */
+.puzzle-layer, .puzzle-shadow, .puzzle-lifter, .puzzle-flip, .puzzle-face, .puzzle-glint { position: absolute; inset: 0; }
+.puzzle-layer > .puzzle-svg, .puzzle-shadow > .puzzle-svg, .puzzle-face > .puzzle-svg, .puzzle-glint > .puzzle-svg, .puzzle-glyph > .puzzle-svg {
+  left: calc(var(--S) * -.4); top: calc(var(--S) * -.4); width: calc(var(--S) * 1.8); height: calc(var(--S) * 1.9); }
+.puzzle-dish { --w: 3.4; --h: 2.5; }
+.puzzle-dish > .puzzle-svg { left: calc(var(--S) * -.6); top: calc(var(--S) * -.6); width: calc(var(--S) * 4.6); height: calc(var(--S) * 3.7); }
+.puzzle-board { --w: 3.84; --h: 3.84; }
+.puzzle-board > .puzzle-svg { left: calc(var(--S) * -.7); top: calc(var(--S) * -.7); width: calc(var(--S) * 5.24); height: calc(var(--S) * 5.34); }
+.puzzle-lifter { perspective: calc(var(--S) * 7); }
+.puzzle-flip { transform-style: preserve-3d; transform: rotateY(180deg); }
+.puzzle-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.puzzle-face[data-side='glaze'] { transform: rotateY(180deg); }
+.puzzle-glint { opacity: .45; }
+
+/* Words on the open ground and on objects: HTML, full ink, measured. */
+.puzzle-note { position: absolute; left: calc(var(--x) * var(--S)); top: calc(var(--y) * var(--S)); width: calc(var(--w) * var(--S)); margin: 0; text-align: center;
+  font-size: clamp(.78rem, calc(var(--S) * .16), .875rem); font-weight: 650; line-height: 1.35; color: var(--puzzle-ink); }
+.puzzle-note > span { display: block; margin-top: 3px; font-weight: 520; }
+.puzzle-note > .puzzle-label { display: flex; justify-content: center; align-items: center; gap: 7px; font-weight: 650; }
+.puzzle-meet { position: absolute; left: calc(var(--x) * var(--S)); top: calc(var(--y) * var(--S)); width: calc(var(--w) * var(--S)); margin: 0; text-align: center;
+  font-size: clamp(.78rem, calc(var(--S) * .165), .9375rem); font-weight: 650; line-height: 1.35; color: var(--puzzle-ink); text-wrap: balance; }
+.puzzle-word { position: absolute; left: calc(var(--x) * var(--S)); top: calc(var(--y) * var(--S)); width: calc(var(--w, 2.4) * var(--S)); margin: 0; line-height: 1.2; color: var(--puzzle-ink); }
+.puzzle-word b { display: block; font-size: clamp(.875rem, calc(var(--S) * .19), 1.0625rem); font-weight: 650; letter-spacing: -.005em; }
+.puzzle-word small { display: block; margin-top: 2px; font-size: clamp(.75rem, calc(var(--S) * .14), .8125rem); font-weight: 600; letter-spacing: .02em; }
+/* Engraved on the board: on porcelain, so full ink on bisque. */
+.puzzle-engr { position: absolute; left: calc(var(--ex) * var(--S)); top: calc(var(--ey) * var(--S)); translate: -50% -50%; text-align: center; white-space: nowrap;
+  font-size: clamp(.6875rem, calc(var(--S) * .12), .75rem); font-weight: 700; letter-spacing: .08em; line-height: 1.2; text-transform: uppercase; color: var(--puzzle-ink); }
+.puzzle-q { position: absolute; left: calc(var(--ex) * var(--S)); top: calc(var(--ey) * var(--S)); translate: -50% -50%; font-family: var(--display); font-weight: 620; line-height: 1;
+  font-size: clamp(.875rem, calc(var(--S) * .28), 1.5rem); color: var(--puzzle-ink); }
+.puzzle-engr-top { --ex: 1.92; --ey: .98; }
+.puzzle-engr-left { --ex: .93; --ey: 1.92; }
+.puzzle-engr-bottom { --ex: 1.92; --ey: 2.9; }
+.puzzle-engr-answer { --ex: 2.92; --ey: .22; font-size: clamp(.6875rem, calc(var(--S) * .11), .75rem); }
+/* The unknown edge's "?" sits outside its dashed loop (review m7), on the next piece. */
+.puzzle-q-edge { --ex: 2.94; --ey: 1.92; }
+.puzzle-q-answer { --ex: 2.92; --ey: .94; }
+
+/* Tags: glazed porcelain tags with a pointed end, never a pill, never a dot (review m2): the
+   person's acts in pink glaze, the company's role in deep green glaze. Picture labels, not
+   controls: no pointer, no focus, the default cursor. */
+.puzzle-tag { position: absolute; left: calc(var(--x) * var(--S)); top: calc(var(--y) * var(--S)); display: block; padding: 5px 12px 6px 18px; max-width: calc((var(--cw) - var(--x)) * var(--S));
+  font-size: clamp(.75rem, calc(var(--S) * .15), .8125rem); font-weight: 680; line-height: 1.2; color: var(--puzzle-ink); background: var(--puzzle-glaze-pink); cursor: default;
+  clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+  box-shadow: inset 0 1.5px 0 rgb(255 255 255 / .75), inset 0 -2px 0 rgb(214 100 140 / .32), inset 6px 0 10px -6px rgb(255 255 255 / .6); }
+.puzzle-tag small { display: block; margin-top: 1px; font-size: clamp(.6875rem, calc(var(--S) * .13), .75rem); font-weight: 620; }
+.puzzle-tag[data-tone='role'] { padding: 5px 18px 6px 12px; color: #fbf8f1; background: var(--puzzle-glaze-green);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  box-shadow: inset 0 1.5px 0 rgb(255 255 255 / .22), inset 0 -2px 0 rgb(0 0 0 / .25); }
+.puzzle-tag[data-tone='plain'] { background: var(--puzzle-bisque); box-shadow: inset 0 1.5px 0 #fff, inset 0 -2px 0 rgb(150 135 110 / .3); }
+/* The thread: a thin line of pink glaze from your dish to what you handed over (your yes, the
+   access). It grows from your side, and it is cut on your side. */
+.puzzle-thread { height: 2px; background: var(--puzzle-glaze-line); transform-origin: 0 50%; border-radius: 1px; box-shadow: 0 1px 0 rgb(255 255 255 / .7); }
+.puzzle-bead { width: 12px; height: 12px; margin: -5px 0 0 -6px; border-radius: 50%; background: var(--puzzle-glaze-line); opacity: 0;
+  box-shadow: inset -2px -2px 3px rgb(190 70 115 / .45), inset 2px 2px 2px rgb(255 255 255 / .85); }
+/* The cut, by your hand: the break mark, two short parallel strokes across the thread. */
+.puzzle-snip { width: 16px; height: 18px; margin: -9px 0 0 -8px; }
+.puzzle-snip::before, .puzzle-snip::after { content: ''; position: absolute; top: 0; width: 2px; height: 18px; border-radius: 1px; background: var(--puzzle-ink); transform: rotate(24deg); }
+.puzzle-snip::before { left: 4px; }
+.puzzle-snip::after { left: 10px; }
+@media (max-width: 40rem) { .puzzle-snip::before, .puzzle-snip::after { left: 7px; transform: rotate(-66deg); } .puzzle-snip::before { top: -3px; } .puzzle-snip::after { top: 3px; } }
+/* A watched search resting in the dish, paused. */
+.puzzle-watch > .puzzle-layer, .puzzle-watch > .puzzle-shadow { transform: scale(.72); }
+.puzzle-pause { position: absolute; left: 50%; top: 50%; width: 12px; height: 14px; translate: -50% -50%; border-left: 3.5px solid var(--puzzle-ink); border-right: 3.5px solid var(--puzzle-ink); }
+
+/* ── Compositions (wide) ───────────────────────────────────────────────────────────────────── */
+.puzzle-s1 { --cw: 9; --ch: 5; --smax: 96px; }
+.puzzle-s1 .puzzle-dish { --x: 2.8; --y: 1.1; }
+.puzzle-s1 .puzzle-at-dish { --x: 4; --y: 1.85; }
+.puzzle-s1 .puzzle-note-dish { --x: 2.6; --y: 4.45; --w: 3.8; }
+.puzzle-word-left { --x: .3; --y: 2.05; --w: 2.25; text-align: right; }
+.puzzle-word-right { --x: 6.45; --y: 2.05; --w: 2.25; }
+.puzzle-word-top { --x: 3.3; --y: .25; --w: 2.4; text-align: center; }
+.puzzle-word-bottom { --x: 3.3; --y: 3.72; --w: 2.4; text-align: center; }
+
+.puzzle-st:not(.puzzle-s1) .puzzle-dish { --x: .4; --y: 1.47; }
+.puzzle-st:not(.puzzle-s1) .puzzle-at-dish { --x: 1.6; --y: 2.22; }
+.puzzle-st:not(.puzzle-s1) .puzzle-note-dish { --x: 0; --y: 4.15; --w: 4.2; }
+.puzzle-board { --x: 7.76; --y: .8; }
+.puzzle-note-board { --x: 7.46; --y: 4.85; --w: 4.44; }
+.puzzle-at-open { --x: 9.18; --y: 2.22; }
+.puzzle-at-meet { --x: 5.28; --y: 2.22; }
+.puzzle-meet { --x: 3.98; --y: 3.42; --w: 3.6; }
+.puzzle-tag-role { --x: 8.1; --y: .58; }
+.puzzle-thread { --x: 3.85; --y: 2.71; --w: 5.05; --h: auto; height: 2px; }
+.puzzle-tag-yes { --x: 4.05; --y: 2.92; }
+.puzzle-tag-add { --x: 4.05; --y: 3.5; }
+.puzzle-bead { --x: 3.85; --y: 2.72; --w: auto; --h: auto; width: 12px; height: 12px; --bx: 5.05; --by: 0; }
+.puzzle-thread-near { --w: .85; }
+.puzzle-thread-far { --x: 4.92; --w: 3.98; opacity: .45; }
+.puzzle-thread-near { transform: scaleX(.35); }
+.puzzle-snip { --x: 4.8; --y: 2.72; --w: auto; --h: auto; }
+.puzzle-tag-stop { --x: 4.05; --y: 2.92; }
+.puzzle-tag-watch { --x: .55; --y: .92; }
+/* How far each mover starts from its end (in pieces). */
+.puzzle-s3-move { --mx: -7.58; --my: 0; }
+.puzzle-s2-yours { --mx: -3.68; --my: 0; }
+.puzzle-s2-open { --mx: 3.9; --my: 0; }
+
+/* ── Compositions (phones: dish above, board below) ───────────────────────────────────────── */
+@media (max-width: 40rem) {
+  .puzzle-st { --cw: 5.8; --ch: 8.9; --smax: 64px; --run: 110svh; }
+  .puzzle-s1 { --cw: 5.8; --ch: 4.9; }
+  .puzzle-copy h2 { max-width: 16ch; }
+  .puzzle-lede { font-size: var(--size-small); line-height: 1.45; }
+  .puzzle-s1 .puzzle-dish { --x: 1.2; --y: 1.05; }
+  .puzzle-s1 .puzzle-at-dish { --x: 2.4; --y: 1.8; }
+  .puzzle-s1 .puzzle-note-dish { --x: .9; --y: 4.3; --w: 4; }
+  .puzzle-word-left { --x: 0; --y: 2.0; --w: 1.12; }
+  .puzzle-word-right { --x: 4.7; --y: 2.0; --w: 1.12; }
+  .puzzle-word-top { --x: 1.7; --y: .2; --w: 2.4; }
+  .puzzle-word-bottom { --x: 1.7; --y: 3.62; --w: 2.4; }
+
+  .puzzle-st:not(.puzzle-s1) .puzzle-dish { --x: 1.2; --y: .5; }
+  .puzzle-st:not(.puzzle-s1) .puzzle-at-dish { --x: 2.4; --y: 1.25; }
+  .puzzle-st:not(.puzzle-s1) .puzzle-note-dish { --x: .4; --y: 0; --w: 5; }
+  .puzzle-board { --x: .98; --y: 4.45; }
+  .puzzle-note-board { --x: 0; --y: 8.4; --w: 5.8; }
+  .puzzle-at-open { --x: 2.4; --y: 5.87; }
+  .puzzle-at-meet { --x: 2.4; --y: 3.22; }
+  .puzzle-meet { --x: 3.85; --y: 3.12; --w: 1.95; text-align: left; }
+  .puzzle-tag-role { --x: 1.12; --y: 4.25; }
+  .puzzle-thread { --x: 2.89; --y: 2.86; --w: auto; width: 2px; height: calc(2.82 * var(--S)); transform-origin: 50% 0; }
+  .puzzle-tag-yes { --x: .25; --y: 3.12; }
+  .puzzle-tag-add { --x: 3.08; --y: 3.12; }
+  .puzzle-bead { --x: 2.9; --y: 2.86; --bx: 0; --by: 2.82; }
+  .puzzle-thread-near { height: calc(.42 * var(--S)); transform: scaleY(.35); }
+  .puzzle-thread-far { --x: 2.89; --y: 3.42; height: calc(2.26 * var(--S)); }
+  .puzzle-snip { --x: 2.9; --y: 3.32; }
+  .puzzle-tag-stop { --x: 3.08; --y: 3.12; }
+  .puzzle-tag-watch { --x: .1; --y: 3.12; max-width: calc(2.6 * var(--S)); }
+  .puzzle-engr-top, .puzzle-engr-left, .puzzle-engr-bottom { display: none; }
+  .puzzle-s3-move { --mx: 0; --my: -4.62; }
+  .puzzle-s2-yours { --mx: 0; --my: -1.97; }
+  .puzzle-s2-open { --mx: 0; --my: 2.65; }
+}
+/* Below 360 px the side words no longer fit beside the dish: two above, two below; the tags on
+   the right of the thread wrap within the picture. */
+@media (max-width: 22.4rem) {
+  .puzzle-tag-add, .puzzle-tag-stop { --x: 3.02; max-width: calc(2.76 * var(--S)); padding-right: 8px; }
+  .puzzle-s1 { --ch: 5.4; }
+  .puzzle-s1 .puzzle-dish { --y: 1.35; }
+  .puzzle-s1 .puzzle-at-dish { --y: 2.1; }
+  .puzzle-s1 .puzzle-note-dish { --y: 4.75; }
+  .puzzle-word-left { --x: 0; --y: .1; --w: 2.8; text-align: left; }
+  .puzzle-word-top { --x: 3; --y: .1; --w: 2.8; text-align: right; }
+  .puzzle-word-right { --x: 3; --y: 3.95; --w: 2.8; text-align: right; }
+  .puzzle-word-bottom { --x: 0; --y: 3.95; --w: 2.8; text-align: left; }
+}
+
+/* ── Plates after the stage: the station's statements with their status, as text ─────────── */
+.puzzle-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px clamp(16px, 2.4vw, 32px); align-items: start;
+  width: min(100% - 2 * var(--gutter), var(--page)); margin: 0 auto; padding-bottom: clamp(24px, 4vw, 56px); }
+.puzzle-plate { display: block; margin: 0; padding: 14px 18px 16px; border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--surface);
+  font-size: var(--size-small); line-height: 1.5; color: var(--puzzle-ink); }
+.puzzle-plate .status { display: flex; margin-bottom: 6px; }
+.puzzle-plate[data-side='you'] { grid-column: 1; }
+.puzzle-plate[data-side='mid'] { grid-column: 2; }
+.puzzle-plate[data-side='them'] { grid-column: 3; }
+.puzzle-plate[data-side='apart'] { grid-column: 2; }
+.puzzle-s1 .puzzle-plate[data-side='apart'] { grid-column: 3; }
+.puzzle-question { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: start; }
+.puzzle-question > p { margin: 0; grid-column: 2; }
+.puzzle-question b { font-weight: 650; }
+.puzzle-sub { padding-top: 8px; margin-top: 4px !important; border-top: 1px solid var(--line); }
+.puzzle-glyph { position: relative; grid-row: 1 / span 2; --S: 36px; width: 36px; height: 36px; margin: 6px 6px 0 4px; }
+.puzzle-glyph-dish > .puzzle-svg { left: -4px; top: -4px; width: 54px; height: 40px; }
+@media (max-width: 52rem) {
+  .puzzle-notes { grid-template-columns: minmax(0, 1fr); max-width: 34rem; }
+  .puzzle-plate[data-side] { grid-column: 1; }
+}
+
+/* ── Live: the track is tall, the stage sticks under the header (layout only) ──────────────── */
+[data-puzzle-live] .puzzle-track { height: calc(100svh - var(--header) + var(--run)); }
+[data-puzzle-live] .puzzle-stage { position: sticky; top: var(--header); height: calc(100svh - var(--header)); padding-block: clamp(16px, 4vh, 48px) clamp(12px, 3vh, 32px); }
+[data-puzzle-live] .puzzle-fig { flex: 1 1 0; min-height: 0; width: 100%; aspect-ratio: auto; }
+.puzzle-s3, .puzzle-s4 { --run: 120svh; }
+@media (max-width: 40rem) { .puzzle-s3, .puzzle-s4 { --run: 130svh; } }
+
+[data-puzzle-live] .puzzle-a { animation-duration: 1s; animation-timing-function: linear; animation-fill-mode: both; }
+@supports (animation-timeline: view()) {
+  [data-puzzle-live='css'] .puzzle-track { view-timeline: --puzzle-t block; view-timeline-inset: var(--header) 0px; }
+  [data-puzzle-live='css'] .puzzle-a { animation-timeline: --puzzle-t; animation-range: contain 0% contain 100%; }
+}
+[data-puzzle-live='js'] .puzzle-a { animation-play-state: paused; animation-delay: calc(var(--puzzle-p, 0) * -1s); }
+@media (prefers-reduced-motion: reduce) { [data-puzzle-live] .puzzle-a { animation: none !important; } }
+
+/* S1: four words come down from the field, each gives the piece one edge, and it settles. */
+[data-puzzle-live] .puzzle-word-left { animation-name: puzzle-w1; }
+[data-puzzle-live] .puzzle-word-top { animation-name: puzzle-w2; }
+[data-puzzle-live] .puzzle-word-right { animation-name: puzzle-w3; }
+[data-puzzle-live] .puzzle-word-bottom { animation-name: puzzle-w4; }
+@keyframes puzzle-w1 { 0%, 4% { opacity: 0; transform: translateY(calc(var(--S) * -.45)); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 20%, 100% { opacity: 1; transform: none; } }
+@keyframes puzzle-w2 { 0%, 10% { opacity: 0; transform: translateY(calc(var(--S) * -.45)); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 26%, 100% { opacity: 1; transform: none; } }
+@keyframes puzzle-w3 { 0%, 16% { opacity: 0; transform: translateY(calc(var(--S) * -.45)); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 32%, 100% { opacity: 1; transform: none; } }
+@keyframes puzzle-w4 { 0%, 22% { opacity: 0; transform: translateY(calc(var(--S) * -.45)); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 38%, 100% { opacity: 1; transform: none; } }
+.puzzle-s1-blank, .puzzle-s1-edge { opacity: 0; }
+[data-puzzle-live] .puzzle-s1-whole { animation-name: puzzle-s1-whole; }
+@keyframes puzzle-s1-whole { 0%, 45% { opacity: 0; } 47%, 100% { opacity: 1; } }
+[data-puzzle-live] .puzzle-s1-blank.puzzle-e3 { animation-name: puzzle-b-e3; }
+[data-puzzle-live] .puzzle-s1-blank.puzzle-e0 { animation-name: puzzle-b-e0; }
+[data-puzzle-live] .puzzle-s1-blank.puzzle-e1 { animation-name: puzzle-b-e1; }
+[data-puzzle-live] .puzzle-s1-blank.puzzle-e2 { animation-name: puzzle-b-e2; }
+[data-puzzle-live] .puzzle-s1-edge.puzzle-e3 { animation-name: puzzle-s-e3; }
+[data-puzzle-live] .puzzle-s1-edge.puzzle-e0 { animation-name: puzzle-s-e0; }
+[data-puzzle-live] .puzzle-s1-edge.puzzle-e1 { animation-name: puzzle-s-e1; }
+[data-puzzle-live] .puzzle-s1-edge.puzzle-e2 { animation-name: puzzle-s-e2; }
+@keyframes puzzle-b-e3 { 0%, 16% { opacity: 1; } 28%, 100% { opacity: 0; } }
+@keyframes puzzle-b-e0 { 0%, 22% { opacity: 1; } 34%, 100% { opacity: 0; } }
+@keyframes puzzle-b-e1 { 0%, 28% { opacity: 1; } 40%, 100% { opacity: 0; } }
+@keyframes puzzle-b-e2 { 0%, 34% { opacity: 1; } 46%, 100% { opacity: 0; } }
+@keyframes puzzle-s-e3 { 0%, 16% { opacity: 0; } 28%, 47% { opacity: 1; } 49%, 100% { opacity: 0; } }
+@keyframes puzzle-s-e0 { 0%, 22% { opacity: 0; } 34%, 47% { opacity: 1; } 49%, 100% { opacity: 0; } }
+@keyframes puzzle-s-e1 { 0%, 28% { opacity: 0; } 40%, 47% { opacity: 1; } 49%, 100% { opacity: 0; } }
+@keyframes puzzle-s-e2 { 0%, 34% { opacity: 0; } 46%, 47% { opacity: 1; } 49%, 100% { opacity: 0; } }
+[data-puzzle-live] .puzzle-s1-lift { animation-name: puzzle-s1-lift; }
+@keyframes puzzle-s1-lift { 0%, 48% { transform: translateY(calc(var(--S) * -.3)) rotate(-3deg); animation-timing-function: cubic-bezier(.45, 0, .25, 1); } 66%, 100% { transform: none; } }
+.puzzle-s1-soft { opacity: 0; }
+[data-puzzle-live] .puzzle-s1-soft { animation-name: puzzle-s1-soft; }
+@keyframes puzzle-s1-soft { 0%, 48% { opacity: .85; transform: translate(calc(var(--S) * .1), calc(var(--S) * .18)) scale(1.05); animation-timing-function: cubic-bezier(.45, 0, .25, 1); } 66%, 100% { opacity: 0; transform: none; } }
+[data-puzzle-live] .puzzle-s1-contact { animation-name: puzzle-s1-contact; }
+@keyframes puzzle-s1-contact { 0%, 56% { opacity: 0; } 66%, 100% { opacity: 1; } }
+
+/* S2: the listing arrives; the two outlines meet where Linkbot compares them. */
+[data-puzzle-live] .puzzle-s2-board { animation-name: puzzle-s2-board; }
+@keyframes puzzle-s2-board { 0%, 2% { opacity: 0; transform: translateX(calc(var(--S) * 1.1)); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 26%, 100% { opacity: 1; transform: none; } }
+.puzzle-s2-yours { opacity: .55; }
+[data-puzzle-live] .puzzle-s2-yours { animation-name: puzzle-s2-yours; }
+[data-puzzle-live] .puzzle-s2-open { animation-name: puzzle-s2-open; }
+@keyframes puzzle-s2-yours { 0%, 26% { opacity: 0; transform: translate(calc(var(--mx) * var(--S)), calc(var(--my) * var(--S))); animation-timing-function: cubic-bezier(.45, 0, .25, 1); } 36% { opacity: .55; } 60%, 100% { opacity: .55; transform: none; } }
+@keyframes puzzle-s2-open { 0%, 26% { opacity: 0; transform: translate(calc(var(--mx) * var(--S)), calc(var(--my) * var(--S))); animation-timing-function: cubic-bezier(.45, 0, .25, 1); } 36% { opacity: 1; } 60%, 100% { opacity: 1; transform: none; } }
+[data-puzzle-live] .puzzle-s2-meet { animation-name: puzzle-rise; }
+@keyframes puzzle-rise { 0%, 58% { opacity: 0; transform: translateY(calc(var(--S) * .12)); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 70%, 100% { opacity: 1; transform: none; } }
+
+/* S3: the role is there first; your yes comes next, and only then does your piece cross. */
+[data-puzzle-live] .puzzle-s3-role { animation-name: puzzle-s3-role; }
+@keyframes puzzle-s3-role { 0% { opacity: 0; transform: translateY(calc(var(--S) * -.2)); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 12%, 100% { opacity: 1; transform: none; } }
+[data-puzzle-live] .puzzle-s3-yes { animation-name: puzzle-s3-yes; transform-origin: 0 50%; }
+@keyframes puzzle-s3-yes { 0%, 16% { opacity: 0; transform: scale(.86); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 30%, 100% { opacity: 1; transform: none; } }
+[data-puzzle-live] .puzzle-s3-move { animation-name: puzzle-s3-move; }
+@keyframes puzzle-s3-move { 0%, 34% { transform: translate(calc(var(--mx) * var(--S)), calc(var(--my) * var(--S))); animation-timing-function: cubic-bezier(.5, 0, .3, 1); } 78%, 100% { transform: none; } }
+[data-puzzle-live] .puzzle-s3-lift { animation-name: puzzle-s3-lift; }
+@keyframes puzzle-s3-lift { 0%, 34% { transform: none; animation-timing-function: ease-out; } 50% { transform: translateY(calc(var(--S) * -.16)) rotate(-4deg) scale(1.1); } 66% { transform: translateY(calc(var(--S) * -.1)) rotate(-1.5deg) scale(1.06); animation-timing-function: ease-in; } 78%, 100% { transform: none; } }
+.puzzle-s3-soft, .puzzle-s4-soft { opacity: 0; }
+[data-puzzle-live] .puzzle-s3-soft { animation-name: puzzle-s3-soft; }
+@keyframes puzzle-s3-soft { 0%, 34% { opacity: 0; transform: none; } 50% { opacity: .85; transform: translate(calc(var(--S) * .1), calc(var(--S) * .26)) scale(1.08); } 66% { opacity: .6; transform: translate(calc(var(--S) * .06), calc(var(--S) * .16)) scale(1.04); } 78%, 100% { opacity: 0; transform: none; } }
+[data-puzzle-live] .puzzle-s3-contact { animation-name: puzzle-s3-contact; }
+@keyframes puzzle-s3-contact { 0%, 34% { opacity: 1; } 42%, 70% { opacity: 0; } 78%, 100% { opacity: 1; } }
+[data-puzzle-live] .puzzle-s3-thread { animation-name: puzzle-grow-x; }
+@keyframes puzzle-grow-x { 0%, 36% { transform: scaleX(0); animation-timing-function: cubic-bezier(.5, 0, .3, 1); } 78%, 100% { transform: none; } }
+@keyframes puzzle-grow-y { 0%, 36% { transform: scaleY(0); animation-timing-function: cubic-bezier(.5, 0, .3, 1); } 78%, 100% { transform: none; } }
+@media (max-width: 40rem) { [data-puzzle-live] .puzzle-s3-thread { animation-name: puzzle-grow-y; } }
+
+/* S4: your own act first (the tag), then colour runs from your side, then your piece turns. */
+[data-puzzle-live] .puzzle-s4-add { animation-name: puzzle-s4-add; transform-origin: 0 50%; }
+@keyframes puzzle-s4-add { 0%, 4% { opacity: 0; transform: scale(.86); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 18%, 100% { opacity: 1; transform: none; } }
+[data-puzzle-live] .puzzle-s4-bead { animation-name: puzzle-s4-bead; }
+@keyframes puzzle-s4-bead { 0%, 18% { opacity: 0; transform: none; animation-timing-function: ease-out; } 22% { opacity: 1; transform: none; animation-timing-function: cubic-bezier(.45, 0, .3, 1); } 38% { opacity: 1; transform: translate(calc(var(--bx) * var(--S)), calc(var(--by) * var(--S))); } 42%, 100% { opacity: 0; transform: translate(calc(var(--bx) * var(--S)), calc(var(--by) * var(--S))); } }
+[data-puzzle-live] .puzzle-s4-lift { animation-name: puzzle-s4-lift; }
+@keyframes puzzle-s4-lift { 0%, 38% { transform: none; animation-timing-function: ease-out; } 48%, 70% { transform: translateY(calc(var(--S) * -.14)) scale(1.14); animation-timing-function: ease-in-out; } 80%, 100% { transform: none; } }
+[data-puzzle-live] .puzzle-s4-flip { animation-name: puzzle-s4-flip; }
+@keyframes puzzle-s4-flip { 0%, 46% { transform: rotateY(0deg); animation-timing-function: cubic-bezier(.45, 0, .25, 1); } 68%, 100% { transform: rotateY(180deg); } }
+[data-puzzle-live] .puzzle-s4-glint { animation-name: puzzle-s4-glint; }
+@keyframes puzzle-s4-glint { 0%, 72% { opacity: 0; } 79% { opacity: .95; } 86%, 100% { opacity: .45; } }
+[data-puzzle-live] .puzzle-s4-soft { animation-name: puzzle-s4-soft; }
+@keyframes puzzle-s4-soft { 0%, 38% { opacity: 0; transform: none; } 48% { opacity: .8; transform: translate(calc(var(--S) * .1), calc(var(--S) * .26)) scale(1.1); } 57% { opacity: .45; transform: translate(calc(var(--S) * .1), calc(var(--S) * .26)) scale(.5, 1.1); } 70% { opacity: .8; transform: translate(calc(var(--S) * .1), calc(var(--S) * .26)) scale(1.1); } 80%, 100% { opacity: 0; transform: none; } }
+[data-puzzle-live] .puzzle-s4-contact { animation-name: puzzle-s4-contact; }
+@keyframes puzzle-s4-contact { 0%, 38% { opacity: 1; } 44%, 74% { opacity: 0; } 80%, 100% { opacity: 1; } }
+
+/* S5: your act on your side: you stop access, the thread is cut by your dish; what was handed
+   over stays where it is, turning matte (nothing more to read, a print of what was seen stays);
+   a watched search rests in your dish, paused. */
+[data-puzzle-live] .puzzle-s5-stop { animation-name: puzzle-s5-stop; transform-origin: 0 50%; }
+@keyframes puzzle-s5-stop { 0%, 6% { opacity: 0; transform: scale(.86); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 20%, 100% { opacity: 1; transform: none; } }
+[data-puzzle-live] .puzzle-s5-snip { animation-name: puzzle-s5-snip; }
+@keyframes puzzle-s5-snip { 0%, 22% { opacity: 0; transform: scale(.5); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 30%, 100% { opacity: 1; transform: none; } }
+[data-puzzle-live] .puzzle-s5-near { animation-name: puzzle-s5-near; }
+@keyframes puzzle-s5-near { 0%, 24% { transform: none; animation-timing-function: cubic-bezier(.45, 0, .25, 1); } 40%, 100% { transform: scaleX(.35); } }
+@keyframes puzzle-s5-near-y { 0%, 24% { transform: none; animation-timing-function: cubic-bezier(.45, 0, .25, 1); } 40%, 100% { transform: scaleY(.35); } }
+@media (max-width: 40rem) { [data-puzzle-live] .puzzle-s5-near { animation-name: puzzle-s5-near-y; } }
+[data-puzzle-live] .puzzle-s5-far { animation-name: puzzle-s5-far; }
+@keyframes puzzle-s5-far { 0%, 30% { opacity: 1; } 46%, 100% { opacity: .45; } }
+.puzzle-s5-matte { opacity: .82; }
+[data-puzzle-live] .puzzle-s5-matte { animation-name: puzzle-s5-matte; }
+@keyframes puzzle-s5-matte { 0%, 42% { opacity: 0; } 66%, 100% { opacity: .82; } }
+[data-puzzle-live] .puzzle-s5-watch { animation-name: puzzle-s5-watch; }
+@keyframes puzzle-s5-watch { 0%, 68% { opacity: 0; transform: translateY(calc(var(--S) * -.45)); animation-timing-function: cubic-bezier(.2, .7, .2, 1); } 84%, 100% { opacity: 1; transform: none; } }
+[data-puzzle-live] .puzzle-s5-watchtag { animation-name: puzzle-s5-watchtag; }
+@keyframes puzzle-s5-watchtag { 0%, 76% { opacity: 0; } 88%, 100% { opacity: 1; } }
+
+@media (forced-colors: active) {
+  .puzzle-tag { forced-color-adjust: none; background: Canvas; color: CanvasText; border: 1px solid CanvasText; clip-path: none; }
+  .puzzle-thread, .puzzle-pause { background: CanvasText; }
+}

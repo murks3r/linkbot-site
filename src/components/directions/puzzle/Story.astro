@@ -1,0 +1,271 @@
+---
+/* Concept A9 · W5 · direction `puzzle` ("Shape, not picture"): the home's story in five stations.
+
+   Metaphor: a job opening and your piece. Your words give your own porcelain piece its shape; a
+   listing is a board with an opening; a fit is found by shape alone, while your piece lies picture
+   side down in your own dish. Only your yes moves it into a company's opening (in development),
+   only your own act turns it over, and you can stop access from that moment on: the piece never
+   comes back, and nothing completes the company's board.
+   Style: bisque and glaze. Matte unglazed porcelain on the white-grey ground, no outlines, one
+   light from the top left; colour arrives as glaze, only on what the person turns over.
+
+   Every statement is a row of fundament-v0/claims.md (the row id is beside each string below).
+   TESTED, IN DEVELOPMENT and NOT BUILT parts carry their label as text in the station itself, in
+   every state (static, reduced motion, live). Motion (puzzle.css, puzzle.ts): each station is a
+   tall track with a sticky stage, its objects driven by a CSS scroll timeline (or, without one,
+   by the same keyframes from a scroll-position number); the static end state is the default CSS,
+   so without scripts, with reduced motion or on a screen too small for the stage, every station
+   is simply its end state. Only transform and opacity animate. Nothing here is focusable. */
+import './puzzle.css';
+import Mark from '../../Mark.astro';
+import { defs } from './geometry';
+import { example } from '../../../data/content';
+import record from '../../../data/readings.json';
+
+// S1's words are the hero field's own example, as the app's interpreter read it, plus a place.
+const hero = record.examples.find(e => e.id === 'hero-placeholder');
+if (!hero || example('hero-placeholder') !== 'Data engineer, remote, no on-call') throw Error('puzzle: the hero example changed; re-check S1');
+const [role, mode, task] = hero.criteria;
+const WORDS: [string, string, string][] = [
+  ['left', role.label, 'Role'],            // the left tab
+  ['top', mode.label, 'Work mode'],        // the top notch
+  ['right', `No ${task.label}`, 'Work'],   // the right tab (an Avoid)
+  ['bottom', 'Berlin', 'Place'],           // the bottom notch: the place field
+];
+
+/** One porcelain object from the sprite (geometry.ts). */
+const obj = (id: string, w: number, h: number) =>
+  `<svg class="puzzle-svg" viewBox="0 0 ${w} ${h}" aria-hidden="true" focusable="false"><use href="#puzzle-${id}" width="${w}" height="${h}"/></svg>`;
+const piece = (id: string) => obj(id, 180, 190);
+const wedge = (id: string, i: number) =>
+  `<svg class="puzzle-svg" viewBox="0 0 180 190" aria-hidden="true" focusable="false"><g clip-path="url(#puzzle-w${i})" transform="translate(40 40)"><use href="#puzzle-${id}" x="-40" y="-40" width="180" height="190"/></g></svg>`;
+
+const STATUS = {
+  live: { tone: 'fit' as const, label: 'In the product now' },
+  tested: { tone: 'tradeoff' as const, label: 'Built, tested in staging; not yet live with employers' },
+  proving: { tone: 'tradeoff' as const, label: 'Built, being proven' },
+  dev: { tone: 'unknown' as const, label: 'In development, not live' },
+  none: { tone: 'unknown' as const, label: 'Not built yet' },
+};
+---
+<section class="puzzle" data-direction="puzzle" data-stage="story" id="story" aria-label="How it works, in five steps">
+  <Fragment set:html={defs()} />
+
+  <!-- S1 · Your data stays with you → "Your words give it shape." -->
+  <article class="puzzle-st puzzle-s1" data-puzzle-st="1" aria-labelledby="puzzle-s1-title">
+    <div class="puzzle-track">
+      <div class="puzzle-stage">
+        <header class="puzzle-copy">
+          <p class="puzzle-over"><b>1</b>Your words</p>
+          <h2 id="puzzle-s1-title">Your words give it shape.</h2>
+          <p class="puzzle-lede">Private by default. Shared only when you decide.</p><!-- S1 station line (privacy.astro:18) -->
+        </header>
+        <figure class="puzzle-fig" aria-labelledby="puzzle-s1-alt">
+          <div class="puzzle-comp" aria-hidden="true">
+            <div class="puzzle-o puzzle-dish"><Fragment set:html={obj('dish-small', 460, 370)} /></div>
+            <div class="puzzle-o puzzle-at-dish">
+              <div class="puzzle-shadow puzzle-a puzzle-s1-soft"><Fragment set:html={piece('shadow-soft')} /></div>
+              <div class="puzzle-shadow puzzle-a puzzle-s1-contact"><Fragment set:html={piece('shadow-contact')} /></div>
+              <div class="puzzle-lifter puzzle-a puzzle-s1-lift">
+                {[3, 0, 1, 2].map(i => <div class={`puzzle-layer puzzle-a puzzle-s1-blank puzzle-e${i}`}><Fragment set:html={wedge('blank', i)} /></div>)}
+                {[3, 0, 1, 2].map(i => <div class={`puzzle-layer puzzle-a puzzle-s1-edge puzzle-e${i}`}><Fragment set:html={wedge('back', i)} /></div>)}
+                <div class="puzzle-layer puzzle-a puzzle-s1-whole"><Fragment set:html={piece('back')} /></div>
+              </div>
+            </div>
+            {WORDS.map(([side, word, kind]) => <p class={`puzzle-word puzzle-a puzzle-word-${side}`}><b>{word}</b><small>{kind}</small></p>)}
+            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p>
+          </div>
+          <figcaption class="sr" id="puzzle-s1-alt">Illustration: a white porcelain jigsaw piece lies face down in a shallow dish, noted “Yours, in your Linkbot account”. Your words Data engineer, Remote, No on-call and Berlin have given its four edges their shape. Its coloured side faces down; only a thin coloured line shows at its edge. Nothing moves towards the other side. The words are the search field’s example, as Linkbot’s interpreter reads it.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="puzzle-notes">
+      <p class="puzzle-plate" data-side="you"><span class="status"><Mark tone={STATUS.live.tone} />{STATUS.live.label}</span>Searching, viewing and saving jobs never send anything to an employer.</p><!-- S1.4 -->
+      <div class="puzzle-plate puzzle-question" data-side="apart">
+        <span class="puzzle-glyph puzzle-glyph-dish" aria-hidden="true"><Fragment set:html={obj('unmade-dish', 340, 250)} /></span>
+        <p><span class="status"><Mark tone={STATUS.none.tone} />{STATUS.none.label}</span><b>Could your data stay only on your side?</b> Not yet: what you keep lives in your Linkbot account.</p><!-- S1.7 -->
+      </div>
+    </div>
+  </article>
+
+  <!-- S2 · A match without anyone seeing you as a person → "Compared with your words, not with you." -->
+  <article class="puzzle-st puzzle-s2" data-puzzle-st="2" aria-labelledby="puzzle-s2-title">
+    <div class="puzzle-track">
+      <div class="puzzle-stage">
+        <header class="puzzle-copy">
+          <p class="puzzle-over"><b>2</b>A fit</p>
+          <h2 id="puzzle-s2-title">Compared with your words, not with you.</h2><!-- S2.1 -->
+          <p class="puzzle-lede">Employers aren’t told you’re looking.</p><!-- S1.4 / S2 station line -->
+        </header>
+        <figure class="puzzle-fig" aria-labelledby="puzzle-s2-alt">
+          <div class="puzzle-comp" aria-hidden="true">
+            <div class="puzzle-o puzzle-dish"><Fragment set:html={obj('dish-small', 460, 370)} /></div>
+            <div class="puzzle-o puzzle-at-dish">
+              <div class="puzzle-shadow"><Fragment set:html={piece('shadow-contact')} /></div>
+              <div class="puzzle-layer"><Fragment set:html={piece('back')} /></div>
+            </div>
+            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p>
+            <div class="puzzle-o puzzle-board puzzle-a puzzle-s2-board">
+              <Fragment set:html={obj('board-listing', 524, 534)} />
+              <span class="puzzle-engr puzzle-engr-top">Remote</span>
+              <span class="puzzle-engr puzzle-engr-left">Data<br />engineer</span>
+              <span class="puzzle-engr puzzle-engr-bottom">Berlin</span>
+              <span class="puzzle-q puzzle-q-edge">?</span>
+            </div>
+            <p class="puzzle-note puzzle-note-board puzzle-a puzzle-s2-board">A job listing<span><b>?</b> On-call isn’t in the listing, so it stays open.</span></p>
+            <div class="puzzle-o puzzle-at-meet">
+              <div class="puzzle-layer puzzle-a puzzle-s2-yours"><Fragment set:html={piece('outline-yours')} /></div>
+              <div class="puzzle-layer puzzle-a puzzle-s2-open"><Fragment set:html={piece('outline-open')} /></div>
+            </div>
+            <p class="puzzle-meet puzzle-a puzzle-s2-meet">Linkbot compares your words with the listing</p><!-- S2.1, S2.3 -->
+          </div>
+          <figcaption class="sr" id="puzzle-s2-alt">Illustration: on the right, a porcelain board noted “A job listing”, with one opening. Its edges are marked Remote, Berlin and Data engineer; one edge is dashed with a question mark, because the listing doesn’t state on-call, so it stays open. In the middle, where the outline of your piece and the outline of the opening meet, a note says: Linkbot compares your words with the listing. They match on three edges; the on-call edge stays dashed. Your piece stays face down in your dish, and the board shows no name and no sign of you.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="puzzle-notes">
+      <p class="puzzle-plate" data-side="mid"><span class="status"><Mark tone={STATUS.live.tone} />{STATUS.live.label}</span>A fit is not a disclosure, and not a sign of anyone’s interest.</p><!-- S2.2 (fits in a search) -->
+    </div>
+  </article>
+
+  <!-- S3 · Only a yes from both sides opens contact → "A fit never opens contact." -->
+  <article class="puzzle-st puzzle-s3" data-puzzle-st="3" aria-labelledby="puzzle-s3-title">
+    <div class="puzzle-track">
+      <div class="puzzle-stage">
+        <header class="puzzle-copy">
+          <p class="puzzle-over"><b>3</b>A yes from both sides</p>
+          <h2 id="puzzle-s3-title">A fit never opens contact.</h2><!-- S3 station line; S3.1 -->
+          <p class="puzzle-lede">Linkbot never applies for you, and sends no messages on your behalf.</p><!-- S3.2 -->
+        </header>
+        <figure class="puzzle-fig" aria-labelledby="puzzle-s3-alt">
+          <div class="puzzle-comp" aria-hidden="true">
+            <div class="puzzle-o puzzle-dish"><Fragment set:html={obj('dish-small', 460, 370)} /></div>
+            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p>
+            <div class="puzzle-o puzzle-board">
+              <Fragment set:html={obj('board-role', 524, 534)} />
+              <span class="puzzle-q puzzle-q-edge">?</span>
+              <span class="puzzle-q puzzle-q-answer">?</span>
+              <span class="puzzle-engr puzzle-engr-answer">Its answer</span>
+            </div>
+            <p class="puzzle-note puzzle-note-board">A company’s role<span class="puzzle-label"><Mark tone={STATUS.dev.tone} />{STATUS.dev.label}</span></p>
+            <span class="puzzle-tag puzzle-tag-role puzzle-a puzzle-s3-role" data-tone="role">The role</span>
+            <span class="puzzle-o puzzle-thread puzzle-a puzzle-s3-thread"></span>
+            <span class="puzzle-tag puzzle-tag-yes puzzle-a puzzle-s3-yes" data-tone="you">Your yes</span>
+            <div class="puzzle-o puzzle-at-open puzzle-mover puzzle-a puzzle-s3-move">
+              <div class="puzzle-shadow puzzle-a puzzle-s3-soft"><Fragment set:html={piece('shadow-soft')} /></div>
+              <div class="puzzle-shadow puzzle-a puzzle-s3-contact"><Fragment set:html={piece('shadow-contact')} /></div>
+              <div class="puzzle-lifter puzzle-a puzzle-s3-lift"><div class="puzzle-layer"><Fragment set:html={piece('back')} /></div></div>
+            </div>
+          </div>
+          <figcaption class="sr" id="puzzle-s3-alt">Illustration, in development: the board is now a company’s role, labelled in development, not live. A dark green tag, The role, is fixed to it, and the board keeps a second, empty place marked with a question mark: its answer, still open. A pink tag, Your yes, appears beside your dish, and only then does your piece lift out and move into the opening, still face down, leaving a thin pink line from your dish to it. Without your yes it stays in your dish.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="puzzle-notes">
+      <p class="puzzle-plate" data-side="you"><span class="status"><Mark tone={STATUS.tested.tone} />{STATUS.tested.label}</span>Sharing is a separate decision you confirm: once, or by a standing rule you set.</p><!-- S3 station line, sharing half; S3.3/S3.4 -->
+      <p class="puzzle-plate" data-side="them"><span class="status"><Mark tone={STATUS.dev.tone} />{STATUS.dev.label}</span>If a company’s role fits you, only you are asked. Nothing reaches the company until you say yes. Then it answers.</p><!-- S3.5 -->
+    </div>
+  </article>
+
+  <!-- S4 · Then it gets personal: face, colour, conversation → "Then it gets personal." -->
+  <article class="puzzle-st puzzle-s4" data-puzzle-st="4" data-air-reveal=".35" aria-labelledby="puzzle-s4-title">
+    <div class="puzzle-track">
+      <div class="puzzle-stage">
+        <header class="puzzle-copy">
+          <p class="puzzle-over"><b>4</b>Personal</p>
+          <h2 id="puzzle-s4-title">Then it gets personal.</h2>
+          <p class="puzzle-lede"><span class="status"><Mark tone={STATUS.dev.tone} />{STATUS.dev.label}</span> You decide whether to add your name, and how the company can reach you.</p><!-- S4.2 -->
+        </header>
+        <figure class="puzzle-fig" aria-labelledby="puzzle-s4-alt">
+          <div class="puzzle-comp" aria-hidden="true">
+            <div class="puzzle-o puzzle-dish"><Fragment set:html={obj('dish-small', 460, 370)} /></div>
+            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p>
+            <div class="puzzle-o puzzle-board">
+              <Fragment set:html={obj('board-role', 524, 534)} />
+              <span class="puzzle-q puzzle-q-edge">?</span>
+              <span class="puzzle-q puzzle-q-answer">?</span>
+              <span class="puzzle-engr puzzle-engr-answer">Its answer</span>
+            </div>
+            <p class="puzzle-note puzzle-note-board">A company’s role<span class="puzzle-label"><Mark tone={STATUS.dev.tone} />{STATUS.dev.label}</span></p>
+            <span class="puzzle-tag puzzle-tag-role" data-tone="role">The role</span>
+            <span class="puzzle-o puzzle-thread"></span>
+            <span class="puzzle-tag puzzle-tag-yes" data-tone="you">Your yes</span>
+            <span class="puzzle-tag puzzle-tag-add puzzle-a puzzle-s4-add" data-tone="you">You add what you choose<small>In development, not live</small></span>
+            <span class="puzzle-o puzzle-bead puzzle-a puzzle-s4-bead"></span>
+            <div class="puzzle-o puzzle-at-open">
+              <div class="puzzle-shadow puzzle-a puzzle-s4-soft"><Fragment set:html={piece('shadow-soft')} /></div>
+              <div class="puzzle-shadow puzzle-a puzzle-s4-contact"><Fragment set:html={piece('shadow-contact')} /></div>
+              <div class="puzzle-lifter puzzle-a puzzle-s4-lift">
+                <div class="puzzle-flip puzzle-a puzzle-s4-flip">
+                  <div class="puzzle-face" data-side="back"><Fragment set:html={piece('back')} /></div>
+                  <div class="puzzle-face" data-side="glaze"><Fragment set:html={piece('glaze')} /><div class="puzzle-glint puzzle-a puzzle-s4-glint"><Fragment set:html={piece('glint')} /></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="sr" id="puzzle-s4-alt">Illustration, in development: on your side, a second pink tag appears below Your yes: You add what you choose. Then a drop of colour runs along the pink line from your dish to your piece, and your piece turns over in the opening, from your side. Its other side is glazed in pink, yellow, green and blue bands and dots; the glaze covers only part of it, the rest stays unglazed white. The page around it takes on a little colour. The company’s answer is still an empty place with a question mark.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="puzzle-notes">
+      <div class="puzzle-plate puzzle-question" data-side="apart">
+        <span class="puzzle-glyph" aria-hidden="true"><Fragment set:html={piece('unmade')} /></span>
+        <p><span class="status"><Mark tone={STATUS.none.tone} />{STATUS.none.label}</span><b>Where does the conversation continue after both sides say yes?</b></p><!-- S4.3 (inside Linkbot: NOT BUILT) -->
+        <p class="puzzle-sub"><span class="status"><Mark tone={STATUS.proving.tone} />{STATUS.proving.label}</span>In the pilot, it happens outside Linkbot.</p><!-- S4.3 pilot practice: TESTED -->
+      </div>
+    </div>
+  </article>
+
+  <!-- S5 · You can go back at any time: withdraw or delete → "Change your mind." -->
+  <article class="puzzle-st puzzle-s5" data-puzzle-st="5" aria-labelledby="puzzle-s5-title">
+    <div class="puzzle-track">
+      <div class="puzzle-stage">
+        <header class="puzzle-copy">
+          <p class="puzzle-over"><b>5</b>From now on</p>
+          <h2 id="puzzle-s5-title">Change your mind.</h2><!-- S5 station line -->
+          <p class="puzzle-lede">Pause, edit or close a watched search any time. Remove a saved job.</p><!-- S5.1, S5.2 -->
+        </header>
+        <figure class="puzzle-fig" aria-labelledby="puzzle-s5-alt">
+          <div class="puzzle-comp" aria-hidden="true">
+            <div class="puzzle-o puzzle-dish"><Fragment set:html={obj('dish-small', 460, 370)} /></div>
+            <p class="puzzle-note puzzle-note-dish">Yours, in your Linkbot account</p>
+            <div class="puzzle-o puzzle-board">
+              <Fragment set:html={obj('board-role', 524, 534)} />
+              <span class="puzzle-q puzzle-q-edge">?</span>
+              <span class="puzzle-q puzzle-q-answer">?</span>
+              <span class="puzzle-engr puzzle-engr-answer">Its answer</span>
+            </div>
+            <p class="puzzle-note puzzle-note-board">A company’s role<span class="puzzle-label"><Mark tone={STATUS.dev.tone} />{STATUS.dev.label}</span></p>
+            <span class="puzzle-tag puzzle-tag-role" data-tone="role">The role</span>
+            <span class="puzzle-o puzzle-thread puzzle-thread-far puzzle-a puzzle-s5-far"></span>
+            <span class="puzzle-o puzzle-thread puzzle-thread-near puzzle-a puzzle-s5-near"></span>
+            <span class="puzzle-o puzzle-snip puzzle-a puzzle-s5-snip"></span>
+            <span class="puzzle-tag puzzle-tag-stop puzzle-a puzzle-s5-stop" data-tone="you">You stop access<small>Built, being proven</small></span>
+            <div class="puzzle-o puzzle-at-open">
+              <div class="puzzle-shadow"><Fragment set:html={piece('shadow-contact')} /></div>
+              <div class="puzzle-layer"><Fragment set:html={piece('glaze')} /></div>
+              <div class="puzzle-layer puzzle-a puzzle-s5-matte"><Fragment set:html={piece('matte')} /></div>
+            </div>
+            <div class="puzzle-o puzzle-at-dish puzzle-watch puzzle-a puzzle-s5-watch">
+              <div class="puzzle-shadow"><Fragment set:html={piece('shadow-contact')} /></div>
+              <div class="puzzle-layer"><Fragment set:html={piece('back')} /></div>
+              <span class="puzzle-pause"></span>
+            </div>
+            <span class="puzzle-tag puzzle-tag-watch puzzle-a puzzle-s5-watchtag" data-tone="plain">Watched search, paused</span>
+          </div>
+          <figcaption class="sr" id="puzzle-s5-alt">Illustration: on your side, a pink tag appears, You stop access, and the pink line from your dish to the company’s opening is cut close to your dish. Your piece stays in the opening; it turns matte, so nothing more can be read from it, and a faint print of its colour stays: what was already seen is not taken back. In your dish, a watched search rests, paused. The company’s answer is still an empty place with a question mark.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="puzzle-notes">
+      <p class="puzzle-plate" data-side="you"><span class="status"><Mark tone={STATUS.tested.tone} />{STATUS.tested.label}</span>Revoke a rule or access you gave. It stops access from that moment on. Copies already received aren’t recalled.</p><!-- S5.3 -->
+      <p class="puzzle-plate" data-side="them"><span class="status"><Mark tone={STATUS.dev.tone} />{STATUS.dev.label}</span>Private matching: turn it off, decline privately, or revoke an introduction.</p><!-- S5.5 -->
+      <div class="puzzle-plate puzzle-question" data-side="apart">
+        <span class="puzzle-glyph" aria-hidden="true"><Fragment set:html={piece('unmade')} /></span>
+        <p><span class="status"><Mark tone={STATUS.none.tone} />{STATUS.none.label}</span><b>When can I delete everything Linkbot holds about me?</b></p><!-- S5.6 -->
+      </div>
+    </div>
+  </article>
+</section>
+
+<script>import './puzzle';</script>
