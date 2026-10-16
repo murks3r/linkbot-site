@@ -87,9 +87,10 @@ const v = (name: string, at?: At) => (at ? `--o-${name}: ${at[0]}px; --y-${name}
     opacity: calc((1 - .4 * var(--z)) * (1 - var(--hp) * .9)); }
   .halo-chip[data-side='l'] { right: calc(50% + var(--o)); transform-origin: right center; }
   .halo-chip[data-side='r'] { left: calc(50% + var(--o)); transform-origin: left center; }
-  /* Each chip floats on its own slow breath: a tilt in depth and a lift, never a spin. */
+  /* Each chip floats on its own slow breath: a tilt in depth and a lift, never a spin. A clean
+     surface (A9): the page's noise lies behind it, never on it. */
   .halo-chip i { display: inline-flex; align-items: center; gap: 10px; padding: 10px 17px; border-radius: var(--pill); font-style: normal; white-space: nowrap;
-    background: url('/material/paper.webp') 0 0 / 512px 512px, var(--surface); background-blend-mode: multiply;
+    background: var(--surface);
     box-shadow: 0 1px 0 rgb(255 255 255 / .9) inset, 0 0 0 1px rgb(18 58 44 / .16), 0 12px 26px -14px rgb(18 58 44 / .38), 0 2px 4px -2px rgb(18 58 44 / .2);
     font-size: 1rem; font-weight: 620; letter-spacing: -.005em; color: var(--ink); }
   .halo-chip small { padding-left: 10px; border-left: 1px solid var(--line-strong); font-size: .8125rem; font-weight: 600; color: var(--ink-2); }
