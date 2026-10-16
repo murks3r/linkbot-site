@@ -51,6 +51,7 @@ const { title, description, path, crumbs, quietHeader = false, sky = false } = A
 </html>
 <style is:global>
   main { outline: none; }
-  /* The atmosphere lies under the whole page; everything else is composed above it. */
-  main, footer { position: relative; z-index: 1; }
+  /* L4 (Concept A9): the content lies above the ground's layers (the atmosphere, the wash and the
+     noise, Air.astro), so nothing in it is printed by the noise. The header has its own z (30). */
+  main, footer { position: relative; z-index: var(--z-content); }
 </style>

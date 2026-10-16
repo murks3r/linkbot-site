@@ -63,6 +63,33 @@ html[data-v-radius='20'] { --field-r: 20px; }
 html[data-v-radius='pill'] { --field-r: 999px; }
 html[data-v-controls='follow'] { --control-r: var(--field-r); }
 
+/* ── The ground's layers (Concept A9, fundament v0; drawn by src/components/Air.astro) ──────────
+   Bottom to top: L0 the ground (--paper, the body's background); L1 the atmosphere (home only),
+   its pigments desaturated to --air-saturation; L2 the wash, --wash at --wash-opacity, thinned
+   where a section raises --air-reveal; L3 the noise, in the page flow, scrolling with the content;
+   L4 everything else (main, the footer, the header), never printed by the noise. The z-indices
+   below are the only ones the root stacking context uses for the ground and the content. */
+:root {
+  --z-air: 0; --z-noise: 1; --z-content: 2;
+  /* Founder A4: far less colourful, towards white and grey; colour only where the story needs it. */
+  --air-saturation: .35;
+  --wash: rgb(248 247 244); --wash-opacity: .62;
+  /* 0 … 1. Written by src/scripts/atmosphere.ts on the atmosphere alone, from the sections that
+     carry data-air-reveal; never set on <html> or <body>. Effective wash: --wash-opacity × (1 − .7 ×
+     --air-reveal); the pigments regain saturation towards 1 in the same proportion. */
+  --air-reveal: 0;
+  /* Founder A1–A3: a denser grain that scrolls with the page. One texel per device pixel. */
+  --noise-tile: url('/material/noise-d2-medium.webp');
+  --noise-opacity: 1;
+  --noise-scale: 1024px;
+}
+@media (min-resolution: 1.5dppx) { :root { --noise-scale: 512px; } }
+/* The preview's density stages (switcher axis `density`; d2 is the default and ships). d0 is the
+   paper A7 and A8 shipped, kept byte for byte. */
+html[data-v-density='d1'] { --noise-tile: url('/material/noise-d1-light.webp'); }
+html[data-v-density='d3'] { --noise-tile: url('/material/noise-d3-dense.webp'); }
+html[data-v-density='d0'] { --noise-tile: url('/material/paper.webp'); }
+
 /* ── Base ───────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }

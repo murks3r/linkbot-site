@@ -24,7 +24,7 @@ if (!fs.existsSync(path.join(DIST, 'index.html'))) throw Error('build the site f
 const PAGES = ['/', '/how-it-works', '/privacy', '/hiring'];
 const WIDTHS = [1440, 1024, 768, 390, 320];
 const HEIGHTS = { 1440: 900, 1024: 768, 768: 1024, 390: 844, 320: 720 };
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8' };
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8' };
 
 function serve() {
   const server = http.createServer((req, res) => {
@@ -137,10 +137,10 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       await context.close();
     }
 
-    // ── 2. The composition (Concept A7): the search at the centre of the opening viewport, the
-    //       criteria people give Linkbot around it, one bright living world with a real paper
-    //       layer, then the story as the product works (Signal), privacy in the same light
-    //       (Yours), the invitation. ──
+    // ── 2. The composition (Concept A7; the ground's layers of A9): the search at the centre of
+    //       the opening viewport, the criteria people give Linkbot around it, one bright living
+    //       world with a real paper grain beneath all content, then the story as the product works
+    //       (Signal), privacy in the same light (Yours), the invitation. ──
     {
       const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
       const page = await context.newPage();
@@ -246,16 +246,42 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(still.list === 'abcde' && still.hidden === 0 && still.note && still.why === 4, `reduced motion: five in order, two hidden and counted, the reasons shown (${JSON.stringify(still)})`);
       check(still.shared === 3 && still.receipt && still.fresh && still.nothing && still.slot, `reduced motion: both sides, the new fit, the shared details, the empty identity slot and the receipt are there (${JSON.stringify(still)})`);
       check(still.air === 'still', `reduced motion: the atmosphere draws one still frame (${still.air})`);
-      // The material: one paper layer the size of the page, printed beneath every word; the
-      // fingerprint once, on your side of the privacy chapter, and nowhere else.
+      // The material (Concept A9's layer model): the ground (L0), the light (L1) and the wash (L2)
+      // fixed beneath; one noise layer (L3) in the page flow, as tall as the document, scrolling with
+      // the content and printing with multiply on those alone; everything that carries words (main,
+      // the footer, the header: L4) above it, so no word, field, card or chip is printed by it, and
+      // no ancestor of the noise is a group a component could drag it into. The fingerprint once, on
+      // your side of the privacy chapter, and nowhere else.
       const material = await page.evaluate(() => {
-        const paper = document.querySelector('[data-paper]'), s = getComputedStyle(paper), main = getComputedStyle(document.querySelector('main'));
-        return { height: paper.getBoundingClientRect().height, page: document.documentElement.scrollHeight, innerH: innerHeight, blend: s.mixBlendMode, image: s.backgroundImage, repeat: s.backgroundRepeat, z: Number(s.zIndex), mainZ: Number(main.zIndex), position: s.position, events: s.pointerEvents, hidden: paper.getAttribute('aria-hidden'),
+        const noise = document.querySelector('[data-noise]'), s = getComputedStyle(noise), z = q => Number(getComputedStyle(document.querySelector(q)).zIndex);
+        const group = e => { const c = getComputedStyle(e); return (c.position !== 'static' && c.zIndex !== 'auto') || ['fixed', 'sticky'].includes(c.position) || Number(c.opacity) < 1 || c.transform !== 'none' || c.filter !== 'none' || c.isolation === 'isolate' || c.mixBlendMode !== 'normal' || c.willChange !== 'auto'; };
+        const nearest = e => { for (let a = e.parentElement; a; a = a.parentElement) if (group(a)) return a.localName; return null; };
+        const top = () => Math.round(noise.getBoundingClientRect().top);
+        scrollTo(0, 0); const at0 = top(); scrollTo(0, 600); const at600 = top(); scrollTo(0, 0);
+        return { parent: noise.parentElement.localName, bodyGroup: group(document.body), height: Math.round(noise.getBoundingClientRect().height), page: document.documentElement.scrollHeight, blend: s.mixBlendMode, image: s.backgroundImage, repeat: s.backgroundRepeat, position: s.position, events: s.pointerEvents, hidden: noise.getAttribute('aria-hidden'), at0, at600,
+          z: Number(s.zIndex), air: z('.air'), main: z('main'), footer: z('footer'), header: z('[data-masthead]'), washOver: document.querySelector('.air').lastElementChild?.matches('[data-wash]'),
+          looseBlends: [...document.querySelectorAll('body *')].filter(e => e !== noise && getComputedStyle(e).mixBlendMode !== 'normal' && ['main', 'footer', 'header', 'body', 'html'].includes(nearest(e))).map(e => e.className),
           prints: [...document.querySelectorAll('img[src*="/material/print"]')].map(i => i.closest('.yr-you') ? 'yours' : i.closest('section, div')?.className), calm: [...document.querySelectorAll('[data-air-calm]')].map(e => e.className.split(' ')[1]) };
       });
-      check(material.height >= material.innerH - 2 && /paper\.webp/.test(material.image) && material.repeat === 'repeat' && material.blend === 'multiply' && material.hidden === 'true', `the paper covers the whole view (fixed, so every scrolled page), tiles and prints with multiply (${JSON.stringify(material)})`);
-      check(material.z > material.mainZ && material.position === 'fixed' && material.events === 'none', `the paper lies over the whole page, fixed, never in the way of a pointer (${JSON.stringify(material)})`);
+      check(material.parent === 'body' && !material.bodyGroup && material.position === 'absolute' && Math.abs(material.height - material.page) <= 2 && material.at0 === 0 && material.at600 === -600, `the noise lies in the page flow, as tall as the document, and scrolls with it (${JSON.stringify(material)})`);
+      check(/noise-d2-medium\.webp/.test(material.image) && material.repeat === 'repeat' && material.blend === 'multiply' && material.hidden === 'true' && material.events === 'none', `the noise is the d2 tile, tiled, printed with multiply, decorative and never in the way of a pointer (${JSON.stringify(material)})`);
+      check(material.air < material.z && material.washOver && [material.main, material.footer, material.header].every(c => c > material.z), `the ground, the light and the wash lie beneath the noise, and main, the footer and the header above it (${JSON.stringify(material)})`);
+      check(material.looseBlends.length === 0, `every blend inside the content has its own group (${material.looseBlends})`);
       check(JSON.stringify(material.prints) === JSON.stringify(['yours']), `the fingerprint appears once, on your side of the privacy chapter (${material.prints})`);
+      // In pixels: inside the field the grain is gone (its surface lies above the noise); the open
+      // ground beside it carries it.
+      await page.setViewportSize({ width: 1440, height: 900 }); await page.evaluate(() => scrollTo(0, 0));
+      const hide = await page.addStyleTag({ content: '.hero .search-box * { visibility: hidden !important; }' });
+      const fieldBox = await page.evaluate(() => { const r = document.querySelector('.hero .search-box').getBoundingClientRect(); return { x: r.left + 24, y: r.top + 12, width: r.width * .5, height: r.height - 24 }; });
+      const grainIn = clip => page.screenshot({ clip }).then(buf => page.evaluate(async src => {
+        const img = await new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + src; });
+        const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+        const d = g.getImageData(0, 0, c.width, c.height).data, w = c.width, h = c.height, L = i => .2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2];
+        let e = 0, m = 0; for (let y = 1; y < h - 1; y++) for (let x = 1; x < w - 1; x++) { let t = 0; for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) t += L(((y + dy) * w + x + dx) * 4); const q = L((y * w + x) * 4) - t / 9; e += q * q; m++; }
+        return Math.sqrt(e / m); }, buf.toString('base64')));
+      const inField = await grainIn(fieldBox), onGround = await grainIn({ x: 16, y: 150, width: 120, height: 560 });
+      await hide.evaluate(n => n.remove());
+      check(inField < 1 && onGround >= 5, `the field is not printed by the noise, the open ground is (grain ${inField.toFixed(2)} inside the field, ${onGround.toFixed(2)} on the ground)`);
       check(JSON.stringify(material.calm) === JSON.stringify(['yours']), `only the privacy chapter calms the light (${material.calm})`);
       await context.close();
 
@@ -302,9 +328,12 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       const a = await pixels(); await lp.waitForTimeout(3000); const b = await pixels();
       const motion = await measure(a, b);
       // A6, measured the same way: 7 % of the strip changed in 3 s (mean 1.1 levels), chroma 28.6,
-      // fine texture 5.3; A7 at its commit: about 76 %, 3.5 levels, 32.8, 6.9.
-      check(motion.changed >= 30 && motion.mean <= 8, `left alone, the atmosphere moves plainly but calmly (${motion.changed.toFixed(1)} % of a sky strip changed in 3 s, mean ${motion.mean.toFixed(2)} levels; A6: 7 %, 1.1)`);
-      check(motion.chroma >= 30, `the light is coloured, not grey (mean chroma ${motion.chroma.toFixed(1)})`);
+      // fine texture 5.3; A7 at its commit: about 76 %, 3.5 levels, 32.8, 6.9. A9 (founder A4: the
+      // background far less colourful, towards white and grey, colour only where the story needs
+      // it): the pigments desaturated to 35 % and a wash over them, so at rest the light is quiet,
+      // near white-grey, and still alive (A9 v0 at its checkpoint: 4.0 %, 0.94 levels, chroma 4.2).
+      check(motion.mean >= .4 && motion.mean <= 8, `left alone, the atmosphere still lives, calmly (${motion.changed.toFixed(1)} % of a sky strip changed in 3 s, mean ${motion.mean.toFixed(2)} levels; a hidden tab: < .3)`);
+      check(motion.chroma <= 12, `at rest the light is quiet, towards white and grey (mean chroma ${motion.chroma.toFixed(1)}; A7: 32.8)`);
       check(motion.grain >= 6, `the paper is plainly visible at 2× (${motion.grain.toFixed(2)} levels of fine texture; A6's grain: 5.3)`);
       report.atmosphere = { changedIn3s: +motion.changed.toFixed(1), meanDelta: +motion.mean.toFixed(2), chroma: +motion.chroma.toFixed(1), grain: +motion.grain.toFixed(2) };
       // One bright world: at the hero, in the story and in the privacy chapter the viewport stays
@@ -466,7 +495,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         check(await mp.evaluate(() => [...document.querySelectorAll('[data-scene]')].every(s => !s.classList.contains('is-live'))), `${w}×${h}: a screen too short for the stages gets the static story`);
       }
       await moving.close();
-      report.journeys.composition = 'A7 hero at 1440/1024/390/320 (the field placed at the optical centre and dominant, balanced headline a step below it, criteria floating clear of everything, three promises); the paper over the whole page beneath the words, the fingerprint once; a living atmosphere (plainly moving when idle, calm, coloured, one bright world, still under reduced motion, paused when hidden, the hand never moves the search, nothing written on the root); value → story → privacy → start; two scenes static (no JS, reduced motion, short screens) and live from 360 × 800 (beats, reverse, jump, fling, resize, contrast per beat, statements over the real background, no row over another)';
+      report.journeys.composition = 'A7 hero at 1440/1024/390/320 (the field placed at the optical centre and dominant, balanced headline a step below it, criteria floating clear of everything, three promises); the noise in the page flow beneath all content (scrolling, multiply, the field free of it), the fingerprint once; a living atmosphere (alive when idle, calm, quiet towards white and grey at rest, one bright world, still under reduced motion, paused when hidden, the hand never moves the search, nothing written on the root); value → story → privacy → start; two scenes static (no JS, reduced motion, short screens) and live from 360 × 800 (beats, reverse, jump, fling, resize, contrast per beat, statements over the real background, no row over another)';
     }
 
     // ── 3. Journeys (motion allowed, as most visitors see it) ──

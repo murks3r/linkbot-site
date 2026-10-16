@@ -18,7 +18,17 @@
    then the next animation frame), not at every display refresh: every wake also carries the page's
    own CSS animations, so this halves their cost too. Nothing is drawn while the tab is hidden;
    under reduced motion one still frame is drawn and the pointer is ignored. The only output is the canvas: no style is written anywhere, so the
-   document is never invalidated. Without WebGL the static gradients beneath it remain. */
+   document is never invalidated. Without WebGL the static gradients beneath it remain.
+
+   Concept A9 (founder A4: far less colourful, towards white and grey; colour only where the story
+   needs it). The pigments are desaturated to --air-saturation where they are read, in linear light
+   around each pigment's own relative luminance: every pigment keeps its luminance, so the palette's
+   contrast proof still holds for each one, and the wash above (Air.astro) only lightens further. A
+   section that needs colour carries data-air-reveal (a peak from 0 to 1, empty = 1): while it fills
+   the view, --air-reveal rises towards that peak, easing back to 0 a viewport away; the pigments
+   regain saturation towards 1 and the wash thins in the same proportion. That one value is the only
+   style ever written, on the atmosphere's own element (never on <html> or <body>), and only while
+   such a section exists and the page moves. */
 
 const VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
 const FRAG = `
@@ -92,18 +102,24 @@ const TEMPO = 2.1;
 
 const lin = (c: number) => (c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4);
 const rgb = (hex: string) => { const h = hex.trim().replace('#', ''); return [0, 2, 4].map(i => lin(parseInt(h.slice(i, i + 2), 16) / 255)); };
+/* Towards grey of the same relative luminance (linear light): s = 1 is the pigment, 0 its grey. */
+const desaturate = (c: number[], s: number) => { const y = .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; return c.map(v => y + (v - y) * s); };
+const token = (name: string, fallback: number) => { const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)); return Number.isFinite(v) ? Math.min(1, Math.max(0, v)) : fallback; };
 
-export function atmosphere(root: HTMLElement) {
+/** What the reveal needs from the living field (null without WebGL: then only the wash answers). */
+type Field = { reveal(r: number): void };
+
+export function atmosphere(root: HTMLElement): Field | null {
   const canvas = root.querySelector<HTMLCanvasElement>('canvas');
-  if (!canvas) return;
+  if (!canvas) return null;
   const gl = canvas.getContext('webgl', { alpha: false, antialias: false, depth: false, stencil: false, premultipliedAlpha: false, powerPreference: 'low-power' });
-  if (!gl) return;
+  if (!gl) return null;
   const compile = (type: number, src: string) => { const s = gl.createShader(type)!; gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; };
   const vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, FRAG);
-  if (!vs || !fs) return;
+  if (!vs || !fs) return null;
   const prog = gl.createProgram()!;
   gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return null;
   gl.useProgram(prog);
   gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
@@ -112,12 +128,20 @@ export function atmosphere(root: HTMLElement) {
   const U = (n: string) => gl.getUniformLocation(prog, n);
   const u = { res: U('uRes'), time: U('uTime'), pointer: U('uPointer'), scroll: U('uScroll') };
 
-  // The pigments are the palette's own tokens, so the proof in the palette covers what is drawn.
+  // The pigments are the palette's own tokens, so the proof in the palette covers what is drawn;
+  // desaturated to --air-saturation (A9), and towards full colour as a section reveals it.
   const names = Object.keys(LAYOUT);
+  let base: number[][] = [], saturation = 1, revealed = 0;
+  const upload = () => {
+    const s = saturation + (1 - saturation) * revealed;
+    gl.uniform3fv(U('uCol'), base.flatMap(c => desaturate(c, s)));
+  };
   const pigments = () => {
     const css = getComputedStyle(document.documentElement);
     gl.uniform3fv(U('uPaper'), rgb(css.getPropertyValue('--lb-cream') || '#fbf8f1'));
-    gl.uniform3fv(U('uCol'), names.flatMap(n => rgb(css.getPropertyValue(`--lb-air-${n}`) || '#fbf8f1')));
+    base = names.map(n => rgb(css.getPropertyValue(`--lb-air-${n}`) || '#fbf8f1'));
+    saturation = token('--air-saturation', 1);
+    upload();
   };
   pigments();
   // The preview's switcher can change the palette after load (Concept A8); production never fires this.
@@ -189,7 +213,34 @@ export function atmosphere(root: HTMLElement) {
   document.documentElement.addEventListener('pointerleave', () => { ptr.tz = 0; });
   mode();
   root.classList.add('is-drawn');
+  return { reveal(r: number) { revealed = r; upload(); if (!running()) draw(); } };
+}
+
+/* The reveal hook (A9): sections carrying data-air-reveal raise --air-reveal on the atmosphere while
+   they are in view. Nothing is listened to when no section asks for colour. */
+export function reveal(root: HTMLElement, field: Field | null) {
+  const asks = [...document.querySelectorAll<HTMLElement>('[data-air-reveal]')];
+  if (!asks.length) return;
+  let raf = 0, last = -1;
+  const peak = (el: HTMLElement) => { const v = el.dataset.airReveal; const n = v === undefined || v.trim() === '' ? 1 : Number(v); return Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 1; };
+  const update = () => {
+    raf = 0;
+    const h = innerHeight;
+    let r = 0;
+    for (const el of asks) { const b = el.getBoundingClientRect(); r = Math.max(r, peak(el) * Math.max(0, Math.min(1, Math.min(h - b.top, b.bottom) / h))); }
+    r = Math.round(r * 1000) / 1000;
+    if (r === last) return;
+    last = r;
+    root.style.setProperty('--air-reveal', String(r));
+    field?.reveal(r);
+  };
+  const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue, { passive: true });
+  // A direction may change a section's peak as its own story moves (data-air-reveal is re-read).
+  new MutationObserver(queue).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['data-air-reveal'] });
+  update();
 }
 
 const root = document.querySelector<HTMLElement>('[data-air]');
-if (root) atmosphere(root);
+if (root) reveal(root, atmosphere(root));
