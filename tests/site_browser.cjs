@@ -219,7 +219,10 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(JSON.stringify(scenes.map(s => [s.name, s.beats])) === JSON.stringify([['signal', 7], ['yours', 3]]), `two scenes with their beats (${JSON.stringify(scenes.map(s => [s.name, s.beats]))})`);
       check(scenes.every(s => s.captions.length === s.beats && !s.live), 'reduced motion: every scene is static, with one statement per beat, all readable in order');
       check(scenes[0].captions.join(' | ') === 'New openings every day. Most aren’t for you. | Say what would make a move worth it. | Linkbot reads it as criteria. | Prefer brings up what states it. | Avoid sends down what states it. | A Must is a hard line, and only you draw it. | Every fit shows its reasons.', `the story is the product, step by step (${scenes[0].captions.join(' | ')})`);
-      check(scenes[1].captions.join(' | ') === 'What you see is yours. | A fit tells no one. | You decide what is shared, and with whom.', `privacy, in three facts (${scenes[1].captions.join(' | ')})`);
+      // A9: the default story never states "A fit tells no one" (an option only while counsel's reading
+      // is open, founder B) and states sharing as the claims ledger allows it (S2.2, S3.3).
+      check(scenes[1].captions.join(' | ') === 'What you see is yours. | A fit is not a disclosure. | Sharing is a separate decision.', `privacy, in three facts (${scenes[1].captions.join(' | ')})`);
+      check(!/tells no one/i.test(await page.evaluate(() => document.querySelector('main').innerText)), 'the default home never says "A fit tells no one"');
       const home = await page.evaluate(() => document.querySelector('main').innerText);
       check(!/What works today|short phrases|Write it in|runs in circles/i.test(home), 'no status section, no writing instructions and no problem-first loop on the home page');
       check(/Illustration/.test(home) && /interpreter/.test(home), 'the illustrations say they are illustrations, and the words are credited to the interpreter');

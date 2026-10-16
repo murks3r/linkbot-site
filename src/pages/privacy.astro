@@ -38,7 +38,7 @@ const SECTIONS: [string, string][] = [['search', 'When you search'], ['save', 'W
         <h2 id="save-title">When you save a job or watch a search</h2>
         <p>Keeping anything needs an account, so it has a private place to live. You sign in first, and you confirm what to keep after signing in; nothing is saved before that.</p>
         <ul class="marks">
-          <li><Mark tone="fit" size={14} /><div><b>Only you can see it.</b><p>Saved jobs and watched directions are private to your account. There is no public profile.</p></div></li>
+          <li><Mark tone="fit" size={14} /><div><b>Private to your account.</b><p>Saved jobs and watched directions are private to your account. There is no public profile.</p></div></li>
           <li><Mark tone="tradeoff" size={14} /><div><b>Linkbot reads what it works on.</b><p>To watch a direction for you, Linkbot’s servers read it and compare it with new listings. That is the work you asked for. It isn’t end-to-end encrypted, and we don’t say it is.</p></div></li>
         </ul>
       </section>
@@ -46,7 +46,7 @@ const SECTIONS: [string, string][] = [['search', 'When you search'], ['save', 'W
       <section id="employers" aria-labelledby="employers-title">
         <h2 id="employers-title">What employers can’t see</h2>
         <ul class="marks">
-          <li><Mark tone="unknown" size={14} /><div><b>No directory of people.</b><p>Employers can’t search for you or browse profiles. There aren’t any.</p></div></li>
+          <li><Mark tone="unknown" size={14} /><div><b>No directory of people.</b><p>Employers can’t search for you or browse profiles.</p></div></li>
           <li><Mark tone="unknown" size={14} /><div><b>Not your searches, saves or watches.</b><p>None of it is visible to any employer, and no employer can see who saved a job.</p></div></li>
           <li><Mark tone="unknown" size={14} /><div><b>Not your matches.</b><p>A match is not a disclosure, not a sign of interest and not permission to contact you. Matching never applies for you.</p></div></li>
         </ul>
@@ -60,10 +60,10 @@ const SECTIONS: [string, string][] = [['search', 'When you search'], ['save', 'W
 
       <section id="sharing" aria-labelledby="sharing-title">
         <h2 id="sharing-title">When you decide to share</h2>
-        <p>Sharing is always a separate step you confirm, for one named recipient, with exactly the details you choose. Before anything is sent, you see which details go to whom.</p>
+        <p>Sharing is a separate decision you confirm: once, for one named recipient with exactly the details you choose, or by a standing rule you set. When you share once, you see which details go to whom before anything is sent.</p>
         <div class="two">
           <div class="mode"><h3>Once</h3><p>You confirm one share of chosen details with one recipient.</p></div>
-          <div class="mode"><h3>By standing rule</h3><p>You set a rule: these details, to this named recipient, for this long. Linkbot shares under it without asking each time. You create it explicitly; Linkbot never creates one for you.</p></div>
+          <div class="mode"><h3>By standing rule</h3><p>You confirm a rule once, for one watched search. It covers the pilot employers Linkbot lists for that search, and a fixed set of details: role categories, employment country and work mode, plus experience level and availability where you confirmed them. When a current, reviewed job of one of those employers fits the search, Linkbot shares under the rule without asking again: at most once per employer, with access for at most 7 days. You create the rule yourself; Linkbot never creates one for you.</p></div>
         </div>
         <ul class="marks">
           <li><Mark tone="fit" size={14} /><div><b>A receipt every time.</b><p>Who received which details, when, and under which choice. Your history stays visible to you.</p></div></li>
