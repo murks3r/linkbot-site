@@ -64,12 +64,15 @@
   --shadow-field: 0 1px 2px rgb(18 58 44 / .04), 0 24px 60px -28px rgb(18 58 44 / .28);
 }
 @media (prefers-reduced-motion: reduce) { :root { --fast: 0ms; --base: 0ms; } }
-/* Into Search Jobs (A9, src/scripts/transition.ts): the header stays, the field travels, the page
-   crossfades over the shared ground. Only with motion. */
+/* Into Search Jobs (A9, src/scripts/transition.ts): only the field travels. The page itself, header
+   included, swaps at once: the two documents lie on the same ground and carry the same header, so a
+   crossfade would only show two grains (or two headers) at half strength, never anything new (W1
+   part 3, review R1/R2). Only with motion; without it nothing moves at all. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
   ::view-transition-group(lb-field) { animation-duration: .42s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
-  ::view-transition-group(root) { animation-duration: .3s; }
+  ::view-transition-old(root) { animation: none; opacity: 0; }
+  ::view-transition-new(root) { animation: none; }
 }
 html[data-v-radius='10'] { --field-r: 10px; }
 html[data-v-radius='16'] { --field-r: 16px; }
