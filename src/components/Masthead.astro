@@ -34,6 +34,8 @@ const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy',
      plate inside the plate's own group (the A8 lesson: a multiply needs an opaque backdrop in its
      own stacking context, or it blends with nothing and paints white). */
   .masthead { position: sticky; top: 0; z-index: 30; background: transparent; }
+  /* The same header in Search Jobs (the app): named, so a transition into it leaves it where it is. */
+  @media (prefers-reduced-motion: no-preference) { .masthead { view-transition-name: lb-header; } }
   .masthead-plate { position: absolute; left: 0; right: 0; top: 0; bottom: calc(-1 * var(--feather)); z-index: -1; overflow: hidden; pointer-events: none; background: var(--wash);
     -webkit-mask-image: linear-gradient(#000 calc(100% - var(--feather)), transparent); mask-image: linear-gradient(#000 calc(100% - var(--feather)), transparent);
     opacity: 0; transition: opacity var(--base); }

@@ -75,6 +75,8 @@ import { app, searchWith } from '../lib/links';
   .hero h1 { max-width: 17ch; font-size: var(--h1-size); font-weight: 560; letter-spacing: -.034em; line-height: 1.02; }
   .h1-line { display: block; }
   .hero-search { position: relative; width: 100%; display: grid; justify-items: center; }
+  /* The field that travels into Search Jobs (A9, src/scripts/transition.ts). */
+  @media (prefers-reduced-motion: no-preference) { .hero-search :global(.search-box) { view-transition-name: lb-field; } }
   /* A9 (W1 part 2): A7–A8's pool of light behind the field is gone. It lifted the field off a
      colourful sky; on the desaturated ground it only veiled the grain around the field, a smooth
      halo on the noise (most visible on phones). The field keeps its ring and its lift. */
