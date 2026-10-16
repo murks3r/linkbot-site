@@ -237,7 +237,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
           labels: [...new Set([...document.querySelectorAll('[data-direction="puzzle"] .status')].map(s => s.textContent.trim()))].sort(),
           air: document.querySelector('[data-air]')?.dataset.air };
       });
-      check(still.words === 'Data engineer | Remote | No on-call | Berlin' && still.whole === 1, `reduced motion: S1, the four words and the shaped piece (${JSON.stringify(still)})`);
+      check(still.words.replace(/\u2011/g, '-') === 'Data engineer | Remote | No on-call | Berlin' && still.whole === 1, `reduced motion: S1, the four words and the shaped piece (${JSON.stringify(still)})`);
       check(still.outlines[0] > .4 && still.outlines[1] === 1 && still.meet === 'Linkbot compares your words with the listing', `reduced motion: S2, the outlines meet where Linkbot compares (${JSON.stringify(still)})`);
       check(still.yes === 1 && still.seated === 'none' && /^matrix3d\(-1/.test(still.turned) && still.matte > .5 && still.answer, `reduced motion: S3–S5, your yes, the piece in the opening, turned, then matte; the company's answer open (${JSON.stringify(still)})`);
       check(JSON.stringify(still.labels) === JSON.stringify(['Built, being proven', 'Built, tested in staging; not yet live with employers', 'In development, not live', 'In the product now', 'Not built yet']), `every status is stated in words (${still.labels})`);

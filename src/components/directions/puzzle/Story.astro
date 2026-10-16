@@ -29,7 +29,7 @@ const [role, mode, task] = hero.criteria;
 const WORDS: [string, string, string][] = [
   ['left', role.label, 'Role'],            // the left tab
   ['top', mode.label, 'Work mode'],        // the top notch
-  ['right', `No ${task.label}`, 'Work'],   // the right tab (an Avoid)
+  ['right', `No ${task.label.replace('-', '\u2011')}`, 'Work'],   // the right tab (an Avoid); a hyphen that never breaks the word
   ['bottom', 'Berlin', 'Place'],           // the bottom notch: the place field
 ];
 
