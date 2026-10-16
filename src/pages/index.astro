@@ -2,8 +2,7 @@
 import Base from '../layouts/Base.astro';
 import SearchForm from '../components/SearchForm.astro';
 import Halo from '../components/Halo.astro';
-import Signal from '../components/Signal.astro';
-import Yours from '../components/Yours.astro';
+import Story from '../components/directions/begegnung/Story.astro';
 import Icon from '../components/Icon.astro';
 import { START_EXAMPLES } from '../data/content';
 import { app, searchWith } from '../lib/links';
@@ -33,18 +32,10 @@ import { app, searchWith } from '../lib/links';
   </section>
 
   <!-- a9:story:start -->
-  <!-- The story block (Concept A9's slot, fundament v0 contracts.md): a direction replaces only what
-       lies between these two markers with its <Story /> (src/components/directions/<key>/), keeping
-       the anchor #story for the hero's cue. Today: A8's two scenes. -->
-  <!-- 2. The story: from openings everywhere to the right ones, step by step. -->
-  <div id="story" class="story" data-stage="story">
-    <Signal />
-  </div>
-
-  <!-- 3. Privacy, in the same bright world: what you see, and what an employer sees. -->
-  <div class="story" data-stage="privacy">
-    <Yours />
-  </div>
+  <!-- The story block (Concept A9's slot, fundament v0 contracts.md): direction W4, Begegnung
+       (encounter), the five stations S1–S5 in src/components/directions/begegnung/. Its root
+       section carries the anchor #story for the hero's cue. -->
+  <Story />
   <!-- a9:story:end -->
 
   <!-- 4. The invitation (A8): one plain call to action, no second field. The three recorded
