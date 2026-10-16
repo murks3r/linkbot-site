@@ -9,31 +9,45 @@
    piece body is 100 × 100; the CSS sizes each object in multiples of the station's piece size --S.
    No meaning is carried by SVG text (there is none): every word in the story is HTML. */
 
-type Edges = [number, number, number, number]; // top, right, bottom, left: 1 tab, -1 notch, 0 flat
+type Edges = [number, number, number, number]; // top, right, bottom, left: 1 tab, -1 notch, 0 flat, 2 open (below)
 const S = 100;
 const f = (n: number) => Math.round(n * 100) / 100;
 
 /** The person's piece: tabs left and right, notches top and bottom (symmetric, so it still fits
     after it is turned over). The role's opening in the board has the same shape. */
 export const YOURS: Edges = [-1, 1, -1, 1];
+/** The opening a listing (and later a company's role) leaves for your piece: the same shape on the
+    three edges the listing states (role, work mode, place), and an OPEN edge where it states nothing
+    (on-call): no socket at all, only a bay wider and deeper than any tab, its rim dashed. So your
+    piece's own tab can lie in it without touching it: the unknown is never drawn as met (claims.md
+    NEVER row "the unknown drawn as confirmed"; verify F3), and nothing ever completes the board. */
+export const OPENING: Edges = [-1, 2, -1, 1];
 /** The company's own open place (its answer, never given in the story): top and right on the
-    board's frame, so flat; a tab below, a notch to the left. */
-const ANSWER: Edges = [0, 0, 1, -1];
+    board's frame, so flat; notches below and to the left, so nothing of it reaches towards the
+    opening's open bay. */
+const ANSWER: Edges = [0, 0, -1, -1];
 
 // One knob along an edge from u = 0 to u = 1, w outwards (units of the edge length).
 const KNOB: [string, ...number[]][] = [['L', .34, 0], ['C', .40, 0, .425, .03, .405, .085], ['C', .375, .16, .33, .285, .5, .285], ['C', .67, .285, .625, .16, .595, .085], ['C', .575, .03, .60, 0, .66, 0]];
 const RC = .06;
+/** The open edge's bay (u from, u to, depth w; corner radius): a tab spans about u .34–.66 and
+    reaches w .285, so the bay leaves at least .14 beside it and .08 beyond it. */
+const BAY = { a: .2, b: .8, w: .37, r: .13 };
 
 function mapper(size: number, edges: Edges, ox: number, oy: number) {
   const corners = [[0, 0], [size, 0], [size, size], [0, size]], dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]];
   return (e: number, u: number, w: number): [number, number] => {
-    const [x0, y0] = corners[e], [dx, dy] = dirs[e], s = edges[e] || 0;
+    const [x0, y0] = corners[e], [dx, dy] = dirs[e], s = edges[e] === 2 ? 1 : edges[e] || 0;
     return [ox + x0 + u * size * dx + w * size * dy * s, oy + y0 + u * size * dy - w * size * dx * s];
   };
 }
 function edgeCmds(P: ReturnType<typeof mapper>, e: number, edges: Edges) {
   let d = '';
-  if (edges[e]) for (const k of KNOB) {
+  const at = (u: number, w: number) => { const p = P(e, u, w); return `${f(p[0])} ${f(p[1])}`; };
+  if (edges[e] === 2) {
+    const { a, b, w, r } = BAY;
+    d += `L${at(a, 0)}L${at(a, w - r)}Q${at(a, w)} ${at(a + r, w)}L${at(b - r, w)}Q${at(b, w)} ${at(b, w - r)}L${at(b, 0)}`;
+  } else if (edges[e]) for (const k of KNOB) {
     if (k[0] === 'L') { const p = P(e, k[1], k[2]); d += `L${f(p[0])} ${f(p[1])}`; }
     else { const a = P(e, k[1], k[2]), b = P(e, k[3], k[4]), c = P(e, k[5], k[6]); d += `C${f(a[0])} ${f(a[1])} ${f(b[0])} ${f(b[1])} ${f(c[0])} ${f(c[1])}`; }
   }
@@ -50,16 +64,6 @@ export function piecePath(size: number, edges: Edges, ox = 0, oy = 0) {
 function edgePath(size: number, edges: Edges, e: number, ox = 0, oy = 0) {
   const P = mapper(size, edges, ox, oy), s = P(e, RC, 0);
   return `M${f(s[0])} ${f(s[1])}` + edgeCmds(P, e, edges);
-}
-function seam(ax: number, ay: number, bx: number, by: number, s: number) {
-  const L = Math.hypot(bx - ax, by - ay), dx = (bx - ax) / L, dy = (by - ay) / L;
-  const P = (u: number, w: number) => [ax + u * L * dx + w * L * dy * s, ay + u * L * dy - w * L * dx * s];
-  let d = `M${f(ax)} ${f(ay)}`;
-  for (const k of KNOB) {
-    if (k[0] === 'L') { const p = P(k[1], k[2]); d += `L${f(p[0])} ${f(p[1])}`; }
-    else { const a = P(k[1], k[2]), b = P(k[3], k[4]), c = P(k[5], k[6]); d += `C${f(a[0])} ${f(a[1])} ${f(b[0])} ${f(b[1])} ${f(c[0])} ${f(c[1])}`; }
-  }
-  return d + `L${f(bx)} ${f(by)}`;
 }
 const rrect = (x: number, y: number, w: number, h: number, r: number) =>
   `M${f(x + r)} ${f(y)}H${f(x + w - r)}A${f(r)} ${f(r)} 0 0 1 ${f(x + w)} ${f(y + r)}V${f(y + h - r)}A${f(r)} ${f(r)} 0 0 1 ${f(x + w - r)} ${f(y + h)}H${f(x + r)}A${f(r)} ${f(r)} 0 0 1 ${f(x)} ${f(y + h - r)}V${f(y + r)}A${f(r)} ${f(r)} 0 0 1 ${f(x + r)} ${f(y)}Z`;
@@ -159,12 +163,14 @@ function shadowContact() {
     <path d="${PIECE}" fill="#4b3f2a" opacity=".34" transform="translate(.6 ${T + .8})" filter="url(#puzzle-b18)"/>`;
 }
 /** Outlines with no surface: the shapes being compared (S2). Yours: all four edges, from your four
-    words. The opening's: three edges the listing states, the fourth (on-call) dashed: not stated. */
-function outline(openRight: boolean) {
-  let s = `<path d="${PIECE}" fill="${C.ink}" opacity=".035"/>`;
+    words. The opening's: the three edges the listing states, and the open bay (on-call) dashed: not
+    stated, so where they meet your tab lies inside the bay and touches nothing. */
+function outline(opening: boolean) {
+  const edges = opening ? OPENING : YOURS;
+  let s = `<path d="${piecePath(S, edges)}" fill="${C.ink}" opacity=".035"/>`;
   for (let e = 0; e < 4; e++) {
-    const open = openRight && e === 1;
-    s += `<path d="${edgePath(S, YOURS, e)}" fill="none" stroke="${C.ink}" stroke-width="${open ? 2 : 2.6}" ${open ? 'stroke-dasharray="6 7"' : ''} stroke-linecap="round" stroke-linejoin="round"/>`;
+    const open = edges[e] === 2;
+    s += `<path d="${edgePath(S, edges, e)}" fill="none" stroke="${C.ink}" stroke-width="${open ? 2 : 2.6}" ${open ? 'stroke-dasharray="6 7"' : ''} stroke-linecap="round" stroke-linejoin="round"/>`;
   }
   return s;
 }
@@ -203,34 +209,23 @@ function dish(id: string, W: number, H: number) {
 }
 
 export const BOARD = { m: 42, w: 3.84, vb: '-70 -70 524 534' };
-/** The company's board: a slab of engraved pieces with the opening of the role in the middle. The
-    edge the listing doesn't state (on-call, the opening's right edge) is dashed, never cut.
-    role = true adds the company's own open place (its answer), which the story never fills. */
+/** The company's board: a porcelain slab with one opening in the middle, cut to the listing's
+    stated edges, its open edge (on-call) a dashed bay. No other pieces are engraved around it (the
+    earlier jigsaw grid made a seated piece read as the "missing piece" that completes a picture;
+    verify F3, review M4): it is an opening, not a puzzle to finish. role = true adds the company's
+    own open place (its answer), which the story never fills. */
 function board(id: string, role: boolean) {
   const m = BOARD.m, W = 3 * S + 2 * m, H = W, ox = m + S, oy = m + S, r = 14, t = 7;
-  const outer = rrect(0, 0, W, H, r), hole = piecePath(S, YOURS, ox, oy);
+  const outer = rrect(0, 0, W, H, r), hole = piecePath(S, OPENING, ox, oy);
   const answer = role ? piecePath(S, ANSWER, m + 2 * S, m) : '';
   const holes = hole + answer;
-  const seams: string[] = [];
-  const sign = [1, -1, -1, 1, 1, -1, 1, -1, -1, 1, -1, 1];
-  let k = 0;
-  for (let row = 0; row < 3; row++) for (let col = 1; col < 3; col++) {
-    const touchesHole = row === 1 || (role && row === 0 && col === 2);
-    if (touchesHole) { k++; continue; }
-    seams.push(seam(m + col * S, m + row * S, m + col * S, m + (row + 1) * S, sign[k++ % 12]));
-  }
-  for (let row = 1; row < 3; row++) for (let col = 0; col < 3; col++) {
-    const touchesHole = col === 1 || (role && row === 1 && col === 2);
-    if (touchesHole) { k++; continue; }
-    seams.push(seam(m + col * S, m + row * S, m + (col + 1) * S, m + row * S, sign[k++ % 12]));
-  }
   const frame = rrect(m, m, 3 * S, 3 * S, 4);
   const groove = (p: string) => `<path d="${p}" fill="none" stroke="#fff" stroke-width="1.6" opacity=".95" transform="translate(.9 1)"/><path d="${p}" fill="none" stroke="#b9ae9a" stroke-width="1.25" opacity=".85"/>`;
   const walls = (p: string, cid: string) => `<g clip-path="url(#${cid})">
       <path d="${big(0, 0, W, H)}${p}" fill-rule="evenodd" fill="#7f735c" opacity=".42" transform="translate(4.5 6)" filter="url(#puzzle-b36)"/>
       <path d="${big(0, 0, W, H)}${p}" fill-rule="evenodd" fill="#fff" opacity=".85" transform="translate(-1.8 -2.2)" filter="url(#puzzle-b10)"/></g>`;
-  const P = mapper(S, YOURS, ox, oy);
-  const right = `M${f(P(1, RC, 0)[0])} ${f(P(1, RC, 0)[1])}` + edgeCmds(P, 1, YOURS);
+  const P = mapper(S, OPENING, ox, oy);
+  const right = `M${f(P(1, RC, 0)[0])} ${f(P(1, RC, 0)[1])}` + edgeCmds(P, 1, OPENING);
   return `<defs><clipPath id="${id}-h"><path d="${hole}"/></clipPath>${role ? `<clipPath id="${id}-a"><path d="${answer}"/></clipPath>` : ''}
       <radialGradient id="${id}-fl" gradientUnits="userSpaceOnUse" cx="${ox + 50}" cy="${oy + 50}" r="90"><stop offset="0" stop-color="#f3efe6"/><stop offset="1" stop-color="#e6e0d3"/></radialGradient></defs>
     <path d="${outer}" fill="${C.ink}" opacity=".16" transform="translate(8 ${t + 16})" filter="url(#puzzle-b16x)"/>
@@ -238,7 +233,7 @@ function board(id: string, role: boolean) {
     ${extrude(outer, t)}
     <path d="${holes}" fill="url(#${id}-fl)"/>
     ${bisqueTop(id, outer + holes, [0, 0, W, H], true)}
-    ${groove(seams.join('') + frame)}
+    ${groove(frame)}
     ${walls(hole, `${id}-h`)}${role ? walls(answer, `${id}-a`) : ''}
     <path d="${right}" fill="none" stroke="${C.ink}" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round" opacity=".75"/>`;
 }
