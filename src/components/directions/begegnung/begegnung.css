@@ -6,7 +6,10 @@
    open ground is set in full --ink (the fundament's rule allows --ink-2, but --ink-2 small text
    measured 4.43–4.48 at d2 in the storyboard); plates and tags are surfaces. */
 
-.begegnung { position: relative; overflow-x: clip; padding-block: clamp(40px, 7vw, 96px) clamp(24px, 4vw, 48px);
+/* The company's sleeve runs on past the stage to the edge of the screen: paint containment clips it
+   there without making the section a clipping box (overflow), so nothing scrolls sideways and the
+   text-spacing audit sees no clipped content; the sticky stage still sticks to the page. */
+.begegnung { position: relative; contain: paint; padding-block: clamp(40px, 7vw, 96px) clamp(24px, 4vw, 48px);
   --begegnung-col: 430px; --begegnung-gap: clamp(32px, 4vw, 56px); }
 .begegnung .mark, .begegnung .mark[data-tone='unknown'] { color: var(--ink); }
 

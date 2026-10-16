@@ -214,37 +214,30 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       await page.waitForTimeout(200);
       check(await page.evaluate(() => getComputedStyle(document.querySelector('.masthead-cta')).backgroundColor !== 'rgba(0, 0, 0, 0)'), 'once the hero has scrolled away, the header offers the search action');
       const stages = await page.evaluate(() => [...document.querySelectorAll('main > [data-stage]')].map(s => s.dataset.stage));
-      check(JSON.stringify(stages) === JSON.stringify(['value', 'story', 'privacy', 'start']), `the home runs value → story → privacy → start (${stages})`);
-      const scenes = await page.evaluate(() => [...document.querySelectorAll('[data-scene]')].map(s => ({ name: s.className.split(' ')[1], beats: s.dataset.beats.split(',').length, captions: [...s.querySelectorAll('[data-caption] h2')].map(h => h.textContent), live: s.classList.contains('is-live') })));
-      check(JSON.stringify(scenes.map(s => [s.name, s.beats])) === JSON.stringify([['signal', 7], ['yours', 3]]), `two scenes with their beats (${JSON.stringify(scenes.map(s => [s.name, s.beats]))})`);
-      check(scenes.every(s => s.captions.length === s.beats && !s.live), 'reduced motion: every scene is static, with one statement per beat, all readable in order');
-      check(scenes[0].captions.join(' | ') === 'New openings every day. Most aren’t for you. | Say what would make a move worth it. | Linkbot reads it as criteria. | Prefer brings up what states it. | Avoid sends down what states it. | A Must is a hard line, and only you draw it. | Every fit shows its reasons.', `the story is the product, step by step (${scenes[0].captions.join(' | ')})`);
-      check(scenes[1].captions.join(' | ') === 'What you see is yours. | A fit tells no one. | You decide what is shared, and with whom.', `privacy, in three facts (${scenes[1].captions.join(' | ')})`);
+      // Concept A9, direction W4 (Begegnung): the story block holds one story, S1–S5, privacy included.
+      check(JSON.stringify(stages) === JSON.stringify(['value', 'story', 'start']), `the home runs value → story → start (${stages})`);
+      // The story (W4 Begegnung): five stations, each its own words and its own picture, in the flow
+      // under reduced motion; every picture says it is an illustration.
+      const story = await page.evaluate(() => { const r = document.querySelector('[data-direction="begegnung"]');
+        return { pinned: r?.dataset.mode === 'pin', stations: [...(r?.querySelectorAll('.begegnung-station') ?? [])].map(s => ({ title: s.querySelector('h2')?.textContent ?? '', pic: s.querySelector('.begegnung-frame')?.getAttribute('aria-label') ?? '' })) }; });
+      check(story.stations.length === 5 && !story.pinned, `reduced motion: the story is five stations in the flow, not pinned (${JSON.stringify(story).slice(0, 200)})`);
+      check(story.stations.map(s => s.title).join(' | ') === 'Private by default. Shared only when you decide. | Compared with your words, not with you. | A fit is not permission to contact you. | Then it gets personal, if you want it to. | Change your mind: pause, remove or revoke.', `the five stations S1–S5 (${story.stations.map(s => s.title).join(' | ')})`);
+      check(story.stations.every(s => s.pic.startsWith('Illustration:')), 'every station’s picture says it is an illustration');
       const home = await page.evaluate(() => document.querySelector('main').innerText);
       check(!/What works today|short phrases|Write it in|runs in circles/i.test(home), 'no status section, no writing instructions and no problem-first loop on the home page');
-      check(/Illustration/.test(home) && /interpreter/.test(home), 'the illustrations say they are illustrations, and the words are credited to the interpreter');
-      check(/tested in staging, not yet live/.test(home) && /Private matching is in development/.test(home), 'sharing and private matching carry their real status');
-      check(/not sharing, and it is not applying/.test(home) && /No name, no contact details/.test(home), 'matching is not disclosure and not applying; identity is never among the shared details');
+      check(/Employers aren’t told you’re looking/.test(home) && /Compared with your words, not with you/.test(home), 'the story names who is not told: employers; a fit is with your words, not with you');
+      check(/Built, tested in staging; not yet live with employers/.test(home) && /In development, not live/.test(home) && /Open question/.test(home), 'sharing, private matching and what is not built carry their real status');
+      check(/A fit is not permission to contact you/.test(home) && /Linkbot never applies for you/.test(home) && /once, or by a standing rule you set/.test(home) && !/\bmatched\b|Only your yes opens anything|[Hh]andshake/.test(home), 'a fit is not permission and not applying; sharing is said as it is (once, or by a standing rule); no match as contact, no Handshake');
       check(!/encrypt|anonym|zero.knowledge|on your device|nobody can see|guarantee/i.test(home), 'no claim of encryption, anonymity, local-only processing or guarantees');
       // Reduced motion: the final states are simply there.
       const still = await page.evaluate(() => {
-        const vis = e => !!e && getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden' && Number(getComputedStyle(e).opacity) === 1;
-        const must = document.querySelector('.sg-chips .chip[data-must]');
-        return {
-          words: document.querySelector('.sg-sentence .sg-typed').textContent.replace(/\s+/g, ' ').trim(),
-          chips: [...document.querySelectorAll('.sg-chips .chip')].map(c => c.querySelector('.chip-label').textContent),
-          must: getComputedStyle(must.querySelector('.chip-hard')).opacity === '1' && getComputedStyle(must.querySelector('.chip-soft')).opacity === '0',
-          list: [...document.querySelectorAll('.sg-card')].filter(vis).map(c => c.dataset.card).join(''),
-          hidden: [...document.querySelectorAll('.sg-card[data-hidden]')].filter(c => getComputedStyle(c).display !== 'none').length,
-          why: [...document.querySelectorAll('.sg-why > div')].filter(vis).length, note: vis(document.querySelector('.sg-hidden')),
-          shared: [...document.querySelectorAll('.yr-shared li')].filter(vis).length, receipt: vis(document.querySelector('.yr-receipt')), fresh: vis(document.querySelector('.yr-fits li[data-new]')),
-          nothing: vis(document.querySelector('.yr-nothing')), slot: vis(document.querySelector('.yr-slot')),
-          air: document.querySelector('[data-air]')?.dataset.air };
+        const r = document.querySelector('[data-direction="begegnung"]'), vis = e => !!e && getComputedStyle(e).display !== 'none' && Number(getComputedStyle(e).opacity) === 1;
+        const tags = k => [...r.querySelectorAll(`.begegnung-v${k} .begegnung-tag`)].filter(vis).map(t => t.textContent.trim());
+        return { frames: [...r.querySelectorAll('.begegnung-station .begegnung-frame')].filter(f => getComputedStyle(f).display !== 'none').length,
+          running: r.getAnimations({ subtree: true }).length, tags3: tags(3), tags4: tags(4), tags5: tags(5), air: document.querySelector('[data-air]')?.dataset.air };
       });
-      check(still.words === 'Product designer, hybrid, more research, no agency work', `the words are the recorded reading's own (${still.words})`);
-      check(still.chips.join(' | ') === 'Product designer | Hybrid | more research | agency work' && still.must, `reduced motion: the words are read and the Must is set (${still.chips.join(' | ')})`);
-      check(still.list === 'abcde' && still.hidden === 0 && still.note && still.why === 4, `reduced motion: five in order, two hidden and counted, the reasons shown (${JSON.stringify(still)})`);
-      check(still.shared === 3 && still.receipt && still.fresh && still.nothing && still.slot, `reduced motion: both sides, the new fit, the shared details, the empty identity slot and the receipt are there (${JSON.stringify(still)})`);
+      check(still.frames === 5 && still.running === 0, `reduced motion: five finished pictures, nothing running (${JSON.stringify(still)})`);
+      check(still.tags3.includes('In development, not live') && still.tags4.includes('In development, not live') && still.tags4.includes('Not shared') && still.tags5.some(t => /Copies already received aren’t recalled\..*Built, tested in staging/.test(t)), `reduced motion: the labels stand in the pictures (${JSON.stringify(still)})`);
       check(still.air === 'still', `reduced motion: the atmosphere draws one still frame (${still.air})`);
       // The material (Concept A9's layer model): the ground (L0), the light (L1) and the wash (L2)
       // fixed beneath; one noise layer (L3) in the page flow, as tall as the document, scrolling with
@@ -267,7 +260,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(/noise-d2-medium\.webp/.test(material.image) && material.repeat === 'repeat' && material.blend === 'multiply' && material.hidden === 'true' && material.events === 'none', `the noise is the d2 tile, tiled, printed with multiply, decorative and never in the way of a pointer (${JSON.stringify(material)})`);
       check(material.air < material.z && material.washOver && [material.main, material.footer, material.header].every(c => c > material.z), `the ground, the light and the wash lie beneath the noise, and main, the footer and the header above it (${JSON.stringify(material)})`);
       check(material.looseBlends.length === 0, `every blend inside the content has its own group (${material.looseBlends})`);
-      check(JSON.stringify(material.prints) === JSON.stringify(['yours']), `the fingerprint appears once, on your side of the privacy chapter (${material.prints})`);
+      check(JSON.stringify(material.prints) === JSON.stringify([]), `this story uses no fingerprint (${material.prints})`);
       // In pixels: inside the field the grain is gone (its surface lies above the noise); the open
       // ground beside it carries it.
       await page.setViewportSize({ width: 1440, height: 900 }); await page.evaluate(() => scrollTo(0, 0));
@@ -282,14 +275,14 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       const inField = await grainIn(fieldBox), onGround = await grainIn({ x: 16, y: 150, width: 120, height: 560 });
       await hide.evaluate(n => n.remove());
       check(inField < 1 && onGround >= 5, `the field is not printed by the noise, the open ground is (grain ${inField.toFixed(2)} inside the field, ${onGround.toFixed(2)} on the ground)`);
-      check(JSON.stringify(material.calm) === JSON.stringify(['yours']), `only the privacy chapter calms the light (${material.calm})`);
+      check(JSON.stringify(material.calm) === JSON.stringify([]), `nothing calms the light; the story reveals colour instead (${material.calm})`);
       await context.close();
 
       // Without scripts, everything is there too, and the search never sends the words.
       const bare = await browser.newContext({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
       const bp = await bare.newPage();
       await bp.goto(origin + '/', { waitUntil: 'networkidle' });
-      check(await bp.evaluate(() => [...document.querySelectorAll('[data-scene]')].every(s => !s.classList.contains('is-live') && getComputedStyle(s.querySelector('[data-scene-stage]')).position !== 'sticky')), 'without scripts every scene is complete and static');
+      check(await bp.evaluate(() => { const r = document.querySelector('[data-direction="begegnung"]'); return !r.dataset.mode && [...r.querySelectorAll('.begegnung-station .begegnung-frame')].every(f => getComputedStyle(f).display !== 'none') && r.querySelectorAll('.begegnung-still').length === 5; }), 'without scripts the story is five finished pictures in the flow');
       check(await bp.evaluate(() => getComputedStyle(document.querySelector('.air-still')).backgroundImage.includes('radial-gradient') && !document.querySelector('.air.is-drawn')), 'without scripts the still atmosphere is there');
       check(await bp.locator('#q-hero').count() === 1 && await bp.locator('#q-hero').getAttribute('name') === null, 'without scripts the search is there and never sends the words (no name)');
       await bare.close();
@@ -339,7 +332,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       // One bright world: at the hero, in the story and in the privacy chapter the viewport stays
       // light (no night, no colour-world jump).
       const levels = [];
-      for (const at of ['.hero', '.signal', '.yours', '.start']) {
+      for (const at of ['.hero', '.begegnung-v2', '.begegnung-v4', '.start']) {
         await lp.evaluate(s => { const e = document.querySelector(s); scrollTo(0, e.getBoundingClientRect().top + scrollY + (s === '.hero' || s === '.start' ? 0 : e.offsetHeight * .3)); }, at);
         await lp.waitForTimeout(700);
         const png = await lp.screenshot({ scale: 'css' });
@@ -379,123 +372,65 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(s1.equals(s2), 'under reduced motion the atmosphere is still');
       await calm.close();
 
-      // With motion: one number per scene, from the scroll position, drives every illustration, so
-      // each scene plays forward, reverses, survives jumps, flings and resizes, and stays legible at
-      // every beat. Statements change with their beat (a short eased transition), so states are read
-      // once the transition has settled.
+      // With motion (W4 Begegnung): one pinned stage beside five captions in the flow; every layer is a
+      // CSS scroll-driven animation of the track's view timeline, so the picture is a function of the
+      // scroll position: forward, back, after a jump or a fling; every station legible.
       const moving = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' });
       await moving.addInitScript(colorKit);
       const mp = await moving.newPage();
-      await mp.goto(origin + '/', { waitUntil: 'networkidle' });
+      await mp.goto(origin + '/', { waitUntil: 'load' });
       await mp.evaluate(() => document.fonts.ready);
       const frame = () => mp.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
-      const settle = async () => { await frame(); await mp.waitForTimeout(950); };
-      const geometry = i => mp.evaluate(i => { const root = document.querySelectorAll('[data-scene]')[i], s = root.querySelector('[data-scene-stage]'); const header = parseFloat(getComputedStyle(s).top) || 0;
-        return { live: root.classList.contains('is-live'), start: root.getBoundingClientRect().top + scrollY - header, span: root.offsetHeight - s.offsetHeight, beats: root.dataset.beats.split(',').map(b => b.split(':').map(Number)) }; }, i);
-      const state = i => mp.evaluate(i => {
-        const root = document.querySelectorAll('[data-scene]')[i], s = root.querySelector('[data-scene-stage]'), r = s.getBoundingClientRect();
-        const on = [...root.querySelectorAll('[data-caption]')].map(c => Math.round(Number(getComputedStyle(c).opacity) * 100) / 100);
-        return { p: Number((root.querySelector('[data-scene-vars]') ?? s).style.getPropertyValue('--p')), beat: root.dataset.beat ?? null, pinned: Math.abs(r.top - parseFloat(getComputedStyle(s).top)) < 2, on,
-          current: [...root.querySelectorAll('[data-caption]')].findIndex(c => c.getAttribute('aria-current') === 'step') }; }, i);
-      const names = ['signal', 'yours'];
-      for (let i = 0; i < 2; i++) {
-        const g = await geometry(i);
-        check(g.live, `${names[i]}: live with motion at 1440×900`);
-        const at = async p => { await mp.evaluate(y => scrollTo(0, y), Math.round(g.start + p * g.span)); await settle(); return state(i); };
-        const mids = g.beats.map(([a, b]) => (a + b) / 2);
-        const seen = [];
-        for (const [k, p] of mids.entries()) {
-          const s = await at(p); seen.push(s);
-          check(s.pinned && Math.abs(s.p - p) < .01, `${names[i]} beat ${k + 1}: pinned at p ${p.toFixed(2)} (${JSON.stringify(s)})`);
-          check(s.current === k, `${names[i]} beat ${k + 1}: its statement is the current step (current ${s.current})`);
-          check(s.on[k] >= .95 && s.on.every((o, j) => j === k || o <= .05), `${names[i]} beat ${k + 1}: one statement owns the stage (${s.on})`);
-        }
-        const back = await at(mids[0]);
-        check(JSON.stringify(back) === JSON.stringify(seen[0]), `${names[i]}: scrolling back to beat 1 returns the same frame`);
-        await mp.evaluate(() => scrollTo(0, document.documentElement.scrollHeight)); await frame();
-        const last = mids.length - 1;
-        check(JSON.stringify(await at(mids[last])) === JSON.stringify(seen[last]), `${names[i]}: a jump back lands on the last beat's frame`);
-        await mp.evaluate(({ start, span, p }) => { for (let k = 0; k <= 40; k++) scrollTo(0, start + span * ((k * 7) % 41) / 40); scrollTo(0, start + span * p); }, { start: g.start, span: g.span, p: mids[1] });
-        await settle();
-        check(JSON.stringify(await state(i)) === JSON.stringify(seen[1]), `${names[i]}: after a fast fling the stage shows the frame for where the page stopped`);
-        for (const [k, p] of mids.entries()) {
-          await at(p);
-          await mp.evaluate(i => { document.querySelectorAll('main > *, .masthead, .footer').forEach(e => { e.inert = !e.contains(document.querySelectorAll('[data-scene]')[i]); }); document.querySelectorAll('[data-scene]').forEach((s, j) => { s.inert = j !== i; });
-            document.querySelectorAll('[aria-hidden="true"]:not(.icon):not(.mark)').forEach(e => { e.dataset.qaHidden = e.style.visibility; e.style.visibility = 'hidden'; }); }, i);
-          const audit = await mp.evaluate(pageAudit, { modal: false, touch: false });
-          await mp.evaluate(() => { document.querySelectorAll('[inert]').forEach(e => { e.inert = false; }); document.querySelectorAll('[data-qa-hidden]').forEach(e => { e.style.visibility = e.dataset.qaHidden; delete e.dataset.qaHidden; }); });
-          const bad = audit.contrast.failures;
-          check(bad.length === 0, `${names[i]} beat ${k + 1}: text below its contrast minimum: ${bad.slice(0, 2).map(f => `${f.node} ${f.text} ${f.ratio}`).join('; ')}`);
-          check(audit.overflow.scrollWidth <= audit.overflow.clientWidth, `${names[i]} beat ${k + 1}: no horizontal overflow`);
-          // The statement over the real, living atmosphere: its darkest background pixels, with the
-          // text itself hidden, against the text's colour.
-          const real = await mp.evaluate(async i => {
-            const root = document.querySelectorAll('[data-scene]')[i], cap = root.querySelector('[data-caption][aria-current="step"]');
-            const parts = [...cap.querySelectorAll('h2, small')].map(e => ({ e, r: e.getBoundingClientRect(), color: getComputedStyle(e).color }));
-            return parts.map(p => ({ x: Math.max(0, Math.round(p.r.left)), y: Math.max(0, Math.round(p.r.top)), width: Math.round(p.r.width), height: Math.round(p.r.height), color: p.color }));
-          }, i);
-          await mp.addStyleTag({ content: '[data-caption] * { color: transparent !important; }' }).then(t => t.evaluate(n => { n.id = 'qa-hide-text'; }));
-          for (const box of real) {
-            const png = await mp.screenshot({ clip: { x: box.x, y: box.y, width: Math.max(1, box.width), height: Math.max(1, box.height) } });
-            const ratio = await mp.evaluate(async ([src, color]) => {
-              const img = await new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + src; });
-              const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
-              const d = g.getImageData(0, 0, c.width, c.height).data, lin = v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }, L = (r, g, b) => .2126 * lin(r) + .7152 * lin(g) + .0722 * lin(b);
-              const ls = []; for (let k = 0; k < d.length; k += 4) ls.push(L(d[k], d[k + 1], d[k + 2])); ls.sort((a, b) => a - b);
-              const [r, g2, b] = color.match(/\d+/g).map(Number), t = L(r, g2, b), bg = ls[Math.floor(ls.length * .02)], hi = ls[Math.floor(ls.length * .98)];
-              return Math.min((Math.max(t, bg) + .05) / (Math.min(t, bg) + .05), (Math.max(t, hi) + .05) / (Math.min(t, hi) + .05));
-            }, [png.toString('base64'), box.color]);
-            check(ratio >= 4.5, `${names[i]} beat ${k + 1}: a statement over the living background keeps ${ratio.toFixed(2)}:1`);
-          }
-          await mp.evaluate(() => document.getElementById('qa-hide-text')?.remove());
-        }
+      const settle = async () => { await frame(); await mp.waitForTimeout(300); };
+      const station = k => mp.evaluate(k => { const s = document.querySelectorAll('.begegnung-station')[k], h = parseFloat(getComputedStyle(document.querySelector('.begegnung-pin')).top) || 0; return Math.round(s.getBoundingClientRect().top + scrollY - h); }, k);
+      const picture = () => mp.evaluate(() => [...document.querySelectorAll('.begegnung-pin .begegnung-canvas > :not(noscript)')].map(e => { const s = getComputedStyle(e); return Math.round(Number(s.opacity) * 100) + (s.transform === 'none' ? '' : s.transform.replace(/-?[\d.]+/g, n => (+n).toFixed(1))); }).join('|'));
+      const go = async y => { await mp.evaluate(y => scrollTo(0, y), y); await settle(); };
+      check(await mp.evaluate(() => document.querySelector('[data-direction="begegnung"]').dataset.mode) === 'pin', 'begegnung: pinned with motion at 1440×900');
+      const seen = [];
+      for (let k = 0; k < 5; k++) {
+        await go(await station(k)); seen.push(await picture());
+        const at = await mp.evaluate(() => { const p = document.querySelector('.begegnung-pin'); return { pinned: Math.abs(p.getBoundingClientRect().top - parseFloat(getComputedStyle(p).top)) < 2, loaded: [...p.querySelectorAll('img')].every(i => i.src && i.complete) }; });
+        check(at.pinned && at.loaded, `begegnung station ${k + 1}: the stage is pinned and its layers are loaded (${JSON.stringify(at)})`);
       }
-      // Resizing keeps the frame for the position (geometry is measured again).
-      for (const [w, h] of [[1024, 768], [390, 844], [1440, 900]]) {
-        await mp.setViewportSize({ width: w, height: h }); await frame(); await frame();
-        const g = await geometry(0); const p = (g.beats[3][0] + g.beats[3][1]) / 2;
-        await mp.evaluate(y => scrollTo(0, y), Math.round(g.start + p * g.span)); await settle();
-        const s = await state(0);
-        check(g.live && s.current === 3 && Math.abs(s.p - p) < .01 && s.pinned, `${w}×${h}: after resizing, the fourth beat is still the fourth beat (${JSON.stringify(s)})`);
-      }
-      // Every beat at five sizes: nothing visible leaves the stage, nothing covers the legend or the
-      // statement, and no row of the list covers another (a scene whose finished state cannot fit a
-      // screen stays static there instead). Both scenes are live from 360 × 800 phones up.
-      for (const [w, h] of [[360, 800], [390, 844], [1024, 768], [1280, 720], [1440, 900]]) {
-        await mp.setViewportSize({ width: w, height: h }); await frame(); await frame();
-        for (let i = 0; i < 2; i++) {
-          const g = await geometry(i);
-          check(g.live, `${w}×${h}: ${names[i]} is live`);
-          if (!g.live) continue;
-          for (const [k, [a, z]] of g.beats.entries()) {
-            await mp.evaluate(y => scrollTo(0, y), Math.round(g.start + g.span * (a + z) / 2)); await settle();
-            const issues = await mp.evaluate(i => {
-              const t = document.querySelectorAll('[data-scene]')[i], s = t.querySelector('[data-scene-stage]'), sr = s.getBoundingClientRect();
-              const visible = e => { let o = 1; for (let x = e; x && x !== s; x = x.parentElement) { const cs = getComputedStyle(x); if (cs.visibility === 'hidden' || cs.display === 'none') return false; o *= Number(cs.opacity); } return o > .05; };
-              const legend = t.querySelector('figcaption'), lr = legend && visible(legend) ? legend.getBoundingClientRect() : null;
-              const cap = t.querySelector('.caption[aria-current]'), cr = cap ? cap.getBoundingClientRect() : null;
-              const items = [...t.querySelectorAll('.caption h2, .caption small, .chip, .sg-lens, .sg-card, .sg-hidden, .yr-card, .yr-fits li, .yr-shared li, .yr-kept, .yr-receipt')].filter(e => !e.closest('[aria-hidden="true"]') && visible(e) && e.getBoundingClientRect().height > 0);
-              const hit = (r, q) => r.bottom > q.top + 1 && r.top < q.bottom - 1 && r.right > q.left + 1 && r.left < q.right - 1;
-              const out = [];
-              for (const e of items) { const r = e.getBoundingClientRect(), name = e.className.split(' ')[0] || e.localName;
-                if (r.bottom > sr.bottom + 1 || r.top < sr.top - 1) out.push(`${name} leaves the stage`);
-                if (lr && !legend.contains(e) && hit(r, lr)) out.push(`${name} covers the legend`);
-                if (cr && !cap.contains(e) && hit(r, cr)) out.push(`${name} covers the statement`); }
-              const rows = items.filter(e => e.matches('.sg-lens, .sg-card, .sg-hidden'));
-              for (let x = 0; x < rows.length; x++) for (let y = x + 1; y < rows.length; y++) if (hit(rows[x].getBoundingClientRect(), rows[y].getBoundingClientRect())) out.push(`${rows[x].dataset.card ?? rows[x].className.split(' ')[0]} covers ${rows[y].dataset.card ?? rows[y].className.split(' ')[0]}`);
-              return [...new Set(out)];
-            }, i);
-            check(issues.length === 0, `${w}×${h} ${names[i]} beat ${k + 1}: ${issues.join('; ')}`);
-          }
+      check(new Set(seen).size === 5, 'begegnung: five different pictures');
+      for (let k = 3; k >= 0; k--) { await go(await station(k)); check(await picture() === seen[k], `begegnung: scrolling back to station ${k + 1} shows its picture again`); }
+      await go(await mp.evaluate(() => document.documentElement.scrollHeight)); await go(await station(3));
+      check(await picture() === seen[3], 'begegnung: a jump back lands on station 4’s picture');
+      const second = await station(1);
+      await mp.evaluate(y => { for (let k = 0; k <= 40; k++) scrollTo(0, (k * 977) % (y * 4)); scrollTo(0, y); }, second); await settle();
+      check(await picture() === seen[1], 'begegnung: after a fast fling the stage shows the picture for where the page stopped');
+      // Every station's words keep their contrast, over the real pixels (noise and colour beneath).
+      for (let k = 0; k < 5; k++) {
+        await go(await station(k));
+        await mp.evaluate(k => { document.querySelectorAll('[aria-hidden="true"]:not(.icon):not(.mark)').forEach(e => { e.dataset.qaHidden = e.style.visibility; e.style.visibility = 'hidden'; });
+          document.querySelectorAll('.begegnung-station').forEach((s, j) => { s.inert = j !== k; }); }, k);
+        const audit = await mp.evaluate(pageAudit, { modal: false, touch: false });
+        const boxes = await mp.evaluate(k => [...document.querySelectorAll('.begegnung-station')[k].querySelectorAll('.begegnung-title, .begegnung-body, .begegnung-status, .begegnung-plate-text, .begegnung-legend li')].map(e => { const r = e.getBoundingClientRect(); return { x: Math.max(0, Math.round(r.left)), y: Math.max(0, Math.round(r.top)), width: Math.round(r.width), height: Math.round(r.height), color: getComputedStyle(e).color }; }).filter(b => b.y + b.height <= innerHeight), k);
+        await mp.evaluate(() => { document.querySelectorAll('[inert]').forEach(e => { e.inert = false; }); document.querySelectorAll('[data-qa-hidden]').forEach(e => { e.style.visibility = e.dataset.qaHidden; delete e.dataset.qaHidden; }); });
+        check(audit.contrast.failures.length === 0, `begegnung station ${k + 1}: text below its contrast minimum: ${audit.contrast.failures.slice(0, 2).map(f => `${f.node} ${f.text} ${f.ratio}`).join('; ')}`);
+        check(audit.overflow.scrollWidth <= audit.overflow.clientWidth, `begegnung station ${k + 1}: no horizontal overflow`);
+        const tag = await mp.addStyleTag({ content: '.begegnung-station * { color: transparent !important; }' });
+        for (const box of boxes) {
+          const png = await mp.screenshot({ clip: { x: box.x, y: box.y, width: Math.max(1, box.width), height: Math.max(1, box.height) } });
+          const ratio = await mp.evaluate(async ([src, color]) => {
+            const img = await new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + src; });
+            const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+            const d = g.getImageData(0, 0, c.width, c.height).data, lin = v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }, L = (r, g, b) => .2126 * lin(r) + .7152 * lin(g) + .0722 * lin(b);
+            const ls = []; for (let k = 0; k < d.length; k += 4) ls.push(L(d[k], d[k + 1], d[k + 2])); ls.sort((a, b) => a - b);
+            const [r, g2, b] = color.match(/\d+/g).map(Number), t = L(r, g2, b), bg = ls[Math.floor(ls.length * .02)], hi = ls[Math.floor(ls.length * .98)];
+            return Math.min((Math.max(t, bg) + .05) / (Math.min(t, bg) + .05), (Math.max(t, hi) + .05) / (Math.min(t, hi) + .05));
+          }, [png.toString('base64'), box.color]);
+          check(ratio >= 4.5, `begegnung station ${k + 1}: a line over the real background keeps ${ratio.toFixed(2)}:1`);
         }
+        await tag.evaluate(n => n.remove());
       }
-      // A screen too short for a stage gets the complete story instead.
-      for (const [w, h] of [[844, 390], [375, 667]]) {
+      // Pinned only where every caption fits one screen; short screens and phones keep the stations in the flow.
+      for (const [w, h, want] of [[1024, 768, 'pin'], [1280, 720, 'pin'], [844, 390, 'flow'], [375, 667, 'flow'], [390, 844, 'flow']]) {
         await mp.setViewportSize({ width: w, height: h }); await frame(); await frame();
-        check(await mp.evaluate(() => [...document.querySelectorAll('[data-scene]')].every(s => !s.classList.contains('is-live'))), `${w}×${h}: a screen too short for the stages gets the static story`);
+        check(await mp.evaluate(() => document.querySelector('[data-direction="begegnung"]').dataset.mode ?? 'flow') === want, `${w}×${h}: the story is ${want}`);
       }
       await moving.close();
-      report.journeys.composition = 'A7 hero at 1440/1024/390/320 (the field placed at the optical centre and dominant, balanced headline a step below it, criteria floating clear of everything, three promises); the noise in the page flow beneath all content (scrolling, multiply, the field free of it), the fingerprint once; a living atmosphere (alive when idle, calm, quiet towards white and grey at rest, one bright world, still under reduced motion, paused when hidden, the hand never moves the search, nothing written on the root); value → story → privacy → start; two scenes static (no JS, reduced motion, short screens) and live from 360 × 800 (beats, reverse, jump, fling, resize, contrast per beat, statements over the real background, no row over another)';
+      report.journeys.composition = 'A7 hero at 1440/1024/390/320 (the field placed at the optical centre and dominant, balanced headline a step below it, criteria floating clear of everything, three promises); the noise in the page flow beneath all content (scrolling, multiply, the field free of it), the fingerprint once; a living atmosphere (alive when idle, calm, quiet towards white and grey at rest, one bright world, still under reduced motion, paused when hidden, the hand never moves the search, nothing written on the root); value → story → start; the Begegnung story (W4): five stations in the flow without scripts, under reduced motion and on short screens or phones, pinned with motion on wide screens (forward, back, jump, fling, contrast per station over the real background)';
     }
 
     // ── 3. Journeys (motion allowed, as most visitors see it) ──
