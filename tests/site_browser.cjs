@@ -240,7 +240,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
           running: r.getAnimations({ subtree: true }).length, tags3: tags(3), tags4: tags(4), tags5: tags(5), air: document.querySelector('[data-air]')?.dataset.air };
       });
       check(still.frames === 5 && still.running === 0, `reduced motion: five finished pictures, nothing running (${JSON.stringify(still)})`);
-      check(still.tags3.includes('In development, not live') && still.tags4.includes('In development, not live') && still.tags4.includes('Not shared') && still.tags5.some(t => /Copies already received aren’t recalled\..*Built, tested in staging/.test(t)), `reduced motion: the labels stand in the pictures (${JSON.stringify(still)})`);
+      check(still.tags3.includes('In development, not live') && still.tags4.includes('In development, not live') && still.tags4.includes('Not shared') && still.tags5.some(t => /Copies already received aren’t recalled\..*Built, tested in staging/.test(t)) && still.tags5.includes('In development, not live'), `reduced motion: the labels stand in the pictures (${JSON.stringify(still)})`);
       check(still.air === 'still', `reduced motion: the atmosphere draws one still frame (${still.air})`);
       // The material (Concept A9's layer model): the ground (L0), the light (L1) and the wash (L2)
       // fixed beneath; one noise layer (L3) in the page flow, as tall as the document, scrolling with
@@ -460,10 +460,11 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       report.brightness = levels.map(l => +l.mean.toFixed(1));
       // The colour hook (A9, slots.md): a section that asks for colour after load is seen and brings
       // the colour back while it fills the view; removing its attribute brings the quiet back (V6).
-      await lp.evaluate(() => { const s = document.querySelector('.signal'); s.setAttribute('data-air-reveal', ''); scrollTo(0, s.getBoundingClientRect().top + scrollY + s.offsetHeight * .3); });
+      // (W4: A8's .signal scene is gone; the hero, a full screen with no colour hook of its own, stands in.)
+      await lp.evaluate(() => { const s = document.querySelector('.hero'); s.setAttribute('data-air-reveal', ''); scrollTo(0, s.getBoundingClientRect().top + scrollY); });
       await lp.waitForTimeout(500);
       const asked = await lp.evaluate(() => Number(getComputedStyle(document.querySelector('.air')).getPropertyValue('--air-reveal')));
-      await lp.evaluate(() => document.querySelector('.signal').removeAttribute('data-air-reveal')); await lp.waitForTimeout(400);
+      await lp.evaluate(() => document.querySelector('.hero').removeAttribute('data-air-reveal')); await lp.waitForTimeout(400);
       const released = await lp.evaluate(() => Number(getComputedStyle(document.querySelector('.air')).getPropertyValue('--air-reveal')));
       check(asked >= .9 && released === 0, `a section that asks for colour later is seen, and one that stops asking is quiet again (--air-reveal ${asked} while asked, ${released} after)`);
       await lp.evaluate(() => scrollTo(0, 0)); await lp.waitForTimeout(400);
@@ -544,6 +545,34 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         }
         await tag.evaluate(n => n.remove());
       }
+      // Placement (W4 round 2, verification m7; replaces A8's "nothing leaves the stage" check): at every
+      // station's end state, at five sizes, every label in the picture lies wholly on screen and on no
+      // other label, no label covers the station's words, and every line of the words is what is on top
+      // at its centre (nothing covers the legend, a statement or a plate).
+      for (const [w, h] of [[1440, 900], [1280, 720], [390, 844], [360, 640], [320, 640]]) {
+        await mp.setViewportSize({ width: w, height: h }); await frame(); await frame(); await mp.waitForTimeout(200);
+        for (let k = 1; k <= 5; k++) {
+          const y = await mp.evaluate(k => { const r = document.querySelector('[data-direction="begegnung"]');
+            if (r.dataset.mode === 'pin') { const s = document.querySelectorAll('.begegnung-station')[k - 1], top = parseFloat(getComputedStyle(document.querySelector('.begegnung-pin')).top) || 0; return s.getBoundingClientRect().top + scrollY - top; }
+            const f = document.querySelector(`.begegnung-v${k} .begegnung-frame`).getBoundingClientRect(); return f.top + scrollY - (innerHeight - .45 * (innerHeight + f.height)); }, k);
+          await go(Math.max(0, Math.round(y)));
+          const place = await mp.evaluate(k => {
+            const r = document.querySelector('[data-direction="begegnung"]'), pin = r.dataset.mode === 'pin', box = e => e.getBoundingClientRect();
+            const tags = [...r.querySelectorAll(`${pin ? '.begegnung-pin' : `.begegnung-v${k}`} .begegnung-tag`)].filter(t => Number(getComputedStyle(t).opacity) > .5).map(t => ({ text: t.textContent.trim().slice(0, 24), b: box(t) }));
+            const words = r.querySelectorAll('.begegnung-words')[k - 1], wb = box(words), hit = (a, b) => a.right > b.left && a.left < b.right && a.bottom > b.top && a.top < b.bottom;
+            const lines = [...words.querySelectorAll('.begegnung-title, .begegnung-body, .begegnung-status, .begegnung-plate-text, .begegnung-legend li')].map(e => { const b = box(e), x = b.left + b.width / 2, y = b.top + b.height / 2;
+              const top = y > 0 && y < innerHeight ? document.elementFromPoint(x, y) : null; return { text: e.textContent.trim().slice(0, 24), onTop: !top || words.contains(top), inView: b.left >= 0 && b.right <= innerWidth }; });
+            return { pin, vw: innerWidth, tags, off: tags.filter(t => t.b.left < 0 || t.b.right > innerWidth).map(t => [t.text, Math.round(t.b.left), Math.round(t.b.right)]),
+              clash: tags.flatMap((a, i) => tags.slice(i + 1).filter(b => hit(a.b, b.b)).map(b => [a.text, b.text])), onWords: tags.filter(t => hit(t.b, wb)).map(t => t.text),
+              covered: lines.filter(l => !l.onTop).map(l => l.text), outside: lines.filter(l => !l.inView).map(l => l.text) };
+          }, k);
+          check(place.off.length === 0, `${w}×${h} S${k}: every label in the picture is wholly on screen (${JSON.stringify(place.off)})`);
+          check(place.clash.length === 0, `${w}×${h} S${k}: no label lies on another (${JSON.stringify(place.clash)})`);
+          check(place.onWords.length === 0, `${w}×${h} S${k}: no label covers the station's words (${JSON.stringify(place.onWords)})`);
+          check(place.covered.length === 0 && place.outside.length === 0, `${w}×${h} S${k}: nothing covers the words, and they stay on screen (${JSON.stringify(place)})`.slice(0, 400));
+        }
+      }
+      await mp.setViewportSize({ width: 1440, height: 900 }); await frame();
       // Pinned only where every caption fits one screen; short screens and phones keep the stations in the flow.
       for (const [w, h, want] of [[1024, 768, 'pin'], [1280, 720, 'pin'], [844, 390, 'flow'], [375, 667, 'flow'], [390, 844, 'flow']]) {
         await mp.setViewportSize({ width: w, height: h }); await frame(); await frame();
