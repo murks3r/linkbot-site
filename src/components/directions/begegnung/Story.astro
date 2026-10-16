@@ -1,0 +1,92 @@
+---
+/* Begegnung (encounter): the home story, five stations S1–S5 (Concept A9, direction W4).
+
+   A person who is still unknown stands veiled in a glaze of white paint, in their own place, their
+   words as paper lanterns at their feet. A role waits across the floor as an empty chair. An open
+   hand in a sleeve waits beside it; it never reaches first. Only the person's own hand takes it, and
+   only the person lifts the veil: then they become recognisable, wear what they choose to show, and
+   their colour blooms. They can draw the veil back; what they handed over stays where it went.
+
+   Layout (fundament-v0 contracts.md, the site slot; guardrail E; storyboard review changes 5, 6):
+   - wide screens with motion (≥ 64 rem × 700 px): one pinned stage beside five captions that scroll
+     in the normal flow. The stage is a layout only: nothing is intercepted, nothing focusable sits
+     in or behind it. Its state is a CSS scroll-driven animation of the track's view timeline
+     (scene.ts); without scroll timelines, begegnung.ts steps it with an IntersectionObserver;
+   - phones, tablets, short screens and reduced motion: five vignettes in the flow, picture and
+     words; with motion each plays its own station on its own view timeline, otherwise it is the
+     station's finished picture (the same statement, every station understandable without motion);
+   - no scripts: the same vignettes, each with its finished picture (<noscript>).
+   The painted layers are images on our own origin, loaded by begegnung.ts after the page's load
+   event and only near the story (so never before the largest paint); phones get the 1× set.
+   Every word is in copy.ts with its claims.md row. Colour: the drawing carries it, and the story
+   raises W1's --air-reveal (data-air-reveal on this section) where the story needs it. */
+import Mark from '../../Mark.astro';
+import { STATIONS, STATUS, type Plate } from './copy';
+import { LAYERS, TAGS, partsOf, storyCss, value, type Part } from './scene';
+import baked from './art/layers.json';
+import './begegnung.css';
+
+const BASE = '/directions/begegnung/';
+const files = baked.files as Record<string, Record<'1x' | '15x', { file: string; w: number; h: number }>>;
+const css = storyCss(baked.boxes);
+const tone = { tested: 'tradeoff', dev: 'unknown', open: 'unknown' } as const;
+const layer = (p: Part, end?: number) => {
+  const f = files[p.id];
+  return { class: `begegnung-l begegnung-l--${p.id}`, alt: '', width: f['1x'].w, height: f['1x'].h, decoding: 'async' as const,
+    'data-src': BASE + f['1x'].file, 'data-src2': BASE + f['15x'].file, 'data-end': end === undefined ? undefined : value(p, end).o > .001 ? '1' : '0' };
+};
+/* The claims row of every line (copy.ts) is written into preview builds only, for review; a production
+   page carries no internal notes (verification m8). */
+const claim = (row: string) => import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1' ? row : undefined;
+/* Without scripts, each station shows its finished picture (a still baked from the same layers). The
+   company's sleeve is not in the still: it runs on past the frame to the screen's edge as the layer it is,
+   beneath the still, so it is an arm from beyond the screen there too (verification m4). */
+const SLEEVES = ['co-sleeve-tail', 'co-sleeve'];
+const sleeves = (k: number) => partsOf(k, LAYERS).filter(p => SLEEVES.includes(p.id) && value(p, k).o > .001);
+const tagClass = (t: (typeof TAGS)[number]) => `begegnung-tag begegnung-l--${t.id}${t.sub ? ' begegnung-tag--two' : ''} begegnung-tag--${t.align ?? 'center'}`;
+const plateClass = (p: Plate) => `begegnung-plate begegnung-plate--${p.status}`;
+---
+<section class="begegnung" data-direction="begegnung" id="story" data-stage="story" data-air-reveal="0">
+  <div class="begegnung-track">
+    <!-- The pinned stage (wide screens with motion only). Decorative here: each station's own picture
+         and its text alternative are in the station below. -->
+    <div class="begegnung-pin" data-s="1" aria-hidden="true">
+      <div class="begegnung-frame begegnung-frame--pin">
+        <div class="begegnung-canvas">
+          {LAYERS.map(p => <img {...layer(p)} />)}
+          {TAGS.map(t => <span class={tagClass(t)}>{t.status && !t.sub && <Mark tone={t.status === 'tested' ? 'tradeoff' : 'unknown'} size={11} />}{t.text}{t.sub && <small><Mark tone="tradeoff" size={11} />{t.sub}</small>}</span>)}
+        </div>
+      </div>
+    </div>
+    <ol class="begegnung-stations">
+      {STATIONS.map(s => (
+        <li class={`begegnung-station begegnung-v${s.n}`} data-station={s.n}>
+          <div class="begegnung-words">
+            {s.over && <p class="begegnung-status"><Mark tone="unknown" />{STATUS[s.over]}</p>}
+            <h2 class="begegnung-title" data-claim={claim(s.claimTitle)}>{s.title}</h2>
+            {s.body && <p class="begegnung-body" data-claim={claim(s.claimBody ?? '')}>{s.body}</p>}
+            {s.legend && <ul class="begegnung-legend" aria-label="What the lanterns mean">{s.legend.map(l => <li><Mark tone={l.mark === 'solid' ? 'fit' : 'unknown'} />{l.text}</li>)}</ul>}
+            {s.plates.map(p => (
+              <div class={plateClass(p)} data-claim={claim(p.claim)}>
+                {p.status === 'open'
+                  ? <p class="begegnung-status"><span class="begegnung-q" aria-hidden="true">?</span>{STATUS.open}</p>
+                  : <p class="begegnung-status"><Mark tone={tone[p.status]} />{STATUS[p.status]}</p>}
+                <p class="begegnung-plate-text">{p.text}{p.sub && <small>{p.sub}</small>}</p>
+              </div>
+            ))}
+          </div>
+          <p class="begegnung-alt">{s.alt}</p>
+          <div class="begegnung-frame" role="img" aria-label={s.alt}>
+            <div class="begegnung-canvas" aria-hidden="true">
+              <noscript>{sleeves(s.n).map(p => <img class={`begegnung-l begegnung-l--${p.id}`} src={BASE + files[p.id]['1x'].file} alt="" width={files[p.id]['1x'].w} height={files[p.id]['1x'].h} loading="lazy" decoding="async" />)}<img class="begegnung-still" src={BASE + baked.stills[String(s.n) as '1'].file} alt="" width={baked.stills[String(s.n) as '1'].w} height={baked.stills[String(s.n) as '1'].h} loading="lazy" decoding="async" /></noscript>
+              {partsOf(s.n, LAYERS).map(p => <img {...layer(p, s.n)} />)}
+              {partsOf(s.n, TAGS).map(t => <span class={tagClass(t)}>{t.status && !t.sub && <Mark tone={t.status === 'tested' ? 'tradeoff' : 'unknown'} size={11} />}{t.text}{t.sub && <small><Mark tone="tradeoff" size={11} />{t.sub}</small>}</span>)}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+<style is:inline set:html={css}></style>
+<script>import './begegnung';</script>
