@@ -8,5 +8,5 @@ const preview = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1';
 <span class="draft" data-draft><slot />{preview && <span class="draft-mark" title="This statement is a draft the founder has not confirmed yet.">Draft · founder to confirm</span>}</span>
 
 <style>
-  .draft-mark { display: inline-block; margin-left: 8px; padding: 1px 8px; border: 1px dashed var(--warn); border-radius: var(--pill); font-family: var(--text); font-size: .6875rem; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--warn); vertical-align: middle; white-space: nowrap; }
+  .draft-mark { display: inline-block; margin-left: 8px; padding: 1px 8px; border: 1px dashed var(--warn); border-radius: var(--pill); background: var(--warn-wash); font-family: var(--text); font-size: .6875rem; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--warn); vertical-align: middle; white-space: nowrap; }
 </style>
