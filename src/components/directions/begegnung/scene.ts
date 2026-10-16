@@ -171,10 +171,17 @@ function samples(p: Part, a: number, b: number) {
   }
   return [...out].sort((m, k) => m - k);
 }
-function pinPercent(u: number) {
-  for (const [u0, u1, p0, p1] of PIN) if (u >= u0 && u <= u1) return p0 + (p1 - p0) * (u - u0) / (u1 - u0);
-  return u < 0 ? 0 : 100;
+/** Where u lies on the pinned story's timeline. A station's finished state holds between two
+    transitions, so a u on a window's edge gets a stop at both edges of the hold (and u 0 and 5 at
+    the timeline's ends): the picture stays still while its caption is read. */
+function pinPercents(u: number): number[] {
+  const at: number[] = [];
+  if (u <= PIN[0][0]) at.push(0);
+  for (const [u0, u1, p0, p1] of PIN) if (u >= u0 && u <= u1) at.push(p0 + (p1 - p0) * (u - u0) / (u1 - u0));
+  if (u >= PIN[PIN.length - 1][1]) at.push(100);
+  return [...new Set(at)];
 }
+const EDGES = [...new Set(PIN.flatMap(([u0, u1]) => [u0, u1]))];
 
 export const STATIONS = [1, 2, 3, 4, 5] as const;
 /** The parts a station's vignette holds: whatever shows while its transition runs. */
@@ -205,8 +212,9 @@ export function storyCss(boxes: Record<string, Box>) {
   const motion: string[] = [];
   for (const p of all) {
     const name = `begegnung-p-${p.id}`;
-    const frames = samples(p, 0, 5).map(u => `${n(pinPercent(u), 2)}%{${css(p, u, boxes[p.id])}}`);
-    motion.push(`@keyframes ${name}{0%{${css(p, 0, boxes[p.id])}}${frames.join('')}100%{${css(p, 5, boxes[p.id])}}}`);
+    const us = [...new Set([...samples(p, 0, 5), ...EDGES])].sort((a, b) => a - b);
+    const frames = us.flatMap(u => pinPercents(u).map(at => [at, css(p, u, boxes[p.id])] as const)).sort((a, b) => a[0] - b[0]);
+    motion.push(`@keyframes ${name}{${frames.map(([at, v]) => `${n(at, 2)}%{${v}}`).join('')}}`);
     motion.push(`.begegnung-pin ${cls(p.id)}{animation-name:${name}}`);
   }
   for (const k of STATIONS) for (const p of partsOf(k, all)) {

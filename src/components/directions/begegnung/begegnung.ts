@@ -3,8 +3,9 @@
 
    1. Layout: pins the stage on wide screens when motion is allowed and every caption fits one
       screen (data-mode="pin" on the section); otherwise the stations stay in the flow.
-   2. Images: the painted layers load after the page's load event, and only when the story is about
-      a screen away, so they never compete with the first paint; dense wide screens get the 1.5×
+   2. Images: the painted layers load after the page's load event and its largest paint (on the
+      first scroll, or 3 s after load), and only when the story is about a screen away, so they never
+      compete with the first paint; dense wide screens get the 1.5×
       set, everything else (every phone) the 1× set. A station shown as its finished picture
       (reduced motion, no scroll timelines) loads only the layers that picture shows.
    3. Fallback: where CSS scroll timelines are missing, an IntersectionObserver steps the pinned
@@ -27,7 +28,7 @@ function story(root: HTMLElement) {
   const wide = matchMedia('(min-width: 64rem) and (min-height: 700px)');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
   const timelines = typeof CSS !== 'undefined' && CSS.supports('animation-timeline: view()');
-  let pinned = false, ready = document.readyState === 'complete';
+  let pinned = false, ready = false;
 
   // 1. Layout
   const header = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header')) || 72;
@@ -105,5 +106,10 @@ function story(root: HTMLElement) {
   still.addEventListener('change', mode);
   addEventListener('resize', () => { if (wide.matches && !still.matches) mode(); }, { passive: true });
   document.fonts?.ready.then(mode);
-  if (!ready) addEventListener('load', () => { ready = true; load(); }, { once: true });
+  // After the largest paint: the browser stops looking for it at the first scroll, so the layers
+  // start loading on the first scroll after the load event, or 3 s after it for a reader who doesn't
+  // scroll (review change 5: the painterly layers load lazily after LCP).
+  const start = () => { if (ready) return; ready = true; removeEventListener('scroll', start); load(); };
+  const loaded = () => { addEventListener('scroll', start, { passive: true, once: true }); setTimeout(start, 3000); };
+  if (document.readyState === 'complete') loaded(); else addEventListener('load', loaded, { once: true });
 }
