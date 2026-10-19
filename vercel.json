@@ -61,7 +61,12 @@
       "design/concept-a9-w2-schloss": false,
       "design/concept-a9-w3-wallet": false,
       "design/concept-a9-w4-begegnung": false,
-      "design/concept-a9-w5-frei": false
+      "design/concept-a9-w5-frei": false,
+      "design/concept-a10": false,
+      "design/concept-a10-research": false,
+      "design/concept-a10-w1": false,
+      "design/concept-a10-w2": false,
+      "design/concept-a10-w3": false
     }
   }
 }
