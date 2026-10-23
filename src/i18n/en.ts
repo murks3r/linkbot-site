@@ -109,7 +109,7 @@ export const en = {
       items: [
         { name: 'By form', status: 'now' as Status, paras: [
           'The form is generated from the pack. Required criteria come first; the rest sit behind “more details”. Nothing is pre-selected: no option, no unit, no basis, no party type. Every list offers “other / not listed”, “don’t know” and “any” where the pack allows them.',
-          'Each criterion carries an importance. Must and never are hard; prefer, open to and rather not are soft. The pack may suggest one, marked “suggested”, and the person can change it unless the pack locks it. Choosing never asks for a separate confirmation.',
+          'Each criterion carries an importance. Must and never are hard; nice to have, open to and rather not are soft. The pack may suggest one, marked “suggested”, and the person can change it unless the pack locks it. Choosing never asks for a separate confirmation.',
         ] },
         { name: 'In your own words', status: 'contract' as Status, paras: [
           'A person writes what they need or offer. A reading proposes values for the same criteria, each shown next to the words it came from, and asks where it cannot decide: a unit, an option, a number that two conventions read differently. A reading never overwrites what a person chose; a difference becomes a question.',
