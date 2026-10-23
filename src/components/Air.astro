@@ -1,0 +1,49 @@
+---
+/* The light and the paper every page lies on (Concepts A6–A7).
+
+   Behind the content, carrying no text:
+   1. the light (home only): still gradients of the seven proven pigments, which a browser without
+      WebGL or scripts shows and everyone sees first, and over them the living field
+      (src/scripts/atmosphere.ts, loaded by the page that has it), drawn into a small canvas;
+   2. the paper (every page): a real paper texture (fine tooth, fibres and specks, from the
+      founder's Resource Boy noise textures, levelled and made seamless) printed with multiply, so
+      white stays white and only the material shows. It is one layer the size of the page and
+      scrolls with it, so it tiles as the page grows; on dense screens it is drawn at one texture
+      pixel per device pixel. It is an image on our own origin, so a strict img-src holds.
+   The paper sits between the light and everything that carries words: text is never printed over. */
+interface Props { mode?: 'living' | 'paper' }
+const { mode = 'paper' } = Astro.props;
+---
+{mode === 'living' && <div class="air" data-air aria-hidden="true">
+  <div class="air-still"></div>
+  <canvas class="air-field" width="32" height="32"></canvas>
+</div>}
+<div class="paper" data-paper aria-hidden="true"></div>
+
+<style is:global>
+  body { position: relative; }
+  .air { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: var(--paper); }
+  .air > * { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .air-still { background:
+      radial-gradient(42% 46% at 14% 18%, var(--lb-air-sun) 0%, transparent 72%),
+      radial-gradient(40% 44% at 86% 16%, var(--lb-air-peach) 0%, transparent 72%),
+      radial-gradient(30% 36% at 94% 62%, var(--lb-air-coral) 0%, transparent 72%),
+      radial-gradient(44% 50% at 8% 86%, var(--lb-air-sky) 0%, transparent 72%),
+      radial-gradient(50% 40% at 56% 104%, var(--lb-air-sage) 0%, transparent 72%),
+      radial-gradient(26% 30% at 38% 96%, var(--lb-air-leaf) 0%, transparent 72%),
+      var(--paper); }
+  .air-field { opacity: 0; transition: opacity 1.2s ease; }
+  .air.is-drawn .air-field { opacity: 1; }
+  /* A8: the paper lies over the whole page, header and footer included (z above them, below the
+     preview's panel), so one material runs through everything and no bar can differ from the page
+     (multiply: the paper's tooth prints a few levels onto letters, unseen). It is fixed over the
+     viewport by default (the content scrolls beneath it, the material stays where paper would);
+     the A7 behaviour (it scrolls with the page) is the variant [data-v-noise='scroll']. A fixed
+     layer, never background-attachment (unreliable on iOS). */
+  .paper { position: fixed; inset: 0; z-index: 40; pointer-events: none; mix-blend-mode: multiply;
+    background: url('/material/paper.webp') 0 0 / var(--paper-size, 1024px) var(--paper-size, 1024px) repeat; }
+  html[data-v-noise='scroll'] .paper { position: absolute; }
+  @media (min-resolution: 1.5dppx) { :root { --paper-size: 512px; } }
+  @media (prefers-reduced-motion: reduce) { .air-field { transition: none; } }
+  @media (forced-colors: active) { .air, .paper { display: none; } }
+</style>

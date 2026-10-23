@@ -1,0 +1,56 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/figtree/index.css';
+import '../styles/palette.css';
+import '../styles/site.css';
+/* Concept A8's exploration axes (palette, type): inert without the preview's data-v-* attributes. */
+import '../styles/brand-a8.css';
+import '../styles/type-a8.css';
+import displayUrl from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import textUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
+import SEO from '../components/SEO.astro';
+import Masthead from '../components/Masthead.astro';
+import Footer from '../components/Footer.astro';
+import Air from '../components/Air.astro';
+import Variants from '../components/Variants.astro';
+import { AXES } from '../lib/variants';
+/* The variant switcher exists only in preview builds (never in a production build). */
+const variants = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1';
+interface Props { title: string; description: string; path: string; crumbs?: [string, string][]; quietHeader?: boolean; sky?: boolean }
+const { title, description, path, crumbs, quietHeader = false, sky = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="preload" href={displayUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={textUrl} as="font" type="font/woff2" crossorigin />
+    <SEO title={title} description={description} path={path} crumbs={crumbs} />
+    <meta name="theme-color" content="#fbf8f1" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Scripts mark the page so enhancements (the scroll-driven scenes) can take over from the
+         complete, static version every page ships with. -->
+    <script is:inline>document.documentElement.classList.add('js')</script>
+    {variants && <script is:inline define:vars={{ axes: AXES.map(a => [a.id, a.values.map(v => v[0])]) }}>
+      /* Preview only: the chosen variants, from the address, before the first paint (no flicker). */
+      const q = new URLSearchParams(location.search);
+      for (const [id, values] of axes) document.documentElement.setAttribute('data-v-' + id, values.includes(q.get(id)) ? q.get(id) : values[0]);
+    </script>}
+  </head>
+  <body data-sky={sky ? '' : undefined}>
+    <a class="skip" href="#main">Skip to content</a>
+    <Air mode={sky ? 'living' : 'paper'} />
+    <Masthead current={path} quiet={quietHeader} />
+    <main id="main" tabindex="-1"><slot /></main>
+    <Footer />
+    {variants && <Variants />}
+    <script>import '../scripts/stages';</script>
+  </body>
+</html>
+<style is:global>
+  main { outline: none; }
+  /* The atmosphere lies under the whole page; everything else is composed above it. */
+  main, footer { position: relative; z-index: 1; }
+</style>

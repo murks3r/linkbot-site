@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import Toc from '../components/Toc.astro';
+import Mark from '../components/Mark.astro';
+import SearchForm from '../components/SearchForm.astro';
+import WatchDemo from '../components/WatchDemo.astro';
+import Reader from '../components/Reader.astro';
+import ListingDemo from '../components/ListingDemo.astro';
+import Today from '../components/Today.astro';
+const SECTIONS: [string, string][] = [['say', 'Say what matters'], ['see', 'See what fits'], ['keep', 'Keep what’s worth keeping'], ['decide', 'Decide what happens next'], ['next', 'What’s next: private matching'], ['today', 'What’s live today']];
+const LEVELS: [string, string, string][] = [
+  ['Prefer', 'Where you start for anything you want.', 'Listings that state it are shown higher.'],
+  ['Open to', 'Fine either way.', 'Listings are kept either way, without moving up.'],
+  ['Avoid', 'Where you start for “no …” and “not …”.', 'Listings that state it are shown lower. Nothing disappears.'],
+  ['Must', 'Only when you choose it, for a place or a work mode.', 'Hides listings that state otherwise. Listings that don’t say stay, marked.'],
+  ['Never', 'Only when you choose it, where it can be checked.', 'Hides listings that state it, and listings that don’t say.'],
+];
+---
+<Base title="How Linkbot works: from a few words to a decision you understand"
+  description="How Linkbot reads your words into criteria, explains every listing, keeps a watched search going, and leaves each next step to you."
+  path="/how-it-works" crumbs={[['How it works', '/how-it-works']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h1><span class="h1-soft">From a few words</span> to a decision you understand.</h1>
+      <p class="lede">Linkbot does the reading: of your words, and of every listing. It shows its work at each step, and every step after a search is your choice.</p>
+    </div>
+  </section>
+
+  <div class="wrap doc">
+    <Toc items={SECTIONS} label="On this page" />
+    <div class="doc-body">
+      <section id="say" aria-labelledby="say-title">
+        <p class="step">Step 1</p>
+        <h2 id="say-title">Say what matters</h2>
+        <p>Write a few short phrases, separated by commas: a role, how you want to work, work you want more of, work you’d rather avoid, a place. Linkbot reads each phrase on its own and shows what it understood as criteria under the search field, each one a choice you can change.</p>
+        <Reader />
+        <dl class="kinds">
+          <div><dt>Role</dt><dd>“Senior backend engineer”, “Data scientist”</dd></div>
+          <div><dt>Work mode</dt><dd>“remote”, “hybrid”, “on-site”</dd></div>
+          <div><dt>Work you want more of</dt><dd>“more mentoring”, “more autonomy”</dd></div>
+          <div><dt>Work you’d rather avoid</dt><dd>“no management”, “not on-call”</dd></div>
+          <div><dt>Place</dt><dd>A city, region or country, looked up in Linkbot’s list of places. If a name fits more than one place, Linkbot asks which.</dd></div>
+        </dl>
+        <h3>Every criterion has a level, and you can change it</h3>
+        <div class="table"><table>
+          <thead><tr><th scope="col">Level</th><th scope="col">When</th><th scope="col">What it does</th></tr></thead>
+          <tbody>{LEVELS.map(([level, when, does]) => <tr><th scope="row">{level}</th><td>{when}</td><td>{does}</td></tr>)}</tbody>
+        </table></div>
+        <h3>What Linkbot can’t read stays visible</h3>
+        <p>Words Linkbot can’t check are listed under the search field as not used. They never filter anything, and Linkbot never guesses what they mean. Where it makes sense, you can still look for listings that mention them, as words: your choice, never inferred. Long sentences are the clearest case: write “Senior backend engineer, remote, no management” rather than a paragraph.</p>
+      </section>
+
+      <section id="see" aria-labelledby="see-title">
+        <p class="step">Step 2</p>
+        <h2 id="see-title">See what fits</h2>
+        <p>Linkbot compares each current listing with your words, not with you. For every criterion, a listing shows one of three answers, each with a square that keeps its meaning in print, in high-contrast mode and without colour:</p>
+        <ul class="marks">
+          <li><Mark tone="fit" size={14} /><div><b>Stated</b><p>The listing says it, and Linkbot shows where: in the title, in the listing text, or in a field such as work mode.</p></div></li>
+          <li><Mark tone="tradeoff" size={14} /><div><b>Stated differently</b><p>The listing says something else, and Linkbot shows what: “Hybrid, not remote”.</p></div></li>
+          <li><Mark tone="unknown" size={14} /><div><b>Not stated</b><p>The listing doesn’t say. That is never counted as a fit, and there is no match score that could hide it.</p></div></li>
+        </ul>
+        <ListingDemo />
+        <h3>Where listings come from, and how current they are</h3>
+        <ul class="plain">
+          <li>Every listing shows its source and the day Linkbot last checked it, with a link to the original.</li>
+          <li>Only listings checked in the last 7 days are shown. Out-of-date listings are hidden, and the page says how many.</li>
+          <li>Copies of the same job from different boards are merged into one listing.</li>
+          <li>Each search says how many listings it checked. Linkbot doesn’t cover every job, and says so instead of implying there is nothing else.</li>
+        </ul>
+        <h3>What Linkbot doesn’t check</h3>
+        <p>Your experience, your right to work and the employer’s interest. Work mode and hours are only what the listing states, and pay isn’t checked yet.</p>
+      </section>
+
+      <section id="keep" aria-labelledby="keep-title">
+        <p class="step">Step 3</p>
+        <h2 id="keep-title">Keep what’s worth keeping</h2>
+        <p>Searching never needs an account. Keeping something does, because it has to be stored somewhere only you can open.</p>
+        <ul class="marks">
+          <li><Mark tone="fit" size={14} /><div><b>Save a job</b><p>Saved jobs live in your account, on My radar. Only you see them. When you choose Save without an account, Linkbot explains sign-in first; nothing is saved until you confirm after signing in.</p></div></li>
+          <li><Mark tone="tradeoff" size={14} /><div><b>Watch a search</b><p>Linkbot is built to check a watched direction once a day while it’s active, and marks what’s new since your last visit. Pause and resume it any time. It asks for a quick review after two weeks, then weekly, and stops checking until you confirm; after 90 days it ends. Status: built, being proven in testing.</p></div></li>
+          <li><Mark tone="unknown" size={14} /><div><b>Alerts</b><p>There are no email or push alerts yet. You see what changed when you come back.</p></div></li>
+        </ul>
+        <p class="note">Signing in leaves the page you were on, so the search itself is cleared; what you chose to save or watch is confirmed after you sign in.</p>
+        <h3 id="watching">A week of watching, in practice</h3>
+        <WatchDemo />
+      </section>
+
+      <section id="decide" aria-labelledby="decide-title">
+        <p class="step">Step 4</p>
+        <h2 id="decide-title">Decide what happens next</h2>
+        <p>Finding, matching, keeping, sharing and applying are separate decisions. None of them happens because another one did.</p>
+        <ul class="marks">
+          <li><Mark tone="fit" size={14} /><div><b>Apply on the original site</b><p>For listings Linkbot found elsewhere, you apply where the employer published it. Linkbot sends nothing.</p></div></li>
+          <li><Mark tone="tradeoff" size={14} /><div><b>Apply on Linkbot</b><p>For roles a company publishes on Linkbot, a one-click application sends exactly the details you confirm. Built, and waiting for companies to publish.</p></div></li>
+          <li><Mark tone="tradeoff" size={14} /><div><b>Share chosen details</b><p>With one named recipient, once or by a standing rule you set, each share with a receipt. Built, tested in staging. <a href="/privacy#sharing">How sharing works</a></p></div></li>
+        </ul>
+      </section>
+
+      <section id="next" aria-labelledby="next-title">
+        <p class="step">What’s next</p>
+        <h2 id="next-title">Private matching, staged and not magical</h2>
+        <p>Today Linkbot matches listings to directions you saved. The next step is matching people and companies privately: a company that is hiring describes the role under a mandate; people who opted in are checked against it; if there is an overlap, you are asked first. Nothing private is disclosed because an overlap exists, and nothing is shared without your decision.</p>
+        <p class="status-line"><span class="status" data-tone="next"><Mark tone="unknown" size={10} />In development, not live</span></p>
+        <p>Recruiting is the first place Linkbot works. The same approach, private by default and shared only with permission, is meant to carry further, one area at a time.</p>
+      </section>
+
+      <section id="today" aria-labelledby="today-title">
+        <p class="step">Status</p>
+        <h2 id="today-title">What’s live today, and what isn’t yet</h2>
+        <p>Linkbot is early. This is exactly which parts you can rely on now, with the same squares the product uses for evidence.</p>
+        <Today />
+      </section>
+
+      <section class="doc-cta" aria-labelledby="try-title">
+        <h2 id="try-title">Try it with your own words</h2>
+        <SearchForm id="q-how" />
+        <p class="muted">Hiring? <a href="/hiring">See how hiring with Linkbot works</a>.</p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page-hero { padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 56px); }
+  .page-hero .wrap { display: grid; gap: 20px; justify-items: center; text-align: center; }
+  .page-hero .lede { text-wrap: balance; }
+  .page-hero h1 { font-size: clamp(2.4rem, 1.1rem + 3.9vw, 4.75rem); max-width: 17ch; }
+  .h1-soft { font-weight: 300; color: var(--ink-2); }
+  .doc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px clamp(40px, 6vw, 96px); padding-bottom: var(--band); }
+  @media (min-width: 64rem) { .doc { grid-template-columns: 15rem minmax(0, 1fr); } }
+  .doc-body { display: grid; gap: var(--space-section); max-width: 48rem; }
+  .doc-body, .doc-body section { min-width: 0; }
+  .doc-body section { display: grid; gap: var(--space-head); scroll-margin-top: var(--anchor-top); }
+  .doc-body h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem); }
+  .doc-body h3 { margin-top: 12px; }
+  .doc-body p { color: var(--ink-2); }
+  .doc-body a:not(.link):not(.btn) { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--green-line); }
+  .doc-body a:not(.link):not(.btn):hover { text-decoration-color: currentColor; }
+  .step { font-size: var(--size-micro); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3) !important; }
+  .kinds { display: grid; margin: 4px 0 0; border-top: 2px solid var(--ink); }
+  .kinds > div { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .kinds dt { font-weight: 650; }
+  .kinds dd { margin: 0; color: var(--ink-2); }
+  @media (max-width: 36rem) { .kinds > div { grid-template-columns: minmax(0, 1fr); } }
+  .table { overflow-x: auto; border: 1px solid var(--line-strong); border-radius: var(--r-3); }
+  table { width: 100%; border-collapse: collapse; font-size: var(--size-small); }
+  th, td { padding: 12px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+  thead th { font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); background: var(--sand); }
+  tbody th { font-weight: 650; white-space: nowrap; }
+  tbody tr:last-child > * { border-bottom: 0; }
+  td { color: var(--ink-2); }
+  .marks { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .marks li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .marks li :global(.mark) { position: relative; top: 2px; }
+  .marks b { font-weight: 650; }
+  .marks p { margin-top: 4px; font-size: var(--size-small); }
+  .plain { display: grid; gap: 8px; padding-left: 1.1em; list-style: disc; color: var(--ink-2); }
+  .note { padding: 14px 16px; border-radius: var(--r-2); background: var(--sand); font-size: var(--size-small); }
+  .status-line { display: flex; }
+  /* Inside the reading column the listing and its reading stack. */
+  .doc-body :global(.listing) { grid-template-columns: minmax(0, 1fr); }
+  .doc-cta { padding: clamp(24px, 4vw, 40px); border-radius: var(--r-3); background: var(--mist); }
+</style>

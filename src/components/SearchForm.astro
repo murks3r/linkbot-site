@@ -1,0 +1,152 @@
+---
+/* The site's one working action: words handed to the app's search. The words go in the address
+   fragment (#/search?q=…), which browsers never send to a server; the app reads them once,
+   removes them from the address and searches in memory. The input has no name, so a browser
+   without scripts opens the app's search without sending the words anywhere. */
+import { app, searchWith } from '../lib/links';
+import { HERO_PLACEHOLDER } from '../data/content';
+import Icon from './Icon.astro';
+interface Props { id: string; examples?: string[]; size?: 'hero' | 'band' | 'monumental' | 'focal'; label?: string; placeholder?: string; describedBy?: string; place?: boolean }
+const { id, examples = [], size = 'hero', label = 'What work are you looking for?', placeholder = HERO_PLACEHOLDER, describedBy, place = false } = Astro.props;
+---
+<form class="search" data-size={size} data-place={place ? '' : undefined} action={app('#/search')} method="get" data-handoff={app('#/search')} role="search" aria-label="Search jobs in Linkbot">
+  <label class="search-label" for={id}>{label}</label>
+  <div class="search-box">
+    <span class="search-field">
+      <Icon name="search" size={18} />
+      <input id={id} type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" maxlength="2000" placeholder={placeholder} aria-describedby={describedBy} />
+    </span>
+    {place && <span class="search-place">
+      <label class="search-place-label" for={`${id}-place`}>Where?</label>
+      <Icon name="pin" size={18} />
+      <input id={`${id}-place`} type="text" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="search" maxlength="60" placeholder="City or country" data-place-input />
+    </span>}
+    <button class="btn btn-primary" type="submit" data-lit={size === 'focal' ? '' : undefined}>{size === 'focal' && <span class="btn-light" data-decor aria-hidden="true"></span>}<span>Search</span><Icon name="arrow" /></button>
+  </div>
+  <p class="search-alert" id={`${id}-alert`} data-alert hidden></p>
+  {examples.length > 0 && <ul class="search-try" aria-label="Examples">{examples.map(example => <li><a href={searchWith(example)}>{example}</a></li>)}</ul>}
+</form>
+
+<style>
+  .search { display: grid; gap: 12px; width: 100%; max-width: 46rem; }
+  .search-label { font-size: var(--size-small); font-weight: 650; }
+  .search-box { display: flex; align-items: center; gap: 8px; min-height: 68px; padding: 6px; border: 1.5px solid var(--line-ink); border-radius: var(--field-r); background: var(--surface); box-shadow: var(--shadow-field);
+    transition: border-color var(--fast), box-shadow var(--base) var(--ease), transform var(--base) var(--ease); }
+  .search-box:hover { border-color: var(--ink-2); }
+  .search-box:focus-within { border-color: var(--green); box-shadow: 0 0 0 4px var(--green-wash), var(--shadow-field); }
+  .search-field { display: flex; align-items: center; flex: 1; min-width: 0; padding-left: 16px; }
+  .search-field > :global(.icon) { flex: none; color: var(--ink-3); }
+  .search input { flex: 1; min-width: 0; height: 54px; padding: 0 12px; border: 0; outline: none; background: transparent; font-size: clamp(1.0625rem, 1rem + .35vw, 1.2rem); font-weight: 500; letter-spacing: -.005em; color: var(--ink); }
+  .search input::placeholder { color: var(--ink-3); opacity: 1; font-weight: 400; }
+  .search .btn { min-height: 54px; flex: none; }
+  /* A8: the place, a narrower split beside the words: what, and where. Two real labelled inputs in
+     one shell; a hairline parts them; the place is optional. */
+  .search-place { display: flex; align-items: center; flex: 0 1 11rem; min-width: 9rem; padding-left: 12px; border-left: 1.5px solid var(--line-strong); }
+  /* With a place beside the words the field is a little wider, so the placeholder still reads. */
+  .search[data-size='focal'][data-place] { max-width: 50rem; }
+  .search-place-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .search-place > :global(.icon) { flex: none; color: var(--ink-3); }
+  .search-place input { font-size: 1.0625rem; }
+  .search[data-size='focal'] .search-place input { height: 60px; font-size: 1.0625rem; }
+  .search[data-size='focal'] .search-place { margin-left: 4px; }
+  .search-alert { font-size: var(--size-small); font-weight: 600; color: var(--warn); }
+  .search-try { display: flex; flex-wrap: wrap; align-items: center; gap: 0 22px; font-size: var(--size-small); }
+  .search-try a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 5px; transition: color var(--fast), text-decoration-color var(--fast); }
+  .search-try a:hover { color: var(--ink); text-decoration-color: currentColor; }
+  .search[data-size='band'] .search-box { border-color: var(--green); }
+  /* The hero: one wide field on the page's centre line, the label for assistive technology only. */
+  .search[data-size='monumental'] { max-width: 52rem; justify-items: center; text-align: center; gap: 14px; }
+  .search[data-size='monumental'] .search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .search[data-size='monumental'] .search-box { width: 100%; min-height: 80px; padding: 8px; border-color: var(--green); text-align: left; }
+  .search[data-size='monumental'] .search-box:focus-within { transform: translateY(-1px); }
+  .search[data-size='monumental'] .search-field { padding-left: 22px; }
+  .search[data-size='monumental'] input { height: 62px; font-size: clamp(1.125rem, 1rem + .55vw, 1.375rem); }
+  .search[data-size='monumental'] .btn { min-height: 62px; padding: 0 30px; font-size: 1.0625rem; }
+  .search[data-size='monumental'] .search-try { justify-content: center; }
+  /* The focal search (Concepts A6–A7). In A7 it is the largest object on the opening screen: wider
+     and taller than A6's, drawn with a crisp ink ring rather than a hairline, lifted off the colour
+     by a deeper shadow, the placeholder set a step larger, and the pink action the only filled
+     control. Hover deepens the lift; focus draws the green ring and a quiet halo. Nothing about it
+     moves with the pointer except the light inside the action. */
+  .search[data-size='focal'] { max-width: 46rem; justify-items: center; text-align: center; gap: 14px; }
+  .search[data-size='focal'] .search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .search[data-size='focal'] .search-box { width: 100%; min-height: 76px; padding: 8px; border: 0; text-align: left;
+    box-shadow: 0 0 0 1.5px var(--ink), 0 1px 1px rgb(18 58 44 / .06), 0 14px 30px -14px rgb(18 58 44 / .3), 0 40px 80px -36px rgb(18 58 44 / .34);
+    transition: box-shadow var(--base) var(--ease); }
+  .search[data-size='focal'] .search-box:hover { box-shadow: 0 0 0 1.5px var(--ink), 0 1px 1px rgb(18 58 44 / .07), 0 16px 34px -14px rgb(18 58 44 / .34), 0 46px 90px -36px rgb(18 58 44 / .4); }
+  .search[data-size='focal'] .search-box:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 7px color-mix(in srgb, var(--green) 10%, transparent), 0 16px 34px -14px rgb(18 58 44 / .34), 0 46px 90px -36px rgb(18 58 44 / .4); }
+  .search[data-size='focal'] .search-field { padding-left: 20px; }
+  .search[data-size='focal'] .search-field > :global(.icon) { color: var(--ink-2); }
+  .search[data-size='focal'] input { height: 60px; font-size: 1.1875rem; }
+  /* Inside a rounded field the action's corners follow the field's (a pill inside a pill, a
+     softer rectangle inside a rectangle). */
+  .search[data-size='focal'] .btn { position: relative; overflow: hidden; min-height: 60px; padding: 0 28px 0 30px; font-size: 1.0625rem; isolation: isolate; border-radius: max(var(--control-r), min(var(--field-r), calc(var(--field-r) - 6px)));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 1px 2px rgb(18 58 44 / .12); transition: background-color var(--fast) var(--ease), box-shadow var(--base) var(--ease), transform var(--fast) var(--ease); }
+  .search[data-size='focal'] .btn:hover { box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 6px 16px -6px color-mix(in srgb, var(--pink-press) 90%, transparent); }
+  .search[data-size='focal'] .btn:active { transform: scale(.975); }
+  /* The light inside the action follows the hand while it is over it. */
+  .search .btn-light { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity var(--base) var(--ease);
+    background: radial-gradient(90px circle at var(--lx, 50%) var(--ly, 50%), rgb(255 255 255 / .55), transparent 70%); }
+  .search .btn[data-lit]:hover .btn-light { opacity: 1; }
+  .search[data-size='focal'] .search-try { justify-content: center; }
+  /* Phones: the words get the whole width, and the action sits under them, where the thumb is. */
+  @media (max-width: 30rem) {
+    .search .search-box, .search[data-size='monumental'] .search-box { flex-direction: column; align-items: stretch; gap: 10px; min-height: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+    .search .search-field { min-height: 60px; padding: 0 6px 0 16px; border: 1.5px solid var(--green); border-radius: var(--field-r); background: var(--surface); transition: box-shadow var(--base) var(--ease); }
+    .search .search-field:focus-within { box-shadow: 0 0 0 4px var(--green-wash); }
+    .search input, .search[data-size='monumental'] input { height: 56px; padding: 0 10px; font-size: 1.0625rem; }
+    .search .btn, .search[data-size='monumental'] .btn { min-height: 56px; width: 100%; }
+    .search[data-size='focal'] .search-box, .search[data-size='focal'] .search-box:hover, .search[data-size='focal'] .search-box:focus-within { padding: 0; box-shadow: none; }
+    .search[data-size='focal'] .search-field { min-height: 62px; border: 0; box-shadow: 0 0 0 1.5px var(--ink), 0 12px 26px -12px rgb(18 58 44 / .28), 0 30px 60px -30px rgb(18 58 44 / .3); }
+    .search[data-size='focal'] .search-field:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 10%, transparent); }
+    .search[data-size='focal'] input { height: 58px; font-size: 1.125rem; }
+    .search[data-size='focal'] .btn { min-height: 58px; width: 100%; padding: 0 22px; }
+    /* Phones: the place stacks under the words as its own field, and shares its row with the action,
+       so the whole search stays as tall as A7's field and action did (the hero keeps its foot). */
+    .search[data-place] .search-box { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+    .search[data-place] .search-field { grid-column: 1 / -1; }
+    .search[data-place] .btn, .search[data-size='focal'][data-place] .btn { width: auto; padding: 0 18px; }
+    .search .search-place { flex: none; min-height: 62px; margin: 0; padding: 0 6px 0 16px; border: 0; border-radius: var(--field-r); background: var(--surface); box-shadow: 0 0 0 1.5px var(--line-ink), 0 12px 26px -12px rgb(18 58 44 / .24); }
+    .search .search-place:focus-within { box-shadow: 0 0 0 2px var(--green), 0 0 0 6px color-mix(in srgb, var(--green) 10%, transparent); }
+    .search[data-size='focal'] .search-place input { height: 58px; font-size: 1.0625rem; }
+    .search-try { gap: 0 16px; }
+  }
+</style>
+
+<script>
+  import { searchWith } from '../lib/links';
+  for (const form of document.querySelectorAll<HTMLFormElement>('form[data-handoff]')) {
+    const input = form.querySelector<HTMLInputElement>('input:not([data-place-input])'), placeInput = form.querySelector<HTMLInputElement>('[data-place-input]'), alert = form.querySelector<HTMLElement>('[data-alert]');
+    if (input) input.dataset.describedBy = input.getAttribute('aria-describedby') ?? '';
+    const clear = () => { if (alert && !alert.hidden) { alert.hidden = true; alert.textContent = ''; alert.removeAttribute('role'); input?.removeAttribute('aria-invalid'); if (input) { if (input.dataset.describedBy) input.setAttribute('aria-describedby', input.dataset.describedBy); else input.removeAttribute('aria-describedby'); } } };
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const words = input?.value.trim() ?? '';
+      if (!words) {
+        if (alert && input) {
+          alert.textContent = 'Add a few words first, such as a role and how you want to work.';
+          alert.hidden = false; alert.setAttribute('role', 'alert');
+          input.setAttribute('aria-invalid', 'true'); input.setAttribute('aria-describedby', [alert.id, input.dataset.describedBy].filter(Boolean).join(' '));
+        }
+        input?.focus();
+        return;
+      }
+      // The place is handed over as its own part of the words: the app's interpreter reads a
+      // comma-separated part that names a place as a place criterion (and asks when several
+      // places share the name). No service is called from here.
+      const place = placeInput?.value.replace(/[,\s]+$/g, '').trim() ?? '';
+      location.href = searchWith(place ? `${words.replace(/[,\s]+$/g, '')}, ${place}` : words);
+    });
+    input?.addEventListener('input', clear);
+  }
+  // The light inside the focal action: its position is written on the button alone, while the hand
+  // is over it.
+  for (const button of document.querySelectorAll<HTMLElement>('.search .btn[data-lit]')) {
+    button.addEventListener('pointermove', event => {
+      if (event.pointerType !== 'mouse') return;
+      const r = button.getBoundingClientRect();
+      button.style.setProperty('--lx', `${Math.round(event.clientX - r.left)}px`);
+      button.style.setProperty('--ly', `${Math.round(event.clientY - r.top)}px`);
+    }, { passive: true });
+  }
+</script>

@@ -1,0 +1,589 @@
+{
+  "generator": "murks3r/linkbot tools/site/readings.ts",
+  "commit": "51f32a1f8d21ab4de11febc638ebb63425859cca",
+  "interpreterChanged": false,
+  "readings": [
+    {
+      "id": "phrases",
+      "label": "Phrases",
+      "text": "Senior backend engineer, remote, no management",
+      "spans": [
+        {
+          "start": 0,
+          "end": 23,
+          "tone": "read",
+          "quote": "Senior backend engineer"
+        },
+        {
+          "start": 25,
+          "end": 31,
+          "tone": "read",
+          "quote": "remote"
+        },
+        {
+          "start": 33,
+          "end": 46,
+          "tone": "read",
+          "quote": "no management"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Senior backend engineer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Senior backend engineer"
+        },
+        {
+          "label": "Remote",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "remote"
+        },
+        {
+          "label": "management",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no management"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "avoid",
+      "label": "Avoiding",
+      "text": "Data scientist, hybrid, no on-call",
+      "spans": [
+        {
+          "start": 0,
+          "end": 14,
+          "tone": "read",
+          "quote": "Data scientist"
+        },
+        {
+          "start": 16,
+          "end": 22,
+          "tone": "read",
+          "quote": "hybrid"
+        },
+        {
+          "start": 24,
+          "end": 34,
+          "tone": "read",
+          "quote": "no on-call"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Data scientist",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Data scientist"
+        },
+        {
+          "label": "Hybrid",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "hybrid"
+        },
+        {
+          "label": "on-call",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no on-call"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "unknown",
+      "label": "Unknown word",
+      "text": "Frontend developer, React, not on-call",
+      "spans": [
+        {
+          "start": 0,
+          "end": 18,
+          "tone": "read",
+          "quote": "Frontend developer"
+        },
+        {
+          "start": 20,
+          "end": 25,
+          "tone": "unused",
+          "quote": "React"
+        },
+        {
+          "start": 27,
+          "end": 38,
+          "tone": "read",
+          "quote": "not on-call"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Frontend developer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Frontend developer"
+        },
+        {
+          "label": "on-call",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "not on-call"
+        }
+      ],
+      "unused": [
+        {
+          "text": "React",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    {
+      "id": "paragraph",
+      "label": "Paragraph",
+      "text": "I'm a senior backend engineer. I'd consider moving for more autonomy, challenging technical work, and flexible remote options. I don't want a management role.",
+      "spans": [
+        {
+          "start": 0,
+          "end": 29,
+          "tone": "unused",
+          "quote": "I'm a senior backend engineer"
+        },
+        {
+          "start": 31,
+          "end": 68,
+          "tone": "unused",
+          "quote": "I'd consider moving for more autonomy"
+        },
+        {
+          "start": 70,
+          "end": 96,
+          "tone": "unused",
+          "quote": "challenging technical work"
+        },
+        {
+          "start": 98,
+          "end": 125,
+          "tone": "unused",
+          "quote": "and flexible remote options"
+        },
+        {
+          "start": 127,
+          "end": 157,
+          "tone": "unused",
+          "quote": "I don't want a management role"
+        }
+      ],
+      "criteria": [],
+      "unused": [
+        {
+          "text": "I'm a senior backend engineer",
+          "reason": "ambiguous"
+        },
+        {
+          "text": "I'd consider moving for more autonomy",
+          "reason": "ambiguous"
+        },
+        {
+          "text": "challenging technical work",
+          "reason": "ambiguous"
+        },
+        {
+          "text": "and flexible remote options",
+          "reason": "ambiguous"
+        },
+        {
+          "text": "I don't want a management role",
+          "reason": "ambiguous"
+        }
+      ]
+    },
+    {
+      "id": "rewrite",
+      "label": "Rewritten",
+      "text": "Senior backend engineer, more autonomy, challenging technical work, remote, no management",
+      "spans": [
+        {
+          "start": 0,
+          "end": 23,
+          "tone": "read",
+          "quote": "Senior backend engineer"
+        },
+        {
+          "start": 25,
+          "end": 38,
+          "tone": "read",
+          "quote": "more autonomy"
+        },
+        {
+          "start": 40,
+          "end": 66,
+          "tone": "unused",
+          "quote": "challenging technical work"
+        },
+        {
+          "start": 68,
+          "end": 74,
+          "tone": "read",
+          "quote": "remote"
+        },
+        {
+          "start": 76,
+          "end": 89,
+          "tone": "read",
+          "quote": "no management"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Senior backend engineer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Senior backend engineer"
+        },
+        {
+          "label": "more autonomy",
+          "dimension": "task",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "more autonomy"
+        },
+        {
+          "label": "Remote",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "remote"
+        },
+        {
+          "label": "management",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no management"
+        }
+      ],
+      "unused": [
+        {
+          "text": "challenging technical work",
+          "reason": "unsupported"
+        }
+      ]
+    },
+    {
+      "id": "story",
+      "label": "Story",
+      "text": "Product designer, hybrid, more research, no agency work",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "tone": "read",
+          "quote": "Product designer"
+        },
+        {
+          "start": 18,
+          "end": 24,
+          "tone": "read",
+          "quote": "hybrid"
+        },
+        {
+          "start": 26,
+          "end": 39,
+          "tone": "read",
+          "quote": "more research"
+        },
+        {
+          "start": 41,
+          "end": 55,
+          "tone": "read",
+          "quote": "no agency work"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Product designer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Product designer"
+        },
+        {
+          "label": "Hybrid",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "hybrid"
+        },
+        {
+          "label": "more research",
+          "dimension": "task",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "more research"
+        },
+        {
+          "label": "agency work",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no agency work"
+        }
+      ],
+      "unused": []
+    }
+  ],
+  "examples": [
+    {
+      "id": "hero-placeholder",
+      "text": "Data engineer, remote, no on-call",
+      "spans": [
+        {
+          "start": 0,
+          "end": 13,
+          "tone": "read",
+          "quote": "Data engineer"
+        },
+        {
+          "start": 15,
+          "end": 21,
+          "tone": "read",
+          "quote": "remote"
+        },
+        {
+          "start": 23,
+          "end": 33,
+          "tone": "read",
+          "quote": "no on-call"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Data engineer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Data engineer"
+        },
+        {
+          "label": "Remote",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "remote"
+        },
+        {
+          "label": "on-call",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no on-call"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "start-placeholder",
+      "text": "Product manager, more research",
+      "spans": [
+        {
+          "start": 0,
+          "end": 15,
+          "tone": "read",
+          "quote": "Product manager"
+        },
+        {
+          "start": 17,
+          "end": 30,
+          "tone": "read",
+          "quote": "more research"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Product manager",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Product manager"
+        },
+        {
+          "label": "more research",
+          "dimension": "task",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "more research"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "start-1",
+      "text": "Backend engineer, hybrid",
+      "spans": [
+        {
+          "start": 0,
+          "end": 16,
+          "tone": "read",
+          "quote": "Backend engineer"
+        },
+        {
+          "start": 18,
+          "end": 24,
+          "tone": "read",
+          "quote": "hybrid"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Backend engineer",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Backend engineer"
+        },
+        {
+          "label": "Hybrid",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "hybrid"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "start-2",
+      "text": "Engineering manager, more mentoring",
+      "spans": [
+        {
+          "start": 0,
+          "end": 19,
+          "tone": "read",
+          "quote": "Engineering manager"
+        },
+        {
+          "start": 21,
+          "end": 35,
+          "tone": "read",
+          "quote": "more mentoring"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Engineering manager",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Engineering manager"
+        },
+        {
+          "label": "more mentoring",
+          "dimension": "task",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "more mentoring"
+        }
+      ],
+      "unused": []
+    },
+    {
+      "id": "start-3",
+      "text": "Data analyst, remote, no on-call",
+      "spans": [
+        {
+          "start": 0,
+          "end": 12,
+          "tone": "read",
+          "quote": "Data analyst"
+        },
+        {
+          "start": 14,
+          "end": 20,
+          "tone": "read",
+          "quote": "remote"
+        },
+        {
+          "start": 22,
+          "end": 32,
+          "tone": "read",
+          "quote": "no on-call"
+        }
+      ],
+      "criteria": [
+        {
+          "label": "Data analyst",
+          "dimension": "role_direction",
+          "level": "prefer",
+          "hardAllowed": false,
+          "quote": "Data analyst"
+        },
+        {
+          "label": "Remote",
+          "dimension": "work_mode",
+          "level": "prefer",
+          "hardAllowed": true,
+          "quote": "remote"
+        },
+        {
+          "label": "on-call",
+          "dimension": "task",
+          "level": "avoid",
+          "hardAllowed": false,
+          "quote": "no on-call"
+        }
+      ],
+      "unused": []
+    }
+  ],
+  "roles": [
+    {
+      "text": "Senior Backend Engineer\nPython and Kafka. Remote within Germany.",
+      "stated": [
+        {
+          "field": "Role title",
+          "value": "Senior Backend Engineer",
+          "from": null
+        },
+        {
+          "field": "Role category",
+          "value": "Software engineering",
+          "from": "Backend Engineer"
+        },
+        {
+          "field": "Level",
+          "value": "Senior",
+          "from": "Senior"
+        },
+        {
+          "field": "Work mode",
+          "value": "Fully remote",
+          "from": "Remote within"
+        },
+        {
+          "field": "Country",
+          "value": "DE",
+          "from": "Germany"
+        }
+      ],
+      "skills": [
+        "python",
+        "kafka"
+      ],
+      "unknown": [
+        "Engagement"
+      ]
+    }
+  ]
+}
