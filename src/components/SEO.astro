@@ -1,48 +1,35 @@
 ---
-interface Props {
-  title: string;
-  description: string;
-  canonicalPath: string;
-}
-
-const { title, description, canonicalPath } = Astro.props;
-const canonical = new URL(canonicalPath, Astro.site ?? 'https://linkbot.org').toString();
-const ogImage = new URL('/og.svg', Astro.site ?? 'https://linkbot.org').toString();
+/* Page metadata. Structured data states only what is verifiable today: the name, the address of
+   this site and a plain description. Legal name, founding date, address and logo are left out
+   until the owner confirms them (see docs/README.md). Previews are never indexed. */
+import { NOINDEX } from '../lib/links';
+interface Props { title: string; description: string; path: string; crumbs?: [string, string][] }
+const { title, description, path, crumbs = [] } = Astro.props;
+const site = Astro.site ?? new URL('https://linkbot.org');
+const canonical = new URL(path, site).toString();
+const image = new URL('/og.png', site).toString();
+const graph: Record<string, unknown>[] = [];
+if (path === '/') graph.push(
+  { '@context': 'https://schema.org', '@type': 'Organization', name: 'Linkbot', url: site.origin,
+    description: 'Linkbot is a private job search: describe the work you want in your own words and see current listings explained.' },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'Linkbot', url: site.origin, inLanguage: 'en' },
+);
+if (crumbs.length) graph.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [['Linkbot', '/'], ...crumbs].map(([name, href], index) => ({ '@type': 'ListItem', position: index + 1, name, item: new URL(href, site).toString() })) });
 ---
-
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-
+{NOINDEX && <meta name="robots" content="noindex, nofollow" />}
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Linkbot" />
+<meta property="og:locale" content="en" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
-<meta property="og:image" content={ogImage} />
-
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Linkbot: Find work that fits. Keep your privacy." />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={title} />
-<meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={ogImage} />
-
-<script type="application/ld+json" is:inline set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Linkbot',
-  legalName: 'Linkbot OÜ',
-  url: 'https://linkbot.org',
-  logo: 'https://linkbot.org/og.svg',
-  description: 'Private eligibility infrastructure for the labour market. We replace public exposure with permissioned matching.',
-  foundingDate: '2024',
-  address: { '@type': 'PostalAddress', addressCountry: 'EE', addressLocality: 'Tallinn' },
-  knowsAbout: ['Privacy engineering', 'Identity and access management', 'Labour market matching', 'Eligibility protocols'],
-})}></script>
-
-<script type="application/ld+json" is:inline set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Linkbot',
-  url: 'https://linkbot.org',
-  inLanguage: 'en',
-})}></script>
+{graph.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(graph.length === 1 ? graph[0] : graph)} />}

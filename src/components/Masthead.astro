@@ -1,0 +1,86 @@
+---
+import { app } from '../lib/links';
+import Icon from './Icon.astro';
+interface Props { current?: string; quiet?: boolean }
+const { current, quiet = false } = Astro.props;
+const NAV: [string, string][] = [['/how-it-works', 'How it works'], ['/privacy', 'Privacy'], ['/hiring', 'Hiring']];
+---
+<header class="masthead" data-masthead data-quiet={quiet ? '' : undefined}>
+  <div class="wrap masthead-inner">
+    <a class="brand" href="/">Linkbot</a>
+    <nav class="nav" aria-label="Main">
+      {NAV.map(([href, label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
+    </nav>
+    <a class="btn btn-primary masthead-cta" data-size="sm" href={app('#/search')}>Search jobs</a>
+    <details class="menu" data-menu>
+      <summary><span>Menu</span><Icon name="down" /></summary>
+      <nav class="menu-panel" aria-label="Main">
+        {NAV.map(([href, label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
+        <a href={app('#/saved')}>My radar</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  /* A8: the bar is seamless. It has no fill of its own, so the page's ground (the paper colour or
+     the living light) runs through it unchanged, and the paper layer prints over it as over
+     everything else. While content passes beneath, only a blur, never a tint, keeps the words
+     readable. No rule marks its edge. */
+  .masthead { position: sticky; top: 0; z-index: 30; background: transparent; }
+  .masthead::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); opacity: 0; transition: opacity var(--base); }
+  .masthead[data-scrolled]::before { opacity: 1; }
+  /* Home: nothing in the header competes with the hero's search. The action keeps its box (nothing
+     moves) and is quiet text until the hero's search has scrolled away. */
+  .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta { background: transparent; color: var(--ink-2); }
+  .masthead[data-quiet]:not([data-hero-gone]) .masthead-cta:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 4px; }
+  .masthead-cta { transition: background-color var(--base) var(--ease), color var(--base); }
+  .masthead-inner { display: flex; align-items: center; gap: 12px clamp(20px, 3vw, 44px); min-height: 72px; }
+  .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-stretch: 112%; font-size: 1.5rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; text-decoration: none; color: var(--ink); }
+  .nav { display: flex; gap: 4px clamp(20px, 2.6vw, 36px); margin-left: auto; }
+  .nav a { position: relative; display: inline-flex; align-items: center; min-height: var(--target); font-size: var(--size-small); font-weight: 560; color: var(--ink-2); text-decoration: none; transition: color var(--fast); }
+  .nav a:hover { color: var(--ink); }
+  .nav a[aria-current='page'] { color: var(--ink); font-weight: 650; }
+  .nav a[aria-current='page']::after { content: ''; position: absolute; left: 0; right: 0; bottom: 8px; height: 1.5px; background: var(--green); }
+  .menu { display: none; position: relative; }
+  .menu summary { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--pill); font-size: var(--size-small); font-weight: 600; cursor: pointer; list-style: none; transition: border-color var(--fast); }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu summary :global(.icon) { transition: transform var(--base) var(--ease); }
+  .menu[open] summary { border-color: var(--green); }
+  .menu[open] summary :global(.icon) { transform: rotate(180deg); }
+  .menu-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(280px, calc(100vw - 32px)); padding: 6px; display: grid; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-3); box-shadow: var(--shadow-float); }
+  .menu-panel a { display: flex; align-items: center; min-height: var(--target); padding: 0 14px; border-radius: var(--r-2); font-weight: 560; text-decoration: none; }
+  .menu-panel a:hover { background: var(--sand); }
+  .menu-panel a[aria-current='page'] { background: var(--green-wash); font-weight: 650; }
+  @media (max-width: 52rem) {
+    .masthead-inner { min-height: 64px; }
+    .nav { display: none; }
+    .masthead-cta { margin-left: auto; }
+    .menu { display: block; }
+  }
+  @media (max-width: 22.5rem) {
+    .brand { font-size: 1.3rem; }
+    .menu summary span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .menu summary { padding: 0 12px; }
+    .masthead-cta { padding: 0 14px; }
+  }
+</style>
+
+<script>
+  const masthead = document.querySelector<HTMLElement>('[data-masthead]');
+  const menu = document.querySelector<HTMLDetailsElement>('[data-menu]');
+  if (masthead) {
+    // Scrolled, the bar blurs what passes beneath it.
+    const update = () => masthead.toggleAttribute('data-scrolled', window.scrollY > 8);
+    update();
+    addEventListener('scroll', update, { passive: true });
+    const hero = document.querySelector('[data-hero-search]');
+    if (masthead.hasAttribute('data-quiet') && hero && 'IntersectionObserver' in window)
+      new IntersectionObserver(([entry]) => masthead.toggleAttribute('data-hero-gone', !entry.isIntersecting)).observe(hero);
+    else masthead.setAttribute('data-hero-gone', '');
+  }
+  if (menu) {
+    document.addEventListener('pointerdown', event => { if (menu.open && !menu.contains(event.target as Node)) menu.open = false; });
+    menu.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary')?.focus(); } });
+  }
+</script>

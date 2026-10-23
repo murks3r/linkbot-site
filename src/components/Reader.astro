@@ -1,0 +1,127 @@
+---
+/* Demonstration: from everyday words to criteria you can see. Every panel is a reading the
+   app's own interpreter produced (src/data/readings.json, with the commit that produced it);
+   nothing here interprets anything. What was read is set in full ink and weight, what can't be
+   used is softened: no marks. The Must switch shows the one decision Linkbot leaves to the
+   person: a phrase becomes a hard requirement only when they say so, and only where the listing
+   can be checked for it (work mode here; places in the app). */
+import Icon from './Icon.astro';
+import { readings as recorded, readingCommit, LEVEL, KIND, REASON, LEVEL_HINT } from '../data/content';
+const readings = recorded.filter(r => r.id !== 'story');  // the homepage story has its own stage
+import { searchWith } from '../lib/links';
+const pieces = (r: (typeof readings)[number]) => {
+  const out: { text: string; tone: string | null }[] = [];
+  let at = 0;
+  for (const span of r.spans) { if (span.start > at) out.push({ text: r.text.slice(at, span.start), tone: null }); out.push({ text: r.text.slice(span.start, span.end), tone: span.tone }); at = span.end; }
+  if (at < r.text.length) out.push({ text: r.text.slice(at), tone: null });
+  return out;
+};
+---
+<div class="reader" data-reader>
+  <div class="reader-tabs" role="tablist" aria-label="Example sentences">
+    {readings.map((r, index) => <button type="button" role="tab" id={`reader-tab-${r.id}`} aria-controls={`reader-panel-${r.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1}>{r.label}</button>)}
+  </div>
+  {readings.map((r, index) => <section class="reader-panel" role="tabpanel" id={`reader-panel-${r.id}`} aria-labelledby={`reader-tab-${r.id}`} hidden={index !== 0}>
+    <p class="reader-label">You write</p>
+    <p class="reader-words">{pieces(r).map(p => p.tone === 'read' ? <b class="read">{p.text}</b> : p.tone ? <span class="unused">{p.text}</span> : p.text)}</p>
+    <p class="reader-label">Linkbot reads</p>
+    {r.criteria.length > 0 ? <ul class="reader-criteria">
+      {r.criteria.map(c => <li data-criterion>
+        <span class="reader-kind">{KIND[c.dimension] ?? 'Understood'}</span>
+        <b>{c.label}</b>
+        <span class="chip" data-level={c.level} data-chip>{LEVEL[c.level ?? 'prefer']}</span>
+        {c.hardAllowed && <button type="button" class="reader-must" aria-pressed="false" data-must>Make it a Must</button>}
+        <p class="reader-hint" data-hint aria-live="polite">{LEVEL_HINT[(c.level ?? 'prefer') as 'prefer' | 'avoid'] ?? ''}</p>
+      </li>)}
+    </ul> : <p class="reader-none">Nothing here can be used yet.</p>}
+    {r.unused.length > 0 && <ul class="reader-unused" aria-label="Words Linkbot can’t use">
+      {r.unused.map(u => <li><span class="unused">{u.text}</span><span>{REASON[u.reason] ?? REASON.unsupported}</span></li>)}
+    </ul>}
+    {r.id === 'paragraph' && <p class="reader-note">Linkbot reads short phrases. It doesn’t pull meaning out of long sentences, and it won’t guess: every clause stays visible, unused. <button type="button" class="link" data-goto="rewrite">Show the same thing as phrases<Icon name="arrow" /></button></p>}
+    {r.id === 'rewrite' && <p class="reader-note">Four phrases understood. “challenging technical work” stays in view but filters nothing: Linkbot shows what it can’t check instead of guessing at it.</p>}
+    {r.id === 'unknown' && <p class="reader-note">In Linkbot you can still look for listings that mention “React”, as words. That is your choice, never inferred.</p>}
+    <p class="reader-foot"><a class="link" href={searchWith(r.text)}>Search with these words<Icon name="arrow" /></a></p>
+  </section>)}
+  <p class="reader-proof">Recorded from Linkbot’s own interpreter (app commit {readingCommit}). Type your own words in Linkbot and it reads them the same way.</p>
+</div>
+
+<style>
+  .reader { display: grid; gap: 0; border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--paper); color: var(--ink); overflow: clip; }
+  .reader-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px; border-bottom: 1px solid var(--line); background: var(--sand); }
+  .reader-words { color: var(--ink-3); }
+  .reader-words .read { color: var(--ink); font-weight: 620; }
+  @media (max-width: 40rem) {
+    /* Phones: one scrolling row of examples instead of three wrapped rows. */
+    .reader-tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; scroll-padding-inline: 12px; }
+    .reader-tabs::-webkit-scrollbar { display: none; }
+    .reader-tabs button { flex: none; }
+  }
+  .reader-tabs button { min-height: var(--target); padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--pill); background: var(--surface); font-size: var(--size-small); font-weight: 600; color: var(--ink-2); transition: border-color var(--fast), color var(--fast), background-color var(--fast); }
+  .reader-tabs button:hover { border-color: var(--ink); color: var(--ink); }
+  .reader-tabs button[aria-selected='true'] { background: var(--green); border-color: var(--green); color: var(--on-green); }
+  .reader-panel { display: grid; gap: 10px; padding: clamp(20px, 3vw, 32px); }
+  .reader-label { font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  .reader-label + .reader-words { margin-bottom: 14px; }
+  .reader-words { font-family: var(--display); font-stretch: 104%; font-size: clamp(1.3rem, 1.1rem + .9vw, 1.75rem); font-weight: 420; line-height: 1.38; letter-spacing: -.015em; }
+  .reader-criteria { display: grid; }
+  .reader-criteria li { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) auto auto; align-items: center; gap: 6px 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .reader-criteria li:last-child { border-bottom: 1px solid var(--line); }
+  .reader-kind { font-size: var(--size-micro); font-weight: 600; color: var(--ink-3); }
+  .reader-criteria b { font-weight: 620; overflow-wrap: anywhere; }
+  .reader-must { min-height: var(--target); padding: 0 14px; border: 1px dashed var(--line-ink); border-radius: var(--pill); background: var(--surface); font-size: var(--size-micro); font-weight: 650; transition: border-color var(--fast), background-color var(--fast); }
+  .reader-must:hover { border-style: solid; border-color: var(--ink); }
+  .reader-must[aria-pressed='true'] { border-style: solid; border-color: var(--green); background: var(--green-wash); }
+  .reader-hint { grid-column: 2 / -1; font-size: var(--size-micro); color: var(--ink-2); }
+  .reader-none { padding: 14px 16px; border: 1px dashed var(--line-ink); border-radius: var(--r-2); font-weight: 600; }
+  .reader-unused { display: grid; gap: 6px; margin-top: 6px; }
+  .reader-unused li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; font-size: var(--size-small); }
+  .reader-unused li > span:last-child { color: var(--ink-3); font-size: var(--size-micro); font-weight: 600; }
+  .reader-note { margin-top: 8px; padding: 14px 16px; border-radius: var(--r-2); background: var(--mist); font-size: var(--size-small); color: var(--ink); }
+  .reader-note .link { display: inline-flex; min-height: var(--target); padding: 0; border: 0; background: none; }
+  .reader-foot { margin-top: 4px; }
+  .reader-proof { padding: 12px clamp(20px, 3vw, 32px); border-top: 1px solid var(--line); font-size: var(--size-micro); color: var(--ink-3); }
+  @media (max-width: 40rem) {
+    .reader-criteria li { grid-template-columns: minmax(0, 1fr) auto; }
+    .reader-kind { grid-column: 1 / -1; }
+    .reader-must { grid-column: 1 / -1; justify-self: start; }
+    .reader-hint { grid-column: 1 / -1; }
+  }
+</style>
+
+<script>
+  /* Tabs (WAI-ARIA tabs pattern, automatic activation): arrow keys, Home and End move between
+     example sentences. The Must switch changes only this demonstration, exactly as the level menu
+     does in the app. */
+  const HINT = { must: 'Hides listings that state otherwise. Listings that don’t say stay, marked.', prefer: 'Shown higher when the listing states it.' };
+  for (const reader of document.querySelectorAll<HTMLElement>('[data-reader]')) {
+    const tabs = [...reader.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const show = (tab: HTMLButtonElement, focus = false) => {
+      for (const other of tabs) {
+        const on = other === tab, panel = reader.querySelector<HTMLElement>(`#${other.getAttribute('aria-controls')}`);
+        other.setAttribute('aria-selected', String(on)); other.tabIndex = on ? 0 : -1;
+        if (panel) panel.hidden = !on;
+      }
+      if (focus) tab.focus();
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => show(tab));
+      tab.addEventListener('keydown', event => {
+        const next = event.key === 'ArrowRight' ? (index + 1) % tabs.length : event.key === 'ArrowLeft' ? (index - 1 + tabs.length) % tabs.length
+          : event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1 : -1;
+        if (next < 0) return;
+        event.preventDefault(); show(tabs[next], true);
+      });
+    });
+    reader.querySelectorAll<HTMLButtonElement>('[data-goto]').forEach(button => button.addEventListener('click', () => {
+      const tab = tabs.find(t => t.id === `reader-tab-${button.dataset.goto}`);
+      if (tab) show(tab, true);
+    }));
+    reader.querySelectorAll<HTMLButtonElement>('[data-must]').forEach(button => button.addEventListener('click', () => {
+      const row = button.closest('[data-criterion]'), chip = row?.querySelector<HTMLElement>('[data-chip]'), hint = row?.querySelector<HTMLElement>('[data-hint]');
+      const must = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(must));
+      if (chip) { chip.dataset.level = must ? 'must' : 'prefer'; chip.textContent = must ? 'Must' : 'Prefer'; }
+      if (hint) hint.textContent = must ? HINT.must : HINT.prefer;
+    }));
+  }
+</script>

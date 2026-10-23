@@ -1,0 +1,12 @@
+---
+/* A marked draft (Concept A8): a founder statement the documentation cannot verify yet is shown as
+   written, with a small mark "Draft · founder to confirm" that exists only in preview builds. A
+   production build would show the copy without the mark, so nothing marked may ship before the
+   founder confirms it (the feedback review lists every such line). */
+const preview = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1';
+---
+<span class="draft" data-draft><slot />{preview && <span class="draft-mark" title="This statement is a draft the founder has not confirmed yet.">Draft · founder to confirm</span>}</span>
+
+<style>
+  .draft-mark { display: inline-block; margin-left: 8px; padding: 1px 8px; border: 1px dashed var(--warn); border-radius: var(--pill); font-family: var(--text); font-size: .6875rem; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--warn); vertical-align: middle; white-space: nowrap; }
+</style>

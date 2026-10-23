@@ -1,0 +1,188 @@
+/* Linkbot's public site — Concept A6, "focus".
+   One palette with the app (palette.css is copied from the app's generated tokens). Warm paper is
+   the ground; on the home it lies under a living atmosphere of seven proven pigments that moves on
+   its own and answers the hand (src/scripts/atmosphere.ts), and every page carries the paper's
+   grain. One deep flat green is the ink (text, rules, focus, the night of the privacy chapter);
+   pink is the spot colour, kept for the primary action. Emphasis comes from weight, scale and
+   focus, never from a marker. Two families: Archivo for display, Figtree for reading. Evidence and
+   product status use the app's three square marks (solid, split, dashed), never colour alone.
+   Focus is the visual language: soft is what doesn't matter yet, sharp is what does. The story is
+   told on pinned scenes driven by scroll position (src/scripts/stages.ts). */
+
+/* Metric-matched fallbacks while the web fonts load (measured against Arial: Archivo at 112 %
+   width is 1.121× Arial's advance, Figtree 1.002×; ascent and descent from the fonts), so the
+   swap barely moves anything. */
+@font-face { font-family: 'Archivo Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 112%; ascent-override: 78.5%; descent-override: 18.7%; line-gap-override: 0%; }
+@font-face { font-family: 'Figtree Fallback'; src: local('Arial'), local('Helvetica Neue'), local('Helvetica'); size-adjust: 100%; ascent-override: 95%; descent-override: 25%; line-gap-override: 0%; }
+
+:root {
+  color-scheme: light;
+  --paper: var(--lb-cream); --surface: var(--lb-white);
+  --ink: var(--lb-ink); --ink-2: var(--lb-ink-2); --ink-3: var(--lb-ink-3);
+  --green: var(--lb-forest); --green-hover: var(--lb-forest-hover); --green-press: var(--lb-forest-press);
+  --green-wash: var(--lb-forest-wash); --green-line: var(--lb-forest-line); --green-rule: var(--lb-forest-rule);
+  --on-green: var(--lb-on-forest); --on-green-2: var(--lb-on-forest-2);
+  --pink: var(--lb-pink); --pink-hover: var(--lb-pink-hover); --pink-press: var(--lb-pink-press); --on-pink: var(--lb-on-pink);
+  --blush: var(--lb-blush); --sage: var(--lb-sage); --dawn: var(--lb-dawn);
+  --line: var(--lb-line); --line-strong: var(--lb-line-strong); --line-ink: var(--lb-line-ink);
+  --sand: var(--lb-sand); --sand-2: var(--lb-sand-2); --mist: var(--lb-mist);
+  --warn: var(--lb-warn); --warn-wash: var(--lb-warn-wash);
+
+  --display: 'Archivo Variable', 'Archivo Fallback', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --text: 'Figtree Variable', 'Figtree Fallback', 'Helvetica Neue', Arial, system-ui, sans-serif;
+  /* The headline is composed, not monumental: it must never push the search out of the focal area. */
+  --size-hero: clamp(2.25rem, 1.1rem + 3.9vw, 4.75rem);
+  --size-h2: clamp(1.9rem, 1.1rem + 2.6vw, 3.5rem);
+  --size-statement: clamp(1.75rem, 1rem + 2.4vw, 3.25rem);
+  /* A story's statements (A7): a step below the hero's headline, so the opening stays the peak. */
+  --size-caption: clamp(1.5rem, 1.05rem + 1.75vw, 2.75rem);
+  --size-h3: clamp(1.2rem, 1.1rem + .4vw, 1.45rem);
+  --size-lede: clamp(1.125rem, 1.04rem + .4vw, 1.375rem);
+  --size-body: 1.0625rem; --size-small: .9375rem; --size-micro: .8125rem;
+  --page: 1240px; --gutter: clamp(16px, 4vw, 48px); --prose: 62ch;
+  --band: clamp(96px, 12vw, 176px);
+  /* A8: one spacing scale, so nothing is set tight by accident: between sections, between a
+     heading and its text, between statements, and the measure of running text. */
+  --space-section: clamp(72px, 9vw, 136px); --space-block: clamp(32px, 4vw, 56px); --space-head: clamp(14px, 1.6vw, 22px); --space-para: 1em;
+  --measure: 62ch; --lh-body: 1.6; --lh-tight: 1.1;
+  --r-1: 6px; --r-2: 10px; --r-3: 16px; --pill: 999px;
+  /* A8: the search field is a rounded rectangle, no longer a pill (the founder's call); the radius
+     is one token, with the switcher's steps below. Buttons and chips stay pills unless the
+     variant [data-v-controls='follow'] makes them follow. */
+  --field-r: 16px; --control-r: var(--pill);
+  --target: 44px;
+  --ease: cubic-bezier(.2, .7, .2, 1); --ease-out: cubic-bezier(.16, 1, .3, 1); --fast: 140ms; --base: 240ms;
+  --header: 72px; --beat: 100svh;
+  --shadow-float: 0 1px 2px rgb(18 58 44 / .06), 0 18px 48px rgb(18 58 44 / .12);
+  --shadow-field: 0 1px 2px rgb(18 58 44 / .04), 0 24px 60px -28px rgb(18 58 44 / .28);
+}
+@media (prefers-reduced-motion: reduce) { :root { --fast: 0ms; --base: 0ms; } }
+html[data-v-radius='10'] { --field-r: 10px; }
+html[data-v-radius='16'] { --field-r: 16px; }
+html[data-v-radius='20'] { --field-r: 20px; }
+html[data-v-radius='pill'] { --field-r: 999px; }
+html[data-v-controls='follow'] { --control-r: var(--field-r); }
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+/* A8: anchors land below the header, and below the folded "On this page" bar on narrow screens. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: var(--anchor-top); background: var(--paper); --anchor-top: calc(var(--header) + 24px); }
+@media (max-width: 63.99rem) { html { --anchor-top: calc(var(--header) + 64px); } }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--size-body)/1.6 var(--text); font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-wrap: break-word; }
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2 { font-family: var(--display); font-stretch: 102%; font-weight: 540; line-height: 1.04; letter-spacing: -.032em; text-wrap: balance; }
+h1 { font-size: var(--size-hero); font-weight: 560; letter-spacing: -.036em; line-height: 1; }
+h2 { font-size: var(--size-h2); }
+h3 { font-family: var(--text); font-size: var(--size-h3); font-weight: 650; letter-spacing: -.012em; line-height: 1.25; text-wrap: balance; }
+p { text-wrap: pretty; }
+a { color: inherit; text-decoration-color: var(--green-line); text-decoration-thickness: 1px; text-underline-offset: .24em; transition: text-decoration-color var(--fast); }
+a:hover { text-decoration-color: currentColor; }
+img, svg { display: block; max-width: 100%; }
+button, input { font: inherit; color: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+.sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -80px; z-index: 100; padding: 12px 16px; border-radius: var(--r-2); background: var(--green); color: var(--on-green); font-weight: 600; text-decoration: none; }
+.skip:focus { top: 12px; }
+::selection { background: var(--pink); color: var(--on-pink); }
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.band { padding-block: var(--band); }
+.band[data-tone='mist'] { background: var(--mist); }
+.band[data-tone='sand'] { background: var(--sand); }
+.band[data-tone='green'] { background: var(--green); color: var(--on-green); }
+/* Two plain bands in a row share their spacing; after a coloured band the full spacing returns. */
+.band:not([data-tone]) + .band:not([data-tone]) { padding-top: 0; }
+.lede { font-size: var(--size-lede); line-height: 1.5; color: var(--ink-2); max-width: 36em; }
+.prose { max-width: var(--prose); }
+.prose > * + * { margin-top: 1em; }
+.prose p, .muted { color: var(--ink-2); }
+/* A quiet label for help pages; the homepage needs none. */
+.eyebrow { font-size: var(--size-micro); font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.section-head { display: grid; gap: 18px; max-width: 46rem; }
+.section-head p { font-size: var(--size-lede); color: var(--ink-2); }
+.stack { display: grid; gap: 20px; }
+
+/* Words Linkbot can't use: softened, never underlined or marked. */
+.unused { color: var(--ink-3); }
+
+/* ── Buttons and links ─────────────────────────────────────────────────── */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border: 1.5px solid transparent; border-radius: var(--control-r);
+  font-family: var(--text); font-size: 1rem; font-weight: 650; line-height: 1.2; text-align: center; text-decoration: none;
+  transition: background-color var(--fast) var(--ease), border-color var(--fast), color var(--fast), transform var(--fast) var(--ease); }
+.btn svg { flex: none; transition: transform var(--base) var(--ease); }
+.btn:hover svg { transform: translateX(3px); }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--pink); color: var(--on-pink); }
+.btn-primary:hover { background: var(--pink-hover); }
+.btn-primary:active { background: var(--pink-press); }
+.btn-secondary { background: transparent; color: var(--ink); border-color: var(--green); }
+.btn-secondary:hover { background: var(--green-wash); }
+.btn-green { background: var(--green); color: var(--on-green); }
+.btn-green:hover { background: var(--green-hover); }
+.btn[data-size='sm'] { min-height: var(--target); padding: 0 18px; font-size: var(--size-small); }
+.link { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); font-weight: 650; color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); }
+.link:hover { text-decoration-color: currentColor; }
+.link svg { flex: none; transition: transform var(--base) var(--ease); }
+.link:hover svg { transform: translateX(3px); }
+
+/* ── Evidence and status marks (the app's three squares) ──────────────── */
+.mark { flex: none; color: var(--ink); }
+.mark[data-tone='unknown'] { color: var(--ink-3); }
+/* Product status, stated in words beside its square: no badge, no fill. */
+.status { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; font-size: var(--size-micro); font-weight: 650; line-height: 1.35; color: var(--ink-2); }
+.status[data-tone='next'] .mark { color: var(--ink-3); }
+
+/* ── Criteria chips: the person's words as Linkbot read them ──────────── */
+.chip { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 4px 14px; border: 1px solid var(--line-strong); border-radius: var(--control-r); background: var(--surface); font-size: var(--size-small); font-weight: 600; line-height: 1.25; }
+.chip small { padding-left: 8px; border-left: 1px solid var(--line-strong); font-size: var(--size-micro); font-weight: 560; color: var(--ink-2); }
+.chip[data-level='must'], .chip[data-level='never'] { background: var(--green); border-color: var(--green); color: var(--on-green); }
+.chip[data-level='must'] small, .chip[data-level='never'] small { color: var(--on-green-2); border-left-color: var(--green-rule); }
+
+/* ── Cards (paper objects, used sparingly on help pages) ───────────────── */
+.card { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-3); }
+.card-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
+.card-body { padding: 18px; }
+
+@media (forced-colors: active) {
+  .chip { forced-color-adjust: none; background: Canvas; color: CanvasText; border-color: CanvasText; }
+  .btn { border: 1px solid ButtonText; }
+}
+
+/* ── Scenes: pinned stages driven by scroll position ─────────────────────── */
+.scene { position: relative; }
+.scene-stage { position: relative; }
+.js .scene.is-live { height: calc(100svh + var(--beats, 3) * var(--beat)); }
+.js .scene.is-live .scene-stage { position: sticky; top: var(--header); height: calc(100svh - var(--header)); overflow: clip; }
+.scene-inner { position: relative; width: 100%; }
+.js .scene.is-live .scene-inner { position: absolute; inset: 0; display: grid; align-content: center; }
+/* Captions: one owns the top of the stage at a time when live (the zone keeps its height, so the
+   figure below never moves); all of them read in order when static, each statement its own block,
+   clearly apart (A8). */
+.captions { display: grid; gap: var(--space-block); }
+.caption + .caption { padding-top: var(--space-block); border-top: 1px solid var(--line); }
+.caption { font-family: var(--display); font-stretch: 102%; font-size: var(--size-caption); font-weight: 540; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
+/* The statement's body in full ink: it is read over the living light and the paper, so it keeps its
+   contrast even against the paper's darkest fibres. */
+.caption small { display: block; margin-top: var(--space-head); max-width: var(--measure); margin-inline: auto; font-family: var(--text); font-size: var(--size-body); font-weight: 400; letter-spacing: 0; line-height: var(--lh-body); color: var(--ink); }
+.js .scene.is-live .scene-inner { align-content: start; }
+/* A8: the live statement sits in a zone with clear air above it (the founder: it nearly fell out
+   of the picture) and is centred in that zone, with room beneath before the figure. */
+.js .scene.is-live .captions { position: relative; display: grid; align-items: center; width: min(100%, 46rem); margin-inline: auto; margin-top: clamp(12px, 3vh, 36px); margin-bottom: clamp(12px, 2.5vh, 28px); height: var(--cap-h, clamp(112px, 17vh, 150px)); }
+.js .scene.is-live .caption + .caption { padding-top: 0; border-top: 0; }
+/* Live, the statement of the current beat comes into focus when its beat begins and leaves when
+   the next begins (a short, eased transition in time, both ways), so a statement is never left
+   half-faded wherever the reader stops. Statically all of them read in order. */
+.js .scene.is-live .caption { grid-area: 1 / 1; align-self: center; opacity: 0; transform: translateY(14px); filter: blur(6px); pointer-events: none;
+  transition: opacity .45s var(--ease-out), transform .7s var(--ease-out), filter .45s var(--ease-out); }
+.js .scene.is-live .caption[aria-current='step'] { opacity: 1; transform: none; filter: none; pointer-events: auto; transition-delay: .14s; }
+@media (prefers-reduced-motion: reduce) { .js .scene.is-live .caption { transition: none; } }
+@media (max-width: 52rem) { .js .scene.is-live .caption small { font-size: var(--size-small); line-height: 1.45; } .js .scene.is-live .captions { margin-top: 0; margin-bottom: 8px; } }
+/* Short screens have no air to spare: the zone keeps A7's margins there, and the statement is still centred in it. */
+/* Short screens (1280 × 720 laptops): a wider zone keeps a statement to two lines, and tighter margins. */
+@media (max-height: 47.5rem) { .js .scene.is-live .captions.captions { width: min(100%, 54rem); max-width: 54rem; margin-top: 8px; margin-bottom: 10px; } }
+@media (max-width: 52rem) { :root { --header: 64px; } }
