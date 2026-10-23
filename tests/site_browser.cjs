@@ -223,7 +223,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       const home = await page.evaluate(() => document.querySelector('main').innerText);
       check(!/What works today|short phrases|Write it in|runs in circles/i.test(home), 'no status section, no writing instructions and no problem-first loop on the home page');
       check(/Illustration/.test(home) && /interpreter/.test(home), 'the illustrations say they are illustrations, and the words are credited to the interpreter');
-      check(/tested in staging, not yet live/.test(home) && /Private matching is in development/.test(home), 'sharing and private matching carry their real status');
+      check(/tested in staging, not yet in use/.test(home) && /Private matching is in development/.test(home), 'sharing and private matching carry their real status');
       check(/not sharing, and it is not applying/.test(home) && /No name, no contact details/.test(home), 'matching is not disclosure and not applying; identity is never among the shared details');
       check(!/encrypt|anonym|zero.knowledge|on your device|nobody can see|guarantee/i.test(home), 'no claim of encryption, anonymity, local-only processing or guarantees');
       // Reduced motion: the final states are simply there.
