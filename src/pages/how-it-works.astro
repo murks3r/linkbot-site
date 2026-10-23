@@ -7,7 +7,7 @@ import WatchDemo from '../components/WatchDemo.astro';
 import Reader from '../components/Reader.astro';
 import ListingDemo from '../components/ListingDemo.astro';
 import Today from '../components/Today.astro';
-const SECTIONS: [string, string][] = [['say', 'Say what matters'], ['see', 'See what fits'], ['keep', 'Keep what’s worth keeping'], ['decide', 'Decide what happens next'], ['next', 'What’s next: private matching'], ['today', 'What’s live today']];
+const SECTIONS: [string, string][] = [['say', 'Say what matters'], ['see', 'See what fits'], ['keep', 'Keep what’s worth keeping'], ['decide', 'Decide what happens next'], ['next', 'What’s next: private matching'], ['today', 'What works today']];
 const LEVELS: [string, string, string][] = [
   ['Prefer', 'Where you start for anything you want.', 'Listings that state it are shown higher.'],
   ['Open to', 'Fine either way.', 'Listings are kept either way, without moving up.'],
@@ -101,13 +101,13 @@ const LEVELS: [string, string, string][] = [
         <p class="step">What’s next</p>
         <h2 id="next-title">Private matching, staged and not magical</h2>
         <p>Today Linkbot matches listings to directions you saved. The next step is matching people and companies privately: a company that is hiring describes the role under a mandate; people who opted in are checked against it; if there is an overlap, you are asked first. Nothing private is disclosed because an overlap exists, and nothing is shared without your decision.</p>
-        <p class="status-line"><span class="status" data-tone="next"><Mark tone="unknown" size={10} />In development, not live</span></p>
+        <p class="status-line"><span class="status" data-tone="next"><Mark tone="unknown" size={10} />In development, not in the product</span></p>
         <p>Recruiting is the first place Linkbot works. The same approach, private by default and shared only with permission, is meant to carry further, one area at a time.</p>
       </section>
 
       <section id="today" aria-labelledby="today-title">
         <p class="step">Status</p>
-        <h2 id="today-title">What’s live today, and what isn’t yet</h2>
+        <h2 id="today-title">What works today, and what doesn’t yet</h2>
         <p>Linkbot is early. This is exactly which parts you can rely on now, with the same squares the product uses for evidence.</p>
         <Today />
       </section>

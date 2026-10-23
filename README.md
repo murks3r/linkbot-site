@@ -1,16 +1,25 @@
 # Linkbot — public site
 
-The crawlable public pages for Linkbot: what it is, how it works, how privacy works, and hiring.
+The crawlable public pages for Linkbot. This repository is built in BUILD MODE on the integration
+branch `build/vision` (see `CLAUDE.md`): pull requests target that branch, the fast check in
+`.github/workflows/check.yml` (types, build, unit tests) must be green, previews only, `main` only
+at milestones with the owner's go.
+
+The design is concept A8, brought over as the base of `build/vision` (S0). Its words still describe
+the job search the design was drawn for; the copy that is true of Linkbot today (spaces, packs,
+how matching works, in five languages) replaces it in S1. Until then the pages below are the
+design, not the product description.
+
 The product itself (search, interpretation, results, saving, watching, permissions, the agency
 and company workspaces) runs in the app, `murks3r/linkbot`, served under `/talent`. The site
-explains; the app executes. Concept A6 ("focus") — draft, not published.
+explains; the app executes.
 
 ## Pages
 
 | Route | What it does |
 |---|---|
 | `/` | a working first search at the optical centre of a living atmosphere, with three plain promises at its foot; then the story as one pinned scene (your words come into focus, become criteria and a lens, and the openings that fit come into focus with their reasons and a Must); the night, where privacy is two sides of the glass; and a contextual start |
-| `/how-it-works` | criteria and levels with recorded readings, how a listing is explained, saving and watching, applying, private matching (in development), what's live today |
+| `/how-it-works` | criteria and levels with recorded readings, how a listing is explained, saving and watching, applying, private matching (in development), what works today |
 | `/privacy` | what happens to what you type, save and share; the five separate decisions; limits; what Linkbot doesn't claim |
 | `/hiring` | for recruiting agencies and companies: explanation first, then each path with a working next step |
 
@@ -66,5 +75,5 @@ node scripts/og.cjs           # re-render public/og.png
 No cookies, analytics or third-party requests; the typefaces (Archivo for display, Figtree for
 text) are self-hosted.
 
-`vercel.json` keeps the draft concept branches out of the production project's Git builds
-(`git.deploymentEnabled`); remove those entries before anything merges.
+`vercel.json` holds the framework preset, the install and build commands and the security headers.
+Every branch and pull request gets a preview deployment; production is `main`.

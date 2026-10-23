@@ -5,7 +5,7 @@
 > it states, what it states differently and what it doesn't say. Searching needs no account,
 > and there is no public profile.
 
-This file is a plain-text summary of the public site for automated readers. It is not a
+This file is a plain-text summary of the public site for machine readers. It is not a
 ranking instruction and makes no claims beyond the pages it links to.
 
 ## Pages
@@ -18,7 +18,7 @@ ranking instruction and makes no claims beyond the pages it links to.
   the openings are examples.
 - [How it works](/how-it-works): criteria and levels, recorded readings of real examples, how
   listings are explained, saving and watching, applying, private matching (in development, not
-  live), and what is live today versus what is not built yet.
+  in the product), and what works today versus what is not built yet.
 - [How your privacy works](/privacy): what happens to searches, saved items and shared details,
   the five separate decisions from finding a job to applying, the limits of revoking access and
   what Linkbot does not claim.
@@ -27,4 +27,4 @@ ranking instruction and makes no claims beyond the pages it links to.
 ## Status
 
 Recruiting is Linkbot's first area. Private matching between people and companies is in
-development and not live. Email or push alerts are not built.
+development and not in the product. Email or push alerts are not built.

@@ -42,7 +42,7 @@ const pieces = (r: (typeof readings)[number]) => {
     {r.id === 'unknown' && <p class="reader-note">In Linkbot you can still look for listings that mention “React”, as words. That is your choice, never inferred.</p>}
     <p class="reader-foot"><a class="link" href={searchWith(r.text)}>Search with these words<Icon name="arrow" /></a></p>
   </section>)}
-  <p class="reader-proof">Recorded from Linkbot’s own interpreter (app commit {readingCommit}). Type your own words in Linkbot and it reads them live, the same way.</p>
+  <p class="reader-proof">Recorded from Linkbot’s own interpreter (app commit {readingCommit}). Type your own words in Linkbot and it reads them the same way.</p>
 </div>
 
 <style>
