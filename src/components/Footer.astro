@@ -1,34 +1,38 @@
 ---
-import { app } from '../lib/links';
+import { LANGS, NAMES, pathFor, type Catalogue, type Lang } from '../i18n';
+interface Props { lang: Lang; t: Catalogue; path: string }
+const { lang, t, path } = Astro.props;
 const year = new Date().getUTCFullYear();
 ---
 <footer class="footer">
   <div class="wrap footer-inner">
     <div class="footer-brand">
-      <a class="brand" href="/">Linkbot</a>
-      <p>A private way to find work that fits.</p>
+      <a class="brand" href={pathFor(lang, '/')}>{t.site.name}</a>
+      <p>{t.site.claim}</p>
     </div>
-    <nav aria-labelledby="footer-people">
-      <h2 id="footer-people">For people</h2>
-      <a href={app('#/search')}>Search jobs</a>
-      <a href="/how-it-works">How it works</a>
-      <a href="/privacy">How your privacy works</a>
-      <a href={app('#/saved')}>My radar</a>
+    <nav aria-labelledby="footer-product">
+      <h2 id="footer-product">{t.site.footer.product}</h2>
+      <a href={pathFor(lang, '/how-it-works')}>{t.site.nav.how}</a>
+      <a href={pathFor(lang, '/platforms')}>{t.site.nav.platforms}</a>
+      <a href={pathFor(lang, '/verticals')}>{t.site.nav.verticals}</a>
     </nav>
-    <nav aria-labelledby="footer-hiring">
-      <h2 id="footer-hiring">For hiring</h2>
-      <a href="/hiring">Hiring with Linkbot</a>
-      <a href="/hiring#agencies">Recruiting agencies</a>
-      <a href="/hiring#companies">Companies</a>
+    <nav aria-labelledby="footer-legal">
+      <h2 id="footer-legal">{t.site.footer.legal}</h2>
+      <a href={pathFor(lang, '/imprint')}>{t.site.footer.imprint}</a>
+      <a href={pathFor(lang, '/privacy')}>{t.site.footer.privacy}</a>
     </nav>
-    <p class="footer-legal"><span>© {year} Linkbot. This site sets no cookies and uses no third-party analytics or tracking.</span><span class="footer-links"><a href="/imprint">Imprint</a><a href="/privacy-policy">Privacy policy</a></span></p>
+    <nav aria-labelledby="footer-lang">
+      <h2 id="footer-lang">{t.site.language}</h2>
+      {LANGS.map(l => <a href={pathFor(l, path)} lang={l} hreflang={l} aria-current={l === lang ? 'true' : undefined}>{NAMES[l]}</a>)}
+    </nav>
+    <p class="footer-line">© {year} {t.site.name}. {t.site.footer.line}</p>
   </div>
 </footer>
 
 <style>
   /* A8: no fill of its own, so the page's ground runs on; a rule above it is all that marks it. */
   .footer { background: transparent; border-top: 1px solid var(--line-strong); }
-  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding-block: 56px 36px; font-size: var(--size-small); }
+  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 32px 40px; padding-block: 56px 36px; font-size: var(--size-small); }
   .footer-brand { display: grid; gap: 8px; align-content: start; }
   .footer-brand p { max-width: 30ch; color: var(--ink-2); }
   .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-stretch: 112%; font-size: 1.5rem; font-weight: 600; letter-spacing: -.03em; line-height: 1; text-decoration: none; justify-self: start; }
@@ -36,9 +40,8 @@ const year = new Date().getUTCFullYear();
   h2 { margin-bottom: 6px; font-family: var(--text); font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; color: var(--ink-3); }
   nav a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink); text-decoration: none; }
   nav a:hover { text-decoration: underline; text-decoration-color: var(--green-line); }
-  .footer-legal { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 20px; border-top: 1px solid var(--line-strong); color: var(--ink-3); }
-  .footer-links { display: inline-flex; gap: 20px; }
-  .footer-links a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--green-line); text-underline-offset: 4px; }
+  nav a[aria-current] { font-weight: 650; }
+  .footer-line { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line-strong); color: var(--ink-3); }
   @media (max-width: 48rem) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
   @media (max-width: 22.5rem) { .footer-inner { grid-template-columns: 1fr; } }
 </style>

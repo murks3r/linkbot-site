@@ -1,0 +1,25 @@
+---
+/* The four ways to say what you need or offer, each with where it stands. One short body on the
+   home page, full paragraphs on How it works. */
+import State from './State.astro';
+import type { Catalogue } from '../i18n';
+import type { Status } from '../i18n/en';
+interface Props { t: Catalogue; items: { name: string; status: Status; body?: string; paras?: string[] }[] }
+const { t, items } = Astro.props;
+---
+<ul class="ways">
+  {items.map(way => <li class="tile way">
+    <div class="way-head"><h3>{way.name}</h3><State status={way.status} t={t} /></div>
+    {way.body && <p>{way.body}</p>}
+    {way.paras?.map(para => <p>{para}</p>)}
+  </li>)}
+</ul>
+
+<style>
+  .ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .way { display: grid; gap: 10px; align-content: start; padding: clamp(18px, 2.4vw, 26px); }
+  .way-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+  .way h3 { font-size: 1.2rem; }
+  .way p { font-size: var(--size-small); color: var(--ink-2); }
+  @media (max-width: 48rem) { .ways { grid-template-columns: minmax(0, 1fr); } }
+</style>

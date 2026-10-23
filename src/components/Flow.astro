@@ -1,0 +1,19 @@
+---
+/* The path from a need to an introduction in six steps, as the contract orders them: a strip of
+   paper tiles under the headline, one row on wide screens, two or three on narrow ones. */
+interface Props { label: string; steps: { name: string; note: string }[] }
+const { label, steps } = Astro.props;
+---
+<ol class="flow" aria-label={label}>
+  {steps.map((step, index) => <li class="tile flow-step"><span class="flow-n" aria-hidden="true">{index + 1}</span><b>{step.name}</b><small>{step.note}</small></li>)}
+</ol>
+
+<style>
+  .flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; width: 100%; }
+  .flow-step { display: grid; gap: 4px; align-content: start; padding: 14px 16px 16px; }
+  .flow-n { font-size: var(--size-micro); font-weight: 700; color: var(--ink-3); }
+  .flow-step b { font-size: 1rem; font-weight: 650; letter-spacing: -.01em; }
+  .flow-step small { font-size: var(--size-micro); line-height: 1.4; color: var(--ink-2); }
+  @media (max-width: 64rem) { .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 36rem) { .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .flow-step { padding: 12px 14px; } }
+</style>

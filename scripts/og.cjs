@@ -16,7 +16,7 @@ h1{align-self:center;font-family:D;font-stretch:112%;font-size:96px;font-weight:
 h1 span{display:block;font-weight:300;color:#37584c}
 p{display:flex;align-items:center;gap:18px;font-size:28px;color:#37584c}
 p i{display:inline-block;width:14px;height:14px;border-radius:50%;background:#ff9dbb}
-</style></head><body><div class="brand">Linkbot</div><h1>Find work that fits.<span>Keep your privacy.</span></h1><p><i></i>Say what matters in a few words. No account, no public profile.</p></body></html>`;
+</style></head><body><div class="brand">Linkbot</div><h1>Needs meet offers.<span>People decide.</span></h1><p><i></i>A matching layer any platform can embed. One space per market.</p></body></html>`;
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });

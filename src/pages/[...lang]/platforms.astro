@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import Toc from '../../components/Toc.astro';
+import { langPaths, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const p = t.platforms;
+const sections = [['embed', p.embed], ['keys', p.keys], ['console', p.console], ['server', p.server], ['recipes', p.recipes]] as const;
+---
+<Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path="/platforms" crumbs={[[t.site.nav.platforms, '/platforms']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{p.eyebrow}</p>
+      <h1>{p.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{p.lede}</p>
+    </div>
+  </section>
+
+  <div class="wrap doc">
+    <Toc items={p.toc} label={t.site.toc} />
+    <div class="doc-body">
+      {sections.map(([id, s]) => <section id={id} aria-labelledby={`${id}-title`}><h2 id={`${id}-title`}>{s.title}</h2>{s.paras.map(para => <p>{para}</p>)}</section>)}
+      <section id="state" aria-labelledby="state-title">
+        <h2 id="state-title">{p.state.title}</h2>
+        <p class="note">{t.site.synthetic}</p>
+      </section>
+    </div>
+  </div>
+</Base>

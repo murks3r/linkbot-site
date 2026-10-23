@@ -1,14 +1,21 @@
 ---
+/* One page for every missing address, served in English, with the way to each language's home. */
 import Base from '../layouts/Base.astro';
-import SearchForm from '../components/SearchForm.astro';
+import { DEFAULT_LANG, LANGS, NAMES, pathFor, resolve } from '../i18n';
+const lang = DEFAULT_LANG;
+const { t } = resolve(lang);
+const n = t.notFound;
 ---
-<Base title="Page not found · Linkbot" description="This page doesn’t exist. Search jobs in your own words, or go back to Linkbot’s home page." path="/404" quietHeader>
+<Base lang={lang} t={t} title={n.title} description={n.description} path="/404">
   <section class="nf">
     <div class="wrap">
-      <p class="eyebrow">Page not found</p>
-      <h1>There’s nothing here.</h1>
-      <p class="lede">The page may have moved. You can still search in your own words, or <a href="/">go to the home page</a>.</p>
-      <div data-hero-search><SearchForm id="q-404" /></div>
+      <p class="eyebrow">{n.eyebrow}</p>
+      <h1>{n.h1}</h1>
+      <p class="lede">{n.lede} <a href={pathFor(lang, '/')}>{n.home}</a>.</p>
+      <nav class="nf-langs" aria-label={n.languages}>
+        <p>{n.languages}</p>
+        <ul>{LANGS.map(l => <li><a href={pathFor(l, '/')} lang={l} hreflang={l}>{NAMES[l]}</a></li>)}</ul>
+      </nav>
     </div>
   </section>
 </Base>
@@ -16,6 +23,10 @@ import SearchForm from '../components/SearchForm.astro';
   .nf { padding-block: clamp(56px, 9vw, 120px); }
   .nf .wrap { display: grid; gap: 22px; justify-items: center; text-align: center; }
   .nf .lede { text-wrap: balance; }
-  .nf [data-hero-search] { width: 100%; display: grid; justify-items: center; }
+  .nf .lede a { color: var(--ink); font-weight: 600; }
   h1 { font-size: clamp(2.4rem, 1.2rem + 4vw, 4.5rem); }
+  .nf-langs { display: grid; gap: 8px; justify-items: center; font-size: var(--size-small); }
+  .nf-langs p { color: var(--ink-3); font-weight: 650; }
+  .nf-langs ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 20px; }
+  .nf-langs a { display: inline-flex; align-items: center; min-height: var(--target); }
 </style>

@@ -14,24 +14,29 @@ import Footer from '../components/Footer.astro';
 import Air from '../components/Air.astro';
 import Variants from '../components/Variants.astro';
 import { AXES } from '../lib/variants';
+import { DEFAULT_LANG, FALLBACK_NOTICE, type Catalogue, type Lang } from '../i18n';
 /* The variant switcher exists only in preview builds (never in a production build). */
 const variants = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1';
-interface Props { title: string; description: string; path: string; crumbs?: [string, string][]; quietHeader?: boolean; sky?: boolean }
-const { title, description, path, crumbs, quietHeader = false, sky = false } = Astro.props;
+/* lang: the language the reader asked for; t: the words, English when that language has no
+   catalogue yet (fallback), and then the page says so in the reader's language. path: the
+   language-neutral address of the page ('/how-it-works'); every language gets its own. */
+interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; sky?: boolean }
+const { lang, t, fallback = false, title, description, path, crumbs, sky = false } = Astro.props;
+const contentLang = fallback ? DEFAULT_LANG : lang;
 ---
 <!doctype html>
-<html lang="en">
+<html lang={contentLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="preload" href={displayUrl} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={textUrl} as="font" type="font/woff2" crossorigin />
-    <SEO title={title} description={description} path={path} crumbs={crumbs} />
+    <SEO lang={lang} t={t} title={title} description={description} path={path} crumbs={crumbs} />
     <meta name="theme-color" content="#fbf8f1" />
     <meta name="color-scheme" content="light" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <!-- Scripts mark the page so enhancements (the scroll-driven scenes) can take over from the
-         complete, static version every page ships with. -->
+    <!-- Scripts mark the page so enhancements (the masthead's blur, the table of contents) can take
+         over from the complete, static version every page ships with. -->
     <script is:inline>document.documentElement.classList.add('js')</script>
     {variants && <script is:inline define:vars={{ axes: AXES.map(a => [a.id, a.values.map(v => v[0])]) }}>
       /* Preview only: the chosen variants, from the address, before the first paint (no flicker). */
@@ -40,17 +45,22 @@ const { title, description, path, crumbs, quietHeader = false, sky = false } = A
     </script>}
   </head>
   <body data-sky={sky ? '' : undefined}>
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">{t.site.skip}</a>
     <Air mode={sky ? 'living' : 'paper'} />
-    <Masthead current={path} quiet={quietHeader} />
-    <main id="main" tabindex="-1"><slot /></main>
-    <Footer />
+    <Masthead lang={lang} t={t} path={path} />
+    <main id="main" tabindex="-1">
+      {fallback && <p class="fallback" lang={lang} role="note"><span class="wrap">{FALLBACK_NOTICE[lang]}</span></p>}
+      <slot />
+    </main>
+    <Footer lang={lang} t={t} path={path} />
     {variants && <Variants />}
-    <script>import '../scripts/stages';</script>
   </body>
 </html>
 <style is:global>
   main { outline: none; }
   /* The atmosphere lies under the whole page; everything else is composed above it. */
   main, footer { position: relative; z-index: 1; }
+  /* A page shown in English for a language that has no translation yet says so first. */
+  .fallback { padding: 12px 0; border-bottom: 1px solid var(--line-strong); background: var(--sand); font-size: var(--size-small); font-weight: 600; }
+  .fallback .wrap { display: block; }
 </style>
