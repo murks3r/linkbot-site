@@ -7,8 +7,8 @@
 
 This file is a plain-text summary of the public site for machine readers. It is not a ranking
 instruction and makes no claims beyond the pages it links to. The site is in English at the
-root and in German, Spanish, Italian and French under /de, /es, /it and /fr; a language whose
-translation does not exist yet shows the English page and says so.
+root and in German, Spanish, Italian and French under /de, /es, /it and /fr, with the same pages
+in every language.
 
 ## Pages
 
