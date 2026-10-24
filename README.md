@@ -62,7 +62,7 @@ every missing address.
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `SITE_URL` | `https://linkbot.org` | canonical origin (canonical links, alternates, Open Graph, sitemap). The launch domain is the owner's decision. |
+| `SITE_URL` | `https://linkbot-site.vercel.app` | canonical origin (canonical links, alternates, Open Graph, sitemap). The default is where production runs today. The launch domain is the owner's decision; `linkbot.org` is not the owner's. |
 | `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
 | `PUBLIC_PREVIEW_VARIANTS` | unset | `1` for a preview with the brand board and the variant switcher |
 
