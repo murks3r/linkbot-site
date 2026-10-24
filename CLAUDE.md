@@ -37,6 +37,16 @@ API contract; the site states nothing they do not provide. The live demo of the 
 watch, mine) arrives only once a synthetic demo space exists; until then there is no demo on the site, and a sample
 build is never used on a page real people use.
 
+## Domains and identification (owner, 2026-10-24)
+
+* Linkbot has no domain of its own yet. Where a Linkbot domain is meant, write `linkbot-domain-tbd.invalid` (an
+  address: `contact@linkbot-domain-tbd.invalid`; prose: "[Linkbot domain: to be named by the owner]"). The `.invalid`
+  name never resolves. The owner names the real domain once it is registered.
+* Never send mail, links or data to a domain Linkbot does not own. The third-party domain that earlier site copy and
+  docs used is listed on GEO-188 and is refused in code.
+* No crawler, probe or outgoing request identifies itself with a domain Linkbot does not own. Until a domain is
+  registered, a User-Agent carries a product token only and no URL (for example `Linkbot-Probe/1.0`).
+
 ## Before a PR
 
 `npm run typecheck` and `npm test`. Report what you could not verify.
