@@ -8,7 +8,7 @@ interface Props { lang: Lang; t: Catalogue; title: string; description: string; 
 const { lang, t, title, description, path, crumbs = [] } = Astro.props;
 const NOINDEX = import.meta.env.PUBLIC_NOINDEX === '1';
 const OG_LOCALE: Record<Lang, string> = { en: 'en_GB', de: 'de_DE', es: 'es_ES', it: 'it_IT', fr: 'fr_FR' };
-const site = Astro.site ?? new URL('https://linkbot.org');
+const site = Astro.site ?? new URL('https://linkbot-site.vercel.app');
 const url = (l: Lang, p = path) => new URL(pathFor(l, p), site).toString();
 const canonical = url(lang);
 const image = new URL('/og.png', site).toString();
