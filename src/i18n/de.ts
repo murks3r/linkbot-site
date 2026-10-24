@@ -26,7 +26,7 @@ export const de: Catalogue = {
 
   home: {
     title: 'Linkbot: Anfrage trifft Angebot, Menschen entscheiden',
-    description: 'Eine Matching-Schicht für jede Plattform: ein Space pro Markt, Anfragen und Angebote als bestätigte Kriterien, eine Vorstellung erst, wenn beide Seiten Ja sagen.',
+    description: 'Eine Matching-Schicht für jede Plattform: ein Space pro Markt, Anfragen und Angebote als bestätigte Kriterien, eine Vorstellung erst, wenn beide Ja sagen.',
     h1: ['Anfrage trifft Angebot.', 'Menschen entscheiden.'],
     lede: 'Linkbot ist eine Matching-Schicht, die eine Plattform in ihre eigenen Seiten einbettet. Ein Space pro Markt. Anfragen und Angebote als bestätigte Kriterien. Ein Urteil pro Kriterium, nie ein Score. Eine Vorstellung erst, wenn beide Seiten Ja sagen.',
     actions: { how: 'So funktioniert es', platforms: 'Für Plattformen' },
