@@ -20,7 +20,7 @@ const { colorKit, focusKit, pageAudit, treeFindings, keyboardFindings, textSpaci
 if (!fs.existsSync(path.join(DIST, 'index.html'))) throw Error('build the site first (npm run build)');
 
 const LANGS = ['en', 'de', 'es', 'it', 'fr'];
-const PAGES = ['/', '/how-it-works', '/platforms', '/verticals', '/privacy', '/imprint'];
+const PAGES = ['/', '/how-it-works', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
 const WIDTHS = [1440, 1024, 768, 390, 320];
 const HEIGHTS = { 1440: 900, 1024: 768, 768: 1024, 390: 844, 320: 720 };
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8' };

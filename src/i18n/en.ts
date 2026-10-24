@@ -6,6 +6,11 @@
 /** Where a capability stands: on the staging space now; in the contract, not on staging yet; not built. */
 export type Status = 'now' | 'contract' | 'later';
 
+/** A row of a two- or three-column table on an integration page. */
+export interface Row { name: string; what: string; more?: string }
+/** A section of an integration page: paragraphs, a list, a table, or a mix; `code` sets names and items in code. */
+export interface Section { id: string; title: string; paras?: string[]; items?: string[]; rows?: Row[]; columns?: string[]; code?: boolean }
+
 export const en = {
   site: {
     name: 'Linkbot',
@@ -226,7 +231,7 @@ export const en = {
     eyebrow: 'For platforms',
     h1: ['A space', 'on your own pages.'],
     lede: 'One script and one element show the widget in your page, in your fonts and colours. Your team approves cases in a console on your machine or behind your own login. Your server hears about events through signed webhooks.',
-    toc: [['embed', 'The embed'], ['keys', 'Keys and origins'], ['console', 'The console'], ['server', 'SDK and webhooks'], ['recipes', 'Recipes'], ['state', 'Where it stands']] as [string, string][],
+    toc: [['pages', 'Each integration'], ['embed', 'The embed'], ['keys', 'Keys and origins'], ['console', 'The console'], ['server', 'SDK and webhooks'], ['recipes', 'Recipes'], ['state', 'Where it stands']] as [string, string][],
     embed: {
       title: 'The embed: one script, one element',
       paras: [
@@ -332,6 +337,157 @@ export const en = {
     lede: 'The page may have moved.',
     home: 'Go to the home page',
     languages: 'This site in other languages',
+  },
+
+  /* S2: one page per integration, each with only what the Connect lane's docs show today. The
+     sections carry paragraphs, a list, or a table (rows with two or three columns). */
+  integrations: {
+    eyebrow: 'For platforms',
+    hub: 'Each integration on its own page',
+    state: 'Where it stands',
+    pages: {
+      embed: {
+        nav: 'The embed',
+        title: 'The embed: one script, one element · Linkbot for platforms',
+        description: 'What a page sets on the embed: the element’s attributes, your data notice, the theme variables, the Content Security Policy, what the widget keeps and sends.',
+        h1: ['One script,', 'one element.'],
+        lede: 'The widget is one script and one element per place it appears. Your page sets its key, its mode, its side and its language; everything else comes from your space.',
+        sections: [
+          { id: 'element', title: 'The element', paras: [
+            'Load the script once per page, with async, so your page renders without waiting for it. Put the element where the form should appear. Several elements on one page are several widgets, and elements added later, as single-page applications do, start on their own.',
+            'A value the widget does not know falls back to the default, with a warning in the browser console. A language the space does not offer falls back too, and the widget says so on screen.',
+          ], code: true, columns: ['Attribute', 'Values', 'Default'], rows: [
+            { name: 'data-linkbot', what: 'your publishable key. The widget refuses to start with a secret key and tells you to rotate it', more: 'required' },
+            { name: 'data-mode', what: 'describe (say what you need or offer), board (browse and answer listings), mine (my requests, watches and possible fits)', more: 'describe' },
+            { name: 'data-side', what: 'seeking (a need) or offer', more: 'seeking' },
+            { name: 'data-locale', what: 'en, de, es, it or fr', more: 'the visitor’s browser language, then the space default' },
+            { name: 'data-input', what: 'form, text or both; it can only narrow what the space allows', more: 'the space’s setting' },
+            { name: 'data-api', what: 'your space’s API base, https only (http on localhost)', more: 'the origin the script was loaded from' },
+          ] },
+          { id: 'notice', title: 'Your data notice', paras: ['A child with slot="notice" appears just above the confirm button, styled by your page’s CSS. The widget adds its own fixed lines next to it, such as “Nothing is used until you confirm.” What you write there comes from your own privacy texts.'] },
+          { id: 'design', title: 'Design', paras: [
+            'The widget takes your page’s font and text colour. Everything else is set by CSS variables on the element: the accent for the primary button, selected choices and focus rings, its hover, the corner radius, text and secondary text, headings and their font, the font of field labels, card borders and dividers, field borders, card and surface backgrounds, and the error colour and background.',
+            'The widget picks black or white text for the accent, whichever contrasts more. If your page is dark, set color-scheme: dark on the element. Your page’s other styles do not reach inside the widget, which renders in a shadow root, and the widget’s styles do not reach your page.',
+          ] },
+          { id: 'csp', title: 'Content Security Policy', paras: [
+            'Allow the origin of the script in script-src, and the Space API’s origin in connect-src, plus the script’s origin if it differs: the widget loads a language other than English from next to itself and checks it against a sha256 built into the script.',
+            'Styles need no “unsafe-inline”: the widget uses a constructable stylesheet. In browsers without one it adds a single style element that carries the nonce of its own script tag, so put your nonce on the script tag if your policy uses nonces. If you host the script yourself, copy its locales folder with it.',
+          ] },
+          { id: 'global', title: 'The page’s global', paras: ['The script defines one global, window.Linkbot, and nothing else: the embed’s version, whether it is the sample build, and mount and unmount for an element the scan cannot see, for example inside your own shadow root.'] },
+          { id: 'keeps', title: 'What the widget keeps, and what it sends', paras: [
+            'Its guest session and owner tokens sit in sessionStorage, per tab and per space. It uses no cookies and no localStorage. Requests go to the Space API only, without credentials. There are no analytics. The sample build sends nothing over the network.',
+            'sessionStorage belongs to your page’s origin, so any script you run on that page can read the draft and the tokens. Run no scripts you do not trust on pages that carry the widget.',
+          ] },
+        ] as Section[],
+        state: ['The script comes from your space’s own instance. The staging instance serves a test fixture in its place until a release of the widget is deployed there; on 2026-10-23 the widget ran against the staging space’s API with the released script served from a local stand-in for that address.'],
+      },
+      sdk: {
+        nav: 'SDK and webhooks',
+        title: 'The SDK, the React wrapper and webhooks · Linkbot for platforms',
+        description: 'A server client typed by the Space API contract, the webhook check, the React wrapper, and how your server receives Linkbot’s events.',
+        h1: ['Your server,', 'typed by the contract.'],
+        lede: 'Nothing of the SDK goes into a browser page: the embed takes the publishable key, and the SDK’s client refuses to start in a browser. It is not published yet; its code is in the Connect repository.',
+        sections: [
+          { id: 'client', title: 'The client', paras: [
+            'The client takes your space’s API base (https only, except on localhost), your secret key from your server’s secret store (a value that is not shaped like a secret key is refused) and, if you want, your runtime’s fetch. Its paths, parameters, bodies and responses are the contract’s own, generated from the YAML Core posted and pinned by sha256: a route, field or value the contract does not have is a type error.',
+            'A fresh idempotency key is one call away. Writes the contract marks need one; keep the key with the write and send the same key when you retry it, so the space does the write once.',
+          ] },
+          { id: 'seeding', title: 'Seeding your platform’s own offer', paras: ['Your server seeds an offer on the operator path, and a second operator confirms it: four eyes. On a space that checks each party, such as Geoprocure’s, seeding your own organisation’s offer counts as a confirm, so it carries the identity release the space’s notice asks for, and the space refuses it without one. This is for your own organisation only; anyone else’s release is theirs to give, in the widget.'] },
+          { id: 'webhooks', title: 'Webhooks', paras: [
+            'Register an endpoint with your secret key, https only. The signing secret is shown once and belongs in your secret store, never in code. Each delivery carries an id, a timestamp in seconds and a signature: the HMAC-SHA256 of the timestamp, a dot and the raw body, keyed with your secret.',
+            'Refuse a delivery older than five minutes or whose signature does not match. The SDK’s check does both, comparing in constant time with Web Crypto, in Node, Deno, Bun and edge runtimes. Check the raw body before you parse it. Answer 2xx quickly: anything else is retried with backoff for 24 hours, then the delivery is marked dead. A retry carries the same id, so handle each id once, with the ids in your database rather than in memory.',
+            'Rotate the secret when you need to: the old one stays valid for up to seven days, and the check takes both. Deliveries carry ids and states, never contact data; fetch details with your secret key. The delivery log lists status, attempts and a hash of the body, never the body. Webhooks are in the contract and not sent by the staging space yet.',
+          ] },
+          { id: 'events', title: 'Event types', paras: ['Every event has an id, a type, the space id, the time it occurred, the contract version and the object it is about, with its type, id and state where there is one. The types:'], code: true, items: ['intent.confirmed', 'intent.revised', 'intent.status_changed', 'match.proposed', 'match.updated', 'gate.recorded', 'approval.recorded', 'answer.recorded', 'clarification.requested', 'review.recorded', 'introduction.created', 'outcome.recorded', 'watch.delivered', 'channel.verified', 'deletion.completed', 'key.rotated'] },
+          { id: 'react', title: 'The React wrapper', paras: [
+            'The wrapper renders the same element as the snippet and loads the script once per address; the embed then starts in its own shadow root, which React never touches. It is a client component, so it works in the Next.js App Router, and it adds no global CSS.',
+            'Its props are the element’s attributes: the publishable key and the script address are required (a secret key throws), then mode, side, locale, input, api, your notice, a class name and a style for the theme variables. When a prop the embed reads changes, the wrapper gives React a new element and the embed starts afresh. A page that wants the script loaded before it renders an element can ask for that too. Not published yet.',
+          ] },
+        ] as Section[],
+        state: ['The SDK and the wrapper are built and tested in the Connect repository and not published. The webhooks guide’s receiver is tested against signed sample deliveries; the staging space does not send webhooks yet.'],
+      },
+      console: {
+        nav: 'The console',
+        title: 'The console for your team · Linkbot for platforms',
+        description: 'The approval queue, cases with gates and approval, introductions with receipts, outcomes, webhooks and operators, on your machine or behind your own login.',
+        h1: ['Your team’s console,', 'behind your own login.'],
+        lede: 'The console is a small server, the only place the space’s secret key is used, plus the page your team works in. There is no Linkbot login for operators: your platform signs its team in. You run it on your own machine as a local tool, or mount its handler behind your platform’s login. It is never a public Linkbot page.',
+        sections: [
+          { id: 'views', title: 'What it shows', columns: ['View', 'What it shows'], rows: [
+            { name: 'Approval queue', what: 'Cases waiting for your team, with no identities: the fit per criterion, both sides’ answers, missing gates.' },
+            { name: 'Case', what: 'The fit per criterion and why. Your team records the case’s checks and each party’s check (passed, failed, referred, and waived only where the gate allows it), a party’s check side by side so one party’s record never reads as the other’s; approves or declines with an optional reason for the audit log; answers for your platform’s own offers or requests only, as the signed-in operator; asks one side to clarify.' },
+            { name: 'Introductions', what: 'Listed without contact details. Opening one asks first, then shows the contact fields and records the read. A value from a long list, such as a country or a port, shows by name with its code. Receipts and outcomes.' },
+            { name: 'Webhooks', what: 'Add an endpoint (https only); the signing secret is shown once; rotate, with the old secret valid for up to seven days; remove; the delivery log.' },
+            { name: 'Operators', what: 'The register: add, deactivate, reactivate.' },
+            { name: 'Space and snippet', what: 'The settings as the Space API reports them, and the snippet with your publishable key and your instance’s script address.' },
+            { name: 'Setup', what: 'The five steps, with what your space has for each.' },
+          ] },
+          { id: 'safe', title: 'How the key stays safe', items: [
+            'The key stays on the server. The page gets its settings from the server, and the tests check that this response carries no secret key.',
+            'No proxy: each operation is listed with the fields it may send; anything else is refused and unlisted fields are dropped.',
+            'The server names the operator from your sign-in; an id sent by the page is ignored.',
+            'It answers only for your platform’s own side of a case, worked out on the server; the page never picks a side and never gets the intents, which hold identity fields.',
+            'Only the console’s own page can call it: its own header, its own origin, same-origin requests, JSON bodies.',
+            'Local mode binds to the local machine only and answers only to its own name, which blocks DNS rebinding.',
+            'A strict page policy: no inline script or style, no framing, no caching.',
+          ] },
+          { id: 'run', title: 'Running it', paras: [
+            'On sample data: the sample operator API answers from memory with synthetic data, needs no key and sends nothing over the network, and every page says so in a banner. It follows the contract’s rules, so you can try them: a gate that cannot be waived, approval only after the required gates, an introduction only with every gate, the approval and a yes from both sides, and a read receipt when your team opens the contact details.',
+            'Against a space: the API base, your secret key from your secret store, your id in the space’s operator register and, if you want the snippet shown, the publishable key. Behind your login: one handler; your session decides who acts, and without a signed-in operator it answers 401. Behind a proxy it needs the public address the browser used.',
+            'This path ran against Geoprocure’s synthetic staging space on 2026-10-23: the queue, a case, both kinds of check, the approval, an answer for the platform’s own offer, and an introduction with its receipt.',
+          ] },
+          { id: 'notyet', title: 'Not here yet, and why', items: [
+            'Settings, allowed origins and keys cannot be changed from the console: the contract has no routes for them yet. Spaces are provisioned with Core’s tool, so setting one up from a pack here waits on a route too.',
+            'No funnel: it shows no numbers until the Space API reports real ones.',
+            'No “send again” for a delivery until there are real deliveries to try it on.',
+          ] },
+        ] as Section[],
+        state: ['The console is built on the Space API contract and ran against the synthetic staging space on 2026-10-23; its tests run against a sample operator API with synthetic data.'],
+      },
+      wordpress: {
+        nav: 'WordPress',
+        title: 'WordPress · Linkbot for platforms',
+        description: 'A small plugin adds the shortcode for every editor: install it, put it where the form should appear, keep caching plugins away from the script.',
+        h1: ['A shortcode', 'for every editor.'],
+        lede: 'Pasting the snippet into a Custom HTML block works only for users WordPress lets post scripts, which excludes editors on multisite networks. The plugin adds a shortcode that works for every editor, loads the script once per page through WordPress’s own script loading, and checks every value it prints.',
+        sections: [
+          { id: 'install', title: 'Install the plugin', paras: ['Copy the plugin folder to the plugins directory, or zip it and upload it under Plugins, then activate it. The whole plugin is one file.'] },
+          { id: 'shortcode', title: 'The shortcode', paras: ['In the block editor, add a Shortcode block. The text between the opening and the closing shortcode becomes your data notice, shown above the confirm button. Use the same script address in every shortcode on a page: the plugin loads the script once, from the first.'], code: true, columns: ['Attribute', 'What it is'], rows: [
+            { name: 'src', what: 'the https address of the script on your space’s instance; it must be https' },
+            { name: 'key', what: 'your publishable key. A secret key shows people who can edit the page a warning, and visitors nothing' },
+            { name: 'mode, side, locale, input, api', what: 'the element’s attributes without the data- prefix. A value the plugin does not know is left out, so the widget uses its default' },
+          ] },
+          { id: 'caching', title: 'Caching and optimisation plugins', paras: ['Plugins that combine, minify, move or delay scripts must leave the script alone: exclude it by its address or by its handle. The widget loads its other languages from next to itself and checks each one against a sha256 it carries, so a copy elsewhere cannot load them. If your host does not allow plugins, the shortcode is not available, and a Custom HTML block works only for users WordPress lets post scripts.'] },
+        ] as Section[],
+        state: ['Connect’s CI runs the plugin in a real WordPress 6.8 on PHP 8.3 through WordPress Playground and loads its pages in three browser engines against the sample build: the shortcode starts the widget with your notice, two shortcodes on one page load the script once, a shortcode with a secret key shows a visitor nothing. It has not run against a real space as written yet. The recipe is the whole plugin today; a settings page is not part of it.'],
+      },
+      nextjs: {
+        nav: 'Next.js',
+        title: 'Next.js · Linkbot for platforms',
+        description: 'The React wrapper in the App Router: a client component a server component can render, the public variables, the policy, webhooks in a route handler.',
+        h1: ['The wrapper', 'in the App Router.'],
+        lede: 'Use the React wrapper. It is a client component, so a server component can render it: the script address and your publishable key as props, the mode, the side and the language, your data notice, and the theme variables in its style.',
+        sections: [
+          { id: 'props', title: 'Props and variables', paras: ['The script address and the publishable key are required. They are public by design: the key only identifies your space and works only on your allowed origins. Public variables are fixed at build time. The notice is your data notice, shown above the confirm button; the style sets the theme variables and reserves room before the widget loads, so the page below does not jump.'] },
+          { id: 'csp', title: 'Content Security Policy', paras: ['Add the script’s origin to script-src, and the Space API’s origin together with the script’s origin to connect-src. The wrapper adds the script tag from the browser: under a nonce-based policy with strict-dynamic that tag is allowed because trusted code adds it; without strict-dynamic, list the script’s origin. The example sends no policy, so Connect’s CI does not test one for Next.js yet.'] },
+          { id: 'server', title: 'Your server side', paras: ['Webhooks arrive at a route handler; the webhooks guide shows one for the App Router, in code CI runs. The secret key stays on the server, never in a public variable.'] },
+        ] as Section[],
+        state: ['Connect’s CI builds the example with Next.js 16.3.8 and React 19.3, which typechecks it, then starts it and runs the page in three browser engines against the sample build: the wrapper loads the script once, the widget starts with the notice and the theme, and the console shows no errors. It has not run against a real space as written yet. No package is published.'],
+      },
+      astro: {
+        nav: 'Astro',
+        title: 'Astro · Linkbot for platforms',
+        description: 'One component: the script left inline so Astro does not bundle it, the notice through a wrapper, three public variables, and a static build.',
+        h1: ['One component,', 'a static build.'],
+        lede: 'Copy one component into your site. It renders the script tag and the element from three public variables: the script address on your space’s instance, your publishable key and, if the script comes from another origin, your API base. The page needs no server: a static Astro build works.',
+        sections: [
+          { id: 'inline', title: 'The script stays inline', paras: ['The script tag carries is:inline, so Astro leaves it alone. The script must load from where it is served, because it fetches its other languages from next to itself and checks each one against a sha256 it carries.'] },
+          { id: 'notice', title: 'The notice', paras: ['Astro uses the notice slot name for its own slots and drops the attribute, so the component puts your notice in a wrapper the widget picks up. Your page’s CSS styles it.'] },
+          { id: 'twice', title: 'Twice on one page', paras: ['If you use the component twice on one page, the script tag appears twice; the second load does nothing. Set the public variables in your build’s environment or in an environment file you do not commit; they are public by design.'] },
+        ] as Section[],
+        state: ['Connect’s CI builds the example with Astro 7.3.5 and runs the built page in three browser engines against the sample build: the widget starts, shows the notice, takes the theme, and Astro left the script tag alone. It has not run against a real space as written yet. A packaged Astro integration is not built.'],
+      },
+    },
   },
 };
 
