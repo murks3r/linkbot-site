@@ -14,3 +14,4 @@ Linkbot OÜ, Tallinn, Estonia.
 ## Pages
 
 - [Home](/): this holding page.
+- [Legal notice](/imprint): the provider of this site.
