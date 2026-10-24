@@ -1,0 +1,88 @@
+---
+/* Direction A of the front-page previews (GEO-188, 2026-10-24): "Watch a need meet an offer". The page shows the
+   product instead of describing it: one synthetic pair, played criterion by criterion with a verdict per row, then
+   the gate, the approval, both yes and the server's introduction. After it: why it is built that way, the four ways
+   with where each stands, the integration in one snippet, the packs, and where it stands. Words: src/front/a-copy.ts
+   (rows in docs/truth-check.md); the pair: src/front/a-match.ts; the ground: src/front/theme.css (light and dark).
+   English only; the four translated languages keep the catalogue's home until a direction is picked. */
+import Base from '../../layouts/Base.astro';
+import Icon from '../Icon.astro';
+import Ways from '../Ways.astro';
+import Reach from './Reach.astro';
+import Ledger from './Ledger.astro';
+import { A } from '../../front/a-copy';
+import { pathFor, type Catalogue, type Lang } from '../../i18n';
+import '../../front/theme.css';
+import '../../front/a.css';
+interface Props { lang: Lang; t: Catalogue }
+const { lang, t } = Astro.props;
+const to = (path: string) => pathFor(lang, path);
+/* The embed's snippet as the Connect reference shows it (docs/reference/embed.md): the script from the space's own
+   instance, one element with the publishable key, the mode, the side and the language. */
+const snippet = ['<script src="https://{space_host}/embed/v0/embed.js" async></script>', '<div data-linkbot="pk_…" data-mode="describe" data-side="seeking" data-locale="en"></div>']
+  .join('\n').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+---
+<Base lang={lang} t={t} title={A.meta.title} description={A.meta.description} path="/" front>
+  <script is:inline>/* Preview only: ?theme=dark or ?theme=light overrides the system's scheme (src/front/theme.css). */(function(){var q=new URLSearchParams(location.search).get('theme');if(q==='dark'||q==='light')document.documentElement.setAttribute('data-theme',q);})();</script>
+
+  <!-- 1 · The opening: who it is for in one line, the invitation to watch, the one action; then the pair itself. -->
+  <section class="fa-hero" aria-labelledby="hero-title">
+    <div class="wrap fa-hero-inner">
+      <p class="fp-eyebrow">{A.hero.eyebrow}</p>
+      <h1 id="hero-title"><span class="fa-line">{A.hero.h1[0]}</span> <span class="fa-line">{A.hero.h1[1]}</span></h1>
+      <p class="lede fa-lede">{A.hero.lede}</p>
+      <p class="fa-actions">
+        <Reach href={to('/platforms')} label={A.hero.primary}><Icon name="arrow" /></Reach>
+        <a class="link" href={`${to('/how-it-works')}#matching`}>{A.hero.secondary}<Icon name="arrow" /></a>
+      </p>
+    </div>
+    <div class="wrap fa-ledger"><Ledger /></div>
+  </section>
+
+  <!-- 2 · What you saw, and why it is built that way: four statements, each the contract's. -->
+  <section class="fp-section" id="saw" aria-labelledby="saw-title">
+    <div class="wrap">
+      <div class="fp-head"><h2 id="saw-title">{A.saw.h2}</h2></div>
+      <ul class="fa-four">{A.saw.items.map(item => <li><h3>{item.h3}</h3><p>{item.p}</p></li>)}</ul>
+      <p class="fa-more"><a class="link" href={`${to('/how-it-works')}#matching`}>{A.saw.link}<Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <!-- 3 · The four ways, each with where it stands (the catalogue's words and statuses). -->
+  <section class="fp-section" id="ways" aria-labelledby="ways-title">
+    <div class="wrap">
+      <div class="fp-head"><h2 id="ways-title">{t.home.ways.title}</h2><p>{t.home.ways.lede}</p></div>
+      <Ways t={t} items={t.home.ways.items} />
+    </div>
+  </section>
+
+  <!-- 4 · For platforms: the whole integration, shown. -->
+  <section class="fp-section" id="platforms" aria-labelledby="platforms-title">
+    <div class="wrap fa-two">
+      <div class="fp-head fa-two-head">
+        <h2 id="platforms-title">{A.platforms.h2}</h2>
+        <p>{A.platforms.p}</p>
+        <p class="fa-more"><a class="link" href={to('/platforms')}>{A.platforms.link}<Icon name="arrow" /></a></p>
+      </div>
+      <figure class="fa-snippet">
+        <figcaption class="fp-eyebrow">{A.platforms.snippet}</figcaption>
+        <pre class="fp-code"><code set:html={snippet} /></pre>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 5 · For verticals, in one paragraph. -->
+  <section class="fp-section" id="verticals" aria-labelledby="verticals-title">
+    <div class="wrap">
+      <div class="fp-head"><h2 id="verticals-title">{A.verticals.h2}</h2><p>{A.verticals.p}</p></div>
+      <p class="fa-more"><a class="link" href={to('/verticals')}>{A.verticals.link}<Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <!-- 6 · Where it stands: synthetic, no demo, the pair above is text. -->
+  <section class="fp-section fa-state" id="state" aria-labelledby="state-title">
+    <div class="wrap">
+      <div class="fp-head"><h2 id="state-title">{A.state.h2}</h2><p>{t.site.synthetic}</p><p>{A.state.p}</p></div>
+    </div>
+  </section>
+</Base>

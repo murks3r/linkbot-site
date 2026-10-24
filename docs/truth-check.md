@@ -59,3 +59,25 @@ The words themselves live in `src/i18n/en.ts` (the source) and the other catalog
 - **MCP (D-V2, GEO-190, option A):** no page mentions an MCP endpoint until it runs on staging; then the page describes exactly the "prepare only, a person decides" model.
 - **Network (D-V1, GEO-189):** nothing on the site about matching across spaces until it runs on staging; where the copy touches the subject it says that nothing leaves a space (`how.space`).
 - **Mail (D-V3, GEO-191):** no provider is named anywhere; where a page describes notifications it says Linkbot sends them, nothing more (`how.describe` watch, `how.after`).
+
+## Front-page preview A (branch `vision/front-a-verdict`, 2026-10-24)
+
+The English home of this branch (`src/front/a-copy.ts`, `src/front/a-match.ts`). The other four languages keep the catalogue's home, whose rows stand above.
+
+| Where | Claim | Backed by | Checked | Unfinished |
+| -- | -- | -- | -- | -- |
+| a.hero.lede, a.saw[0] | Matching compares confirmed criteria one by one; a verdict per criterion, never a score; whether a pair can be a fit follows from the hard conditions alone | C matching paragraph (slice S3); C invariant 5 | 2026-10-24 | |
+| a.hero.lede, a.ledger.stages, a.saw[3] | Nobody is introduced until a named operator has approved and both sides have said yes; the server creates the introduction when the last condition is met, in any order, and refuses every other way; every write names its actor | C invariant 4, invariant 7; C approval paragraph (slice S4) | 2026-10-24 | |
+| a.ledger (the rows) | A synthetic pair with fixed values, written for the page; each verdict follows the rule the contract names: the same option meets; a limit kept meets; overlapping ranges and windows meet; the asked term among the offered meets; a soft criterion without a hit conflicts and only shows; "not stated" is unknown and never a fit | C matching paragraph (`eq`, `in`, `overlap` hit meets; limits inside meets; `within_tolerance` any overlap meets; date windows overlap meets; `unknown` or `other` on either side is unknown, never a fit; state from the hard verdicts alone); the vocabulary is the Connect lane's sample pack (D `packages/adapter/src/sample/pack.ts`, synthetic) | 2026-10-24 | the page says the values are synthetic and fixed (caption, legend, "Where it stands") |
+| a.ledger.verdicts, a.saw[0] | The four verdict words: meets, partly, conflicts, unknown, with the rule that decided each | C matching paragraph; C `CriterionVerdict.reason` | 2026-10-24 | |
+| a.ledger.stages[0] | A named operator records the space's required gate as passed; the system never decides a gate | C invariant 4 (a); C approval paragraph | 2026-10-24 | |
+| a.ledger.stages[1] | A named, active operator approves; an approval alone discloses nothing | C approval paragraph | 2026-10-24 | |
+| a.ledger.stages[2] | Each side answers for itself; before both said yes the other side learns nothing | C approval paragraph (GEO-140 c) | 2026-10-24 | |
+| a.ledger.stages[3] | Each side receives a receipt | C approval paragraph (receipts); `/introductions/{id}` | 2026-10-24 | |
+| a.ledger.notice, a.saw[0] | A possible fit discloses only the verdicts and a fixed notice that people decide | C invariant 3 | 2026-10-24 | |
+| a.saw[1] | "Don't know" or "other" on either side is unknown; nothing pre-selected, nothing guessed; a criterion one side did not state is never counted in its favour | C invariant 1; C matching paragraph | 2026-10-24 | |
+| a.saw[2] | Nothing is stored before a person confirms; describing, answering and validating leave nothing behind; the widget's line "Nothing is used until you confirm." | C invariant 2; D `reference/embed.md` (fixed lines), `guides/privacy-for-integrators.md` | 2026-10-24 | |
+| a.platforms.p, the snippet | One script and one element; the widget takes the page's font and colours; the publishable key works only on the allowed origins and belongs in the page; the secret key stays on the server; the console runs on the platform's machine or behind its own login; webhooks are signed, in the contract and not sent by the staging space yet | D `reference/embed.md`, `guides/quickstart.md`; D `README.md` (console); D `reference/sdk.md`, `guides/webhooks.md` | 2026-10-24 | **unfinished**: webhooks (Core-Engine E5) |
+| a.verticals.p | What a pack describes; the first is industrial minerals | C `CriterionDefinition`, `DisclosureStage`, `GateDefinition`; D `README.md` | 2026-10-24 | |
+| a.state.p | No demo of the widget on this site until a demo space with synthetic data exists; the pair above is fixed text, the product did not run on the page | GEO-188 S3; this repository (`src/front/a-match.ts`) | 2026-10-24 | **unfinished**: the demo space |
+| a.hero.eyebrow | A matching layer any platform can embed | the catalogue's `site.claim` (row `home.lede`) | 2026-10-24 | |
