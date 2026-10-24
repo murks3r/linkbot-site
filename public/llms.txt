@@ -5,10 +5,8 @@
 ## What this site is
 
 The official site for Linkbot, a privacy-first matching layer for the labour
-market. Public career profiles have become attack surfaces. Linkbot gives
-people a private, verifiable record of who they are and what they are
-eligible for, and lets employers request access to specific signals — with
-the holder's consent.
+market. Public career profiles have become attack surfaces. Linkbot lets
+employers request access to specific signals — with the person's consent.
 
 ## Who operates it
 
