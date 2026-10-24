@@ -12,7 +12,8 @@ const file = (lang, page) => { const p = pathFor(lang, page); return new URL(`.$
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
 
 /* Pages whose words exist in English only (the redesign pass of 2026-10-24: direction C as its own page, until it is
-   translated): every language gets the page in English, says so in the reader's language, and carries lang="en". */
+   translated): every language gets the page in English throughout, says so in the reader's language, and carries
+   lang="en". */
 const ENGLISH_ONLY = ['/who-sees-what'];
 
 test('every page exists in every language and says which language it is in', { skip }, () => {
@@ -22,6 +23,10 @@ test('every page exists in every language and says which language it is in', { s
     assert.match(html, new RegExp(`<html lang="${content}"`), `${lang} ${page}: lang`);
     assert.equal((html.match(/<h1[\s>]/g) ?? []).length, 1, `${lang} ${page}: one h1`);
     assert.equal(html.includes('class="fallback"'), content !== lang, `${lang} ${page}: the fallback notice exactly when English stands in`);
+    /* Where English stands in, none of the reader's own catalogue is on the page: not the skip link, the masthead or a
+       section the page takes from the catalogue. */
+    const own = content !== lang ? catalogues[lang] : undefined;
+    if (own) for (const words of [own.site.skip, own.site.nav.how, own.home.rules.title]) assert.ok(!html.includes(words), `${lang} ${page}: English stands in, yet the page carries “${words}”`);
     for (const other of LANGS) assert.ok(html.includes(`hreflang="${other}"`), `${lang} ${page}: alternate ${other}`);
     assert.ok(html.includes('hreflang="x-default"'), `${lang} ${page}: x-default alternate`);
     assert.doesNotMatch(html, /name="robots" content="noindex/, `${lang} ${page}: indexable`);

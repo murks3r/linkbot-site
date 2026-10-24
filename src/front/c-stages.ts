@@ -1,8 +1,8 @@
 /* Direction C: one synthetic offer, stage by stage (front-page preview, GEO-188, 2026-10-24). Fixed values written
    for this page in the vocabulary of the Connect lane's synthetic sample pack (murks3r/linkbot-connect,
-   packages/adapter/src/sample/pack.ts): the stages of its criteria, its board coarsening of the quantity
-   (band:5000t), and what the Space API contract (0.2.7) lets each stage show. Nothing here is a real offer, and
-   nothing is matched or introduced on the page. */
+   packages/adapter/src/sample/pack.ts): the stages of its criteria, its board coarsening (the quantity as a band of
+   5,000 t, a port as its country, the window in whole months; contract 0.2.11), and what the Space API contract lets
+   each stage show. Nothing here is a real offer, and nothing is matched or introduced on the page. */
 export type Verdict = 'meets' | 'partly' | 'conflicts' | 'unknown';
 export interface Field { label: string; value: string; verdict?: Verdict }
 export interface Stage { key: 'board' | 'match' | 'introduction' | 'operator'; name: string; eyes: number; open: number; who: string; rule: string; fields: Field[]; not: string[] }
@@ -17,7 +17,7 @@ export const STAGES: Stage[] = [
       { label: 'P₂O₅ content', value: '31–32 %' },
       { label: 'Quantity', value: '20,000–25,000 t, as a band of 5,000 t' },
       { label: 'Delivery terms', value: 'CFR, CIF or FOB' },
-      { label: 'Named port', value: 'Augusta, Ravenna or Tarragona' },
+      { label: 'Named port', value: 'Italy or Spain, as the ports’ countries' },
       { label: 'Shipment window', value: 'January to February 2027' },
     ],
     not: ['Cadmium, payment, packaging, origin and inspection: match stage, not board', 'Who posted it'],

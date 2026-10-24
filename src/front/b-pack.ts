@@ -24,8 +24,6 @@ export interface Criterion {
   phosphatesOnly?: boolean;
 }
 
-export const PACK = { name: 'Sample pack for industrial minerals', version: '0.2.0', note: 'synthetic, written by the Connect lane to exercise every control; not a real market’s pack' };
-
 export const CRITERIA: Criterion[] = [
   { key: 'product', label: 'Product', control: 'single_choice', options: ['Rock phosphate', 'DAP (diammonium phosphate)', 'MAP (monoammonium phosphate)', 'TSP (triple superphosphate)', 'Sulphur'], specials: ['other', 'unknown', 'any'], required: true, importance: 'must' },
   { key: 'p2o5', label: 'P₂O₅ content', help: 'Give a minimum, a maximum or both.', control: 'range', unit: '%', specials: ['unknown', 'any'], required: true, importance: 'must', phosphatesOnly: true },
@@ -44,7 +42,7 @@ export const CRITERIA: Criterion[] = [
 export const WORDS = {
   other: 'Other / not listed', unknown: 'Don’t know', any: 'Any', either: 'Either is fine', orAnswer: 'Or answer:',
   otherLabel: 'Describe it', otherNote: 'Your words are kept as you wrote them. They aren’t matched to the nearest option.',
-  must: 'Must', niceToHave: 'Nice to have', suggested: 'suggested', min: 'Minimum', max: 'Maximum', from: 'From', to: 'To', yes: 'Yes', no: 'No',
-  essentials: 'Needed for matching', details: 'More details', confirmNote: 'Nothing is used until you confirm.',
+  must: 'Must', niceToHave: 'Nice to have', suggested: 'suggested', min: 'Minimum', max: 'Maximum', yes: 'Yes', no: 'No',
+  essentials: 'Needed for matching', details: 'More details',
   ambiguous: 'Is this {a} or {b}? Please type it so it can be read only one way.',
 } as const;

@@ -1,7 +1,7 @@
-/* Direction C, "Who sees what, and when." (front-page preview, GEO-188, 2026-10-24): the English words of the front.
-   Every sentence states what the Space API contract (0.2.7) and the Connect lane's docs provide today, and each has a
-   row in docs/truth-check.md ("front C"). The stages themselves are src/front/c-stages.ts; the rules and the deletion
-   paragraph are the catalogue's own strings (src/i18n/en.ts). English only until the founder picks a direction; no
+/* Direction C, "Who sees what, and when." (front-page preview, GEO-188, 2026-10-24): the English words of its own page,
+   /who-sees-what. Every sentence states what the Space API contract (0.2.7) and the Connect lane's docs provide today,
+   and each has a row in docs/truth-check.md. The stages themselves are src/front/c-stages.ts; the rules and the
+   deletion paragraph are the catalogue's own strings (src/i18n/en.ts). English only until the page is translated; no
    forbidden word (tests/front.test.mjs). */
 export const C = {
   meta: {

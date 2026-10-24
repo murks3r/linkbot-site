@@ -16,7 +16,7 @@ const L = A.ledger;
     <div class="ledger-stitch" aria-hidden="true"></div>
     <div class="ledger-side" data-side="offer"><span class="fp-eyebrow">{L.offer}</span><b>{L.space}</b></div>
   </div>
-  <div class="ledger-table" role="table" aria-label="The pair, criterion by criterion">
+  <div class="ledger-table" role="table" aria-label={L.table}>
     <div role="row" class="ledger-row ledger-row-head">
       <span role="columnheader">{L.columns.criterion}</span><span role="columnheader">{L.columns.need}</span><span role="columnheader">{L.columns.offer}</span><span role="columnheader">{L.columns.verdict}</span>
     </div>
@@ -28,7 +28,7 @@ const L = A.ledger;
     </div>)}
   </div>
   <p class="ledger-state">{L.state}</p>
-  <ol class="ledger-stages" aria-label="Before anyone is introduced">
+  <ol class="ledger-stages" aria-label={L.before}>
     {L.stages.map((stage, index) => <li><span class="ledger-n" aria-hidden="true">{index + 1}</span><div><b>{stage.name}</b><p>{stage.text}</p></div></li>)}
   </ol>
   <p class="ledger-notice">{L.notice}</p>

@@ -1,13 +1,9 @@
 /* Direction B, "Say what you need. See what Linkbot asks back." (front-page preview, GEO-188, 2026-10-24): the English
-   words of the front. Every sentence states what the Space API contract (0.2.7), Connect ADR 0004 and the Connect
-   lane's docs provide today, and each has a row in docs/truth-check.md ("front B"). The questions themselves come
-   from src/front/b-pack.ts (the synthetic sample pack); the widget's own lines are quoted as they stand in Connect.
-   English only until the founder picks a direction; no forbidden word (tests/front.test.mjs). */
+   words of the home, whose hero it is. Every sentence states what the Space API contract (0.2.7), Connect ADR 0004 and
+   the Connect lane's docs provide today, and each has a row in docs/truth-check.md. The questions themselves come from
+   src/front/b-pack.ts (the synthetic sample pack); the widget's own lines are quoted as they stand in Connect. English
+   only until the home is translated; no forbidden word (tests/front.test.mjs). */
 export const B = {
-  meta: {
-    title: 'Linkbot: say what you need, see what it asks back',
-    description: 'A matching layer any platform can embed. Write a need in one line and see the questions a pack asks back: nothing guessed, your words kept as written.',
-  },
   hero: {
     eyebrow: 'A matching layer any platform can embed',
     h1: ['Say what you need.', 'See what Linkbot asks back.'],
@@ -18,8 +14,9 @@ export const B = {
     placeholder: '25,000 t rock phosphate, CFR Augusta, Q1 2027',
     button: 'Ask me',
     privacy: 'Nothing you type here leaves this page, and nothing is stored: the site has no account and sends nothing anywhere.',
+    empty: 'Write one line first.',
     yoursLabel: 'Your line, kept as written',
-    yoursNote: 'Nobody and nothing reads it on this page. Linkbot does not read text into answers yet: that path is in the contract and off until a reading policy is approved. What runs today on the staging space is the form, generated from the pack, and this is what it asks.',
+    yoursNote: 'Nobody and nothing reads it on this page. Here you answer the pack’s questions yourself, in a form drawn from the synthetic sample pack.',
     asksTitle: 'What the pack asks back',
     packNote: 'The questions of the Connect lane’s sample pack for industrial minerals, version 0.2.0: synthetic, written to exercise every control, not a real market’s pack.',
     storedTitle: 'What would be stored, if you confirmed',
@@ -27,6 +24,8 @@ export const B = {
     storedSource: 'picked by you',
     storedUnknown: 'unknown',
     storedOther: 'your words',
+    storedMin: 'at least',
+    storedMax: 'at most',
     end: 'Here it would end with the confirm step and the widget’s line “Nothing is used until you confirm.” Confirming happens on a platform’s page, not here: nothing you entered was stored.',
     reset: 'Clear everything',
   },
@@ -39,15 +38,6 @@ export const B = {
       { h3: 'Nothing is stored before you confirm', p: 'Describing, answering and validating leave nothing behind. The confirm step is the form itself; the server validates every value against the pack and names each field that fails.' },
     ],
     link: 'How matching works, step by step',
-  },
-  after: {
-    h2: 'After confirm: a verdict per criterion, then people',
-    steps: [
-      { name: 'Verdicts', text: 'Matching compares the stored criteria and shows one of four words per criterion: meets, partly, conflicts or unknown. No score.' },
-      { name: 'Gate and approval', text: 'A named operator records the space’s required check and approves the case. The system decides neither.' },
-      { name: 'Both yes', text: 'Each side answers for itself; the other side learns nothing before both have said yes.' },
-      { name: 'Introduction', text: 'The server creates it when the last condition is met, and refuses every other way. Each side receives a receipt.' },
-    ],
   },
   platforms: {
     h2: 'For platforms: the same questions, on your pages',

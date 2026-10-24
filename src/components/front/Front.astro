@@ -1,8 +1,9 @@
 ---
 /* The home (redesign pass, GEO-188, 2026-10-24): B as the hero, with the Venn as the signature object beside the
-   field; the pack's questions when a line is asked; A's verdict sequence as the second section; why it asks instead
-   of guessing; what happens after confirm; who sees what (a teaser for its own page); the platform and the pack;
-   where it stands. Words: src/front/home-copy.ts, b-copy.ts, a-copy.ts, c-copy.ts (rows in docs/truth-check.md).
+   field; the pack's questions when a line is asked; A's verdict sequence as the second section (what happens after
+   confirm); why it asks instead of guessing; who sees what (a teaser for its own page); the platform and the pack;
+   where it stands. Words: src/front/home-copy.ts, b-copy.ts, b-pack.ts, a-copy.ts, a-match.ts, and the stage names of
+   c-stages.ts (rows in docs/truth-check.md).
    English only; the four translated languages keep the catalogue's home until the words are translated. */
 import Base from '../../layouts/Base.astro';
 import Icon from '../Icon.astro';
@@ -14,6 +15,7 @@ import Eye from './Eye.astro';
 import { HOME } from '../../front/home-copy';
 import { B } from '../../front/b-copy';
 import { CRITERIA, WORDS } from '../../front/b-pack';
+import { STAGES } from '../../front/c-stages';
 import { pathFor, type Catalogue, type Lang } from '../../i18n';
 import '../../front/theme.css';
 import '../../front/home.css';
@@ -21,7 +23,7 @@ interface Props { lang: Lang; t: Catalogue }
 const { lang, t } = Astro.props;
 const to = (path: string) => pathFor(lang, path);
 const required = CRITERIA.filter(c => c.required), more = CRITERIA.filter(c => !c.required);
-const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, any: WORDS.any, min: 'at least', max: 'at most', storedSource: B.ask.storedSource, storedUnknown: B.ask.storedUnknown, storedOther: B.ask.storedOther });
+const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, any: WORDS.any, min: B.ask.storedMin, max: B.ask.storedMax, storedSource: B.ask.storedSource, storedUnknown: B.ask.storedUnknown, storedOther: B.ask.storedOther });
 ---
 <Base lang={lang} t={t} title={HOME.meta.title} description={HOME.meta.description} path="/" front>
 
@@ -34,14 +36,16 @@ const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, a
         <p class="lede hm-lede">{B.hero.lede}</p>
       </div>
       <div class="hm-hero-venn"><Venn study={1} label={HOME.venn.label} need={HOME.venn.need} offer={HOME.venn.offer} caption={HOME.venn.caption} pause={HOME.venn.pause} /></div>
-    <form class="ask hm-ask" data-ask data-words={words} novalidate>
+    <!-- method="dialog": outside a dialog a submit goes nowhere, so without scripts nothing typed here leaves the page
+         either; with them, src/front/ask.ts handles the submit event, which still fires. -->
+    <form class="ask hm-ask" method="dialog" data-ask data-words={words} novalidate>
       <label class="ask-label" for="ask-line">{B.ask.label}</label>
       <div class="ask-field">
         <input id="ask-line" class="ask-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" maxlength="200" placeholder={B.ask.placeholder} data-ask-line aria-describedby="ask-privacy" />
         <Reach label={B.ask.button}><span class="ask-icon ask-icon-arrow"><Icon name="arrow" /></span><span class="ask-icon ask-icon-match"><Icon name="menu" /></span></Reach>
       </div>
       <p id="ask-privacy" class="ask-privacy">{B.ask.privacy}</p>
-      <p class="ask-empty" role="status">Write one line first.</p>
+      <p class="ask-empty" role="status">{B.ask.empty}</p>
       <div class="ask-result" data-ask-result>
         <section class="ask-yours" data-yours hidden aria-labelledby="yours-title">
           <h2 id="yours-title" class="eyebrow">{B.ask.yoursLabel}</h2>
@@ -94,7 +98,7 @@ const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, a
     <div class="wrap hm-sees">
       <div class="fp-head hm-sees-head"><p class="eyebrow">{HOME.sees.eyebrow}</p><h2 id="sees-title">{HOME.sees.h2}</h2><p>{HOME.sees.p}</p><p class="hm-more"><a class="link" href={to('/who-sees-what')}>{HOME.sees.link}<Icon name="arrow" /></a></p></div>
       <ol class="hm-stages" aria-hidden="true">
-        {[['Board', 3, 1], ['Match', 2, .75], ['Introduction', 1, .5], ['Operator', 1, .3]].map(([name, eyes, open]) => <li><Eye eyes={eyes as number} open={open as number} /><span>{name}</span></li>)}
+        {STAGES.map(stage => <li><Eye eyes={stage.eyes} open={stage.open} /><span>{stage.name}</span></li>)}
       </ol>
     </div>
   </section>

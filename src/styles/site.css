@@ -1,17 +1,6 @@
-/* Linkbot's public site — Concept A6, "focus".
-   One palette with the app (palette.css is copied from the app's generated tokens). Warm paper is
-   the ground; on the home it lies under a living atmosphere of seven proven pigments that moves on
-   its own and answers the hand (src/scripts/atmosphere.ts), and every page carries the paper's
-   grain. One deep flat green is the ink (text, rules, focus, the night of the privacy chapter);
-   pink is the spot colour, kept for the primary action. Emphasis comes from weight, scale and
-   focus, never from a marker. Two families: Archivo for display, Figtree for reading. Evidence and
-   product status use the app's three square marks (solid, split, dashed), never colour alone.
-   Focus is the visual language: soft is what doesn't matter yet, sharp is what does. The story is
-   told on pinned scenes driven by scroll position (src/scripts/stages.ts). */
-
-/* Metric-matched fallbacks while the web fonts load (measured against Arial: Archivo at 112 %
-   width is 1.121× Arial's advance, Figtree 1.002×; ascent and descent from the fonts), so the
-   swap barely moves anything. */
+/* Linkbot's public site: the tokens, the base and the shared pieces of every page. Concept A8's structure; its palette,
+   type and texture were replaced in the redesign pass of 2026-10-24 (GEO-188), as the tokens below say. The fonts and
+   their metric-matched fallbacks are in src/styles/fonts.css. */
 
 /* ── Tokens (the redesign pass of 2026-10-24, GEO-188): one palette for light and dark, defined once with light-dark().
    Light is the default for everyone (third pass): the page does not follow the system's scheme; the dark palette is
