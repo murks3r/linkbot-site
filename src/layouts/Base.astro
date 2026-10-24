@@ -20,8 +20,10 @@ const variants = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1';
 /* lang: the language the reader asked for; t: the words, English when that language has no
    catalogue yet (fallback), and then the page says so in the reader's language. path: the
    language-neutral address of the page ('/how-it-works'); every language gets its own. */
-interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; sky?: boolean }
-const { lang, t, fallback = false, title, description, path, crumbs, sky = false } = Astro.props;
+/* front: the home's front-page preview (src/front/theme.css): its own tokens in light and dark, so the body carries
+   data-front and the theme metas name both schemes. */
+interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; sky?: boolean; front?: boolean }
+const { lang, t, fallback = false, title, description, path, crumbs, sky = false, front = false } = Astro.props;
 const contentLang = fallback ? DEFAULT_LANG : lang;
 ---
 <!doctype html>
@@ -32,8 +34,7 @@ const contentLang = fallback ? DEFAULT_LANG : lang;
     <link rel="preload" href={displayUrl} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={textUrl} as="font" type="font/woff2" crossorigin />
     <SEO lang={lang} t={t} title={title} description={description} path={path} crumbs={crumbs} />
-    <meta name="theme-color" content="#fbf8f1" />
-    <meta name="color-scheme" content="light" />
+    {front ? <><meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)" /><meta name="theme-color" content="#0f1114" media="(prefers-color-scheme: dark)" /><meta name="color-scheme" content="light dark" /></> : <><meta name="theme-color" content="#fbf8f1" /><meta name="color-scheme" content="light" /></>}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Scripts mark the page so enhancements (the masthead's blur, the table of contents) can take
          over from the complete, static version every page ships with. -->
@@ -44,7 +45,7 @@ const contentLang = fallback ? DEFAULT_LANG : lang;
       for (const [id, values] of axes) document.documentElement.setAttribute('data-v-' + id, values.includes(q.get(id)) ? q.get(id) : values[0]);
     </script>}
   </head>
-  <body data-sky={sky ? '' : undefined}>
+  <body data-sky={sky ? '' : undefined} data-front={front ? '' : undefined}>
     <a class="skip" href="#main">{t.site.skip}</a>
     <Air mode={sky ? 'living' : 'paper'} />
     <Masthead lang={lang} t={t} path={path} />
