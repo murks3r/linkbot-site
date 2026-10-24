@@ -1,13 +1,13 @@
 # Site lane handover
 
-Written 2026-10-25 by the Site lane, so that a fresh session can continue without asking anyone.
-
-It was corrected the same day: the source of the next steps is `vision/home-redesign`, the version the owner reviewed. It is no longer the three earlier direction branches.
+Written 2026-10-25 by the Site lane, so that a fresh session can continue without asking anyone. It was updated the same day twice:
+- after #34, which made `vision/home-redesign` the source of the front;
+- after #35, which merged step 1. This update includes the gaps the step-1 session found in this file.
 
 Read these first, in this order:
 1. `CLAUDE.md`, the binding rules.
 2. This file.
-3. Linear issue GEO-188, the lane's parent issue: the daily report comment, updated in place, and the threads under it.
+3. Linear issue GEO-188, the lane's parent issue: one report comment per day, and the threads under the comments.
 4. `docs/truth-check.md`.
 
 The repository is **public**, and so is this file. It names no preview host, key, internal URL or personal data, and it shows Linear issues by ID only.
@@ -44,9 +44,9 @@ The production deployments on record (GitHub's deployment history, all made by V
 
 Of the project's three production names, only `linkbot-site.vercel.app` is public. The other two, every deployment's own URL and every preview sit behind Vercel's login and send `X-Robots-Tag: noindex`.
 
-### `build/vision`: the site being built, head `f6148ba`
+### `build/vision`: the site being built, head `5688598`
 
-It builds 61 pages: the same 12 in each of five languages, plus the 404 page. English sits at the root, then `/de`, `/es`, `/it` and `/fr`.
+It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and `/who-sees-what`), plus the 404 page. English sits at the root, then `/de`, `/es`, `/it` and `/fr`.
 - **Its preview** is behind Vercel's login. Find it in the Vercel dashboard under project `linkbot-m3`, Deployments, branch `build/vision`.
 - **Each PR's own preview link** is in the Vercel bot's comment on that PR.
 
@@ -60,28 +60,36 @@ It builds 61 pages: the same 12 in each of five languages, plus the 404 page. En
 | The domain placeholder `linkbot-domain-tbd.invalid` replaces the old domain | [#31](https://github.com/murks3r/linkbot-site/pull/31) | `90d4e42` |
 | The owner's rules "Domains and identification", added to `CLAUDE.md` by the Architect | direct commit | `dd5d348` |
 | `tests/domains.test.mjs`: the domain guard | [#32](https://github.com/murks3r/linkbot-site/pull/32) | `5dcdf8d` |
-| This handover | [#33](https://github.com/murks3r/linkbot-site/pull/33) | `f6148ba` |
+| This handover, and its first correction | [#33](https://github.com/murks3r/linkbot-site/pull/33), [#34](https://github.com/murks3r/linkbot-site/pull/34) | `f6148ba`, `2dec13a` |
+| Step 1: the front is B, then A, and C is `/who-sees-what`. It merges `vision/home-redesign` at `a111f6f`, plus fixes. | [#35](https://github.com/murks3r/linkbot-site/pull/35) | `5688598` |
 
-### The home redesign: `vision/home-redesign`, the version the owner reviewed
+### The front, since #35
 
-- **The branch:** head `a111f6f`, cut from `build/vision` at `dd5d348`. It names no unowned domain, and its previews are behind the login.
-- **Review:** the owner reviewed it on 2026-10-24. See the two GEO-188 comments of that day at 16:42 and 20:15 UTC.
-- **The redesign pass** (`948a39b`, `c5e7b93`):
-  - B is the hero, with a 2D Venn of a need and an offer.
-  - A's verdict sequence is the second section.
-  - C is its own page, `/who-sees-what`.
-  - It brings the brand lab's type and icons, self-hosted. The licences are in `public/fonts/*/OFL.txt`.
-- **The third pass** (`a111f6f`):
-  - The Venn loops by itself, with a pause control.
-  - The dust lies under all content, is finer, and scrolls with the page.
-  - One floating globe button chooses the language.
-  - Light is the default for everyone; dark stays behind `?theme=dark`.
-- **Notes and review files:**
-  - One note per decision in `docs/front/redesign-2026-10-24.md` on that branch (§1 to §15).
-  - The review files (motion studies, frame strips, before-and-after shots) are in `~/Desktop/linkbot-design-evidence/vision-front/` (README) and attached to GEO-188.
-- **Review switches on its pages:** `?theme=dark`, `?logo=quote`, `?venn=2`, `?icon=match`, `?arm=pointer`.
+This carries out the owner's site decisions of 2026-10-24, recorded on GEO-188.
 
-**The predecessors:** the three direction branches `vision/front-b-ask` (`c4d9b4e`), `vision/front-a-verdict` (`d010904`) and `vision/front-c-stages` (`0e6b0ca`) all branch from `cc8fe9b`. The redesign builds on them. Do not port them: they are superseded, and they still name the unowned domain.
+**The English home:**
+- B is the hero, with a 2D Venn of a need and an offer. Study 1, "approach", is the default.
+- The Venn loops by itself, with a pause control and no replay button.
+- A's verdict sequence is the second section.
+- The home's ask form has `method="dialog"`, so nothing typed leaves the page.
+
+**`/who-sees-what`** is direction C, as its own page. It is in English for every language, and de, es, it and fr show the English fallback notice.
+
+**The other four languages' home** is still the older catalogue home (`src/components/HomeA8.astro`), with no fallback notice.
+
+**Site-wide:**
+- Light is the default for everyone; dark stays behind `?theme=dark`.
+- The dust is the page's background, under all content. It is finer than before and scrolls with the page.
+- One floating globe button chooses the language (`src/components/LangSwitch.astro`). There are no language lists in the header or footer.
+- The type and icons are the brand lab's, self-hosted. The licences are SIL OFL 1.1, in `public/fonts/*/OFL.txt`.
+
+**Review switches:** `?theme=dark`, `?logo=quote`, `?venn=2`, `?icon=match`, `?arm=pointer`.
+
+**Notes and review files:**
+- one note per decision in `docs/front/redesign-2026-10-24.md`;
+- the review files (motion studies, frame strips, before-and-after shots) in `~/Desktop/linkbot-design-evidence/vision-front/` (README), also attached to GEO-188.
+
+**Superseded branches:** `vision/home-redesign`, merged in #35. Its predecessors `vision/front-b-ask`, `vision/front-a-verdict` and `vision/front-c-stages` should not be ported, and they still name the unowned domain.
 
 ### Outside this repository, for the record
 
@@ -97,26 +105,26 @@ On 2026-10-24 a second public Linkbot landing page in the same Vercel team was t
 
 ## 4. Next three steps
 
-The owner's site decisions of 2026-10-24, recorded on GEO-188:
-- B is the hero, A the second section, and C becomes `/who-sees-what`.
-- The light theme is the default.
-- The Venn loops automatically, with no replay button.
-- The dust layer sits behind all content, finer, and scrolls with the page.
-- The language comes from a small floating globe button at the bottom right, with no language lists in the header or footer.
+Nothing goes to production.
 
-`vision/home-redesign` already builds all of them. Nothing goes to production.
+### Step 1: make the status sentences true again, in all five languages
 
-### Step 1: merge `vision/home-redesign` into `build/vision`
+**What is untrue:** the catalogues in `src/i18n/*.ts` still say "Text, the board and watches are in the contract and not on staging yet" (`home.ways`) and "The text path is off until a reading policy is approved" (`how.describe`). `how.today` also lists text and the board under "In the contract, not on staging yet".
 
-- **Status:** in progress since 2026-10-25 in a Site lane session, in worktree `~/Projects/linkbot-site/.claude/worktrees/zealous-bohr-9a8db0` on branch `claude/site-home-redesign`. Look on GEO-188 for its result before starting anything here.
-- **The work:** merge `a111f6f` into a branch from `build/vision`. Keep `build/vision`'s `tests/domains.test.mjs` and this file.
-- **The pause control stays:** WCAG 2.2.2 requires a way to pause motion that starts by itself, and a pause control is not a replay button.
-- **Done when:**
-  - `npm run typecheck`, `npm test` and `npm run build` pass.
-  - `npm run test:browser` is green in light and in dark.
-  - Every sentence has a truth-check row, the third pass included.
-  - The PR names the two OFL font licences.
-  - It is merged on local evidence, and a GEO-188 comment carries the preview link.
+**What changed:** the Connect lane's docs moved on 2026-10-24, after this copy was written.
+- **Contract 0.2.10:** text is read by a deterministic reader, without a model, and the text path runs on the staging space.
+- **Contract 0.2.11:** the board runs on the staging space. Its coarsened values show a port only as its country.
+- **Watches:** check them there; do not assume.
+
+Re-read these first, in murks3r/linkbot-connect on its `build/vision` branch: `docs/plan/connect-plan.md` §1 and `docs/guides/privacy-for-integrators.md`.
+
+**The truth-check rows:** `home.ways, how.describe (text)` and `(board)` still say "unfinished: Core-Engine E2 / E3". They change with the sentences.
+
+**Done when:**
+- Every status sentence and status label in the five catalogues matches Connect's docs as read that day.
+- The truth-check rows carry the new source (the Connect commit) and the date.
+- `npm run build` and then `npm test` pass.
+- It is merged on local evidence.
 
 ### Step 2: the owner's open choices, then remove what loses
 
@@ -135,13 +143,28 @@ Do not decide any of them.
 - The gates pass.
 - The PR says which decision it carries out.
 
-### Step 3: the home and `/who-sees-what` in the four other languages
+### Step 3: the new front in the four other languages
 
-- **The work:** translate them through the delegate (rule 8) and review every line. Until then, those languages show the English fallback notice.
-- **Done when:**
-  - No page shows the fallback notice.
-  - `npm test`, with its language checks, passes.
-  - The native reading goes to GEO-192.
+**The work:**
+- Translate the new home and `/who-sees-what` through the delegate (rule 8), and review every line.
+- Replace the older home (`HomeA8.astro`) in de, es, it and fr with the translated front.
+- Drop the fallback notice.
+
+**Done when:**
+- All five languages show the new home and `/who-sees-what` in their own language, and no page shows the fallback notice.
+- `HomeA8.astro` is gone, if nothing uses it any more.
+- The tests pass.
+- The native reading goes to GEO-192.
+
+### Then: clear out concept A8's leftovers (rule 7)
+
+- `type-a8.css` is still imported.
+- `palette.css` feeds only the brand board `/__preview/brand`, the variant switcher and the living light.
+- The living light (the `living` mode of `Air.astro`, and `src/scripts/atmosphere.ts`) is used by no page.
+- `public/material/print.webp` is unreferenced.
+- The variant axes `noise` and `palette` change nothing any more.
+
+Ask the owner first whether the brand board is still needed.
 
 ## 5. Blockers
 
@@ -153,7 +176,7 @@ Do not decide any of them.
 | PR #28 on `main` | Counsel, plus a domain and mailbox Linkbot owns (owner) | GEO-150, GEO-154 |
 | A native reading of the Spanish, Italian and French texts | The M3 gate | GEO-192 |
 | A domain for the site. The placeholder stays `linkbot-domain-tbd.invalid`. The owner's facts on the candidate names are on GEO-188 and stay out of this public repository. | The owner | GEO-188 |
-| The open choices of step 2 | The owner | GEO-188 |
+| The open choices of step 2, and whether the brand board stays | The owner | GEO-188 |
 | The hostname history on the old design branches, which can be rewritten only with the owner's go | The owner | GEO-151 |
 
 ## 6. Gotchas
@@ -162,23 +185,31 @@ Do not decide any of them.
   - No staging host, key, internal URL or person's data goes into it, including PR text.
   - Synthetic data only.
   - Keep Linear IDs out of PR titles and branch names: a parent ID in a PR title closes that issue on merge, as #22 did to GEO-188. Titles read "Lane Site, …" for `build/vision` and "Main: …" for `main`.
+- **Product facts move.** Before carrying any status sentence, re-read the Connect lane's docs (step 1 names them). Contracts 0.2.10 and 0.2.11 overtook the copy within a day.
 - **The domain guard.** `tests/domains.test.mjs` fails, with file and line, when the domain Linkbot does not own appears in any tracked text file, in any letter case.
   - Where a Linkbot address is meant, write `linkbot-domain-tbd.invalid` (`contact@linkbot-domain-tbd.invalid` for mail).
-  - The three `vision/front-*` branches still name the old domain. `vision/home-redesign` does not.
+  - The old `vision/front-*` branches still name the old domain.
 - **No URL in a User-Agent.** No crawler, probe or outgoing request identifies itself with a domain Linkbot does not own. Until a domain is registered, a User-Agent carries a product token only (`CLAUDE.md`). The site sets none today.
 - **The truth check.** Every claim on a page has a row in `docs/truth-check.md`, with its source and the date checked.
   - `tests/i18n.test.mjs` refuses the forbidden words in every language: "verified", "live", "automated", "anonymous", "real-time", "stays private", "guaranteed" and their translations.
   - A sentence must be true on staging today, not planned.
+- **Build before you test.** `tests/build.test.mjs` reads `dist/`. A stale `dist/` from an older build makes it fail, and a missing one makes it skip. Run `npm run build`, then `npm test`.
+- **English-only pages.** A page shown in English for other languages must take the English catalogue for everything, its header and footer included. `tests/build.test.mjs` checks this. Open: the SEO alternates (`hreflang`, `og:locale`) still claim the reader's language for those pages.
+- **Forms.** On this static site, a `<form>` without `method` sends its named inputs as a query in the URL when scripts don't run. A form that must not send uses `method="dialog"`.
 - **The production build stop (PR #28 only).** `src/pages/imprint.astro` throws when `VERCEL_ENV` is `production` while `CONTACT_EMAIL` is unset or the board line is unsettled. This is on purpose, so a preview builds and production does not.
 - **CI.** `check.yml` runs only for `main` and by hand. PRs into `build/vision` trigger nothing.
-  - Merge on local evidence: run `npm run typecheck` and `npm test`, paste the commands and results into the PR, then use `gh pr merge <n> --merge --subject "Lane Site: … (#<n>)"`.
+  - Merge on local evidence: run `npm run typecheck`, `npm run build` and `npm test`, paste the commands and results into the PR, then use `gh pr merge <n> --merge --subject "Lane Site: … (#<n>)"`.
   - Browser tests run locally at milestones.
-- **Browser tests** need the app's audit module. Set `LINKBOT_APP_DIR` to a checkout of the app repository on its `build/vision` branch (on this Mac: `~/Projects/linkbot-build-vision`).
+- **Browser tests** need the app's audit module: set `LINKBOT_APP_DIR` to a checkout of the app repository on its `build/vision` branch (on this Mac: `~/Projects/linkbot-build-vision`).
+  - Run it twice: `npm run test:browser`, then `SITE_SCHEME=dark npm run test:browser`.
+  - Each pass takes about 1.5 minutes. The Playwright browsers are installed on this Mac.
 - **Building `main`.** Its `package-lock.json` is a 20-byte placeholder (GEO-153). Install with `npm install --package-lock=false`, and commit no lockfile there without the owner.
 - **Vercel.**
-  - The project sets no environment variables. The names the code reads are `SITE_URL`, `PUBLIC_NOINDEX`, `PUBLIC_PREVIEW_VARIANTS` and, in tests, `LINKBOT_APP_DIR`. None holds a secret.
+  - The project sets no environment variables. The names the code reads are `SITE_URL`, `PUBLIC_NOINDEX`, `PUBLIC_PREVIEW_VARIANTS` and, in tests, `LINKBOT_APP_DIR` and `SITE_SCHEME`. None holds a secret.
+  - A preview's address can be had without the dashboard: `gh api repos/murks3r/linkbot-site/deployments`, then `/deployments/<id>/statuses`, then `environment_url`. Every preview answers with a redirect to Vercel's login.
   - `vercel inspect` keeps listing a removed alias, so check public names with `curl`.
   - `vercel api` (beta) reads and changes one project's Git link and domains. Select fields with `jq`, so that no environment values print.
+- **Reports.** Post one GEO-188 comment per day: start a new comment each day, and update that day's comment in place.
 - **Author identity.** Commits carry the account's real email, never a machine hostname (GEO-151).
 - **Translations by the DeepSeek delegate** (reasonix, rule 8):
   - Give each run its own worktree and a narrow brief.
@@ -196,10 +227,13 @@ Do not decide any of them.
 | -- | -- | -- | -- |
 | `~/Projects/linkbot-site` | `build/vision` | The main checkout, shared by sessions. Its local `build/vision` may lag `origin`. | `git -C ~/Projects/linkbot-site pull --ff-only` |
 | `~/Projects/linkbot-site/.claude/worktrees/s0-a8-base-c611a3` | the handover's branches (merged) | The lane's worktree, with `node_modules` (Playwright 1.63) | `git fetch origin && git switch -c claude/<next> origin/build/vision` |
-| `~/Projects/linkbot-site/.claude/worktrees/zealous-bohr-9a8db0` | `claude/site-home-redesign` | Step 1 in progress (2026-10-25) | Its session reports on GEO-188 |
-| `~/Projects/linkbot-site/.claude/worktrees/recursing-shtern-2e0e50` | `claude/site-refuse-unowned-domain` (PR #32, merged) | Done | Remove with `git -C ~/Projects/linkbot-site worktree remove <path>` |
+| `~/Projects/linkbot-site/.claude/worktrees/zealous-bohr-9a8db0` | `claude/site-home-redesign` (PR #35, merged at `5688598`) | Done | Remove with `git -C ~/Projects/linkbot-site worktree remove <path>` |
+| `~/Projects/linkbot-site/.claude/worktrees/recursing-shtern-2e0e50` | `claude/site-refuse-unowned-domain` (PR #32, merged) | Done | Remove the same way |
 | `~/Projects/linkbot-build-vision` | the app repository, `build/vision` | Another lane's checkout; read only for this lane | Point `LINKBOT_APP_DIR` at it |
 
-- **Direction and redesign branches:** none of them has a worktree of its own on this Mac. Create one from `origin` when needed.
-- **The Architect's notes folder:** `~/.claude-instances/*/side-session-notes/local_9e6a9e15-01ee-44dc-b034-fce8dd114fd3/` holds the lane's hand-over note `site-lane.md`, and the evidence of 2026-10-24 under `evidence/linkbot-landing-2026-10-24/` (README and SHA256SUMS included).
+- **Notes folders.** The Architect's notes folder `~/.claude-instances/*/side-session-notes/local_9e6a9e15-01ee-44dc-b034-fce8dd114fd3/` holds:
+  - the lane's hand-over note `site-lane.md`;
+  - the evidence of 2026-10-24, under `evidence/linkbot-landing-2026-10-24/` (README and SHA256SUMS included).
+
+  The Site lane session's own folder, `.../side-session-notes/local_6c67fc50-6b08-48f5-a779-f4ae1699b953/`, holds the step-1 notes `site-step1-2026-10-25.md`.
 - **Scratch files** of past sessions lived under `/private/tmp` and are not durable.
