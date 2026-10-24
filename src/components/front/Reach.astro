@@ -5,22 +5,22 @@
    leaves. It is decoration and nothing else: aria-hidden, no pointer events, no layout of its own, drawn only for a
    fine pointer with motion allowed (never on touch, under reduced motion or forced colours), one animation frame at a
    time and only while a pointer is near. The link itself is an ordinary .btn and works without any of it. */
-interface Props { href: string; label: string; class?: string; reach?: number }
+interface Props { href?: string; label: string; class?: string; reach?: number }
 const { href, label, class: className = 'btn btn-ink', reach = 240 } = Astro.props;
 ---
 <span class="reach" data-reach data-reach-radius={reach}>
-  <a class={className} href={href}>{label}<slot /></a>
+  {href ? <a class={className} href={href}>{label}<slot /></a> : <button type="submit" class={className}>{label}<slot /></button>}
   <svg class="reach-arm" viewBox={`${-reach} ${-reach} ${reach * 2} ${reach * 2}`} width={reach * 2} height={reach * 2} aria-hidden="true" focusable="false" data-reach-svg>
     <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-      <path data-ghost="a" stroke-width="1.2" opacity=".42" d="" />
-      <path data-ghost="b" stroke-width="1.2" opacity=".32" d="" />
-      <path data-arm stroke-width="2.4" d="" />
+      <path data-ghost="a" stroke-width="1.6" opacity=".5" d="" />
+      <path data-ghost="b" stroke-width="1.6" opacity=".4" d="" />
+      <path data-arm stroke-width="3.2" d="" />
       <g data-hand>
-        <path stroke-width="2.1" d="M-11 -9C-5 -14 4 -14 8 -8L9 8C4 13 -5 13 -11 9Z" />
-        <g data-fingers stroke-width="2.1">
+        <path stroke-width="2.6" d="M-11 -9C-5 -14 4 -14 8 -8L9 8C4 13 -5 13 -11 9Z" />
+        <g data-fingers stroke-width="2.6">
           <path d="M8 -7C14 -10 19 -10 25 -9" /><path d="M9 -2C16 -3 22 -3 28 -2" /><path d="M9 3C16 3 22 4 27 5" /><path d="M7 8C12 10 17 12 21 14" />
         </g>
-        <path stroke-width="2.1" d="M-7 10C-3 17 3 20 10 21" />
+        <path stroke-width="2.6" d="M-7 10C-3 17 3 20 10 21" />
       </g>
     </g>
   </svg>
@@ -76,9 +76,10 @@ const { href, label, class: className = 'btn btn-ink', reach = 240 } = Astro.pro
       const near = gap < R;
       let da = (near ? target : ang) - ang; da = Math.atan2(Math.sin(da), Math.cos(da)); ang += da * .25;
       const edge = Math.hypot(Math.cos(ang) * r.width / 2, Math.sin(ang) * r.height / 2);
-      const wanted = near ? Math.max(0, Math.min(gap - 18, R - 12)) : 0;
+      // The wrist stops short of the pointer by about a hand, so the fingertips reach it.
+      const wanted = near ? Math.max(0, Math.min(gap - 26, R - 12)) : 0;
       len += (wanted - len) * (wanted > len ? .22 : .16);
-      grab += ((near && gap - len < 36 ? 1 : 0) - grab) * .2;
+      grab += ((near && gap - len < 40 ? 1 : 0) - grab) * .2;
       if (len < .5 && !near) { svg.removeAttribute('data-on'); return; }
       svg.setAttribute('data-on', '');
       const t = performance.now() / 1000, boil = Math.floor(t * 11);
@@ -86,10 +87,10 @@ const { href, label, class: className = 'btn btn-ink', reach = 240 } = Astro.pro
       const sx = ux * edge * .92, sy = uy * edge * .92, ex = sx + ux * len, ey = sy + uy * len;
       const sag = Math.min(len * .16, 26) * (1 + .25 * Math.sin(t * 2.1));
       main.setAttribute('d', d(sx, sy, ex, ey, nx, ny, sag, 0));
-      ghostA.setAttribute('d', d(sx, sy, ex, ey, nx, ny, sag * 1.12, 1.6 * noise(1, boil)));
-      ghostB.setAttribute('d', d(sx, sy, ex, ey, nx, ny, sag * .88, 1.6 * noise(2, boil)));
-      const wobble = 1.5 * noise(3, boil);
-      hand.setAttribute('transform', `translate(${ex.toFixed(1)} ${ey.toFixed(1)}) rotate(${(ang * 180 / Math.PI + wobble).toFixed(1)}) scale(${(Math.min(1, len / 60) * .55 + .45).toFixed(3)})`);
+      ghostA.setAttribute('d', d(sx, sy, ex, ey, nx, ny, sag * 1.14, 2.4 * noise(1, boil)));
+      ghostB.setAttribute('d', d(sx, sy, ex, ey, nx, ny, sag * .86, 2.4 * noise(2, boil)));
+      const wobble = 2 * noise(3, boil);
+      hand.setAttribute('transform', `translate(${ex.toFixed(1)} ${ey.toFixed(1)}) rotate(${(ang * 180 / Math.PI + wobble).toFixed(1)}) scale(${(Math.min(1, len / 50) * .45 + .85).toFixed(3)})`);
       fingers.setAttribute('transform', `scale(${(1 - .3 * grab).toFixed(3)} 1)`);
       raf = requestAnimationFrame(tick);
     };
