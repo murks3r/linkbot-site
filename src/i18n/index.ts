@@ -5,13 +5,14 @@
 import { en, type Catalogue } from './en.ts';
 import { de } from './de.ts';
 import { es } from './es.ts';
+import { fr } from './fr.ts';
 import { it } from './it.ts';
 import { DEFAULT_LANG, type Lang } from './locales.ts';
 
 export type { Catalogue } from './en.ts';
 export * from './locales.ts';
 
-export const catalogues: Partial<Record<Lang, Catalogue>> = { en, de, es, it };
+export const catalogues: Partial<Record<Lang, Catalogue>> = { en, de, es, it, fr };
 
 /** The words of a page in a language, and whether they are English standing in for it. */
 export const resolve = (lang: Lang): { t: Catalogue; fallback: boolean } => {
