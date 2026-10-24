@@ -315,7 +315,7 @@ export const en = {
       items: [
         'It sets no cookies and uses no analytics or tracking.',
         'It loads nothing from third parties: the typefaces and images come from this site.',
-        'It has no form and no account. Nothing you type reaches anyone.',
+        'It has no account and sends nothing you type anywhere: the fields on the home page work in your browser only, and the site stores nothing.',
         'The product runs on a platform’s own pages, under that platform’s data notice, next to the widget’s fixed lines.',
       ],
     },

@@ -1,0 +1,106 @@
+---
+/* Direction B of the front-page previews (GEO-188, 2026-10-24): "Say what you need. See what Linkbot asks back."
+   The page is the first minute of using Linkbot, played honestly: a visitor writes a need in one line and the page
+   answers with the questions a pack asks back, keeps the line as written, and shows what a confirm would store;
+   nothing is read into answers (the text path is in the contract and off), nothing is sent, nothing is kept. Then:
+   why it asks instead of guessing, what happens after confirm, the platform and the pack, where it stands.
+   Words: src/front/b-copy.ts (rows in docs/truth-check.md); the questions: src/front/b-pack.ts (the Connect lane's
+   synthetic sample pack); behaviour: src/front/ask.ts; the ground: src/front/theme.css (light and dark). English only;
+   the four translated languages keep the catalogue's home until a direction is picked. */
+import Base from '../../layouts/Base.astro';
+import Icon from '../Icon.astro';
+import Reach from './Reach.astro';
+import Question from './Question.astro';
+import { B } from '../../front/b-copy';
+import { CRITERIA, WORDS } from '../../front/b-pack';
+import { pathFor, type Catalogue, type Lang } from '../../i18n';
+import '../../front/theme.css';
+import '../../front/b.css';
+interface Props { lang: Lang; t: Catalogue }
+const { lang, t } = Astro.props;
+const to = (path: string) => pathFor(lang, path);
+const required = CRITERIA.filter(c => c.required), more = CRITERIA.filter(c => !c.required);
+const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, any: WORDS.any, min: 'at least', max: 'at most', storedSource: B.ask.storedSource, storedUnknown: B.ask.storedUnknown, storedOther: B.ask.storedOther });
+---
+<Base lang={lang} t={t} title={B.meta.title} description={B.meta.description} path="/" front>
+  <script is:inline>/* Preview only: ?theme=dark or ?theme=light overrides the system's scheme (src/front/theme.css). */(function(){var q=new URLSearchParams(location.search).get('theme');if(q==='dark'||q==='light')document.documentElement.setAttribute('data-theme',q);})();</script>
+
+  <!-- 1 · The opening: the invitation, the line, and what the pack asks back. -->
+  <section class="fb-hero" aria-labelledby="hero-title">
+    <div class="wrap fb-hero-inner">
+      <p class="fp-eyebrow">{B.hero.eyebrow}</p>
+      <h1 id="hero-title"><span class="fb-line">{B.hero.h1[0]}</span> <span class="fb-line">{B.hero.h1[1]}</span></h1>
+      <p class="lede fb-lede">{B.hero.lede}</p>
+    </div>
+    <form class="wrap ask" data-ask data-words={words} novalidate>
+      <label class="ask-label" for="ask-line">{B.ask.label}</label>
+      <div class="ask-field">
+        <input id="ask-line" class="ask-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" maxlength="200" placeholder={B.ask.placeholder} data-ask-line aria-describedby="ask-privacy" />
+        <Reach label={B.ask.button}><Icon name="arrow" /></Reach>
+      </div>
+      <p id="ask-privacy" class="ask-privacy">{B.ask.privacy}</p>
+      <p class="ask-empty" role="status">Write one line first.</p>
+
+      <div class="ask-result" data-ask-result>
+        <section class="ask-yours" data-yours hidden aria-labelledby="yours-title">
+          <h2 id="yours-title" class="fp-eyebrow">{B.ask.yoursLabel}</h2>
+          <blockquote class="ask-quote" data-yours-text></blockquote>
+          <p class="ask-note">{B.ask.yoursNote}</p>
+        </section>
+        <div class="ask-grid">
+          <section class="ask-asks" aria-labelledby="asks-title">
+            <h2 id="asks-title">{B.ask.asksTitle}</h2>
+            <p class="ask-pack">{B.ask.packNote}</p>
+            <p class="fp-eyebrow ask-group">{WORDS.essentials}</p>
+            <ol class="ask-list">
+              {required.map((c, i) => <Question c={c} n={i + 1} />)}
+            </ol>
+            <details class="ask-more">
+              <summary><span>{WORDS.details}</span><Icon name="down" /></summary>
+              <ol class="ask-list" start={required.length + 1}>{more.map((c, i) => <Question c={c} n={required.length + i + 1} />)}</ol>
+            </details>
+          </section>
+          <aside class="ask-stored" aria-labelledby="stored-title" data-stored>
+            <h2 id="stored-title">{B.ask.storedTitle}</h2>
+            <p class="ask-stored-empty" data-stored-empty>{B.ask.storedEmpty}</p>
+            <dl class="ask-stored-list" data-stored-list aria-live="polite"></dl>
+            <p class="ask-end">{B.ask.end}</p>
+            <p><button type="button" class="btn btn-secondary" data-ask-reset>{B.ask.reset}</button></p>
+          </aside>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <!-- 2 · Why it asks instead of guessing. -->
+  <section class="fp-section" id="why" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="fp-head"><h2 id="why-title">{B.why.h2}</h2></div>
+      <ul class="fb-four">{B.why.items.map(item => <li><h3>{item.h3}</h3><p>{item.p}</p></li>)}</ul>
+      <p class="fb-more"><a class="link" href={`${to('/how-it-works')}#describe`}>{B.why.link}<Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <!-- 3 · After confirm, in four steps. -->
+  <section class="fp-section" id="after" aria-labelledby="after-title">
+    <div class="wrap">
+      <div class="fp-head"><h2 id="after-title">{B.after.h2}</h2></div>
+      <ol class="fb-steps">{B.after.steps.map((step, index) => <li><span class="fb-n" aria-hidden="true">{index + 1}</span><div><b>{step.name}</b><p>{step.text}</p></div></li>)}</ol>
+    </div>
+  </section>
+
+  <!-- 4 · For platforms and for verticals, side by side. -->
+  <section class="fp-section" id="for" aria-labelledby="platforms-title">
+    <div class="wrap fb-two">
+      <div class="fb-card"><h2 id="platforms-title">{B.platforms.h2}</h2><p>{B.platforms.p}</p><a class="link" href={to('/platforms')}>{B.platforms.link}<Icon name="arrow" /></a></div>
+      <div class="fb-card"><h2 id="verticals-title">{B.verticals.h2}</h2><p>{B.verticals.p}</p><a class="link" href={to('/verticals')}>{B.verticals.link}<Icon name="arrow" /></a></div>
+    </div>
+  </section>
+
+  <!-- 5 · Where it stands. -->
+  <section class="fp-section fb-state" id="state" aria-labelledby="state-title">
+    <div class="wrap"><div class="fp-head"><h2 id="state-title">{B.state.h2}</h2><p>{t.site.synthetic}</p><p>{B.state.p}</p></div></div>
+  </section>
+</Base>
+
+<script>import '../../front/ask';</script>
