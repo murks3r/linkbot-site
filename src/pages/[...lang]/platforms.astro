@@ -38,7 +38,7 @@ const sections = [['embed', p.embed], ['keys', p.keys], ['console', p.console], 
 <style>
   .pages { display: grid; gap: 0; border-top: 2px solid var(--ink); }
   .pages li { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-  .pages a { font-weight: 650; color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); }
+  .pages a { display: inline-flex; align-items: center; min-height: var(--target); justify-self: start; font-weight: 650; color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); }
   .pages a:hover { text-decoration-color: currentColor; }
   .pages p { font-size: var(--size-small); color: var(--ink-2); }
 </style>
