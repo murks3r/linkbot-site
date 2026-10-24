@@ -1,0 +1,105 @@
+---
+/* The language (third pass, GEO-188, 2026-10-24): one small floating button at the bottom right, with the globe, that
+   opens a compact list of the five languages, each named in its own language. It replaces the language menus of the
+   masthead and the footer.
+
+   A real button (popovertarget, aria-expanded kept in step), the list a popover: Escape and a click outside close it
+   (the browser's light dismiss, a small fallback where popovers are missing), the arrow keys, Home and End move
+   between the languages, Tab out of the list closes it, and focus returns to the button. It sits clear of the phone's
+   safe areas (env(safe-area-inset-*), the viewport is viewport-fit=cover) and steps aside, never over what matters:
+   while a primary button or the focused control passes beneath it, and while someone types on a touch screen. The
+   footer leaves room for it at the end of every page. Without scripts the popover still opens and closes. */
+import Icon from './Icon.astro';
+import { LANGS, NAMES, pathFor, type Catalogue, type Lang } from '../i18n';
+interface Props { lang: Lang; t: Catalogue; path: string }
+const { lang, t, path } = Astro.props;
+---
+<div class="lang" data-lang>
+  <button class="lang-button" type="button" popovertarget="lang-menu" aria-controls="lang-menu" data-lang-button>
+    <Icon name="globe" size={20} />
+    <span class="sr">{t.site.language}: {NAMES[lang]}</span>
+  </button>
+  <nav id="lang-menu" class="lang-menu" popover aria-label={t.site.language} data-lang-menu>
+    <ul>
+      {LANGS.map(l => <li><a href={pathFor(l, path)} lang={l} hreflang={l} aria-current={l === lang ? 'true' : undefined}><span>{NAMES[l]}</span>{l === lang && <Icon name="check" />}</a></li>)}
+    </ul>
+  </nav>
+</div>
+
+<style>
+  .lang { --lang-x: max(16px, calc(env(safe-area-inset-right, 0px) + 8px)); --lang-y: max(16px, calc(env(safe-area-inset-bottom, 0px) + 8px));
+    position: fixed; right: var(--lang-x); bottom: var(--lang-y); z-index: 35; }
+  .lang-button { display: grid; place-items: center; width: var(--target); height: var(--target); padding: 0; border: 1px solid var(--line-strong); border-radius: 50%;
+    background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .06), 0 10px 24px -12px rgb(0 0 0 / .28); cursor: pointer;
+    transition: border-color var(--fast), opacity var(--base) var(--ease), transform var(--base) var(--ease), visibility 0s; }
+  .lang-button:hover { border-color: var(--line-ink); }
+  .lang-button[aria-expanded='true'] { border-color: var(--ink); }
+  /* Stepping aside: out of sight and out of reach until what it would cover has passed. */
+  .lang[data-yield] .lang-button { opacity: 0; transform: translateY(6px); visibility: hidden; pointer-events: none;
+    transition: opacity var(--base) var(--ease), transform var(--base) var(--ease), visibility 0s linear var(--base); }
+  .lang-menu { position: fixed; inset: auto; right: var(--lang-x); bottom: calc(var(--lang-y) + var(--target) + 8px); margin: 0; padding: 6px; min-width: 200px;
+    border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-float); }
+  .lang-menu ul { display: grid; gap: 2px; }
+  .lang-menu a { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: var(--target); padding: 0 14px; border-radius: var(--r-2);
+    font-size: var(--size-small); font-weight: 560; color: var(--ink); text-decoration: none; }
+  .lang-menu a:hover { background: var(--sand); }
+  .lang-menu a[aria-current] { background: var(--green-wash); font-weight: 650; }
+  @supports not selector(:popover-open) { .lang-menu { display: none; } .lang-menu[data-open] { display: block; } }
+  @media (forced-colors: active) { .lang-button, .lang-menu { border-color: CanvasText; } }
+  @media print { .lang { display: none; } }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-lang]');
+  if (root) {
+    const button = root.querySelector<HTMLButtonElement>('[data-lang-button]')!;
+    const menu = root.querySelector<HTMLElement>('[data-lang-menu]')!;
+    const links = [...menu.querySelectorAll<HTMLAnchorElement>('a')];
+    const native = typeof menu.showPopover === 'function';
+    const isOpen = () => (native ? menu.matches(':popover-open') : menu.hasAttribute('data-open'));
+    const close = () => { if (native) menu.hidePopover(); else { menu.removeAttribute('data-open'); opened(false); } };
+    button.setAttribute('aria-expanded', 'false');
+    function opened(open: boolean) {
+      button.setAttribute('aria-expanded', String(open));
+      if (open) { root!.removeAttribute('data-yield'); (links.find(a => a.hasAttribute('aria-current')) ?? links[0]).focus(); }
+      else if (document.activeElement === document.body || menu.contains(document.activeElement)) button.focus();
+    }
+    if (native) {
+      // The state first, in step with the popover (beforetoggle runs before it opens or closes), then focus.
+      menu.addEventListener('beforetoggle', event => button.setAttribute('aria-expanded', String((event as ToggleEvent).newState === 'open')));
+      menu.addEventListener('toggle', event => opened((event as ToggleEvent).newState === 'open'));
+    }
+    else {
+      button.removeAttribute('popovertarget');
+      button.addEventListener('click', () => { const open = !isOpen(); menu.toggleAttribute('data-open', open); opened(open); });
+      document.addEventListener('pointerdown', event => { if (isOpen() && !root.contains(event.target as Node)) close(); });
+    }
+    menu.addEventListener('keydown', event => {
+      const at = links.indexOf(document.activeElement as HTMLAnchorElement);
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); links[(at + (event.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length].focus(); }
+      else if (event.key === 'Home' || event.key === 'End') { event.preventDefault(); links[event.key === 'Home' ? 0 : links.length - 1].focus(); }
+      else if (event.key === 'Escape' && !native) { event.preventDefault(); close(); }
+    });
+    // Tab out of the list closes it, also past the page's end; focus goes on to where it was going.
+    menu.addEventListener('focusout', event => { const next = event.relatedTarget as Node | null; if (isOpen() && next !== button && !(next && menu.contains(next))) close(); });
+
+    // Out of the way: never over a primary button or the focused control, and not while someone types on a touch screen.
+    const coarse = matchMedia('(pointer: coarse)').matches;
+    const primaries = [...document.querySelectorAll<HTMLElement>('.btn, button[type="submit"], [data-motion-toggle]')].filter(el => !root.contains(el));
+    const overlap = (a: DOMRect, b: DOMRect) => b.width > 0 && a.left - 6 < b.right && a.right + 6 > b.left && a.top - 6 < b.bottom && a.bottom + 6 > b.top;
+    let typing = false, frame = 0;
+    const check = () => {
+      frame = 0;
+      if (isOpen()) return;
+      const here = button.getBoundingClientRect(), active = document.activeElement;
+      const focused = active instanceof HTMLElement && active !== document.body && !root.contains(active) ? active : null;
+      root.toggleAttribute('data-yield', typing || primaries.some(el => overlap(here, el.getBoundingClientRect())) || (focused !== null && overlap(here, focused.getBoundingClientRect())));
+    };
+    const soon = () => { if (!frame) frame = requestAnimationFrame(check); };
+    addEventListener('scroll', soon, { passive: true });
+    addEventListener('resize', soon);
+    document.addEventListener('focusin', event => { typing = coarse && (event.target as Element).matches('input, textarea, select'); check(); setTimeout(check, 0); });
+    document.addEventListener('focusout', () => { typing = false; soon(); });
+    check();
+  }
+</script>

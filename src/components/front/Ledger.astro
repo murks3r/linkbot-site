@@ -1,0 +1,36 @@
+---
+/* The one synthetic pair: the need's criteria against the offer's, a verdict per row, then the four steps the server
+   requires before anyone is introduced. The values are fixed text (src/front/a-match.ts); the page matches nothing
+   and says so in the caption. It stands still and complete (third pass, GEO-188): motion on the site runs by itself
+   and loops, and a table that empties itself to play again would take its text from whoever is reading it; the
+   section's new illustration, chosen from two sketches, will carry the motion. */
+import Verdict from './Verdict.astro';
+import { ROWS } from '../../front/a-match';
+import { A } from '../../front/a-copy';
+const L = A.ledger;
+---
+<figure class="ledger" aria-labelledby="ledger-cap">
+  <figcaption id="ledger-cap" class="ledger-cap"><span class="ledger-dot" aria-hidden="true"></span>{L.label}</figcaption>
+  <div class="ledger-head">
+    <div class="ledger-side"><span class="fp-eyebrow">{L.need}</span><b>{L.space}</b></div>
+    <div class="ledger-stitch" aria-hidden="true"></div>
+    <div class="ledger-side" data-side="offer"><span class="fp-eyebrow">{L.offer}</span><b>{L.space}</b></div>
+  </div>
+  <div class="ledger-table" role="table" aria-label={L.table}>
+    <div role="row" class="ledger-row ledger-row-head">
+      <span role="columnheader">{L.columns.criterion}</span><span role="columnheader">{L.columns.need}</span><span role="columnheader">{L.columns.offer}</span><span role="columnheader">{L.columns.verdict}</span>
+    </div>
+    {ROWS.map(row => <div role="row" class="ledger-row" data-verdict={row.verdict}>
+      <span role="cell" class="ledger-crit"><b>{row.label}</b><small data-importance={row.importance}>{L.importance[row.importance]}</small></span>
+      <span role="cell" class="ledger-val" data-label={L.need}>{row.need}</span>
+      <span role="cell" class="ledger-val" data-label={L.offer}>{row.offer}</span>
+      <span role="cell" class="ledger-verdict"><span class="ledger-word"><Verdict kind={row.verdict} />{L.verdicts[row.verdict]}</span><small>{row.why}</small></span>
+    </div>)}
+  </div>
+  <p class="ledger-state">{L.state}</p>
+  <ol class="ledger-stages" aria-label={L.before}>
+    {L.stages.map((stage, index) => <li><span class="ledger-n" aria-hidden="true">{index + 1}</span><div><b>{stage.name}</b><p>{stage.text}</p></div></li>)}
+  </ol>
+  <p class="ledger-notice">{L.notice}</p>
+  <p class="ledger-legend">{L.legend}</p>
+</figure>

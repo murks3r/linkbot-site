@@ -11,7 +11,7 @@ export const de: Catalogue = {
     menu: 'Menü',
     toc: 'Auf dieser Seite',
     language: 'Sprache',
-    nav: { how: 'So funktioniert es', platforms: 'Für Plattformen', verticals: 'Für Branchen' },
+    nav: { how: 'So funktioniert es', sees: 'Wer was sieht', platforms: 'Für Plattformen', verticals: 'Für Branchen' },
     footer: {
       product: 'Linkbot',
       legal: 'Rechtliches',

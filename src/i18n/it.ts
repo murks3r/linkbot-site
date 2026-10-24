@@ -9,7 +9,7 @@ export const it: Catalogue = {
     menu: 'Menu',
     toc: 'In questa pagina',
     language: 'Lingua',
-    nav: { how: 'Come funziona', platforms: 'Per le piattaforme', verticals: 'Per i verticali' },
+    nav: { how: 'Come funziona', sees: 'Chi vede cosa', platforms: 'Per le piattaforme', verticals: 'Per i verticali' },
     footer: {
       product: 'Linkbot',
       legal: 'Informazioni legali',
