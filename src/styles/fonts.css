@@ -1,0 +1,12 @@
+/* The site's two typefaces, self-hosted, subset for the five languages (de, en, es, it, fr: Google's "latin" range
+   plus ẞ, the sub- and superscripts and the arrows), nothing loaded from a third party (CLAUDE.md). The pairing is the
+   brand lab's D-P02 (Lane D, exploration-r2-v1): IBM Plex Sans SemiBold for display, Atkinson Hyperlegible Next for
+   text, UI and numerals. Both are under the SIL Open Font License 1.1; Plex carries the reserved font name "Plex", so
+   its subset is renamed "LB Display Sans" as the licence requires (public/fonts/lb-display-sans/OFL.txt). Atkinson
+   lacks the subscript digits (P₂O₅) and the arrows, so a tiny Plex Regular face fills those code points in the text
+   family. Metric-matched fallbacks keep the swap small. */
+@font-face { font-family: 'LB Display Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/lb-display-sans/lb-display-sans-600.woff2') format('woff2'); }
+@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('/fonts/atkinson-hyperlegible-next/atkinson-hyperlegible-next-vf.woff2') format('woff2'); }
+@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('/fonts/lb-display-sans/lb-display-sans-400-symbols.woff2') format('woff2'); unicode-range: U+2070-209F, U+2190-2199, U+0178; }
+@font-face { font-family: 'LB Display Fallback'; src: local('Helvetica Neue'), local('Arial'); size-adjust: 103%; ascent-override: 100%; descent-override: 26%; line-gap-override: 0%; }
+@font-face { font-family: 'Atkinson Fallback'; src: local('Helvetica Neue'), local('Arial'); size-adjust: 99%; ascent-override: 93%; descent-override: 24%; line-gap-override: 0%; }

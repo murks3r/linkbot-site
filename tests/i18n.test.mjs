@@ -20,19 +20,7 @@ const strings = (value, at = '') => {
   return typeof value === 'string' ? [[at, value]] : [];
 };
 
-/* The claims the copy may not make (CLAUDE.md, BUILD MODE rule 4), per language, as whole words.
-   "Match" as a stage name and "anonym…" in a sentence that says what is not claimed are not here:
-   the catalogues avoid them altogether. */
-const FORBIDDEN = {
-  en: /\b(verified|verifies|verifiable|live|automated|automatic(?:ally)?|anonym\w*|real[- ]time|stays private|guaranteed?)\b/i,
-  de: /\b(verifiziert\w*|live|automatisch\w*|automatisiert\w*|anonym\w*|echtzeit|bleibt privat|garantiert\w*)\b/i,
-  es: /\b(verificad\w*|en vivo|en directo|automatizad\w*|automátic\w*|anónim\w*|tiempo real|permanece privad\w*|garantizad\w*)\b/i,
-  it: /\b(verificat\w*|dal vivo|live|automatizzat\w*|automatic\w*|anonim\w*|tempo reale|resta privat\w*|garantit\w*)\b/i,
-  fr: /\b(vérifié\w*|en direct|live|automatisé\w*|automatique\w*|anonym\w*|temps réel|reste privé\w*|garanti\w*)\b/i,
-};
-/* Nothing that belongs to no public page: a host, an address, a key, a provider. A bare identifier
-   (an event type such as channel.verified) is not a claim and is exempt from the word check. */
-const PRIVATE = /https?:\/\/|\bsk_|\bpk_|railway|vercel|resend|@[a-z0-9-]+\.[a-z]{2,}/i;
+import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 
 test('every language the site offers has a name and a fallback notice', () => {
   assert.deepEqual([...LANGS], ['en', 'de', 'es', 'it', 'fr']);

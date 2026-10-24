@@ -1,0 +1,103 @@
+---
+/* Reach: the primary action with a drawn arm (the founder's reference of 2026-10-24: a pill button from which an
+   ink-drawn arm grows towards the cursor). The arm follows the pointer, so it is an animation that depends on input,
+   which the third pass (GEO-188) rules out: by default the button stands alone. A self-running arm was tried and set
+   aside: beside the field it could only reach across the lede or the Venn's list. The arm stays for comparison behind
+   ?arm=pointer: it comes out of the button towards a pointer within reach, its open hand follows the cursor and closes
+   a little as the cursor comes near, and it withdraws when the pointer leaves. It is decoration and nothing else:
+   aria-hidden, no pointer events, no layout of its own (not even a box while it rests), drawn only for a fine pointer
+   with motion allowed (never on touch, under reduced motion or forced colours). The link itself is an ordinary .btn
+   and works without any of it. */
+interface Props { href?: string; label: string; class?: string; reach?: number }
+const { href, label, class: className = 'btn btn-ink', reach = 240 } = Astro.props;
+---
+<span class="reach" data-reach data-reach-radius={reach}>
+  {href ? <a class={className} href={href}>{label}<slot /></a> : <button type="submit" class={className}>{label}<slot /></button>}
+  <svg class="reach-arm" viewBox={`${-reach} ${-reach} ${reach * 2} ${reach * 2}`} width={reach * 2} height={reach * 2} aria-hidden="true" focusable="false" data-reach-svg>
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <path data-ghost="a" stroke-width="1.6" opacity=".5" d="" />
+      <path data-ghost="b" stroke-width="1.6" opacity=".4" d="" />
+      <path data-arm stroke-width="3.2" d="" />
+      <g data-hand>
+        <path stroke-width="2.6" d="M-11 -9C-5 -14 4 -14 8 -8L9 8C4 13 -5 13 -11 9Z" />
+        <g data-fingers stroke-width="2.6">
+          <path d="M8 -7C14 -10 19 -10 25 -9" /><path d="M9 -2C16 -3 22 -3 28 -2" /><path d="M9 3C16 3 22 4 27 5" /><path d="M7 8C12 10 17 12 21 14" />
+        </g>
+        <path stroke-width="2.6" d="M-7 10C-3 17 3 20 10 21" />
+      </g>
+    </g>
+  </svg>
+</span>
+
+<style>
+  .reach { position: relative; display: inline-block; }
+  .reach-arm { position: absolute; left: 50%; top: 50%; translate: -50% -50%; overflow: visible; pointer-events: none; z-index: 2; display: none; color: var(--ink); }
+  .reach-arm[data-on] { display: block; }
+  @media (prefers-reduced-motion: reduce), (pointer: coarse), (forced-colors: active) { .reach-arm { display: none; } }
+</style>
+
+<script>
+  /* Only with ?arm=pointer: one pointer listener for the page; each arm follows only while the pointer is within its reach. */
+  const fine = matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches && !matchMedia('(forced-colors: active)').matches;
+  const byPointer = document.documentElement.getAttribute('data-arm') === 'pointer';
+  const arms: Array<(x: number, y: number) => void> = [];
+  if (fine && byPointer) for (const wrap of document.querySelectorAll<HTMLElement>('[data-reach]')) arms.push(arm(wrap));
+  if (arms.length) {
+    addEventListener('pointermove', event => { for (const follow of arms) follow(event.clientX, event.clientY); }, { passive: true });
+    addEventListener('pointerout', event => { if (!event.relatedTarget) for (const follow of arms) follow(-1e6, -1e6); });
+    addEventListener('blur', () => { for (const follow of arms) follow(-1e6, -1e6); });
+  }
+
+  function arm(wrap: HTMLElement) {
+    const R = Number(wrap.dataset.reachRadius) || 240; // how far beyond the button's edge the arm reaches
+    const svg = wrap.querySelector<SVGSVGElement>('[data-reach-svg]')!;
+    // The drawing surface: the button plus the reach on every side, centred on the button.
+    const size = () => { const r = wrap.getBoundingClientRect(), w = r.width + 2 * R, h = r.height + 2 * R; svg.setAttribute('viewBox', `${-w / 2} ${-h / 2} ${w} ${h}`); svg.style.width = `${w}px`; svg.style.height = `${h}px`; };
+    size();
+    if ('ResizeObserver' in window) new ResizeObserver(size).observe(wrap);
+    const main = svg.querySelector<SVGPathElement>('[data-arm]')!;
+    const ghostA = svg.querySelector<SVGPathElement>('[data-ghost="a"]')!;
+    const ghostB = svg.querySelector<SVGPathElement>('[data-ghost="b"]')!;
+    const hand = svg.querySelector<SVGGElement>('[data-hand]')!;
+    const fingers = svg.querySelector<SVGGElement>('[data-fingers]')!;
+    let px = -1e6, py = -1e6, len = 0, ang = 0, grab = 0, raf = 0;
+    const seed = Math.random() * 1000;
+    // A small, cheap noise for the hand-drawn "boil": the ghost strokes jitter a little every few frames.
+    const noise = (i: number, t: number) => Math.sin(i * 12.9898 + t * 78.233 + seed) * 0.5;
+    const d = (sx: number, sy: number, ex: number, ey: number, nx: number, ny: number, sag: number, j: number) => {
+      const c1x = sx + (ex - sx) * .35 + nx * sag + j, c1y = sy + (ey - sy) * .35 + ny * sag - j;
+      const c2x = sx + (ex - sx) * .72 - nx * sag * .6 - j, c2y = sy + (ey - sy) * .72 - ny * sag * .6 + j;
+      return `M${sx.toFixed(1)} ${sy.toFixed(1)}C${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+    };
+    const tick = () => {
+      raf = 0;
+      const r = wrap.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const dx = px - cx, dy = py - cy, dist = Math.hypot(dx, dy);
+      const target = Math.atan2(dy, dx);
+      // The pointer's distance from the pill's edge (the pill as an ellipse of its own size), in the pointer's direction.
+      const gap = dist - Math.hypot(Math.cos(target) * r.width / 2, Math.sin(target) * r.height / 2);
+      const near = gap < R;
+      let da = (near ? target : ang) - ang; da = Math.atan2(Math.sin(da), Math.cos(da)); ang += da * .25;
+      const edge = Math.hypot(Math.cos(ang) * r.width / 2, Math.sin(ang) * r.height / 2);
+      // The wrist stops short of the pointer by about a hand, so the fingertips reach it.
+      const wanted = near ? Math.max(0, Math.min(gap - 26, R - 12)) : 0;
+      len += (wanted - len) * (wanted > len ? .22 : .16);
+      grab += ((near && gap - len < 40 ? 1 : 0) - grab) * .2;
+      if (len < .5 && !near) { svg.removeAttribute('data-on'); return; }
+      svg.setAttribute('data-on', '');
+      const t = performance.now() / 1000, boil = Math.floor(t * 11);
+      const ux = Math.cos(ang), uy = Math.sin(ang), nx = -uy, ny = ux;
+      const sx = ux * edge * .92, sy = uy * edge * .92, ex = sx + ux * len, ey = sy + uy * len;
+      const sag = Math.min(len * .16, 26) * (1 + .25 * Math.sin(t * 2.1));
+      main.setAttribute('d', d(sx, sy, ex, ey, nx, ny, sag, 0));
+      ghostA.setAttribute('d', d(sx, sy, ex, ey, nx, ny, sag * 1.14, 2.4 * noise(1, boil)));
+      ghostB.setAttribute('d', d(sx, sy, ex, ey, nx, ny, sag * .86, 2.4 * noise(2, boil)));
+      const wobble = 2 * noise(3, boil);
+      hand.setAttribute('transform', `translate(${ex.toFixed(1)} ${ey.toFixed(1)}) rotate(${(ang * 180 / Math.PI + wobble).toFixed(1)}) scale(${(Math.min(1, len / 50) * .45 + .85).toFixed(3)})`);
+      fingers.setAttribute('transform', `scale(${(1 - .3 * grab).toFixed(3)} 1)`);
+      raf = requestAnimationFrame(tick);
+    };
+    return (x: number, y: number) => { px = x; py = y; if (!raf) raf = requestAnimationFrame(tick); };
+  }
+</script>
