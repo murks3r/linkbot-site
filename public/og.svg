@@ -11,12 +11,10 @@
   <rect width="1200" height="630" fill="url(#bg)" />
   <rect width="1200" height="630" fill="url(#grid)" />
   <g transform="translate(80,160)">
-    <text x="0" y="0" font-family="Fraunces, Georgia, serif" font-size="86" font-weight="300" fill="#f5f4ef" letter-spacing="-3">Your career should</text>
-    <text x="0" y="100" font-family="Fraunces, Georgia, serif" font-size="86" font-weight="300" fill="#c8c5b8" letter-spacing="-3">not be a public</text>
-    <text x="0" y="200" font-family="Fraunces, Georgia, serif" font-size="86" font-weight="300" fill="#3fc487" letter-spacing="-3">attack surface.</text>
+    <text x="0" y="100" font-family="Fraunces, Georgia, serif" font-size="120" font-weight="300" fill="#f5f4ef" letter-spacing="-3">Linkbot</text>
   </g>
   <g transform="translate(80,560)">
-    <text x="0" y="0" font-family="Inter, sans-serif" font-size="22" fill="#c8c5b8" letter-spacing="3">LINKBOT — PRIVATE ELIGIBILITY</text>
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="22" fill="#c8c5b8" letter-spacing="3">SITE IN PREPARATION</text>
   </g>
   <g transform="translate(1080,540)" stroke="#3fc487" stroke-width="1.2" fill="none">
     <path d="M0 30 L30 0 L60 30 L30 60 Z" />

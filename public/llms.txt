@@ -1,29 +1,16 @@
 # Linkbot
 
-> Linkbot replaces public career exposure with permissioned, private eligibility.
+> Linkbot is building a matching layer that platforms embed in their own pages.
 
 ## What this site is
 
-The official site for Linkbot, a privacy-first matching layer for the labour
-market. Public career profiles have become attack surfaces. Linkbot lets
-employers request access to specific signals — with the person's consent.
+A holding page while the Linkbot site is rebuilt. It has no forms, sets no cookies and loads nothing
+from other sites.
 
 ## Who operates it
 
-Linkbot OÜ, registered in Tallinn, Estonia. Operated by a small team across
-Europe and Africa.
+Linkbot OÜ, Tallinn, Estonia.
 
-## Core pages
+## Pages
 
-- [Home / Overview](https://linkbot.org/): the problem, the position, and
-  the private-beta access request.
-
-## Canonical URL
-
-- https://linkbot.org/
-
-## What this site is not
-
-- It is not a recruiter database.
-- It is not a public profile host.
-- It is not a job board. There are no public listings on this site.
+- [Home](/): this holding page.
