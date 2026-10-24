@@ -18,7 +18,7 @@ const { mode = 'paper' } = Astro.props;
   <div class="air-still"></div>
   <canvas class="air-field" width="32" height="32"></canvas>
 </div>}
-<div class="paper" data-paper aria-hidden="true"></div>
+<div class="dust" data-dust aria-hidden="true"></div>
 
 <style is:global>
   body { position: relative; }
@@ -34,16 +34,13 @@ const { mode = 'paper' } = Astro.props;
       var(--paper); }
   .air-field { opacity: 0; transition: opacity 1.2s ease; }
   .air.is-drawn .air-field { opacity: 1; }
-  /* A8: the paper lies over the whole page, header and footer included (z above them, below the
-     preview's panel), so one material runs through everything and no bar can differ from the page
-     (multiply: the paper's tooth prints a few levels onto letters, unseen). It is fixed over the
-     viewport by default (the content scrolls beneath it, the material stays where paper would);
-     the A7 behaviour (it scrolls with the page) is the variant [data-v-noise='scroll']. A fixed
-     layer, never background-attachment (unreliable on iOS). */
-  .paper { position: fixed; inset: 0; z-index: 40; pointer-events: none; mix-blend-mode: multiply;
-    background: url('/material/paper.webp') 0 0 / var(--paper-size, 1024px) var(--paper-size, 1024px) repeat; }
-  html[data-v-noise='scroll'] .paper { position: absolute; }
-  @media (min-resolution: 1.5dppx) { :root { --paper-size: 512px; } }
+  /* The dust (2026-10-24): a fine, even layer of one-device-pixel grains over the whole page, header, text and buttons
+     included, at a few per cent (--dust-opacity, tuned per scheme in site.css). It is alpha over whatever lies beneath,
+     never a blend, so it darkens the light page and lightens the dark one by a bounded few levels and keeps every text
+     pair above 4.5:1 with room to spare. Static. Drawn at one texture pixel per device pixel (--dust-size by
+     resolution), so a grain is never larger than a pixel. Fixed over the viewport, never background-attachment. */
+  .dust { position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: var(--dust-opacity);
+    background: var(--dust-tile) 0 0 / var(--dust-size) var(--dust-size) repeat; }
   @media (prefers-reduced-motion: reduce) { .air-field { transition: none; } }
-  @media (forced-colors: active) { .air, .paper { display: none; } }
+  @media (forced-colors: active) { .air, .dust { display: none; } }
 </style>

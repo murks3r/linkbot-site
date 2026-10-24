@@ -1,0 +1,68 @@
+---
+/* The one synthetic pair, played: the need's criteria against the offer's, a verdict per row, then the four steps
+   the server requires before anyone is introduced. The values are fixed text (src/front/a-match.ts); the page
+   matches nothing and says so in the caption. With scripts and motion allowed the rows appear one by one once the
+   figure is in view, then the steps; without scripts, or under reduced motion, the complete figure simply stands
+   there. Nothing moves in the layout: a row that is not yet shown keeps its height. */
+import Verdict from './Verdict.astro';
+import { ROWS } from '../../front/a-match';
+import { A } from '../../front/a-copy';
+const L = A.ledger;
+---
+<figure class="ledger" data-ledger aria-labelledby="ledger-cap">
+  <figcaption id="ledger-cap" class="ledger-cap"><span class="ledger-dot" aria-hidden="true"></span>{L.label}</figcaption>
+  <div class="ledger-head">
+    <div class="ledger-side"><span class="fp-eyebrow">{L.need}</span><b>{L.space}</b></div>
+    <div class="ledger-stitch" aria-hidden="true"></div>
+    <div class="ledger-side" data-side="offer"><span class="fp-eyebrow">{L.offer}</span><b>{L.space}</b></div>
+  </div>
+  <div class="ledger-table" role="table" aria-label="The pair, criterion by criterion">
+    <div role="row" class="ledger-row ledger-row-head">
+      <span role="columnheader">{L.columns.criterion}</span><span role="columnheader">{L.columns.need}</span><span role="columnheader">{L.columns.offer}</span><span role="columnheader">{L.columns.verdict}</span>
+    </div>
+    {ROWS.map(row => <div role="row" class="ledger-row" data-row data-verdict={row.verdict} data-shown>
+      <span role="cell" class="ledger-crit"><b>{row.label}</b><small data-importance={row.importance}>{L.importance[row.importance]}</small></span>
+      <span role="cell" class="ledger-val" data-label={L.need}>{row.need}</span>
+      <span role="cell" class="ledger-val" data-label={L.offer}>{row.offer}</span>
+      <span role="cell" class="ledger-verdict"><span class="ledger-word"><Verdict kind={row.verdict} />{L.verdicts[row.verdict]}</span><small>{row.why}</small></span>
+    </div>)}
+  </div>
+  <p class="ledger-state" data-step data-shown>{L.state}</p>
+  <ol class="ledger-stages" aria-label="Before anyone is introduced">
+    {L.stages.map((stage, index) => <li data-step data-shown><span class="ledger-n" aria-hidden="true">{index + 1}</span><div><b>{stage.name}</b><p>{stage.text}</p></div></li>)}
+  </ol>
+  <p class="ledger-notice" data-step data-shown>{L.notice}</p>
+  <p class="ledger-legend">{L.legend}</p>
+  <p class="ledger-controls"><button type="button" class="btn btn-secondary" data-replay hidden>{L.replay}</button></p>
+  <script is:inline>
+    /* Before the first paint: with motion allowed the rows start hidden, so the page never shows the complete figure
+       and then takes it back. The module below reveals them; without it (or under reduced motion) nothing is hidden. */
+    (function () { var f = document.currentScript.closest('[data-ledger]'); if (f && matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window) { f.setAttribute('data-armed', ''); f.querySelectorAll('[data-row], [data-step]').forEach(function (s) { s.removeAttribute('data-shown'); }); } })();
+  </script>
+</figure>
+
+<script>
+  for (const ledger of document.querySelectorAll<HTMLElement>('[data-ledger][data-armed]')) {
+    const rows = [...ledger.querySelectorAll<HTMLElement>('[data-row]')];
+    const steps = [...ledger.querySelectorAll<HTMLElement>('[data-step]')];
+    const replay = ledger.querySelector<HTMLButtonElement>('[data-replay]')!;
+    let timers: number[] = [];
+    const play = () => {
+      for (const id of timers) clearTimeout(id);
+      timers = [];
+      for (const el of [...rows, ...steps]) el.removeAttribute('data-shown');
+      ledger.removeAttribute('data-played');
+      replay.hidden = true;
+      const show = (el: HTMLElement, at: number, last = false) => timers.push(window.setTimeout(() => {
+        el.setAttribute('data-shown', '');
+        if (last) { ledger.setAttribute('data-played', ''); replay.hidden = false; }
+      }, at));
+      rows.forEach((row, i) => show(row, 240 + i * 210));
+      const after = 240 + rows.length * 210 + 380;
+      steps.forEach((step, i) => show(step, after + i * 720, i === steps.length - 1));
+    };
+    const io = new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) { io.disconnect(); play(); } }, { threshold: .05 });
+    io.observe(ledger);
+    replay.addEventListener('click', play);
+  }
+</script>

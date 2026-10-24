@@ -13,7 +13,7 @@ const { lang, t, fallback } = Astro.props;
 const h = t.home;
 const to = (path: string) => pathFor(lang, path);
 ---
-<Base lang={lang} t={t} fallback={fallback} title={h.title} description={h.description} path="/" sky>
+<Base lang={lang} t={t} fallback={fallback} title={h.title} description={h.description} path="/">
   <!-- 1. The opening: the claim in two lines over the living light, the path from a need to an
        introduction in six tiles beneath it. -->
   <section class="hero" aria-labelledby="hero-title">
@@ -67,15 +67,12 @@ const to = (path: string) => pathFor(lang, path);
   </section>
 </Base>
 
-<script>import '../scripts/atmosphere';</script>
 
 <style>
   /* 1. The hero: the claim, then the lede, then the path. A pool of light behind the words lifts
      them off the colour around them (never wider than the page, so nothing overflows). */
   .hero { position: relative; isolation: isolate; min-height: calc(100svh - var(--header)); display: grid; align-content: center; padding: clamp(40px, 7vh, 88px) 0 clamp(32px, 6vh, 64px); }
   .hero-inner { position: relative; display: grid; justify-items: center; text-align: center; gap: clamp(18px, 2.6vh, 28px); }
-  .hero-inner::before { content: ''; position: absolute; left: 50%; top: 40%; width: min(72rem, 100%); height: 110%; transform: translate(-50%, -50%); z-index: -1; pointer-events: none;
-    background: radial-gradient(closest-side, rgb(255 253 249 / .85), rgb(255 253 249 / .45) 45%, transparent 100%); }
   .hero h1 { max-width: 15ch; font-size: clamp(2.5rem, 1.3rem + 4.2vw, 5rem); font-weight: 560; letter-spacing: -.036em; line-height: 1; }
   .h1-line { display: block; }
   .hero-lede { max-width: 40em; color: var(--ink); }

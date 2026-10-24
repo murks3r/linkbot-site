@@ -1,29 +1,5 @@
-/* The front page's ground (the three front-page previews of 2026-10-24, GEO-188): its own tokens over the site's,
-   in light and dark, scoped to the home (body[data-front]) so every other page keeps A8's look until a direction is
-   picked. The colours start from the founder's canvas (#F4F4F1, #2346D0, #FF7A1A) and are cut to pass 4.5:1: the blue
-   reads as given (6.7:1 on the paper), the orange reads as text only in its darker cut (#a84a08, 5.2:1) and stays
-   full-strength for marks. Dark follows the system through light-dark(); html[data-theme] (the preview's ?theme=
-   switch) overrides it. A browser without light-dark() keeps the site's light tokens. */
-html:has(body[data-front]) {
-  color-scheme: light dark;
-  --paper: light-dark(#f4f4f1, #0f1114); --surface: light-dark(#ffffff, #17191d);
-  --ink: light-dark(#15171a, #ecece8); --ink-2: light-dark(#4a4f55, #b2b5ba); --ink-3: light-dark(#5c6166, #a0a4aa);
-  --line: light-dark(#e1e2dd, #2a2d33); --line-strong: light-dark(#cfd1cb, #363a41); --line-ink: light-dark(#8a8e93, #70757c);
-  --sand: light-dark(#ecece8, #1b1e22); --sand-2: light-dark(#e4e4df, #22262b); --mist: light-dark(#e9e9e4, #1b1e22);
-  /* The site's "green" tokens are its ink-coloured controls (focus, current page, the skip link); on the front the
-     ink is neutral, so they follow it. */
-  --green: light-dark(#15171a, #ecece8); --green-hover: light-dark(#2a2d33, #ffffff); --green-press: light-dark(#000000, #d7d7d2);
-  --green-wash: light-dark(#e9e9e4, #22262b); --green-line: light-dark(#b9bbb6, #4a4f55); --green-rule: light-dark(#4a4f55, #b2b5ba);
-  --on-green: light-dark(#f4f4f1, #0f1114); --on-green-2: light-dark(#c9cbc6, #4a4f55);
-  --blue: light-dark(#2346d0, #8aa2ff); --orange: light-dark(#ff7a1a, #ff9a52); --orange-ink: light-dark(#a84a08, #ff9a52);
-  --shadow-float: 0 1px 2px rgb(0 0 0 / .06), 0 18px 48px rgb(0 0 0 / .12);
-  --shadow-field: 0 1px 2px rgb(0 0 0 / .04), 0 24px 60px -28px rgb(0 0 0 / .28);
-}
-html[data-theme='light']:has(body[data-front]) { color-scheme: light; }
-html[data-theme='dark']:has(body[data-front]) { color-scheme: dark; }
-/* The paper texture prints with multiply: over the dark ground it would only dirty it. */
-@media (prefers-color-scheme: dark) { html:has(body[data-front]):not([data-theme='light']) .paper { display: none; } }
-html[data-theme='dark']:has(body[data-front]) .paper { display: none; }
+/* The front page's shared classes (the previews of 2026-10-24). The tokens, light and dark, live in src/styles/site.css
+   since the redesign pass made them the whole site's. */
 
 /* ── Shared pieces of the front pages ─────────────────────────────────────────────────────────────────── */
 /* The one filled action: ink on paper, paper on ink in the dark. */

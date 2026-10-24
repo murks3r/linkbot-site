@@ -1,0 +1,44 @@
+---
+/* One question of the pack, as the widget's form asks it (Connect ADR 0004): the label and help, the suggested
+   importance, the control the pack names, and the special answers it allows. Nothing is pre-selected. The inputs are
+   real inputs, so the keyboard and assistive technology work; the page's script (src/front/ask.ts) keeps special and
+   ordinary answers exclusive and shows what a confirm would store. */
+import { WORDS, type Criterion } from '../../front/b-pack';
+interface Props { c: Criterion; n: number }
+const { c, n } = Astro.props;
+const imp = c.importance === 'must' ? WORDS.must : WORDS.niceToHave;
+const hasOther = c.specials.includes('other');
+---
+<li class="ask-q" data-q data-label={c.label} data-importance={imp} data-unit={c.unit} data-phosphates-only={c.phosphatesOnly ? '' : undefined} hidden={c.phosphatesOnly ? true : undefined}>
+  <div class="ask-q-head">
+    <span class="ask-n" aria-hidden="true">{n}</span>
+    <div class="ask-q-title"><b id={`q-${c.key}`}>{c.label}</b>{c.help && <small>{c.help}</small>}</div>
+    <span class="ask-imp">{imp} <small>{WORDS.suggested}</small></span>
+  </div>
+  {c.control === 'single_choice' && <div class="ask-opts" role="group" aria-labelledby={`q-${c.key}`}>
+    {c.options!.map(o => <label class="ask-opt"><input type="radio" name={c.key} value={o} /><span>{o}</span></label>)}
+  </div>}
+  {c.control === 'multiple_choice' && <div class="ask-opts" role="group" aria-labelledby={`q-${c.key}`}>
+    {c.options!.map(o => <label class="ask-opt"><input type="checkbox" name={c.key} value={o} /><span>{o}</span></label>)}
+  </div>}
+  {c.control === 'range' && <div class="ask-range" role="group" aria-labelledby={`q-${c.key}`}>
+    <label class="ask-num"><span>{WORDS.min} ({c.unit})</span><input type="text" inputmode="decimal" name={`${c.key}-min`} data-num autocomplete="off" /></label>
+    <label class="ask-num"><span>{WORDS.max} ({c.unit})</span><input type="text" inputmode="decimal" name={`${c.key}-max`} data-num autocomplete="off" /></label>
+    {c.bases && <div class="ask-opts ask-bases" role="group" aria-label="Basis">{c.bases.map(b => <label class="ask-opt"><input type="radio" name={`${c.key}-basis`} value={b} data-basis /><span>{b}</span></label>)}</div>}
+    <p class="ask-err" data-err role="alert" hidden></p>
+  </div>}
+  {c.control === 'searchable_list' && <label class="ask-text"><span class="sr">{c.label}</span><input type="text" name={c.key} data-text autocomplete="off" placeholder="Augusta, or IT AUG" /></label>}
+  {c.control === 'date_window' && <div class="ask-opts" role="group" aria-labelledby={`q-${c.key}`}>
+    {c.quick!.map(q => <label class="ask-opt"><input type="radio" name={c.key} value={q} /><span>{q}</span></label>)}
+  </div>}
+  {c.control === 'yes_no' && <div class="ask-opts" role="group" aria-labelledby={`q-${c.key}`}>
+    <label class="ask-opt"><input type="radio" name={c.key} value={WORDS.yes} /><span>{WORDS.yes}</span></label>
+    <label class="ask-opt"><input type="radio" name={c.key} value={WORDS.no} /><span>{WORDS.no}</span></label>
+    <label class="ask-opt"><input type="radio" name={c.key} value={WORDS.either} /><span>{WORDS.either}</span></label>
+  </div>}
+  <div class="ask-specials"><span class="ask-or">{WORDS.orAnswer}</span>{c.specials.map(s => <label class="ask-opt" data-kind="special"><input type="radio" name={`${c.key}-special`} value={`__${s}`} data-special={s} /><span>{WORDS[s]}</span></label>)}</div>
+  {hasOther && <div class="ask-other" data-other hidden>
+    <label class="ask-text"><span>{WORDS.otherLabel}</span><input type="text" name={`${c.key}-other`} data-text autocomplete="off" maxlength="120" /></label>
+    <p class="ask-other-note">{WORDS.otherNote}</p>
+  </div>}
+</li>

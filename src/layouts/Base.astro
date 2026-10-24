@@ -1,13 +1,10 @@
 ---
-import '@fontsource-variable/archivo/wdth.css';
-import '@fontsource-variable/figtree/index.css';
+import '../styles/fonts.css';
 import '../styles/palette.css';
 import '../styles/site.css';
 /* Concept A8's exploration axes (palette, type): inert without the preview's data-v-* attributes. */
 import '../styles/brand-a8.css';
 import '../styles/type-a8.css';
-import displayUrl from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
-import textUrl from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 import SEO from '../components/SEO.astro';
 import Masthead from '../components/Masthead.astro';
 import Footer from '../components/Footer.astro';
@@ -31,14 +28,15 @@ const contentLang = fallback ? DEFAULT_LANG : lang;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <link rel="preload" href={displayUrl} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={textUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/lb-display-sans/lb-display-sans-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/atkinson-hyperlegible-next/atkinson-hyperlegible-next-vf.woff2" as="font" type="font/woff2" crossorigin />
     <SEO lang={lang} t={t} title={title} description={description} path={path} crumbs={crumbs} />
-    {front ? <><meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)" /><meta name="theme-color" content="#0f1114" media="(prefers-color-scheme: dark)" /><meta name="color-scheme" content="light dark" /></> : <><meta name="theme-color" content="#fbf8f1" /><meta name="color-scheme" content="light" /></>}
+    <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)" /><meta name="theme-color" content="#0f1114" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Scripts mark the page so enhancements (the masthead's blur, the table of contents) can take
          over from the complete, static version every page ships with. -->
-    <script is:inline>document.documentElement.classList.add('js')</script>
+    <script is:inline>document.documentElement.classList.add('js');/* Preview review: ?theme=dark|light and ?logo=quote|wordmark override the scheme and the brand form for this page (src/styles/site.css, components/Brand.astro). */(function(){var q=new URLSearchParams(location.search),t=q.get('theme'),l=q.get('logo');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);if(l==='quote'||l==='wordmark')document.documentElement.setAttribute('data-logo',l);})();</script>
     {variants && <script is:inline define:vars={{ axes: AXES.map(a => [a.id, a.values.map(v => v[0])]) }}>
       /* Preview only: the chosen variants, from the address, before the first paint (no flicker). */
       const q = new URLSearchParams(location.search);

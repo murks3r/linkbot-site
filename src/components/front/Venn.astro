@@ -1,0 +1,157 @@
+---
+/* The Venn: the site's signature object (brief of 2026-10-24), in two dimensions at the highest craft the page can
+   carry: exact geometry, soft radial shading on each disc, a lens that forms where they overlap and brightens with
+   each criterion that meets, and motion with real easing that tells the product story: two intents approach (study 1)
+   or two facts meet (study 2), a verdict per criterion settles into the lens as a mark, then rest. Inline SVG, about
+   four kilobytes, no library, no WebGL and so no fallback image: under reduced motion, without scripts, or before the
+   script runs, the final frame stands. The marks are the four verdicts (solid meets, crossed conflicts, dashed
+   unknown); the HTML list beside the figure names them, so the picture never carries text and stays crisp at every
+   size. Nothing in the layout moves: the figure's box is fixed by its viewBox. The values are the synthetic pair of
+   src/front/a-match.ts; the caption says so. */
+import { ROWS } from '../../front/a-match';
+interface Props { study?: 1 | 2; label: string; need: string; offer: string; caption: string; replay: string }
+const { study = 1, label, need, offer, caption, replay } = Astro.props;
+const rows = ROWS.slice(0, 9);
+/* The geometry: discs of r 150 whose centres end 160 apart; the lens is the intersection; nine marks sit in a 3 × 3 grid
+   at its centre. Study 1 starts the discs 400 apart. */
+const R = 150, CX = 280, CY = 196, D = 160, L = CX - D / 2, Rr = CX + D / 2;
+const grid = (i: number) => ({ x: CX + ((i % 3) - 1) * 30, y: CY + (Math.floor(i / 3) - 1) * 30 });
+---
+<figure class="venn" data-venn data-study={study} aria-labelledby="venn-cap">
+  <svg class="venn-svg" viewBox="0 0 560 392" width="560" height="392" role="img" aria-label={label}>
+    <defs>
+      <radialGradient id="venn-need" cx="38%" cy="34%" r="80%"><stop offset="0" stop-color="var(--blue)" stop-opacity=".2" /><stop offset=".55" stop-color="var(--blue)" stop-opacity=".09" /><stop offset="1" stop-color="var(--blue)" stop-opacity=".16" /></radialGradient>
+      <radialGradient id="venn-offer" cx="62%" cy="34%" r="80%"><stop offset="0" stop-color="var(--ink)" stop-opacity=".12" /><stop offset=".55" stop-color="var(--ink)" stop-opacity=".05" /><stop offset="1" stop-color="var(--ink)" stop-opacity=".1" /></radialGradient>
+      <radialGradient id="venn-lens" cx="50%" cy="42%" r="70%"><stop offset="0" stop-color="var(--blue)" stop-opacity=".34" /><stop offset="1" stop-color="var(--blue)" stop-opacity=".12" /></radialGradient>
+      <clipPath id="venn-clip-need"><circle data-clip-need cx={L} cy={CY} r={R} /></clipPath>
+    </defs>
+    <g data-disc="need"><circle cx={L} cy={CY} r={R} fill="url(#venn-need)" stroke="var(--blue)" stroke-opacity=".55" stroke-width="1" /></g>
+    <g data-disc="offer"><circle cx={Rr} cy={CY} r={R} fill="url(#venn-offer)" stroke="var(--ink)" stroke-opacity=".45" stroke-width="1" /></g>
+    <g clip-path="url(#venn-clip-need)"><circle data-lens cx={Rr} cy={CY} r={R} fill="url(#venn-lens)" style="opacity:1" /></g>
+    <g data-marks fill="none" stroke-linecap="round">
+      {rows.map((row, i) => { const p = grid(i); return <g data-mark data-verdict={row.verdict} transform={`translate(${p.x} ${p.y})`} style="opacity:1">
+        {row.verdict === 'meets' && <rect x="-7" y="-7" width="14" height="14" fill="var(--blue)" />}
+        {row.verdict === 'partly' && <><rect x="-7" y="-7" width="14" height="14" stroke="var(--ink)" stroke-width="1.5" /><path d="M7 -7V7H-7Z" fill="var(--ink)" /></>}
+        {row.verdict === 'conflicts' && <><rect x="-7" y="-7" width="14" height="14" stroke="var(--orange)" stroke-width="1.5" /><path d="M-3.5 -3.5l7 7M3.5 -3.5l-7 7" stroke="var(--orange)" stroke-width="1.6" /></>}
+        {row.verdict === 'unknown' && <rect x="-7" y="-7" width="14" height="14" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="2.6 1.9" />}
+      </g>; })}
+    </g>
+    <g class="venn-labels" font-family="var(--text)" font-size="13" font-weight="700" fill="var(--ink-2)" letter-spacing=".06em">
+      <text data-label="need" x={L - R + 4} y={CY + R + 26}>{need.toUpperCase()}</text>
+      <text data-label="offer" x={Rr + R - 4} y={CY + R + 26} text-anchor="end">{offer.toUpperCase()}</text>
+    </g>
+  </svg>
+  <ol class="venn-list" aria-label={label}>
+    {rows.map((row, i) => <li data-list-row data-verdict={row.verdict} style={`--i:${i}`}><span class="venn-sq" aria-hidden="true"></span><span>{row.label}</span><small>{row.verdict}</small></li>)}
+  </ol>
+  <figcaption id="venn-cap" class="venn-cap">{caption}</figcaption>
+  <p class="venn-controls"><button type="button" class="link venn-replay" data-venn-replay hidden>{replay}</button></p>
+  <script is:inline>
+    /* Before the first paint: with motion allowed the figure starts at frame zero, so the page never shows the final
+       frame and then takes it back. The module below plays it; without it nothing is hidden. */
+    (function () { var f = document.currentScript.closest('[data-venn]'); if (f && matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window) f.setAttribute('data-armed', ''); })();
+  </script>
+</figure>
+
+<style>
+  .venn { display: grid; gap: 14px; justify-items: start; min-width: 0; }
+  .venn-svg { display: block; width: 100%; height: auto; max-width: 34rem; overflow: visible; }
+  .venn-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; width: 100%; max-width: 34rem; font-size: var(--size-small); line-height: 1.35; }
+  .venn-list li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 2px 8px; align-items: center; color: var(--ink); }
+  .venn-list small { grid-column: 2; font-size: var(--size-caption); color: var(--ink-3); text-transform: capitalize; }
+  .venn-list li[data-verdict='conflicts'] small { color: var(--orange-ink); }
+  .venn-sq { width: 12px; height: 12px; border: 1.5px solid var(--ink); }
+  .venn-list li[data-verdict='meets'] .venn-sq { background: var(--blue); border-color: var(--blue); }
+  .venn-list li[data-verdict='conflicts'] .venn-sq { border-color: var(--orange); background: linear-gradient(45deg, transparent 44%, var(--orange) 44% 56%, transparent 56%), linear-gradient(-45deg, transparent 44%, var(--orange) 44% 56%, transparent 56%); }
+  .venn-list li[data-verdict='unknown'] .venn-sq { border-style: dashed; border-color: var(--ink-3); }
+  .venn-cap { font-size: var(--size-caption); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  .venn-controls { min-height: var(--target); }
+  .venn-replay { border: 0; background: none; padding: 0; font-size: var(--size-small); }
+  /* Armed and before the play: frame zero (the discs apart or the lens empty), rows of the list dimmed. */
+  @media (prefers-reduced-motion: no-preference) {
+    .venn[data-armed]:not([data-played]) .venn-list li:not([data-shown]) { opacity: .35; }
+    .venn-list li { transition: opacity .3s var(--ease); }
+  }
+  @media (max-width: 36rem) { .venn-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+
+<script>
+  /* Two motion studies, one timeline each, drawn with requestAnimationFrame and real easing; the geometry is the
+     component's (r 150, centres 160 apart at rest). Study 1, "approach": the discs start 400 apart, come together over
+     1.4 s (ease-out quint), the lens forms as they meet; then the nine marks settle into the lens one by one (160 ms
+     apart, ease-out back), the lens brightens with each meets; rest. Study 2, "meeting": the discs rest overlapped from
+     the start with an empty lens; per criterion one small square leaves the need's far side and one the offer's, they
+     travel to the lens (420 ms, ease-in-out cubic) and merge into the verdict's mark, which settles into the grid; the
+     lens brightens with each meets and dims a touch on conflicts; rest. A play again button appears when a study has
+     rested. The URL's ?venn=2 picks study 2 for the review. */
+  const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
+  const easeInOutCubic = (t: number) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const easeOutBack = (t: number) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
+  const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+  const R = 150, CX = 280, CY = 196, D = 160, L = CX - D / 2, Rr = CX + D / 2;
+
+  for (const venn of document.querySelectorAll<HTMLElement>('[data-venn][data-armed]')) {
+    const asked = new URLSearchParams(location.search).get('venn');
+    const study = asked === '2' ? 2 : asked === '1' ? 1 : Number(venn.dataset.study) === 2 ? 2 : 1;
+    venn.dataset.study = String(study);
+    const needDisc = venn.querySelector<SVGGElement>('[data-disc="need"]')!, offerDisc = venn.querySelector<SVGGElement>('[data-disc="offer"]')!;
+    const clip = venn.querySelector<SVGCircleElement>('[data-clip-need]')!, lens = venn.querySelector<SVGCircleElement>('[data-lens]')!;
+    const marks = [...venn.querySelectorAll<SVGGElement>('[data-mark]')], rows = [...venn.querySelectorAll<HTMLElement>('[data-list-row]')];
+    const labelNeed = venn.querySelector<SVGTextElement>('[data-label="need"]')!, labelOffer = venn.querySelector<SVGTextElement>('[data-label="offer"]')!;
+    const replay = venn.querySelector<HTMLButtonElement>('[data-venn-replay]')!;
+    const rest = marks.map(m => { const t = m.getAttribute('transform')!.match(/translate\(([-\d.]+) ([-\d.]+)\)/)!; return { x: Number(t[1]), y: Number(t[2]) }; });
+    const meets = marks.map(m => m.dataset.verdict === 'meets');
+    let raf = 0, start = 0;
+
+    const place = (gap: number) => { // the discs' centres, gap apart
+      const nx = CX - gap / 2, ox = CX + gap / 2;
+      needDisc.setAttribute('transform', `translate(${(nx - L).toFixed(2)} 0)`); offerDisc.setAttribute('transform', `translate(${(ox - Rr).toFixed(2)} 0)`);
+      clip.setAttribute('cx', String(nx)); lens.setAttribute('cx', String(ox));
+      labelNeed.setAttribute('x', String(nx - R + 4)); labelOffer.setAttribute('x', String(ox + R - 4));
+    };
+    const glow = (v: number) => { lens.style.opacity = String(.25 + .75 * clamp01(v)); };
+    const setMark = (i: number, x: number, y: number, scale: number, opacity: number) => { marks[i].setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(3)})`); marks[i].style.opacity = String(clamp01(opacity)); };
+    const show = (i: number, on: boolean) => rows[i].toggleAttribute('data-shown', on);
+
+    const frame1 = (ms: number) => { // study 1: approach, then the marks settle
+      const a = clamp01((ms - 300) / 1400), g = 400 - (400 - D) * easeOutQuint(a);
+      place(g);
+      let lit = 0, done = true;
+      marks.forEach((_, i) => {
+        const t0 = 1900 + i * 160, p = clamp01((ms - t0) / 520);
+        if (p < 1) done = false;
+        const s = p === 0 ? 0 : .6 + .4 * easeOutBack(p);
+        setMark(i, rest[i].x, rest[i].y + (1 - easeOutQuint(p)) * 10, s, p);
+        show(i, p > .3); if (meets[i]) lit += p;
+      });
+      glow(a < 1 ? 0 : lit / meets.filter(Boolean).length);
+      return done && a >= 1;
+    };
+    const frame2 = (ms: number) => { // study 2: the facts meet in the lens, one criterion at a time
+      place(D);
+      let lit = 0, done = true;
+      marks.forEach((_, i) => {
+        const t0 = 400 + i * 520, p = clamp01((ms - t0) / 420), q = clamp01((ms - t0 - 420) / 220);
+        if (q < 1) done = false;
+        const e = easeInOutCubic(p);
+        // before they meet: two small squares from the far sides (drawn as the mark itself travelling from the left, then settling)
+        const fromX = p < 1 ? (L - R + 22) + (rest[i].x - (L - R + 22)) * e : rest[i].x;
+        const y = p < 1 ? CY - 60 + (rest[i].y - (CY - 60)) * e : rest[i].y;
+        setMark(i, fromX, y, p < 1 ? .55 + .45 * e : .9 + .1 * easeOutBack(q), p === 0 ? 0 : 1);
+        show(i, p >= 1);
+        if (p >= 1) lit += meets[i] ? 1 : marks[i].dataset.verdict === 'conflicts' ? -.15 : 0;
+      });
+      glow(lit / meets.filter(Boolean).length);
+      return done;
+    };
+    const frame = study === 2 ? frame2 : frame1;
+
+    const tick = (now: number) => { raf = 0; const done = frame(now - start); if (!done) raf = requestAnimationFrame(tick); else { venn.setAttribute('data-played', ''); replay.hidden = false; } };
+    const play = () => { if (raf) cancelAnimationFrame(raf); venn.removeAttribute('data-played'); replay.hidden = true; rows.forEach(r => r.removeAttribute('data-shown')); start = performance.now(); frame(0); raf = requestAnimationFrame(tick); };
+    frame(0);
+    const io = new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) { io.disconnect(); play(); } }, { threshold: .3 });
+    io.observe(venn);
+    replay.addEventListener('click', play);
+    document.addEventListener('visibilitychange', () => { if (document.hidden && raf) { cancelAnimationFrame(raf); raf = 0; } else if (!document.hidden && !venn.hasAttribute('data-played') && start) { start = performance.now(); raf = requestAnimationFrame(tick); } });
+  }
+</script>

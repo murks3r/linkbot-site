@@ -59,3 +59,12 @@ The words themselves live in `src/i18n/en.ts` (the source) and the other catalog
 - **MCP (D-V2, GEO-190, option A):** no page mentions an MCP endpoint until it runs on staging; then the page describes exactly the "prepare only, a person decides" model.
 - **Network (D-V1, GEO-189):** nothing on the site about matching across spaces until it runs on staging; where the copy touches the subject it says that nothing leaves a space (`how.space`).
 - **Mail (D-V3, GEO-191):** no provider is named anywhere; where a page describes notifications it says Linkbot sends them, nothing more (`how.describe` watch, `how.after`).
+
+## Redesign pass (branch `vision/home-redesign`, 2026-10-24)
+
+The home composes B (hero), A (the verdict sequence) and C's teaser; their rows stand above. The two sentences the composition adds:
+
+| Where | Claim | Backed by | Checked | Unfinished |
+| -- | -- | -- | -- | -- |
+| home.ledger.lede | Matching compares the stored criteria one by one; a verdict per criterion, never a score; nobody is introduced until a named operator has approved and both sides have said yes; the pair below is synthetic | C matching paragraph; C invariant 4 (as row a.hero.lede) | 2026-10-24 | |
+| home.sees.p, home.venn.caption | A pack gives every criterion a stage; a stage is the furthest a value travels (board, match, introduction, operator); the Venn shows nine criteria of one fixed synthetic pair and nothing is matched on the page | C `DisclosureStage` (as row c.hero.lede); R: `src/front/a-match.ts` | 2026-10-24 | |

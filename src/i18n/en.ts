@@ -19,7 +19,7 @@ export const en = {
     menu: 'Menu',
     toc: 'On this page',
     language: 'Language',
-    nav: { how: 'How it works', platforms: 'For platforms', verticals: 'For verticals' },
+    nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals' },
     footer: {
       product: 'Linkbot',
       legal: 'Legal',
