@@ -85,7 +85,8 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
           ids: [...document.querySelectorAll('[id]')].map(e => e.id),
           anchors: [...document.querySelectorAll('a[href^="#"]')].map(a => a.getAttribute('href').slice(1)).filter(Boolean),
           links: [...document.querySelectorAll('a[href]')].map(a => a.getAttribute('href')),
-          text: document.querySelector('main').innerText,
+          // The page's prose without its code: an identifier such as channel.verified is not a claim.
+          text: (() => { const main = document.querySelector('main').cloneNode(true); main.querySelectorAll('code').forEach(c => c.remove()); return main.innerText; })(),
         }));
         const own = meta.lang === lang;
         check(own || meta.lang === 'en', `${route}: lang ${meta.lang}`);
