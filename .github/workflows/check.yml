@@ -1,13 +1,19 @@
-# The fast check of BUILD MODE (CLAUDE.md, rule 2): types and the unit tests on every pull request
-# and on the integration branch. The browser acceptance (`npm run test:browser`) is not run here:
-# it needs a checkout of the app (LINKBOT_APP_DIR, for its accessibility audit) and runs at
-# milestones, locally, until it stands on its own.
+# CI only where it is actually necessary (CLAUDE.md, BUILD MODE rule 2): the fast check runs on
+# pushes and pull requests to `main`, that is on the final head before a milestone merge, and by
+# hand (workflow_dispatch). Pull requests into `build/vision` are merged on local evidence (the
+# commands and their results pasted into the PR), so they trigger nothing here. Docs-only changes
+# skip the run. The browser acceptance (`npm run test:browser`) runs at milestones, locally: it
+# needs a checkout of the app for its accessibility audit.
 name: check
 
 on:
-  pull_request:
   push:
-    branches: [build/vision, main]
+    branches: [main]
+    paths-ignore: ['**.md', 'docs/**']
+  pull_request:
+    branches: [main]
+    paths-ignore: ['**.md', 'docs/**']
+  workflow_dispatch:
 
 permissions:
   contents: read
