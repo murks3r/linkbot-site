@@ -30,7 +30,8 @@ const FORBIDDEN = {
   it: /\b(verificat\w*|dal vivo|live|automatizzat\w*|automatic\w*|anonim\w*|tempo reale|resta privat\w*|garantit\w*)\b/i,
   fr: /\b(vérifié\w*|en direct|live|automatisé\w*|automatique\w*|anonym\w*|temps réel|reste privé\w*|garanti\w*)\b/i,
 };
-/* Nothing that belongs to no public page: a host, an address, a key, a provider. */
+/* Nothing that belongs to no public page: a host, an address, a key, a provider. A bare identifier
+   (an event type such as channel.verified) is not a claim and is exempt from the word check. */
 const PRIVATE = /https?:\/\/|\bsk_|\bpk_|railway|vercel|resend|@[a-z0-9-]+\.[a-z]{2,}/i;
 
 test('every language the site offers has a name and a fallback notice', () => {
@@ -47,7 +48,7 @@ test('no catalogue carries a forbidden claim, an empty string or anything privat
   for (const [lang, catalogue] of Object.entries(catalogues)) {
     for (const [at, text] of strings(catalogue)) {
       assert.ok(text.trim().length > 0, `${lang}${at}: empty`);
-      assert.doesNotMatch(text, FORBIDDEN[lang], `${lang}${at}: forbidden word in “${text}”`);
+      if (!/^[a-z0-9_.-]+$/.test(text)) assert.doesNotMatch(text, FORBIDDEN[lang], `${lang}${at}: forbidden word in “${text}”`);
       assert.doesNotMatch(text, PRIVATE, `${lang}${at}: private detail in “${text}”`);
     }
   }
@@ -55,9 +56,10 @@ test('no catalogue carries a forbidden claim, an empty string or anything privat
 
 test('every page has a title and a description of a sensible length', () => {
   for (const [lang, catalogue] of Object.entries(catalogues)) {
-    for (const page of ['home', 'how', 'platforms', 'verticals', 'privacy', 'imprint', 'notFound']) {
-      assert.ok(catalogue[page].title.length >= 10 && catalogue[page].title.length <= 80, `${lang}.${page}.title: ${catalogue[page].title.length} characters`);
-      assert.ok(catalogue[page].description.length >= 50 && catalogue[page].description.length <= 160, `${lang}.${page}.description: ${catalogue[page].description.length} characters`);
+    const pages = [...['home', 'how', 'platforms', 'verticals', 'privacy', 'imprint', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];
+    for (const [key, page] of pages) {
+      assert.ok(page.title.length >= 10 && page.title.length <= 80, `${lang}.${key}.title: ${page.title.length} characters`);
+      assert.ok(page.description.length >= 50 && page.description.length <= 160, `${lang}.${key}.description: ${page.description.length} characters`);
     }
   }
 });

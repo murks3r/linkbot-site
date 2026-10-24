@@ -1,12 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Toc from '../../components/Toc.astro';
-import { langPaths, resolve, type Lang } from '../../i18n';
+import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
 export const getStaticPaths = () => langPaths();
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const { t, fallback } = resolve(lang);
 const p = t.platforms;
+const PAGES = ['embed', 'sdk', 'console', 'wordpress', 'nextjs', 'astro'] as const;
 const sections = [['embed', p.embed], ['keys', p.keys], ['console', p.console], ['server', p.server], ['recipes', p.recipes]] as const;
 ---
 <Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path="/platforms" crumbs={[[t.site.nav.platforms, '/platforms']]}>
@@ -21,6 +22,10 @@ const sections = [['embed', p.embed], ['keys', p.keys], ['console', p.console], 
   <div class="wrap doc">
     <Toc items={p.toc} label={t.site.toc} />
     <div class="doc-body">
+      <section id="pages" aria-labelledby="pages-title">
+        <h2 id="pages-title">{t.integrations.hub}</h2>
+        <ul class="pages">{PAGES.map(key => <li><a href={pathFor(lang, `/platforms/${key}`)}>{t.integrations.pages[key].nav}</a><p>{t.integrations.pages[key].description}</p></li>)}</ul>
+      </section>
       {sections.map(([id, s]) => <section id={id} aria-labelledby={`${id}-title`}><h2 id={`${id}-title`}>{s.title}</h2>{s.paras.map(para => <p>{para}</p>)}</section>)}
       <section id="state" aria-labelledby="state-title">
         <h2 id="state-title">{p.state.title}</h2>
@@ -29,3 +34,11 @@ const sections = [['embed', p.embed], ['keys', p.keys], ['console', p.console], 
     </div>
   </div>
 </Base>
+
+<style>
+  .pages { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .pages li { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .pages a { display: inline-flex; align-items: center; min-height: var(--target); min-width: var(--target); justify-self: start; font-weight: 650; color: var(--ink); text-decoration: underline; text-decoration-color: var(--green-line); }
+  .pages a:hover { text-decoration-color: currentColor; }
+  .pages p { font-size: var(--size-small); color: var(--ink-2); }
+</style>

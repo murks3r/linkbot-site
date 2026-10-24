@@ -1,0 +1,48 @@
+---
+/* One integration page (S2): the embed, the SDK, the console, WordPress, Next.js or Astro, each
+   rendered from its catalogue entry: a hero, the table of contents, sections of paragraphs, lists
+   and tables, and where it stands. Nothing here comes from anywhere but the Connect lane's docs. */
+import Base from '../layouts/Base.astro';
+import Toc from './Toc.astro';
+import type { Catalogue, Lang } from '../i18n';
+type PageKey = keyof Catalogue['integrations']['pages'];
+interface Props { lang: Lang; t: Catalogue; fallback: boolean; page: PageKey }
+const { lang, t, fallback, page } = Astro.props;
+const p = t.integrations.pages[page];
+const path = `/platforms/${page}`;
+const toc: [string, string][] = [...p.sections.map(s => [s.id, s.title] as [string, string]), ['state', t.integrations.state]];
+---
+<Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path={path} crumbs={[[t.site.nav.platforms, '/platforms'], [p.nav, path]]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{t.integrations.eyebrow}</p>
+      <h1>{p.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{p.lede}</p>
+    </div>
+  </section>
+
+  <div class="wrap doc">
+    <Toc items={toc} label={t.site.toc} />
+    <div class="doc-body">
+      {p.sections.map(s => <section id={s.id} aria-labelledby={`${s.id}-title`}>
+        <h2 id={`${s.id}-title`}>{s.title}</h2>
+        {s.paras?.map(para => <p>{para}</p>)}
+        {s.rows && s.columns && <div class="table"><table>
+          <thead><tr>{s.columns.map(column => <th scope="col">{column}</th>)}</tr></thead>
+          <tbody>{s.rows.map(row => <tr><th scope="row">{s.code ? <code>{row.name}</code> : row.name}</th><td>{row.what}</td>{s.columns!.length > 2 && <td>{row.more}</td>}</tr>)}</tbody>
+        </table></div>}
+        {s.items && <ul class:list={['plain', { codes: s.code }]}>{s.items.map(item => <li>{s.code ? <code>{item}</code> : item}</li>)}</ul>}
+      </section>)}
+      <section id="state" aria-labelledby="state-title">
+        <h2 id="state-title">{t.integrations.state}</h2>
+        {p.state.map(para => <p>{para}</p>)}
+        <p class="note">{t.site.synthetic}</p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .codes { columns: 2; column-gap: 32px; list-style: none; padding-left: 0; }
+  @media (max-width: 36rem) { .codes { columns: 1; } }
+</style>

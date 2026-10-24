@@ -1,7 +1,7 @@
 /* Die Worte der Seite auf Deutsch, typisiert gegen das Englische (en.ts): ein fehlender Schlüssel
    kompiliert nicht. Jeder Satz sagt, was der Vertrag der Space-API (0.2.7) und die Docs der
    Connect-Lane heute hergeben, nichts darüber hinaus. Sie-Form, wie das Widget. */
-import type { Catalogue, Status } from './en.ts';
+import type { Catalogue, Section, Status } from './en.ts';
 
 export const de: Catalogue = {
   site: {
@@ -223,7 +223,7 @@ export const de: Catalogue = {
     eyebrow: 'Für Plattformen',
     h1: ['Ein Space', 'auf Ihren eigenen Seiten.'],
     lede: 'Ein Skript und ein Element zeigen das Widget auf Ihrer Seite, in Ihren Schriften und Farben. Ihr Team gibt Fälle in einer Konsole auf Ihrem Rechner oder hinter Ihrem eigenen Login frei. Ihr Server erfährt von Ereignissen über signierte Webhooks.',
-    toc: [['embed', 'Das Embed'], ['keys', 'Schlüssel und Origins'], ['console', 'Die Konsole'], ['server', 'SDK und Webhooks'], ['recipes', 'Rezepte'], ['state', 'Wo es steht']] as [string, string][],
+    toc: [['pages', 'Jede Integration'], ['embed', 'Das Embed'], ['keys', 'Schlüssel und Origins'], ['console', 'Die Konsole'], ['server', 'SDK und Webhooks'], ['recipes', 'Rezepte'], ['state', 'Wo es steht']] as [string, string][],
     embed: {
       title: 'Das Embed: ein Skript, ein Element',
       paras: [
@@ -329,5 +329,154 @@ export const de: Catalogue = {
     lede: 'Die Seite ist vielleicht umgezogen.',
     home: 'Zur Startseite',
     languages: 'Diese Seite in anderen Sprachen',
+  },
+
+  integrations: {
+    eyebrow: 'Für Plattformen',
+    hub: 'Jede Integration auf ihrer eigenen Seite',
+    state: 'Wo es steht',
+    pages: {
+      embed: {
+        nav: 'Das Embed',
+        title: 'Das Embed: ein Skript, ein Element · Linkbot für Plattformen',
+        description: 'Was eine Seite am Embed setzt: Attribute, Datenhinweis, Theme-Variablen, Content Security Policy, und was das Widget behält und sendet.',
+        h1: ['Ein Skript,', 'ein Element.'],
+        lede: 'Das Widget ist ein Skript und ein Element pro Stelle, an der es erscheint. Ihre Seite setzt seinen Schlüssel, seinen Modus, seine Seite und seine Sprache; alles andere kommt aus Ihrem Space.',
+        sections: [
+          { id: 'element', title: 'Das Element', paras: [
+            'Laden Sie das Skript einmal pro Seite, mit async, damit Ihre Seite rendert, ohne darauf zu warten. Setzen Sie das Element dorthin, wo das Formular erscheinen soll. Mehrere Elemente auf einer Seite sind mehrere Widgets, und Elemente, die später hinzukommen, wie in Single-Page-Anwendungen, starten von selbst.',
+            'Einen Wert, den das Widget nicht kennt, ersetzt es durch die Voreinstellung, mit einer Warnung in der Browser-Konsole. Eine Sprache, die der Space nicht anbietet, fällt ebenfalls zurück, und das Widget sagt es auf dem Bildschirm.',
+          ], code: true, columns: ['Attribut', 'Werte', 'Voreinstellung'], rows: [
+            { name: 'data-linkbot', what: 'Ihr Publishable Key. Mit einem Secret Key verweigert das Widget den Start und sagt Ihnen, ihn zu rotieren', more: 'Pflicht' },
+            { name: 'data-mode', what: 'describe (sagen, was Sie brauchen oder anbieten), board (Einträge durchsehen und beantworten), mine (meine Anfragen, Beobachtungen und möglichen Passungen)', more: 'describe' },
+            { name: 'data-side', what: 'seeking (eine Anfrage) oder offer (ein Angebot)', more: 'seeking' },
+            { name: 'data-locale', what: 'en, de, es, it oder fr', more: 'die Browser-Sprache der Besucherin oder des Besuchers, dann die Voreinstellung des Space' },
+            { name: 'data-input', what: 'form, text oder both; es kann nur einschränken, was der Space erlaubt', more: 'die Einstellung des Space' },
+            { name: 'data-api', what: 'die API-Basis Ihres Space, nur https (http nur auf localhost)', more: 'der Origin, von dem das Skript geladen wurde' },
+          ] },
+          { id: 'notice', title: 'Ihr Datenhinweis', paras: ['Ein Kind-Element mit slot="notice" erscheint direkt über dem Bestätigen-Knopf, gestaltet vom CSS Ihrer Seite. Das Widget setzt seine eigenen festen Zeilen daneben, etwa die, dass bis zur Bestätigung nichts verwendet wird. Was Sie dort schreiben, kommt aus Ihren eigenen Datenschutztexten.'] },
+          { id: 'design', title: 'Gestaltung', paras: [
+            'Das Widget übernimmt Schrift und Textfarbe Ihrer Seite. Alles andere setzen CSS-Variablen auf dem Element: die Akzentfarbe für den Hauptknopf, gewählte Optionen und Fokusringe, ihr Hover, der Eckenradius, Text und Nebentext, Überschriften und ihre Schrift, die Schrift der Feldbeschriftungen, Kartenränder und Trennlinien, Feldränder, Karten- und Flächenhintergründe sowie Fehlerfarbe und -hintergrund.',
+            'Für die Akzentfarbe wählt das Widget schwarzen oder weißen Text, je nachdem, was stärker kontrastiert. Ist Ihre Seite dunkel, setzen Sie color-scheme: dark auf dem Element. Die übrigen Stile Ihrer Seite reichen nicht in das Widget, das in einem Shadow Root rendert, und die Stile des Widgets reichen nicht in Ihre Seite.',
+          ] },
+          { id: 'csp', title: 'Content Security Policy', paras: [
+            'Erlauben Sie den Origin des Skripts in script-src und den Origin der Space-API in connect-src, dazu den des Skripts, falls er sich unterscheidet: Das Widget lädt eine andere Sprache als Englisch von neben sich und prüft sie gegen eine im Skript hinterlegte sha256-Summe.',
+            'Stile brauchen kein „unsafe-inline“: Das Widget nutzt ein konstruierbares Stylesheet. In Browsern ohne eines fügt es ein einziges style-Element hinzu, das die Nonce seines eigenen Script-Tags trägt; setzen Sie Ihre Nonce also auf das Script-Tag, wenn Ihre Richtlinie Nonces nutzt. Hosten Sie das Skript selbst, kopieren Sie den Ordner locales mit.',
+          ] },
+          { id: 'global', title: 'Das Global der Seite', paras: ['Das Skript definiert ein einziges Global, window.Linkbot, und sonst nichts: die Version des Embeds, ob es der Beispiel-Build ist, und mount und unmount für ein Element, das der Scan nicht sieht, etwa in Ihrem eigenen Shadow Root.'] },
+          { id: 'keeps', title: 'Was das Widget behält und was es sendet', paras: [
+            'Sein Gast-Sitzungs-Token und sein Besitzer-Token liegen in sessionStorage, pro Tab und pro Space. Es nutzt keine Cookies und kein localStorage. Anfragen gehen nur an die Space-API, ohne Zugangsdaten. Es gibt keine Analyse-Dienste. Der Beispiel-Build sendet nichts über das Netz.',
+            'sessionStorage gehört dem Origin Ihrer Seite, also kann jedes Skript, das Sie auf dieser Seite ausführen, den Entwurf und die Token lesen. Führen Sie auf Seiten mit dem Widget keine Skripte aus, denen Sie nicht vertrauen.',
+          ] },
+        ] as Section[],
+        state: ['Das Skript kommt von der eigenen Instanz Ihres Space. Die Staging-Instanz liefert an seiner Stelle eine Testdatei aus, bis dort ein Release des Widgets eingespielt ist; am 23.10.2026 lief das Widget gegen die API des Staging-Space, mit dem veröffentlichten Skript von einem lokalen Stellvertreter für diese Adresse.'],
+      },
+      sdk: {
+        nav: 'SDK und Webhooks',
+        title: 'Das SDK, der React-Wrapper und Webhooks · Linkbot für Plattformen',
+        description: 'Ein Server-Client, typisiert durch den Vertrag der Space-API, die Webhook-Prüfung, der React-Wrapper, und wie Ihr Server Linkbots Ereignisse erhält.',
+        h1: ['Ihr Server,', 'typisiert durch den Vertrag.'],
+        lede: 'Nichts vom SDK gehört in eine Browser-Seite: Das Embed nimmt den Publishable Key, und der Client des SDK verweigert den Start in einem Browser. Es ist noch nicht veröffentlicht; sein Code liegt im Connect-Repository.',
+        sections: [
+          { id: 'client', title: 'Der Client', paras: [
+            'Der Client nimmt die API-Basis Ihres Space (nur https, außer auf localhost), Ihren Secret Key aus dem geheimen Speicher Ihres Servers (ein Wert, der nicht wie ein Secret Key geformt ist, wird abgelehnt) und auf Wunsch das fetch Ihrer Laufzeit. Seine Pfade, Parameter, Rümpfe und Antworten sind die des Vertrags, erzeugt aus dem YAML, das Core veröffentlicht hat, und per sha256 gepinnt: Eine Route, ein Feld oder ein Wert, den der Vertrag nicht hat, ist ein Typfehler.',
+            'Ein frischer Idempotenz-Schlüssel ist einen Aufruf entfernt. Schreibzugriffe, die der Vertrag so markiert, brauchen einen; bewahren Sie den Schlüssel beim Schreibzugriff auf und senden Sie denselben beim Wiederholen, damit der Space den Zugriff einmal ausführt.',
+          ] },
+          { id: 'seeding', title: 'Das eigene Angebot Ihrer Plattform anlegen', paras: ['Ihr Server legt ein Angebot auf dem Operator-Weg an, und ein zweiter Operator bestätigt es: vier Augen. Auf einem Space, der jede Partei prüft, wie dem von Geoprocure, zählt das Anlegen des Angebots Ihrer eigenen Organisation als Bestätigen, trägt also die Freigabe der Identität, die der Hinweis des Space verlangt, und der Space lehnt es ohne sie ab. Das gilt nur für Ihre eigene Organisation; die Freigabe anderer geben diese selbst, im Widget.'] },
+          { id: 'webhooks', title: 'Webhooks', paras: [
+            'Registrieren Sie einen Endpunkt mit Ihrem Secret Key, nur https. Das Signaturgeheimnis wird einmal gezeigt und gehört in Ihren geheimen Speicher, nie in Code. Jede Zustellung trägt eine ID, einen Zeitstempel in Sekunden und eine Signatur: HMAC-SHA256 über den Zeitstempel, einen Punkt und den rohen Rumpf, mit Ihrem Geheimnis als Schlüssel.',
+            'Lehnen Sie eine Zustellung ab, die älter als fünf Minuten ist oder deren Signatur nicht passt. Die Prüfung des SDK tut beides, mit Vergleich in konstanter Zeit über Web Crypto, in Node, Deno, Bun und Edge-Laufzeiten. Prüfen Sie den rohen Rumpf, bevor Sie ihn parsen. Antworten Sie schnell mit 2xx: Alles andere wird mit wachsenden Abständen 24 Stunden lang wiederholt, danach gilt die Zustellung als tot. Eine Wiederholung trägt dieselbe ID; behandeln Sie jede ID einmal, mit den IDs in Ihrer Datenbank statt im Speicher.',
+            'Rotieren Sie das Geheimnis bei Bedarf: Das alte bleibt bis zu sieben Tage gültig, und die Prüfung nimmt beide. Zustellungen tragen IDs und Zustände, nie Kontaktdaten; Details holen Sie mit Ihrem Secret Key. Das Zustellprotokoll zeigt Status, Versuche und eine Prüfsumme des Rumpfs, nie den Rumpf. Webhooks stehen im Vertrag und werden vom Staging-Space noch nicht gesendet.',
+          ] },
+          { id: 'events', title: 'Ereignistypen', paras: ['Jedes Ereignis hat eine ID, einen Typ, die Space-ID, den Zeitpunkt, die Vertragsversion und das Objekt, um das es geht, mit dessen Typ, ID und Zustand, wo es einen gibt. Die Typen:'], code: true, items: ['intent.confirmed', 'intent.revised', 'intent.status_changed', 'match.proposed', 'match.updated', 'gate.recorded', 'approval.recorded', 'answer.recorded', 'clarification.requested', 'review.recorded', 'introduction.created', 'outcome.recorded', 'watch.delivered', 'channel.verified', 'deletion.completed', 'key.rotated'] },
+          { id: 'react', title: 'Der React-Wrapper', paras: [
+            'Der Wrapper rendert dasselbe Element wie das Snippet und lädt das Skript einmal pro Adresse; das Embed startet dann in seinem eigenen Shadow Root, den React nie anfasst. Er ist eine Client-Komponente, funktioniert also im App Router von Next.js, und fügt kein globales CSS hinzu.',
+            'Seine Props sind die Attribute des Elements: Publishable Key und Skriptadresse sind Pflicht (ein Secret Key wirft einen Fehler), dazu mode, side, locale, input, api, Ihr Hinweis, ein Klassenname und ein style für die Theme-Variablen. Ändert sich ein Prop, das das Embed liest, gibt der Wrapper React ein neues Element, und das Embed startet neu. Eine Seite, die das Skript laden will, bevor sie ein Element rendert, kann auch das verlangen. Noch nicht veröffentlicht.',
+          ] },
+        ] as Section[],
+        state: ['SDK und Wrapper sind im Connect-Repository gebaut und getestet und nicht veröffentlicht. Der Empfänger aus der Webhook-Anleitung ist gegen signierte Beispiel-Zustellungen getestet; der Staging-Space sendet noch keine Webhooks.'],
+      },
+      console: {
+        nav: 'Die Konsole',
+        title: 'Die Konsole für Ihr Team · Linkbot für Plattformen',
+        description: 'Freigabe-Warteschlange, Fälle mit Gates und Freigabe, Vorstellungen mit Quittungen, Webhooks und Operatoren, auf Ihrem Rechner oder hinter Ihrem Login.',
+        h1: ['Die Konsole Ihres Teams,', 'hinter Ihrem eigenen Login.'],
+        lede: 'Die Konsole ist ein kleiner Server, der einzige Ort, an dem der Secret Key des Space verwendet wird, plus die Seite, auf der Ihr Team arbeitet. Es gibt kein Linkbot-Login für Operatoren: Ihre Plattform meldet ihr Team an. Sie führen die Konsole auf Ihrem eigenen Rechner als lokales Werkzeug aus oder hängen ihren Handler hinter das Login Ihrer Plattform. Sie ist nie eine öffentliche Linkbot-Seite.',
+        sections: [
+          { id: 'views', title: 'Was sie zeigt', columns: ['Ansicht', 'Was sie zeigt'], rows: [
+            { name: 'Freigabe-Warteschlange', what: 'Fälle, die auf Ihr Team warten, ohne Identitäten: die Passung pro Kriterium, die Antworten beider Seiten, fehlende Gates.' },
+            { name: 'Fall', what: 'Die Passung pro Kriterium und warum. Ihr Team trägt die Prüfungen des Falls und die Prüfung jeder Partei ein (bestanden, nicht bestanden, verwiesen, und erlassen nur, wo das Gate es erlaubt), die Prüfung einer Partei nebeneinander, damit der Eintrag der einen nie als der der anderen gelesen wird; gibt frei oder lehnt ab, mit optionalem Grund für das Audit-Log; antwortet nur für die eigenen Angebote oder Anfragen Ihrer Plattform, als angemeldeter Operator; bittet eine Seite um Klärung.' },
+            { name: 'Vorstellungen', what: 'Gelistet ohne Kontaktdaten. Wer eine öffnet, wird erst gefragt, sieht dann die Kontaktfelder, und das Lesen wird vermerkt. Ein Wert aus einer langen Liste, etwa ein Land oder ein Hafen, erscheint mit Namen und Code. Quittungen und Ergebnisse.' },
+            { name: 'Webhooks', what: 'Endpunkt hinzufügen (nur https); das Signaturgeheimnis wird einmal gezeigt; rotieren, das alte Geheimnis bleibt bis zu sieben Tage gültig; entfernen; das Zustellprotokoll.' },
+            { name: 'Operatoren', what: 'Das Register: hinzufügen, deaktivieren, reaktivieren.' },
+            { name: 'Space und Snippet', what: 'Die Einstellungen, wie die Space-API sie meldet, und das Snippet mit Ihrem Publishable Key und der Skriptadresse Ihrer Instanz.' },
+            { name: 'Einrichtung', what: 'Die fünf Schritte, mit dem, was Ihr Space für jeden hat.' },
+          ] },
+          { id: 'safe', title: 'Wie der Schlüssel geschützt bleibt', items: [
+            'Der Schlüssel bleibt auf dem Server. Die Seite holt ihre Einstellungen vom Server, und die Tests prüfen, dass diese Antwort keinen Secret Key enthält.',
+            'Kein Proxy: Jede Operation ist mit den Feldern gelistet, die sie senden darf; alles andere wird abgelehnt, ungelistete Felder werden verworfen.',
+            'Der Server benennt den Operator aus Ihrer Anmeldung; eine von der Seite gesendete ID wird ignoriert.',
+            'Sie antwortet nur für die eigene Seite Ihrer Plattform in einem Fall, ermittelt auf dem Server; die Seite wählt nie eine Seite aus und erhält nie die Intents, die Identitätsfelder enthalten.',
+            'Nur die eigene Seite der Konsole kann sie aufrufen: ihr eigener Header, ihr eigener Origin, Same-Origin-Anfragen, JSON-Rümpfe.',
+            'Der lokale Modus bindet nur an den lokalen Rechner und antwortet nur auf seinen eigenen Namen, was DNS-Rebinding blockiert.',
+            'Eine strenge Seitenrichtlinie: kein Inline-Skript und -Stil, kein Einbetten in Frames, kein Caching.',
+          ] },
+          { id: 'run', title: 'Sie ausführen', paras: [
+            'Mit Beispieldaten: Die Beispiel-Operator-API antwortet aus dem Speicher mit synthetischen Daten, braucht keinen Schlüssel und sendet nichts über das Netz, und jede Seite sagt das in einem Banner. Sie folgt den Regeln des Vertrags, Sie können sie also ausprobieren: ein Gate, das nicht erlassen werden kann, Freigabe erst nach den Pflicht-Gates, eine Vorstellung nur mit jedem Gate, der Freigabe und einem Ja beider Seiten, und eine Lesequittung, wenn Ihr Team die Kontaktdaten öffnet.',
+            'Gegen einen Space: die API-Basis, Ihr Secret Key aus Ihrem geheimen Speicher, Ihre ID im Operator-Register des Space und, wenn das Snippet gezeigt werden soll, der Publishable Key. Hinter Ihrem Login: ein Handler; Ihre Sitzung entscheidet, wer handelt, und ohne angemeldeten Operator antwortet er mit 401. Hinter einem Proxy braucht er die öffentliche Adresse, die der Browser verwendet hat.',
+            'Dieser Weg lief am 23.10.2026 gegen den synthetischen Staging-Space von Geoprocure: die Warteschlange, ein Fall, beide Arten von Prüfung, die Freigabe, eine Antwort für das eigene Angebot der Plattform und eine Vorstellung mit ihrer Quittung.',
+          ] },
+          { id: 'notyet', title: 'Noch nicht hier, und warum', items: [
+            'Einstellungen, erlaubte Origins und Schlüssel lassen sich aus der Konsole nicht ändern: Der Vertrag hat dafür noch keine Routen. Spaces werden mit dem Werkzeug von Core eingerichtet, also wartet auch das Einrichten aus einem Pack hier auf eine Route.',
+            'Kein Funnel: Sie zeigt keine Zahlen, bis die Space-API echte meldet.',
+            'Kein „Erneut senden“ für eine Zustellung, bis es echte Zustellungen gibt, an denen man es ausprobieren kann.',
+          ] },
+        ] as Section[],
+        state: ['Die Konsole ist auf dem Vertrag der Space-API gebaut und lief am 23.10.2026 gegen den synthetischen Staging-Space; ihre Tests laufen gegen eine Beispiel-Operator-API mit synthetischen Daten.'],
+      },
+      wordpress: {
+        nav: 'WordPress',
+        title: 'WordPress · Linkbot für Plattformen',
+        description: 'Ein kleines Plugin ergänzt den Shortcode für jede Redaktion: installieren, an die Stelle des Formulars setzen, Caching-Plugins vom Skript fernhalten.',
+        h1: ['Ein Shortcode', 'für jede Redaktion.'],
+        lede: 'Das Snippet in einen Custom-HTML-Block zu kleben funktioniert nur für Nutzerinnen und Nutzer, denen WordPress erlaubt, Skripte zu veröffentlichen, und das schließt Redaktionen in Multisite-Netzwerken aus. Das Plugin ergänzt einen Shortcode, der für alle funktioniert, lädt das Skript einmal pro Seite über das Skript-Laden von WordPress selbst und prüft jeden Wert, den es ausgibt.',
+        sections: [
+          { id: 'install', title: 'Das Plugin installieren', paras: ['Kopieren Sie den Plugin-Ordner in das Plugin-Verzeichnis, oder packen Sie ihn als Zip und laden Sie ihn unter Plugins hoch, dann aktivieren Sie ihn. Das ganze Plugin ist eine Datei.'] },
+          { id: 'shortcode', title: 'Der Shortcode', paras: ['Fügen Sie im Block-Editor einen Shortcode-Block ein. Der Text zwischen öffnendem und schließendem Shortcode wird Ihr Datenhinweis, gezeigt über dem Bestätigen-Knopf. Verwenden Sie in jedem Shortcode einer Seite dieselbe Skriptadresse: Das Plugin lädt das Skript einmal, aus dem ersten.'], code: true, columns: ['Attribut', 'Was es ist'], rows: [
+            { name: 'src', what: 'die https-Adresse des Skripts auf der Instanz Ihres Space; sie muss https sein' },
+            { name: 'key', what: 'Ihr Publishable Key. Ein Secret Key zeigt Personen, die die Seite bearbeiten können, eine Warnung, und Besuchern nichts' },
+            { name: 'mode, side, locale, input, api', what: 'die Attribute des Elements ohne das Präfix data-. Einen Wert, den das Plugin nicht kennt, lässt es weg, sodass das Widget seine Voreinstellung nimmt' },
+          ] },
+          { id: 'caching', title: 'Caching- und Optimierungs-Plugins', paras: ['Plugins, die Skripte zusammenfassen, verkleinern, verschieben oder verzögern, müssen das Skript in Ruhe lassen: Schließen Sie es über seine Adresse oder seinen Handle aus. Das Widget lädt seine anderen Sprachen von neben sich und prüft jede gegen eine sha256-Summe, die es trägt, also kann eine Kopie anderswo sie nicht laden. Erlaubt Ihr Hoster keine Plugins, steht der Shortcode nicht zur Verfügung, und ein Custom-HTML-Block funktioniert nur für Nutzerinnen und Nutzer, denen WordPress Skripte erlaubt.'] },
+        ] as Section[],
+        state: ['Die CI von Connect führt das Plugin in einem echten WordPress 6.8 auf PHP 8.3 über WordPress Playground aus und lädt seine Seiten in drei Browser-Engines gegen den Beispiel-Build: Der Shortcode startet das Widget mit Ihrem Hinweis, zwei Shortcodes auf einer Seite laden das Skript einmal, ein Shortcode mit einem Secret Key zeigt einem Besucher nichts. Gegen einen echten Space lief es so, wie es geschrieben ist, noch nicht. Das Rezept ist heute das ganze Plugin; eine Einstellungsseite gehört nicht dazu.'],
+      },
+      nextjs: {
+        nav: 'Next.js',
+        title: 'Next.js · Linkbot für Plattformen',
+        description: 'Der React-Wrapper im App Router: eine Client-Komponente, öffentliche Variablen, die Content Security Policy und Webhooks in einem Route-Handler.',
+        h1: ['Der Wrapper', 'im App Router.'],
+        lede: 'Verwenden Sie den React-Wrapper. Er ist eine Client-Komponente, eine Server-Komponente kann ihn also rendern: Skriptadresse und Publishable Key als Props, Modus, Seite und Sprache, Ihr Datenhinweis und die Theme-Variablen in seinem style.',
+        sections: [
+          { id: 'props', title: 'Props und Variablen', paras: ['Skriptadresse und Publishable Key sind Pflicht. Sie sind absichtlich öffentlich: Der Schlüssel bezeichnet nur Ihren Space und gilt nur auf Ihren erlaubten Origins. Öffentliche Variablen stehen zur Build-Zeit fest. Der Hinweis ist Ihr Datenhinweis, gezeigt über dem Bestätigen-Knopf; der style setzt die Theme-Variablen und reserviert Platz, bevor das Widget lädt, damit die Seite darunter nicht springt.'] },
+          { id: 'csp', title: 'Content Security Policy', paras: ['Nehmen Sie den Origin des Skripts in script-src auf und den Origin der Space-API zusammen mit dem des Skripts in connect-src. Der Wrapper fügt das Script-Tag aus dem Browser hinzu: Unter einer Nonce-Richtlinie mit strict-dynamic ist dieses Tag erlaubt, weil vertrauenswürdiger Code es hinzufügt; ohne strict-dynamic listen Sie den Origin des Skripts. Das Beispiel sendet keine Richtlinie, also testet die CI von Connect für Next.js noch keine.'] },
+          { id: 'server', title: 'Ihre Server-Seite', paras: ['Webhooks kommen in einem Route-Handler an; die Webhook-Anleitung zeigt einen für den App Router, in Code, den die CI ausführt. Der Secret Key bleibt auf dem Server, nie in einer öffentlichen Variable.'] },
+        ] as Section[],
+        state: ['Die CI von Connect baut das Beispiel mit Next.js 16.3.8 und React 19.3, was es typprüft, startet es dann und führt die Seite in drei Browser-Engines gegen den Beispiel-Build aus: Der Wrapper lädt das Skript einmal, das Widget startet mit Hinweis und Theme, und die Konsole zeigt keine Fehler. Gegen einen echten Space lief es so, wie es geschrieben ist, noch nicht. Kein Paket ist veröffentlicht.'],
+      },
+      astro: {
+        nav: 'Astro',
+        title: 'Astro · Linkbot für Plattformen',
+        description: 'Eine Komponente: das Skript bleibt inline, damit Astro es nicht bündelt, der Hinweis über einen Wrapper, drei öffentliche Variablen, ein statischer Build.',
+        h1: ['Eine Komponente,', 'ein statischer Build.'],
+        lede: 'Kopieren Sie eine Komponente in Ihre Site. Sie rendert das Script-Tag und das Element aus drei öffentlichen Variablen: der Skriptadresse auf der Instanz Ihres Space, Ihrem Publishable Key und, falls das Skript von einem anderen Origin kommt, Ihrer API-Basis. Die Seite braucht keinen Server: Ein statischer Astro-Build funktioniert.',
+        sections: [
+          { id: 'inline', title: 'Das Skript bleibt inline', paras: ['Das Script-Tag trägt is:inline, Astro lässt es also in Ruhe. Das Skript muss von dort laden, wo es ausgeliefert wird, weil es seine anderen Sprachen von neben sich holt und jede gegen eine sha256-Summe prüft, die es trägt.'] },
+          { id: 'notice', title: 'Der Hinweis', paras: ['Astro verwendet den Slot-Namen des Hinweises für seine eigenen Slots und entfernt das Attribut, also legt die Komponente Ihren Hinweis in einen Wrapper, den das Widget aufnimmt. Das CSS Ihrer Seite gestaltet ihn.'] },
+          { id: 'twice', title: 'Zweimal auf einer Seite', paras: ['Verwenden Sie die Komponente zweimal auf einer Seite, erscheint das Script-Tag zweimal; das zweite Laden tut nichts. Setzen Sie die öffentlichen Variablen in der Umgebung Ihres Builds oder in einer Umgebungsdatei, die Sie nicht einchecken; sie sind absichtlich öffentlich.'] },
+        ] as Section[],
+        state: ['Die CI von Connect baut das Beispiel mit Astro 7.3.5 und führt die gebaute Seite in drei Browser-Engines gegen den Beispiel-Build aus: Das Widget startet, zeigt den Hinweis, übernimmt das Theme, und Astro hat das Script-Tag in Ruhe gelassen. Gegen einen echten Space lief es so, wie es geschrieben ist, noch nicht. Eine paketierte Astro-Integration ist nicht gebaut.'],
+      },
+    },
   },
 };

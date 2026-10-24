@@ -16,7 +16,8 @@ owner's go. The design is concept A8 (the design canvas `design/concept-a8`).
 |---|---|
 | `/` | what Linkbot is, the path from a need to an introduction, the four ways to say what you need or offer with where each stands, the rules the server enforces, for platforms, for verticals, where it stands |
 | `/how-it-works` | a space, a pack, the four ways to describe, confirming, matching, approval and gates, both yes, the introduction, afterwards, who sees what, five languages, what works today |
-| `/platforms` | the embed, keys and origins, the console, the SDK and webhooks, the recipes |
+| `/platforms` | the embed, keys and origins, the console, the SDK and webhooks, the recipes, and the six integration pages |
+| `/platforms/embed`, `/platforms/sdk`, `/platforms/console`, `/platforms/wordpress`, `/platforms/nextjs`, `/platforms/astro` | one page per integration, each with only what the Connect lane's docs show today, rendered from the catalogue by `src/components/Integration.astro` |
 | `/verticals` | what a pack holds, the first space, more verticals |
 | `/privacy`, `/imprint` | placeholders that say the texts are in preparation; nothing legal is invented |
 

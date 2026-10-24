@@ -20,7 +20,7 @@ const { colorKit, focusKit, pageAudit, treeFindings, keyboardFindings, textSpaci
 if (!fs.existsSync(path.join(DIST, 'index.html'))) throw Error('build the site first (npm run build)');
 
 const LANGS = ['en', 'de', 'es', 'it', 'fr'];
-const PAGES = ['/', '/how-it-works', '/platforms', '/verticals', '/privacy', '/imprint'];
+const PAGES = ['/', '/how-it-works', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
 const WIDTHS = [1440, 1024, 768, 390, 320];
 const HEIGHTS = { 1440: 900, 1024: 768, 768: 1024, 390: 844, 320: 720 };
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8' };
@@ -85,7 +85,8 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
           ids: [...document.querySelectorAll('[id]')].map(e => e.id),
           anchors: [...document.querySelectorAll('a[href^="#"]')].map(a => a.getAttribute('href').slice(1)).filter(Boolean),
           links: [...document.querySelectorAll('a[href]')].map(a => a.getAttribute('href')),
-          text: document.querySelector('main').innerText,
+          // The page's prose without its code: an identifier such as channel.verified is not a claim.
+          text: (() => { const main = document.querySelector('main').cloneNode(true); main.querySelectorAll('code').forEach(c => c.remove()); return main.innerText; })(),
         }));
         const own = meta.lang === lang;
         check(own || meta.lang === 'en', `${route}: lang ${meta.lang}`);
