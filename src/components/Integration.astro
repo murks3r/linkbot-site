@@ -4,7 +4,7 @@
    and tables, and where it stands. Nothing here comes from anywhere but the Connect lane's docs. */
 import Base from '../layouts/Base.astro';
 import Toc from './Toc.astro';
-import { pathFor, type Catalogue, type Lang } from '../i18n';
+import type { Catalogue, Lang } from '../i18n';
 type PageKey = keyof Catalogue['integrations']['pages'];
 interface Props { lang: Lang; t: Catalogue; fallback: boolean; page: PageKey }
 const { lang, t, fallback, page } = Astro.props;
@@ -15,7 +15,7 @@ const toc: [string, string][] = [...p.sections.map(s => [s.id, s.title] as [stri
 <Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path={path} crumbs={[[t.site.nav.platforms, '/platforms'], [p.nav, path]]}>
   <section class="page-hero">
     <div class="wrap">
-      <p class="eyebrow"><a href={pathFor(lang, '/platforms')}>{t.integrations.eyebrow}</a></p>
+      <p class="eyebrow">{t.integrations.eyebrow}</p>
       <h1>{p.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
       <p class="lede">{p.lede}</p>
     </div>
@@ -43,8 +43,6 @@ const toc: [string, string][] = [...p.sections.map(s => [s.id, s.title] as [stri
 </Base>
 
 <style>
-  .eyebrow a { color: inherit; text-decoration: none; }
-  .eyebrow a:hover { text-decoration: underline; }
   .codes { columns: 2; column-gap: 32px; list-style: none; padding-left: 0; }
   @media (max-width: 36rem) { .codes { columns: 1; } }
 </style>
