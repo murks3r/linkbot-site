@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import Toc from '../../components/Toc.astro';
+import Ways from '../../components/Ways.astro';
+import Stages from '../../components/Stages.astro';
+import Status from '../../components/Status.astro';
+import { langPaths, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const d = t.how;
+const prose = [d.space, d.pack, d.confirm, d.matching, d.approval, d.yes, d.introduction, d.after, d.languages];
+const ids = ['space', 'pack', 'confirm', 'matching', 'approval', 'yes', 'introduction', 'after', 'languages'];
+const section = (id: string) => ({ id, ...prose[ids.indexOf(id)] });
+---
+<Base lang={lang} t={t} fallback={fallback} title={d.title} description={d.description} path="/how-it-works" crumbs={[[t.site.nav.how, '/how-it-works']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{d.eyebrow}</p>
+      <h1>{d.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{d.lede}</p>
+    </div>
+  </section>
+
+  <div class="wrap doc">
+    <Toc items={d.toc} label={t.site.toc} />
+    <div class="doc-body">
+      {['space', 'pack'].map(id => { const s = section(id); return <section id={s.id} aria-labelledby={`${s.id}-title`}><h2 id={`${s.id}-title`}>{s.title}</h2>{s.paras.map(para => <p>{para}</p>)}</section>; })}
+
+      <section id="describe" aria-labelledby="describe-title">
+        <h2 id="describe-title">{d.describe.title}</h2>
+        <p>{d.describe.lede}</p>
+        <Ways t={t} items={d.describe.items} />
+      </section>
+
+      {['confirm', 'matching', 'approval', 'yes', 'introduction', 'after'].map(id => { const s = section(id); return <section id={s.id} aria-labelledby={`${s.id}-title`}><h2 id={`${s.id}-title`}>{s.title}</h2>{s.paras.map(para => <p>{para}</p>)}</section>; })}
+
+      <section id="sees" aria-labelledby="sees-title">
+        <h2 id="sees-title">{d.sees.title}</h2>
+        <p>{d.sees.lede}</p>
+        <Stages stages={d.sees.stages} />
+      </section>
+
+      {(() => { const s = section('languages'); return <section id={s.id} aria-labelledby={`${s.id}-title`}><h2 id={`${s.id}-title`}>{s.title}</h2>{s.paras.map(para => <p>{para}</p>)}</section>; })()}
+
+      <section id="today" aria-labelledby="today-title">
+        <h2 id="today-title">{d.today.title}</h2>
+        <p>{d.today.lede}</p>
+        <Status columns={d.today.columns} />
+        <p class="note">{t.site.synthetic}</p>
+      </section>
+    </div>
+  </div>
+</Base>

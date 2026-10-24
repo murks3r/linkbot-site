@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.2.0",
   "private": true,
-  "description": "Linkbot's public site: the story, how it works, privacy and hiring. Static, crawlable, no tracking. The product itself runs in the app.",
+  "description": "Linkbot's public site in five languages: what a space is, how matching works, for platforms and verticals. Static, crawlable, no tracking.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build",

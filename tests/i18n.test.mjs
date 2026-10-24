@@ -1,0 +1,80 @@
+/* The words of the site are evidence, so they are checked: every language has exactly English's
+   keys (the types say so too; this runs without a compiler), no catalogue carries a claim BUILD
+   MODE bans or anything that belongs to no public page, a language without a catalogue falls
+   back to English and says so, and every address is built the same way. */
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { en } from '../src/i18n/en.ts';
+import { DEFAULT_LANG, FALLBACK_NOTICE, LANGS, NAMES, catalogues, langPaths, pathFor, resolve } from '../src/i18n/index.ts';
+
+/** Every key path of a catalogue, arrays included, so a missing item or a reordered list shows. */
+const shape = (value, at = '') => {
+  if (Array.isArray(value)) return value.flatMap((item, index) => shape(item, `${at}[${index}]`));
+  if (value && typeof value === 'object') return Object.entries(value).flatMap(([key, item]) => shape(item, `${at}.${key}`));
+  return [`${at}:${typeof value}`];
+};
+/** Every string of a catalogue with where it sits. */
+const strings = (value, at = '') => {
+  if (Array.isArray(value)) return value.flatMap((item, index) => strings(item, `${at}[${index}]`));
+  if (value && typeof value === 'object') return Object.entries(value).flatMap(([key, item]) => strings(item, `${at}.${key}`));
+  return typeof value === 'string' ? [[at, value]] : [];
+};
+
+/* The claims the copy may not make (CLAUDE.md, BUILD MODE rule 4), per language, as whole words.
+   "Match" as a stage name and "anonym…" in a sentence that says what is not claimed are not here:
+   the catalogues avoid them altogether. */
+const FORBIDDEN = {
+  en: /\b(verified|verifies|verifiable|live|automated|automatic(?:ally)?|anonym\w*|real[- ]time|stays private|guaranteed?)\b/i,
+  de: /\b(verifiziert\w*|live|automatisch\w*|automatisiert\w*|anonym\w*|echtzeit|bleibt privat|garantiert\w*)\b/i,
+  es: /\b(verificad\w*|en vivo|en directo|automatizad\w*|automátic\w*|anónim\w*|tiempo real|permanece privad\w*|garantizad\w*)\b/i,
+  it: /\b(verificat\w*|dal vivo|live|automatizzat\w*|automatic\w*|anonim\w*|tempo reale|resta privat\w*|garantit\w*)\b/i,
+  fr: /\b(vérifié\w*|en direct|live|automatisé\w*|automatique\w*|anonym\w*|temps réel|reste privé\w*|garanti\w*)\b/i,
+};
+/* Nothing that belongs to no public page: a host, an address, a key, a provider. */
+const PRIVATE = /https?:\/\/|\bsk_|\bpk_|railway|vercel|resend|@[a-z0-9-]+\.[a-z]{2,}/i;
+
+test('every language the site offers has a name and a fallback notice', () => {
+  assert.deepEqual([...LANGS], ['en', 'de', 'es', 'it', 'fr']);
+  for (const lang of LANGS) { assert.ok(NAMES[lang], `${lang}: name`); assert.ok(FALLBACK_NOTICE[lang].length > 10, `${lang}: fallback notice`); }
+});
+
+test('every catalogue has exactly the keys and list lengths of English', () => {
+  assert.ok(catalogues.en === en);
+  for (const [lang, catalogue] of Object.entries(catalogues)) assert.deepEqual(shape(catalogue), shape(en), `${lang}: shape differs from English`);
+});
+
+test('no catalogue carries a forbidden claim, an empty string or anything private', () => {
+  for (const [lang, catalogue] of Object.entries(catalogues)) {
+    for (const [at, text] of strings(catalogue)) {
+      assert.ok(text.trim().length > 0, `${lang}${at}: empty`);
+      assert.doesNotMatch(text, FORBIDDEN[lang], `${lang}${at}: forbidden word in “${text}”`);
+      assert.doesNotMatch(text, PRIVATE, `${lang}${at}: private detail in “${text}”`);
+    }
+  }
+});
+
+test('every page has a title and a description of a sensible length', () => {
+  for (const [lang, catalogue] of Object.entries(catalogues)) {
+    for (const page of ['home', 'how', 'platforms', 'verticals', 'privacy', 'imprint', 'notFound']) {
+      assert.ok(catalogue[page].title.length >= 10 && catalogue[page].title.length <= 80, `${lang}.${page}.title: ${catalogue[page].title.length} characters`);
+      assert.ok(catalogue[page].description.length >= 50 && catalogue[page].description.length <= 160, `${lang}.${page}.description: ${catalogue[page].description.length} characters`);
+    }
+  }
+});
+
+test('a language without a catalogue falls back to English and says so; one with a catalogue does not', () => {
+  for (const lang of LANGS) {
+    const { t, fallback } = resolve(lang);
+    if (catalogues[lang]) { assert.equal(t, catalogues[lang], `${lang}: its own words`); assert.equal(fallback, false); }
+    else { assert.equal(t, en, `${lang}: English stands in`); assert.equal(fallback, true); assert.notEqual(lang, DEFAULT_LANG); }
+  }
+});
+
+test('addresses: English at the root, every other language under its prefix', () => {
+  assert.equal(pathFor('en', '/'), '/');
+  assert.equal(pathFor('en', '/how-it-works'), '/how-it-works');
+  assert.equal(pathFor('de', '/'), '/de');
+  assert.equal(pathFor('de', '/how-it-works'), '/de/how-it-works');
+  assert.deepEqual(langPaths().map(p => p.params.lang), [undefined, 'de', 'es', 'it', 'fr']);
+  assert.deepEqual(langPaths().map(p => p.props.lang), [...LANGS]);
+});

@@ -1,0 +1,27 @@
+---
+/* Who sees what, stage by stage: the four disclosure stages of the contract (board, match,
+   introduction, operator), each with who may see it and what. Static: a list, legible without
+   scripts and on every width. */
+interface Props { stages: { name: string; who: string; what: string }[] }
+const { stages } = Astro.props;
+---
+<ol class="stages">
+  {stages.map((stage, index) => <li class="stage">
+    <span class="stage-n" aria-hidden="true">{index + 1}</span>
+    <div class="stage-body">
+      <h3>{stage.name}</h3>
+      <p class="stage-who">{stage.who}</p>
+      <p>{stage.what}</p>
+    </div>
+  </li>)}
+</ol>
+
+<style>
+  .stages { display: grid; border-top: 2px solid var(--ink); }
+  .stage { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .stage-n { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--line-ink); background: var(--surface); font-size: var(--size-micro); font-weight: 700; color: var(--ink-2); }
+  .stage-body { display: grid; gap: 4px; }
+  .stage h3 { font-size: 1.125rem; }
+  .stage-who { font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
+  .stage p { font-size: var(--size-small); color: var(--ink-2); }
+</style>

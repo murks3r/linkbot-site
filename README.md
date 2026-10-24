@@ -1,65 +1,68 @@
 # Linkbot — public site
 
-The crawlable public pages for Linkbot. This repository is built in BUILD MODE on the integration
-branch `build/vision` (see `CLAUDE.md`): pull requests target that branch, the fast check in
-`.github/workflows/check.yml` (types, build, unit tests) must be green, previews only, `main` only
-at milestones with the owner's go.
+The crawlable public pages for Linkbot, in five languages: what a space is, how matching works,
+for platforms, for verticals, and the privacy notice and imprint as marked placeholders until
+their texts are released. The product itself runs on a platform's own pages (the widget, the
+console, the Space API); the site explains, it never matches.
 
-The design is concept A8, brought over as the base of `build/vision` (S0). Its words still describe
-the job search the design was drawn for; the copy that is true of Linkbot today (spaces, packs,
-how matching works, in five languages) replaces it in S1. Until then the pages below are the
-design, not the product description.
-
-The product itself (search, interpretation, results, saving, watching, permissions, the agency
-and company workspaces) runs in the app, `murks3r/linkbot`, served under `/talent`. The site
-explains; the app executes.
+This repository is built in BUILD MODE on the integration branch `build/vision` (see
+`CLAUDE.md`): pull requests target that branch, the fast check in `.github/workflows/check.yml`
+(types, build, unit tests) must be green, previews only, `main` only at milestones with the
+owner's go. The design is concept A8 (the design canvas `design/concept-a8`).
 
 ## Pages
 
 | Route | What it does |
 |---|---|
-| `/` | a working first search at the optical centre of a living atmosphere, with three plain promises at its foot; then the story as one pinned scene (your words come into focus, become criteria and a lens, and the openings that fit come into focus with their reasons and a Must); the night, where privacy is two sides of the glass; and a contextual start |
-| `/how-it-works` | criteria and levels with recorded readings, how a listing is explained, saving and watching, applying, private matching (in development), what works today |
-| `/privacy` | what happens to what you type, save and share; the five separate decisions; limits; what Linkbot doesn't claim |
-| `/hiring` | for recruiting agencies and companies: explanation first, then each path with a working next step |
+| `/` | what Linkbot is, the path from a need to an introduction, the four ways to say what you need or offer with where each stands, the rules the server enforces, for platforms, for verticals, where it stands |
+| `/how-it-works` | a space, a pack, the four ways to describe, confirming, matching, approval and gates, both yes, the introduction, afterwards, who sees what, five languages, what works today |
+| `/platforms` | the embed, keys and origins, the console, the SDK and webhooks, the recipes |
+| `/verticals` | what a pack holds, the first space, more verticals |
+| `/privacy`, `/imprint` | placeholders that say the texts are in preparation; nothing legal is invented |
 
-## How it stays one product with the app
+English is at the root; German, Spanish, Italian and French are under `/de`, `/es`, `/it` and
+`/fr`, with the same routes. A language whose catalogue is not written yet shows the English page
+with a notice in the reader's language. There is one `404` for every missing address.
 
-- **Search handoff.** Forms and example links open `/talent#/search?q=<words>`. The words travel in
-  the URL fragment (never sent to a server); the app reads them once, removes them from the
-  address and runs the search in memory. The site input has no `name`, so without scripts the
-  words are not sent anywhere.
-- **One palette.** `src/styles/palette.css` is a copy of the app's generated tokens
+## Words, and what makes them true
+
+- **One catalogue per language** in `src/i18n/`: `en.ts` is the source and defines the type; the
+  others are typed against it, so a translation is complete or does not compile. `index.ts`
+  resolves a language to its words or to English with `fallback: true`. `locales.ts` holds the
+  five codes, their names, the fallback notices and the address rules.
+- **Every sentence is true today** (CLAUDE.md, rule 4). `docs/truth-check.md` lists every claim
+  with the fact that backs it (the Space API contract, the Connect lane's docs, a decision) and
+  when it was last checked; sentences that depend on another lane's unfinished work are marked
+  there. `tests/i18n.test.mjs` refuses the banned words in every language.
+- **Product facts come only from** the Space API contract and the Connect lane's docs; the site
+  states nothing they do not provide. MCP, the network across spaces and mail providers are not
+  on the site until they run on staging (the owner's decisions of 2026-10-23).
+- **Adding a language's words:** write `src/i18n/<code>.ts` typed as `Catalogue`, register it in
+  `index.ts`, and the pages, the sitemap and the tests pick it up. A translation is reviewed
+  before it is merged.
+
+## Design (concept A8)
+
+- **One palette with the app.** `src/styles/palette.css` is a copy of the app's generated tokens
   (`tools/design/palette.cjs` proves every contrast pair):
   `node scripts/sync-tokens.mjs <app checkout> [--check]`.
-- **One interpreter.** The site never interprets anything. `src/data/readings.json` holds
-  readings recorded from the app's own interpreter, with the commit that produced them:
-  `npx tsx tools/site/readings.ts > <site>/src/data/readings.json` (run in the app).
-- **One vocabulary.** Levels, evidence words and reasons come from the app's copy (`src/data/content.ts`).
 - **The atmosphere** (`src/components/Air.astro`, `src/scripts/atmosphere.ts`): the palette's
-  seven proven pigments as a slow, domain-warped field of light drawn by WebGL into a small
-  canvas, mixed with the paper in linear light (no pixel darker than the darkest pigment). It
-  moves on its own, parts around a mouse pointer, and drifts with the page; at most 30 frames a
-  second, nothing while the tab is hidden or a deep band covers it, one still frame under reduced
-  motion, still gradients without WebGL or scripts. It writes no style anywhere. Every page has
-  the paper's grain: fractal noise drawn by an inline SVG pattern (no image is loaded), finer on
-  dense screens, blended with soft-light.
-- **The scenes** (`src/components/Clarity.astro`, `Glass.astro`) are pinned stages driven by
-  `src/scripts/stages.ts`: one number per scene (`--p`) and one eased value per beat (`--b1` …)
-  are written on the stage from the scroll position, and CSS derives every illustration, so each
-  scene reverses, survives jumps, flings and resizes, and never hijacks scrolling. Each beat's
-  statement comes into focus when its beat begins (a short transition, both ways). Without
-  scripts, under reduced motion, or on any screen that cannot hold a stage (measured live), a
-  scene is its complete final state at normal height. The words are read by the app's
-  interpreter (the `story` reading); the openings are illustrations and say so.
+  seven proven pigments as a slow field of light drawn by WebGL into a small canvas behind the
+  home page, still gradients without WebGL or scripts, one still frame under reduced motion; and
+  the paper, a real texture printed over every page with multiply.
+- **Evidence and status** use the app's three squares (`src/components/Mark.astro`): solid = on
+  the staging space now, split = in the contract and not on staging yet, dashed = not built yet.
+- **For the owner's open design choices:** the brand board at `/__preview/brand` and the variant
+  switcher (palette, type pair, field radius, badge line) exist only in preview builds with
+  `PUBLIC_PREVIEW_VARIANTS=1`; `tests/build.test.mjs` proves a production build carries none of it.
 
 ## Configuration
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `SITE_URL` | `https://linkbot.org` | canonical origin (canonical links, Open Graph, sitemap). The launch domain is the owner's decision. |
-| `PUBLIC_APP_ORIGIN` | empty (same origin) | where the app runs, if not beside the site |
+| `SITE_URL` | `https://linkbot.org` | canonical origin (canonical links, alternates, Open Graph, sitemap). The launch domain is the owner's decision. |
 | `PUBLIC_NOINDEX` | unset | `1` for previews: `noindex` on every page and `Disallow: /` in robots.txt |
+| `PUBLIC_PREVIEW_VARIANTS` | unset | `1` for a preview with the brand board and the variant switcher |
 
 ## Develop and test
 
@@ -67,10 +70,13 @@ explains; the app executes.
 npm ci
 npm run dev
 npm run build                 # astro check + static build to ./dist
-npm test                      # data integrity: recorded readings, palette copy
-LINKBOT_APP_DIR=../linkbot npm run test:browser   # pages, journeys, the app's WCAG audit at 5 widths
+npm test                      # the catalogues, the palette copy, the production build
+LINKBOT_APP_DIR=../linkbot npm run test:browser   # every page in every language at 5 widths, the app's WCAG audit, the journeys
 node scripts/og.cjs           # re-render public/og.png
 ```
+
+The browser acceptance needs a checkout of the app (murks3r/linkbot) for its accessibility audit,
+so it runs at milestones, locally; the fast check in CI runs the rest.
 
 No cookies, analytics or third-party requests; the typefaces (Archivo for display, Figtree for
 text) are self-hosted.
