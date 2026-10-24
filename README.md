@@ -62,7 +62,7 @@ with a notice in the reader's language. There is one `404` for every missing add
 | Variable | Default | Meaning |
 |---|---|---|
 | `SITE_URL` | `https://linkbot.org` | canonical origin (canonical links, alternates, Open Graph, sitemap). The launch domain is the owner's decision. |
-| `PUBLIC_NOINDEX` | unset | `1` for previews: `noindex` on every page and `Disallow: /` in robots.txt |
+| `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
 | `PUBLIC_PREVIEW_VARIANTS` | unset | `1` for a preview with the brand board and the variant switcher |
 
 ## Develop and test

@@ -5,7 +5,8 @@ import sitemap from '@astrojs/sitemap';
 /* The public site is static and crawlable, in five languages: English at the root, the others
    under /de, /es, /it and /fr (src/i18n). SITE_URL is the canonical origin (canonical links,
    Open Graph and the sitemap derive from it); the launch domain is the owner's decision, so a
-   deploy sets it explicitly. Previews set PUBLIC_NOINDEX=1 and are never indexed. */
+   deploy sets it explicitly. A build with PUBLIC_NOINDEX=1 is never indexed; Vercel's preview deployments
+   are behind its login and send X-Robots-Tag: noindex themselves. */
 const site = process.env.SITE_URL || 'https://linkbot.org';
 const locales = ['en', 'de', 'es', 'it', 'fr'];
 
