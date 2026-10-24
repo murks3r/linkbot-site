@@ -1,6 +1,6 @@
 # Linkbot — Site
 
-Privacy-first marketing site for [Linkbot OÜ](https://linkbot.org). Built
+Privacy-first marketing site for [Linkbot OÜ](https://linkbot-domain-tbd.invalid). Built
 as a single, content-rich landing page with a four-act 3D narrative
 embedded in the middle of the scroll.
 
