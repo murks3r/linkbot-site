@@ -6,8 +6,10 @@ interface Props {
 }
 
 const { title, description, canonicalPath } = Astro.props;
-const canonical = new URL(canonicalPath, Astro.site ?? 'https://linkbot.org').toString();
-const ogImage = new URL('/og.svg', Astro.site ?? 'https://linkbot.org').toString();
+// astro.config.mjs sets the site; the fallback is the same production address.
+const site = Astro.site ?? new URL('https://linkbot-site.vercel.app');
+const canonical = new URL(canonicalPath, site).toString();
+const ogImage = new URL('/og.svg', site).toString();
 ---
 
 <title>{title}</title>
@@ -31,18 +33,15 @@ const ogImage = new URL('/og.svg', Astro.site ?? 'https://linkbot.org').toString
   '@type': 'Organization',
   name: 'Linkbot',
   legalName: 'Linkbot OÜ',
-  url: 'https://linkbot.org',
-  logo: 'https://linkbot.org/og.svg',
-  description: 'Private eligibility infrastructure for the labour market. We replace public exposure with permissioned matching.',
-  foundingDate: '2024',
+  url: site.toString(),
+  description: 'Linkbot is building a matching layer that platforms embed in their own pages.',
   address: { '@type': 'PostalAddress', addressCountry: 'EE', addressLocality: 'Tallinn' },
-  knowsAbout: ['Privacy engineering', 'Identity and access management', 'Labour market matching', 'Eligibility protocols'],
 })}></script>
 
 <script type="application/ld+json" is:inline set:html={JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Linkbot',
-  url: 'https://linkbot.org',
+  url: site.toString(),
   inLanguage: 'en',
 })}></script>

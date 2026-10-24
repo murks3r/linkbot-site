@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = 'Linkbot — Private eligibility, not public exposure',
-  description = 'Public career profiles have become attack surfaces. Linkbot replaces public exposure with permissioned, private eligibility for the people employers are actually looking for.',
+  title = 'Linkbot',
+  description = 'Linkbot is building a matching layer that platforms embed in their own pages. This site is being rebuilt.',
   canonicalPath = '/',
 } = Astro.props;
 ---
@@ -23,10 +23,6 @@ const {
     <meta name="theme-color" content="#05060a" />
     <meta name="color-scheme" content="dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 
     <SEO title={title} description={description} canonicalPath={canonicalPath} />
   </head>
