@@ -22,8 +22,9 @@ owner's go. The design is concept A8 (the design canvas `design/concept-a8`).
 | `/privacy`, `/imprint` | placeholders that say the texts are in preparation; nothing legal is invented |
 
 English is at the root; German, Spanish, Italian and French are under `/de`, `/es`, `/it` and
-`/fr`, with the same routes. A language whose catalogue is not written yet shows the English page
-with a notice in the reader's language. There is one `404` for every missing address.
+`/fr`, with the same routes. All five languages have their own catalogue; a language added without
+one would show the English page with a notice in the reader's language. There is one `404` for
+every missing address.
 
 ## Words, and what makes them true
 
@@ -62,7 +63,7 @@ with a notice in the reader's language. There is one `404` for every missing add
 | Variable | Default | Meaning |
 |---|---|---|
 | `SITE_URL` | `https://linkbot.org` | canonical origin (canonical links, alternates, Open Graph, sitemap). The launch domain is the owner's decision. |
-| `PUBLIC_NOINDEX` | unset | `1` for previews: `noindex` on every page and `Disallow: /` in robots.txt |
+| `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
 | `PUBLIC_PREVIEW_VARIANTS` | unset | `1` for a preview with the brand board and the variant switcher |
 
 ## Develop and test

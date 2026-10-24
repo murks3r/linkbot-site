@@ -54,6 +54,24 @@ test('no catalogue carries a forbidden claim, an empty string or anything privat
   }
 });
 
+/** The values no language may change: anchors (toc and section ids), status values, and what a
+    section sets in code (event types, attribute names). A changed one breaks a link or states
+    something false. */
+const identifiers = catalogue => [
+  ...['how', 'platforms', 'verticals'].flatMap(page => catalogue[page].toc.map(([id]) => `${page}.toc:${id}`)),
+  ...catalogue.home.ways.items.map(way => `home.ways:${way.status}`),
+  ...catalogue.how.describe.items.map(way => `how.describe:${way.status}`),
+  ...catalogue.how.today.columns.map(column => `how.today:${column.status}`),
+  ...Object.entries(catalogue.integrations.pages).flatMap(([key, page]) => page.sections.flatMap(section => [
+    `${key}.section:${section.id}`,
+    ...(section.code ? [...(section.items ?? []), ...(section.rows ?? []).map(row => row.name)].map(value => `${key}.${section.id}.code:${value}`) : []),
+  ])),
+];
+
+test('identifiers are the same in every language', () => {
+  for (const [lang, catalogue] of Object.entries(catalogues)) assert.deepEqual(identifiers(catalogue), identifiers(en), `${lang}: an identifier differs from English`);
+});
+
 test('every page has a title and a description of a sensible length', () => {
   for (const [lang, catalogue] of Object.entries(catalogues)) {
     const pages = [...['home', 'how', 'platforms', 'verticals', 'privacy', 'imprint', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];

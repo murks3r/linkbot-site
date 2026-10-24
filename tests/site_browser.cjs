@@ -24,7 +24,13 @@ const PAGES = ['/', '/how-it-works', '/platforms', '/platforms/embed', '/platfor
 const WIDTHS = [1440, 1024, 768, 390, 320];
 const HEIGHTS = { 1440: 900, 1024: 768, 768: 1024, 390: 844, 320: 720 };
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8' };
-const FORBIDDEN = { en: /\b(verified|live|automated|anonymous|real-time|stays private)\b/i, de: /\b(verifiziert|live|automatisch|anonym|echtzeit|bleibt privat)\b/i };
+const FORBIDDEN = {
+  en: /\b(verified|live|automated|anonymous|real-time|stays private)\b/i,
+  de: /\b(verifiziert|live|automatisch|anonym|echtzeit|bleibt privat)\b/i,
+  es: /\b(verificad\w*|en vivo|en directo|automatizad\w*|anónim\w*|tiempo real)\b/i,
+  it: /\b(verificat\w*|dal vivo|live|automatizzat\w*|anonim\w*|tempo reale)\b/i,
+  fr: /\b(vérifié\w*|en direct|live|automatisé\w*|anonym\w*|temps réel)\b/i,
+};
 const pathFor = (lang, page) => (lang === 'en' ? page : `/${lang}${page === '/' ? '' : page}`);
 
 function serve() {
