@@ -5,7 +5,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Where production runs today. linkbot.org does not serve this site; the launch domain is the owner's call.
+  // Where production runs today. The launch domain is to be named by the owner (linkbot-domain-tbd.invalid until then).
   site: 'https://linkbot-site.vercel.app',
   output: 'static',
   trailingSlash: 'ignore',
