@@ -31,7 +31,6 @@ export const A = {
       { name: 'Introduction', text: 'The server creates it when the last of the three conditions is met, in any order, and refuses every other way. Each side receives a receipt.' },
     ],
     notice: 'A possible fit discloses only the verdicts, and a fixed notice that people decide.',
-    replay: 'Play it again',
     legend: 'Solid: meets. Split: partly. Crossed: conflicts. Dashed: unknown, which is never a fit.',
   },
   saw: {

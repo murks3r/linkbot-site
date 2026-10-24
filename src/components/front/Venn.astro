@@ -1,16 +1,22 @@
 ---
 /* The Venn: the site's signature object (brief of 2026-10-24), in two dimensions at the highest craft the page can
    carry: exact geometry, soft radial shading on each disc, a lens that forms where they overlap and brightens with
-   each criterion that meets, and motion with real easing that tells the product story: two intents approach (study 1)
-   or two facts meet (study 2), a verdict per criterion settles into the lens as a mark, then rest. Inline SVG, about
-   four kilobytes, no library, no WebGL and so no fallback image: under reduced motion, without scripts, or before the
-   script runs, the final frame stands. The marks are the four verdicts (solid meets, crossed conflicts, dashed
-   unknown); the HTML list beside the figure names them, so the picture never carries text and stays crisp at every
-   size. Nothing in the layout moves: the figure's box is fixed by its viewBox. The values are the synthetic pair of
-   src/front/a-match.ts; the caption says so. */
+   each criterion that meets. Inline SVG, no library, no WebGL and so no fallback image: under reduced motion, without
+   scripts, or before the script runs, the final frame stands. The marks are the four verdicts (solid meets, split
+   partly, crossed conflicts, dashed unknown); the HTML list beside the figure names them and always stands complete,
+   so the motion never takes text away from a reader. Nothing in the layout moves: the figure's box is fixed by its
+   viewBox. The values are the synthetic pair of src/front/a-match.ts; the caption says so.
+
+   Motion (third pass, GEO-188): it runs by itself and loops, calmly and without a jump: the two intents approach, the
+   lens forms, the criteria settle one by one, rest; then the marks fade, the discs part as slowly as they came, and
+   the next round begins from the same frame the first one did. It pauses while the figure is off-screen or the tab is
+   hidden. A loop that runs for longer than five seconds needs a way to stop it (WCAG 2.2.2, level A), so one small
+   control pauses it and shows the final frame; it starts nothing, and there is no "play again". ?venn=2 shows the
+   second study, for comparison only. */
+import Icon from '../Icon.astro';
 import { ROWS } from '../../front/a-match';
-interface Props { study?: 1 | 2; label: string; need: string; offer: string; caption: string; replay: string }
-const { study = 1, label, need, offer, caption, replay } = Astro.props;
+interface Props { study?: 1 | 2; label: string; need: string; offer: string; caption: string; pause: string }
+const { study = 1, label, need, offer, caption, pause } = Astro.props;
 const rows = ROWS.slice(0, 9);
 /* The geometry: discs of r 150 whose centres end 160 apart; the lens is the intersection; nine marks sit in a 3 × 3 grid
    at its centre. Study 1 starts the discs 400 apart. */
@@ -42,116 +48,137 @@ const grid = (i: number) => ({ x: CX + ((i % 3) - 1) * 30, y: CY + (Math.floor(i
     </g>
   </svg>
   <ol class="venn-list" aria-label={label}>
-    {rows.map((row, i) => <li data-list-row data-verdict={row.verdict} style={`--i:${i}`}><span class="venn-sq" aria-hidden="true"></span><span>{row.label}</span><small>{row.verdict}</small></li>)}
+    {rows.map((row, i) => <li data-verdict={row.verdict} style={`--i:${i}`}><span class="venn-sq" aria-hidden="true"></span><span>{row.label}</span><small>{row.verdict}</small></li>)}
   </ol>
-  <figcaption id="venn-cap" class="venn-cap">{caption}</figcaption>
-  <p class="venn-controls"><button type="button" class="link venn-replay" data-venn-replay hidden>{replay}</button></p>
+  <button type="button" class="venn-motion" data-motion-toggle aria-pressed="false" hidden><span class="venn-motion-pause"><Icon name="pause" /></span><span class="venn-motion-play"><Icon name="play" /></span><span class="sr">{pause}</span></button>
   <script is:inline>
-    /* Before the first paint: with motion allowed the figure starts at frame zero, so the page never shows the final
-       frame and then takes it back. The module below plays it; without it nothing is hidden. */
-    (function () { var f = document.currentScript.closest('[data-venn]'); if (f && matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window) f.setAttribute('data-armed', ''); })();
+    /* Before the first paint: with motion allowed the figure starts at the loop's first frame (study 1: the discs 400
+       apart; both: no marks yet, the lens unlit), so the page never shows the final frame and then takes it back. */
+    (function () {
+      var f = document.currentScript.closest('[data-venn]');
+      if (!f || !matchMedia('(prefers-reduced-motion: no-preference)').matches || !('IntersectionObserver' in window)) return;
+      var q = new URLSearchParams(location.search).get('venn'), study = q === '2' ? 2 : q === '1' ? 1 : f.getAttribute('data-study') === '2' ? 2 : 1;
+      f.setAttribute('data-study', String(study)); f.setAttribute('data-armed', '');
+      f.querySelectorAll('[data-mark]').forEach(function (m) { m.style.opacity = '0'; });
+      f.querySelector('[data-lens]').style.opacity = '.25';
+      if (study === 1) {
+        var nx = 80, ox = 480; /* the centres 400 apart around x 280 */
+        f.querySelector('[data-disc="need"]').setAttribute('transform', 'translate(' + (nx - 200) + ' 0)');
+        f.querySelector('[data-disc="offer"]').setAttribute('transform', 'translate(' + (ox - 360) + ' 0)');
+        f.querySelector('[data-clip-need]').setAttribute('cx', String(nx)); f.querySelector('[data-lens]').setAttribute('cx', String(ox));
+        f.querySelector('[data-label="need"]').setAttribute('x', String(nx - 146)); f.querySelector('[data-label="offer"]').setAttribute('x', String(ox + 146));
+      }
+    })();
   </script>
+  <figcaption id="venn-cap" class="venn-cap">{caption}</figcaption>
 </figure>
 
 <style>
-  .venn { display: grid; gap: 14px; justify-items: start; min-width: 0; }
-  .venn-svg { display: block; width: 100%; height: auto; max-width: 34rem; overflow: visible; }
-  .venn-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; width: 100%; max-width: 34rem; font-size: var(--size-small); line-height: 1.35; }
+  .venn { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px 16px; align-items: center; min-width: 0; max-width: 34rem; }
+  .venn-svg, .venn-list { grid-column: 1 / -1; }
+  .venn-svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .venn-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; width: 100%; font-size: var(--size-small); line-height: 1.35; }
   .venn-list li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 2px 8px; align-items: center; color: var(--ink); }
   .venn-list small { grid-column: 2; font-size: var(--size-caption); color: var(--ink-3); text-transform: capitalize; }
   .venn-list li[data-verdict='conflicts'] small { color: var(--orange-ink); }
   .venn-sq { width: 12px; height: 12px; border: 1.5px solid var(--ink); }
   .venn-list li[data-verdict='meets'] .venn-sq { background: var(--blue); border-color: var(--blue); }
+  .venn-list li[data-verdict='partly'] .venn-sq { background: linear-gradient(135deg, transparent 50%, var(--ink) 50%); }
   .venn-list li[data-verdict='conflicts'] .venn-sq { border-color: var(--orange); background: linear-gradient(45deg, transparent 44%, var(--orange) 44% 56%, transparent 56%), linear-gradient(-45deg, transparent 44%, var(--orange) 44% 56%, transparent 56%); }
   .venn-list li[data-verdict='unknown'] .venn-sq { border-style: dashed; border-color: var(--ink-3); }
-  .venn-cap { font-size: var(--size-caption); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
-  .venn-controls { min-height: var(--target); }
-  .venn-replay { border: 0; background: none; padding: 0; font-size: var(--size-small); }
-  /* Armed and before the play: frame zero (the discs apart or the lens empty), rows of the list dimmed. */
-  @media (prefers-reduced-motion: no-preference) {
-    .venn[data-armed]:not([data-played]) .venn-list li:not([data-shown]) { opacity: .35; }
-    .venn-list li { transition: opacity .3s var(--ease); }
-  }
+  .venn-cap { grid-column: 1; grid-row: 3; font-size: var(--size-caption); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  /* The motion control: small and quiet, at the figure's lower right, the size of a touch target. */
+  .venn-motion { grid-column: 2; grid-row: 3; display: grid; place-items: center; width: var(--target); height: var(--target); padding: 0; border: 1px solid var(--line-strong);
+    border-radius: 50%; background: transparent; color: var(--ink-2); cursor: pointer; transition: border-color var(--fast), color var(--fast); }
+  .venn-motion:hover { border-color: var(--line-ink); color: var(--ink); }
+  .venn-motion .venn-motion-pause, .venn-motion[aria-pressed='true'] .venn-motion-play { display: grid; place-items: center; }
+  .venn-motion .venn-motion-play, .venn-motion[aria-pressed='true'] .venn-motion-pause { display: none; }
   @media (max-width: 36rem) { .venn-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 
 <script>
-  /* Two motion studies, one timeline each, drawn with requestAnimationFrame and real easing; the geometry is the
-     component's (r 150, centres 160 apart at rest). Study 1, "approach": the discs start 400 apart, come together over
-     1.4 s (ease-out quint), the lens forms as they meet; then the nine marks settle into the lens one by one (160 ms
-     apart, ease-out back), the lens brightens with each meets; rest. Study 2, "meeting": the discs rest overlapped from
-     the start with an empty lens; per criterion one small square leaves the need's far side and one the offer's, they
-     travel to the lens (420 ms, ease-in-out cubic) and merge into the verdict's mark, which settles into the grid; the
-     lens brightens with each meets and dims a touch on conflicts; rest. A play again button appears when a study has
-     rested. The URL's ?venn=2 picks study 2 for the review. */
+  /* The loop. One clock per figure that advances only while the figure is on screen, the tab is visible and nobody has
+     paused it; the frame is a pure function of the time within the round, so pausing and resuming never jumps. Study 1,
+     "approach" (11 s): the discs 400 apart come together (0.4–2.0 s, ease in and out), the nine marks settle into the
+     lens 220 ms apart (ease-out back), the lens brightens with each meets; rest until 8.2 s; the marks fade and the lens
+     dims (8.2–8.9 s), the discs part (8.5–10.4 s); apart until the round ends, which is the frame it began with. Study 2,
+     "criteria travel" (10.6 s): the discs rest overlapped; per criterion the mark travels from the need's far side into
+     the lens (520 ms apart) and settles; rest until 8.8 s; the marks fade (8.8–9.6 s); the empty lens until the round
+     ends. Reduced motion, before or during the visit: the final frame, no control. */
   const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
   const easeInOutCubic = (t: number) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const easeOutBack = (t: number) => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); };
   const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
   const R = 150, CX = 280, CY = 196, D = 160, L = CX - D / 2, Rr = CX + D / 2;
+  const STUDY = {
+    1: { round: 11000, rest: 6000 },
+    2: { round: 10600, rest: 7000 },
+  } as const;
 
   for (const venn of document.querySelectorAll<HTMLElement>('[data-venn][data-armed]')) {
-    const asked = new URLSearchParams(location.search).get('venn');
-    const study = asked === '2' ? 2 : asked === '1' ? 1 : Number(venn.dataset.study) === 2 ? 2 : 1;
-    venn.dataset.study = String(study);
+    const study = venn.dataset.study === '2' ? 2 : 1;
+    const { round, rest: restAt } = STUDY[study];
     const needDisc = venn.querySelector<SVGGElement>('[data-disc="need"]')!, offerDisc = venn.querySelector<SVGGElement>('[data-disc="offer"]')!;
     const clip = venn.querySelector<SVGCircleElement>('[data-clip-need]')!, lens = venn.querySelector<SVGCircleElement>('[data-lens]')!;
-    const marks = [...venn.querySelectorAll<SVGGElement>('[data-mark]')], rows = [...venn.querySelectorAll<HTMLElement>('[data-list-row]')];
+    const marks = [...venn.querySelectorAll<SVGGElement>('[data-mark]')];
     const labelNeed = venn.querySelector<SVGTextElement>('[data-label="need"]')!, labelOffer = venn.querySelector<SVGTextElement>('[data-label="offer"]')!;
-    const replay = venn.querySelector<HTMLButtonElement>('[data-venn-replay]')!;
-    const rest = marks.map(m => { const t = m.getAttribute('transform')!.match(/translate\(([-\d.]+) ([-\d.]+)\)/)!; return { x: Number(t[1]), y: Number(t[2]) }; });
-    const meets = marks.map(m => m.dataset.verdict === 'meets');
-    let raf = 0, start = 0;
+    const toggle = venn.querySelector<HTMLButtonElement>('[data-motion-toggle]')!;
+    const home = marks.map((_, i) => ({ x: CX + ((i % 3) - 1) * 30, y: CY + (Math.floor(i / 3) - 1) * 30 }));
+    const meets = marks.map(m => m.dataset.verdict === 'meets'), lit = meets.filter(Boolean).length;
 
     const place = (gap: number) => { // the discs' centres, gap apart
       const nx = CX - gap / 2, ox = CX + gap / 2;
       needDisc.setAttribute('transform', `translate(${(nx - L).toFixed(2)} 0)`); offerDisc.setAttribute('transform', `translate(${(ox - Rr).toFixed(2)} 0)`);
-      clip.setAttribute('cx', String(nx)); lens.setAttribute('cx', String(ox));
-      labelNeed.setAttribute('x', String(nx - R + 4)); labelOffer.setAttribute('x', String(ox + R - 4));
+      clip.setAttribute('cx', nx.toFixed(2)); lens.setAttribute('cx', ox.toFixed(2));
+      labelNeed.setAttribute('x', (nx - R + 4).toFixed(2)); labelOffer.setAttribute('x', (ox + R - 4).toFixed(2));
     };
-    const glow = (v: number) => { lens.style.opacity = String(.25 + .75 * clamp01(v)); };
-    const setMark = (i: number, x: number, y: number, scale: number, opacity: number) => { marks[i].setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(3)})`); marks[i].style.opacity = String(clamp01(opacity)); };
-    const show = (i: number, on: boolean) => rows[i].toggleAttribute('data-shown', on);
+    const glow = (v: number) => { lens.style.opacity = (.25 + .75 * clamp01(v)).toFixed(3); };
+    const setMark = (i: number, x: number, y: number, scale: number, opacity: number) => { marks[i].setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(3)})`); marks[i].style.opacity = clamp01(opacity).toFixed(3); };
 
-    const frame1 = (ms: number) => { // study 1: approach, then the marks settle
-      const a = clamp01((ms - 300) / 1400), g = 400 - (400 - D) * easeOutQuint(a);
-      place(g);
-      let lit = 0, done = true;
+    const frame1 = (ms: number) => {
+      const out = easeInOutCubic(clamp01((ms - 8200) / 700)); // the marks' fade at the round's end
+      const gap = ms < 8500 ? 400 - 240 * easeInOutCubic(clamp01((ms - 400) / 1600)) : D + 240 * easeInOutCubic(clamp01((ms - 8500) / 1900));
+      place(gap);
+      let sum = 0;
       marks.forEach((_, i) => {
-        const t0 = 1900 + i * 160, p = clamp01((ms - t0) / 520);
-        if (p < 1) done = false;
-        const s = p === 0 ? 0 : .6 + .4 * easeOutBack(p);
-        setMark(i, rest[i].x, rest[i].y + (1 - easeOutQuint(p)) * 10, s, p);
-        show(i, p > .3); if (meets[i]) lit += p;
+        const p = clamp01((ms - 2100 - i * 220) / 560);
+        const s = p === 0 ? 0 : (.6 + .4 * easeOutBack(p)) * (1 - .15 * out);
+        setMark(i, home[i].x, home[i].y + (1 - easeOutQuint(p)) * 10, s, p * (1 - out));
+        if (meets[i]) sum += p;
       });
-      glow(a < 1 ? 0 : lit / meets.filter(Boolean).length);
-      return done && a >= 1;
+      glow((sum / lit) * (1 - out));
     };
-    const frame2 = (ms: number) => { // study 2: the facts meet in the lens, one criterion at a time
+    const frame2 = (ms: number) => {
       place(D);
-      let lit = 0, done = true;
+      const out = easeInOutCubic(clamp01((ms - 8800) / 800));
+      let sum = 0;
       marks.forEach((_, i) => {
-        const t0 = 400 + i * 520, p = clamp01((ms - t0) / 420), q = clamp01((ms - t0 - 420) / 220);
-        if (q < 1) done = false;
-        const e = easeInOutCubic(p);
-        // before they meet: two small squares from the far sides (drawn as the mark itself travelling from the left, then settling)
-        const fromX = p < 1 ? (L - R + 22) + (rest[i].x - (L - R + 22)) * e : rest[i].x;
-        const y = p < 1 ? CY - 60 + (rest[i].y - (CY - 60)) * e : rest[i].y;
-        setMark(i, fromX, y, p < 1 ? .55 + .45 * e : .9 + .1 * easeOutBack(q), p === 0 ? 0 : 1);
-        show(i, p >= 1);
-        if (p >= 1) lit += meets[i] ? 1 : marks[i].dataset.verdict === 'conflicts' ? -.15 : 0;
+        const t0 = 400 + i * 520, p = clamp01((ms - t0) / 420), q = clamp01((ms - t0 - 420) / 220), e = easeInOutCubic(p);
+        const x = p < 1 ? (L - R + 22) + (home[i].x - (L - R + 22)) * e : home[i].x;
+        const y = p < 1 ? CY - 60 + (home[i].y - (CY - 60)) * e : home[i].y;
+        const s = (p < 1 ? .55 + .45 * e : .9 + .1 * easeOutBack(q)) * (1 - .15 * out);
+        setMark(i, x, y, s, (p === 0 ? 0 : 1) * (1 - out));
+        if (p >= 1) sum += meets[i] ? 1 : marks[i].dataset.verdict === 'conflicts' ? -.15 : 0;
       });
-      glow(lit / meets.filter(Boolean).length);
-      return done;
+      glow((sum / lit) * (1 - out));
     };
     const frame = study === 2 ? frame2 : frame1;
 
-    const tick = (now: number) => { raf = 0; const done = frame(now - start); if (!done) raf = requestAnimationFrame(tick); else { venn.setAttribute('data-played', ''); replay.hidden = false; } };
-    const play = () => { if (raf) cancelAnimationFrame(raf); venn.removeAttribute('data-played'); replay.hidden = true; rows.forEach(r => r.removeAttribute('data-shown')); start = performance.now(); frame(0); raf = requestAnimationFrame(tick); };
+    let elapsed = 0, last = 0, raf = 0, onScreen = false, paused = false;
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+    const running = () => onScreen && !paused && !document.hidden && !still.matches;
+    const tick = (now: number) => { elapsed += Math.min(now - last, 100); last = now; frame(elapsed % round); raf = requestAnimationFrame(tick); };
+    const sync = () => {
+      if (running() && !raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+      else if (!running() && raf) { cancelAnimationFrame(raf); raf = 0; }
+    };
+    // Paused (by the control or by reduced motion): the round's final frame, and the loop resumes from there.
+    const settle = () => { elapsed = Math.floor(elapsed / round) * round + restAt; frame(restAt); };
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => { paused = !paused; toggle.setAttribute('aria-pressed', String(paused)); venn.toggleAttribute('data-paused', paused); if (paused) settle(); sync(); });
+    still.addEventListener('change', () => { if (still.matches) { settle(); toggle.hidden = true; } else toggle.hidden = false; sync(); });
+    new IntersectionObserver(entries => { onScreen = entries.some(e => e.isIntersecting); sync(); }).observe(venn);
+    document.addEventListener('visibilitychange', sync);
     frame(0);
-    const io = new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) { io.disconnect(); play(); } }, { threshold: .3 });
-    io.observe(venn);
-    replay.addEventListener('click', play);
-    document.addEventListener('visibilitychange', () => { if (document.hidden && raf) { cancelAnimationFrame(raf); raf = 0; } else if (!document.hidden && !venn.hasAttribute('data-played') && start) { start = performance.now(); raf = requestAnimationFrame(tick); } });
   }
 </script>

@@ -33,12 +33,12 @@ const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, a
         <h1 id="hero-title"><span class="hm-line">{B.hero.h1[0]}</span> <span class="hm-line">{B.hero.h1[1]}</span></h1>
         <p class="lede hm-lede">{B.hero.lede}</p>
       </div>
-      <div class="hm-hero-venn"><Venn study={1} label={HOME.venn.label} need={HOME.venn.need} offer={HOME.venn.offer} caption={HOME.venn.caption} replay={HOME.venn.replay} /></div>
+      <div class="hm-hero-venn"><Venn study={1} label={HOME.venn.label} need={HOME.venn.need} offer={HOME.venn.offer} caption={HOME.venn.caption} pause={HOME.venn.pause} /></div>
     <form class="ask hm-ask" data-ask data-words={words} novalidate>
       <label class="ask-label" for="ask-line">{B.ask.label}</label>
       <div class="ask-field">
         <input id="ask-line" class="ask-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" maxlength="200" placeholder={B.ask.placeholder} data-ask-line aria-describedby="ask-privacy" />
-        <Reach label={B.ask.button}><Icon name="arrow" /></Reach>
+        <Reach label={B.ask.button}><span class="ask-icon ask-icon-arrow"><Icon name="arrow" /></span><span class="ask-icon ask-icon-match"><Icon name="menu" /></span></Reach>
       </div>
       <p id="ask-privacy" class="ask-privacy">{B.ask.privacy}</p>
       <p class="ask-empty" role="status">Write one line first.</p>
@@ -72,7 +72,7 @@ const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, a
     </div>
   </section>
 
-  <!-- 2 · A's verdict sequence: the same pair, played in full. -->
+  <!-- 2 · A's verdict sequence: the same pair in full, standing still until the new illustration is chosen (third pass). -->
   <section class="fp-section" id="match" aria-labelledby="match-title">
     <div class="wrap">
       <div class="fp-head"><p class="eyebrow">{HOME.ledger.eyebrow}</p><h2 id="match-title">{HOME.ledger.h2}</h2><p>{HOME.ledger.lede}</p></div>

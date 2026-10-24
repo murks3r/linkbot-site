@@ -3,8 +3,10 @@
    caps, mitred corners; the 16-px optical versions below 18 px, as the lab recommends). Inline, one colour, aria-hidden:
    wherever an icon stands beside text it is decoration; where it stands alone the control carries the label. Names:
    arrow (F-I17), down (F-I20 chevron), close (F-I16), search (F-I01), out (F-I22), pin (F-I02), info (F-I18),
-   menu (F-I21), fit (F-I24, the two circles with their shared area), eye (F-I23). */
-interface Props { name: 'arrow' | 'down' | 'close' | 'search' | 'out' | 'pin' | 'info' | 'menu' | 'fit' | 'eye' | 'check'; size?: number }
+   menu (F-I21), fit (F-I24, the two circles with their shared area), eye (F-I23). Not in the lab's set and drawn here to
+   its construction rules (keyline circle r 8.5, stroke 1.5, square caps, mitred corners; the 16-px versions on the
+   half-pixel grid): globe (the language button), pause and play (the motion control of a looping figure). */
+interface Props { name: 'arrow' | 'down' | 'close' | 'search' | 'out' | 'pin' | 'info' | 'menu' | 'fit' | 'eye' | 'check' | 'globe' | 'pause' | 'play'; size?: number }
 const { name, size = 16 } = Astro.props;
 const small = size <= 18;
 const box = small ? 16 : 24;
@@ -21,4 +23,7 @@ const box = small ? 16 : 24;
   {name === 'fit' && (small ? <><circle cx="5.5" cy="8.5" r="4" /><circle cx="10.5" cy="8.5" r="4" /><path d="M8 5.378A4 4 0 0 1 8 11.622A4 4 0 0 1 8 5.378Z" fill="currentColor" stroke="none" /></> : <><circle cx="8.75" cy="12" r="5.75" /><circle cx="15.25" cy="12" r="5.75" /><path d="M12 7.257A5.75 5.75 0 0 1 12 16.743A5.75 5.75 0 0 1 12 7.257Z" fill="currentColor" stroke="none" /></>)}
   {name === 'eye' && (small ? <><path d="M1.5 8.5Q8 0 14.5 8.5Q8 16 1.5 8.5Z" /><circle cx="8.5" cy="8.5" r="1.75" fill="currentColor" stroke="none" /></> : <><path d="M2.75 12Q12 0 21.25 12Q12 24 2.75 12Z" /><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none" /></>)}
   {name === 'check' && (small ? <path d="M3 8.5l3 3 7-7" /> : <path d="M4.5 12.5l4.5 4.5 10.5-10.5" />)}
+  {name === 'globe' && (small ? <><circle cx="8.5" cy="8.5" r="6" /><path d="M8.5 2.5A2.5 6 0 0 1 8.5 14.5A2.5 6 0 0 1 8.5 2.5Z" /><path d="M3 8.5L14 8.5" /></> : <><circle cx="12" cy="12" r="8.5" /><path d="M12 3.5A3.75 8.5 0 0 1 12 20.5A3.75 8.5 0 0 1 12 3.5Z" /><path d="M4.25 12L19.75 12" /></>)}
+  {name === 'pause' && (small ? <><path d="M6.5 4.5L6.5 12.5" /><path d="M10.5 4.5L10.5 12.5" /></> : <><path d="M9.25 6.25L9.25 17.75" /><path d="M14.75 6.25L14.75 17.75" /></>)}
+  {name === 'play' && (small ? <path d="M5.5 4L12.5 8.5L5.5 13Z" /> : <path d="M8.25 5.5L18.75 12L8.25 18.5Z" />)}
 </svg>

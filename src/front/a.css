@@ -19,9 +19,8 @@
 .ledger-side { display: grid; gap: 4px; }
 .ledger-side b { font-family: var(--display); font-size: clamp(1.25rem, 1.05rem + .8vw, 1.75rem); font-weight: 650; letter-spacing: -.02em; line-height: 1.1; }
 .ledger-side[data-side='offer'] { text-align: right; }
-/* The stitch between the two sides: drawn when both have said yes. */
-.ledger-stitch { align-self: center; width: clamp(40px, 10vw, 160px); height: 1.5px; background: linear-gradient(to right, var(--ink) 50%, transparent 50%) 0 0 / 8px 1.5px repeat-x; opacity: .35; transform: scaleX(0); transform-origin: left; }
-.ledger[data-played] .ledger-stitch, .ledger:not([data-armed]) .ledger-stitch { transform: none; opacity: 1; background: var(--ink); }
+/* The stitch between the two sides: drawn, as both have said yes. */
+.ledger-stitch { align-self: center; width: clamp(40px, 10vw, 160px); height: 1.5px; background: var(--ink); }
 .ledger-table { display: grid; }
 .ledger-row { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 6px 20px; align-items: start; padding: 12px 0; border-top: 1px solid var(--line-strong); font-size: var(--size-small); line-height: 1.45; }
 .ledger-row-head { padding: 8px 0; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
@@ -45,13 +44,6 @@
 .ledger-stages p { font-size: var(--size-small); line-height: 1.5; color: var(--ink-2); }
 .ledger-notice { padding: 14px 0; border-top: 1px solid var(--line-strong); border-bottom: 2px solid var(--ink); font-size: var(--size-small); font-weight: 650; }
 .ledger-legend { padding-top: 12px; font-size: var(--size-micro); color: var(--ink-3); max-width: var(--measure); }
-.ledger-controls { padding-top: 16px; min-height: 68px; }
-/* The play: a row or step not yet shown keeps its place and is invisible; shown, it fades up. Only with motion. */
-@media (prefers-reduced-motion: no-preference) {
-  .ledger[data-armed] [data-row]:not([data-shown]), .ledger[data-armed] [data-step]:not([data-shown]) { opacity: 0; visibility: hidden; transform: translateY(6px); }
-  .ledger[data-armed] [data-row], .ledger[data-armed] [data-step] { transition: opacity .42s var(--ease), transform .42s var(--ease), visibility 0s; }
-  .ledger[data-armed] .ledger-stitch { transition: transform .6s var(--ease) .1s, opacity .6s; }
-}
 @media (max-width: 64rem) { .ledger-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 48rem) {
   .ledger-head { grid-template-columns: 1fr; gap: 8px; }

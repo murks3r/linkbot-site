@@ -1,16 +1,9 @@
 ---
-/* The light and the paper every page lies on (Concepts A6–A7).
-
-   Behind the content, carrying no text:
-   1. the light (home only): still gradients of the seven proven pigments, which a browser without
-      WebGL or scripts shows and everyone sees first, and over them the living field
-      (src/scripts/atmosphere.ts, loaded by the page that has it), drawn into a small canvas;
-   2. the paper (every page): a real paper texture (fine tooth, fibres and specks, from the
-      founder's Resource Boy noise textures, levelled and made seamless) printed with multiply, so
-      white stays white and only the material shows. It is one layer the size of the page and
-      scrolls with it, so it tiles as the page grows; on dense screens it is drawn at one texture
-      pixel per device pixel. It is an image on our own origin, so a strict img-src holds.
-   The paper sits between the light and everything that carries words: text is never printed over. */
+/* The light every page could lie on (Concepts A6–A7), kept for a page that asks for it (Base's sky prop; no page does
+   since the redesign pass of 2026-10-24): still gradients of the seven proven pigments, which a browser without WebGL
+   or scripts shows, and over them the living field (src/scripts/atmosphere.ts, loaded by the page that has it), drawn
+   into a small canvas. The dust is no longer here: since the third pass (GEO-188) it is part of the page's own
+   background (body in src/styles/site.css), under everything else, and it scrolls with the page. */
 interface Props { mode?: 'living' | 'paper' }
 const { mode = 'paper' } = Astro.props;
 ---
@@ -18,7 +11,6 @@ const { mode = 'paper' } = Astro.props;
   <div class="air-still"></div>
   <canvas class="air-field" width="32" height="32"></canvas>
 </div>}
-<div class="dust" data-dust aria-hidden="true"></div>
 
 <style is:global>
   body { position: relative; }
@@ -34,13 +26,6 @@ const { mode = 'paper' } = Astro.props;
       var(--paper); }
   .air-field { opacity: 0; transition: opacity 1.2s ease; }
   .air.is-drawn .air-field { opacity: 1; }
-  /* The dust (2026-10-24): a fine, even layer of one-device-pixel grains over the whole page, header, text and buttons
-     included, at a few per cent (--dust-opacity, tuned per scheme in site.css). It is alpha over whatever lies beneath,
-     never a blend, so it darkens the light page and lightens the dark one by a bounded few levels and keeps every text
-     pair above 4.5:1 with room to spare. Static. Drawn at one texture pixel per device pixel (--dust-size by
-     resolution), so a grain is never larger than a pixel. Fixed over the viewport, never background-attachment. */
-  .dust { position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: var(--dust-opacity);
-    background: var(--dust-tile) 0 0 / var(--dust-size) var(--dust-size) repeat; }
   @media (prefers-reduced-motion: reduce) { .air-field { transition: none; } }
-  @media (forced-colors: active) { .air, .dust { display: none; } }
+  @media (forced-colors: active) { .air { display: none; } }
 </style>

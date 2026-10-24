@@ -13,14 +13,17 @@
    width is 1.121× Arial's advance, Figtree 1.002×; ascent and descent from the fonts), so the
    swap barely moves anything. */
 
-/* ── Tokens (the redesign pass of 2026-10-24, GEO-188): one palette for light and dark, defined once with light-dark()
-   and decided by the system's scheme or html[data-theme] (the ?theme= switch of the previews). The ground is a cool
+/* ── Tokens (the redesign pass of 2026-10-24, GEO-188): one palette for light and dark, defined once with light-dark().
+   Light is the default for everyone (third pass): the page does not follow the system's scheme; the dark palette is
+   kept and shown only behind html[data-theme='dark'] (the ?theme=dark switch of the previews), until the owner decides
+   whether dark should follow the system. The ground is a cool
    paper (#f4f4f1) or near-black (#0f1114); the ink is neutral; the blue (#2346d0) is the one accent and the orange
    (#ff7a1a) is a mark, cut to #a84a08 where it reads as text (5.2:1 on the paper); nothing else carries colour. The
    type is the brand lab's D-P02: LB Display Sans (IBM Plex Sans 600, renamed per OFL) for display, Atkinson
-   Hyperlegible Next for everything that is read. The dust (Air.astro) is a 1-device-pixel grain at a few per cent. */
+   Hyperlegible Next for everything that is read. The dust is a tile of single-device-pixel grains on the page's own
+   background, under everything else (body, below). */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --paper: light-dark(#f4f4f1, #0f1114); --surface: light-dark(#ffffff, #17191d);
   --ink: light-dark(#15171a, #ecece8); --ink-2: light-dark(#4a4f55, #b2b5ba); --ink-3: light-dark(#5c6166, #a0a4aa);
   --line: light-dark(#e1e2dd, #2a2d33); --line-strong: light-dark(#cfd1cb, #363a41); --line-ink: light-dark(#8a8e93, #70757c);
@@ -57,16 +60,16 @@
   --header: 72px;
   --shadow-float: 0 1px 2px rgb(0 0 0 / .06), 0 18px 48px rgb(0 0 0 / .12);
   --shadow-field: 0 1px 2px rgb(0 0 0 / .04), 0 24px 60px -28px rgb(0 0 0 / .28);
-  /* The dust: a tile of one-device-pixel grains (public/material/dust-*.png), at a few per cent, tuned by scheme. */
-  --dust-tile: url('/material/dust-light.png'); --dust-opacity: .055;
-  --dust-size: 192px;
+  /* The dust: a 240-pixel tile of single grains (public/material/dust-*.png, written by scripts/dust.mjs), its faint
+     levels baked into the image, drawn at one tile pixel per device pixel. */
+  --dust-tile: url('/material/dust-light.png');
+  --dust-size: 240px;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --dust-tile: url('/material/dust-dark.png'); --dust-opacity: .075; } }
-html[data-theme='dark'] { --dust-tile: url('/material/dust-dark.png'); --dust-opacity: .075; }
-@media (min-resolution: 1.5dppx) { :root { --dust-size: 96px; } }
-@media (min-resolution: 2.5dppx) { :root { --dust-size: 64px; } }
-html[data-theme='light'] { color-scheme: light; }
-html[data-theme='dark'] { color-scheme: dark; }
+html[data-theme='dark'] { color-scheme: dark; --dust-tile: url('/material/dust-dark.png'); }
+@media (min-resolution: 1.5dppx) { :root { --dust-size: 160px; } }
+@media (min-resolution: 2dppx) { :root { --dust-size: 120px; } }
+@media (min-resolution: 2.5dppx) { :root { --dust-size: 96px; } }
+@media (min-resolution: 3dppx) { :root { --dust-size: 80px; } }
 @media (prefers-reduced-motion: reduce) { :root { --fast: 0ms; --base: 0ms; } }
 html[data-v-radius='10'] { --field-r: 10px; }
 html[data-v-radius='16'] { --field-r: 16px; }
@@ -80,7 +83,10 @@ html[data-v-controls='follow'] { --control-r: var(--field-r); }
 /* A8: anchors land below the header, and below the folded "On this page" bar on narrow screens. */
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: var(--anchor-top); background: var(--paper); --anchor-top: calc(var(--header) + 24px); }
 @media (max-width: 63.99rem) { html { --anchor-top: calc(var(--header) + 64px); } }
-body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--size-body)/1.6 var(--text); font-variant-numeric: tabular-nums;
+/* The layers (third pass): the page's colour, then the dust, then everything else (text, buttons, figures, header,
+   footer); nothing lies under the dust. The tile repeats from the page's corner and scrolls with the page, so it runs on
+   as far as the page does. Surfaces with their own fill (cards, fields) cover it, as anything above it would. */
+body { margin: 0; background-color: var(--paper); background-image: var(--dust-tile); background-size: var(--dust-size) var(--dust-size); background-repeat: repeat; color: var(--ink); font: 400 var(--size-body)/1.6 var(--text); font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-wrap: break-word; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
@@ -157,9 +163,11 @@ button { cursor: pointer; }
 .card-body { padding: 18px; }
 
 @media (forced-colors: active) {
+  body { background-image: none; }
   .chip { forced-color-adjust: none; background: Canvas; color: CanvasText; border-color: CanvasText; }
   .btn { border: 1px solid ButtonText; }
 }
+@media print { body { background-image: none; } }
 
 @media (max-width: 52rem) { :root { --header: 64px; } }
 

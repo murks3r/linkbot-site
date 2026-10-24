@@ -1,10 +1,13 @@
 ---
-/* Reach: the primary action that reaches for the pointer (the founder's reference of 2026-10-24: a pill button from
-   which a drawn arm grows towards the cursor). An ink-drawn arm comes out of the button towards a pointer within reach,
-   its open hand follows the cursor and closes a little as the cursor comes near, and it withdraws when the pointer
-   leaves. It is decoration and nothing else: aria-hidden, no pointer events, no layout of its own, drawn only for a
-   fine pointer with motion allowed (never on touch, under reduced motion or forced colours), one animation frame at a
-   time and only while a pointer is near. The link itself is an ordinary .btn and works without any of it. */
+/* Reach: the primary action with a drawn arm (the founder's reference of 2026-10-24: a pill button from which an
+   ink-drawn arm grows towards the cursor). The arm follows the pointer, so it is an animation that depends on input,
+   which the third pass (GEO-188) rules out: by default the button stands alone. A self-running arm was tried and set
+   aside: beside the field it could only reach across the lede or the Venn's list. The arm stays for comparison behind
+   ?arm=pointer: it comes out of the button towards a pointer within reach, its open hand follows the cursor and closes
+   a little as the cursor comes near, and it withdraws when the pointer leaves. It is decoration and nothing else:
+   aria-hidden, no pointer events, no layout of its own (not even a box while it rests), drawn only for a fine pointer
+   with motion allowed (never on touch, under reduced motion or forced colours). The link itself is an ordinary .btn
+   and works without any of it. */
 interface Props { href?: string; label: string; class?: string; reach?: number }
 const { href, label, class: className = 'btn btn-ink', reach = 240 } = Astro.props;
 ---
@@ -28,16 +31,17 @@ const { href, label, class: className = 'btn btn-ink', reach = 240 } = Astro.pro
 
 <style>
   .reach { position: relative; display: inline-block; }
-  .reach-arm { position: absolute; left: 50%; top: 50%; translate: -50% -50%; overflow: visible; pointer-events: none; z-index: 2; opacity: 0; color: var(--ink); }
-  .reach-arm[data-on] { opacity: 1; }
+  .reach-arm { position: absolute; left: 50%; top: 50%; translate: -50% -50%; overflow: visible; pointer-events: none; z-index: 2; display: none; color: var(--ink); }
+  .reach-arm[data-on] { display: block; }
   @media (prefers-reduced-motion: reduce), (pointer: coarse), (forced-colors: active) { .reach-arm { display: none; } }
 </style>
 
 <script>
-  /* One pointer listener for the page; each arm follows only while the pointer is within its reach. */
+  /* Only with ?arm=pointer: one pointer listener for the page; each arm follows only while the pointer is within its reach. */
   const fine = matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches && !matchMedia('(forced-colors: active)').matches;
+  const byPointer = document.documentElement.getAttribute('data-arm') === 'pointer';
   const arms: Array<(x: number, y: number) => void> = [];
-  if (fine) for (const wrap of document.querySelectorAll<HTMLElement>('[data-reach]')) arms.push(arm(wrap));
+  if (fine && byPointer) for (const wrap of document.querySelectorAll<HTMLElement>('[data-reach]')) arms.push(arm(wrap));
   if (arms.length) {
     addEventListener('pointermove', event => { for (const follow of arms) follow(event.clientX, event.clientY); }, { passive: true });
     addEventListener('pointerout', event => { if (!event.relatedTarget) for (const follow of arms) follow(-1e6, -1e6); });

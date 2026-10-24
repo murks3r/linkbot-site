@@ -3,7 +3,7 @@
    not; a receipt set like a receipt. One accent, the blue, for what is seen; the orange ink for what is not. */
 
 /* ── 1 · The opening ────────────────────────────────────────────────────────────────────────────────── */
-.fc-hero { padding-block: clamp(40px, 7vw, 96px) 0; }
+.fc-hero { padding-block: clamp(40px, 7vw, 96px) 0; overflow-x: clip; } /* the arm may draw past the edge; never the page */
 .fc-hero-inner { display: grid; gap: var(--space-head); align-content: start; justify-items: start; }
 .fc-hero h1 { max-width: 14ch; }
 .fc-line { display: block; }

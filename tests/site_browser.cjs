@@ -22,8 +22,11 @@ if (!fs.existsSync(path.join(DIST, 'index.html'))) throw Error('build the site f
 const LANGS = ['en', 'de', 'es', 'it', 'fr'];
 const PAGES = ['/', '/how-it-works', '/who-sees-what', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
 const WIDTHS = [1440, 1024, 768, 390, 320];
-/* SITE_SCHEME=dark runs every page in the dark scheme (the site defines both; the audit measures the computed colours). */
+/* SITE_SCHEME=dark runs every page in the dark palette. Light is the default for everyone (third pass, GEO-188): the
+   page does not follow the system's scheme, so the dark run opens each page with the preview's ?theme=dark (and a dark
+   system, which must not matter); the audit measures the computed colours either way. */
 const SCHEME = process.env.SITE_SCHEME === 'dark' ? 'dark' : 'light';
+const SWITCH = SCHEME === 'dark' ? '?theme=dark' : '';
 const HEIGHTS = { 1440: 900, 1024: 768, 768: 1024, 390: 844, 320: 720 };
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8' };
 const FORBIDDEN = {
@@ -77,7 +80,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
         tab.on('pageerror', e => errors.push(e.message));
         tab.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
         tab.on('request', r => { if (!r.url().startsWith(origin) && !r.url().startsWith('data:')) foreign.push(r.url()); });
-        const response = await tab.goto(origin + route, { waitUntil: 'networkidle' });
+        const response = await tab.goto(origin + route + SWITCH, { waitUntil: 'networkidle' });
         check(response.status() === 200, `${route}: status ${response.status()}`);
         await tab.evaluate(() => document.fonts.ready);
         const meta = await tab.evaluate(() => ({
@@ -89,7 +92,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
           ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map(s => JSON.parse(s.textContent)),
           robots: document.querySelector('meta[name="robots"]')?.content ?? null,
           fallback: document.querySelector('.fallback')?.textContent.trim() ?? '',
-          current: document.querySelector('.menu-lang .menu-panel a[aria-current]')?.getAttribute('lang') ?? '',
+          current: document.querySelector('#lang-menu a[aria-current]')?.getAttribute('lang') ?? '',
           ids: [...document.querySelectorAll('[id]')].map(e => e.id),
           anchors: [...document.querySelectorAll('a[href^="#"]')].map(a => a.getAttribute('href').slice(1)).filter(Boolean),
           links: [...document.querySelectorAll('a[href]')].map(a => a.getAttribute('href')),
@@ -149,13 +152,25 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
       const tab = await context.newPage();
       await tab.goto(origin + '/', { waitUntil: 'networkidle' });
-      await tab.click('.menu-lang summary');
-      await tab.click('.menu-lang .menu-panel a[lang="de"]');
+      // The language lives in one floating button (third pass): not in the masthead, not in the footer.
+      check(await tab.evaluate(() => !document.querySelector('header .menu-lang, header a[hreflang], footer nav:not(#lang-menu) a[hreflang]')), 'language: no list in the masthead or the footer');
+      await tab.click('[data-lang-button]');
+      await tab.click('#lang-menu a[lang="de"]');
       await tab.waitForLoadState('networkidle');
       check(new URL(tab.url()).pathname === '/de' && await tab.evaluate(() => document.documentElement.lang) === 'de', `language switch: ${tab.url()}`);
       await tab.goto(origin + '/de/how-it-works', { waitUntil: 'networkidle' });
-      await tab.click('.menu-lang summary');
-      await tab.click('.menu-lang .menu-panel a[lang="en"]');
+      // By keyboard: Enter opens it on the current language, the arrows move, Escape closes it and focus returns.
+      await tab.focus('[data-lang-button]');
+      await tab.keyboard.press('Enter');
+      await tab.waitForFunction(() => document.activeElement?.closest('#lang-menu'));
+      check(await tab.getAttribute('[data-lang-button]', 'aria-expanded') === 'true' && await tab.evaluate(() => document.activeElement.getAttribute('lang')) === 'de', 'language: Enter opens the list on the current language');
+      await tab.keyboard.press('ArrowUp');
+      check(await tab.evaluate(() => document.activeElement.getAttribute('lang')) === 'en', 'language: the arrow keys move between languages');
+      await tab.keyboard.press('Escape');
+      await tab.waitForFunction(() => document.activeElement?.hasAttribute('data-lang-button'));
+      check(await tab.getAttribute('[data-lang-button]', 'aria-expanded') === 'false', 'language: Escape closes the list and focus returns to the button');
+      await tab.click('[data-lang-button]');
+      await tab.click('#lang-menu a[lang="en"]');
       await tab.waitForLoadState('networkidle');
       check(new URL(tab.url()).pathname === '/how-it-works', `language switch keeps the page: ${tab.url()}`);
       // The table of contents: a click lands on the section's heading, with the anchor in the address.
@@ -171,9 +186,40 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       check(await tab.evaluate(() => [...document.querySelectorAll('.menu-main .menu-panel a')].filter(a => a.offsetParent !== null).length) === 4, 'phone: the menu lists the four pages');
       await tab.keyboard.press('Escape');
       check(await tab.evaluate(() => !document.querySelector('.menu-main').open), 'phone: Escape closes the menu');
+      // On a phone the language button stays clear of the safe margin and of the ask button.
+      const lang = await tab.evaluate(() => { const a = document.querySelector('[data-lang-button]').getBoundingClientRect(), b = document.querySelector('.ask-field .btn').getBoundingClientRect(); return { inside: a.right <= innerWidth - 16 && a.bottom <= innerHeight - 16, over: a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top }; });
+      check(lang.inside && !lang.over, `phone: the language button is clear of the edges and of the ask button (${JSON.stringify(lang)})`);
       // The 404 page is served for an unknown address and offers every language.
       const missing = await tab.goto(origin + '/nothing-here', { waitUntil: 'networkidle' });
       check(missing.status() === 404 && await tab.evaluate(() => document.querySelectorAll('.nf-langs a').length) === 5, '404: served with the five languages');
+      await context.close();
+    }
+
+    // ── 3. Motion and scheme (third pass): light for everyone; the Venn runs by itself, loops, pauses off-screen and on
+    //       its control; no play-again button anywhere. ──
+    {
+      const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: 'dark' });
+      const tab = await context.newPage();
+      await tab.goto(origin + '/', { waitUntil: 'networkidle' });
+      check(await tab.evaluate(() => getComputedStyle(document.body).backgroundColor) === 'rgb(244, 244, 241)', 'scheme: a dark system still gets the light page');
+      check(await tab.evaluate(() => !document.querySelector('[data-venn-replay], [data-replay]')), 'motion: no play-again button');
+      const venn = () => tab.evaluate(() => document.querySelector('[data-disc="need"]').getAttribute('transform') + [...document.querySelectorAll('[data-mark]')].map(m => m.style.opacity).join());
+      const seen = new Set();
+      for (let i = 0; i < 24; i++) { seen.add(await venn()); await tab.waitForTimeout(500); }
+      check(seen.size > 12, `motion: the Venn runs by itself (${seen.size} distinct frames in 12 s)`);
+      await tab.evaluate(() => scrollTo(0, document.body.scrollHeight));
+      await tab.waitForTimeout(300);
+      const away = await venn(); await tab.waitForTimeout(800);
+      check(away === await venn(), 'motion: off-screen the Venn pauses');
+      await tab.evaluate(() => scrollTo(0, 0));
+      await tab.click('[data-motion-toggle]');
+      const held = await venn(); await tab.waitForTimeout(800);
+      check(held === await venn() && await tab.getAttribute('[data-motion-toggle]', 'aria-pressed') === 'true', 'motion: the control pauses the Venn');
+      // On a phone the language button steps aside while a control (here the Venn's) passes beneath it.
+      await tab.setViewportSize({ width: 390, height: 844 });
+      await tab.evaluate(() => { const b = document.querySelector('[data-lang-button]').getBoundingClientRect(), c = document.querySelector('[data-motion-toggle]').getBoundingClientRect(); scrollBy(0, (c.top + c.height / 2) - (b.top + b.height / 2)); });
+      await tab.waitForTimeout(150);
+      check(await tab.evaluate(() => document.querySelector('[data-lang]').hasAttribute('data-yield')), 'phone: the language button steps aside over a control');
       await context.close();
     }
   } finally {
@@ -181,5 +227,5 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
     server.close();
   }
   if (failures.length) { console.error(`${failures.length} failure(s):\n` + failures.map(f => `  ${f}`).join('\n')); process.exit(1); }
-  console.log(`site browser acceptance: ${report.pages} pages (${LANGS.length} languages), ${report.audits} WCAG audits, journeys language switch, table of contents, phone menu, 404; ok`);
+  console.log(`site browser acceptance (${SCHEME}): ${report.pages} pages (${LANGS.length} languages), ${report.audits} WCAG audits, journeys language button, table of contents, phone menu, 404, motion and scheme; ok`);
 })().catch(error => { console.error(error); process.exit(1); });

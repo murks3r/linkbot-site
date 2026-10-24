@@ -11,7 +11,7 @@ export const HOME = {
     need: 'The need',
     offer: 'The offer',
     caption: 'Synthetic · nine criteria of one fixed pair · nothing is matched on this page',
-    replay: 'Play again',
+    pause: 'Pause the motion',
   },
   ledger: {
     eyebrow: 'What happens after confirm',

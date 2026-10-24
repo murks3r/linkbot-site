@@ -4,7 +4,7 @@
 @import './b.css';
 @import './a.css';
 
-.hm-hero { padding-block: clamp(40px, 7vw, 96px) 0; }
+.hm-hero { padding-block: clamp(40px, 7vw, 96px) 0; overflow-x: clip; } /* the Venn's discs and the arm may draw past the edge; never the page */
 /* The grid: the words and the field on the left, the Venn on the right, the asked questions across both columns. The form
    is one element (its script needs that), so it lays its children into the grid itself (display: contents) and the
    spacing comes from the items, not from the form. */
@@ -28,6 +28,12 @@
 .hm-lede { max-width: 38em; color: var(--ink); }
 .hm-hero-venn { min-width: 0; }
 @media (max-width: 64rem) { .hm-hero-venn { order: 3; margin-top: var(--space-block); } .hm-hero-grid > .ask-result { order: 4; } }
+
+/* The ask button's icon: the arrow, or F-I21 (the lab's menu icon) with ?icon=match, the owner's second reading of "icon
+   no. 21 on the matching button" (third pass); the menu button keeps F-I21 in both. */
+.ask-icon { display: inline-flex; }
+.ask-icon-match, html[data-icon='match'] .ask-icon-arrow { display: none; }
+html[data-icon='match'] .ask-icon-match { display: inline-flex; }
 
 /* The ledger's opening heading comes from the section head; the figure's own hero styles do not apply here. */
 #match .ledger { margin-top: 0; }
