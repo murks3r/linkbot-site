@@ -34,7 +34,6 @@ const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, a
         <p class="lede hm-lede">{B.hero.lede}</p>
         <p class="hm-demo"><a class="link" href={to('/demo')}>{B.hero.demo}<Icon name="arrow" /></a></p>
       </div>
-      <div class="hm-hero-venn"><Venn study={1} rows={ROWS} verdicts={A.ledger.verdicts} label={HOME.venn.label} need={HOME.venn.need} offer={HOME.venn.offer} caption={HOME.venn.caption} pause={HOME.venn.pause} /></div>
     <!-- method="dialog": outside a dialog a submit goes nowhere, so without scripts nothing typed here leaves the page
          either; with them, src/front/ask.ts handles the submit event, which still fires. -->
     <form class="ask hm-ask" method="dialog" data-ask data-words={words} novalidate>
@@ -72,6 +71,9 @@ const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, a
         </div>
       </div>
     </form>
+    <!-- After the form in the source, as on a phone, where the Venn stands below the line: the page then never paints the
+         Venn first and pushes it down when the form arrives. On wide screens home.css places it on the right. -->
+    <div class="hm-hero-venn"><Venn study={1} rows={ROWS} verdicts={A.ledger.verdicts} label={HOME.venn.label} need={HOME.venn.need} offer={HOME.venn.offer} caption={HOME.venn.caption} pause={HOME.venn.pause} /></div>
     </div>
   </section>
 
