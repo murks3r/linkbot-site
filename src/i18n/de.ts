@@ -85,7 +85,24 @@ export const de: Catalogue = {
     eyebrow: 'So funktioniert es',
     h1: ['Von der bestätigten Anfrage', 'zur Vorstellung.'],
     lede: 'Jeder Schritt unten steht im Vertrag der Space-API. Wo der Staging-Space einen Schritt noch nicht ausführt, sagt die Seite es.',
-    toc: [['space', 'Ein Space'], ['pack', 'Ein Pack'], ['describe', 'Vier Wege zu beschreiben'], ['confirm', 'Bestätigen'], ['matching', 'Matching'], ['approval', 'Freigabe und Gates'], ['yes', 'Beide Ja'], ['introduction', 'Die Vorstellung'], ['after', 'Danach'], ['sees', 'Wer sieht was'], ['languages', 'Fünf Sprachen'], ['today', 'Was auf dem Staging-Space läuft']] as [string, string][],
+    toc: [['blocks', 'Drei Bausteine'], ['rule', 'Das Ja beider Seiten'], ['path', 'Der Weg in sechs Schritten'], ['space', 'Ein Space'], ['pack', 'Ein Pack'], ['describe', 'Vier Wege zu beschreiben'], ['confirm', 'Bestätigen'], ['matching', 'Matching'], ['approval', 'Freigabe und Gates'], ['yes', 'Beide Ja'], ['introduction', 'Die Vorstellung'], ['after', 'Danach'], ['sees', 'Wer sieht was'], ['languages', 'Fünf Sprachen'], ['today', 'Was auf dem Staging-Space läuft']] as [string, string][],
+    blocks: {
+      title: 'Drei Bausteine',
+      lede: 'Ein Space besteht aus drei Teilen. Jeder ist eine Gruppe von Routen im Vertrag der Space-API.',
+      items: [
+        { name: 'Erfassung', text: 'Ein Käufer oder ein Anbieter beschreibt einen Bedarf oder ein Angebot, per Formular oder in eigenen Worten, prüft jeden Wert und bestätigt. Vor der Bestätigung wird nichts gespeichert, und der Server prüft jeden Wert gegen das Pack des Space.' },
+        { name: 'Beobachten', text: `Eine Beobachtung hält einen bestätigten Bedarf oder ein Angebot offen und sagt nur dem Eigentümer Bescheid, wenn etwas Neues passt, per E-Mail oder Webhook. Der Eigentümer pausiert oder beendet sie jederzeit, auch über einen Link. Stand ${AS_OF}: Die Beobachtungs-E-Mails des Staging-Space gehen an ein Testpostfach und erreichen niemanden, und Webhooks sendet er noch nicht.` },
+        { name: 'Vorstellungen', text: 'Sobald beide Seiten Ja gesagt haben und ein namentlich genannter Operator freigegeben hat, stellt der Server die beiden Seiten einander vor und gibt jeder eine Quittung, wer welche Felder sehen darf. Danach werden beide Seiten nach dem Ergebnis gefragt.' },
+      ],
+    },
+    rule: {
+      title: 'Keine Vorstellung ohne das Ja beider Seiten',
+      paras: [
+        'Das Matching findet mögliche Treffer; es stellt niemanden vor. Jede Seite beantwortet einen möglichen Treffer für sich. Bevor beide Ja gesagt haben, erfährt die andere Seite nichts, und ein späteres Nein widerruft ein Ja.',
+        'Der Space verlangt außerdem die Freigabe eines namentlich genannten Operators nach den Prüfungen, die er festlegt. Der Server legt eine Vorstellung erst an, wenn alle drei vorliegen, in beliebiger Reihenfolge, und lehnt jeden anderen Weg ab.',
+      ],
+    },
+    path: { title: 'Der Weg in sechs Schritten', lede: 'Die sechs Schritte der Demo-Seite, und wer bei jedem handelt.', link: 'Die Demo-Seite' },
     space: {
       title: 'Ein Space ist ein Markt auf einer Plattform',
       paras: [

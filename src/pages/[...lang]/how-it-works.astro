@@ -4,12 +4,15 @@ import Toc from '../../components/Toc.astro';
 import Ways from '../../components/Ways.astro';
 import Stages from '../../components/Stages.astro';
 import Status from '../../components/Status.astro';
-import { langPaths, resolve, type Lang } from '../../i18n';
+import { FRONT } from '../../front/copy';
+import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
 export const getStaticPaths = () => langPaths();
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const { t, fallback } = resolve(lang);
 const d = t.how;
+/* The six steps are the demo page's own (src/front/demo-copy.ts), so the two pages cannot tell the path differently. */
+const steps = FRONT[lang].demo.steps;
 const prose = [d.space, d.pack, d.confirm, d.matching, d.approval, d.yes, d.introduction, d.after, d.languages];
 const ids = ['space', 'pack', 'confirm', 'matching', 'approval', 'yes', 'introduction', 'after', 'languages'];
 const section = (id: string) => ({ id, ...prose[ids.indexOf(id)] });
@@ -26,6 +29,23 @@ const section = (id: string) => ({ id, ...prose[ids.indexOf(id)] });
   <div class="wrap doc">
     <Toc items={d.toc} label={t.site.toc} />
     <div class="doc-body">
+      <section id="blocks" aria-labelledby="blocks-title">
+        <h2 id="blocks-title">{d.blocks.title}</h2>
+        <p>{d.blocks.lede}</p>
+        <dl class="blocks">{d.blocks.items.map(block => <div><dt>{block.name}</dt><dd>{block.text}</dd></div>)}</dl>
+      </section>
+
+      <section id="rule" aria-labelledby="rule-title">
+        <h2 id="rule-title">{d.rule.title}</h2>
+        {d.rule.paras.map(para => <p>{para}</p>)}
+      </section>
+
+      <section id="path" aria-labelledby="path-title">
+        <h2 id="path-title">{d.path.title}</h2>
+        <p>{d.path.lede} <a href={pathFor(lang, '/demo')}>{d.path.link}</a></p>
+        <ol class="steps">{steps.items.map(step => <li><h3>{step.name}</h3><p class="who"><span>{steps.who}:</span> {step.who}</p><p>{step.text}</p></li>)}</ol>
+      </section>
+
       {['space', 'pack'].map(id => { const s = section(id); return <section id={s.id} aria-labelledby={`${s.id}-title`}><h2 id={`${s.id}-title`}>{s.title}</h2>{s.paras.map(para => <p>{para}</p>)}</section>; })}
 
       <section id="describe" aria-labelledby="describe-title">
@@ -53,3 +73,16 @@ const section = (id: string) => ({ id, ...prose[ids.indexOf(id)] });
     </div>
   </div>
 </Base>
+
+<style>
+  .blocks, .steps { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .blocks > div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .steps li { display: list-item; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .steps li > p { margin-top: 4px; }
+  .blocks dt, .steps h3 { font-weight: 650; color: var(--ink); }
+  .steps { list-style: decimal inside; }
+  .steps li::marker { font-weight: 650; color: var(--green); }
+  .steps h3 { display: inline; font-size: inherit; }
+  .who { font-size: var(--size-small); color: var(--ink-2); }
+  .who span { font-weight: 600; }
+</style>

@@ -83,7 +83,24 @@ export const fr: Catalogue = {
     eyebrow: 'Comment ça marche',
     h1: ['D’une demande confirmée', 'à une mise en relation.'],
     lede: 'Chaque étape ci-dessous figure dans le contrat Space API. Là où l’espace staging ne fait pas encore tourner une étape, la page le dit.',
-    toc: [['space', 'Un espace'], ['pack', 'Un pack'], ['describe', 'Quatre façons de décrire'], ['confirm', 'Confirmer'], ['matching', 'L’appariement'], ['approval', 'Approbation et gates'], ['yes', 'Le double oui'], ['introduction', 'La mise en relation'], ['after', 'Ensuite'], ['sees', 'Qui voit quoi'], ['languages', 'Cinq langues'], ['today', 'Ce qui tourne sur l’espace staging']] as [string, string][],
+    toc: [['blocks', 'Trois briques'], ['rule', 'Le oui des deux côtés'], ['path', 'Le parcours en six étapes'], ['space', 'Un espace'], ['pack', 'Un pack'], ['describe', 'Quatre façons de décrire'], ['confirm', 'Confirmer'], ['matching', 'L’appariement'], ['approval', 'Approbation et gates'], ['yes', 'Le double oui'], ['introduction', 'La mise en relation'], ['after', 'Ensuite'], ['sees', 'Qui voit quoi'], ['languages', 'Cinq langues'], ['today', 'Ce qui tourne sur l’espace staging']] as [string, string][],
+    blocks: {
+      title: 'Trois briques',
+      lede: 'Un espace se compose de trois parties. Chacune est un groupe de routes du contrat Space API.',
+      items: [
+        { name: 'Saisie', text: 'Un acheteur ou un fournisseur décrit un besoin ou une offre, par formulaire ou avec ses propres mots, contrôle chaque valeur et confirme. Rien n’est enregistré avant la confirmation, et le serveur contrôle chaque valeur par rapport au pack de l’espace.' },
+        { name: 'Suivi', text: `Un suivi garde ouvert un besoin ou une offre confirmés et prévient seulement son titulaire quand quelque chose de nouveau correspond, par e-mail ou webhook. Le titulaire le met en pause ou y met fin à tout moment, aussi depuis un lien. Au ${AS_OF}, les e-mails de suivi de l’espace staging vont dans une boîte de test et n’atteignent personne, et il n’envoie pas encore de webhooks.` },
+        { name: 'Mises en relation', text: 'Une fois que les deux côtés ont dit oui et qu’un opérateur nommé a approuvé, le serveur met les deux côtés en relation et remet à chacun un reçu indiquant qui peut voir quels champs. Ensuite, on demande aux deux côtés le résultat.' },
+      ],
+    },
+    rule: {
+      title: 'Aucune mise en relation sans le oui des deux côtés',
+      paras: [
+        'L’appariement trouve des correspondances possibles ; il ne met personne en relation. Chaque côté répond pour lui-même à une correspondance possible. Avant que les deux aient dit oui, l’autre côté n’apprend rien, et un non ultérieur révoque un oui.',
+        'L’espace exige aussi l’approbation d’un opérateur nommé après les contrôles qu’il fixe. Le serveur crée une mise en relation seulement quand les trois conditions sont réunies, dans n’importe quel ordre, et refuse toute autre voie.',
+      ],
+    },
+    path: { title: 'Le parcours en six étapes', lede: 'Les six étapes de la page de démonstration, et qui agit à chacune.', link: 'La page de démonstration' },
     space: {
       title: 'Un espace est un marché sur une plateforme',
       paras: [

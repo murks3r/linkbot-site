@@ -95,7 +95,24 @@ export const en = {
     eyebrow: 'How it works',
     h1: ['From a confirmed need', 'to an introduction.'],
     lede: 'Every step below is in the Space API contract. Where the staging space does not run a step yet, the page says so.',
-    toc: [['space', 'A space'], ['pack', 'A pack'], ['describe', 'Four ways to describe'], ['confirm', 'Confirm'], ['matching', 'Matching'], ['approval', 'Approval and gates'], ['yes', 'Both yes'], ['introduction', 'The introduction'], ['after', 'Afterwards'], ['sees', 'Who sees what'], ['languages', 'Five languages'], ['today', 'What runs on the staging space']] as [string, string][],
+    toc: [['blocks', 'Three building blocks'], ['rule', 'Both sides’ yes'], ['path', 'The path in six steps'], ['space', 'A space'], ['pack', 'A pack'], ['describe', 'Four ways to describe'], ['confirm', 'Confirm'], ['matching', 'Matching'], ['approval', 'Approval and gates'], ['yes', 'Both yes'], ['introduction', 'The introduction'], ['after', 'Afterwards'], ['sees', 'Who sees what'], ['languages', 'Five languages'], ['today', 'What runs on the staging space']] as [string, string][],
+    blocks: {
+      title: 'Three building blocks',
+      lede: 'A space is built from three parts. Each is a group of routes in the Space API contract.',
+      items: [
+        { name: 'Intake', text: 'A buyer or a supplier describes a need or an offer, by form or in their own words, checks every value and confirms. Nothing is stored before the confirm, and the server checks every value against the space’s pack.' },
+        { name: 'Watch', text: `A watch keeps a confirmed need or offer open and tells only its owner when something new fits, by email or webhook. The owner pauses or ends it at any time, also from a link. As of ${AS_OF}, the staging space’s watch email goes to a test mailbox and reaches no one, and it sends no webhooks yet.` },
+        { name: 'Introductions', text: 'Once both sides have said yes and a named operator has approved, the server introduces the two sides and gives each a receipt of who may see which fields. Afterwards both sides are asked for the outcome.' },
+      ],
+    },
+    rule: {
+      title: 'No introduction without both sides’ yes',
+      paras: [
+        'Matching finds possible fits; it introduces no one. Each side answers a possible fit for itself. Before both have said yes, the other side learns nothing, and a later no revokes a yes.',
+        'The space also requires a named operator’s approval after the checks it sets. The server creates an introduction only when all three are in place, in any order, and refuses every other way.',
+      ],
+    },
+    path: { title: 'The path in six steps', lede: 'The six steps of the demo page, and who acts at each.', link: 'The demo page' },
     space: {
       title: 'A space is one market on one platform',
       paras: [
