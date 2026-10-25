@@ -1,16 +1,29 @@
 ---
-/* What runs on the staging space today, in three honest columns with the same squares the product
-   uses for evidence: solid = on staging now, split = in the contract and not on staging yet,
-   dashed = not built. */
+/* Where each part of the product stands, in three columns with the same squares the product uses for evidence:
+   solid = on the staging space, split = built or in the contract and not on it, dashed = not built. The rows come from
+   the truth check's status table (src/lib/status.ts), the words from the catalogue's status. */
 import Mark from './Mark.astro';
-import type { Status } from '../i18n/en';
-interface Props { columns: { status: Status; title: string; lead: string; items: string[] }[] }
-const { columns } = Astro.props;
-const TONE = { now: 'fit', contract: 'tradeoff', later: 'unknown' } as const;
+import type { Catalogue } from '../i18n';
+import { STATES, loadStatus, type State } from '../lib/status';
+interface Props { t: Catalogue }
+const { t } = Astro.props;
+const NAME = { 'on staging': 'staging', built: 'built', planned: 'planned' } as const satisfies Record<State, keyof Catalogue['status']['states']>;
+const TONE = { staging: 'fit', built: 'tradeoff', planned: 'unknown' } as const;
+const items = t.status.items as Record<string, string>;
+const rows = loadStatus();
+const columns = STATES.map(state => ({
+  id: NAME[state],
+  ...t.status.states[NAME[state]],
+  items: rows.filter(row => row.state === state).map(row => {
+    const words = items[row.key];
+    if (!words) throw new Error(`status: the catalogue has no words for “${row.key}” (docs/truth-check.md)`);
+    return words;
+  }),
+}));
 ---
 <div class="today">
-  {columns.map(column => <section class="today-col" aria-labelledby={`today-${column.status}`} data-tone={column.status}>
-    <h3 id={`today-${column.status}`}><Mark tone={TONE[column.status]} size={14} />{column.title}</h3>
+  {columns.map(column => <section class="today-col" aria-labelledby={`today-${column.id}`} data-tone={column.id}>
+    <h3 id={`today-${column.id}`}><Mark tone={TONE[column.id]} size={14} />{column.title}</h3>
     <p>{column.lead}</p>
     <ul>{column.items.map(item => <li>{item}</li>)}</ul>
   </section>)}
@@ -24,6 +37,6 @@ const TONE = { now: 'fit', contract: 'tradeoff', later: 'unknown' } as const;
   .today-col ul { display: grid; gap: 6px; padding-top: 8px; border-top: 1px solid var(--line); font-size: var(--size-small); }
   .today-col li { padding-left: 1em; text-indent: -1em; }
   .today-col li::before { content: '·'; display: inline-block; width: 1em; text-indent: 0; color: var(--ink-3); }
-  .today-col[data-tone='later'] { color: var(--ink-2); }
+  .today-col[data-tone='planned'] { color: var(--ink-2); }
   @media (max-width: 56rem) { .today { grid-template-columns: minmax(0, 1fr); } }
 </style>

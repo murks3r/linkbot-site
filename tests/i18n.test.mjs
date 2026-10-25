@@ -49,7 +49,6 @@ const identifiers = catalogue => [
   ...['how', 'platforms', 'verticals', 'developers'].flatMap(page => catalogue[page].toc.map(([id]) => `${page}.toc:${id}`)),
   ...catalogue.home.ways.items.map(way => `home.ways:${way.status}`),
   ...catalogue.how.describe.items.map(way => `how.describe:${way.status}`),
-  ...catalogue.how.today.columns.map(column => `how.today:${column.status}`),
   ...Object.entries(catalogue.integrations.pages).flatMap(([key, page]) => page.sections.flatMap(section => [
     `${key}.section:${section.id}`,
     ...(section.code ? [...(section.items ?? []), ...(section.rows ?? []).map(row => row.name)].map(value => `${key}.${section.id}.code:${value}`) : []),
@@ -62,7 +61,7 @@ test('identifiers are the same in every language', () => {
 
 test('every page has a title and a description of a sensible length', () => {
   for (const [lang, catalogue] of Object.entries(catalogues)) {
-    const pages = [...['home', 'how', 'platforms', 'forPlatforms', 'developers', 'verticals', 'privacy', 'imprint', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];
+    const pages = [...['home', 'how', 'platforms', 'forPlatforms', 'developers', 'status', 'verticals', 'privacy', 'imprint', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];
     for (const [key, page] of pages) {
       assert.ok(page.title.length >= 10 && page.title.length <= 80, `${lang}.${key}.title: ${page.title.length} characters`);
       assert.ok(page.description.length >= 50 && page.description.length <= 160, `${lang}.${key}.description: ${page.description.length} characters`);

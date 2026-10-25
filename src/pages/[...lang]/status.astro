@@ -1,0 +1,26 @@
+---
+/* Where each part of the product stands, dated: built from the status table in docs/truth-check.md (src/lib/status.ts),
+   so the page cannot say more than the truth check. Words: the catalogue's status. */
+import Base from '../../layouts/Base.astro';
+import Status from '../../components/Status.astro';
+import { langPaths, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const s = t.status;
+---
+<Base lang={lang} t={t} fallback={fallback} title={s.title} description={s.description} path="/status" crumbs={[[s.eyebrow, '/status']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{s.eyebrow}</p>
+      <h1>{s.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{s.lede}</p>
+    </div>
+  </section>
+  <div class="wrap">
+    <Status t={t} />
+    <p class="note">{s.source}</p>
+    <p class="note">{t.site.synthetic}</p>
+  </div>
+</Base>

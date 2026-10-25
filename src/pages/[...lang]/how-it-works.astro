@@ -67,7 +67,8 @@ const section = (id: string) => ({ id, ...prose[ids.indexOf(id)] });
       <section id="today" aria-labelledby="today-title">
         <h2 id="today-title">{d.today.title}</h2>
         <p>{d.today.lede}</p>
-        <Status columns={d.today.columns} />
+        <Status t={t} />
+        <p><a href={pathFor(lang, '/status')}>{t.status.link}</a></p>
         <p class="note">{t.site.synthetic}</p>
       </section>
     </div>
