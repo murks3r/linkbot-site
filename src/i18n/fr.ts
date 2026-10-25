@@ -13,7 +13,7 @@ export const fr: Catalogue = {
     menu: 'Menu',
     toc: 'Sur cette page',
     language: 'Langue',
-    nav: { how: 'Comment ça marche', sees: 'Qui voit quoi', platforms: 'Pour les plateformes', verticals: 'Pour les secteurs' },
+    nav: { how: 'Comment ça marche', sees: 'Qui voit quoi', platforms: 'Pour les plateformes', verticals: 'Pour les secteurs', integrations: 'Intégrations' },
     footer: {
       product: 'Linkbot',
       legal: 'Informations légales',
@@ -237,9 +237,9 @@ export const fr: Catalogue = {
   },
 
   platforms: {
-    title: 'Pour les plateformes : un espace Linkbot sur vos propres pages',
+    title: 'Intégrations : un espace Linkbot sur vos propres pages',
     description: 'Un espace Linkbot sur vos pages : un script, un élément, une Publishable Key, votre avis de données, une console pour l’équipe, des webhooks pour votre serveur.',
-    eyebrow: 'Pour les plateformes',
+    eyebrow: 'Intégrations',
     h1: ['Un espace', 'sur vos propres pages.'],
     lede: 'Un script et un élément affichent le widget dans votre page, dans vos polices et vos couleurs. Votre équipe approuve les dossiers dans une console sur votre machine ou derrière votre propre connexion. Votre serveur apprend les événements par des webhooks signés.',
     toc: [['pages', 'Chaque intégration'], ['embed', 'L’embed'], ['keys', 'Clés et origines'], ['console', 'La console'], ['server', 'SDK et webhooks'], ['recipes', 'Recettes'], ['state', 'État actuel']] as [string, string][],
@@ -280,6 +280,46 @@ export const fr: Catalogue = {
       ],
     },
     state: { title: 'État actuel' },
+  },
+
+  forPlatforms: {
+    title: 'Pour les plateformes : ce qu’un opérateur obtient avec un espace Linkbot',
+    description: 'Pour un opérateur qui veut un espace pour son marché : les quatre voies d’accès, ce qu’obtient une plateforme et ce qui reste à elle : ses données et sa décision.',
+    eyebrow: 'Pour les plateformes',
+    h1: ['Votre marché, vos pages,', 'votre décision.'],
+    lede: 'Pour un opérateur qui veut un espace pour son propre marché : comment un espace atteint vos utilisateurs, ce que vous obtenez et ce qui reste à vous. Cette page décrit le contrat Space API et l’espace staging synthétique de Geoprocure. Aucune plateforme réelle ne fait encore tourner d’espace, et cette page n’indique aucun prix.',
+    toc: [['ways', 'Quatre voies d’accès'], ['gets', 'Ce que vous obtenez'], ['yours', 'Ce qui reste à vous'], ['details', 'Les détails']] as [string, string][],
+    ways: {
+      title: 'Quatre voies d’accès',
+      lede: `Au ${AS_OF}, deux d’entre elles tournent sur l’espace staging, et deux ne sont pas construites.`,
+      items: [
+        { name: 'Pages hébergées', status: 'later' as Status, body: 'Une page servie pour vous, vers laquelle vous créez un lien au lieu d’intégrer. Elle n’est pas construite. Aujourd’hui, un espace n’apparaît que sur vos propres pages, par l’intégration ou par votre propre serveur.' },
+        { name: 'L’intégration', status: 'now' as Status, body: 'Un script et un élément sur votre page. Le script vient de l’instance propre à votre espace ; l’élément porte votre clé publiable, qui ne fonctionne que sur les origines que votre espace autorise. Ses modes : décrire, tableau, suivi et les miens. L’instance staging sert la version 0.3.0-v1 du widget.' },
+        { name: 'L’API et le SDK', status: 'now' as Status, body: `Votre serveur parle à Space API avec la clé secrète, qui n’apparaît jamais dans une page : il peut créer des besoins et des offres, enregistrer des contrôles et des approbations, et lire les mises en relation et les résultats. Le SDK donne à votre serveur un client typé par le contrat. Au ${AS_OF}, le SDK n’est pas publié ; son code est dans le dépôt de Connect.` },
+        { name: 'MCP', status: 'later' as Status, body: 'Prévu, non construit : un serveur MCP par espace, par lequel un agent d’IA prépare un besoin ou une offre et une personne confirme et répond. Le propriétaire a choisi cette direction ; sa conception est proposée et son contrat est un squelette.' },
+      ],
+    },
+    gets: {
+      title: 'Ce qu’obtient une plateforme',
+      items: [
+        'Un espace à elle : une instance pour un marché, avec sa propre base de données, ses clés et son journal de suppression.',
+        'Un pack avec le vocabulaire de votre marché. Le formulaire, la lecture du texte, le tableau et les règles d’appariement en découlent.',
+        'Un widget qui reprend la police et la couleur du texte de votre page, avec votre propre mention sur les données au-dessus de son bouton de confirmation.',
+        'Un appariement avec un verdict par critère, jamais un score, et une mise en relation seulement après le oui des deux côtés et l’approbation de votre équipe.',
+        `Une console pour votre équipe : la file d’approbation, les dossiers avec leurs contrôles, les mises en relation avec reçus, et les résultats. Elle tourne sur votre machine ou derrière votre propre connexion. Au ${AS_OF}, elle tourne sur un échantillon de données synthétiques et n’est pas publiée.`,
+        `Des webhooks vers votre serveur, avec des ids et des états, jamais de coordonnées. Ils sont dans le contrat ; au ${AS_OF}, l’espace staging ne les envoie pas.`,
+      ],
+    },
+    yours: {
+      title: 'Ce qui reste à vous',
+      items: [
+        'Votre décision. Aucune mise en relation n’a lieu sans qu’un opérateur nommé de votre équipe l’approuve, après les contrôles que fixe votre espace. Le système ne tranche jamais un contrôle, et chaque côté dit oui ou non pour lui-même.',
+        'Vos données. Les besoins, offres et correspondances d’un espace ne sont partagés avec aucun autre espace. Les webhooks ne portent aucune coordonnée ; votre serveur récupère les détails avec sa clé secrète.',
+        'Vos pages. Votre propre mention sur les données, votre police et vos couleurs. Le widget ne dépose aucun cookie et n’envoie rien à personne d’autre que votre espace.',
+        'Votre connexion. Votre équipe se connecte par votre propre connexion ; il n’existe pas de connexion Linkbot pour les opérateurs.',
+      ],
+    },
+    details: { title: 'Les détails', lede: 'Les pages d’intégration montrent comment fonctionne chaque partie : l’intégration, les clés et origines, la console, le SDK et les webhooks, et des recettes pour HTML simple, WordPress, Next.js et Astro.', link: 'Intégrations' },
   },
 
   verticals: {

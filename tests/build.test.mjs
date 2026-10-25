@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { LANGS, DEFAULT_LANG, pathFor, catalogues } from '../src/i18n/index.ts';
 
-const PAGES = ['/', '/how-it-works', '/who-sees-what', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
+const PAGES = ['/', '/how-it-works', '/who-sees-what', '/for-platforms', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
 const dist = new URL('../dist/', import.meta.url);
 const file = (lang, page) => { const p = pathFor(lang, page); return new URL(`.${p === '/' ? '/index' : p}.html`, dist); };
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';

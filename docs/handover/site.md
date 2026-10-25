@@ -69,6 +69,13 @@ It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and
 | The handover, kept current | [#36](https://github.com/murks3r/linkbot-site/pull/36), [#37](https://github.com/murks3r/linkbot-site/pull/37) | `d284ce2`, `66eccbf` |
 | The status sentences, true again and dated. Text and the board run on the staging space, the instance serves the widget, and the console's routes exist since 0.2.9; watches, webhooks and outgoing email are not there yet. It adds `src/i18n/status-date.ts` and `tests/status.test.mjs`. | [#38](https://github.com/murks3r/linkbot-site/pull/38) | the merge of #38 |
 
+### Since #38 (2026-10-25)
+
+- `/demo` (#43): a buyer's whole path in six steps; the widget only in a preview build given `PUBLIC_DEMO_EMBED_URL` and `PUBLIC_DEMO_KEY`, which waits for the owner's go.
+- `/how-it-works` (#44) opens with the three building blocks (Intake, Watch, Introductions), the rule of both sides' yes and the demo's six steps.
+- `/for-platforms` (S-3): the four ways in (hosted pages and MCP marked not built), what a platform gets, what stays its own. The header's and footer's "For platforms" lead here; `/platforms` and its six pages are now "Integrations".
+- The build has 76 pages: 15 in each of five languages, plus the 404 page.
+
 ### The front, since #35
 
 This carries out the owner's site decisions of 2026-10-24, recorded on GEO-188.

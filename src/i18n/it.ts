@@ -13,7 +13,7 @@ export const it: Catalogue = {
     menu: 'Menu',
     toc: 'In questa pagina',
     language: 'Lingua',
-    nav: { how: 'Come funziona', sees: 'Chi vede cosa', platforms: 'Per le piattaforme', verticals: 'Per i verticali' },
+    nav: { how: 'Come funziona', sees: 'Chi vede cosa', platforms: 'Per le piattaforme', verticals: 'Per i verticali', integrations: 'Integrazioni' },
     footer: {
       product: 'Linkbot',
       legal: 'Informazioni legali',
@@ -237,9 +237,9 @@ export const it: Catalogue = {
   },
 
   platforms: {
-    title: 'Per le piattaforme: uno spazio Linkbot sulle Sue pagine',
+    title: 'Integrazioni: uno spazio Linkbot sulle Sue pagine',
     description: 'Uno spazio Linkbot sulle Sue pagine: uno script e un elemento, una Publishable Key, la Sua informativa dati, la console per il team, i webhook per il server.',
-    eyebrow: 'Per le piattaforme',
+    eyebrow: 'Integrazioni',
     h1: ['Uno spazio', 'sulle Sue pagine.'],
     lede: 'Uno script e un elemento mostrano il widget nella Sua pagina, con i Suoi font e i Suoi colori. Il Suo team approva i casi in una console sulla Sua macchina o dietro il Suo login. Il Suo server riceve gli eventi tramite webhook firmati.',
     toc: [['pages', 'Ogni integrazione'], ['embed', 'L’embed'], ['keys', 'Chiavi e origin'], ['console', 'La console'], ['server', 'SDK e webhook'], ['recipes', 'Ricette'], ['state', 'A che punto siamo']] as [string, string][],
@@ -280,6 +280,46 @@ export const it: Catalogue = {
       ],
     },
     state: { title: 'A che punto siamo' },
+  },
+
+  forPlatforms: {
+    title: 'Per le piattaforme: cosa ottiene un operatore con uno spazio Linkbot',
+    description: 'Per un operatore che vuole uno spazio per il proprio mercato: le quattro vie d’accesso, cosa ottiene una piattaforma e cosa resta suo: i suoi dati e la sua decisione.',
+    eyebrow: 'Per le piattaforme',
+    h1: ['Il Suo mercato, le Sue pagine,', 'la Sua decisione.'],
+    lede: 'Per un operatore che vuole uno spazio per il proprio mercato: come uno spazio raggiunge i Suoi utenti, cosa ottiene e cosa resta Suo. Questa pagina descrive il contratto della Space API e lo spazio di staging sintetico di Geoprocure. Nessuna piattaforma reale gestisce ancora uno spazio, e questa pagina non indica prezzi.',
+    toc: [['ways', 'Quattro vie d’accesso'], ['gets', 'Cosa ottiene'], ['yours', 'Cosa resta Suo'], ['details', 'I dettagli']] as [string, string][],
+    ways: {
+      title: 'Quattro vie d’accesso',
+      lede: `Al ${AS_OF}, due di esse girano sullo spazio di staging e due non sono costruite.`,
+      items: [
+        { name: 'Pagine ospitate', status: 'later' as Status, body: 'Una pagina servita per Lei, da collegare invece di incorporare. Non è costruita. Oggi uno spazio compare solo sulle Sue pagine, tramite l’incorporamento o tramite il Suo server.' },
+        { name: 'L’incorporamento', status: 'now' as Status, body: 'Uno script e un elemento sulla Sua pagina. Lo script arriva dall’istanza propria del Suo spazio; l’elemento porta la Sua chiave pubblicabile, che funziona solo sulle origini consentite dal Suo spazio. Le sue modalità: descrizione, bacheca, monitoraggio e i miei. L’istanza di staging serve la versione 0.3.0-v1 del widget.' },
+        { name: 'L’API e l’SDK', status: 'now' as Status, body: `Il Suo server parla con la Space API con la chiave segreta, che non compare mai in una pagina: può inserire fabbisogni e offerte, registrare controlli e approvazioni, e leggere presentazioni ed esiti. L’SDK dà al Suo server un client tipizzato dal contratto. Al ${AS_OF} l’SDK non è pubblicato; il suo codice è nel repository di Connect.` },
+        { name: 'MCP', status: 'later' as Status, body: 'Previsto, non costruito: un server MCP per spazio, tramite il quale un agente IA prepara un fabbisogno o un’offerta e una persona conferma e risponde. Il titolare ha scelto questa direzione; il suo progetto è proposto e il suo contratto è uno scheletro.' },
+      ],
+    },
+    gets: {
+      title: 'Cosa ottiene una piattaforma',
+      items: [
+        'Uno spazio proprio: un’istanza per un mercato, con il proprio database, le proprie chiavi e il proprio registro delle cancellazioni.',
+        'Un pack con il vocabolario del Suo mercato. Il modulo, la lettura del testo, la bacheca e le regole della corrispondenza ne derivano.',
+        'Un widget che riprende il carattere e il colore del testo della Sua pagina, con la Sua informativa sui dati sopra il pulsante di conferma.',
+        'Corrispondenza con un verdetto per criterio, mai un punteggio, e una presentazione solo dopo il sì di entrambe le parti e l’approvazione del Suo team.',
+        `Una console per il Suo team: la coda di approvazione, i casi con i loro controlli, le presentazioni con ricevute e gli esiti. Funziona sul Suo computer o dietro il Suo login. Al ${AS_OF} funziona su un campione con dati sintetici e non è pubblicata.`,
+        `Webhook verso il Suo server, con id e stati, mai dati di contatto. Sono nel contratto; al ${AS_OF} lo spazio di staging non li invia.`,
+      ],
+    },
+    yours: {
+      title: 'Cosa resta Suo',
+      items: [
+        'La Sua decisione. Nessuna presentazione avviene senza che un operatore con nome del Suo team la approvi, dopo i controlli fissati dal Suo spazio. Il sistema non decide mai un controllo, e ogni parte dice sì o no per conto proprio.',
+        'I Suoi dati. Fabbisogni, offerte e corrispondenze di uno spazio non vengono condivisi con un altro spazio. I webhook non portano dati di contatto; il Suo server recupera i dettagli con la sua chiave segreta.',
+        'Le Sue pagine. La Sua informativa sui dati, il Suo carattere e i Suoi colori. Il widget non imposta cookie e non invia nulla a nessuno se non al Suo spazio.',
+        'Il Suo login. Il Suo team accede tramite il Suo login; non esiste un login Linkbot per gli operatori.',
+      ],
+    },
+    details: { title: 'I dettagli', lede: 'Le pagine di integrazione mostrano come funziona ogni parte: l’incorporamento, chiavi e origini, la console, l’SDK e i webhook, e ricette per HTML semplice, WordPress, Next.js e Astro.', link: 'Integrazioni' },
   },
 
   verticals: {

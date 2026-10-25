@@ -15,7 +15,7 @@ export const de: Catalogue = {
     menu: 'Menü',
     toc: 'Auf dieser Seite',
     language: 'Sprache',
-    nav: { how: 'So funktioniert es', sees: 'Wer was sieht', platforms: 'Für Plattformen', verticals: 'Für Branchen' },
+    nav: { how: 'So funktioniert es', sees: 'Wer was sieht', platforms: 'Für Plattformen', verticals: 'Für Branchen', integrations: 'Integrationen' },
     footer: {
       product: 'Linkbot',
       legal: 'Rechtliches',
@@ -239,9 +239,9 @@ export const de: Catalogue = {
   },
 
   platforms: {
-    title: 'Für Plattformen: ein Linkbot-Space auf Ihren eigenen Seiten',
+    title: 'Integrationen: ein Linkbot-Space auf Ihren eigenen Seiten',
     description: 'Ein Linkbot-Space auf Ihren Seiten: ein Skript und ein Element, ein Publishable Key, Ihr Datenhinweis, eine Konsole für Ihr Team, Webhooks für Ihren Server.',
-    eyebrow: 'Für Plattformen',
+    eyebrow: 'Integrationen',
     h1: ['Ein Space', 'auf Ihren eigenen Seiten.'],
     lede: 'Ein Skript und ein Element zeigen das Widget auf Ihrer Seite, in Ihren Schriften und Farben. Ihr Team gibt Fälle in einer Konsole auf Ihrem Rechner oder hinter Ihrem eigenen Login frei. Ihr Server erfährt von Ereignissen über signierte Webhooks.',
     toc: [['pages', 'Jede Integration'], ['embed', 'Das Embed'], ['keys', 'Schlüssel und Origins'], ['console', 'Die Konsole'], ['server', 'SDK und Webhooks'], ['recipes', 'Rezepte'], ['state', 'Wo es steht']] as [string, string][],
@@ -282,6 +282,46 @@ export const de: Catalogue = {
       ],
     },
     state: { title: 'Wo es steht' },
+  },
+
+  forPlatforms: {
+    title: 'Für Plattformen: was ein Betreiber mit einem Linkbot-Space bekommt',
+    description: 'Für einen Betreiber, der einen Space für seinen Markt will: die vier Wege hinein, was eine Plattform bekommt, und was ihr bleibt: ihre Daten und ihre Entscheidung.',
+    eyebrow: 'Für Plattformen',
+    h1: ['Ihr Markt, Ihre Seiten,', 'Ihre Entscheidung.'],
+    lede: 'Für einen Betreiber, der einen Space für seinen eigenen Markt will: wie ein Space Ihre Nutzer erreicht, was Sie bekommen und was Ihnen bleibt. Diese Seite beschreibt den Vertrag der Space-API und Geoprocures synthetischen Staging-Space. Noch betreibt keine echte Plattform einen Space, und diese Seite nennt keine Preise.',
+    toc: [['ways', 'Vier Wege hinein'], ['gets', 'Was Sie bekommen'], ['yours', 'Was Ihnen bleibt'], ['details', 'Die Einzelheiten']] as [string, string][],
+    ways: {
+      title: 'Vier Wege hinein',
+      lede: `Stand ${AS_OF}: Zwei davon laufen auf dem Staging-Space, zwei sind nicht gebaut.`,
+      items: [
+        { name: 'Gehostete Seiten', status: 'later' as Status, body: 'Eine für Sie bereitgestellte Seite, auf die Sie verlinken, statt einzubetten. Sie ist nicht gebaut. Heute erscheint ein Space nur auf Ihren eigenen Seiten, über die Einbettung oder über Ihren eigenen Server.' },
+        { name: 'Die Einbettung', status: 'now' as Status, body: 'Ein Skript und ein Element auf Ihrer Seite. Das Skript kommt von der eigenen Instanz Ihres Space; das Element trägt Ihren Publishable Key, der nur auf den Origins gilt, die Ihr Space erlaubt. Seine Modi: Beschreiben, Board, Beobachten und Meine. Die Staging-Instanz liefert das Widget in der Version 0.3.0-v1 aus.' },
+        { name: 'Die API und das SDK', status: 'now' as Status, body: `Ihr Server spricht mit dem Secret Key mit der Space-API, und dieser Schlüssel erscheint nie in einer Seite: Er kann Bedarfe und Angebote anlegen, Prüfungen und Freigaben erfassen und Vorstellungen und Ergebnisse lesen. Das SDK gibt Ihrem Server einen Client, der durch den Vertrag typisiert ist. Stand ${AS_OF} ist das SDK nicht veröffentlicht; sein Code liegt im Connect-Repository.` },
+        { name: 'MCP', status: 'later' as Status, body: 'Geplant, nicht gebaut: ein MCP-Server je Space, über den ein KI-Agent einen Bedarf oder ein Angebot vorbereitet und ein Mensch bestätigt und antwortet. Der Eigentümer hat diese Richtung gewählt; ihr Entwurf ist vorgeschlagen, ihr Vertrag ein Gerüst.' },
+      ],
+    },
+    gets: {
+      title: 'Was eine Plattform bekommt',
+      items: [
+        'Einen eigenen Space: eine Instanz für einen Markt, mit eigener Datenbank, eigenen Schlüsseln und eigenem Löschprotokoll.',
+        'Ein Pack mit dem Vokabular Ihres Marktes. Das Formular, das Lesen von Text, das Board und die Regeln des Matchings folgen daraus.',
+        'Ein Widget, das Schrift und Textfarbe Ihrer Seite übernimmt, mit Ihrem eigenen Datenhinweis über seinem Bestätigen-Knopf.',
+        'Matching mit einem Urteil je Kriterium, nie einer Punktzahl, und eine Vorstellung erst nach dem Ja beider Seiten und der Freigabe Ihres Teams.',
+        `Eine Konsole für Ihr Team: die Freigabe-Warteschlange, Fälle mit ihren Prüfungen, Vorstellungen mit Quittungen und Ergebnisse. Sie läuft auf Ihrem Rechner oder hinter Ihrem eigenen Login. Stand ${AS_OF} läuft sie auf einem Muster mit synthetischen Daten und ist nicht veröffentlicht.`,
+        `Webhooks an Ihren Server, mit IDs und Zuständen, nie mit Kontaktdaten. Sie stehen im Vertrag; Stand ${AS_OF} sendet der Staging-Space sie nicht.`,
+      ],
+    },
+    yours: {
+      title: 'Was Ihnen bleibt',
+      items: [
+        'Ihre Entscheidung. Keine Vorstellung kommt zustande, ohne dass ein namentlich genannter Operator Ihres Teams sie freigibt, nach den Prüfungen, die Ihr Space festlegt. Das System entscheidet nie über eine Prüfung, und jede Seite sagt für sich Ja oder Nein.',
+        'Ihre Daten. Bedarfe, Angebote und Treffer eines Space werden mit keinem anderen Space geteilt. Webhooks tragen keine Kontaktdaten; Ihr Server holt Einzelheiten mit seinem Secret Key.',
+        'Ihre Seiten. Ihr eigener Datenhinweis, Ihre Schrift und Farben. Das Widget setzt keine Cookies und sendet nichts an jemand anderen als Ihren Space.',
+        'Ihr Login. Ihr Team meldet sich über Ihren eigenen Login an; einen Linkbot-Login für Operatoren gibt es nicht.',
+      ],
+    },
+    details: { title: 'Die Einzelheiten', lede: 'Die Integrationsseiten zeigen, wie jeder Teil funktioniert: die Einbettung, Schlüssel und Origins, die Konsole, das SDK und Webhooks, und Rezepte für reines HTML, WordPress, Next.js und Astro.', link: 'Integrationen' },
   },
 
   verticals: {
