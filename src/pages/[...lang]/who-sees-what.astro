@@ -1,17 +1,16 @@
 ---
-/* Who sees what, and when (redesign pass, GEO-188, 2026-10-24): direction C as its own page. The words are English
-   for every language until they are translated, the catalogue's own strings on the page included (the rules, deletion,
-   the synthetic note, the masthead and the footer): a page in another language is English throughout, as any page
-   without its translation is (src/i18n/index.ts), says so at the top (the fallback notice) and carries lang="en". */
+/* Who sees what, and when (redesign pass, GEO-188, 2026-10-24): direction C as its own page, in every language; its
+   words from src/front/copy.ts, the rules, deletion and the synthetic note from the catalogue. */
 import Base from '../../layouts/Base.astro';
 import WhoSeesWhat from '../../components/front/WhoSeesWhat.astro';
-import { C } from '../../front/c-copy';
-import { DEFAULT_LANG, langPaths, resolve, type Lang } from '../../i18n';
+import { FRONT } from '../../front/copy';
+import { langPaths, resolve, type Lang } from '../../i18n';
 export const getStaticPaths = () => langPaths();
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const { t } = resolve(DEFAULT_LANG);
+const { t } = resolve(lang);
+const { c: C } = FRONT[lang];
 ---
-<Base lang={lang} t={t} fallback={lang !== DEFAULT_LANG} title={C.meta.title} description={C.meta.description} path="/who-sees-what" crumbs={[[t.site.nav.sees, '/who-sees-what']]} front>
+<Base lang={lang} t={t} title={C.meta.title} description={C.meta.description} path="/who-sees-what" crumbs={[[t.site.nav.sees, '/who-sees-what']]} front>
   <WhoSeesWhat lang={lang} t={t} />
 </Base>

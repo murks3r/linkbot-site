@@ -16,7 +16,7 @@ export const ROWS: Row[] = [
   { key: 'quantity', label: 'Quantity', importance: 'must', need: '22,500–27,500 t', offer: '20,000–25,000 t', verdict: 'meets', why: 'the two ranges overlap' },
   { key: 'incoterm', label: 'Delivery terms', importance: 'must', need: 'CFR', offer: 'CFR, CIF or FOB', verdict: 'meets', why: 'the asked term is among the offered' },
   { key: 'port', label: 'Named port', importance: 'must', need: 'Augusta (IT AUG)', offer: 'Augusta, Ravenna or Tarragona', verdict: 'meets', why: 'the asked port is among the offered' },
-  { key: 'window', label: 'Delivery window', importance: 'must', need: 'Q1 2027', offer: '15 January to 15 April 2027', verdict: 'meets', why: 'the windows overlap' },
+  { key: 'window', label: 'Shipment window', importance: 'must', need: 'Q1 2027', offer: '15 January to 15 April 2027', verdict: 'meets', why: 'the windows overlap' },
   { key: 'payment', label: 'Payment', importance: 'nice_to_have', need: 'Letter of credit', offer: 'Cash against documents', verdict: 'conflicts', why: 'a soft criterion: it shows, it does not decide' },
   { key: 'packaging', label: 'Packaging', importance: 'nice_to_have', need: 'Bulk', offer: 'not stated', verdict: 'unknown', why: 'not stated in the offer' },
   { key: 'origin', label: 'Country of origin', importance: 'nice_to_have', need: 'Morocco or Jordan', offer: 'Egypt', verdict: 'conflicts', why: 'a soft criterion: it shows, it does not decide' },

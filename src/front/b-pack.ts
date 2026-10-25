@@ -20,17 +20,19 @@ export interface Criterion {
   specials: Special[];
   required: boolean;
   importance: 'must' | 'nice_to_have';
+  /** The option that hides the phosphate-only criteria (the pack's show-when: sulphur is the one product that is no phosphate). */
+  hides?: string;
   /** Shown only when the product is a phosphate (the pack's show-when). */
   phosphatesOnly?: boolean;
 }
 
 export const CRITERIA: Criterion[] = [
-  { key: 'product', label: 'Product', control: 'single_choice', options: ['Rock phosphate', 'DAP (diammonium phosphate)', 'MAP (monoammonium phosphate)', 'TSP (triple superphosphate)', 'Sulphur'], specials: ['other', 'unknown', 'any'], required: true, importance: 'must' },
+  { key: 'product', label: 'Product', control: 'single_choice', options: ['Rock phosphate', 'DAP (diammonium phosphate)', 'MAP (monoammonium phosphate)', 'TSP (triple superphosphate)', 'Sulphur'], hides: 'Sulphur', specials: ['other', 'unknown', 'any'], required: true, importance: 'must' },
   { key: 'p2o5', label: 'P₂O₅ content', help: 'Give a minimum, a maximum or both.', control: 'range', unit: '%', specials: ['unknown', 'any'], required: true, importance: 'must', phosphatesOnly: true },
   { key: 'quantity', label: 'Quantity', control: 'range', unit: 't', specials: ['unknown', 'any'], required: true, importance: 'must' },
   { key: 'incoterm', label: 'Delivery terms (Incoterms® 2020)', control: 'single_choice', options: ['EXW', 'FCA', 'FAS', 'FOB', 'CFR', 'CIF', 'CPT', 'CIP', 'DAP', 'DPU', 'DDP'], specials: ['other', 'unknown', 'any'], required: true, importance: 'must' },
   { key: 'port', label: 'Named port', help: 'Search by name or UN/LOCODE.', control: 'searchable_list', specials: ['unknown', 'any'], required: true, importance: 'must' },
-  { key: 'window', label: 'Delivery window', control: 'date_window', quick: ['Q1 2027', 'Q2 2027', 'Q3 2027', 'Q4 2027'], specials: ['unknown', 'any'], required: true, importance: 'must' },
+  { key: 'window', label: 'Shipment window', control: 'date_window', quick: ['Q1 2027', 'Q2 2027', 'Q3 2027', 'Q4 2027'], specials: ['unknown', 'any'], required: true, importance: 'must' },
   { key: 'cadmium', label: 'Cadmium (Cd)', help: 'Choose whether the limit is per kg of product or per kg of P₂O₅.', control: 'range', unit: 'mg/kg', bases: ['per kg of product', 'per kg of P₂O₅'], specials: ['unknown', 'any'], required: false, importance: 'must', phosphatesOnly: true },
   { key: 'payment', label: 'Payment', control: 'multiple_choice', options: ['Letter of credit (L/C)', 'Cash against documents (CAD)', 'Advance payment (T/T)', 'Open account'], specials: ['other', 'unknown', 'any'], required: false, importance: 'nice_to_have' },
   { key: 'packaging', label: 'Packaging', control: 'multiple_choice', options: ['Bulk', 'Big bags (FIBC)'], specials: ['other', 'unknown', 'any'], required: false, importance: 'nice_to_have' },

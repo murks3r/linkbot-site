@@ -14,10 +14,10 @@
    control pauses it and shows the final frame; it starts nothing, and there is no "play again". ?venn=2 shows the
    second study, for comparison only. */
 import Icon from '../Icon.astro';
-import { ROWS } from '../../front/a-match';
-interface Props { study?: 1 | 2; label: string; need: string; offer: string; caption: string; pause: string }
-const { study = 1, label, need, offer, caption, pause } = Astro.props;
-const rows = ROWS.slice(0, 9);
+import type { Row, Verdict } from '../../front/a-match';
+interface Props { study?: 1 | 2; rows: Row[]; verdicts: Record<Verdict, string>; label: string; need: string; offer: string; caption: string; pause: string }
+const { study = 1, verdicts, label, need, offer, caption, pause } = Astro.props;
+const rows = Astro.props.rows.slice(0, 9);
 /* The geometry: discs of r 150 whose centres end 160 apart; the lens is the intersection; nine marks sit in a 3 × 3 grid
    at its centre. Study 1 starts the discs 400 apart. */
 const R = 150, CX = 280, CY = 196, D = 160, L = CX - D / 2, Rr = CX + D / 2;
@@ -48,7 +48,7 @@ const grid = (i: number) => ({ x: CX + ((i % 3) - 1) * 30, y: CY + (Math.floor(i
     </g>
   </svg>
   <ol class="venn-list" aria-label={label}>
-    {rows.map((row, i) => <li data-verdict={row.verdict} style={`--i:${i}`}><span class="venn-sq" aria-hidden="true"></span><span>{row.label}</span><small>{row.verdict}</small></li>)}
+    {rows.map((row, i) => <li data-verdict={row.verdict} style={`--i:${i}`}><span class="venn-sq" aria-hidden="true"></span><span>{row.label}</span><small>{verdicts[row.verdict]}</small></li>)}
   </ol>
   <button type="button" class="venn-motion motion-toggle" data-motion-toggle aria-pressed="false" hidden><span class="motion-pause"><Icon name="pause" /></span><span class="motion-play"><Icon name="play" /></span><span class="sr">{pause}</span></button>
   <script is:inline>
@@ -79,7 +79,7 @@ const grid = (i: number) => ({ x: CX + ((i % 3) - 1) * 30, y: CY + (Math.floor(i
   .venn-svg { display: block; width: 100%; height: auto; overflow: visible; }
   .venn-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 14px; width: 100%; font-size: var(--size-small); line-height: 1.35; }
   .venn-list li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 2px 8px; align-items: center; color: var(--ink); }
-  .venn-list small { grid-column: 2; font-size: var(--size-caption); color: var(--ink-3); text-transform: capitalize; }
+  .venn-list small { grid-column: 2; font-size: var(--size-caption); color: var(--ink-3); }
   .venn-list li[data-verdict='conflicts'] small { color: var(--orange-ink); }
   .venn-sq { width: 12px; height: 12px; border: 1.5px solid var(--ink); }
   .venn-list li[data-verdict='meets'] .venn-sq { background: var(--blue); border-color: var(--blue); }
