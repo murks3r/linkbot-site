@@ -251,6 +251,12 @@ export const de: FrontCopy = {
         ['Das Widget des Einkäufers unter „Meine Anfragen und Angebote“: Beide Seiten haben Ja gesagt, die Anfrage ist vorgestellt, und eine Schaltfläche zeigt, was die andere Seite teilt.', 'Die Vorstellungen in der Operator-Konsole: eine Vorstellung, im Modus direkt, ohne Kontaktdaten aufgeführt.'],
       ],
     },
+    watch: {
+      name: 'Wenn noch nichts passt: beobachten',
+      who: 'Der Einkäufer',
+      text: 'Nach dem Bestätigen kann der Einkäufer die Anfrage offen halten und beobachten: wie oft, wöchentlich oder täglich; worüber er hören will; und in den E-Mail-Optionen, höchstens wie viele pro E-Mail und keine E-Mail vor einem gewählten Tag. Eine Beobachtung meldet nur ihrem Inhaber, wenn etwas Neues passt, und beginnt, sobald die E-Mail-Adresse bestätigt ist. Sie läuft 90 Tage und lässt sich jederzeit pausieren, fortsetzen oder beenden, auch über einen Link in ihren E-Mails.',
+      screens: ['Das Widget des Einkäufers nach dem Bestätigen, noch ohne Angebote: eine Beobachtung, wöchentlich, auf alles, was die Muss-Kriterien erfüllt, höchstens 5 pro E-Mail.', 'Dasselbe Widget nach „Beobachten starten“: Die Beobachtung wartet darauf, dass die E-Mail-Adresse bestätigt wird, höchstens 5 pro E-Mail, bis zum 23.01.2027. Die Aufnahme hat keine E-Mail gesendet, und die erfundene Adresse existiert nicht.'],
+    },
     space: {
       h2: 'Das Board des Test-Space',
       on: 'Unten steht das Widget selbst, vom Test-Space ausgeliefert, im Board-Modus: die offenen Anfragen und Angebote, deren Inhaber sie zeigen wollten, vergröbert, wie das Pack es festlegt. Wer auf einen Eintrag antwortet, beginnt bei Schritt 1, auf der anderen Seite.',
