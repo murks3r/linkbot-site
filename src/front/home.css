@@ -63,3 +63,11 @@ html[data-icon='match'] .ask-icon-match { display: inline-flex; }
 
 .hm-state .fp-head { margin-bottom: 0; }
 .hm-state .fp-head p { font-size: var(--size-body); color: var(--ink-2); }
+
+/* The figures' motion control (src/front/loop.ts): small and quiet, at the figure's lower right, the size of a touch target. */
+.motion-toggle { display: grid; place-items: center; width: var(--target); height: var(--target); padding: 0; border: 1px solid var(--line-strong);
+  border-radius: 50%; background: transparent; color: var(--ink-2); cursor: pointer; transition: border-color var(--fast), color var(--fast); }
+.motion-toggle:hover { border-color: var(--line-ink); color: var(--ink); }
+.motion-toggle .motion-pause, .motion-toggle[aria-pressed='true'] .motion-play { display: grid; place-items: center; }
+.motion-toggle .motion-play, .motion-toggle[aria-pressed='true'] .motion-pause { display: none; }
+.hm-pair { margin-top: var(--space-block); }

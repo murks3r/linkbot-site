@@ -1,0 +1,143 @@
+---
+/* Section A, sketch 1, "one Venn, the whole story" (owner's provisional default, 2026-10-25): the hero's object again,
+   now carrying what happens after confirm. The two intents overlap, the nine verdicts of the synthetic pair settle in
+   the lens, each side says yes, a named operator approves (the half-open eye), and only then are the two joined below:
+   introduced. One composition for every width (the sketch's phone frame), labelled where things stand. The numbered
+   steps under the figure always stand complete, so the motion never takes text from a reader; the figure is an image
+   with one label. The verdict marks are the Venn's; the values are those of src/front/a-match.ts.
+
+   Motion: the Venn's loop rules (src/front/loop.ts). The round (12 s): the discs come together (0.3–1.7 s), the marks
+   settle 200 ms apart, the two yeses and the operator's eye appear (4.0–5.2 s), the bracket joins the sides (5.5–6.3 s);
+   rest until 8.6 s; everything but the discs fades (8.6–9.3 s), the discs part (9.4–11.3 s). Without scripts, under
+   reduced motion and while paused, the final frame stands. */
+import Icon from '../Icon.astro';
+import { ROWS } from '../../front/a-match';
+import { HOME } from '../../front/home-copy';
+const S = HOME.story;
+const rows = ROWS.slice(0, 9);
+/* Geometry: discs of r 150, centres 140 apart at rest; the marks in a 3 × 3 grid at the lens' centre. */
+const R = 150, CX = 320, CY = 300, D = 140, L = CX - D / 2, Rr = CX + D / 2;
+const grid = (i: number) => ({ x: CX + ((i % 3) - 1) * 38, y: CY + (Math.floor(i / 3) - 1) * 38 });
+const label = { 'font-family': 'var(--text)', 'font-size': '22', 'font-weight': '700', 'letter-spacing': '.06em' };
+---
+<figure class="story" data-story aria-labelledby="story-note">
+  <svg class="story-svg" viewBox="0 0 640 560" width="640" height="560" role="img" aria-label={S.label}>
+    <defs>
+      <radialGradient id="story-need" cx="38%" cy="34%" r="80%"><stop offset="0" stop-color="var(--blue)" stop-opacity=".2" /><stop offset=".55" stop-color="var(--blue)" stop-opacity=".09" /><stop offset="1" stop-color="var(--blue)" stop-opacity=".16" /></radialGradient>
+      <radialGradient id="story-offer" cx="62%" cy="34%" r="80%"><stop offset="0" stop-color="var(--ink)" stop-opacity=".12" /><stop offset=".55" stop-color="var(--ink)" stop-opacity=".05" /><stop offset="1" stop-color="var(--ink)" stop-opacity=".1" /></radialGradient>
+      <radialGradient id="story-lens" cx="50%" cy="42%" r="70%"><stop offset="0" stop-color="var(--blue)" stop-opacity=".34" /><stop offset="1" stop-color="var(--blue)" stop-opacity=".12" /></radialGradient>
+      <clipPath id="story-clip-need"><circle data-clip-need cx={L} cy={CY} r={R} /></clipPath>
+    </defs>
+    <!-- 1 · the two intents, labelled inside -->
+    <g data-disc="need">
+      <circle cx={L} cy={CY} r={R} fill="url(#story-need)" stroke="var(--blue)" stroke-opacity=".55" stroke-width="1.6" />
+      <text x={L - 82} y={CY + 8} text-anchor="middle" fill="var(--ink-2)" {...label}>{S.need.toUpperCase()}</text>
+    </g>
+    <g data-disc="offer">
+      <circle cx={Rr} cy={CY} r={R} fill="url(#story-offer)" stroke="var(--ink)" stroke-opacity=".45" stroke-width="1.6" />
+      <text x={Rr + 82} y={CY + 8} text-anchor="middle" fill="var(--ink-2)" {...label}>{S.offer.toUpperCase()}</text>
+    </g>
+    <g clip-path="url(#story-clip-need)"><circle data-lens cx={Rr} cy={CY} r={R} fill="url(#story-lens)" /></g>
+    <!-- 2 · a verdict per criterion, in the lens -->
+    <g fill="none" stroke-linecap="round">
+      {rows.map((row, i) => { const p = grid(i); return <g data-mark data-verdict={row.verdict} transform={`translate(${p.x} ${p.y})`}>
+        {row.verdict === 'meets' && <rect x="-10" y="-10" width="20" height="20" fill="var(--blue)" />}
+        {row.verdict === 'partly' && <><rect x="-10" y="-10" width="20" height="20" stroke="var(--ink)" stroke-width="2" /><path d="M10 -10V10H-10Z" fill="var(--ink)" /></>}
+        {row.verdict === 'conflicts' && <><rect x="-10" y="-10" width="20" height="20" stroke="var(--orange)" stroke-width="2" /><path d="M-5 -5l10 10M5 -5l-10 10" stroke="var(--orange)" stroke-width="2.1" /></>}
+        {row.verdict === 'unknown' && <rect x="-10" y="-10" width="20" height="20" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="3.6 2.6" />}
+      </g>; })}
+    </g>
+    <!-- 3 · both say yes, an operator approves -->
+    <g data-step="yes-need" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx={L - 90} cy="168" r="28" fill="var(--paper)" stroke="var(--blue)" /><path d={`M${L - 102} 168l8 8 16-16`} fill="none" stroke="var(--blue)" />
+      <text x={L - 134} y="176" text-anchor="end" fill="var(--ink)" stroke="none" {...label}>{S.yes.toUpperCase()}</text>
+    </g>
+    <g data-step="yes-offer" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx={Rr + 90} cy="168" r="28" fill="var(--paper)" stroke="var(--ink)" /><path d={`M${Rr + 78} 168l8 8 16-16`} fill="none" stroke="var(--ink)" />
+      <text x={Rr + 134} y="176" fill="var(--ink)" stroke="none" {...label}>{S.yes.toUpperCase()}</text>
+    </g>
+    <g data-step="operator">
+      <text x={CX} y="48" text-anchor="middle" fill="var(--ink)" {...label}>{S.operator.toUpperCase()}</text>
+      <g transform={`translate(${CX} 92)`}><g data-eye fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M-36 0Q0 -11 36 0Q0 11 -36 0Z" /><circle r="3" fill="var(--ink)" /></g></g>
+    </g>
+    <!-- 4 · introduced: the two sides joined, below -->
+    <g data-step="introduced">
+      <path data-bracket d={`M${L} 450V486H${Rr}V450`} pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx={L} cy="450" r="7" fill="var(--blue)" /><circle cx={Rr} cy="450" r="7" fill="var(--ink)" />
+      <text data-intro-label x={CX} y="536" text-anchor="middle" fill="var(--ink)" {...label}>{S.introduced.toUpperCase()}</text>
+    </g>
+  </svg>
+  <ol class="story-steps">
+    {S.steps.map((step, i) => <li><span class="story-n" aria-hidden="true">{i + 1}</span><b>{step.name}</b><span>{step.text}</span></li>)}
+  </ol>
+  <p id="story-note" class="story-note">{S.note}</p>
+  <button type="button" class="motion-toggle story-motion" data-motion-toggle aria-pressed="false" hidden><span class="motion-pause"><Icon name="pause" /></span><span class="motion-play"><Icon name="play" /></span><span class="sr">{S.pause}</span></button>
+  <script is:inline>
+    /* Before the first paint: with motion allowed, arm the figure, so the loop starts from its first frame and the page
+       never shows the final frame and then takes it back (the CSS below hides what the first frame does not show). */
+    (function () {
+      var f = document.currentScript.closest('[data-story]');
+      if (f && matchMedia('(prefers-reduced-motion: no-preference)').matches && 'IntersectionObserver' in window) f.setAttribute('data-armed', '');
+    })();
+  </script>
+</figure>
+
+<style>
+  .story { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px 16px; align-items: center; }
+  .story-svg { grid-column: 1 / -1; justify-self: center; display: block; width: 100%; max-width: 36rem; height: auto; overflow: visible; }
+  .story[data-armed]:not([data-running]) :is([data-mark], [data-step]) { opacity: 0; }
+  .story-steps { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 clamp(16px, 2.4vw, 32px); counter-reset: none; }
+  .story-steps li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-content: start; padding-top: 18px; border-top: 1.5px solid var(--ink); }
+  .story-steps b { font-family: var(--display); font-weight: 600; font-size: clamp(1.05rem, .95rem + .4vw, 1.25rem); letter-spacing: -.01em; line-height: 1.25; }
+  .story-steps li > span:last-child { grid-column: 2; font-size: var(--size-small); color: var(--ink-2); line-height: 1.5; }
+  .story-n { display: grid; place-items: center; width: 22px; height: 22px; margin-top: 2px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: var(--size-micro); font-weight: 700; }
+  .story-note { grid-column: 1; font-size: var(--size-caption); color: var(--ink-3); }
+  .story-motion { grid-column: 2; }
+  @media (max-width: 48rem) { .story-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; } }
+</style>
+
+<script>
+  import { loop, easeOutQuint, easeInOutCubic, easeOutBack, clamp01 } from '../../front/loop';
+  const R = 150, CX = 320, CY = 300, D = 140, L = CX - D / 2, Rr = CX + D / 2;
+  const ROUND = 12000, REST = 7000;
+
+  for (const story of document.querySelectorAll<HTMLElement>('[data-story][data-armed]')) {
+    const needDisc = story.querySelector<SVGGElement>('[data-disc="need"]')!, offerDisc = story.querySelector<SVGGElement>('[data-disc="offer"]')!;
+    const clip = story.querySelector<SVGCircleElement>('[data-clip-need]')!, lens = story.querySelector<SVGCircleElement>('[data-lens]')!;
+    const marks = [...story.querySelectorAll<SVGGElement>('[data-mark]')];
+    const step = (name: string) => story.querySelector<SVGGElement>(`[data-step="${name}"]`)!;
+    const yesNeed = step('yes-need'), yesOffer = step('yes-offer'), operator = step('operator'), introduced = step('introduced');
+    const eye = story.querySelector<SVGGElement>('[data-eye]')!, bracket = story.querySelector<SVGPathElement>('[data-bracket]')!;
+    const toggle = story.querySelector<HTMLButtonElement>('[data-motion-toggle]')!;
+    const home = marks.map((_, i) => ({ x: CX + ((i % 3) - 1) * 38, y: CY + (Math.floor(i / 3) - 1) * 38 }));
+    const meets = marks.map(m => m.dataset.verdict === 'meets'), lit = meets.filter(Boolean).length;
+    const fade = (el: SVGElement, v: number) => { el.style.opacity = clamp01(v).toFixed(3); };
+    const span = (ms: number, from: number, length: number) => clamp01((ms - from) / length);
+
+    const place = (gap: number) => { // the discs' centres, gap apart
+      const nx = CX - gap / 2, ox = CX + gap / 2;
+      needDisc.setAttribute('transform', `translate(${(nx - L).toFixed(2)} 0)`); offerDisc.setAttribute('transform', `translate(${(ox - Rr).toFixed(2)} 0)`);
+      clip.setAttribute('cx', nx.toFixed(2)); lens.setAttribute('cx', ox.toFixed(2));
+    };
+    const frame = (ms: number) => {
+      const out = easeInOutCubic(span(ms, 8600, 700)); // everything but the discs fades at the round's end
+      place(ms < 9400 ? 300 - 160 * easeInOutCubic(span(ms, 300, 1400)) : D + 160 * easeInOutCubic(span(ms, 9400, 1900)));
+      let sum = 0;
+      marks.forEach((mark, i) => {
+        const p = span(ms, 1900 + i * 200, 520), s = p === 0 ? 0 : (.6 + .4 * easeOutBack(p)) * (1 - .15 * out);
+        mark.setAttribute('transform', `translate(${home[i].x} ${(home[i].y + (1 - easeOutQuint(p)) * 12).toFixed(2)}) scale(${s.toFixed(3)})`);
+        fade(mark, p * (1 - out));
+        if (meets[i]) sum += p;
+      });
+      lens.style.opacity = (.25 + .75 * clamp01((sum / lit) * (1 - out))).toFixed(3);
+      fade(yesNeed, easeOutQuint(span(ms, 4000, 400)) * (1 - out));
+      fade(yesOffer, easeOutQuint(span(ms, 4400, 400)) * (1 - out));
+      const open = easeOutQuint(span(ms, 4800, 400));
+      fade(operator, open * (1 - out)); eye.setAttribute('transform', `scale(1 ${(.15 + .85 * open).toFixed(3)})`);
+      bracket.setAttribute('stroke-dashoffset', (1 - easeInOutCubic(span(ms, 5500, 800))).toFixed(3));
+      fade(introduced, span(ms, 5500, 200) * (1 - out));
+    };
+    story.setAttribute('data-running', '');
+    loop({ figure: story, toggle, round: ROUND, restAt: REST, frame });
+  }
+</script>
