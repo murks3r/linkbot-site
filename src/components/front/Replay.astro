@@ -18,7 +18,7 @@ const total = String(D.steps.items.length);
 const picture = (shot: string, count: number) => ({
   src: `/material/demo/${lang}/${shot}.webp`,
   srcset: `/material/demo/${lang}/${shot}-480.webp 480w, /material/demo/${lang}/${shot}.webp 960w`,
-  sizes: count === 1 ? '(max-width: 760px) 92vw, 400px' : '(max-width: 960px) 46vw, 310px',
+  sizes: count === 1 ? '(max-width: 760px) 92vw, 400px' : '(max-width: 560px) 92vw, (max-width: 960px) 46vw, 310px',
 });
 ---
 <div class="fr-replay" data-replay data-position={D.replay.position}>
