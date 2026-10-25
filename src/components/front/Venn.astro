@@ -88,6 +88,8 @@ const grid = (i: number) => ({ x: CX + ((i % 3) - 1) * 30, y: CY + (Math.floor(i
   .venn-list li[data-verdict='unknown'] .venn-sq { border-style: dashed; border-color: var(--ink-3); }
   .venn-cap { grid-column: 1; grid-row: 3; font-size: var(--size-caption); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
   .venn-motion { grid-column: 2; grid-row: 3; }
+  /* Its place is kept until the script shows it, so the figure does not move when it appears. */
+  .venn-motion[hidden] { display: grid; visibility: hidden; }
   @media (max-width: 36rem) { .venn-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 
