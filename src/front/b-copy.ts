@@ -28,6 +28,8 @@ export const B = {
     storedMax: 'at most',
     end: 'Here it would end with the confirm step and the widget’s line “Nothing is used until you confirm.” Confirming happens on a platform’s page, not here: nothing you entered was stored.',
     reset: 'Clear everything',
+    basis: 'Basis',
+    portPlaceholder: 'Augusta, or IT AUG',
   },
   why: {
     h2: 'Why it asks instead of guessing',

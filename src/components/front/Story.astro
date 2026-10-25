@@ -11,10 +11,11 @@
    rest until 8.6 s; everything but the discs fades (8.6–9.3 s), the discs part (9.4–11.3 s). Without scripts, under
    reduced motion and while paused, the final frame stands. */
 import Icon from '../Icon.astro';
-import { ROWS } from '../../front/a-match';
-import { HOME } from '../../front/home-copy';
-const S = HOME.story;
-const rows = ROWS.slice(0, 9);
+import type { Row } from '../../front/a-match';
+import type { FrontCopy } from '../../front/copy';
+interface Props { story: FrontCopy['home']['story']; rows: Row[] }
+const { story: S } = Astro.props;
+const rows = Astro.props.rows.slice(0, 9);
 /* Geometry: discs of r 150, centres 140 apart at rest; the marks in a 3 × 3 grid at the lens' centre. */
 const R = 150, CX = 320, CY = 300, D = 140, L = CX - D / 2, Rr = CX + D / 2;
 const grid = (i: number) => ({ x: CX + ((i % 3) - 1) * 38, y: CY + (Math.floor(i / 3) - 1) * 38 });

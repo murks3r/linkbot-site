@@ -3,20 +3,20 @@
    travels through the four disclosure stages; the page shows what each stage shows and withholds, then the receipt;
    after it, why a platform can let Linkbot near its users, the rules the server enforces and deletion (the
    catalogue's words), the platform and the pack, where it stands. Words: src/front/c-copy.ts (rows in
-   docs/truth-check.md); the offer: src/front/c-stages.ts. English for every language until translated. */
+   docs/truth-check.md); the offer: src/front/c-stages.ts; in the reader's language through src/front/copy.ts. */
 import Icon from '../Icon.astro';
 import Reach from './Reach.astro';
 import Eye from './Eye.astro';
 import Verdict from './Verdict.astro';
-import { C } from '../../front/c-copy';
-import { STAGES } from '../../front/c-stages';
+import { FRONT } from '../../front/copy';
 import { pathFor, type Catalogue, type Lang } from '../../i18n';
 import '../../front/theme.css';
 import '../../front/c.css';
 interface Props { lang: Lang; t: Catalogue }
 const { lang, t } = Astro.props;
 const to = (path: string) => pathFor(lang, path);
-const VERDICT = { meets: 'meets', partly: 'partly', conflicts: 'conflicts', unknown: 'unknown' } as const;
+const { c: C, stages: STAGES, a: A } = FRONT[lang];
+const VERDICT = A.ledger.verdicts;
 ---
 <section class="fc-hero" aria-labelledby="hero-title">
   <div class="wrap fc-hero-inner">

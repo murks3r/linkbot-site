@@ -5,9 +5,11 @@
    and loops, and a table that empties itself to play again would take its text from whoever is reading it; the
    section's new illustration, chosen from two sketches, will carry the motion. */
 import Verdict from './Verdict.astro';
-import { ROWS } from '../../front/a-match';
-import { A } from '../../front/a-copy';
-const L = A.ledger;
+import type { Row } from '../../front/a-match';
+import type { FrontCopy } from '../../front/copy';
+interface Props { a: FrontCopy['a']; rows: Row[] }
+const { a, rows: ROWS } = Astro.props;
+const L = a.ledger;
 ---
 <figure class="ledger" aria-labelledby="ledger-cap">
   <figcaption id="ledger-cap" class="ledger-cap"><span class="ledger-dot" aria-hidden="true"></span>{L.label}</figcaption>

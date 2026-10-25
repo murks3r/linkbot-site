@@ -2,8 +2,6 @@
    not even for the tab. The form never submits anywhere; "Ask me" shows the pack's questions and echoes the line as
    written; every answer appears in the "stored" panel with its source and importance, as a confirm would store it;
    a number two conventions read differently is refused with the widget's own question (Connect ADR 0004). */
-const PHOSPHATES = new Set(['Rock phosphate', 'DAP (diammonium phosphate)', 'MAP (monoammonium phosphate)', 'TSP (triple superphosphate)']);
-
 for (const form of document.querySelectorAll<HTMLFormElement>('[data-ask]')) ask(form);
 
 function ask(form: HTMLFormElement) {
@@ -42,10 +40,12 @@ function ask(form: HTMLFormElement) {
     line.focus();
   });
 
-  /* A number in the English form: "25,000" is twenty-five thousand; "25.000" could be 25 or 25,000, so it is refused
-     with a question, never guessed (Connect ADR 0004; the widget's own line). */
-  const ambiguous = (raw: string) => /^\d{1,3}\.\d{3}$/.test(raw.trim());
-  const twoWays = (raw: string) => { const [a, b] = raw.trim().split('.'); return { a: `${Number(a)}`, b: `${Number(a + b).toLocaleString('en-GB')}` }; };
+  /* A number in the form's language: in English "25.000" could be 25 or 25,000, in German, Spanish, Italian or French
+     "25,000" could be 25 or 25.000, so it is refused with a question, never guessed (Connect ADR 0004; the widget's own
+     line): the decimal mark with three digits after at most three. */
+  const locale = words.locale ?? 'en-GB', decimal = words.decimal ?? '.';
+  const ambiguous = (raw: string) => new RegExp(`^\\d{1,3}\\${decimal}\\d{3}$`).test(raw.trim());
+  const twoWays = (raw: string) => { const [a, b] = raw.trim().split(decimal); return { a: Number(`${a}.${b}`).toLocaleString(locale), b: Number(a + b).toLocaleString(locale) }; };
   for (const field of form.querySelectorAll<HTMLInputElement>('[data-num]')) {
     const err = field.closest('[data-q]')!.querySelector<HTMLElement>('[data-err]')!;
     const check = () => {
@@ -63,11 +63,10 @@ function ask(form: HTMLFormElement) {
   }
 
   /* The pack's show-when: the phosphate criteria appear once a phosphate is chosen (or the answer is "other" or
-     "don't know", which keep their dependants visible and optional); sulphur hides them. */
-  const product = () => form.querySelector<HTMLInputElement>('input[name="product"]:checked')?.value ?? '';
+     "don't know", which keep their dependants visible and optional); sulphur, the option marked data-hides, hides them. */
   const dependants = () => {
-    const p = product();
-    const show = p !== '' && (PHOSPHATES.has(p) || p === '__other' || p === '__unknown' || p === '__any');
+    const picked = form.querySelector<HTMLInputElement>('input[name="product"]:checked, input[name="product-special"]:checked');
+    const show = picked !== null && !picked.hasAttribute('data-hides');
     for (const q of form.querySelectorAll<HTMLElement>('[data-phosphates-only]')) q.hidden = !show;
   };
 
