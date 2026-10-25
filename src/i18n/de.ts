@@ -31,8 +31,6 @@ export const de: Catalogue = {
   },
 
   home: {
-    title: 'Linkbot: Anfrage trifft Angebot, Menschen entscheiden',
-    description: 'Eine Matching-Schicht für jede Plattform: ein Space pro Markt, Anfragen und Angebote als bestätigte Kriterien, eine Vorstellung erst, wenn beide Ja sagen.',
     h1: ['Anfrage trifft Angebot.', 'Menschen entscheiden.'],
     lede: 'Linkbot ist eine Matching-Schicht, die eine Plattform in ihre eigenen Seiten einbettet. Ein Space pro Markt. Anfragen und Angebote als bestätigte Kriterien. Ein Urteil pro Kriterium, nie ein Score. Eine Vorstellung erst, wenn beide Seiten Ja sagen.',
     actions: { how: 'So funktioniert es', platforms: 'Für Plattformen' },
@@ -52,16 +50,6 @@ export const de: Catalogue = {
       { title: 'Kriterien, bestätigt.', body: 'Eine Anfrage oder ein Angebot ist eine Menge von Kriterien, jedes mit seiner Quelle und seiner Gewichtung. Nichts ist vorausgewählt, nichts wird geraten, und was nicht angegeben ist, bleibt unbekannt. Die Person bestätigt das Formular; erst dann wird etwas gespeichert.' },
       { title: 'Eine Vorstellung erst, wenn beide Ja sagen.', body: 'Das Matching vergleicht die gespeicherten Kriterien und zeigt ein Urteil pro Kriterium. Eine Vorstellung braucht die Gates des Space, die Freigabe eines benannten Operators und ein Ja von beiden Seiten. Dann legt der Server sie an, und jeden anderen Weg verweigert er.' },
     ],
-    ways: {
-      title: 'Vier Wege zu sagen, was Sie brauchen oder anbieten',
-      lede: `Stand ${AS_OF}: Formular, Text, Board und Beobachtungen laufen auf dem Staging-Space. Seine E-Mails gehen an ein Testpostfach und erreichen niemanden.`,
-      items: [
-        { name: 'Per Formular', status: 'now' as Status, body: 'Das Formular kommt aus dem Pack: Pflichtkriterien zuerst, jede Liste mit „Anderes / nicht aufgeführt“, „Weiß nicht“ und „Beliebig“. Das Widget zeigt es auf den Seiten der Plattform.' },
-        { name: 'In eigenen Worten', status: 'now' as Status, body: 'Eine Lesung schlägt Werte vor, jeden mit dem Zitat, aus dem er stammt, und fragt nach, wo sie unsicher ist. Sie überschreibt nie, was eine Person gewählt hat. Auf dem Staging-Space lesen feste Regeln, kein Modell.' },
-        { name: 'Auf dem Board', status: 'now' as Status, body: 'Offene Anfragen und Angebote, gelistet nur mit Zustimmung der Person, der sie gehören, mit den vergröberten Werten des Packs und nie mit dem Absender. Wer einen Eintrag beantwortet, beginnt einen Entwurf auf der anderen Seite.' },
-        { name: 'Mit einer Beobachtung', status: 'now' as Status, body: 'Eine Beobachtung hält eine Anfrage oder ein Angebot offen und sagt nur der Person Bescheid, die sie angelegt hat, wenn etwas Neues passt.' },
-      ],
-    },
     rules: {
       title: 'Die Regeln, vom Server durchgesetzt',
       items: [
@@ -76,9 +64,6 @@ export const de: Catalogue = {
       ],
       link: 'So funktioniert das Matching, Schritt für Schritt',
     },
-    platforms: { title: 'Für Plattformen', body: 'Ein Skript und ein Element bringen einen Space auf Ihre Seite. Ihre Seite hält den Publishable Key, der nur auf Ihren Origins gilt; der Secret Key bleibt auf Ihrem Server. Ihr Team gibt Fälle in einer Konsole frei, die auf Ihrem Rechner oder hinter Ihrem eigenen Login läuft.', link: 'Was eine Plattform bekommt' },
-    verticals: { title: 'Für Branchen', body: 'Ein Pack beschreibt einen Markt: seine Kriterien, Optionen und Einheiten, seine Beschriftungen und Fragen in den Sprachen des Space, was jedes Kriterium auf welcher Stufe preisgibt, und die Gates, die der Markt braucht. Der erste ist Industrieminerale.', link: 'Was ein Pack enthält' },
-    state: { title: 'Wo es steht', body: 'Diese Seite zeigt keine Demo des Widgets, bis ein Demo-Space mit synthetischen Daten existiert.' },
   },
 
   how: {
