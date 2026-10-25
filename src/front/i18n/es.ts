@@ -97,7 +97,7 @@ export const es: FrontCopy = {
       yoursLabel: 'Su línea, conservada tal como la escribió',
       yoursNote: 'Nadie ni nada la lee en esta página. Aquí responde usted mismo las preguntas del pack, en un formulario tomado del pack de muestra sintético.',
       asksTitle: 'Lo que el pack pregunta de vuelta',
-      packNote: 'Las preguntas del pack de muestra del carril Connect para minerales industriales, versión 0.2.0: sintético, escrito para ejercitar cada control, no el pack de un mercado real.',
+      packNote: 'Las preguntas del pack de muestra de Linkbot Connect para minerales industriales, versión 0.2.0: sintético, escrito para ejercitar cada control, no el pack de un mercado real.',
       storedTitle: 'Qué se guardaría si usted confirmara',
       storedEmpty: 'Nada todavía. Cada respuesta aparece aquí con su fuente y su importancia; una pregunta que no responda sigue desconocida.',
       storedSource: 'elegido por usted',

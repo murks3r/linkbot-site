@@ -38,6 +38,8 @@
 .fr-note { max-width: 46em; margin-top: 20px; font-size: var(--size-small); line-height: 1.55; color: var(--ink-2); }
 @media (max-width: 960px) { .fr-step[data-count="2"] { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 760px) { .fr-step { grid-template-columns: minmax(0, 1fr); } }
+/* Two pictures side by side are too small to read on a phone: there they stand one above the other. */
+@media (max-width: 560px) { .fr-screens { grid-auto-flow: row; } }
 @media (prefers-reduced-motion: no-preference) {
   [data-player] .fr-step:not([hidden]) { animation: fr-in .24s ease-out; }
   @keyframes fr-in { from { opacity: 0; } }

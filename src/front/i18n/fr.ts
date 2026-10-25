@@ -97,7 +97,7 @@ export const fr: FrontCopy = {
       yoursLabel: 'Votre ligne, conservée telle que vous l’avez écrite',
       yoursNote: 'Personne et rien ne la lit sur cette page. Ici, vous répondez vous-même aux questions du pack, dans un formulaire tiré du pack d’exemple synthétique.',
       asksTitle: 'Ce que le pack demande en retour',
-      packNote: 'Les questions du pack d’exemple de Connect pour les minéraux industriels, version 0.2.0 : synthétique, écrit pour exercer chaque contrôle, pas le pack d’un marché réel.',
+      packNote: 'Les questions du pack d’exemple de Linkbot Connect pour les minéraux industriels, version 0.2.0 : synthétique, écrit pour exercer chaque contrôle, pas le pack d’un marché réel.',
       storedTitle: 'Ce qui serait stocké, si vous confirmiez',
       storedEmpty: 'Rien pour l’instant. Chaque réponse apparaît ici avec sa source et son importance ; une question que vous sautez reste inconnue.',
       storedSource: 'choisi par vous',

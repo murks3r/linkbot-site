@@ -59,3 +59,14 @@ test('every page describes itself in 50 to 160 characters', { skip }, () => {
     assert.ok(text.length >= 50 && text.length <= 160, `${page.pathname.split('/dist/')[1]}: description is ${text.length} characters`);
   }
 });
+
+/* The build's own vocabulary (a lane, the orchestrator, Linear issues) means nothing to a reader; no page shows it. */
+test('no page shows the build process\'s vocabulary', { skip }, () => {
+  const walk = dir => readdirSync(dir, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(new URL(`${e.name}/`, dir)) : e.name.endsWith('.html') ? [new URL(e.name, dir)] : []);
+  const jargon = /\b(lanes?|Lanes?|carril|orchestrator|GEO-\d+)\b/;
+  for (const page of walk(dist)) {
+    const text = readFileSync(page, 'utf8').replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<[^>]+>/g, ' ');
+    const hit = text.match(jargon);
+    assert.equal(hit, null, `${page.pathname.split('/dist/')[1]}: “${hit?.[0]}”`);
+  }
+});
