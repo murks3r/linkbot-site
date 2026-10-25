@@ -1,8 +1,8 @@
 /* Direction B, "Say what you need. See what Linkbot asks back." (front-page preview, GEO-188, 2026-10-24): the English
    words of the home, whose hero it is. Every sentence states what the Space API contract (0.2.7), Connect ADR 0004 and
    the Connect lane's docs provide today, and each has a row in docs/truth-check.md. The questions themselves come from
-   src/front/b-pack.ts (the synthetic sample pack); the widget's own lines are quoted as they stand in Connect. English
-   only until the home is translated; no forbidden word (tests/front.test.mjs). */
+   src/front/b-pack.ts (the synthetic sample pack); the widget's own lines are quoted as they stand in Connect. The
+   English source of src/front/copy.ts; no forbidden word (tests/front.test.mjs). */
 export const B = {
   hero: {
     eyebrow: 'A matching layer any platform can embed',

@@ -1,7 +1,7 @@
 /* Direction A, "Watch a need meet an offer" (front-page preview, GEO-188, 2026-10-24): the English words of its ledger,
    which the home shows as its second section (src/components/front/Ledger.astro). Every sentence states what the Space
-   API contract (0.2.7) provides today, and each has a row in docs/truth-check.md. English only until the home is
-   translated; no forbidden word (tests/front.test.mjs). */
+   API contract (0.2.7) provides today, and each has a row in docs/truth-check.md. The English source of src/front/copy.ts;
+   no forbidden word (tests/front.test.mjs). */
 export const A = {
   ledger: {
     label: 'Synthetic · fixed values, written for this page · nothing is matched here',

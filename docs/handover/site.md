@@ -79,9 +79,9 @@ This carries out the owner's site decisions of 2026-10-24, recorded on GEO-188.
 - A's verdict sequence is the second section.
 - The home's ask form has `method="dialog"`, so nothing typed leaves the page.
 
-**`/who-sees-what`** is direction C, as its own page. It is in English for every language, and de, es, it and fr show the English fallback notice.
+**`/who-sees-what`** is direction C, as its own page.
 
-**The other four languages' home** is still the older catalogue home (`src/components/HomeA8.astro`), with no fallback notice.
+**All five languages** show the new home and `/who-sees-what` since 2026-10-25: the words are in `src/front/copy.ts` and `src/front/i18n/`, typed against English. The pack's labels and the form's words are Connect's own translations. de, es, it and fr are not yet natively read (GEO-192, M3).
 
 **Site-wide:**
 - Light is the default for everyone; dark stays behind `?theme=dark`.
@@ -149,18 +149,9 @@ Since 2026-10-25 the orchestrator's provisional defaults hold: the wordmark, Ven
 - The gates pass.
 - The PR says which decision it carries out.
 
-### Step 2: the new front in the four other languages
+### Step 2: done on 2026-10-25
 
-**The work:**
-- Translate the new home and `/who-sees-what` through the delegate (rule 8), and review every line.
-- Replace the older home (`HomeA8.astro`) in de, es, it and fr with the translated front.
-- Drop the fallback notice.
-
-**Done when:**
-- All five languages show the new home and `/who-sees-what` in their own language, and no page shows the fallback notice.
-- `HomeA8.astro` is gone, if nothing uses it any more.
-- The tests pass.
-- The native reading goes to GEO-192.
+The new front in de, es, it and fr replaced the older home, which is deleted. The native reading goes to GEO-192.
 
 ### Step 3: clear out concept A8's leftovers (rule 7)
 
