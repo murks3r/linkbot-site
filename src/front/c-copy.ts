@@ -44,6 +44,6 @@ export const C = {
   verticals: { h2: 'For verticals', p: 'A pack describes a market: its criteria, options and units, its labels and questions in the space’s languages, what each criterion discloses at each stage, and the gates the market needs. The first is industrial minerals.', link: 'What a pack holds' },
   state: {
     h2: 'Where it stands',
-    p: 'The offer above is fixed text, written for this page in the vocabulary of a synthetic pack; the product did not run here. This site shows no demo of the widget until a demo space with synthetic data exists.',
+    p: 'The offer above is fixed text, written for this page in the vocabulary of a synthetic pack; the product did not run here. The demo page walks through the whole path, step by step.',
   },
 } as const;

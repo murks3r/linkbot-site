@@ -86,6 +86,7 @@ export const de: FrontCopy = {
       eyebrow: 'Eine Matching-Schicht, die jede Plattform einbetten kann',
       h1: ['Sagen Sie, was Sie brauchen.', 'Sehen Sie, was Linkbot zurückfragt.'],
       lede: 'Linkbot rät nie. Auf der Seite einer Plattform stellt es die Fragen des Packs dieses Marktes, behält Ihre Worte so, wie Sie sie geschrieben haben, und speichert nichts, bis Sie bestätigen. Probieren Sie den ersten Teil hier aus: eine Zeile genügt.',
+      demo: 'Der ganze Weg, von der Anfrage bis zur Vorstellung',
     },
     ask: {
       label: 'Was brauchen Sie? Eine Zeile genügt.',
@@ -143,7 +144,7 @@ export const de: FrontCopy = {
     },
     state: {
       h2: 'Wo Linkbot steht',
-      p: 'Die Fragen oben stammen aus dem synthetischen Beispiel-Pack und werden nur in Ihrem Browser beantwortet; das Widget selbst läuft auf den Seiten einer Plattform, und diese Website zeigt keine Demo davon, bis ein Demo-Space mit synthetischen Daten existiert.',
+      p: 'Die Fragen oben stammen aus dem synthetischen Beispiel-Pack und werden nur in Ihrem Browser beantwortet; das Widget selbst läuft auf den Seiten einer Plattform. Die Demo-Seite geht den ganzen Weg Schritt für Schritt durch.',
     },
   },
   c: {
@@ -207,7 +208,37 @@ export const de: FrontCopy = {
     },
     state: {
       h2: 'Wo Linkbot steht',
-      p: 'Das Angebot oben ist fester Text, für diese Seite im Vokabular eines synthetischen Packs geschrieben; das Produkt ist hier nicht gelaufen. Diese Website zeigt keine Demo des Widgets, bis ein Demo-Space mit synthetischen Daten existiert.',
+      p: 'Das Angebot oben ist fester Text, für diese Seite im Vokabular eines synthetischen Packs geschrieben; das Produkt ist hier nicht gelaufen. Die Demo-Seite geht den ganzen Weg Schritt für Schritt durch.',
+    },
+  },
+  demo: {
+    meta: {
+      title: 'Linkbot: der ganze Weg, von der Anfrage bis zur Vorstellung',
+      description: 'Der Weg eines Einkäufers durch Linkbot in sechs Schritten: die Anfrage, die bestätigten Kriterien, die möglichen Passungen, das Ja beider Seiten, die Freigabe durch einen Operator und die Vorstellung. Auf einem Test-Space mit erfundenen Daten.',
+    },
+    hero: {
+      eyebrow: 'Demo · ein Test-Space mit erfundenen Daten',
+      h1: ['Von der Anfrage bis zur Vorstellung,', 'in sechs Schritten.'],
+      lede: 'Was zwischen der ersten Zeile eines Einkäufers und dem Moment geschieht, in dem zwei Unternehmen einander vorgestellt werden, Schritt für Schritt, und wer bei jedem Schritt handelt.',
+    },
+    test: 'Dies ist ein Test-Space mit erfundenen Daten. Jede Anfrage, jedes Angebot, jedes Unternehmen und jeder Wert hier ist für Tests erfunden. Bitte geben Sie nichts Echtes ein: kein Unternehmen, keine Person, keine eigene Adresse. Seine E-Mails gehen in ein Test-Postfach und erreichen niemanden.',
+    steps: {
+      h2: 'Der Weg, Schritt für Schritt',
+      who: 'Wer handelt',
+      items: [
+        { name: 'Die Anfrage', who: 'Der Einkäufer', text: 'Der Einkäufer beschreibt den Bedarf auf der Seite einer Plattform, im Formular, das das Pack des Marktes erzeugt, oder in einer Zeile Text, die feste Regeln lesen und in vorgeschlagene Werte umsetzen. Nichts ist vorausgewählt, und was der Einkäufer nicht angegeben hat, bleibt unbekannt.' },
+        { name: 'Die Kriterien, bestätigt', who: 'Der Einkäufer', text: 'Der Einkäufer prüft jeden Wert und bestätigt. Erst jetzt wird etwas gespeichert: Der Server prüft jeden Wert gegen das Pack und nennt jedes Feld, das nicht passt. Die E-Mail-Adresse wird über einen Link bestätigt.' },
+        { name: 'Die möglichen Passungen', who: 'Der Space', text: 'Das Matching vergleicht die gespeicherten Kriterien Stück für Stück mit denen der anderen Seite: ein Urteil pro Kriterium, passt, passt teilweise, widerspricht oder unbekannt, nie eine Punktzahl. Eine mögliche Passung zeigt jeder Seite nur die Urteile und einen Hinweis, dass Menschen entscheiden.' },
+        { name: 'Beide sagen Ja', who: 'Der Einkäufer und der Lieferant', text: 'Jede Seite beantwortet die mögliche Passung für sich selbst. Bevor beide Ja gesagt haben, erfährt die andere Seite nichts, und ein späteres Nein widerruft ein Ja.' },
+        { name: 'Der Operator gibt frei', who: 'Das Team der Plattform', text: 'Ein namentlich genannter Operator hält die Prüfungen fest, die der Space verlangt, und gibt das Paar frei. Eine Freigabe allein gibt nichts preis, und jede Änderung nennt, wer sie vorgenommen hat.' },
+        { name: 'Die Vorstellung', who: 'Der Server', text: 'Sobald die letzte der drei Bedingungen erfüllt ist, in beliebiger Reihenfolge, erstellt der Server die Vorstellung, und auf jedem anderen Weg verweigert er sie. Jede Seite erhält einen Beleg, wer welche Felder sehen darf. Im Operator-Modus nimmt danach das Team der Plattform mit beiden Seiten Kontakt auf.' },
+      ],
+    },
+    space: {
+      h2: 'Das Board des Test-Space',
+      on: 'Unten steht das Widget selbst, vom Test-Space ausgeliefert, im Board-Modus: die offenen Anfragen und Angebote, deren Inhaber sie zeigen wollten, vergröbert, wie das Pack es festlegt. Wer auf einen Eintrag antwortet, beginnt bei Schritt 1, auf der anderen Seite.',
+      off: 'Dieser Build zeigt kein Widget: Der Test-Space lässt die Adresse dieser Website nicht zu. Der Weg oben steht nur in Worten.',
+      notice: 'Ein Test-Space mit erfundenen Daten: Geben Sie nichts Echtes ein. Seine E-Mails erreichen niemanden.',
     },
   },
   rows: [

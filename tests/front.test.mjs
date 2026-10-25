@@ -29,12 +29,12 @@ test('every translation keeps English’s structure and is its own', () => {
     criteria: copy.criteria.map(c => [c.key, c.control, c.specials, c.required, c.importance, !!c.phosphatesOnly, c.options?.length, c.bases?.length, c.quick, c.unit, c.hides ? c.options.indexOf(c.hides) : -1]),
     rows: copy.rows.map(r => [r.key, r.importance, r.verdict]),
     stages: copy.stages.map(s => [s.key, s.eyes, s.open, s.fields.map(f => f.verdict ?? null), s.not.length]),
-    lists: [copy.b.hero.h1.length, copy.b.why.items.length, copy.c.why.items.length, copy.c.stages.receipt.lines.length, copy.a.ledger.stages.length, copy.home.story.steps.length],
+    lists: [copy.b.hero.h1.length, copy.b.why.items.length, copy.c.why.items.length, copy.c.stages.receipt.lines.length, copy.a.ledger.stages.length, copy.home.story.steps.length, copy.demo.steps.items.length],
   });
   for (const [lang, copy] of Object.entries(FRONT)) {
     assert.deepEqual(shape(copy), shape(en), `${lang}: the structure differs from English`);
     if (lang === 'en') continue;
-    for (const at of ['b.hero.lede', 'c.hero.lede', 'home.story.note', 'a.ledger.state']) {
+    for (const at of ['b.hero.lede', 'c.hero.lede', 'home.story.note', 'a.ledger.state', 'demo.test']) {
       const read = obj => at.split('.').reduce((o, k) => o[k], obj);
       assert.notEqual(read(copy), read(en), `${lang}: ${at} is still English`);
     }

@@ -86,6 +86,7 @@ export const fr: FrontCopy = {
       eyebrow: 'Une couche d’appariement que toute plateforme peut intégrer',
       h1: ['Dites de quoi vous avez besoin.', 'Voyez ce que Linkbot vous demande en retour.'],
       lede: 'Linkbot ne devine jamais. Sur la page d’une plateforme, il pose les questions du pack de ce marché, conserve vos mots tels que vous les avez écrits et ne stocke rien avant votre confirmation. Essayez ici la première partie : une ligne suffit.',
+      demo: 'Tout le parcours, de la demande à la mise en relation',
     },
     ask: {
       label: 'De quoi avez-vous besoin ? Une ligne suffit.',
@@ -143,7 +144,7 @@ export const fr: FrontCopy = {
     },
     state: {
       h2: 'État actuel',
-      p: 'Les questions ci-dessus sont tirées du pack d’exemple synthétique et ne sont traitées que dans votre navigateur ; le widget lui-même tourne dans les pages d’une plateforme, et ce site n’en montre aucune démo tant qu’il n’existe pas d’espace de démonstration avec des données synthétiques.',
+      p: 'Les questions ci-dessus sont tirées du pack d’exemple synthétique et ne sont traitées que dans votre navigateur ; le widget lui-même tourne dans les pages d’une plateforme. La page de démo parcourt tout le chemin, étape par étape.',
     },
   },
   c: {
@@ -207,7 +208,37 @@ export const fr: FrontCopy = {
     },
     state: {
       h2: 'État actuel',
-      p: 'L’offre ci-dessus est un texte fixe, écrit pour cette page dans le vocabulaire d’un pack synthétique ; le produit n’a pas tourné ici. Ce site ne montre aucune démo du widget tant qu’il n’existe pas d’espace de démonstration avec des données synthétiques.',
+      p: 'L’offre ci-dessus est un texte fixe, écrit pour cette page dans le vocabulaire d’un pack synthétique ; le produit n’a pas tourné ici. La page de démo parcourt tout le chemin, étape par étape.',
+    },
+  },
+  demo: {
+    meta: {
+      title: 'Linkbot : tout le parcours, de la demande à la mise en relation',
+      description: 'Le parcours d’un acheteur dans Linkbot en six étapes : la demande, les critères confirmés, les correspondances possibles, le oui des deux côtés, l’approbation d’un opérateur et la mise en relation. Sur un espace de test aux données fictives.',
+    },
+    hero: {
+      eyebrow: 'Démo · un espace de test aux données fictives',
+      h1: ['De la demande à la mise en relation,', 'en six étapes.'],
+      lede: 'Ce qui se passe entre la première ligne d’un acheteur et le moment où deux entreprises sont mises en relation, étape par étape, et qui agit à chaque étape.',
+    },
+    test: 'Ceci est un espace de test aux données fictives. Chaque demande, offre, entreprise et valeur ici est inventée pour des tests. N’y saisissez rien de réel : aucune entreprise, aucune personne, aucune adresse à vous. Ses e-mails vont dans une boîte de test et n’atteignent personne.',
+    steps: {
+      h2: 'Le parcours, étape par étape',
+      who: 'Qui agit',
+      items: [
+        { name: 'La demande', who: 'L’acheteur', text: 'L’acheteur décrit le besoin sur la page d’une plateforme, dans le formulaire que génère le pack du marché, ou en une ligne de texte que des règles fixes lisent et transforment en valeurs proposées. Rien n’est présélectionné, et ce que l’acheteur n’a pas indiqué reste inconnu.' },
+        { name: 'Les critères, confirmés', who: 'L’acheteur', text: 'L’acheteur contrôle chaque valeur et confirme. C’est seulement alors que quelque chose est enregistré : le serveur contrôle chaque valeur par rapport au pack et nomme chaque champ qui ne convient pas. L’adresse e-mail est confirmée par un lien.' },
+        { name: 'Les correspondances possibles', who: 'L’espace', text: 'Le matching compare les critères enregistrés à ceux de l’autre côté, un par un : un verdict par critère, correspond, correspond en partie, contredit ou inconnu, jamais un score. Une correspondance possible ne montre à chaque côté que les verdicts et un avis indiquant que ce sont les personnes qui décident.' },
+        { name: 'Les deux disent oui', who: 'L’acheteur et le fournisseur', text: 'Chaque côté répond à la correspondance possible pour lui-même. Avant que les deux aient dit oui, l’autre côté n’apprend rien, et un non ultérieur révoque un oui.' },
+        { name: 'L’opérateur approuve', who: 'L’équipe de la plateforme', text: 'Un opérateur nommé enregistre les contrôles que l’espace exige et approuve la paire. Une approbation seule ne révèle rien, et chaque écriture indique qui l’a faite.' },
+        { name: 'La mise en relation', who: 'Le serveur', text: 'Quand la dernière des trois conditions est remplie, dans n’importe quel ordre, le serveur crée la mise en relation, et la refuse par toute autre voie. Chaque côté reçoit un reçu indiquant qui peut voir quels champs. En mode opérateur, l’équipe de la plateforme contacte ensuite les deux côtés.' },
+      ],
+    },
+    space: {
+      h2: 'Le tableau de l’espace de test',
+      on: 'Ci-dessous, le widget lui-même, servi par l’espace de test, en mode tableau : les demandes et offres ouvertes que leurs titulaires ont choisi de montrer, rendues moins précises comme le pack le déclare. Répondre à l’une d’elles commence à l’étape 1, de l’autre côté.',
+      off: 'Cette version ne montre aucun widget : l’espace de test n’admet pas l’adresse de ce site. Le parcours ci-dessus n’est qu’en mots.',
+      notice: 'Un espace de test aux données fictives : n’y saisissez rien de réel. Ses e-mails n’atteignent personne.',
     },
   },
   rows: [
