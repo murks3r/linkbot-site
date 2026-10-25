@@ -234,6 +234,23 @@ export const de: FrontCopy = {
         { name: 'Die Vorstellung', who: 'Der Server', text: 'Sobald die letzte der drei Bedingungen erfüllt ist, in beliebiger Reihenfolge, erstellt der Server die Vorstellung, und auf jedem anderen Weg verweigert er sie. Jede Seite erhält einen Beleg, wer welche Felder sehen darf. Im Operator-Modus nimmt danach das Team der Plattform mit beiden Seiten Kontakt auf.' },
       ],
     },
+    replay: {
+      label: 'Aufgezeichneter Durchgang · erfundene Daten',
+      lede: 'Bilder des Widgets und der Operator-Konsole bei jedem Schritt, aufgenommen auf einem Computer. Jede Partei, jedes Unternehmen und jeder Wert darin ist erfunden.',
+      note: 'Aufgenommen am 25. Oktober 2026 auf der Demo-Bühne von Linkbot Connect, die das Widget und die Operator-Konsole auf einem Computer gegen eine Beispiel-Space-API laufen lässt. Nichts auf diesen Bildern hat einen Space oder einen Menschen erreicht. Die Aufnahme stellt im Modus direkt vor: Nach der Freigabe durch den Operator kann jede Seite öffnen, was die andere teilt.',
+      steps: 'Die sechs Schritte',
+      position: 'Schritt {n} von {total}',
+      previous: 'Vorheriger Schritt',
+      next: 'Nächster Schritt',
+      screens: [
+        ['Das Widget des Einkäufers: das Formular, das das Beispiel-Pack erzeugt, mit Rohphosphat gewählt und einem P₂O₅-Minimum von 30 %. Die Gewichtung ist als vorgeschlagen markiert, sonst ist nichts gewählt.'],
+        ['Das Widget des Einkäufers nach dem Bestätigen: Die Anfrage ist aktiv, mit jedem Kriterium und seiner Gewichtung. Noch keine Angebote zu zeigen.'],
+        ['Das Widget des Einkäufers: ein Angebot, das passen könnte, mit einem Haken je Kriterium, der Frage „Möchten Sie vorgestellt werden?“ und dem Hinweis, dass Menschen entscheiden.'],
+        ['Das Widget des Einkäufers nach dem Ja: „Ihr Ja ist festgehalten. Sample space prüft es zuerst.“'],
+        ['Der Fall in der Operator-Konsole: die Prüfung jeder Seite und die KYC- und Sanktionsprüfung des Falls, vom Beispiel-Operator als bestanden festgehalten, dann „Von Ihrem Team freigegeben.“'],
+        ['Das Widget des Einkäufers unter „Meine Anfragen und Angebote“: Beide Seiten haben Ja gesagt, die Anfrage ist vorgestellt, und eine Schaltfläche zeigt, was die andere Seite teilt.', 'Die Vorstellungen in der Operator-Konsole: eine Vorstellung, im Modus direkt, ohne Kontaktdaten aufgeführt.'],
+      ],
+    },
     space: {
       h2: 'Das Board des Test-Space',
       on: 'Unten steht das Widget selbst, vom Test-Space ausgeliefert, im Board-Modus: die offenen Anfragen und Angebote, deren Inhaber sie zeigen wollten, vergröbert, wie das Pack es festlegt. Wer auf einen Eintrag antwortet, beginnt bei Schritt 1, auf der anderen Seite.',

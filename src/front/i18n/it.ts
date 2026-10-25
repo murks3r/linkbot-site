@@ -234,6 +234,23 @@ export const it: FrontCopy = {
         { name: 'La presentazione', who: 'Il server', text: 'Quando l’ultima delle tre condizioni è soddisfatta, in qualunque ordine, il server crea la presentazione, e la rifiuta per ogni altra via. Ciascuna parte riceve una ricevuta di chi può vedere quali campi. In modalità operatore, il team della piattaforma contatta poi entrambe le parti.' },
       ],
     },
+    replay: {
+      label: 'Percorso registrato · dati inventati',
+      lede: 'Immagini del widget e della console dell’operatore a ogni passaggio, registrate su un solo computer. Ogni parte, azienda e valore che vi compare è inventato.',
+      note: 'Registrato il 25 ottobre 2026 sul palco demo di Linkbot Connect, che esegue il widget e la console dell’operatore contro una Space API di esempio su un solo computer. Nulla di queste immagini ha raggiunto uno spazio o una persona. La registrazione presenta in modalità diretta: dopo l’approvazione dell’operatore ciascuna parte può aprire ciò che l’altra condivide.',
+      steps: 'I sei passaggi',
+      position: 'Passaggio {n} di {total}',
+      previous: 'Passaggio precedente',
+      next: 'Passaggio successivo',
+      screens: [
+        ['Il widget dell’acquirente: il modulo generato dal pack di esempio, con fosfato naturale scelto e un minimo di P₂O₅ del 30 %. L’importanza è segnata come suggerita, e nient’altro è scelto.'],
+        ['Il widget dell’acquirente dopo la conferma: la richiesta è attiva, con ogni criterio e la sua importanza. Ancora nessuna offerta da mostrare.'],
+        ['Il widget dell’acquirente: un’offerta che potrebbe essere adatta, con un segno di spunta per criterio, la domanda «Desidera essere presentato?» e l’avviso che decidono le persone.'],
+        ['Il widget dell’acquirente dopo il sì: «Il Suo sì è registrato. Sample space lo esamina prima.»'],
+        ['Il caso nella console dell’operatore: il controllo di ciascuna parte e il controllo KYC e sanzioni del caso, registrati come superati dall’operatore di esempio, poi «Approvato dal Suo team.»'],
+        ['Il widget dell’acquirente in «Le mie richieste e offerte»: entrambe le parti hanno detto sì, la richiesta è presentata e un pulsante mostra ciò che l’altra parte condivide.', 'Le presentazioni nella console dell’operatore: una presentazione, in modalità diretta, elencata senza dati di contatto.'],
+      ],
+    },
     space: {
       h2: 'La bacheca dello spazio di prova',
       on: 'Qui sotto c’è il widget stesso, servito dallo spazio di prova, in modalità bacheca: le richieste e le offerte aperte che i loro titolari hanno scelto di mostrare, rese meno precise come dichiara il pack. Rispondere a una comincia dal passo 1, dall’altra parte.',

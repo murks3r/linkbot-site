@@ -25,6 +25,23 @@ export const DEMO = {
       { name: 'The introduction', who: 'The server', text: 'When the last of the three conditions is met, in any order, the server creates the introduction, and refuses every other way. Each side receives a receipt of who may see which fields. In operator mode the platform’s team then contacts both sides.' },
     ],
   },
+  replay: {
+    label: 'Recorded walkthrough · fictional data',
+    lede: 'Pictures of the widget and the operator console at each step, recorded on one computer. Every party, company and value in them is fictional.',
+    note: 'Recorded on 25 October 2026 on Linkbot Connect’s demo stage, which runs the widget and the operator console against a sample Space API on one computer. Nothing in these pictures reached a space or a person. The recording introduces in mode direct: after the operator’s approval each side can open what the other shares.',
+    steps: 'The six steps',
+    position: 'Step {n} of {total}',
+    previous: 'Previous step',
+    next: 'Next step',
+    screens: [
+      ['The buyer’s widget: the form the sample pack generates, with rock phosphate chosen and a P₂O₅ minimum of 30 %. The importance “Must” is marked as suggested, and nothing else is chosen.'],
+      ['The buyer’s widget after confirming: the request is active, with each criterion and its importance. No offers to show yet.'],
+      ['The buyer’s widget: an offer that may fit, with a tick per criterion, the question “Do you want an introduction?” and the notice that people decide.'],
+      ['The buyer’s widget after the yes: “Your yes is recorded. Sample space reviews it first.”'],
+      ['The operator console’s case: each side’s check and the case’s KYC and sanctions check recorded as passed by the sample operator, then “Approved by your team.”'],
+      ['The buyer’s widget under “My requests and offers”: both sides said yes, the request is introduced, and a button shows what the other side shares.', 'The operator console’s introductions: one introduction, in mode direct, listed without contact details.'],
+    ],
+  },
   space: {
     h2: 'The test space’s board',
     on: 'Below is the widget itself, served by the test space, in board mode: the open requests and offers whose owners chose to show them, coarsened as the pack declares. Answering one starts at step 1, on the other side.',
