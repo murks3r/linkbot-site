@@ -170,14 +170,18 @@ Ask the owner first whether the brand board is still needed.
 
 | What | Who unblocks it | Linear |
 | -- | -- | -- |
-| S3, the live demo of the four widget modes (describe, board, watch, mine). There is no demo on the site until then, and a sample build never goes on a public page. | Core-Platform: the `linkbot-demo` space (P1). Geoprocure: the second synthetic pack (G3). | GEO-185, GEO-187 |
-| S4, Connect's Astro package | Connect | GEO-186 |
+| S3, the live demo of the four widget modes (describe, board, watch, mine). There is no demo on the site until then, and a sample build never goes on a public page. | Core-Platform: the `linkbot-demo` space (P1) | GEO-185 |
+| S4, the site on Connect's Astro package. `@linkbot-connect/astro` is merged in Connect's C3 (version `0.1.0-v1`, marked private), but Connect publishes nothing (npm, public docs, CDN) before M3 and the owner's go (Connect's plan, decision 4). A live embed also needs the demo space of S3. | Connect, after M3 and the owner's go; Core-Platform for the space | GEO-115, GEO-186, GEO-185 |
 | The privacy notice and the imprint on `build/vision`, which are placeholders saying "in preparation" | Trust's T6 texts, then counsel | GEO-135, GEO-154 |
 | PR #28 on `main` | Counsel, plus a domain and mailbox Linkbot owns (owner) | GEO-150, GEO-154 |
 | A native reading of the Spanish, Italian and French texts | The M3 gate | GEO-192 |
 | A domain for the site. The placeholder stays `linkbot-domain-tbd.invalid`. The owner's facts on the candidate names are on GEO-188 and stay out of this public repository. | The owner | GEO-188 |
 | The open choices of step 2, and whether the brand board stays | The owner | GEO-188 |
 | The hostname history on the old design branches, which can be rewritten only with the owner's go | The owner | GEO-151 |
+
+Two blockers in the first handover are done:
+- the second synthetic pack, `bulk_freight@0.1.0-draft`, is registered in the app repository;
+- Connect's Astro package is merged, in Connect's C3.
 
 ## 6. Gotchas
 
@@ -227,10 +231,11 @@ Ask the owner first whether the brand board is still needed.
 | -- | -- | -- | -- |
 | `~/Projects/linkbot-site` | `build/vision` | The main checkout, shared by sessions. Its local `build/vision` may lag `origin`. | `git -C ~/Projects/linkbot-site pull --ff-only` |
 | `~/Projects/linkbot-site/.claude/worktrees/s0-a8-base-c611a3` | the handover's branches (merged) | The lane's worktree, with `node_modules` (Playwright 1.63) | `git fetch origin && git switch -c claude/<next> origin/build/vision` |
-| `~/Projects/linkbot-site/.claude/worktrees/zealous-bohr-9a8db0` | `claude/site-home-redesign` (PR #35, merged at `5688598`) | Done | Remove with `git -C ~/Projects/linkbot-site worktree remove <path>` |
-| `~/Projects/linkbot-site/.claude/worktrees/recursing-shtern-2e0e50` | `claude/site-refuse-unowned-domain` (PR #32, merged) | Done | Remove the same way |
+| `~/Projects/linkbot-site/.claude/worktrees/zealous-bohr-9a8db0` | `claude/site-home-redesign` (PR #35, merged at `5688598`) | Done | Done; leave for the housekeeping worker (GEO-194). |
+| `~/Projects/linkbot-site/.claude/worktrees/recursing-shtern-2e0e50` | `claude/site-refuse-unowned-domain` (PR #32, merged) | Done | Done; leave for the housekeeping worker (GEO-194). |
 | `~/Projects/linkbot-build-vision` | the app repository, `build/vision` | Another lane's checkout; read only for this lane | Point `LINKBOT_APP_DIR` at it |
 
+- **Local folders.** Only the housekeeping worker (GEO-194) moves or deletes local folders, worktrees included (owner's rule). A session leaves its finished worktree where it is.
 - **Notes folders.** The Architect's notes folder `~/.claude-instances/*/side-session-notes/local_9e6a9e15-01ee-44dc-b034-fce8dd114fd3/` holds:
   - the lane's hand-over note `site-lane.md`;
   - the evidence of 2026-10-24, under `evidence/linkbot-landing-2026-10-24/` (README and SHA256SUMS included).
