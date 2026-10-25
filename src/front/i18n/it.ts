@@ -86,6 +86,7 @@ export const it: FrontCopy = {
       eyebrow: 'Uno strato di corrispondenza che ogni piattaforma può integrare',
       h1: ['Dica di che cosa ha bisogno.', 'Veda che cosa Le chiede Linkbot.'],
       lede: 'Linkbot non indovina mai. Nella pagina di una piattaforma pone le domande del pack di quel mercato, conserva le Sue parole come le ha scritte e non salva nulla finché Lei non conferma. Provi qui la prima parte: una riga basta.',
+      demo: 'Tutto il percorso, dalla richiesta alla presentazione',
     },
     ask: {
       label: 'Di che cosa ha bisogno? Una riga basta.',
@@ -143,7 +144,7 @@ export const it: FrontCopy = {
     },
     state: {
       h2: 'A che punto siamo',
-      p: 'Le domande qui sopra sono tratte dal pack di esempio sintetico e trovano risposta solo nel Suo browser; il widget stesso gira nelle pagine di una piattaforma, e questo sito non ne mostra alcuna demo finché non esiste uno spazio demo con dati sintetici.',
+      p: 'Le domande qui sopra sono tratte dal pack di esempio sintetico e trovano risposta solo nel Suo browser; il widget stesso gira nelle pagine di una piattaforma. La pagina demo percorre tutto il cammino, passo dopo passo.',
     },
   },
   c: {
@@ -207,7 +208,37 @@ export const it: FrontCopy = {
     },
     state: {
       h2: 'A che punto siamo',
-      p: 'L’offerta qui sopra è testo fisso, scritto per questa pagina nel vocabolario di un pack sintetico; il prodotto non ha girato qui. Questo sito non mostra alcuna demo del widget finché non esiste uno spazio demo con dati sintetici.',
+      p: 'L’offerta qui sopra è testo fisso, scritto per questa pagina nel vocabolario di un pack sintetico; il prodotto non ha girato qui. La pagina demo percorre tutto il cammino, passo dopo passo.',
+    },
+  },
+  demo: {
+    meta: {
+      title: 'Linkbot: tutto il percorso, dalla richiesta alla presentazione',
+      description: 'Il percorso di un acquirente in Linkbot in sei passi: la richiesta, i criteri confermati, le possibili corrispondenze, il sì di entrambe le parti, l’approvazione di un operatore e la presentazione. Su uno spazio di prova con dati fittizi.',
+    },
+    hero: {
+      eyebrow: 'Demo · uno spazio di prova con dati fittizi',
+      h1: ['Dalla richiesta alla presentazione,', 'in sei passi.'],
+      lede: 'Che cosa succede tra la prima riga di un acquirente e il momento in cui due aziende vengono presentate, un passo alla volta, e chi agisce a ogni passo.',
+    },
+    test: 'Questo è uno spazio di prova con dati fittizi. Ogni richiesta, offerta, azienda e valore qui è inventato per i test. Non inserisca nulla di reale: nessuna azienda, nessuna persona, nessun indirizzo Suo. Le sue email vanno in una casella di prova e non raggiungono nessuno.',
+    steps: {
+      h2: 'Il percorso, passo dopo passo',
+      who: 'Chi agisce',
+      items: [
+        { name: 'La richiesta', who: 'L’acquirente', text: 'L’acquirente descrive il fabbisogno nella pagina di una piattaforma, nel modulo che il pack del mercato genera, oppure in una riga di testo che regole fisse leggono e trasformano in valori proposti. Nulla è preselezionato, e ciò che l’acquirente non ha indicato resta sconosciuto.' },
+        { name: 'I criteri, confermati', who: 'L’acquirente', text: 'L’acquirente controlla ogni valore e conferma. Solo ora viene salvato qualcosa: il server controlla ogni valore rispetto al pack e nomina ogni campo che non lo rispetta. L’indirizzo email viene confermato tramite un link.' },
+        { name: 'Le possibili corrispondenze', who: 'Lo spazio', text: 'Il matching confronta i criteri salvati con quelli dell’altra parte, uno per uno: un verdetto per criterio, corrisponde, corrisponde in parte, contraddice o sconosciuto, mai un punteggio. Una possibile corrispondenza mostra a ciascuna parte solo i verdetti e un avviso che decidono le persone.' },
+        { name: 'Entrambi dicono sì', who: 'L’acquirente e il fornitore', text: 'Ciascuna parte risponde alla possibile corrispondenza per sé. Prima che entrambe abbiano detto sì l’altra parte non sa nulla, e un no successivo revoca un sì.' },
+        { name: 'L’operatore approva', who: 'Il team della piattaforma', text: 'Un operatore con nome registra i controlli che lo spazio richiede e approva la coppia. Un’approvazione da sola non rivela nulla, e ogni scrittura indica chi l’ha fatta.' },
+        { name: 'La presentazione', who: 'Il server', text: 'Quando l’ultima delle tre condizioni è soddisfatta, in qualunque ordine, il server crea la presentazione, e la rifiuta per ogni altra via. Ciascuna parte riceve una ricevuta di chi può vedere quali campi. In modalità operatore, il team della piattaforma contatta poi entrambe le parti.' },
+      ],
+    },
+    space: {
+      h2: 'La bacheca dello spazio di prova',
+      on: 'Qui sotto c’è il widget stesso, servito dallo spazio di prova, in modalità bacheca: le richieste e le offerte aperte che i loro titolari hanno scelto di mostrare, rese meno precise come dichiara il pack. Rispondere a una comincia dal passo 1, dall’altra parte.',
+      off: 'Questa versione non mostra alcun widget: lo spazio di prova non ammette l’indirizzo di questo sito. Il percorso qui sopra è solo a parole.',
+      notice: 'Uno spazio di prova con dati fittizi: non inserisca nulla di reale. Le sue email non raggiungono nessuno.',
     },
   },
   rows: [

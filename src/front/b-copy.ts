@@ -8,6 +8,7 @@ export const B = {
     eyebrow: 'A matching layer any platform can embed',
     h1: ['Say what you need.', 'See what Linkbot asks back.'],
     lede: 'Linkbot never guesses. On a platform’s page it asks the questions of that market’s pack, keeps your words as you wrote them, and stores nothing until you confirm. Try the first part here: one line is enough.',
+    demo: 'The whole path, from a request to an introduction',
   },
   ask: {
     label: 'What do you need? One line is enough.',
@@ -53,6 +54,6 @@ export const B = {
   },
   state: {
     h2: 'Where it stands',
-    p: 'The questions above are drawn from the synthetic sample pack and answered in your browser only; the widget itself runs on a platform’s pages, and this site shows no demo of it until a demo space with synthetic data exists.',
+    p: 'The questions above are drawn from the synthetic sample pack and answered in your browser only; the widget itself runs on a platform’s pages. The demo page walks through the whole path, step by step.',
   },
 } as const;

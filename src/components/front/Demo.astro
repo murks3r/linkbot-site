@@ -1,0 +1,50 @@
+---
+/* The demo page (/demo): a buyer's whole path in six steps, then the test space's board when the build has one
+   (src/demo/space.ts: preview builds given an embed.js and a publishable key; never production). The widget asks the
+   Space API on the origin embed.js came from, takes the page's language and shows the page's notice above its confirm
+   button (Connect, docs/reference/embed.md). Words: src/front/demo-copy.ts (rows in docs/truth-check.md), in the
+   reader's language through src/front/copy.ts. */
+import { FRONT } from '../../front/copy';
+import { demoSpace } from '../../demo/space';
+import { type Catalogue, type Lang } from '../../i18n';
+import '../../front/theme.css';
+import '../../front/demo.css';
+interface Props { lang: Lang; t: Catalogue }
+const { lang, t } = Astro.props;
+const { demo: D } = FRONT[lang];
+const space = demoSpace({ PUBLIC_DEMO_EMBED_URL: import.meta.env.PUBLIC_DEMO_EMBED_URL, PUBLIC_DEMO_KEY: import.meta.env.PUBLIC_DEMO_KEY, VERCEL_ENV: process.env.VERCEL_ENV });
+---
+<section class="fd-hero" aria-labelledby="hero-title">
+  <div class="wrap fd-hero-inner">
+    <p class="eyebrow">{D.hero.eyebrow}</p>
+    <h1 id="hero-title"><span class="fd-line">{D.hero.h1[0]}</span> <span class="fd-line">{D.hero.h1[1]}</span></h1>
+    <p class="lede fd-lede">{D.hero.lede}</p>
+    <p class="fd-test" role="note">{D.test}</p>
+  </div>
+</section>
+
+<section class="fp-section" id="path" aria-labelledby="path-title">
+  <div class="wrap">
+    <div class="fp-head"><h2 id="path-title">{D.steps.h2}</h2></div>
+    <ol class="fd-steps">
+      {D.steps.items.map((step, index) => <li class="fd-step">
+        <span class="fd-n" aria-hidden="true">{index + 1}</span>
+        <h3>{step.name}</h3>
+        <p class="fd-who"><span class="eyebrow">{D.steps.who}</span>{step.who}</p>
+        <p>{step.text}</p>
+      </li>)}
+    </ol>
+  </div>
+</section>
+
+<section class="fp-section" id="space" aria-labelledby="space-title">
+  <div class="wrap">
+    <div class="fp-head"><h2 id="space-title">{D.space.h2}</h2><p>{space ? D.space.on : D.space.off}</p><p>{t.site.synthetic}</p></div>
+    {space && <>
+      <script is:inline src={space.script} async></script>
+      <div class="fd-widget" data-linkbot={space.key} data-mode="board" data-side="seeking" data-locale={lang}>
+        <p slot="notice">{D.space.notice}</p>
+      </div>
+    </>}
+  </div>
+</section>

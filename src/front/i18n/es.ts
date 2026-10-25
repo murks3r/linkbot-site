@@ -86,6 +86,7 @@ export const es: FrontCopy = {
       eyebrow: 'Una capa de emparejamiento que cualquier plataforma puede integrar',
       h1: ['Diga qué necesita.', 'Vea qué le pregunta Linkbot de vuelta.'],
       lede: 'Linkbot nunca adivina. En la página de una plataforma hace las preguntas del pack de ese mercado, conserva sus palabras tal como las escribió y no guarda nada hasta que usted lo confirma. Pruebe aquí la primera parte: una línea es suficiente.',
+      demo: 'Todo el recorrido, de la solicitud a la presentación',
     },
     ask: {
       label: '¿Qué necesita? Una línea es suficiente.',
@@ -143,7 +144,7 @@ export const es: FrontCopy = {
     },
     state: {
       h2: 'Estado actual',
-      p: 'Las preguntas de arriba salen del pack de muestra sintético y se responden solo en su navegador; el widget mismo se ejecuta en las páginas de una plataforma, y este sitio no muestra ninguna demo suya hasta que exista un espacio de demo con datos sintéticos.',
+      p: 'Las preguntas de arriba salen del pack de muestra sintético y se responden solo en su navegador; el widget mismo se ejecuta en las páginas de una plataforma. La página de demo recorre todo el camino, paso a paso.',
     },
   },
   c: {
@@ -207,7 +208,37 @@ export const es: FrontCopy = {
     },
     state: {
       h2: 'Estado actual',
-      p: 'La oferta de arriba es texto fijo, escrito para esta página con el vocabulario de un pack sintético; el producto no se ejecutó aquí. Este sitio no muestra ninguna demo del widget hasta que exista un espacio de demo con datos sintéticos.',
+      p: 'La oferta de arriba es texto fijo, escrito para esta página con el vocabulario de un pack sintético; el producto no se ejecutó aquí. La página de demo recorre todo el camino, paso a paso.',
+    },
+  },
+  demo: {
+    meta: {
+      title: 'Linkbot: todo el recorrido, de la solicitud a la presentación',
+      description: 'El recorrido de un comprador por Linkbot en seis pasos: la solicitud, los criterios confirmados, los posibles encajes, el sí de ambas partes, la aprobación de un operador y la presentación. En un espacio de prueba con datos ficticios.',
+    },
+    hero: {
+      eyebrow: 'Demo · un espacio de prueba con datos ficticios',
+      h1: ['De la solicitud a la presentación,', 'en seis pasos.'],
+      lede: 'Lo que ocurre entre la primera línea de un comprador y el momento en que dos empresas se presentan, paso a paso, y quién actúa en cada paso.',
+    },
+    test: 'Este es un espacio de prueba con datos ficticios. Cada solicitud, oferta, empresa y valor de aquí se ha inventado para pruebas. No introduzca nada real: ninguna empresa, ninguna persona, ninguna dirección propia. Sus correos van a un buzón de prueba y no llegan a nadie.',
+    steps: {
+      h2: 'El recorrido, paso a paso',
+      who: 'Quién actúa',
+      items: [
+        { name: 'La solicitud', who: 'El comprador', text: 'El comprador describe la necesidad en la página de una plataforma, en el formulario que genera el pack del mercado, o en una línea de texto que unas reglas fijas leen y convierten en valores propuestos. Nada está preseleccionado, y lo que el comprador no indicó queda como desconocido.' },
+        { name: 'Los criterios, confirmados', who: 'El comprador', text: 'El comprador revisa cada valor y confirma. Solo entonces se guarda algo: el servidor comprueba cada valor con el pack y nombra cada campo que no lo cumple. La dirección de correo se confirma mediante un enlace.' },
+        { name: 'Los posibles encajes', who: 'El espacio', text: 'El matching compara los criterios guardados con los de la otra parte, uno a uno: un veredicto por criterio, encaja, encaja en parte, contradice o desconocido, nunca una puntuación. Un posible encaje muestra a cada parte solo los veredictos y un aviso de que deciden las personas.' },
+        { name: 'Ambos dicen sí', who: 'El comprador y el proveedor', text: 'Cada parte responde al posible encaje por sí misma. Antes de que ambas hayan dicho sí, la otra parte no sabe nada, y un no posterior revoca un sí.' },
+        { name: 'El operador aprueba', who: 'El equipo de la plataforma', text: 'Un operador con nombre registra las comprobaciones que exige el espacio y aprueba el par. Una aprobación por sí sola no revela nada, y cada escritura indica quién la hizo.' },
+        { name: 'La presentación', who: 'El servidor', text: 'Cuando se cumple la última de las tres condiciones, en cualquier orden, el servidor crea la presentación, y la rechaza por cualquier otra vía. Cada parte recibe un comprobante de quién puede ver qué campos. En el modo operador, el equipo de la plataforma contacta después con ambas partes.' },
+      ],
+    },
+    space: {
+      h2: 'El tablón del espacio de prueba',
+      on: 'Abajo está el propio widget, servido por el espacio de prueba, en modo tablón: las solicitudes y ofertas abiertas cuyos titulares quisieron mostrarlas, generalizadas como declara el pack. Responder a una empieza en el paso 1, del otro lado.',
+      off: 'Esta versión no muestra ningún widget: el espacio de prueba no admite la dirección de este sitio. El recorrido de arriba está solo en palabras.',
+      notice: 'Un espacio de prueba con datos ficticios: no introduzca nada real. Sus correos no llegan a nadie.',
     },
   },
   rows: [
