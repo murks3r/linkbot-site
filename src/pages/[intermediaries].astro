@@ -1,11 +1,13 @@
 ---
 /* Draft for the owner's review, English only: what an intermediary (recruiter, broker, agency) gets from Linkbot as an
-   introduction layer. Linked from nowhere, never indexed (Base's draft), out of the sitemap (astro.config.mjs). Words:
+   introduction layer. Linked from nowhere, never indexed (Base's draft), out of the sitemap (astro.config.mjs), and
+   absent from a production build (getStaticPaths returns no route there; src/drafts/intermediaries.ts). Words:
    src/drafts/intermediaries.ts, each sentence with its row in docs/truth-check.md. */
 import Base from '../layouts/Base.astro';
 import Toc from '../components/Toc.astro';
-import { intermediaries as d } from '../drafts/intermediaries';
+import { buildsIntermediaries, intermediaries as d } from '../drafts/intermediaries';
 import { resolve } from '../i18n';
+export function getStaticPaths() { return buildsIntermediaries({ VERCEL_ENV: process.env.VERCEL_ENV }) ? [{ params: { intermediaries: 'for-intermediaries' } }] : []; }
 const { t } = resolve('en');
 const toc = d.sections.map(s => [s.id, s.title] as [string, string]);
 ---

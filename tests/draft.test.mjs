@@ -1,10 +1,11 @@
 /* The draft for the owner (/for-intermediaries, src/drafts/intermediaries.ts): its words make no forbidden claim, and
    the built page says it is a draft, is never indexed, has no alternates, and is neither linked from another page nor
-   listed in the sitemap. The build checks are skipped until the site is built. */
+   listed in the sitemap. A production build leaves it out until the owner approves it. The build checks are skipped
+   until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { intermediaries } from '../src/drafts/intermediaries.ts';
+import { INTERMEDIARIES_IN_PRODUCTION, buildsIntermediaries, intermediaries } from '../src/drafts/intermediaries.ts';
 import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 
 const strings = value => typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(strings) : value && typeof value === 'object' ? Object.values(value).flatMap(strings) : [];
@@ -16,6 +17,15 @@ test('the draft carries no forbidden claim and nothing private', () => {
     assert.doesNotMatch(text, FORBIDDEN.en, `forbidden word in “${text}”`);
     assert.doesNotMatch(text, PRIVATE, `private detail in “${text}”`);
   }
+});
+
+test('a production build leaves the draft out, previews and local builds keep it', () => {
+  assert.equal(INTERMEDIARIES_IN_PRODUCTION, false, 'the owner has not approved the draft for production');
+  assert.equal(buildsIntermediaries({ VERCEL_ENV: 'production' }), false);
+  assert.equal(buildsIntermediaries({ VERCEL_ENV: 'preview' }), true);
+  assert.equal(buildsIntermediaries({ VERCEL_ENV: 'development' }), true);
+  assert.equal(buildsIntermediaries({}), true);
+  assert.equal(buildsIntermediaries({ VERCEL_ENV: 'production' }, true), true, 'approved, production carries it');
 });
 
 test('the built draft is marked, never indexed, and reached from nowhere', { skip }, () => {

@@ -189,7 +189,7 @@ For an operator who wants a space. The header's and the footer's "For platforms"
 
 **`/for-intermediaries`** (2026-10-25, English only, a draft for the owner)
 
-A draft for the owner's review: linked from nowhere, never indexed (`noindex, nofollow`), no alternates, out of the sitemap (`tests/draft.test.mjs`). The positioning towards intermediaries is undecided. Words: `src/drafts/intermediaries.ts`. Contract paragraphs read in murks3r/linkbot `contracts/space-api/openapi.yaml` on `build/vision` at `afe5c97`.
+A draft for the owner's review: linked from nowhere, never indexed (`noindex, nofollow`), no alternates, out of the sitemap, and absent from production builds until the owner approves it (`tests/draft.test.mjs`). The positioning towards intermediaries is undecided. Words: `src/drafts/intermediaries.ts`. Contract paragraphs read in murks3r/linkbot `contracts/space-api/openapi.yaml` on `build/vision` at `afe5c97`.
 
 | Where | Claim | Backed by | Checked | Unfinished |
 | -- | -- | -- | -- | -- |

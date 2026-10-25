@@ -1,8 +1,16 @@
 /* The draft page /for-intermediaries, in English only: what a recruiter, broker or agency gets from Linkbot as an
    introduction layer. The owner has not decided this positioning, so the page is a draft for the owner's review: linked
-   from nowhere, never indexed, out of the sitemap. Every sentence has its row in docs/truth-check.md
-   (section "/for-intermediaries"). */
+   from nowhere, never indexed, out of the sitemap, and left out of production builds. Every sentence has its row in
+   docs/truth-check.md (section "/for-intermediaries"). */
 import { statusDate } from '../i18n/status-date.ts';
+
+/** Whether a production build carries the draft. Set it to true once the owner approves the page. */
+export const INTERMEDIARIES_IN_PRODUCTION = false;
+
+/** Whether a build carries the draft: previews and local builds do; a production build (Vercel sets VERCEL_ENV to
+    "production") only once INTERMEDIARIES_IN_PRODUCTION is true. Pure, so tests/draft.test.mjs checks it without a build. */
+export const buildsIntermediaries = (env: { VERCEL_ENV?: string }, inProduction = INTERMEDIARIES_IN_PRODUCTION): boolean =>
+  inProduction || env.VERCEL_ENV !== 'production';
 
 const AS_OF = statusDate('en');
 
