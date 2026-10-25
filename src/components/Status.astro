@@ -4,22 +4,11 @@
    the truth check's status table (src/lib/status.ts), the words from the catalogue's status. */
 import Mark from './Mark.astro';
 import type { Catalogue } from '../i18n';
-import { STATES, loadStatus, type State } from '../lib/status';
+import { statusColumns } from '../lib/status';
 interface Props { t: Catalogue }
 const { t } = Astro.props;
-const NAME = { 'on staging': 'staging', built: 'built', planned: 'planned' } as const satisfies Record<State, keyof Catalogue['status']['states']>;
 const TONE = { staging: 'fit', built: 'tradeoff', planned: 'unknown' } as const;
-const items = t.status.items as Record<string, string>;
-const rows = loadStatus();
-const columns = STATES.map(state => ({
-  id: NAME[state],
-  ...t.status.states[NAME[state]],
-  items: rows.filter(row => row.state === state).map(row => {
-    const words = items[row.key];
-    if (!words) throw new Error(`status: the catalogue has no words for “${row.key}” (docs/truth-check.md)`);
-    return words;
-  }),
-}));
+const columns = statusColumns(t);
 ---
 <div class="today">
   {columns.map(column => <section class="today-col" aria-labelledby={`today-${column.id}`} data-tone={column.id}>
