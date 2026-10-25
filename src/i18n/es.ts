@@ -50,12 +50,12 @@ export const es: Catalogue = {
     ],
     ways: {
       title: 'Cuatro formas de decir lo que solicita u ofrece',
-      lede: `A fecha de ${AS_OF}, el formulario, el texto y el tablón se ejecutan en el espacio de staging. Los seguimientos están en el contrato y aún no se ejecutan allí.`,
+      lede: `A fecha de ${AS_OF}, el formulario, el texto, el tablón y los seguimientos se ejecutan en el espacio de staging. Su email va a un buzón de prueba y no llega a nadie.`,
       items: [
         { name: 'Por formulario', status: 'now' as Status, body: 'El formulario sale del pack: primero los criterios obligatorios, cada lista con «Otro / no está en la lista», «No lo sé» y «Cualquiera». El widget lo muestra en las páginas de la plataforma.' },
         { name: 'Con sus propias palabras', status: 'now' as Status, body: 'Una lectura propone valores con la cita de la que salió cada uno y pregunta donde no está segura. Nunca sobrescribe lo que una persona eligió. En el espacio de staging leen reglas fijas, no un modelo.' },
         { name: 'En el tablón', status: 'now' as Status, body: 'Solicitudes y ofertas abiertas, listadas solo si su titular lo eligió, con los valores simplificados que declara el pack y nunca con quién las publicó. Responder a una inicia un borrador en el otro lado.' },
-        { name: 'Con un seguimiento', status: 'contract' as Status, body: 'Un seguimiento mantiene abierta una solicitud o una oferta y avisa solo a su titular cuando algo nuevo encaja.' },
+        { name: 'Con un seguimiento', status: 'now' as Status, body: 'Un seguimiento mantiene abierta una solicitud o una oferta y avisa solo a su titular cuando algo nuevo encaja.' },
       ],
     },
     rules: {
@@ -104,7 +104,7 @@ export const es: Catalogue = {
     },
     describe: {
       title: 'Cuatro formas de decir lo que solicita u ofrece',
-      lede: `A fecha de ${AS_OF}, el formulario, el texto y el tablón se ejecutan en el espacio de staging. Los seguimientos están en el contrato y desactivados allí hasta que se despliegue su parte.`,
+      lede: `A fecha de ${AS_OF}, el formulario, el texto, el tablón y los seguimientos se ejecutan en el espacio de staging. Los webhooks aún no se ejecutan allí, y su email va a un buzón de prueba que no llega a nadie.`,
       items: [
         { name: 'Por formulario', status: 'now' as Status, paras: [
           'El formulario se genera a partir del pack. Los criterios obligatorios van primero; el resto queda detrás de «más detalles». Nada está preseleccionado: ni opción, ni unidad, ni base, ni tipo de parte. Cada lista ofrece «Otro / no está en la lista», «No lo sé» y «Cualquiera» donde el pack los permite.',
@@ -117,7 +117,7 @@ export const es: Catalogue = {
         { name: 'En el tablón', status: 'now' as Status, paras: [
           'El tablón lista solicitudes y ofertas cuyo titular lo eligió, nunca por defecto. Muestra solo los campos que el pack permite en la etapa de tablón, simplificados como declara el pack, y nunca quién publicó. Responder a un anuncio inicia un borrador en el otro lado, en el mismo formulario.',
         ] },
-        { name: 'Con un seguimiento', status: 'contract' as Status, paras: [
+        { name: 'Con un seguimiento', status: 'now' as Status, paras: [
           'Un seguimiento mantiene abierta una solicitud o una oferta y avisa a su titular cuando algo nuevo encaja, por email o, para la plataforma, por webhook. Notifica solo a su titular y nunca revela más que el tablón. Una persona puede pausarlo, reanudarlo o terminarlo, también desde el enlace de un mensaje.',
         ] },
       ],
@@ -197,6 +197,7 @@ export const es: Catalogue = {
           'Describir una solicitud o una oferta por formulario, con el aviso de identidad donde el espacio lo tiene',
           'Describir una solicitud o una oferta con sus propias palabras, leídas por reglas fijas sin un modelo',
           'El tablón, con los valores simplificados del pack, que lista solo lo que su titular eligió',
+          'Los seguimientos; su email va a un buzón de prueba y no llega a nadie',
           'Los ajustes, orígenes, claves y el funnel de un espacio, mediante Space API',
           'Confirmar; el navegador que confirmó gestiona lo que creó',
           'Emparejamiento con un veredicto por criterio',
@@ -207,9 +208,8 @@ export const es: Catalogue = {
           'El widget, servido por la propia instancia desde una release fijada (0.3.0-v1)',
         ] },
         { status: 'contract' as Status, title: 'En el contrato, no en el espacio de staging', lead: 'Cada una espera a que su parte se despliegue allí.', items: [
-          'Los seguimientos y sus mensajes',
           'Webhooks al servidor de la plataforma',
-          'Email que sale de la instancia; el espacio de staging no envía ninguno',
+          'Email que llega a un buzón real; el email del espacio de staging va a un buzón de prueba',
         ] },
         { status: 'later' as Status, title: 'No construido', lead: 'Sin fecha prometida.', items: [
           'Una demo del widget en este sitio; espera un espacio de demo con datos sintéticos',

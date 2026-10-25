@@ -50,12 +50,12 @@ export const it: Catalogue = {
     ],
     ways: {
       title: 'Quattro modi per indicare una richiesta o un’offerta',
-      lede: `Al ${AS_OF}, il modulo, il testo e la bacheca girano sullo spazio di staging. I monitoraggi sono nel contratto e lì non girano ancora.`,
+      lede: `Al ${AS_OF}, il modulo, il testo, la bacheca e i monitoraggi girano sullo spazio di staging. Le sue email vanno a una casella di prova e non raggiungono nessuno.`,
       items: [
         { name: 'Tramite modulo', status: 'now' as Status, body: 'Il modulo nasce dal pack: prima i criteri richiesti, ogni elenco con «Altro / non in elenco», «Non so» e «Qualsiasi». Il widget lo mostra nelle pagine della piattaforma.' },
         { name: 'Con parole proprie', status: 'now' as Status, body: 'Una lettura propone valori con la citazione da cui ognuno proviene e chiede dove non è sicura. Non sovrascrive mai ciò che una persona ha scelto. Sullo spazio di staging leggono regole fisse, non un modello.' },
         { name: 'Sulla bacheca', status: 'now' as Status, body: 'Richieste e offerte aperte, elencate solo se il proprietario ha dato il consenso, con i valori resi meno precisi dal pack e mai con chi ha pubblicato. Rispondere a una avvia una bozza dall’altra parte.' },
-        { name: 'Con un monitoraggio', status: 'contract' as Status, body: 'Un monitoraggio tiene aperta una richiesta o un’offerta e avvisa solo il suo proprietario quando qualcosa di nuovo corrisponde.' },
+        { name: 'Con un monitoraggio', status: 'now' as Status, body: 'Un monitoraggio tiene aperta una richiesta o un’offerta e avvisa solo il suo proprietario quando qualcosa di nuovo corrisponde.' },
       ],
     },
     rules: {
@@ -104,7 +104,7 @@ export const it: Catalogue = {
     },
     describe: {
       title: 'Quattro modi per indicare una richiesta o un’offerta',
-      lede: `Al ${AS_OF}, il modulo, il testo e la bacheca girano sullo spazio di staging. I monitoraggi sono nel contratto e lì restano disattivati finché la loro parte non viene distribuita.`,
+      lede: `Al ${AS_OF}, il modulo, il testo, la bacheca e i monitoraggi girano sullo spazio di staging. I webhook lì non girano ancora, e le sue email vanno a una casella di prova che non raggiunge nessuno.`,
       items: [
         { name: 'Tramite modulo', status: 'now' as Status, paras: [
           'Il modulo viene generato dal pack. I criteri richiesti vengono prima; il resto sta dietro «ulteriori dettagli». Nulla è preselezionato: nessuna opzione, nessuna unità, nessuna base, nessun tipo di parte. Ogni elenco offre «Altro / non in elenco», «Non so» e «Qualsiasi» dove il pack li consente.',
@@ -117,7 +117,7 @@ export const it: Catalogue = {
         { name: 'Sulla bacheca', status: 'now' as Status, paras: [
           'La bacheca elenca richieste e offerte il cui proprietario ha dato il consenso, mai per impostazione predefinita. Mostra solo i campi che il pack consente alla fase bacheca, resi meno precisi come dichiara il pack, e mai chi ha pubblicato. Rispondere a un annuncio avvia una bozza dall’altra parte, nello stesso modulo.',
         ] },
-        { name: 'Con un monitoraggio', status: 'contract' as Status, paras: [
+        { name: 'Con un monitoraggio', status: 'now' as Status, paras: [
           'Un monitoraggio tiene aperta una richiesta o un’offerta e avvisa il suo proprietario quando qualcosa di nuovo corrisponde, via email o, per la piattaforma, via webhook. Notifica solo il suo proprietario e non rivela mai più della bacheca. Una persona può metterlo in pausa, riprenderlo o chiuderlo, anche dal link in un messaggio.',
         ] },
       ],
@@ -197,6 +197,7 @@ export const it: Catalogue = {
           'Descrivere una richiesta o un’offerta tramite modulo, con l’avviso sull’identità dove lo spazio ne ha uno',
           'Descrivere una richiesta o un’offerta con parole proprie, lette da regole fisse senza un modello',
           'La bacheca, con i valori resi meno precisi dal pack, che elenca solo ciò per cui il proprietario ha dato il consenso',
+          'I monitoraggi; le loro email vanno a una casella di prova e non raggiungono nessuno',
           'Impostazioni, origin, chiavi e funnel di uno spazio, tramite la Space API',
           'Confermare; il browser che ha confermato gestisce ciò che ha creato',
           'Corrispondenza con un verdetto per criterio',
@@ -207,9 +208,8 @@ export const it: Catalogue = {
           'Il widget, servito dall’istanza stessa da una release fissata (0.3.0-v1)',
         ] },
         { status: 'contract' as Status, title: 'Nel contratto, non sullo spazio di staging', lead: 'Ognuna attende che la sua parte venga distribuita lì.', items: [
-          'I monitoraggi e i loro messaggi',
           'Webhook verso il server della piattaforma',
-          'Email che lascia l’istanza; lo spazio di staging non ne invia',
+          'Email che raggiunge una casella reale; le email dello spazio di staging vanno a una casella di prova',
         ] },
         { status: 'later' as Status, title: 'Non realizzato', lead: 'Nessuna data promessa.', items: [
           'Una demo del widget su questo sito; attende uno spazio demo con dati sintetici',
