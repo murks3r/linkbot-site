@@ -97,7 +97,7 @@ export const de: FrontCopy = {
       yoursLabel: 'Ihre Zeile, so behalten, wie Sie sie geschrieben haben',
       yoursNote: 'Niemand und nichts liest sie auf dieser Seite. Hier beantworten Sie die Fragen des Packs selbst, in einem Formular, das aus dem synthetischen Beispiel-Pack stammt.',
       asksTitle: 'Was das Pack zurückfragt',
-      packNote: 'Die Fragen des Beispiel-Packs der Connect-Lane für Industrieminerale, Version 0.2.0: synthetisch, geschrieben, um jedes Eingabeelement zu prüfen, kein Pack eines echten Marktes.',
+      packNote: 'Die Fragen des Beispiel-Packs von Linkbot Connect für Industrieminerale, Version 0.2.0: synthetisch, geschrieben, um jedes Eingabeelement zu prüfen, kein Pack eines echten Marktes.',
       storedTitle: 'Was gespeichert würde, wenn Sie bestätigen',
       storedEmpty: 'Noch nichts. Jede Antwort erscheint hier mit ihrer Quelle und ihrer Gewichtung; eine Frage, die Sie überspringen, bleibt unbekannt.',
       storedSource: 'von Ihnen gewählt',

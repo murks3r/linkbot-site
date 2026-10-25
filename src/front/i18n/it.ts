@@ -97,7 +97,7 @@ export const it: FrontCopy = {
       yoursLabel: 'La Sua riga, conservata come l’ha scritta',
       yoursNote: 'Nessuno e niente la legge su questa pagina. Qui Lei risponde da sé alle domande del pack, in un modulo tratto dal pack di esempio sintetico.',
       asksTitle: 'Che cosa chiede il pack a sua volta',
-      packNote: 'Le domande del pack di esempio della lane Connect per i minerali industriali, versione 0.2.0: sintetico, scritto per esercitare ogni controllo, non il pack di un mercato reale.',
+      packNote: 'Le domande del pack di esempio di Linkbot Connect per i minerali industriali, versione 0.2.0: sintetico, scritto per esercitare ogni controllo, non il pack di un mercato reale.',
       storedTitle: 'Che cosa verrebbe salvato, se Lei confermasse',
       storedEmpty: 'Ancora nulla. Ogni risposta compare qui con la sua fonte e la sua importanza; una domanda che Lei salta resta sconosciuta.',
       storedSource: 'scelto da Lei',

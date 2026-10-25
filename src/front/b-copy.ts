@@ -19,7 +19,7 @@ export const B = {
     yoursLabel: 'Your line, kept as written',
     yoursNote: 'Nobody and nothing reads it on this page. Here you answer the pack’s questions yourself, in a form drawn from the synthetic sample pack.',
     asksTitle: 'What the pack asks back',
-    packNote: 'The questions of the Connect lane’s sample pack for industrial minerals, version 0.2.0: synthetic, written to exercise every control, not a real market’s pack.',
+    packNote: 'The questions of Linkbot Connect’s sample pack for industrial minerals, version 0.2.0: synthetic, written to exercise every control, not a real market’s pack.',
     storedTitle: 'What would be stored, if you confirmed',
     storedEmpty: 'Nothing yet. Each answer appears here with its source and its importance; a question you skip stays unknown.',
     storedSource: 'picked by you',
