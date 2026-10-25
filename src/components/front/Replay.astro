@@ -9,7 +9,7 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const { demo: D } = FRONT[lang];
 /** The pictures of each step, in public/material/demo/{lang}/, all 640 × 880 CSS pixels. */
-const SHOTS = [['1-request'], ['2-confirmed'], ['3-fits'], ['4-yes'], ['5-approved'], ['6-introduced', '6-console']] as const;
+const SHOTS = [['1-request'], ['2-confirmed'], ['3-fits'], ['4-yes', '4-supplier-yes'], ['5-approved'], ['6-introduced', '6-console']] as const;
 const total = String(D.steps.items.length);
 ---
 <div class="fr-replay" data-replay data-position={D.replay.position}>

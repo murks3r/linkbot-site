@@ -246,7 +246,7 @@ export const it: FrontCopy = {
         ['Il widget dell’acquirente: il modulo generato dal pack di esempio, con fosfato naturale scelto e un minimo di P₂O₅ del 30 %. L’importanza è segnata come suggerita, e nient’altro è scelto.'],
         ['Il widget dell’acquirente dopo la conferma: la richiesta è attiva, con ogni criterio e la sua importanza. Ancora nessuna offerta da mostrare.'],
         ['Il widget dell’acquirente: un’offerta che potrebbe essere adatta, con un segno di spunta per criterio, la domanda «Desidera essere presentato?» e l’avviso che decidono le persone.'],
-        ['Il widget dell’acquirente dopo il sì: «Il Suo sì è registrato. Sample space lo esamina prima.»'],
+        ['Il widget dell’acquirente dopo il sì: «Il Suo sì è registrato. Sample space lo esamina prima.»', 'Il widget del fornitore: la stessa possibile corrispondenza, vista dal lato dell’offerta come una richiesta con un segno di spunta per criterio, dopo il sì del fornitore stesso, con le stesse parole.'],
         ['Il caso nella console dell’operatore: il controllo di ciascuna parte e il controllo KYC e sanzioni del caso, registrati come superati dall’operatore di esempio, poi «Approvato dal Suo team.»'],
         ['Il widget dell’acquirente in «Le mie richieste e offerte»: entrambe le parti hanno detto sì, la richiesta è presentata e un pulsante mostra ciò che l’altra parte condivide.', 'Le presentazioni nella console dell’operatore: una presentazione, in modalità diretta, elencata senza dati di contatto.'],
       ],
