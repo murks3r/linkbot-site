@@ -395,6 +395,26 @@ export const en = {
     note: 'Every entry comes from docs/changelog.yml in this site’s repository and names the pull request it rests on; an entry without a source stops the build.',
     link: 'What’s new',
   },
+  requestDemo: {
+    title: 'Request a demo: what you can see today, and what follows',
+    description: 'How a Linkbot demo works today: a walkthrough recorded on one computer, with fictional data. A guided session follows later; there is no date yet.',
+    eyebrow: 'Request a demo',
+    h1: ['A demo,', 'as it can be given today.'],
+    lede: 'There is nothing to book yet, and this page collects nothing. It says what you can see now, what is planned, and how you will reach us.',
+    now: {
+      title: 'Now: the recorded walkthrough',
+      body: 'The demo page shows a buyer’s whole path in six steps, from the request to the introduction, with pictures of the widget and the operator console recorded on one computer, with fictional data. It needs no request, no account and no address: open it and go step by step.',
+      link: 'Open the walkthrough',
+    },
+    later: {
+      title: 'Later: a guided session',
+      body: 'Planned: a session for a platform’s team, in which Linkbot shows the widget and the console on a test space with fictional data and answers questions. It needs a demo space and published contact details. Neither exists yet, so there is no date and nothing to book.',
+    },
+    contact: {
+      title: 'How to ask',
+      write: 'Write to {email}. Name your platform and the market it serves; send no real requests and no one’s personal details.',
+    },
+  },
   sheet: {
     title: 'Linkbot in one page',
     description: 'Linkbot on one printable page, made from this site’s pages: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.',

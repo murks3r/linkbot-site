@@ -20,7 +20,7 @@ const { colorKit, focusKit, pageAudit, treeFindings, keyboardFindings, textSpaci
 if (!fs.existsSync(path.join(DIST, 'index.html'))) throw Error('build the site first (npm run build)');
 
 const LANGS = ['en', 'de', 'es', 'it', 'fr'];
-const ALL_PAGES = ['/', '/how-it-works', '/demo', '/for-platforms', '/developers', '/status', '/changelog', '/who-sees-what', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
+const ALL_PAGES = ['/', '/how-it-works', '/demo', '/for-platforms', '/developers', '/status', '/changelog', '/request-a-demo', '/who-sees-what', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
 /* SITE_PAGES=/,/demo runs the page checks for a subset only (a targeted pass between milestones); the journeys still run. */
 const PAGES = process.env.SITE_PAGES ? process.env.SITE_PAGES.split(',') : ALL_PAGES;
 const WIDTHS = [1440, 1024, 768, 390, 320];

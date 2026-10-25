@@ -383,6 +383,26 @@ export const es: Catalogue = {
     note: 'Cada entrada procede de docs/changelog.yml, en el repositorio de este sitio, y nombra la pull request en la que se basa; una entrada sin fuente detiene la compilación.',
     link: 'Novedades',
   },
+  requestDemo: {
+    title: 'Solicitar una demo: lo que puede ver hoy y lo que vendrá',
+    description: 'Cómo funciona hoy una demo de Linkbot: un recorrido grabado en un solo ordenador, con datos ficticios. Más adelante, una sesión guiada; aún sin fecha.',
+    eyebrow: 'Solicitar una demo',
+    h1: ['Una demo,', 'tal como puede darse hoy.'],
+    lede: 'Todavía no hay nada que reservar, y esta página no recoge nada. Dice lo que puede ver ahora, lo que está previsto y cómo podrá contactarnos.',
+    now: {
+      title: 'Ahora: el recorrido grabado',
+      body: 'La página de la demo muestra todo el camino de un comprador en seis pasos, de la solicitud a la presentación, con imágenes del widget y de la consola del operador grabadas en un solo ordenador, con datos ficticios. No necesita solicitud, cuenta ni dirección: ábrala y avance paso a paso.',
+      link: 'Ver el recorrido',
+    },
+    later: {
+      title: 'Más adelante: una sesión guiada',
+      body: 'Previsto: una sesión para el equipo de una plataforma, en la que Linkbot muestra el widget y la consola en un espacio de prueba con datos ficticios y responde preguntas. Requiere un espacio de demostración y datos de contacto publicados. Aún no existe ninguno de los dos, así que no hay fecha ni nada que reservar.',
+    },
+    contact: {
+      title: 'Cómo solicitarla',
+      write: 'Escriba a {email}. Indique su plataforma y el mercado al que sirve; no envíe solicitudes reales ni datos personales de nadie.',
+    },
+  },
   sheet: {
     title: 'Linkbot en una página',
     description: 'Linkbot en una página imprimible, hecha con las páginas de este sitio: los tres componentes, el sí de ambas partes, lo que una plataforma obtiene y conserva, y en qué punto está cada parte. Con fecha, sin precios.',

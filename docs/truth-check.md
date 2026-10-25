@@ -189,6 +189,17 @@ For an operator who wants a space. The header's and the footer's "For platforms"
 | forPlatforms.yours[3] | The team signs in through the platform's own login; no Linkbot login for operators | row `platforms.console` (GEO-122, option A) | 2026-10-25 | |
 | forPlatforms.details | The integration pages: embed, keys and origins, console, SDK and webhooks, recipes for plain HTML, WordPress, Next.js and Astro | R `src/pages/[...lang]/platforms.astro`, `platforms/*` | 2026-10-25 | |
 
+**`/request-a-demo`** (2026-10-25, five languages)
+
+How a demo works today, what is planned, and how to ask. No form, nothing collected. Linked from every footer and from `/demo`'s section on the test space.
+
+| Where | Claim | Backed by | Checked | Unfinished |
+| -- | -- | -- | -- | -- |
+| requestDemo.lede, requestDemo.description | Nothing to book yet; the page collects nothing (no form, no script of its own, no request to another host) | R `src/pages/[...lang]/request-a-demo.astro`; R `tests/contact.test.mjs` (no host outside Linkbot's own in `dist/`) | 2026-10-25 | |
+| requestDemo.now | The demo page shows a buyer's path in six steps, from the request to the introduction, with pictures of the widget and the operator console recorded on one computer with fictional data; no request, account or address needed | rows of `/demo` above (`demo.replay`); R `tools/record-demo.cjs` | 2026-10-25 | |
+| requestDemo.later | A guided session for a platform's team is planned, on a test space with fictional data; it needs a demo space and published contact details; neither exists, so no date | the orchestrator's brief of 2026-10-25 (the recorded walkthrough now, a session with a person later); row `site.synthetic, how.today` (no demo space; GEO-185); R `src/lib/contact.ts` (`CONTACT_EMAIL` is null); CLAUDE.md "Domains and identification" | 2026-10-25 | **unfinished**: the demo space (GEO-185) and a domain named by the owner |
+| requestDemo.contact | Until `CONTACT_EMAIL` is set the page shows the footer's sentence that contact details follow with the domain; once set, the address, with the request to send no real requests and no personal details | R `src/lib/contact.ts`, `tests/contact.test.mjs` | 2026-10-25 | |
+
 **`/for-intermediaries`** (2026-10-25, English only, a draft for the owner)
 
 A draft for the owner's review: linked from nowhere, never indexed (`noindex, nofollow`), no alternates, out of the sitemap, and absent from production builds until the owner approves it (`tests/draft.test.mjs`). The positioning towards intermediaries is undecided. Words: `src/drafts/intermediaries.ts`. Contract paragraphs read in murks3r/linkbot `contracts/space-api/openapi.yaml` on `build/vision` at `afe5c97`.

@@ -385,6 +385,26 @@ export const de: Catalogue = {
     note: 'Jeder Eintrag stammt aus docs/changelog.yml im Repository dieser Website und nennt den Pull Request, auf dem er beruht; ein Eintrag ohne Quelle stoppt den Build.',
     link: 'Neuigkeiten',
   },
+  requestDemo: {
+    title: 'Demo anfragen: was Sie heute sehen können und was folgt',
+    description: 'Wie eine Linkbot-Demo heute funktioniert: ein Durchgang, auf einem Computer mit erfundenen Daten aufgezeichnet. Eine geführte Sitzung folgt, noch ohne Datum.',
+    eyebrow: 'Demo anfragen',
+    h1: ['Eine Demo,', 'so wie sie heute möglich ist.'],
+    lede: 'Noch ist nichts zu buchen, und diese Seite sammelt nichts. Sie sagt, was Sie jetzt sehen können, was geplant ist und wie Sie uns erreichen werden.',
+    now: {
+      title: 'Jetzt: der aufgezeichnete Durchgang',
+      body: 'Die Demo-Seite zeigt den ganzen Weg eines Käufers in sechs Schritten, von der Anfrage bis zur Vorstellung, mit Bildern des Widgets und der Operator-Konsole, auf einem Computer mit erfundenen Daten aufgezeichnet. Sie braucht keine Anfrage, kein Konto und keine Adresse: öffnen und Schritt für Schritt durchgehen.',
+      link: 'Zum Durchgang',
+    },
+    later: {
+      title: 'Später: eine geführte Sitzung',
+      body: 'Geplant: eine Sitzung für das Team einer Plattform, in der Linkbot das Widget und die Konsole auf einem Test-Space mit erfundenen Daten zeigt und Fragen beantwortet. Dafür braucht es einen Demo-Space und veröffentlichte Kontaktdaten. Beides gibt es noch nicht, also gibt es noch kein Datum und nichts zu buchen.',
+    },
+    contact: {
+      title: 'Wie Sie anfragen',
+      write: 'Schreiben Sie an {email}. Nennen Sie Ihre Plattform und den Markt, den sie bedient; senden Sie keine echten Anfragen und keine personenbezogenen Daten.',
+    },
+  },
   sheet: {
     title: 'Linkbot auf einer Seite',
     description: 'Linkbot auf einer druckbaren Seite, aus den Seiten dieser Website gemacht: die drei Bausteine, das Ja beider Seiten, was eine Plattform bekommt und behält, und wo jeder Teil steht. Datiert, ohne Preise.',

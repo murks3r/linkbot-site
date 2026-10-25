@@ -383,6 +383,26 @@ export const fr: Catalogue = {
     note: 'Chaque entrée provient de docs/changelog.yml, dans le dépôt de ce site, et nomme la pull request sur laquelle elle repose ; une entrée sans source arrête la compilation.',
     link: 'Nouveautés',
   },
+  requestDemo: {
+    title: 'Demander une démo : ce que vous pouvez voir aujourd’hui, et la suite',
+    description: 'Une démo de Linkbot aujourd’hui : un parcours enregistré sur un seul ordinateur, avec des données fictives. Une séance guidée suivra, sans date.',
+    eyebrow: 'Demander une démo',
+    h1: ['Une démo,', 'telle qu’elle peut se faire aujourd’hui.'],
+    lede: 'Il n’y a encore rien à réserver, et cette page ne collecte rien. Elle dit ce que vous pouvez voir maintenant, ce qui est prévu et comment vous pourrez nous joindre.',
+    now: {
+      title: 'Maintenant : le parcours enregistré',
+      body: 'La page de démo montre tout le parcours d’un acheteur en six étapes, de la demande à la mise en relation, avec des images du widget et de la console de l’opérateur enregistrées sur un seul ordinateur, avec des données fictives. Elle ne demande ni requête, ni compte, ni adresse : ouvrez-la et avancez étape par étape.',
+      link: 'Voir le parcours',
+    },
+    later: {
+      title: 'Plus tard : une séance guidée',
+      body: 'Prévu : une séance pour l’équipe d’une plateforme, où Linkbot montre le widget et la console sur un espace de test aux données fictives et répond aux questions. Il faut pour cela un espace de démonstration et des coordonnées publiées. Ni l’un ni l’autre n’existe encore : il n’y a donc ni date ni rien à réserver.',
+    },
+    contact: {
+      title: 'Comment la demander',
+      write: 'Écrivez à {email}. Indiquez votre plateforme et le marché qu’elle sert ; n’envoyez ni demande réelle ni données personnelles de quiconque.',
+    },
+  },
   sheet: {
     title: 'Linkbot en une page',
     description: 'Linkbot sur une page imprimable, faite à partir des pages de ce site : les trois briques, le oui des deux parties, ce qu’une plateforme obtient et conserve, et où en est chaque partie. Datée, sans prix.',
