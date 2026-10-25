@@ -200,3 +200,30 @@ A draft for the owner's review: linked from nowhere, never indexed (`noindex, no
 | introduction | Operator mode: introduction-stage fields go to the platform's team only; each receipt says both agreed and the platform will contact them; the operator connects the parties outside Linkbot and records the outcome; direct mode: each side sees the other's; an operator-stage field never reaches the other side | C approval paragraph (modes `operator` and `direct`); C `GET /introductions/{id}` (mode operator: the operator connects the parties outside Linkbot and records the outcome) | 2026-10-25 | |
 | space | One instance per market, own database, keys, deletion log; nothing shared with another space; a space pins a pack; no pack for recruiting, brokerage or agency work; the only pack a space uses is industrial minerals | rows `home.pillars[0], how.space, verticals.first`, `how.space`, `home.verticals, how.pack, verticals.holds`; R murks3r/linkbot `packs/` at `afe5c97` (industrial_minerals, bulk_freight draft) | 2026-10-25 | |
 | space, embed | Console behind the platform's login, no Linkbot login for operators, a sample not published; embed with a publishable key bound to origins, four modes; the secret key's server calls; the SDK not published; no webhooks from staging | rows `home.platforms, platforms.console`, `home.platforms, platforms.embed, platforms.keys`; the catalogue's `forPlatforms.ways` and `forPlatforms.gets` | 2026-10-25 | **unfinished**: publication after M3 and the owner's go |
+
+## The status page: on the staging space, built, planned
+
+`/status`, in five languages, and the section "What runs on the staging space" on `/how-it-works` are built from this table: `src/lib/status.ts` reads it at build time, so the pages and this file cannot differ. A row's words are in each catalogue under `status.items.<key>`; the build stops when a key has no words, and `tests/status-page.test.mjs` fails when a catalogue has words for a key this table lacks, or when a row's "Checked" is not the day in `src/i18n/status-date.ts`. To change the status, change the State here, then the words. The states: `on staging` runs on Geoprocure's synthetic staging space; `built` is built or in the contract, and neither runs on the staging space nor is published; `planned` is not built. The sources are the rows above.
+
+| Key | State | Backed by | Checked |
+| -- | -- | -- | -- |
+| form | on staging | row `home.ways, how.describe (form)` | 2026-10-25 |
+| text | on staging | row `home.ways, how.describe (text)` | 2026-10-25 |
+| board | on staging | row `home.ways, how.describe (board)` | 2026-10-25 |
+| watches | on staging | row `home.ways, how.describe (watch)` (H, mail adapter `sink`) | 2026-10-25 |
+| control | on staging | row `how.today (now)` (P §2, 0.2.9, slice E1) | 2026-10-25 |
+| confirm | on staging | row `how.today (now)` | 2026-10-25 |
+| matching | on staging | row `how.today (now)` | 2026-10-25 |
+| gates | on staging | row `how.today (now)` | 2026-10-25 |
+| introductions | on staging | row `how.today (now)` | 2026-10-25 |
+| outcomes | on staging | row `how.today (now)` | 2026-10-25 |
+| deletion | on staging | row `how.today (now)` (H `deletion_log.configured: true`) | 2026-10-25 |
+| widget | on staging | row `how.today (now)` (H `embed.origin: pinned_release`, `embed.version: 0.3.0-v1`) | 2026-10-25 |
+| webhooks | built | row `how.today (contract)`; row `platforms.server` (the SDK verifies deliveries; Core-Engine's `features.webhooks` off on staging) | 2026-10-25 |
+| mail | built | row `how.today (contract)` (H `mail.adapter: sink`; a mail provider waits for D-V3) | 2026-10-25 |
+| sdk | built | row `developers.notYet`; row `integrations.sdk` (P §1: the SDK, not published) | 2026-10-25 |
+| console | built | row `forPlatforms.gets[4]` (P §1; P decision 4: nothing published before M3) | 2026-10-25 |
+| recipes | built | row `platforms.recipes` (D `recipes/*.md`; they run in Connect's CI against the sample build) | 2026-10-25 |
+| reader | planned | row `home.ways, how.describe (text)` (a model reader waits for the reading policy and Core-Engine E7) | 2026-10-25 |
+| mcp | planned | row `forPlatforms.ways.items[3]` (planned, not built; the contract is a skeleton) | 2026-10-25 |
+| demo | planned | row `site.synthetic, home.state, how.today` (the demo waits for a demo space) | 2026-10-25 |

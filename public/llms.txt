@@ -29,6 +29,7 @@ in every language.
 
 ## Status
 
-The form path runs on Geoprocure's synthetic staging space in German and English. Text reading,
-the board, watches and webhooks are in the Space API contract and not on staging yet. There is
-no demo of the widget on this site until a demo space with synthetic data exists.
+[Status](/status) lists, dated, which parts run on Geoprocure's synthetic staging space, which are
+built or in the contract but do not run there, and which are planned. It is built from the
+site's truth check. There is no demo of the widget on this site until a demo space with
+synthetic data exists.
