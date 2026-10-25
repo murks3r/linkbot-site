@@ -1,8 +1,9 @@
 # Site lane handover
 
-Written 2026-10-25 by the Site lane, so that a fresh session can continue without asking anyone. It was updated the same day twice:
+Written 2026-10-25 by the Site lane, so that a fresh session can continue without asking anyone. It was updated the same day:
 - after #34, which made `vision/home-redesign` the source of the front;
-- after #35, which merged step 1. This update includes the gaps the step-1 session found in this file.
+- after #35, which merged the front, with the gaps the step-1 session found in this file;
+- in #NN, which made the status sentences true again and dated them.
 
 Read these first, in this order:
 1. `CLAUDE.md`, the binding rules.
@@ -44,7 +45,7 @@ The production deployments on record (GitHub's deployment history, all made by V
 
 Of the project's three production names, only `linkbot-site.vercel.app` is public. The other two, every deployment's own URL and every preview sit behind Vercel's login and send `X-Robots-Tag: noindex`.
 
-### `build/vision`: the site being built, head `5688598`
+### `build/vision`: the site being built, at the merge of #NN
 
 It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and `/who-sees-what`), plus the 404 page. English sits at the root, then `/de`, `/es`, `/it` and `/fr`.
 - **Its preview** is behind Vercel's login. Find it in the Vercel dashboard under project `linkbot-m3`, Deployments, branch `build/vision`.
@@ -62,6 +63,8 @@ It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and
 | `tests/domains.test.mjs`: the domain guard | [#32](https://github.com/murks3r/linkbot-site/pull/32) | `5dcdf8d` |
 | This handover, and its first correction | [#33](https://github.com/murks3r/linkbot-site/pull/33), [#34](https://github.com/murks3r/linkbot-site/pull/34) | `f6148ba`, `2dec13a` |
 | Step 1: the front is B, then A, and C is `/who-sees-what`. It merges `vision/home-redesign` at `a111f6f`, plus fixes. | [#35](https://github.com/murks3r/linkbot-site/pull/35) | `5688598` |
+| The handover, kept current | [#36](https://github.com/murks3r/linkbot-site/pull/36), [#37](https://github.com/murks3r/linkbot-site/pull/37) | `d284ce2`, `66eccbf` |
+| The status sentences, true again and dated. Text and the board run on the staging space, the instance serves the widget, and the console's routes exist since 0.2.9; watches, webhooks and outgoing email are not there yet. It adds `src/i18n/status-date.ts` and `tests/status.test.mjs`. | [#NN](https://github.com/murks3r/linkbot-site/pull/NN) | the merge of #NN |
 
 ### The front, since #35
 
@@ -107,26 +110,26 @@ On 2026-10-24 a second public Linkbot landing page in the same Vercel team was t
 
 Nothing goes to production.
 
-### Step 1: make the status sentences true again, in all five languages
+### Standing duty: keep the status true
 
-**What is untrue:** the catalogues in `src/i18n/*.ts` still say "Text, the board and watches are in the contract and not on staging yet" (`home.ways`) and "The text path is off until a reading policy is approved" (`how.describe`). `how.today` also lists text and the board under "In the contract, not on staging yet".
+The status sentences name the day of their check: `STATUS_CHECKED` in `src/i18n/status-date.ts`, now 2026-10-25. Each catalogue writes that day into its status sentences. The status as of that day:
 
-**What changed:** the Connect lane's docs moved on 2026-10-24, after this copy was written.
-- **Contract 0.2.10:** text is read by a deterministic reader, without a model, and the text path runs on the staging space.
-- **Contract 0.2.11:** the board runs on the staging space. Its coarsened values show a port only as its country.
-- **Watches:** check them there; do not assume.
+| On the staging space | Not on the staging space |
+| -- | -- |
+| the form; text, read by fixed rules without a model; the board; confirm, matching, gates and approval, introductions, outcomes, deletion; a space's settings, origins, keys and funnel; the widget, served by the instance itself (0.3.0-v1) | watches and their messages; webhooks; email that leaves the instance |
 
-Re-read these first, in murks3r/linkbot-connect on its `build/vision` branch: `docs/plan/connect-plan.md` §1 and `docs/guides/privacy-for-integrators.md`.
+**When to check again:**
+- At least every 14 days: `tests/status.test.mjs` fails after that.
+- As soon as staging's `/health` reports contract 0.2.13. That version is watches (Core-Engine E4, deployed on the owner's go, GEO-184). Watches then move to the staging column in all five catalogues.
 
-**The truth-check rows:** `home.ways, how.describe (text)` and `(board)` still say "unfinished: Core-Engine E2 / E3". They change with the sentences.
+**How to check:**
+- **Read the two sources.**
+  - Staging's health report, `GET /health` on the staging space's Space API. It needs no key. The host is in Connect's `docs/handover/connect.md`; never write it into this repository. Send a product-token User-Agent such as `Linkbot-Probe/1.0`.
+  - The Connect lane's plan: `docs/plan/connect-plan.md` in murks3r/linkbot-connect on `build/vision`, its status line and §1.
+- **Supporting sources:** Core-Engine's `docs/handover/core-engine.md` in murks3r/linkbot lists staging's feature flags.
+- **Renew everything together:** `STATUS_CHECKED`, the sentences in all five catalogues, and their rows in `docs/truth-check.md`, whose sources are `H` and `P`.
 
-**Done when:**
-- Every status sentence and status label in the five catalogues matches Connect's docs as read that day.
-- The truth-check rows carry the new source (the Connect commit) and the date.
-- `npm run build` and then `npm test` pass.
-- It is merged on local evidence.
-
-### Step 2: the owner's open choices, then remove what loses
+### Step 1: the owner's open choices, then remove what loses
 
 Each of these is open with the owner and sits behind a review switch today:
 - **The logo:** the wordmark (the default) or the brand lab's quotation mark (`?logo=quote`).
@@ -143,7 +146,7 @@ Do not decide any of them.
 - The gates pass.
 - The PR says which decision it carries out.
 
-### Step 3: the new front in the four other languages
+### Step 2: the new front in the four other languages
 
 **The work:**
 - Translate the new home and `/who-sees-what` through the delegate (rule 8), and review every line.
@@ -156,7 +159,7 @@ Do not decide any of them.
 - The tests pass.
 - The native reading goes to GEO-192.
 
-### Then: clear out concept A8's leftovers (rule 7)
+### Step 3: clear out concept A8's leftovers (rule 7)
 
 - `type-a8.css` is still imported.
 - `palette.css` feeds only the brand board `/__preview/brand`, the variant switcher and the living light.
@@ -176,7 +179,7 @@ Ask the owner first whether the brand board is still needed.
 | PR #28 on `main` | Counsel, plus a domain and mailbox Linkbot owns (owner) | GEO-150, GEO-154 |
 | A native reading of the Spanish, Italian and French texts | The M3 gate | GEO-192 |
 | A domain for the site. The placeholder stays `linkbot-domain-tbd.invalid`. The owner's facts on the candidate names are on GEO-188 and stay out of this public repository. | The owner | GEO-188 |
-| The open choices of step 2, and whether the brand board stays | The owner | GEO-188 |
+| The open choices of step 1, and whether the brand board stays | The owner | GEO-188 |
 | The hostname history on the old design branches, which can be rewritten only with the owner's go | The owner | GEO-151 |
 
 Two blockers in the first handover are done:
@@ -189,7 +192,8 @@ Two blockers in the first handover are done:
   - No staging host, key, internal URL or person's data goes into it, including PR text.
   - Synthetic data only.
   - Keep Linear IDs out of PR titles and branch names: a parent ID in a PR title closes that issue on merge, as #22 did to GEO-188. Titles read "Lane Site, …" for `build/vision` and "Main: …" for `main`.
-- **Product facts move.** Before carrying any status sentence, re-read the Connect lane's docs (step 1 names them). Contracts 0.2.10 and 0.2.11 overtook the copy within a day.
+- **Forbidden words in translation.** Italian "verificato" and French "vérifié" are on the forbidden list even where they only mean "checked". Write "controllato" and "contrôlé".
+- **Product facts move.** Before carrying any status sentence, re-read the sources the standing duty in section 4 names. Contracts 0.2.10 and 0.2.11 overtook the copy within a day.
 - **The domain guard.** `tests/domains.test.mjs` fails, with file and line, when the domain Linkbot does not own appears in any tracked text file, in any letter case.
   - Where a Linkbot address is meant, write `linkbot-domain-tbd.invalid` (`contact@linkbot-domain-tbd.invalid` for mail).
   - The old `vision/front-*` branches still name the old domain.

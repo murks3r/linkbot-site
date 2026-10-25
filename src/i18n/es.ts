@@ -1,5 +1,9 @@
 /* Las palabras del sitio en español: traducción del catálogo fuente en inglés. */
 import type { Catalogue, Section, Status } from './en.ts';
+import { statusDate } from './status-date.ts';
+
+/** The day the status sentences were checked, in this language (status-date.ts). */
+const AS_OF = statusDate('es');
 
 export const es: Catalogue = {
   site: {
@@ -17,7 +21,7 @@ export const es: Catalogue = {
       privacy: 'Aviso de privacidad',
       line: 'Este sitio no usa cookies, no carga nada de terceros y no usa analíticas.',
     },
-    status: { now: 'Ya en el espacio de staging', contract: 'En el contrato, aún no en staging', later: 'Aún no construido' },
+    status: { now: 'En el espacio de staging', contract: 'En el contrato, no en el espacio de staging', later: 'No construido' },
     synthetic: 'Todo en este sitio describe el contrato de Space API y lo que se ejecuta en el espacio de staging sintético de Geoprocure, con datos sintéticos. Ninguna persona ni organización real lo usa todavía.',
     more: 'Leer más',
   },
@@ -46,11 +50,11 @@ export const es: Catalogue = {
     ],
     ways: {
       title: 'Cuatro formas de decir lo que solicita u ofrece',
-      lede: 'El formulario ya se ejecuta en el espacio de staging. El texto, el tablón y los seguimientos están en el contrato y aún no en staging.',
+      lede: `A fecha de ${AS_OF}, el formulario, el texto y el tablón se ejecutan en el espacio de staging. Los seguimientos están en el contrato y aún no se ejecutan allí.`,
       items: [
         { name: 'Por formulario', status: 'now' as Status, body: 'El formulario sale del pack: primero los criterios obligatorios, cada lista con «Otro / no está en la lista», «No lo sé» y «Cualquiera». El widget lo muestra en las páginas de la plataforma.' },
-        { name: 'Con sus propias palabras', status: 'contract' as Status, body: 'Una lectura propone valores con la cita de la que salió cada uno y pregunta donde no está segura. Nunca sobrescribe lo que una persona eligió. Desactivada hasta que se apruebe una política de lectura.' },
-        { name: 'En el tablón', status: 'contract' as Status, body: 'Solicitudes y ofertas abiertas, listadas solo si su titular lo eligió, con los valores simplificados que declara el pack y nunca con quién las publicó. Responder a una inicia un borrador en el otro lado.' },
+        { name: 'Con sus propias palabras', status: 'now' as Status, body: 'Una lectura propone valores con la cita de la que salió cada uno y pregunta donde no está segura. Nunca sobrescribe lo que una persona eligió. En el espacio de staging leen reglas fijas, no un modelo.' },
+        { name: 'En el tablón', status: 'now' as Status, body: 'Solicitudes y ofertas abiertas, listadas solo si su titular lo eligió, con los valores simplificados que declara el pack y nunca con quién las publicó. Responder a una inicia un borrador en el otro lado.' },
         { name: 'Con un seguimiento', status: 'contract' as Status, body: 'Un seguimiento mantiene abierta una solicitud o una oferta y avisa solo a su titular cuando algo nuevo encaja.' },
       ],
     },
@@ -79,7 +83,7 @@ export const es: Catalogue = {
     eyebrow: 'Cómo funciona',
     h1: ['De una solicitud confirmada', 'a una presentación.'],
     lede: 'Cada paso de abajo está en el contrato de Space API. Donde el espacio de staging aún no ejecuta un paso, la página lo dice.',
-    toc: [['space', 'Un espacio'], ['pack', 'Un pack'], ['describe', 'Cuatro formas de describir'], ['confirm', 'Confirmar'], ['matching', 'Emparejamiento'], ['approval', 'Aprobación y gates'], ['yes', 'El sí de ambas partes'], ['introduction', 'La presentación'], ['after', 'Después'], ['sees', 'Quién ve qué'], ['languages', 'Cinco idiomas'], ['today', 'Qué funciona hoy']] as [string, string][],
+    toc: [['space', 'Un espacio'], ['pack', 'Un pack'], ['describe', 'Cuatro formas de describir'], ['confirm', 'Confirmar'], ['matching', 'Emparejamiento'], ['approval', 'Aprobación y gates'], ['yes', 'El sí de ambas partes'], ['introduction', 'La presentación'], ['after', 'Después'], ['sees', 'Quién ve qué'], ['languages', 'Cinco idiomas'], ['today', 'Qué se ejecuta en el espacio de staging']] as [string, string][],
     space: {
       title: 'Un espacio es un mercado en una plataforma',
       paras: [
@@ -100,17 +104,17 @@ export const es: Catalogue = {
     },
     describe: {
       title: 'Cuatro formas de decir lo que solicita u ofrece',
-      lede: 'El formulario ya se ejecuta en el espacio de staging. El texto, el tablón y los seguimientos están en el contrato; la instancia les responde «not implemented» hasta que se construya su parte.',
+      lede: `A fecha de ${AS_OF}, el formulario, el texto y el tablón se ejecutan en el espacio de staging. Los seguimientos están en el contrato y desactivados allí hasta que se despliegue su parte.`,
       items: [
         { name: 'Por formulario', status: 'now' as Status, paras: [
           'El formulario se genera a partir del pack. Los criterios obligatorios van primero; el resto queda detrás de «más detalles». Nada está preseleccionado: ni opción, ni unidad, ni base, ni tipo de parte. Cada lista ofrece «Otro / no está en la lista», «No lo sé» y «Cualquiera» donde el pack los permite.',
           'Cada criterio lleva una importancia. Imprescindible y Nunca son duras; Deseable, Aceptable y Mejor no son blandas. El pack puede sugerir una, marcada «sugerida», y la persona puede cambiarla salvo que el pack la bloquee. Elegir Nunca pide una confirmación aparte.',
         ] },
-        { name: 'Con sus propias palabras', status: 'contract' as Status, paras: [
+        { name: 'Con sus propias palabras', status: 'now' as Status, paras: [
           'Una persona escribe lo que solicita u ofrece. Una lectura propone valores para los mismos criterios, cada uno junto a las palabras de las que salió, y pregunta donde no puede decidir: una unidad, una opción, un número que dos convenciones leen de forma distinta. Una lectura nunca sobrescribe lo que una persona eligió; una diferencia se convierte en una pregunta.',
-          'La vía de texto está desactivada hasta que se apruebe una política de lectura. Sea cual sea el lector del texto, las condiciones duras quedan en código determinista: ningún modelo anula un Imprescindible ni un Nunca.',
+          'En el espacio de staging, reglas fijas leen el texto, sin un modelo; un lector con modelo espera a que se apruebe una política de lectura. Sea cual sea el lector del texto, las condiciones duras quedan en código determinista: ningún modelo anula un Imprescindible ni un Nunca.',
         ] },
-        { name: 'En el tablón', status: 'contract' as Status, paras: [
+        { name: 'En el tablón', status: 'now' as Status, paras: [
           'El tablón lista solicitudes y ofertas cuyo titular lo eligió, nunca por defecto. Muestra solo los campos que el pack permite en la etapa de tablón, simplificados como declara el pack, y nunca quién publicó. Responder a un anuncio inicia un borrador en el otro lado, en el mismo formulario.',
         ] },
         { name: 'Con un seguimiento', status: 'contract' as Status, paras: [
@@ -186,26 +190,26 @@ export const es: Catalogue = {
       ],
     },
     today: {
-      title: 'Qué funciona hoy, y qué no funciona todavía',
-      lede: 'Exactamente qué partes se ejecutan ya en el espacio de staging, con los mismos cuadrados que el producto usa como evidencia.',
+      title: 'Qué se ejecuta en el espacio de staging, y qué no todavía',
+      lede: `Comprobado el ${AS_OF} con el informe de estado del espacio de staging y el plan de Connect: qué partes se ejecutan allí, con los mismos cuadrados que el producto usa como evidencia.`,
       columns: [
-        { status: 'now' as Status, title: 'Ya en el espacio de staging', lead: 'Datos sintéticos, en alemán e inglés.', items: [
+        { status: 'now' as Status, title: 'En el espacio de staging', lead: 'Datos sintéticos, en alemán e inglés.', items: [
           'Describir una solicitud o una oferta por formulario, con el aviso de identidad donde el espacio lo tiene',
+          'Describir una solicitud o una oferta con sus propias palabras, leídas por reglas fijas sin un modelo',
+          'El tablón, con los valores simplificados del pack, que lista solo lo que su titular eligió',
+          'Los ajustes, orígenes, claves y el funnel de un espacio, mediante Space API',
           'Confirmar; el navegador que confirmó gestiona lo que creó',
           'Emparejamiento con un veredicto por criterio',
           'Gates y aprobación por un operador con nombre',
           'Presentaciones en modo de operador, con comprobantes',
           'Resultados, cambios, pausas y cierres',
           'Borrado con el registro de borrado de la instancia',
-          'El modo describe del widget contra el espacio de staging; la instancia aún no sirve el propio widget',
+          'El widget, servido por la propia instancia desde una release fijada (0.3.0-v1)',
         ] },
-        { status: 'contract' as Status, title: 'En el contrato, aún no en staging', lead: 'La instancia responde «not implemented» hasta que se construya la parte.', items: [
-          'Leer una solicitud o una oferta a partir de texto',
-          'El tablón',
+        { status: 'contract' as Status, title: 'En el contrato, no en el espacio de staging', lead: 'Cada una espera a que su parte se despliegue allí.', items: [
           'Los seguimientos y sus mensajes',
           'Webhooks al servidor de la plataforma',
-          'Email que sale de la instancia; hoy no se envía nada',
-          'Los ajustes, orígenes, claves y el funnel de la consola',
+          'Email que sale de la instancia; el espacio de staging no envía ninguno',
         ] },
         { status: 'later' as Status, title: 'No construido', lead: 'Sin fecha prometida.', items: [
           'Una demo del widget en este sitio; espera un espacio de demo con datos sintéticos',
@@ -234,28 +238,28 @@ export const es: Catalogue = {
       title: 'Claves y orígenes',
       paras: [
         'Una publishable key identifica su espacio y solo funciona en los orígenes que su espacio permite; va en la página. Una secret key va en su servidor; el widget se niega a arrancar con una y le dice que la rote.',
-        'Hoy los orígenes permitidos se fijan al aprovisionar un espacio; la consola aún no puede cambiarlos.',
+        'Los orígenes permitidos se fijan al aprovisionar un espacio. Desde el contrato 0.2.9, Space API puede cambiarlos, y también la consola.',
       ],
     },
     console: {
       title: 'La consola para su equipo',
       paras: [
         'La consola muestra la cola de aprobación, cada caso con sus gates y su aprobación, las presentaciones con sus comprobantes, los resultados, los endpoints de webhook y los operadores. Se ejecuta en una máquina suya o detrás de su propio inicio de sesión; la secret key queda en su servidor. No hay inicio de sesión de Linkbot para operadores.',
-        'Los ajustes, orígenes, claves y un funnel esperan las rutas que el contrato añada después.',
+        'Sus pantallas de ajustes y cambios de criterios, claves, orígenes y funnel usan las rutas que Space API tiene desde el contrato 0.2.9.',
       ],
     },
     server: {
       title: 'Su servidor: el SDK y los webhooks',
       paras: [
-        'El SDK da a su servidor un cliente tipado por el contrato de Space API: una ruta, un campo o un valor que el contrato no tiene es un error de tipos. También comprueba las entregas de webhook exactamente como especifica el contrato. Aún no está publicado; su código está en el repositorio de Connect.',
-        'Los webhooks llevan ids y estados, nunca datos de contacto; su servidor obtiene los detalles con su secret key. Las entregas van firmadas y se reintentan. Están en el contrato y el espacio de staging aún no las envía.',
+        `El SDK da a su servidor un cliente tipado por el contrato de Space API: una ruta, un campo o un valor que el contrato no tiene es un error de tipos. También comprueba las entregas de webhook exactamente como especifica el contrato. A fecha de ${AS_OF} no está publicado; su código está en el repositorio de Connect.`,
+        `Los webhooks llevan ids y estados, nunca datos de contacto; su servidor obtiene los detalles con su secret key. Las entregas van firmadas y se reintentan. Están en el contrato; a fecha de ${AS_OF}, el espacio de staging no las envía.`,
       ],
     },
     recipes: {
       title: 'Recetas: HTML plano, Astro, Next.js, WordPress',
       paras: [
         'Cada receta es un archivo que se ejecuta en el CI de Connect en tres motores de navegador contra la build de muestra con datos sintéticos: una página plana con una Content Security Policy estricta, un componente de Astro, una página de Next.js con el wrapper de React y un pequeño plugin de WordPress con un shortcode.',
-        'Ninguna se ejecuta todavía contra un espacio real tal cual está escrita: la instancia de staging sirve un fixture de prueba en lugar del widget hasta que se despliegue allí una release.',
+        `A fecha de ${AS_OF} se ejecutan en el CI de Connect contra la build de muestra, no contra un espacio; la propia instancia de staging sirve la release 0.3.0-v1 del widget.`,
       ],
     },
     state: { title: 'Estado actual' },
@@ -369,14 +373,14 @@ export const es: Catalogue = {
             'sessionStorage pertenece al origen de su página, así que cualquier script que ejecute en esa página puede leer el borrador y los tokens. No ejecute scripts en los que no confíe en páginas que lleven el widget.',
           ] },
         ] as Section[],
-        state: ['El script sale de la propia instancia de su espacio. La instancia de staging sirve un fixture de prueba en su lugar hasta que se despliegue allí una release del widget; el 23 de octubre de 2026 el widget se ejecutó contra la API del espacio de staging con el script publicado servido desde un sustituto local para esa dirección.'],
+        state: [`El script sale de la propia instancia de su espacio. A fecha de ${AS_OF}, la instancia de staging sirve la release 0.3.0-v1 del widget desde un archivo fijado, como muestra su informe de estado; las comprobaciones de Connect del tablón y de los textos del widget pasaron contra ese archivo servido el 24 de octubre de 2026.`],
       },
       sdk: {
         nav: 'SDK y webhooks',
         title: 'El SDK, el wrapper de React y los webhooks · Linkbot para plataformas',
         description: 'Un cliente de servidor tipado por el contrato de Space API, la comprobación de webhooks, el wrapper de React y cómo su servidor recibe los eventos de Linkbot.',
         h1: ['Su servidor,', 'tipado por el contrato.'],
-        lede: 'Nada del SDK va a una página de navegador: el embed toma la publishable key, y el cliente del SDK se niega a arrancar en un navegador. Aún no está publicado; su código está en el repositorio de Connect.',
+        lede: `Nada del SDK va a una página de navegador: el embed toma la publishable key, y el cliente del SDK se niega a arrancar en un navegador. A fecha de ${AS_OF} no está publicado; su código está en el repositorio de Connect.`,
         sections: [
           { id: 'client', title: 'El cliente', paras: [
             'El cliente toma la base de la API de su espacio (solo https, salvo en localhost), su secret key del almacén de secretos de su servidor (un valor que no tenga forma de secret key se rechaza) y, si quiere, el fetch de su runtime. Sus rutas, parámetros, cuerpos y respuestas son los del contrato, generados a partir del YAML que publicó Core y fijados por sha256: una ruta, un campo o un valor que el contrato no tiene es un error de tipos.',
@@ -386,15 +390,15 @@ export const es: Catalogue = {
           { id: 'webhooks', title: 'Webhooks', paras: [
             'Registre un endpoint con su secret key, solo https. El secreto de firma se muestra una vez y va en su almacén de secretos, nunca en el código. Cada entrega lleva un id, una marca de tiempo en segundos y una firma: el HMAC-SHA256 de la marca de tiempo, un punto y el cuerpo sin procesar, con su secreto como clave.',
             'Rechace una entrega de más de cinco minutos o cuya firma no coincida. La comprobación del SDK hace ambas cosas, comparando en tiempo constante con Web Crypto, en Node, Deno, Bun y runtimes de edge. Compruebe el cuerpo sin procesar antes de parsearlo. Responda 2xx rápido: cualquier otra cosa se reintenta con backoff durante 24 horas, y después la entrega se marca como fallida. Un reintento lleva el mismo id, así que trate cada id una vez, con los ids en su base de datos y no en memoria.',
-            'Rote el secreto cuando lo necesite: el antiguo sigue siendo válido hasta siete días, y la comprobación acepta ambos. Las entregas llevan ids y estados, nunca datos de contacto; obtenga los detalles con su secret key. El registro de entregas lista el estado, los intentos y un hash del cuerpo, nunca el cuerpo. Los webhooks están en el contrato y el espacio de staging aún no los envía.',
+            `Rote el secreto cuando lo necesite: el antiguo sigue siendo válido hasta siete días, y la comprobación acepta ambos. Las entregas llevan ids y estados, nunca datos de contacto; obtenga los detalles con su secret key. El registro de entregas lista el estado, los intentos y un hash del cuerpo, nunca el cuerpo. Los webhooks están en el contrato; a fecha de ${AS_OF}, el espacio de staging no los envía.`,
           ] },
           { id: 'events', title: 'Tipos de evento', paras: ['Cada evento tiene un id, un tipo, el id del espacio, el momento en que ocurrió, la versión del contrato y el objeto del que trata, con su tipo, id y estado donde los haya. Los tipos:'], code: true, items: ['intent.confirmed', 'intent.revised', 'intent.status_changed', 'match.proposed', 'match.updated', 'gate.recorded', 'approval.recorded', 'answer.recorded', 'clarification.requested', 'review.recorded', 'introduction.created', 'outcome.recorded', 'watch.delivered', 'channel.verified', 'deletion.completed', 'key.rotated'] },
           { id: 'react', title: 'El wrapper de React', paras: [
             'El wrapper dibuja el mismo elemento que el snippet y carga el script una vez por dirección; el embed arranca entonces en su propio shadow root, que React nunca toca. Es un componente de cliente, así que funciona en el App Router de Next.js, y no añade CSS global.',
-            'Sus props son los atributos del elemento: la publishable key y la dirección del script son obligatorias (una secret key lanza un error), luego mode, side, locale, input, api, su aviso, un nombre de clase y un style para las variables del tema. Cuando cambia una prop que el embed lee, el wrapper da a React un elemento nuevo y el embed arranca de nuevo. Una página que quiera el script cargado antes de dibujar un elemento también puede pedirlo. Aún no publicado.',
+            `Sus props son los atributos del elemento: la publishable key y la dirección del script son obligatorias (una secret key lanza un error), luego mode, side, locale, input, api, su aviso, un nombre de clase y un style para las variables del tema. Cuando cambia una prop que el embed lee, el wrapper da a React un elemento nuevo y el embed arranca de nuevo. Una página que quiera el script cargado antes de dibujar un elemento también puede pedirlo. Sin publicar a fecha de ${AS_OF}.`,
           ] },
         ] as Section[],
-        state: ['El SDK y el wrapper están construidos y probados en el repositorio de Connect y no están publicados. El receptor de la guía de webhooks está probado contra entregas de muestra firmadas; el espacio de staging aún no envía webhooks.'],
+        state: [`El SDK y el wrapper están construidos y probados en el repositorio de Connect y, a fecha de ${AS_OF}, no están publicados. El receptor de la guía de webhooks está probado contra entregas de muestra firmadas; el espacio de staging no envía webhooks.`],
       },
       console: {
         nav: 'La consola',
@@ -427,8 +431,7 @@ export const es: Catalogue = {
             'Esta vía se ejecutó contra el espacio de staging sintético de Geoprocure el 23 de octubre de 2026: la cola, un caso, ambos tipos de comprobación, la aprobación, una respuesta por la oferta de la propia plataforma y una presentación con su comprobante.',
           ] },
           { id: 'notyet', title: 'Aún no está, y por qué', items: [
-            'Los ajustes, los orígenes permitidos y las claves no se pueden cambiar desde la consola: el contrato aún no tiene rutas para ello. Los espacios se aprovisionan con la herramienta de Core, así que crear uno desde un pack aquí también espera una ruta.',
-            'Sin funnel: no muestra cifras hasta que Space API informe de unas reales.',
+            'Un espacio nuevo se crea con la herramienta de aprovisionamiento de Core, no desde la consola; el asistente de cinco pasos de la consola escribe y valida el archivo que esa herramienta lee.',
             'No hay «reenviar» para una entrega hasta que haya entregas reales con las que probarlo.',
           ] },
         ] as Section[],
