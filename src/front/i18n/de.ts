@@ -246,7 +246,7 @@ export const de: FrontCopy = {
         ['Das Widget des Einkäufers: das Formular, das das Beispiel-Pack erzeugt, mit Rohphosphat gewählt und einem P₂O₅-Minimum von 30 %. Die Gewichtung ist als vorgeschlagen markiert, sonst ist nichts gewählt.'],
         ['Das Widget des Einkäufers nach dem Bestätigen: Die Anfrage ist aktiv, mit jedem Kriterium und seiner Gewichtung. Noch keine Angebote zu zeigen.'],
         ['Das Widget des Einkäufers: ein Angebot, das passen könnte, mit einem Haken je Kriterium, der Frage „Möchten Sie vorgestellt werden?“ und dem Hinweis, dass Menschen entscheiden.'],
-        ['Das Widget des Einkäufers nach dem Ja: „Ihr Ja ist festgehalten. Sample space prüft es zuerst.“'],
+        ['Das Widget des Einkäufers nach dem Ja: „Ihr Ja ist festgehalten. Sample space prüft es zuerst.“', 'Das Widget des Lieferanten: dieselbe mögliche Passung, von der Angebotsseite aus als Anfrage mit einem Haken je Kriterium, nach dem eigenen Ja des Lieferanten, mit denselben Worten.'],
         ['Der Fall in der Operator-Konsole: die Prüfung jeder Seite und die KYC- und Sanktionsprüfung des Falls, vom Beispiel-Operator als bestanden festgehalten, dann „Von Ihrem Team freigegeben.“'],
         ['Das Widget des Einkäufers unter „Meine Anfragen und Angebote“: Beide Seiten haben Ja gesagt, die Anfrage ist vorgestellt, und eine Schaltfläche zeigt, was die andere Seite teilt.', 'Die Vorstellungen in der Operator-Konsole: eine Vorstellung, im Modus direkt, ohne Kontaktdaten aufgeführt.'],
       ],

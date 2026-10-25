@@ -246,7 +246,7 @@ export const fr: FrontCopy = {
         ['Le widget de l’acheteur : le formulaire que génère le pack d’exemple, avec le phosphate naturel choisi et un minimum de P₂O₅ de 30 %. L’importance est marquée comme suggérée, et rien d’autre n’est choisi.'],
         ['Le widget de l’acheteur après la confirmation : la demande est active, avec chaque critère et son importance. Aucune offre à afficher pour l’instant.'],
         ['Le widget de l’acheteur : une offre qui pourrait convenir, avec une coche par critère, la question « Souhaitez-vous une mise en relation ? » et la mention que ce sont les personnes qui décident.'],
-        ['Le widget de l’acheteur après le oui : « Votre oui est enregistré. Sample space l’examine d’abord. »'],
+        ['Le widget de l’acheteur après le oui : « Votre oui est enregistré. Sample space l’examine d’abord. »', 'Le widget du fournisseur : la même correspondance possible, vue du côté de l’offre comme une demande avec une coche par critère, après le propre oui du fournisseur, avec les mêmes mots.'],
         ['Le dossier dans la console de l’opérateur : le contrôle de chaque partie et le contrôle KYC et sanctions du dossier, enregistrés comme réussis par l’opérateur d’exemple, puis « Approuvé par votre équipe. »'],
         ['Le widget de l’acheteur sous « Mes demandes et offres » : les deux parties ont dit oui, la demande est mise en relation, et un bouton montre ce que l’autre partie partage.', 'Les mises en relation dans la console de l’opérateur : une mise en relation, en mode direct, listée sans coordonnées.'],
       ],

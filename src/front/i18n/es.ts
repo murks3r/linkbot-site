@@ -246,7 +246,7 @@ export const es: FrontCopy = {
         ['El widget del comprador: el formulario que genera el pack de ejemplo, con roca fosfórica elegida y un mínimo de P₂O₅ del 30 %. La importancia aparece marcada como sugerida y no hay nada más elegido.'],
         ['El widget del comprador tras confirmar: la solicitud está activa, con cada criterio y su importancia. Todavía no hay ofertas que mostrar.'],
         ['El widget del comprador: una oferta que puede encajar, con una marca por criterio, la pregunta «¿Quiere que les presenten?» y el aviso de que deciden las personas.'],
-        ['El widget del comprador tras el sí: «Su sí queda registrado. Sample space lo revisa primero.»'],
+        ['El widget del comprador tras el sí: «Su sí queda registrado. Sample space lo revisa primero.»', 'El widget del proveedor: el mismo posible encaje, visto desde el lado de la oferta como una solicitud con una marca por criterio, tras el propio sí del proveedor, con las mismas palabras.'],
         ['El caso en la consola del operador: el control de cada lado y el control KYC y de sanciones del caso, registrados como superados por el operador de ejemplo, y después «Aprobado por su equipo.»'],
         ['El widget del comprador en «Mis solicitudes y ofertas»: ambos lados dijeron que sí, la solicitud está presentada y un botón muestra lo que comparte el otro lado.', 'Las presentaciones en la consola del operador: una presentación, en modo directo, listada sin datos de contacto.'],
       ],

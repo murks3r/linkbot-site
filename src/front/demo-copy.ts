@@ -37,7 +37,7 @@ export const DEMO = {
       ['The buyer’s widget: the form the sample pack generates, with rock phosphate chosen and a P₂O₅ minimum of 30 %. The importance “Must” is marked as suggested, and nothing else is chosen.'],
       ['The buyer’s widget after confirming: the request is active, with each criterion and its importance. No offers to show yet.'],
       ['The buyer’s widget: an offer that may fit, with a tick per criterion, the question “Do you want an introduction?” and the notice that people decide.'],
-      ['The buyer’s widget after the yes: “Your yes is recorded. Sample space reviews it first.”'],
+      ['The buyer’s widget after the yes: “Your yes is recorded. Sample space reviews it first.”', 'The supplier’s widget: the same possible fit, seen from the offer’s side as a request with a tick per criterion, after the supplier’s own yes, with the same words.'],
       ['The operator console’s case: each side’s check and the case’s KYC and sanctions check recorded as passed by the sample operator, then “Approved by your team.”'],
       ['The buyer’s widget under “My requests and offers”: both sides said yes, the request is introduced, and a button shows what the other side shares.', 'The operator console’s introductions: one introduction, in mode direct, listed without contact details.'],
     ],

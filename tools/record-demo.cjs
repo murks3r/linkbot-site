@@ -1,5 +1,6 @@
-/* Records the demo page's walkthrough (src/components/front/Replay.astro): the six steps of a buyer's path, as pictures
-   of the widget and the operator console, from Linkbot Connect's demo stage in its local rehearsal. That rehearsal runs
+/* Records the demo page's walkthrough (src/components/front/Replay.astro): the six steps of a buyer's path, with the
+   supplier's yes beside the buyer's, as pictures of the widget and the operator console, from Linkbot Connect's demo
+   stage in its local rehearsal. That rehearsal runs
    the widget, the console and a sample Space API on 127.0.0.1 with fictional data only, and nothing leaves the machine.
    It never points at a space; this script knows no host but 127.0.0.1, and no key.
 
@@ -91,15 +92,21 @@ async function shot(p, name, anchor) {
   await wr.getByRole('button', { name: T.showFits }).click(); await r.waitForTimeout(1200);
   await shot(r, '3-fits');
   await wr.getByRole('button', { name: T.introYes }).first().click(); await r.waitForTimeout(1200);
+  // The supplier answers the same possible fit from its own side.
+  await s.goto(url(4175, 'mine')); await s.waitForTimeout(1200);
+  await ws.getByRole('button', { name: T.showFits }).click(); await s.waitForTimeout(1200);
   await ws.getByRole('button', { name: T.introYes }).first().click(); await s.waitForTimeout(1200);
+  await shot(s, '4-supplier-yes', ws.locator('[data-match]').first());
   await shot(r, '4-yes', wr.locator('[data-match]').first());
   const c = await ctx.newPage();
   await c.goto('http://127.0.0.1:4174/#/queue'); await c.waitForTimeout(1200);
   await c.locator('header select').selectOption(lang); await c.waitForTimeout(600);
   await c.locator('main a').first().click(); await c.waitForTimeout(1200);
   for (const sel of ['[data-party-gate="need_side"]', '[data-party-gate="offer_side"]', '[data-gate="kyc_sanctions_check"]']) {
-    const g = c.locator(sel);
-    await g.locator('input[value="passed"]').check(); await g.locator('button').last().click(); await c.waitForTimeout(800);
+    const g = c.locator(sel), passed = g.locator('input[value="passed"]');
+    // A check the sample case already holds sits behind "Record another check": leave it as recorded.
+    if (!(await passed.isVisible())) continue;
+    await passed.check(); await g.locator('button').last().click(); await c.waitForTimeout(800);
   }
   await c.getByRole('button', { name: T.approve, exact: true }).click();
   await c.waitForTimeout(1200);
