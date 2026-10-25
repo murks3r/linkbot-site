@@ -175,7 +175,7 @@ button { cursor: pointer; }
 @media (min-width: 64rem) { .doc { grid-template-columns: 15rem minmax(0, 1fr); } }
 .doc-body { display: grid; gap: var(--space-section); max-width: 48rem; }
 .doc-body, .doc-body section { min-width: 0; }
-.doc-body section { display: grid; gap: var(--space-head); scroll-margin-top: var(--anchor-top); }
+.doc-body section { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-head); scroll-margin-top: var(--anchor-top); }
 .doc-body h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem); }
 .doc-body h3 { margin-top: 12px; }
 .doc-body > section > p { color: var(--ink-2); max-width: var(--measure); }

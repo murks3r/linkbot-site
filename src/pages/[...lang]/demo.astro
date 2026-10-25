@@ -11,6 +11,6 @@ const { lang } = Astro.props;
 const { t } = resolve(lang);
 const { demo: D } = FRONT[lang];
 ---
-<Base lang={lang} t={t} title={D.meta.title} description={D.meta.description} path="/demo" front>
+<Base lang={lang} t={t} title={D.meta.title} description={D.meta.description} path="/demo" crumbs={[[t.how.path.link, '/demo']]} front>
   <Demo lang={lang} t={t} />
 </Base>

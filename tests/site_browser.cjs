@@ -20,7 +20,9 @@ const { colorKit, focusKit, pageAudit, treeFindings, keyboardFindings, textSpaci
 if (!fs.existsSync(path.join(DIST, 'index.html'))) throw Error('build the site first (npm run build)');
 
 const LANGS = ['en', 'de', 'es', 'it', 'fr'];
-const PAGES = ['/', '/how-it-works', '/who-sees-what', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
+const ALL_PAGES = ['/', '/how-it-works', '/demo', '/for-platforms', '/developers', '/status', '/changelog', '/who-sees-what', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
+/* SITE_PAGES=/,/demo runs the page checks for a subset only (a targeted pass between milestones); the journeys still run. */
+const PAGES = process.env.SITE_PAGES ? process.env.SITE_PAGES.split(',') : ALL_PAGES;
 const WIDTHS = [1440, 1024, 768, 390, 320];
 /* SITE_SCHEME=dark runs every page in the dark palette. Light is the default for everyone (third pass, GEO-188): the
    page does not follow the system's scheme, so the dark run opens each page with the preview's ?theme=dark (and a dark
@@ -183,7 +185,7 @@ const check = (condition, message) => { if (!condition) failures.push(message); 
       await tab.goto(origin + '/', { waitUntil: 'networkidle' });
       check(await tab.isVisible('.menu-main summary'), 'phone: the menu is offered');
       await tab.click('.menu-main summary');
-      check(await tab.evaluate(() => [...document.querySelectorAll('.menu-main .menu-panel a')].filter(a => a.offsetParent !== null).length) === 4, 'phone: the menu lists the four pages');
+      check(await tab.evaluate(() => [...document.querySelectorAll('.menu-main .menu-panel a')].filter(a => a.offsetParent !== null).length) === 5, 'phone: the menu lists the five pages');
       await tab.keyboard.press('Escape');
       check(await tab.evaluate(() => !document.querySelector('.menu-main').open), 'phone: Escape closes the menu');
       // On a phone the language button stays clear of the safe margin and of the ask button.

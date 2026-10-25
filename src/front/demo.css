@@ -1,8 +1,8 @@
 /* The demo page: the opening with the test-space line, the recorded walkthrough of the six steps, and room for the
    widget so the page below does not jump while it loads. */
 .fd-hero { padding-block: clamp(40px, 7vw, 96px) 0; }
-.fd-hero-inner { display: grid; gap: var(--space-head); align-content: start; justify-items: start; }
-.fd-hero h1 { max-width: 18ch; }
+.fd-hero-inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-head); align-content: start; justify-items: start; }
+.fd-hero h1 { max-width: 18ch; overflow-wrap: break-word; hyphens: auto; }
 .fd-line { display: block; }
 .fd-hero h1 .fd-line + .fd-line { color: var(--ink-2); }
 .fd-lede { max-width: 40em; color: var(--ink); }
@@ -17,7 +17,7 @@
 .fr-tabs, .fr-controls { display: none; }
 [data-player] .fr-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
 [data-player] .fr-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
-.fr-tab, .fr-button { display: inline-flex; gap: 8px; align-items: baseline; padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: transparent; font: inherit; font-size: var(--size-small); color: var(--ink); cursor: pointer; }
+.fr-tab, .fr-button { display: inline-flex; gap: 8px; align-items: center; min-height: var(--target); padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: transparent; font: inherit; font-size: var(--size-small); color: var(--ink); cursor: pointer; }
 .fr-tab-n { font-weight: 650; }
 .fr-tab[aria-current] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
 .fr-button:disabled { color: var(--ink-3); cursor: default; }
@@ -36,7 +36,8 @@
 .fr-aside { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line-strong); }
 .fr-aside .fr-label { justify-self: start; }
 .fr-note { max-width: 46em; margin-top: 20px; font-size: var(--size-small); line-height: 1.55; color: var(--ink-2); }
-@media (max-width: 760px) { .fr-step, .fr-step[data-count="2"] { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 960px) { .fr-step[data-count="2"] { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) { .fr-step { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: no-preference) {
   [data-player] .fr-step:not([hidden]) { animation: fr-in .24s ease-out; }
   @keyframes fr-in { from { opacity: 0; } }
