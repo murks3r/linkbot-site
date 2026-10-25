@@ -9,7 +9,7 @@ export const it: FrontCopy = {
   home: {
     meta: {
       title: 'Linkbot: dica di che cosa ha bisogno, veda che cosa Le chiede a sua volta',
-      description: 'Uno strato di corrispondenza che ogni piattaforma può integrare. Scriva una richiesta in una riga e veda le domande che un pack chiede a sua volta; poi osservi una coppia sintetica incontrarsi, verdetto per verdetto.',
+      description: 'Uno strato di corrispondenza per ogni piattaforma. Scriva una richiesta in una riga, veda cosa chiede un pack e come si incontra una coppia sintetica.',
     },
     venn: {
       label: 'Due intenzioni, una sola lente: un verdetto per criterio',
@@ -150,7 +150,7 @@ export const it: FrontCopy = {
   c: {
     meta: {
       title: 'Linkbot: chi vede che cosa, e quando',
-      description: 'Uno strato di corrispondenza che ogni piattaforma può integrare, costruito intorno a una domanda: chi vede che cosa, e quando. Un’offerta sintetica, fase per fase, e la ricevuta.',
+      description: 'Uno strato di corrispondenza che ogni piattaforma può integrare, intorno a una domanda: chi vede che cosa, e quando. Un’offerta sintetica, fase per fase.',
     },
     hero: {
       eyebrow: 'Uno strato di corrispondenza che ogni piattaforma può integrare',
@@ -214,7 +214,7 @@ export const it: FrontCopy = {
   demo: {
     meta: {
       title: 'Linkbot: tutto il percorso, dalla richiesta alla presentazione',
-      description: 'Il percorso di un acquirente in Linkbot in sei passi: la richiesta, i criteri confermati, le possibili corrispondenze, il sì di entrambe le parti, l’approvazione di un operatore e la presentazione. Su uno spazio di prova con dati fittizi.',
+      description: 'Il percorso di un acquirente in Linkbot in sei passi, dalla richiesta al sì di entrambe le parti e alla presentazione. Su uno spazio di prova con dati fittizi.',
     },
     hero: {
       eyebrow: 'Demo · uno spazio di prova con dati fittizi',

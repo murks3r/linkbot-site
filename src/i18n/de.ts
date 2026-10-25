@@ -407,7 +407,7 @@ export const de: Catalogue = {
   },
   sheet: {
     title: 'Linkbot auf einer Seite',
-    description: 'Linkbot auf einer druckbaren Seite, aus den Seiten dieser Website gemacht: die drei Bausteine, das Ja beider Seiten, was eine Plattform bekommt und behält, und wo jeder Teil steht. Datiert, ohne Preise.',
+    description: 'Linkbot auf einer druckbaren Seite: die drei Bausteine, das Ja beider Seiten, was eine Plattform bekommt und behält, und wo jeder Teil steht. Ohne Preise.',
     eyebrow: 'Eine Seite',
     dated: `Stand ${AS_OF}. Beim Bauen der Website aus ihren Seiten erzeugt, sagt also nichts, was dort nicht steht. Es nennt keine Preise.`,
     pdf: 'Als PDF herunterladen',
