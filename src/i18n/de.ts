@@ -21,6 +21,8 @@ export const de: Catalogue = {
       legal: 'Rechtliches',
       imprint: 'Impressum',
       privacy: 'Datenschutzhinweis',
+      contact: 'Kontakt',
+      contactPending: 'Kontaktdaten folgen mit unserer Domain. Linkbot hat noch keine eigene Domain, deshalb nennt diese Seite keine Adresse und hat kein Kontaktformular.',
       line: 'Diese Seite setzt keine Cookies, lädt nichts von Dritten und nutzt keine Analyse-Dienste.',
     },
     status: { now: 'Läuft auf dem Staging-Space', contract: 'Im Vertrag, nicht auf dem Staging-Space', later: 'Nicht gebaut' },

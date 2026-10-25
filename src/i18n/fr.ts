@@ -19,6 +19,8 @@ export const fr: Catalogue = {
       legal: 'Informations légales',
       imprint: 'Mentions légales',
       privacy: 'Notice de confidentialité',
+      contact: 'Contact',
+      contactPending: 'Les coordonnées suivront avec notre domaine. Linkbot n’a pas encore de domaine à lui, ce site n’indique donc aucune adresse et n’a pas de formulaire de contact.',
       line: 'Ce site ne dépose aucun cookie, ne charge rien de tiers et n’utilise aucune mesure d’audience.',
     },
     status: { now: 'Sur l’espace staging', contract: 'Dans le contrat, pas sur l’espace staging', later: 'Pas construit' },
