@@ -231,7 +231,7 @@ export const es: FrontCopy = {
         { name: 'Los posibles encajes', who: 'El espacio', text: 'El matching compara los criterios guardados con los de la otra parte, uno a uno: un veredicto por criterio, encaja, encaja en parte, contradice o desconocido, nunca una puntuación. Un posible encaje muestra a cada parte solo los veredictos y un aviso de que deciden las personas.' },
         { name: 'Ambos dicen sí', who: 'El comprador y el proveedor', text: 'Cada parte responde al posible encaje por sí misma. Antes de que ambas hayan dicho sí, la otra parte no sabe nada, y un no posterior revoca un sí.' },
         { name: 'El operador aprueba', who: 'El equipo de la plataforma', text: 'Un operador con nombre registra las comprobaciones que exige el espacio y aprueba el par. Una aprobación por sí sola no revela nada, y cada escritura indica quién la hizo.' },
-        { name: 'La presentación', who: 'El servidor', text: 'Cuando se cumple la última de las tres condiciones, en cualquier orden, el servidor crea la presentación, y la rechaza por cualquier otra vía. Cada parte recibe un comprobante de quién puede ver qué campos. En el modo operador, el equipo de la plataforma contacta después con ambas partes.' },
+        { name: 'La presentación', who: 'El servidor', text: 'Cuando se cumple la última de las tres condiciones, en cualquier orden, el servidor crea la presentación, y la rechaza por cualquier otra vía. Cada parte recibe un comprobante de quién puede ver qué campos. En el modo directo, el que se grabó aquí, cada parte puede abrir después los campos que la otra comparte en esta fase. Una plataforma puede elegir en su lugar el modo operador: entonces solo su equipo ve a ambas partes y contacta con ellas.' },
       ],
     },
     replay: {

@@ -22,7 +22,7 @@ export const DEMO = {
       { name: 'The possible fits', who: 'The space', text: 'Matching compares the stored criteria with the other side’s, one by one: a verdict per criterion, meets, partly, conflicts or unknown, never a score. A possible fit shows each side only the verdicts and a notice that people decide.' },
       { name: 'Both say yes', who: 'The buyer and the supplier', text: 'Each side answers the possible fit for its own side. Before both have said yes the other side learns nothing, and a later no revokes a yes.' },
       { name: 'The operator approves', who: 'The platform’s team', text: 'A named operator records the checks the space requires and approves the pair. An approval alone discloses nothing, and every write names who made it.' },
-      { name: 'The introduction', who: 'The server', text: 'When the last of the three conditions is met, in any order, the server creates the introduction, and refuses every other way. Each side receives a receipt of who may see which fields. In operator mode the platform’s team then contacts both sides.' },
+      { name: 'The introduction', who: 'The server', text: 'When the last of the three conditions is met, in any order, the server creates the introduction, and refuses every other way. Each side receives a receipt of who may see which fields. In direct mode, the one recorded here, each side can then open the fields the other shares at this stage. A platform can choose operator mode instead: then only its team sees both sides, and it contacts them.' },
     ],
   },
   replay: {

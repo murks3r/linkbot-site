@@ -2,11 +2,11 @@
 /* Page metadata, in the page's language, with every other language as an alternate. Structured
    data states only what is verifiable today: the name, the address of this site and a plain
    description. Legal name, founding date, address and logo are left out until the owner confirms
-   them. Previews (PUBLIC_NOINDEX=1) are never indexed. */
+   them. Previews (PUBLIC_NOINDEX=1) and drafts are never indexed; a draft has one language and no alternates. */
 import { DEFAULT_LANG, LANGS, pathFor, type Catalogue, type Lang } from '../i18n';
-interface Props { lang: Lang; t: Catalogue; title: string; description: string; path: string; crumbs?: [string, string][] }
-const { lang, t, title, description, path, crumbs = [] } = Astro.props;
-const NOINDEX = import.meta.env.PUBLIC_NOINDEX === '1';
+interface Props { lang: Lang; t: Catalogue; title: string; description: string; path: string; crumbs?: [string, string][]; draft?: boolean }
+const { lang, t, title, description, path, crumbs = [], draft = false } = Astro.props;
+const NOINDEX = draft || import.meta.env.PUBLIC_NOINDEX === '1';
 const OG_LOCALE: Record<Lang, string> = { en: 'en_GB', de: 'de_DE', es: 'es_ES', it: 'it_IT', fr: 'fr_FR' };
 const site = Astro.site ?? new URL('https://linkbot-site.vercel.app');
 const url = (l: Lang, p = path) => new URL(pathFor(l, p), site).toString();
@@ -23,8 +23,8 @@ if (crumbs.length) graph.push({ '@context': 'https://schema.org', '@type': 'Brea
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
-{LANGS.map(l => <link rel="alternate" hreflang={l} href={url(l)} />)}
-<link rel="alternate" hreflang="x-default" href={url(DEFAULT_LANG)} />
+{!draft && LANGS.map(l => <link rel="alternate" hreflang={l} href={url(l)} />)}
+{!draft && <link rel="alternate" hreflang="x-default" href={url(DEFAULT_LANG)} />}
 {NOINDEX && <meta name="robots" content="noindex, nofollow" />}
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content={t.site.name} />
