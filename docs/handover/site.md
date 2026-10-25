@@ -82,6 +82,7 @@ It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and
 - Share images (S-8, slice 1): every page in every language has its own preview image, `/og/<lang>/<path>.png` (the home is `home`), 1200 × 630. `src/integrations/share-images.ts` draws them after the build from each page's own `og:title` and `og:description` (satori lays out, resvg renders, the fonts are the site's own WOFF2 decompressed at build time; no service is called). `tests/share.test.mjs` checks each page names its own image and that it exists. `public/og.png` and `scripts/og.cjs` are gone.
 - Linkbot in one page (S-8, slice 2): `/one-page` in five languages, print-ready (A4, the site's header and footer left off the paper), and `/linkbot-one-page-<lang>.pdf`, drawn at build time with pdf-lib and the site's own fonts. Both draw `src/lib/sheet.ts`, which takes every word from the catalogues' `how`, `forPlatforms`, `status` and `site` and the status from the truth check, so the sheet cannot say more than the site. Dated with `STATUS_CHECKED`, no prices, the contact line from `CONTACT_EMAIL`. The PDF is one page by construction: a column that overflows, or a character the fonts lack, stops the build; when copy grows, shorten it or the type in `src/lib/sheet-pdf.ts`. Linked from every footer. `tests/sheet.test.mjs`.
 - The build has 92 pages: 18 in each of five languages, plus the 404 page and the draft page for intermediaries; and five PDFs.
+- The draft page for intermediaries is left out of production builds (S-10): `src/pages/[intermediaries].astro` returns no route when `VERCEL_ENV` is `production`, so a production build has 91 pages. Previews and local builds keep it. When the owner approves the draft, set `INTERMEDIARIES_IN_PRODUCTION` in `src/drafts/intermediaries.ts` to `true` (and its line in `tests/draft.test.mjs`).
 
 ### The front, since #35
 
@@ -120,7 +121,7 @@ On 2026-10-24 a second public Linkbot landing page in the same Vercel team was t
 | PR | Branch → base | Waits on |
 | -- | -- | -- |
 | [#28](https://github.com/murks3r/linkbot-site/pull/28) | `claude/main-legal-notice` → `main` | Counsel's view on the legal notice (GEO-150, GEO-154), a mailbox on a domain Linkbot owns, and then the owner's merge. A production build stops while its placeholders are open (see Gotchas). |
-| The V1 PR, a draft | `build/vision` → `main` | The owner's go, planned for 2026-11-10: mark it ready (one CI run, `check.yml` skips drafts), then merge with a merge commit. Its description lists what production gains, what stays a placeholder and the rollback. `main` was merged into `build/vision` with `-s ours` on 2026-10-25, so it merges without conflicts. |
+| The V1 PR, a draft | `build/vision` → `main` | The owner's go, planned for 2026-11-10: mark it ready (one CI run, `check.yml` skips drafts), then merge with a merge commit. Its description lists what production gains, what stays a placeholder and the rollback. Before it is marked ready, the lane renews the status (section 4, due 2026-11-07). `main` was merged into `build/vision` with `-s ours` on 2026-10-25, so it merges without conflicts. |
 | [#30](https://github.com/murks3r/linkbot-site/pull/30) | `claude/main-domain-placeholder` → `main` | Superseded by the V1 PR, which carries the same placeholder (#31) and replaces both files #30 touches. Recommended: close it unmerged once the owner agrees. |
 | #1, #6 to #21 | old design and parallel branches | Nothing. They stay as they are (owner's order). |
 
@@ -137,7 +138,8 @@ The status sentences name the day of their check: `STATUS_CHECKED` in `src/i18n/
 | the form; text, read by fixed rules without a model; the board; watches (contract 0.2.13, mail to a sink that reaches no one); confirm, matching, gates and approval, introductions, outcomes, deletion; a space's settings, origins, keys and funnel; the widget, served by the instance itself (0.3.0-v1) | webhooks (0.2.14); email that reaches an inbox |
 
 **When to check again:**
-- At least every 14 days: `tests/status.test.mjs` fails after that.
+- **Next: on 2026-11-07**, before the V1 PR's go (planned for 2026-11-10). `tests/status.test.mjs` fails 14 days after `STATUS_CHECKED`, that is during 2026-11-08 for the check of 2026-10-25, and it prints a warning from four days before. Renew the status and merge that into `build/vision` before the V1 PR is marked ready, or its CI run fails on the date alone.
+- After that, at least every 14 days; each renewal sets the next re-check day here, one day before the test would fail.
 - After Core-Engine's deploy of contract 0.2.15 (E5 webhooks and E6), on the orchestrator's word. Watches moved to the staging column on 2026-10-25 (0.2.13, mail to a sink).
 
 **How to check:**

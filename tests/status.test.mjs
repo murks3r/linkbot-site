@@ -11,7 +11,7 @@ import { STATUS_CHECKED, statusDate } from '../src/i18n/status-date.ts';
 const MAX_AGE_DAYS = 14;
 const DAY = 86_400_000;
 
-test(`the status was checked at most ${MAX_AGE_DAYS} days ago`, () => {
+test(`the status was checked at most ${MAX_AGE_DAYS} days ago`, t => {
   const age = (Date.now() - Date.parse(`${STATUS_CHECKED}T00:00:00Z`)) / DAY;
   // A day of slack for time zones ahead of UTC.
   assert.ok(age > -1, `STATUS_CHECKED (${STATUS_CHECKED}) lies in the future`);
@@ -19,6 +19,8 @@ test(`the status was checked at most ${MAX_AGE_DAYS} days ago`, () => {
     age <= MAX_AGE_DAYS,
     `the status was checked ${Math.floor(age)} days ago (${STATUS_CHECKED}): re-read the staging space's /health and the Connect lane's plan §1, then renew the status sentences, their truth-check rows and STATUS_CHECKED`,
   );
+  // Warn ahead, so the date never breaks a run unannounced (the handover's standing duty names the re-check day).
+  if (MAX_AGE_DAYS - age <= 4) t.diagnostic(`the status check (${STATUS_CHECKED}) expires in ${Math.max(0, Math.floor(MAX_AGE_DAYS - age))} days: renew it before the next merge`);
 });
 
 test('every language dates its status sentences', () => {
