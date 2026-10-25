@@ -9,7 +9,7 @@ export const fr: FrontCopy = {
   home: {
     meta: {
       title: 'Linkbot : dites de quoi vous avez besoin, voyez ce qu’il demande en retour',
-      description: 'Une couche d’appariement que toute plateforme peut intégrer. Écrivez une demande en une ligne et voyez les questions qu’un pack demande en retour ; puis suivez une paire synthétique, verdict par verdict.',
+      description: 'Une couche d’appariement pour toute plateforme. Écrivez une demande en une ligne, voyez ce qu’un pack demande, puis une paire synthétique, verdict par verdict.',
     },
     venn: {
       label: 'Deux intentions, une intersection : un verdict par critère',
@@ -150,7 +150,7 @@ export const fr: FrontCopy = {
   c: {
     meta: {
       title: 'Linkbot : qui voit quoi, et quand',
-      description: 'Une couche d’appariement que toute plateforme peut intégrer, construite autour d’une question : qui voit quoi, et quand. Une offre synthétique, étape par étape, et le reçu.',
+      description: 'Une couche d’appariement que toute plateforme peut intégrer, autour d’une question : qui voit quoi, et quand. Une offre synthétique, étape par étape.',
     },
     hero: {
       eyebrow: 'Une couche d’appariement que toute plateforme peut intégrer',
@@ -214,7 +214,7 @@ export const fr: FrontCopy = {
   demo: {
     meta: {
       title: 'Linkbot : tout le parcours, de la demande à la mise en relation',
-      description: 'Le parcours d’un acheteur dans Linkbot en six étapes : la demande, les critères confirmés, les correspondances possibles, le oui des deux côtés, l’approbation d’un opérateur et la mise en relation. Sur un espace de test aux données fictives.',
+      description: 'Le parcours d’un acheteur dans Linkbot en six étapes, de la demande au oui des deux côtés et à la mise en relation. Sur un espace de test aux données fictives.',
     },
     hero: {
       eyebrow: 'Démo · un espace de test aux données fictives',

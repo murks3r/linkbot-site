@@ -9,7 +9,7 @@ export const es: FrontCopy = {
   home: {
     meta: {
       title: 'Linkbot: diga qué necesita, vea qué le pregunta de vuelta',
-      description: 'Una capa de emparejamiento que cualquier plataforma puede integrar. Escriba una solicitud en una línea y vea las preguntas que le devuelve un pack; después vea cómo se encuentra una pareja sintética, veredicto a veredicto.',
+      description: 'Una capa de emparejamiento para cualquier plataforma. Escriba una solicitud en una línea, vea qué pregunta un pack y cómo se encuentra una pareja sintética.',
     },
     venn: {
       label: 'Dos intenciones, una lente: un veredicto por criterio',
@@ -150,7 +150,7 @@ export const es: FrontCopy = {
   c: {
     meta: {
       title: 'Linkbot: quién ve qué, y cuándo',
-      description: 'Una capa de emparejamiento que cualquier plataforma puede integrar, construida en torno a una pregunta: quién ve qué, y cuándo. Una oferta sintética, etapa por etapa, y el comprobante.',
+      description: 'Una capa de emparejamiento que cualquier plataforma puede integrar, en torno a una pregunta: quién ve qué, y cuándo. Una oferta sintética, etapa por etapa.',
     },
     hero: {
       eyebrow: 'Una capa de emparejamiento que cualquier plataforma puede integrar',
@@ -214,7 +214,7 @@ export const es: FrontCopy = {
   demo: {
     meta: {
       title: 'Linkbot: todo el recorrido, de la solicitud a la presentación',
-      description: 'El recorrido de un comprador por Linkbot en seis pasos: la solicitud, los criterios confirmados, los posibles encajes, el sí de ambas partes, la aprobación de un operador y la presentación. En un espacio de prueba con datos ficticios.',
+      description: 'El recorrido de un comprador por Linkbot en seis pasos, de la solicitud al sí de ambas partes y la presentación. En un espacio de prueba con datos ficticios.',
     },
     hero: {
       eyebrow: 'Demo · un espacio de prueba con datos ficticios',

@@ -9,7 +9,7 @@ export const de: FrontCopy = {
   home: {
     meta: {
       title: 'Linkbot: Sagen Sie, was Sie brauchen, sehen Sie, was zurückgefragt wird',
-      description: 'Eine Matching-Schicht, die jede Plattform einbetten kann. Schreiben Sie eine Anfrage in einer Zeile und sehen Sie, welche Fragen ein Pack zurückfragt; dann sehen Sie zu, wie ein synthetisches Paar zusammenkommt, Urteil für Urteil.',
+      description: 'Eine Matching-Schicht für jede Plattform. Schreiben Sie eine Anfrage in einer Zeile, sehen Sie die Rückfragen eines Packs, dann ein synthetisches Paar.',
     },
     venn: {
       label: 'Zwei Absichten, eine Linse: ein Urteil pro Kriterium',
@@ -150,7 +150,7 @@ export const de: FrontCopy = {
   c: {
     meta: {
       title: 'Linkbot: wer was sieht, und wann',
-      description: 'Eine Matching-Schicht, die jede Plattform einbetten kann, gebaut um eine Frage: wer was sieht, und wann. Ein synthetisches Angebot, Stufe für Stufe, und die Quittung.',
+      description: 'Eine Matching-Schicht, die jede Plattform einbetten kann, gebaut um eine Frage: wer was sieht, und wann. Ein synthetisches Angebot, Stufe für Stufe.',
     },
     hero: {
       eyebrow: 'Eine Matching-Schicht, die jede Plattform einbetten kann',
@@ -214,7 +214,7 @@ export const de: FrontCopy = {
   demo: {
     meta: {
       title: 'Linkbot: der ganze Weg, von der Anfrage bis zur Vorstellung',
-      description: 'Der Weg eines Einkäufers durch Linkbot in sechs Schritten: die Anfrage, die bestätigten Kriterien, die möglichen Passungen, das Ja beider Seiten, die Freigabe durch einen Operator und die Vorstellung. Auf einem Test-Space mit erfundenen Daten.',
+      description: 'Der Weg eines Einkäufers durch Linkbot in sechs Schritten: von der Anfrage zum Ja beider Seiten und zur Vorstellung. Auf einem Test-Space mit erfundenen Daten.',
     },
     hero: {
       eyebrow: 'Demo · ein Test-Space mit erfundenen Daten',

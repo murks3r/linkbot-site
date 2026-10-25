@@ -5,7 +5,7 @@
 export const DEMO = {
   meta: {
     title: 'Linkbot: the whole path, from a request to an introduction',
-    description: 'A buyer’s path through Linkbot in six steps: the request, the confirmed criteria, the possible fits, both sides’ yes, the operator’s approval and the introduction. On a test space with fictional data.',
+    description: 'A buyer’s path through Linkbot in six steps, from the request to both sides’ yes and the introduction. On a test space with fictional data.',
   },
   hero: {
     eyebrow: 'Demo · a test space with fictional data',

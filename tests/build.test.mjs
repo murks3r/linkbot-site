@@ -3,7 +3,7 @@
    indexable, and without the preview's variant switcher. Skipped until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { LANGS, DEFAULT_LANG, pathFor, catalogues } from '../src/i18n/index.ts';
 
 const PAGES = ['/', '/how-it-works', '/who-sees-what', '/for-platforms', '/developers', '/status', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
@@ -45,5 +45,17 @@ test('while the Connect repository is private, /developers shows its paths and l
     const html = readFileSync(file(lang, '/developers'), 'utf8');
     assert.ok(html.includes('docs/guides/embed-in-five-minutes.md'), `${lang}: the quickstart's path`);
     assert.doesNotMatch(html, /href="https:\/\/github\.com\/murks3r\/linkbot-connect/, `${lang}: a link into the private repository`);
+  }
+});
+
+/* The milestone browser run and search engines read 50 to 160 characters of description; every built page stays inside. */
+test('every page describes itself in 50 to 160 characters', { skip }, () => {
+  const walk = dir => readdirSync(dir, { withFileTypes: true }).flatMap(e => e.isDirectory() ? walk(new URL(`${e.name}/`, dir)) : e.name.endsWith('.html') ? [new URL(e.name, dir)] : []);
+  const entities = { '&#39;': "'", '&quot;': '"', '&amp;': '&', '&lt;': '<', '&gt;': '>' };
+  for (const page of walk(dist)) {
+    const raw = readFileSync(page, 'utf8').match(/<meta name="description" content="([^"]*)"/)?.[1];
+    if (raw === undefined) continue;
+    const text = raw.replace(/&#39;|&quot;|&amp;|&lt;|&gt;/g, e => entities[e]);
+    assert.ok(text.length >= 50 && text.length <= 160, `${page.pathname.split('/dist/')[1]}: description is ${text.length} characters`);
   }
 });

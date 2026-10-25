@@ -20,7 +20,7 @@ export const intermediaries = {
   banner: 'Draft, not published, for the owner’s review.',
   bannerNote: 'This page is linked from nowhere on the site, is never indexed and exists in English only. The positioning towards intermediaries is the owner’s open decision.',
   title: 'For intermediaries: introductions on both sides’ yes (draft)',
-  description: 'Draft for the owner: what a recruiter, broker or agency gets from Linkbot as an introduction layer: intake, watch, an introduction after both sides’ yes, a space of its own, the embed and the API.',
+  description: 'Draft for the owner: what a recruiter, broker or agency gets: intake, watch, an introduction after both sides’ yes, its own space, the embed and the API.',
   eyebrow: 'For intermediaries · draft',
   h1: ['Two sides you bring together,', 'introduced only after both say yes.'],
   lede: 'For a recruiter, a broker or an agency whose work is to bring a need and an offer together: what Linkbot does as the layer under that work, and what it does not do yet. This page describes the Space API contract and Geoprocure’s synthetic staging space, which is the only space running today. No intermediary runs a space, and this page names no prices.',

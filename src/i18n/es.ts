@@ -405,7 +405,7 @@ export const es: Catalogue = {
   },
   sheet: {
     title: 'Linkbot en una página',
-    description: 'Linkbot en una página imprimible, hecha con las páginas de este sitio: los tres componentes, el sí de ambas partes, lo que una plataforma obtiene y conserva, y en qué punto está cada parte. Con fecha, sin precios.',
+    description: 'Linkbot en una página imprimible: los tres componentes, el sí de ambas partes, lo que una plataforma obtiene y conserva, y dónde está cada parte. Sin precios.',
     eyebrow: 'Una página',
     dated: `A fecha de ${AS_OF}. Generada con las páginas de este sitio al construirlo, así que no dice nada que ellas no digan. No menciona precios.`,
     pdf: 'Descargar en PDF',

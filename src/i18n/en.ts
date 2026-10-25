@@ -417,7 +417,7 @@ export const en = {
   },
   sheet: {
     title: 'Linkbot in one page',
-    description: 'Linkbot on one printable page, made from this site’s pages: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.',
+    description: 'Linkbot on one printable page: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.',
     eyebrow: 'One page',
     dated: `As of ${AS_OF}. Made from this site’s pages when the site is built, so it says nothing they do not. It names no prices.`,
     pdf: 'Download as PDF',
