@@ -79,6 +79,7 @@ It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and
 - The contact section (#49): every page's footer says that contact details follow with Linkbot's domain; no address, no form. `CONTACT_EMAIL` in `src/lib/contact.ts` switches the address on once the owner names the domain. `tests/contact.test.mjs` also fails when any host outside Linkbot's own appears in `dist/` (exceptions named in the test).
 - `/status` (#50): built at build time from the table "The status page" at the end of `docs/truth-check.md` (`src/lib/status.ts`); `/how-it-works#today` renders the same table. To change a status, change the row's State there, then the words in `status.items`. Every row's "Checked" must equal `STATUS_CHECKED` (`tests/status-page.test.mjs`).
 - A8's leftovers removed (S-7, slice 3): the living light (`Air.astro`, `src/scripts/atmosphere.ts`, Base's `sky`), `Flow.astro`, `public/material/print.webp`, the old home's unused copy (`home.title`, `description`, `ways`, `platforms`, `verticals`, `state`) and the variant axis `noise`. `palette.css` is imported by the brand board only.
+- Share images (S-8, slice 1): every page in every language has its own preview image, `/og/<lang>/<path>.png` (the home is `home`), 1200 × 630. `src/integrations/share-images.ts` draws them after the build from each page's own `og:title` and `og:description` (satori lays out, resvg renders, the fonts are the site's own WOFF2 decompressed at build time; no service is called). `tests/share.test.mjs` checks each page names its own image and that it exists. `public/og.png` and `scripts/og.cjs` are gone.
 - The build has 87 pages: 17 in each of five languages, plus the 404 page and the draft page for intermediaries.
 
 ### The front, since #35
@@ -167,7 +168,7 @@ The new front in de, es, it and fr replaced the older home, which is deleted. Th
 
 ### Step 3: concept A8's leftovers, done on 2026-10-25 except the brand board
 
-What stays waits for the owner's answer on the brand board (GEO-188): `/__preview/brand`, the variant switcher (`Variants.astro`, `src/lib/variants.ts`), `brand-a8.css`, `type-a8.css` and `palette.css`, and the catalogue keys only the board reads (`home.lede`, `actions`, `flow`, `pillars`; `home.h1` also gives the share image its alt text). If the board goes, all of these go with it.
+What stays waits for the owner's answer on the brand board (GEO-188): `/__preview/brand`, the variant switcher (`Variants.astro`, `src/lib/variants.ts`), `brand-a8.css`, `type-a8.css` and `palette.css`, and the catalogue keys only the board reads (`home.h1`, `home.lede`, `actions`, `flow`, `pillars`). If the board goes, all of these go with it.
 
 ## 5. Blockers
 
