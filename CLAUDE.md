@@ -50,3 +50,5 @@ build is never used on a page real people use.
 ## Before a PR
 
 `npm run typecheck` and `npm test`. Report what you could not verify.
+
+Secret scan before every push: run `git config core.hooksPath .githooks` once per clone (it needs gitleaks). The hook, shared byte for byte with murks3r/linkbot-assurance, refuses a push whose commits hold a secret; never bypass it with `--no-verify`.
