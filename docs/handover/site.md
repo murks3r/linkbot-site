@@ -1,15 +1,18 @@
 # Site lane handover
 
+Read the master document first: Linear "HANDOVER: start here" in P-GEO-12. Its rules apply where this file is looser.
+
 Written 2026-10-25 by the Site lane, so that a fresh session can continue without asking anyone. It was updated the same day:
 - after #34, which made `vision/home-redesign` the source of the front;
 - after #35, which merged the front, with the gaps the step-1 session found in this file;
 - in #38, which made the status sentences true again and dated them.
 
 Read these first, in this order:
-1. `CLAUDE.md`, the binding rules.
-2. This file.
-3. Linear issue GEO-188, the lane's parent issue: one report comment per day, and the threads under the comments.
-4. `docs/truth-check.md`.
+1. The master document named above.
+2. `CLAUDE.md`, the binding rules.
+3. This file.
+4. Linear issue GEO-188, the lane's parent issue: one report comment per day, and the threads under the comments.
+5. `docs/truth-check.md`.
 
 The repository is **public**, and so is this file. It names no preview host, key, internal URL or personal data, and it shows Linear issues by ID only.
 
@@ -191,7 +194,8 @@ Two blockers in the first handover are done:
 - **The repository is public.**
   - No staging host, key, internal URL or person's data goes into it, including PR text.
   - Synthetic data only.
-  - Keep Linear IDs out of PR titles and branch names: a parent ID in a PR title closes that issue on merge, as #22 did to GEO-188. Titles read "Lane Site, …" for `build/vision` and "Main: …" for `main`.
+  - **No Linear issue IDs in PR titles, branch names, PR descriptions or commit messages** (the master document's rule). Link the PR from the Linear comment instead. A parent ID in a PR title closes that issue on merge, as #22 did to GEO-188.
+  - Titles read "Lane Site, …" for `build/vision` and "Main: …" for `main`.
 - **Forbidden words in translation.** Italian "verificato" and French "vérifié" are on the forbidden list even where they only mean "checked". Write "controllato" and "contrôlé".
 - **Product facts move.** Before carrying any status sentence, re-read the sources the standing duty in section 4 names. Contracts 0.2.10 and 0.2.11 overtook the copy within a day.
 - **The domain guard.** `tests/domains.test.mjs` fails, with file and line, when the domain Linkbot does not own appears in any tracked text file, in any letter case.
