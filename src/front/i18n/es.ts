@@ -234,6 +234,23 @@ export const es: FrontCopy = {
         { name: 'La presentación', who: 'El servidor', text: 'Cuando se cumple la última de las tres condiciones, en cualquier orden, el servidor crea la presentación, y la rechaza por cualquier otra vía. Cada parte recibe un comprobante de quién puede ver qué campos. En el modo operador, el equipo de la plataforma contacta después con ambas partes.' },
       ],
     },
+    replay: {
+      label: 'Recorrido grabado · datos ficticios',
+      lede: 'Imágenes del widget y de la consola del operador en cada paso, grabadas en un solo ordenador. Cada parte, empresa y valor que aparece en ellas es ficticio.',
+      note: 'Grabado el 25 de octubre de 2026 en el escenario de demostración de Linkbot Connect, que ejecuta el widget y la consola del operador contra una API de espacio de ejemplo en un solo ordenador. Nada de estas imágenes llegó a un espacio ni a una persona. La grabación presenta en modo directo: tras la aprobación del operador, cada lado puede abrir lo que el otro comparte.',
+      steps: 'Los seis pasos',
+      position: 'Paso {n} de {total}',
+      previous: 'Paso anterior',
+      next: 'Paso siguiente',
+      screens: [
+        ['El widget del comprador: el formulario que genera el pack de ejemplo, con roca fosfórica elegida y un mínimo de P₂O₅ del 30 %. La importancia aparece marcada como sugerida y no hay nada más elegido.'],
+        ['El widget del comprador tras confirmar: la solicitud está activa, con cada criterio y su importancia. Todavía no hay ofertas que mostrar.'],
+        ['El widget del comprador: una oferta que puede encajar, con una marca por criterio, la pregunta «¿Quiere que les presenten?» y el aviso de que deciden las personas.'],
+        ['El widget del comprador tras el sí: «Su sí queda registrado. Sample space lo revisa primero.»'],
+        ['El caso en la consola del operador: el control de cada lado y el control KYC y de sanciones del caso, registrados como superados por el operador de ejemplo, y después «Aprobado por su equipo.»'],
+        ['El widget del comprador en «Mis solicitudes y ofertas»: ambos lados dijeron que sí, la solicitud está presentada y un botón muestra lo que comparte el otro lado.', 'Las presentaciones en la consola del operador: una presentación, en modo directo, listada sin datos de contacto.'],
+      ],
+    },
     space: {
       h2: 'El tablón del espacio de prueba',
       on: 'Abajo está el propio widget, servido por el espacio de prueba, en modo tablón: las solicitudes y ofertas abiertas cuyos titulares quisieron mostrarlas, generalizadas como declara el pack. Responder a una empieza en el paso 1, del otro lado.',

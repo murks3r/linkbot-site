@@ -1,0 +1,46 @@
+---
+/* The recorded walkthrough of the demo page: the six steps of a buyer's path, each with pictures of the widget and the
+   operator console recorded on Linkbot Connect's demo stage against its sample Space API (fictional data; how they
+   were made: tools/record-demo.cjs), beside the step's words (src/front/demo-copy.ts). Without scripts it is a list;
+   src/front/replay.ts turns it into one step at a time. Every frame carries the label that it is a recording. */
+import { FRONT } from '../../front/copy';
+import { type Lang } from '../../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { demo: D } = FRONT[lang];
+/** The pictures of each step, in public/material/demo/{lang}/, all 640 × 880 CSS pixels. */
+const SHOTS = [['1-request'], ['2-confirmed'], ['3-fits'], ['4-yes'], ['5-approved'], ['6-introduced', '6-console']] as const;
+const total = String(D.steps.items.length);
+---
+<div class="fr-replay" data-replay data-position={D.replay.position}>
+  <div class="fr-bar">
+    <p class="fr-label">{D.replay.label}</p>
+    <nav class="fr-tabs" aria-label={D.replay.steps}>
+      {D.steps.items.map((step, index) => <button type="button" class="fr-tab" data-goto aria-controls={`step-${index + 1}`}><span class="fr-tab-n">{index + 1}</span><span>{step.name}</span></button>)}
+    </nav>
+  </div>
+  <ol class="fr-steps">
+    {D.steps.items.map((step, index) => <li class="fr-step" id={`step-${index + 1}`} data-step data-count={SHOTS[index].length}>
+      <div class="fr-screens">
+        {SHOTS[index].map((shot, i) => <img src={`/material/demo/${lang}/${shot}.webp`} alt={D.replay.screens[index][i]} width="640" height="880" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />)}
+      </div>
+      <div class="fr-caption">
+        <p class="fd-n">{D.replay.position.replace('{n}', String(index + 1)).replace('{total}', total)}</p>
+        <h3>{step.name}</h3>
+        <p class="fd-who"><span class="eyebrow">{D.steps.who}</span>{step.who}</p>
+        <p class="fr-text">{step.text}</p>
+      </div>
+    </li>)}
+  </ol>
+  <div class="fr-controls">
+    <button type="button" class="fr-button" data-previous><span aria-hidden="true">←</span> {D.replay.previous}</button>
+    <p class="fr-status" data-status aria-live="polite"></p>
+    <button type="button" class="fr-button" data-next>{D.replay.next} <span aria-hidden="true">→</span></button>
+  </div>
+</div>
+<p class="fr-note">{D.replay.note}</p>
+
+<script>
+  import { replay } from '../../front/replay';
+  document.querySelectorAll<HTMLElement>('[data-replay]').forEach(replay);
+</script>

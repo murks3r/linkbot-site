@@ -1,5 +1,5 @@
-/* The demo page: the opening with the test-space line, the six steps as a numbered list under one rule, and room for
-   the widget so the page below does not jump while it loads. */
+/* The demo page: the opening with the test-space line, the recorded walkthrough of the six steps, and room for the
+   widget so the page below does not jump while it loads. */
 .fd-hero { padding-block: clamp(40px, 7vw, 96px) 0; }
 .fd-hero-inner { display: grid; gap: var(--space-head); align-content: start; justify-items: start; }
 .fd-hero h1 { max-width: 18ch; }
@@ -8,11 +8,38 @@
 .fd-lede { max-width: 40em; color: var(--ink); }
 .fd-test { max-width: 46em; padding: 14px 18px; border: 1.5px dashed var(--ink-3); border-radius: var(--r-3); font-size: var(--size-small); line-height: 1.5; color: var(--ink); }
 
-.fd-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 0 clamp(20px, 3vw, 40px); border-top: 2px solid var(--ink); }
-.fd-step { display: grid; gap: 10px; align-content: start; padding: 20px 0 28px; border-bottom: 1px solid var(--line-strong); }
+/* The recorded walkthrough (Replay.astro): the label that it is a recording above every frame, the pictures beside the
+   step's words. A list without scripts; one step at a time with the step buttons and Previous and Next once
+   src/front/replay.ts runs ([data-player]). It moves only when asked, and fades in only where motion is welcome. */
+.fr-replay { display: grid; gap: 20px; padding-top: 20px; border-top: 2px solid var(--ink); }
+.fr-bar { display: grid; gap: 14px; justify-items: start; }
+.fr-label { padding: 4px 10px; border: 1.5px dashed var(--ink-3); border-radius: var(--r-3); font-size: var(--size-micro); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
+.fr-tabs, .fr-controls { display: none; }
+[data-player] .fr-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+[data-player] .fr-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.fr-tab, .fr-button { display: inline-flex; gap: 8px; align-items: baseline; padding: 8px 14px; border: 1px solid var(--line-strong); border-radius: 999px; background: transparent; font: inherit; font-size: var(--size-small); color: var(--ink); cursor: pointer; }
+.fr-tab-n { font-weight: 650; }
+.fr-tab[aria-current] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.fr-button:disabled { color: var(--ink-3); cursor: default; }
+.fr-tab:focus-visible, .fr-button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.fr-status { font-size: var(--size-small); color: var(--ink-2); }
+
+.fr-steps { display: grid; gap: 40px; }
+.fr-step { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); align-items: start; }
+.fr-step[data-count="2"] { grid-template-columns: minmax(0, 620px) minmax(0, 1fr); }
+.fr-step[hidden] { display: none; }
+.fr-screens { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 12px; }
+.fr-screens img { display: block; width: 100%; height: auto; border: 1px solid var(--line-strong); border-radius: var(--r-3); background: #fff; }
+.fr-caption { display: grid; gap: 10px; align-content: start; max-width: 32rem; }
+.fr-caption h3 { font-size: 1.5rem; }
+.fr-text { font-size: var(--size-small); line-height: 1.55; color: var(--ink-2); }
+.fr-note { max-width: 46em; margin-top: 20px; font-size: var(--size-small); line-height: 1.55; color: var(--ink-2); }
+@media (max-width: 760px) { .fr-step, .fr-step[data-count="2"] { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: no-preference) {
+  [data-player] .fr-step:not([hidden]) { animation: fr-in .24s ease-out; }
+  @keyframes fr-in { from { opacity: 0; } }
+}
 .fd-n { font-size: var(--size-micro); font-weight: 650; letter-spacing: .08em; color: var(--ink-3); }
-.fd-step h3 { font-size: 1.25rem; }
 .fd-who { display: grid; gap: 2px; font-size: var(--size-small); color: var(--ink); }
-.fd-step p:last-child { font-size: var(--size-small); line-height: 1.55; color: var(--ink-2); }
 
 .fd-widget { display: block; min-height: 36rem; --linkbot-accent: var(--ink); --linkbot-radius: var(--r-3); }
