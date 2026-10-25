@@ -383,6 +383,26 @@ export const it: Catalogue = {
     note: 'Ogni voce proviene da docs/changelog.yml, nel repository di questo sito, e indica la pull request su cui si basa; una voce senza fonte ferma la build.',
     link: 'Novità',
   },
+  requestDemo: {
+    title: 'Richiedere una demo: cosa si può vedere oggi e cosa seguirà',
+    description: 'Come funziona oggi una demo di Linkbot: un percorso registrato su un solo computer, con dati fittizi. Più avanti una sessione guidata, ancora senza data.',
+    eyebrow: 'Richiedere una demo',
+    h1: ['Una demo,', 'come si può dare oggi.'],
+    lede: 'Non c’è ancora nulla da prenotare, e questa pagina non raccoglie nulla. Dice cosa si può vedere ora, cosa è previsto e come potrete contattarci.',
+    now: {
+      title: 'Ora: il percorso registrato',
+      body: 'La pagina della demo mostra l’intero percorso di un acquirente in sei passaggi, dalla richiesta alla presentazione, con immagini del widget e della console dell’operatore registrate su un solo computer, con dati fittizi. Non servono richieste, account o indirizzi: apritela e procedete passo dopo passo.',
+      link: 'Apri il percorso',
+    },
+    later: {
+      title: 'Più avanti: una sessione guidata',
+      body: 'Previsto: una sessione per il team di una piattaforma, in cui Linkbot mostra il widget e la console su uno spazio di prova con dati fittizi e risponde alle domande. Servono uno spazio demo e recapiti pubblicati. Nessuno dei due esiste ancora, quindi non c’è una data e non c’è nulla da prenotare.',
+    },
+    contact: {
+      title: 'Come richiederla',
+      write: 'Scrivete a {email}. Indicate la vostra piattaforma e il mercato che serve; non inviate richieste reali né dati personali di nessuno.',
+    },
+  },
   sheet: {
     title: 'Linkbot in una pagina',
     description: 'Linkbot in una pagina stampabile, fatta con le pagine di questo sito: i tre elementi, il sì di entrambe le parti, cosa ottiene e cosa conserva una piattaforma, e a che punto è ogni parte. Con data, senza prezzi.',

@@ -8,7 +8,8 @@
 import { FRONT } from '../../front/copy';
 import { demoSpace } from '../../demo/space';
 import Replay from './Replay.astro';
-import { type Catalogue, type Lang } from '../../i18n';
+import Icon from '../Icon.astro';
+import { pathFor, type Catalogue, type Lang } from '../../i18n';
 import '../../front/theme.css';
 import '../../front/demo.css';
 interface Props { lang: Lang; t: Catalogue }
@@ -34,7 +35,7 @@ const space = demoSpace({ PUBLIC_DEMO_EMBED_URL: import.meta.env.PUBLIC_DEMO_EMB
 
 <section class="fp-section" id="space" aria-labelledby="space-title">
   <div class="wrap">
-    <div class="fp-head"><h2 id="space-title">{D.space.h2}</h2><p>{space ? D.space.on : D.space.off}</p><p>{t.site.synthetic}</p></div>
+    <div class="fp-head"><h2 id="space-title">{D.space.h2}</h2><p>{space ? D.space.on : D.space.off}</p><p>{t.site.synthetic}</p><p><a class="link" href={pathFor(lang, '/request-a-demo')}>{t.requestDemo.eyebrow}<Icon name="arrow" /></a></p></div>
     {space && <>
       <script is:inline src={space.script} async></script>
       <div class="fd-widget" data-linkbot={space.key} data-mode="board" data-side="seeking" data-locale={lang}>
