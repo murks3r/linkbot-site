@@ -1,7 +1,11 @@
 /* Die Worte der Seite auf Deutsch, typisiert gegen das Englische (en.ts): ein fehlender Schlüssel
-   kompiliert nicht. Jeder Satz sagt, was der Vertrag der Space-API (0.2.7) und die Docs der
-   Connect-Lane heute hergeben, nichts darüber hinaus. Sie-Form, wie das Widget. */
+   kompiliert nicht. Jeder Satz sagt, was der Vertrag der Space-API und die Docs der
+   Connect-Lane hergeben, nichts darüber hinaus; ein Statussatz nennt den Tag seiner Prüfung (status-date.ts). Sie-Form, wie das Widget. */
 import type { Catalogue, Section, Status } from './en.ts';
+import { statusDate } from './status-date.ts';
+
+/** The day the status sentences were checked, in this language (status-date.ts). */
+const AS_OF = statusDate('de');
 
 export const de: Catalogue = {
   site: {
@@ -19,7 +23,7 @@ export const de: Catalogue = {
       privacy: 'Datenschutzhinweis',
       line: 'Diese Seite setzt keine Cookies, lädt nichts von Dritten und nutzt keine Analyse-Dienste.',
     },
-    status: { now: 'Läuft heute auf dem Staging-Space', contract: 'Im Vertrag, noch nicht auf Staging', later: 'Noch nicht gebaut' },
+    status: { now: 'Läuft auf dem Staging-Space', contract: 'Im Vertrag, nicht auf dem Staging-Space', later: 'Nicht gebaut' },
     synthetic: 'Alles auf dieser Seite beschreibt den Vertrag der Space-API und das, was auf dem synthetischen Staging-Space von Geoprocure läuft, mit synthetischen Daten. Noch nutzt es keine echte Person und keine echte Organisation.',
     more: 'Mehr lesen',
   },
@@ -48,11 +52,11 @@ export const de: Catalogue = {
     ],
     ways: {
       title: 'Vier Wege zu sagen, was Sie brauchen oder anbieten',
-      lede: 'Das Formular läuft heute auf dem Staging-Space. Text, Board und Beobachtungen stehen im Vertrag und laufen noch nicht auf Staging.',
+      lede: `Stand ${AS_OF}: Formular, Text und Board laufen auf dem Staging-Space. Beobachtungen stehen im Vertrag und laufen dort noch nicht.`,
       items: [
         { name: 'Per Formular', status: 'now' as Status, body: 'Das Formular kommt aus dem Pack: Pflichtkriterien zuerst, jede Liste mit „Anderes / nicht aufgeführt“, „Weiß nicht“ und „Beliebig“. Das Widget zeigt es auf den Seiten der Plattform.' },
-        { name: 'In eigenen Worten', status: 'contract' as Status, body: 'Eine Lesung schlägt Werte vor, jeden mit dem Zitat, aus dem er stammt, und fragt nach, wo sie unsicher ist. Sie überschreibt nie, was eine Person gewählt hat. Aus, bis eine Richtlinie für das Lesen freigegeben ist.' },
-        { name: 'Auf dem Board', status: 'contract' as Status, body: 'Offene Anfragen und Angebote, gelistet nur mit Zustimmung der Person, der sie gehören, mit den vergröberten Werten des Packs und nie mit dem Absender. Wer einen Eintrag beantwortet, beginnt einen Entwurf auf der anderen Seite.' },
+        { name: 'In eigenen Worten', status: 'now' as Status, body: 'Eine Lesung schlägt Werte vor, jeden mit dem Zitat, aus dem er stammt, und fragt nach, wo sie unsicher ist. Sie überschreibt nie, was eine Person gewählt hat. Auf dem Staging-Space lesen feste Regeln, kein Modell.' },
+        { name: 'Auf dem Board', status: 'now' as Status, body: 'Offene Anfragen und Angebote, gelistet nur mit Zustimmung der Person, der sie gehören, mit den vergröberten Werten des Packs und nie mit dem Absender. Wer einen Eintrag beantwortet, beginnt einen Entwurf auf der anderen Seite.' },
         { name: 'Mit einer Beobachtung', status: 'contract' as Status, body: 'Eine Beobachtung hält eine Anfrage oder ein Angebot offen und sagt nur der Person Bescheid, die sie angelegt hat, wenn etwas Neues passt.' },
       ],
     },
@@ -81,7 +85,7 @@ export const de: Catalogue = {
     eyebrow: 'So funktioniert es',
     h1: ['Von der bestätigten Anfrage', 'zur Vorstellung.'],
     lede: 'Jeder Schritt unten steht im Vertrag der Space-API. Wo der Staging-Space einen Schritt noch nicht ausführt, sagt die Seite es.',
-    toc: [['space', 'Ein Space'], ['pack', 'Ein Pack'], ['describe', 'Vier Wege zu beschreiben'], ['confirm', 'Bestätigen'], ['matching', 'Matching'], ['approval', 'Freigabe und Gates'], ['yes', 'Beide Ja'], ['introduction', 'Die Vorstellung'], ['after', 'Danach'], ['sees', 'Wer sieht was'], ['languages', 'Fünf Sprachen'], ['today', 'Was heute funktioniert']] as [string, string][],
+    toc: [['space', 'Ein Space'], ['pack', 'Ein Pack'], ['describe', 'Vier Wege zu beschreiben'], ['confirm', 'Bestätigen'], ['matching', 'Matching'], ['approval', 'Freigabe und Gates'], ['yes', 'Beide Ja'], ['introduction', 'Die Vorstellung'], ['after', 'Danach'], ['sees', 'Wer sieht was'], ['languages', 'Fünf Sprachen'], ['today', 'Was auf dem Staging-Space läuft']] as [string, string][],
     space: {
       title: 'Ein Space ist ein Markt auf einer Plattform',
       paras: [
@@ -102,17 +106,17 @@ export const de: Catalogue = {
     },
     describe: {
       title: 'Vier Wege zu sagen, was Sie brauchen oder anbieten',
-      lede: 'Das Formular läuft heute auf dem Staging-Space. Text, Board und Beobachtungen stehen im Vertrag; die Instanz antwortet darauf mit „nicht implementiert“, bis ihr Abschnitt gebaut ist.',
+      lede: `Stand ${AS_OF}: Formular, Text und Board laufen auf dem Staging-Space. Beobachtungen stehen im Vertrag und sind dort aus, bis ihr Abschnitt eingespielt ist.`,
       items: [
         { name: 'Per Formular', status: 'now' as Status, paras: [
           'Das Formular wird aus dem Pack erzeugt. Pflichtkriterien kommen zuerst; der Rest steht hinter „Mehr Details“. Nichts ist vorausgewählt: keine Option, keine Einheit, keine Basis, keine Art der Partei. Jede Liste bietet „Anderes / nicht aufgeführt“, „Weiß nicht“ und „Beliebig“, wo das Pack sie erlaubt.',
           'Jedes Kriterium trägt eine Gewichtung. Muss und Nie sind hart; Wünschenswert, Offen dafür und Lieber nicht sind weich. Das Pack kann eine vorschlagen, markiert als Vorschlag, und die Person kann sie ändern, sofern das Pack sie nicht festlegt. Wer Nie wählt, bestätigt das eigens.',
         ] },
-        { name: 'In eigenen Worten', status: 'contract' as Status, paras: [
+        { name: 'In eigenen Worten', status: 'now' as Status, paras: [
           'Eine Person schreibt, was sie braucht oder anbietet. Eine Lesung schlägt Werte für dieselben Kriterien vor, jeden neben den Worten, aus denen er stammt, und fragt nach, wo sie nicht entscheiden kann: eine Einheit, eine Option, eine Zahl, die zwei Schreibweisen verschieden lesen. Eine Lesung überschreibt nie, was eine Person gewählt hat; ein Unterschied wird zur Frage.',
-          'Der Textweg ist aus, bis eine Richtlinie für das Lesen freigegeben ist. Was auch immer den Text liest: Harte Bedingungen bleiben bei deterministischem Code, kein Modell überstimmt ein Muss oder ein Nie.',
+          'Auf dem Staging-Space lesen feste Regeln den Text, ohne Modell; ein Leser mit Modell wartet auf eine freigegebene Richtlinie für das Lesen. Was auch immer den Text liest: Harte Bedingungen bleiben bei deterministischem Code, kein Modell überstimmt ein Muss oder ein Nie.',
         ] },
-        { name: 'Auf dem Board', status: 'contract' as Status, paras: [
+        { name: 'Auf dem Board', status: 'now' as Status, paras: [
           'Das Board listet Anfragen und Angebote, deren Besitzer zugestimmt haben, nie von selbst. Es zeigt nur die Felder, die das Pack auf der Board-Stufe erlaubt, vergröbert, wie das Pack es festlegt, und nie, wer eingestellt hat. Wer einen Eintrag beantwortet, beginnt einen Entwurf auf der anderen Seite, im selben Formular.',
         ] },
         { name: 'Mit einer Beobachtung', status: 'contract' as Status, paras: [
@@ -188,26 +192,26 @@ export const de: Catalogue = {
       ],
     },
     today: {
-      title: 'Was heute funktioniert, und was noch nicht',
-      lede: 'Genau die Teile, die heute auf dem Staging-Space laufen, mit denselben Quadraten, die das Produkt für Belege nutzt.',
+      title: 'Was auf dem Staging-Space läuft, und was noch nicht',
+      lede: `Geprüft am ${AS_OF} anhand des Statusberichts des Staging-Space und des Plans von Connect: welche Teile dort laufen, mit denselben Quadraten, die das Produkt für Belege nutzt.`,
       columns: [
-        { status: 'now' as Status, title: 'Läuft heute auf dem Staging-Space', lead: 'Synthetische Daten, auf Deutsch und Englisch.', items: [
+        { status: 'now' as Status, title: 'Läuft auf dem Staging-Space', lead: 'Synthetische Daten, auf Deutsch und Englisch.', items: [
           'Eine Anfrage oder ein Angebot per Formular beschreiben, mit dem Identitätshinweis, wo der Space einen hat',
+          'Eine Anfrage oder ein Angebot in eigenen Worten beschreiben, gelesen von festen Regeln ohne Modell',
+          'Das Board, mit den vergröberten Werten des Packs und nur mit Einträgen, deren Besitzer zugestimmt haben',
+          'Einstellungen, Origins, Schlüssel und Funnel eines Space, über die Space-API',
           'Bestätigen; der Browser, der bestätigt hat, verwaltet, was er angelegt hat',
           'Matching mit einem Urteil pro Kriterium',
           'Gates und Freigabe durch einen benannten Operator',
           'Vorstellungen im Operator-Modus, mit Quittungen',
           'Ergebnisse, Änderungen, Pausieren und Schließen',
           'Löschung mit dem Löschprotokoll der Instanz',
-          'Der Beschreiben-Modus des Widgets gegen den Staging-Space; die Instanz liefert das Widget selbst noch nicht aus',
+          'Das Widget, von der Instanz selbst aus einem festgelegten Release ausgeliefert (0.3.0-v1)',
         ] },
-        { status: 'contract' as Status, title: 'Im Vertrag, noch nicht auf Staging', lead: 'Die Instanz antwortet mit „nicht implementiert“, bis der Abschnitt gebaut ist.', items: [
-          'Eine Anfrage oder ein Angebot aus Text lesen',
-          'Das Board',
+        { status: 'contract' as Status, title: 'Im Vertrag, nicht auf dem Staging-Space', lead: 'Jeder Teil wartet, bis sein Abschnitt dort eingespielt ist.', items: [
           'Beobachtungen und ihre Nachrichten',
           'Webhooks an den Server der Plattform',
-          'E-Mail, die die Instanz verlässt; heute wird nichts versandt',
-          'Einstellungen, Origins, Schlüssel und Funnel in der Konsole',
+          'E-Mail, die die Instanz verlässt; der Staging-Space versendet keine',
         ] },
         { status: 'later' as Status, title: 'Nicht gebaut', lead: 'Kein Datum versprochen.', items: [
           'Eine Demo des Widgets auf dieser Seite; sie wartet auf einen Demo-Space mit synthetischen Daten',
@@ -236,28 +240,28 @@ export const de: Catalogue = {
       title: 'Schlüssel und Origins',
       paras: [
         'Ein Publishable Key bezeichnet Ihren Space und gilt nur auf den Origins, die Ihr Space erlaubt; er gehört in die Seite. Ein Secret Key gehört auf Ihren Server; das Widget verweigert den Start mit einem solchen und sagt Ihnen, ihn zu rotieren.',
-        'Heute werden die erlaubten Origins beim Einrichten eines Space gesetzt; die Konsole kann sie noch nicht ändern.',
+        'Die erlaubten Origins werden beim Einrichten eines Space gesetzt. Seit Vertrag 0.2.9 kann die Space-API sie ändern, und damit auch die Konsole.',
       ],
     },
     console: {
       title: 'Die Konsole für Ihr Team',
       paras: [
         'Die Konsole zeigt die Freigabe-Warteschlange, jeden Fall mit seinen Gates und seiner Freigabe, die Vorstellungen mit ihren Quittungen, die Ergebnisse, die Webhook-Endpunkte und die Operatoren. Sie läuft auf einem Rechner von Ihnen oder hinter Ihrem eigenen Login; der Secret Key bleibt auf ihrem Server. Es gibt kein Linkbot-Login für Operatoren.',
-        'Einstellungen, Origins, Schlüssel und ein Funnel warten auf die Routen, die der Vertrag als Nächstes ergänzt.',
+        'Ihre Ansichten für Einstellungen und Kriterien-Anpassungen, Schlüssel, Origins und Funnel nutzen die Routen, die die Space-API seit Vertrag 0.2.9 hat.',
       ],
     },
     server: {
       title: 'Ihr Server: das SDK und Webhooks',
       paras: [
-        'Das SDK gibt Ihrem Server einen Client, der durch den Vertrag der Space-API typisiert ist: Eine Route, ein Feld oder ein Wert, den der Vertrag nicht hat, ist ein Typfehler. Es prüft auch Webhook-Zustellungen genau so, wie der Vertrag es vorgibt. Es ist noch nicht veröffentlicht; sein Code liegt im Connect-Repository.',
-        'Webhooks tragen IDs und Zustände, nie Kontaktdaten; Ihr Server holt Details mit seinem Secret Key. Zustellungen sind signiert und werden wiederholt. Sie stehen im Vertrag und werden vom Staging-Space noch nicht gesendet.',
+        `Das SDK gibt Ihrem Server einen Client, der durch den Vertrag der Space-API typisiert ist: Eine Route, ein Feld oder ein Wert, den der Vertrag nicht hat, ist ein Typfehler. Es prüft auch Webhook-Zustellungen genau so, wie der Vertrag es vorgibt. Stand ${AS_OF} ist es nicht veröffentlicht; sein Code liegt im Connect-Repository.`,
+        `Webhooks tragen IDs und Zustände, nie Kontaktdaten; Ihr Server holt Details mit seinem Secret Key. Zustellungen sind signiert und werden wiederholt. Sie stehen im Vertrag; Stand ${AS_OF} sendet der Staging-Space sie nicht.`,
       ],
     },
     recipes: {
       title: 'Rezepte: reines HTML, Astro, Next.js, WordPress',
       paras: [
         'Jedes Rezept ist eine Datei, die in der CI von Connect in drei Browser-Engines gegen den Beispiel-Build mit synthetischen Daten läuft: eine einfache Seite mit strenger Content Security Policy, eine Astro-Komponente, eine Next.js-Seite mit dem React-Wrapper und ein kleines WordPress-Plugin mit einem Shortcode.',
-        'Keines davon läuft so, wie es geschrieben ist, schon gegen einen echten Space: Die Staging-Instanz liefert anstelle des Widgets eine Testdatei aus, bis dort ein Release eingespielt ist.',
+        `Stand ${AS_OF} laufen sie in der CI von Connect gegen den Beispiel-Build, nicht gegen einen Space; die Staging-Instanz selbst liefert das Release 0.3.0-v1 des Widgets aus.`,
       ],
     },
     state: { title: 'Wo es steht' },
@@ -369,14 +373,14 @@ export const de: Catalogue = {
             'sessionStorage gehört dem Origin Ihrer Seite, also kann jedes Skript, das Sie auf dieser Seite ausführen, den Entwurf und die Token lesen. Führen Sie auf Seiten mit dem Widget keine Skripte aus, denen Sie nicht vertrauen.',
           ] },
         ] as Section[],
-        state: ['Das Skript kommt von der eigenen Instanz Ihres Space. Die Staging-Instanz liefert an seiner Stelle eine Testdatei aus, bis dort ein Release des Widgets eingespielt ist; am 23.10.2026 lief das Widget gegen die API des Staging-Space, mit dem veröffentlichten Skript von einem lokalen Stellvertreter für diese Adresse.'],
+        state: [`Das Skript kommt von der eigenen Instanz Ihres Space. Stand ${AS_OF} liefert die Staging-Instanz das Release 0.3.0-v1 des Widgets aus einer festgelegten Datei aus, wie ihr Statusbericht zeigt; die Prüfungen von Connect für das Board und für die Formulierungen des Widgets bestanden am 24.10.2026 gegen diese ausgelieferte Datei.`],
       },
       sdk: {
         nav: 'SDK und Webhooks',
         title: 'Das SDK, der React-Wrapper und Webhooks · Linkbot für Plattformen',
         description: 'Ein Server-Client, typisiert durch den Vertrag der Space-API, die Webhook-Prüfung, der React-Wrapper, und wie Ihr Server Linkbots Ereignisse erhält.',
         h1: ['Ihr Server,', 'typisiert durch den Vertrag.'],
-        lede: 'Nichts vom SDK gehört in eine Browser-Seite: Das Embed nimmt den Publishable Key, und der Client des SDK verweigert den Start in einem Browser. Es ist noch nicht veröffentlicht; sein Code liegt im Connect-Repository.',
+        lede: `Nichts vom SDK gehört in eine Browser-Seite: Das Embed nimmt den Publishable Key, und der Client des SDK verweigert den Start in einem Browser. Stand ${AS_OF} ist es nicht veröffentlicht; sein Code liegt im Connect-Repository.`,
         sections: [
           { id: 'client', title: 'Der Client', paras: [
             'Der Client nimmt die API-Basis Ihres Space (nur https, außer auf localhost), Ihren Secret Key aus dem geheimen Speicher Ihres Servers (ein Wert, der nicht wie ein Secret Key geformt ist, wird abgelehnt) und auf Wunsch das fetch Ihrer Laufzeit. Seine Pfade, Parameter, Rümpfe und Antworten sind die des Vertrags, erzeugt aus dem YAML, das Core veröffentlicht hat, und per sha256 gepinnt: Eine Route, ein Feld oder ein Wert, den der Vertrag nicht hat, ist ein Typfehler.',
@@ -386,15 +390,15 @@ export const de: Catalogue = {
           { id: 'webhooks', title: 'Webhooks', paras: [
             'Registrieren Sie einen Endpunkt mit Ihrem Secret Key, nur https. Das Signaturgeheimnis wird einmal gezeigt und gehört in Ihren geheimen Speicher, nie in Code. Jede Zustellung trägt eine ID, einen Zeitstempel in Sekunden und eine Signatur: HMAC-SHA256 über den Zeitstempel, einen Punkt und den rohen Rumpf, mit Ihrem Geheimnis als Schlüssel.',
             'Lehnen Sie eine Zustellung ab, die älter als fünf Minuten ist oder deren Signatur nicht passt. Die Prüfung des SDK tut beides, mit Vergleich in konstanter Zeit über Web Crypto, in Node, Deno, Bun und Edge-Laufzeiten. Prüfen Sie den rohen Rumpf, bevor Sie ihn parsen. Antworten Sie schnell mit 2xx: Alles andere wird mit wachsenden Abständen 24 Stunden lang wiederholt, danach gilt die Zustellung als tot. Eine Wiederholung trägt dieselbe ID; behandeln Sie jede ID einmal, mit den IDs in Ihrer Datenbank statt im Speicher.',
-            'Rotieren Sie das Geheimnis bei Bedarf: Das alte bleibt bis zu sieben Tage gültig, und die Prüfung nimmt beide. Zustellungen tragen IDs und Zustände, nie Kontaktdaten; Details holen Sie mit Ihrem Secret Key. Das Zustellprotokoll zeigt Status, Versuche und eine Prüfsumme des Rumpfs, nie den Rumpf. Webhooks stehen im Vertrag und werden vom Staging-Space noch nicht gesendet.',
+            `Rotieren Sie das Geheimnis bei Bedarf: Das alte bleibt bis zu sieben Tage gültig, und die Prüfung nimmt beide. Zustellungen tragen IDs und Zustände, nie Kontaktdaten; Details holen Sie mit Ihrem Secret Key. Das Zustellprotokoll zeigt Status, Versuche und eine Prüfsumme des Rumpfs, nie den Rumpf. Webhooks stehen im Vertrag; Stand ${AS_OF} sendet der Staging-Space sie nicht.`,
           ] },
           { id: 'events', title: 'Ereignistypen', paras: ['Jedes Ereignis hat eine ID, einen Typ, die Space-ID, den Zeitpunkt, die Vertragsversion und das Objekt, um das es geht, mit dessen Typ, ID und Zustand, wo es einen gibt. Die Typen:'], code: true, items: ['intent.confirmed', 'intent.revised', 'intent.status_changed', 'match.proposed', 'match.updated', 'gate.recorded', 'approval.recorded', 'answer.recorded', 'clarification.requested', 'review.recorded', 'introduction.created', 'outcome.recorded', 'watch.delivered', 'channel.verified', 'deletion.completed', 'key.rotated'] },
           { id: 'react', title: 'Der React-Wrapper', paras: [
             'Der Wrapper rendert dasselbe Element wie das Snippet und lädt das Skript einmal pro Adresse; das Embed startet dann in seinem eigenen Shadow Root, den React nie anfasst. Er ist eine Client-Komponente, funktioniert also im App Router von Next.js, und fügt kein globales CSS hinzu.',
-            'Seine Props sind die Attribute des Elements: Publishable Key und Skriptadresse sind Pflicht (ein Secret Key wirft einen Fehler), dazu mode, side, locale, input, api, Ihr Hinweis, ein Klassenname und ein style für die Theme-Variablen. Ändert sich ein Prop, das das Embed liest, gibt der Wrapper React ein neues Element, und das Embed startet neu. Eine Seite, die das Skript laden will, bevor sie ein Element rendert, kann auch das verlangen. Noch nicht veröffentlicht.',
+            `Seine Props sind die Attribute des Elements: Publishable Key und Skriptadresse sind Pflicht (ein Secret Key wirft einen Fehler), dazu mode, side, locale, input, api, Ihr Hinweis, ein Klassenname und ein style für die Theme-Variablen. Ändert sich ein Prop, das das Embed liest, gibt der Wrapper React ein neues Element, und das Embed startet neu. Eine Seite, die das Skript laden will, bevor sie ein Element rendert, kann auch das verlangen. Stand ${AS_OF} nicht veröffentlicht.`,
           ] },
         ] as Section[],
-        state: ['SDK und Wrapper sind im Connect-Repository gebaut und getestet und nicht veröffentlicht. Der Empfänger aus der Webhook-Anleitung ist gegen signierte Beispiel-Zustellungen getestet; der Staging-Space sendet noch keine Webhooks.'],
+        state: [`SDK und Wrapper sind im Connect-Repository gebaut und getestet und Stand ${AS_OF} nicht veröffentlicht. Der Empfänger aus der Webhook-Anleitung ist gegen signierte Beispiel-Zustellungen getestet; der Staging-Space sendet keine Webhooks.`],
       },
       console: {
         nav: 'Die Konsole',
@@ -427,8 +431,7 @@ export const de: Catalogue = {
             'Dieser Weg lief am 23.10.2026 gegen den synthetischen Staging-Space von Geoprocure: die Warteschlange, ein Fall, beide Arten von Prüfung, die Freigabe, eine Antwort für das eigene Angebot der Plattform und eine Vorstellung mit ihrer Quittung.',
           ] },
           { id: 'notyet', title: 'Noch nicht hier, und warum', items: [
-            'Einstellungen, erlaubte Origins und Schlüssel lassen sich aus der Konsole nicht ändern: Der Vertrag hat dafür noch keine Routen. Spaces werden mit dem Werkzeug von Core eingerichtet, also wartet auch das Einrichten aus einem Pack hier auf eine Route.',
-            'Kein Funnel: Sie zeigt keine Zahlen, bis die Space-API echte meldet.',
+            'Ein neuer Space entsteht mit dem Werkzeug von Core, nicht in der Konsole; der Assistent der Konsole in fünf Schritten schreibt und prüft die Datei, die dieses Werkzeug liest.',
             'Kein „Erneut senden“ für eine Zustellung, bis es echte Zustellungen gibt, an denen man es ausprobieren kann.',
           ] },
         ] as Section[],

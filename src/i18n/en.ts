@@ -1,9 +1,15 @@
 /* The site's words in English: the source every other language is typed against. Every sentence
-   states what the Space API contract (0.2.7) and the Connect lane's docs provide today, nothing
+   states what the Space API contract and the Connect lane's docs provide, nothing
    else: no "verified", "live", "automated", "anonymous", "real-time", "stays private", no invented
-   numbers, no feature the product does not have on the staging space (tests/i18n.test.mjs). */
+   numbers, no feature the product does not have on the staging space (tests/i18n.test.mjs). A status
+   sentence names the day it was checked (status-date.ts). */
 
-/** Where a capability stands: on the staging space now; in the contract, not on staging yet; not built. */
+import { statusDate } from './status-date.ts';
+
+/** The day the status sentences were checked, in English (status-date.ts). */
+const AS_OF = statusDate('en');
+
+/** Where a capability stands on the day of status-date.ts: on the staging space; in the contract, not on it; not built. */
 export type Status = 'now' | 'contract' | 'later';
 
 /** A row of a two- or three-column table on an integration page. */
@@ -27,7 +33,7 @@ export const en = {
       privacy: 'Privacy notice',
       line: 'This site sets no cookies, loads nothing from third parties and uses no analytics.',
     },
-    status: { now: 'On the staging space now', contract: 'In the contract, not on staging yet', later: 'Not built yet' },
+    status: { now: 'On the staging space', contract: 'In the contract, not on the staging space', later: 'Not built' },
     synthetic: 'Everything on this site describes the Space API contract and what runs on Geoprocure’s synthetic staging space, with synthetic data. No real person and no real organisation uses it yet.',
     more: 'Read more',
   },
@@ -56,11 +62,11 @@ export const en = {
     ],
     ways: {
       title: 'Four ways to say what you need or offer',
-      lede: 'The form runs on the staging space today. Text, the board and watches are in the contract and not on staging yet.',
+      lede: `As of ${AS_OF}, the form, text and the board run on the staging space. Watches are in the contract and do not run there yet.`,
       items: [
         { name: 'By form', status: 'now' as Status, body: 'The form comes from the pack: required criteria first, every list with “other / not listed”, “don’t know” and “any”. The widget shows it in the platform’s pages.' },
-        { name: 'In your own words', status: 'contract' as Status, body: 'A reading proposes values with the quote each came from and asks where it is unsure. It never overwrites what a person chose. Off until a reading policy is approved.' },
-        { name: 'On the board', status: 'contract' as Status, body: 'Open needs and offers, listed only when their owner opted in, with the pack’s coarsened values and never who posted. Answering one starts a draft on the other side.' },
+        { name: 'In your own words', status: 'now' as Status, body: 'A reading proposes values with the quote each came from and asks where it is unsure. It never overwrites what a person chose. On the staging space, fixed rules do the reading, not a model.' },
+        { name: 'On the board', status: 'now' as Status, body: 'Open needs and offers, listed only when their owner opted in, with the pack’s coarsened values and never who posted. Answering one starts a draft on the other side.' },
         { name: 'With a watch', status: 'contract' as Status, body: 'A watch keeps a need or an offer open and tells only its owner when something new fits.' },
       ],
     },
@@ -89,7 +95,7 @@ export const en = {
     eyebrow: 'How it works',
     h1: ['From a confirmed need', 'to an introduction.'],
     lede: 'Every step below is in the Space API contract. Where the staging space does not run a step yet, the page says so.',
-    toc: [['space', 'A space'], ['pack', 'A pack'], ['describe', 'Four ways to describe'], ['confirm', 'Confirm'], ['matching', 'Matching'], ['approval', 'Approval and gates'], ['yes', 'Both yes'], ['introduction', 'The introduction'], ['after', 'Afterwards'], ['sees', 'Who sees what'], ['languages', 'Five languages'], ['today', 'What works today']] as [string, string][],
+    toc: [['space', 'A space'], ['pack', 'A pack'], ['describe', 'Four ways to describe'], ['confirm', 'Confirm'], ['matching', 'Matching'], ['approval', 'Approval and gates'], ['yes', 'Both yes'], ['introduction', 'The introduction'], ['after', 'Afterwards'], ['sees', 'Who sees what'], ['languages', 'Five languages'], ['today', 'What runs on the staging space']] as [string, string][],
     space: {
       title: 'A space is one market on one platform',
       paras: [
@@ -110,17 +116,17 @@ export const en = {
     },
     describe: {
       title: 'Four ways to say what you need or offer',
-      lede: 'The form runs on the staging space today. Text, the board and watches are in the contract; the instance answers them with “not implemented” until their slice is built.',
+      lede: `As of ${AS_OF}, the form, text and the board run on the staging space. Watches are in the contract and off there until their slice is deployed.`,
       items: [
         { name: 'By form', status: 'now' as Status, paras: [
           'The form is generated from the pack. Required criteria come first; the rest sit behind “more details”. Nothing is pre-selected: no option, no unit, no basis, no party type. Every list offers “other / not listed”, “don’t know” and “any” where the pack allows them.',
           'Each criterion carries an importance. Must and never are hard; nice to have, open to and rather not are soft. The pack may suggest one, marked “suggested”, and the person can change it unless the pack locks it. Choosing never asks for a separate confirmation.',
         ] },
-        { name: 'In your own words', status: 'contract' as Status, paras: [
+        { name: 'In your own words', status: 'now' as Status, paras: [
           'A person writes what they need or offer. A reading proposes values for the same criteria, each shown next to the words it came from, and asks where it cannot decide: a unit, an option, a number that two conventions read differently. A reading never overwrites what a person chose; a difference becomes a question.',
-          'The text path is off until a reading policy is approved. Whatever reads the text, hard conditions stay with deterministic code: no model overrules a must or a never.',
+          'On the staging space, fixed rules read the text, without a model; a reader that uses a model waits for an approved reading policy. Whatever reads the text, hard conditions stay with deterministic code: no model overrules a must or a never.',
         ] },
-        { name: 'On the board', status: 'contract' as Status, paras: [
+        { name: 'On the board', status: 'now' as Status, paras: [
           'The board lists needs and offers whose owner opted in, never by default. It shows only the fields the pack allows at board stage, coarsened as the pack declares, and never who posted. Answering a listing starts a draft on the other side, in the same form.',
         ] },
         { name: 'With a watch', status: 'contract' as Status, paras: [
@@ -196,26 +202,26 @@ export const en = {
       ],
     },
     today: {
-      title: 'What works today, and what does not yet',
-      lede: 'Exactly which parts run on the staging space now, with the same squares the product uses for evidence.',
+      title: 'What runs on the staging space, and what does not yet',
+      lede: `Checked on ${AS_OF} against the staging space’s health report and Connect’s plan: which parts run there, with the same squares the product uses for evidence.`,
       columns: [
-        { status: 'now' as Status, title: 'On the staging space now', lead: 'Synthetic data, in German and English.', items: [
+        { status: 'now' as Status, title: 'On the staging space', lead: 'Synthetic data, in German and English.', items: [
           'Describing a need or an offer by form, with the identity notice where the space has one',
+          'Describing a need or an offer in your own words, read by fixed rules without a model',
+          'The board, with the pack’s coarsened values, listing only what its owner opted in',
+          'A space’s settings, origins, keys and funnel, through the Space API',
           'Confirming; the browser that confirmed manages what it created',
           'Matching with a verdict per criterion',
           'Gates and approval by a named operator',
           'Introductions in operator mode, with receipts',
           'Outcomes, changes, pausing and closing',
           'Deletion with the instance’s deletion log',
-          'The widget’s describe mode against the staging space; the instance does not serve the widget itself yet',
+          'The widget, served by the instance itself from a pinned release (0.3.0-v1)',
         ] },
-        { status: 'contract' as Status, title: 'In the contract, not on staging yet', lead: 'The instance answers “not implemented” until the slice is built.', items: [
-          'Reading a need or an offer from text',
-          'The board',
+        { status: 'contract' as Status, title: 'In the contract, not on the staging space', lead: 'Each waits until its slice is deployed there.', items: [
           'Watches and their messages',
           'Webhooks to the platform’s server',
-          'Email that leaves the instance; today nothing is sent',
-          'The console’s settings, origins, keys and funnel',
+          'Email that leaves the instance; the staging space sends none',
         ] },
         { status: 'later' as Status, title: 'Not built', lead: 'Not promised as a date.', items: [
           'A demo of the widget on this site; it waits for a demo space with synthetic data',
@@ -244,28 +250,28 @@ export const en = {
       title: 'Keys and origins',
       paras: [
         'A publishable key identifies your space and works only on the origins your space allows; it belongs in the page. A secret key belongs on your server; the widget refuses to start with one and tells you to rotate it.',
-        'Today the allowed origins are set when a space is provisioned; the console cannot change them yet.',
+        'The allowed origins are set when a space is provisioned. Since contract 0.2.9 the Space API can change them, and so can the console.',
       ],
     },
     console: {
       title: 'The console for your team',
       paras: [
         'The console shows the approval queue, each case with its gates and approval, the introductions with their receipts, the outcomes, the webhook endpoints and the operators. It runs on a machine of yours or behind your own login; the secret key stays on its server. There is no Linkbot login for operators.',
-        'Settings, origins, keys and a funnel wait for the routes the contract adds next.',
+        'Its screens for settings and criteria overrides, keys, origins and the funnel use the routes the Space API has had since contract 0.2.9.',
       ],
     },
     server: {
       title: 'Your server: the SDK and webhooks',
       paras: [
-        'The SDK gives your server a client typed by the Space API contract: a route, field or value the contract does not have is a type error. It also checks webhook deliveries exactly as the contract specifies. It is not published yet; its code is in the Connect repository.',
-        'Webhooks carry ids and states, never contact data; your server fetches details with its secret key. Deliveries are signed and retried. They are in the contract and not sent by the staging space yet.',
+        `The SDK gives your server a client typed by the Space API contract: a route, field or value the contract does not have is a type error. It also checks webhook deliveries exactly as the contract specifies. As of ${AS_OF} it is not published; its code is in the Connect repository.`,
+        `Webhooks carry ids and states, never contact data; your server fetches details with its secret key. Deliveries are signed and retried. They are in the contract; as of ${AS_OF} the staging space does not send them.`,
       ],
     },
     recipes: {
       title: 'Recipes: plain HTML, Astro, Next.js, WordPress',
       paras: [
         'Each recipe is a file that runs in Connect’s CI in three browser engines against the sample build with synthetic data: a plain page with a strict Content Security Policy, an Astro component, a Next.js page with the React wrapper, and a small WordPress plugin with a shortcode.',
-        'None of them runs against a real space as written yet: the staging instance serves a test fixture in place of the widget until a release is deployed there.',
+        `As of ${AS_OF}, they run in Connect’s CI against the sample build, not against a space; the staging instance itself serves the widget’s release 0.3.0-v1.`,
       ],
     },
     state: { title: 'Where it stands' },
@@ -379,14 +385,14 @@ export const en = {
             'sessionStorage belongs to your page’s origin, so any script you run on that page can read the draft and the tokens. Run no scripts you do not trust on pages that carry the widget.',
           ] },
         ] as Section[],
-        state: ['The script comes from your space’s own instance. The staging instance serves a test fixture in its place until a release of the widget is deployed there; on 2026-10-23 the widget ran against the staging space’s API with the released script served from a local stand-in for that address.'],
+        state: [`The script comes from your space’s own instance. As of ${AS_OF} the staging instance serves the widget’s release 0.3.0-v1 from a pinned file, as its health report shows; Connect’s checks of the board and of the widget’s wording passed against that served file on 2026-10-24.`],
       },
       sdk: {
         nav: 'SDK and webhooks',
         title: 'The SDK, the React wrapper and webhooks · Linkbot for platforms',
         description: 'A server client typed by the Space API contract, the webhook check, the React wrapper, and how your server receives Linkbot’s events.',
         h1: ['Your server,', 'typed by the contract.'],
-        lede: 'Nothing of the SDK goes into a browser page: the embed takes the publishable key, and the SDK’s client refuses to start in a browser. It is not published yet; its code is in the Connect repository.',
+        lede: `Nothing of the SDK goes into a browser page: the embed takes the publishable key, and the SDK’s client refuses to start in a browser. As of ${AS_OF} it is not published; its code is in the Connect repository.`,
         sections: [
           { id: 'client', title: 'The client', paras: [
             'The client takes your space’s API base (https only, except on localhost), your secret key from your server’s secret store (a value that is not shaped like a secret key is refused) and, if you want, your runtime’s fetch. Its paths, parameters, bodies and responses are the contract’s own, generated from the YAML Core posted and pinned by sha256: a route, field or value the contract does not have is a type error.',
@@ -396,15 +402,15 @@ export const en = {
           { id: 'webhooks', title: 'Webhooks', paras: [
             'Register an endpoint with your secret key, https only. The signing secret is shown once and belongs in your secret store, never in code. Each delivery carries an id, a timestamp in seconds and a signature: the HMAC-SHA256 of the timestamp, a dot and the raw body, keyed with your secret.',
             'Refuse a delivery older than five minutes or whose signature does not match. The SDK’s check does both, comparing in constant time with Web Crypto, in Node, Deno, Bun and edge runtimes. Check the raw body before you parse it. Answer 2xx quickly: anything else is retried with backoff for 24 hours, then the delivery is marked dead. A retry carries the same id, so handle each id once, with the ids in your database rather than in memory.',
-            'Rotate the secret when you need to: the old one stays valid for up to seven days, and the check takes both. Deliveries carry ids and states, never contact data; fetch details with your secret key. The delivery log lists status, attempts and a hash of the body, never the body. Webhooks are in the contract and not sent by the staging space yet.',
+            `Rotate the secret when you need to: the old one stays valid for up to seven days, and the check takes both. Deliveries carry ids and states, never contact data; fetch details with your secret key. The delivery log lists status, attempts and a hash of the body, never the body. Webhooks are in the contract; as of ${AS_OF} the staging space does not send them.`,
           ] },
           { id: 'events', title: 'Event types', paras: ['Every event has an id, a type, the space id, the time it occurred, the contract version and the object it is about, with its type, id and state where there is one. The types:'], code: true, items: ['intent.confirmed', 'intent.revised', 'intent.status_changed', 'match.proposed', 'match.updated', 'gate.recorded', 'approval.recorded', 'answer.recorded', 'clarification.requested', 'review.recorded', 'introduction.created', 'outcome.recorded', 'watch.delivered', 'channel.verified', 'deletion.completed', 'key.rotated'] },
           { id: 'react', title: 'The React wrapper', paras: [
             'The wrapper renders the same element as the snippet and loads the script once per address; the embed then starts in its own shadow root, which React never touches. It is a client component, so it works in the Next.js App Router, and it adds no global CSS.',
-            'Its props are the element’s attributes: the publishable key and the script address are required (a secret key throws), then mode, side, locale, input, api, your notice, a class name and a style for the theme variables. When a prop the embed reads changes, the wrapper gives React a new element and the embed starts afresh. A page that wants the script loaded before it renders an element can ask for that too. Not published yet.',
+            `Its props are the element’s attributes: the publishable key and the script address are required (a secret key throws), then mode, side, locale, input, api, your notice, a class name and a style for the theme variables. When a prop the embed reads changes, the wrapper gives React a new element and the embed starts afresh. A page that wants the script loaded before it renders an element can ask for that too. Not published as of ${AS_OF}.`,
           ] },
         ] as Section[],
-        state: ['The SDK and the wrapper are built and tested in the Connect repository and not published. The webhooks guide’s receiver is tested against signed sample deliveries; the staging space does not send webhooks yet.'],
+        state: [`The SDK and the wrapper are built and tested in the Connect repository and, as of ${AS_OF}, not published. The webhooks guide’s receiver is tested against signed sample deliveries; the staging space does not send webhooks.`],
       },
       console: {
         nav: 'The console',
@@ -437,8 +443,7 @@ export const en = {
             'This path ran against Geoprocure’s synthetic staging space on 2026-10-23: the queue, a case, both kinds of check, the approval, an answer for the platform’s own offer, and an introduction with its receipt.',
           ] },
           { id: 'notyet', title: 'Not here yet, and why', items: [
-            'Settings, allowed origins and keys cannot be changed from the console: the contract has no routes for them yet. Spaces are provisioned with Core’s tool, so setting one up from a pack here waits on a route too.',
-            'No funnel: it shows no numbers until the Space API reports real ones.',
+            'A new space is created with Core’s provisioning tool, not from the console; the console’s five-step wizard writes and validates the file that tool reads.',
             'No “send again” for a delivery until there are real deliveries to try it on.',
           ] },
         ] as Section[],
