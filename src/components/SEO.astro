@@ -2,7 +2,10 @@
 /* Page metadata, in the page's language, with every other language as an alternate. Structured
    data states only what is verifiable today: the name, the address of this site and a plain
    description. Legal name, founding date, address and logo are left out until the owner confirms
-   them. Previews (PUBLIC_NOINDEX=1) and drafts are never indexed; a draft has one language and no alternates. */
+   them. Previews (PUBLIC_NOINDEX=1) and drafts are never indexed; a draft has one language and no alternates.
+   Each page and language has its own preview image, drawn after the build from this page's og:title and og:description
+   (src/integrations/share-images.ts). */
+import { cardPath } from '../lib/share-card';
 import { DEFAULT_LANG, LANGS, pathFor, type Catalogue, type Lang } from '../i18n';
 interface Props { lang: Lang; t: Catalogue; title: string; description: string; path: string; crumbs?: [string, string][]; draft?: boolean }
 const { lang, t, title, description, path, crumbs = [], draft = false } = Astro.props;
@@ -11,7 +14,7 @@ const OG_LOCALE: Record<Lang, string> = { en: 'en_GB', de: 'de_DE', es: 'es_ES',
 const site = Astro.site ?? new URL('https://linkbot-site.vercel.app');
 const url = (l: Lang, p = path) => new URL(pathFor(l, p), site).toString();
 const canonical = url(lang);
-const image = new URL('/og.png', site).toString();
+const image = new URL(cardPath(lang, path), site).toString();
 const graph: Record<string, unknown>[] = [];
 if (path === '/') graph.push(
   { '@context': 'https://schema.org', '@type': 'Organization', name: t.site.name, url: site.origin, description: t.site.claim },
@@ -33,8 +36,10 @@ if (crumbs.length) graph.push({ '@context': 'https://schema.org', '@type': 'Brea
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={image} />
+<meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content={`${t.site.name}: ${t.home.h1.join(' ')}`} />
+<meta property="og:image:alt" content={title} />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image:alt" content={title} />
 {graph.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(graph.length === 1 ? graph[0] : graph)} />}

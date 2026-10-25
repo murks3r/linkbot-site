@@ -86,11 +86,10 @@ The owner's decisions of 2026-10-24 and the reasons for each are in `docs/front/
 ```bash
 npm ci
 npm run dev
-npm run build                 # astro check + static build to ./dist
+npm run build                 # astro check + static build to ./dist; also draws each page's preview image
 npm test                      # the catalogues, the palette copy, the production build
 LINKBOT_APP_DIR=../linkbot npm run test:browser   # every page in every language at 5 widths, the app's WCAG audit, the journeys
 SITE_SCHEME=dark LINKBOT_APP_DIR=../linkbot npm run test:browser   # the same in the dark palette (?theme=dark)
-node scripts/og.cjs           # re-render public/og.png
 ```
 
 The browser acceptance needs a checkout of the app (murks3r/linkbot) for its accessibility audit,
