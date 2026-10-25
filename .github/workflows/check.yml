@@ -1,7 +1,9 @@
 # CI only where it is actually necessary (CLAUDE.md, BUILD MODE rule 2): the fast check runs on
 # pushes and pull requests to `main`, that is on the final head before a milestone merge, and by
 # hand (workflow_dispatch). Pull requests into `build/vision` are merged on local evidence (the
-# commands and their results pasted into the PR), so they trigger nothing here. Docs-only changes
+# commands and their results pasted into the PR), so they trigger nothing here. A draft PR into
+# `main` (the V1 PR, open while `build/vision` moves) runs nothing either: the check runs once, when
+# it is marked ready for review, and again only if its head changes after that. Docs-only changes
 # skip the run. The browser acceptance (`npm run test:browser`) runs at milestones, locally: it
 # needs a checkout of the app for its accessibility audit.
 name: check
@@ -12,6 +14,7 @@ on:
     paths-ignore: ['**.md', 'docs/**']
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore: ['**.md', 'docs/**']
   workflow_dispatch:
 
@@ -25,6 +28,7 @@ concurrency:
 jobs:
   fast:
     name: typecheck, build, unit tests
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

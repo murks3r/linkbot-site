@@ -120,7 +120,8 @@ On 2026-10-24 a second public Linkbot landing page in the same Vercel team was t
 | PR | Branch → base | Waits on |
 | -- | -- | -- |
 | [#28](https://github.com/murks3r/linkbot-site/pull/28) | `claude/main-legal-notice` → `main` | Counsel's view on the legal notice (GEO-150, GEO-154), a mailbox on a domain Linkbot owns, and then the owner's merge. A production build stops while its placeholders are open (see Gotchas). |
-| [#30](https://github.com/murks3r/linkbot-site/pull/30) | `claude/main-domain-placeholder` → `main` | The owner's merge only. It replaces `main`'s last two mentions of the old domain, in the README and a config comment. Nothing the site serves changes. |
+| The V1 PR, a draft | `build/vision` → `main` | The owner's go, planned for 2026-11-10: mark it ready (one CI run, `check.yml` skips drafts), then merge with a merge commit. Its description lists what production gains, what stays a placeholder and the rollback. `main` was merged into `build/vision` with `-s ours` on 2026-10-25, so it merges without conflicts. |
+| [#30](https://github.com/murks3r/linkbot-site/pull/30) | `claude/main-domain-placeholder` → `main` | Superseded by the V1 PR, which carries the same placeholder (#31) and replaces both files #30 touches. Recommended: close it unmerged once the owner agrees. |
 | #1, #6 to #21 | old design and parallel branches | Nothing. They stay as they are (owner's order). |
 
 ## 4. Next three steps
