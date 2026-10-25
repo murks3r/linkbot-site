@@ -13,7 +13,7 @@ export const es: Catalogue = {
     menu: 'Menú',
     toc: 'En esta página',
     language: 'Idioma',
-    nav: { how: 'Cómo funciona', sees: 'Quién ve qué', platforms: 'Para plataformas', verticals: 'Para verticales', integrations: 'Integraciones' },
+    nav: { how: 'Cómo funciona', sees: 'Quién ve qué', platforms: 'Para plataformas', verticals: 'Para verticales', integrations: 'Integraciones', developers: 'Desarrolladores' },
     footer: {
       product: 'Linkbot',
       legal: 'Legal',
@@ -284,7 +284,7 @@ export const es: Catalogue = {
 
   forPlatforms: {
     title: 'Para plataformas: lo que obtiene un operador con un espacio Linkbot',
-    description: 'Para un operador que quiere un espacio para su mercado: las cuatro vías de entrada, lo que obtiene una plataforma y lo que sigue siendo suyo: sus datos y su decisión.',
+    description: 'Para quien quiere un espacio para su mercado: las cuatro vías de entrada, lo que obtiene una plataforma y lo que sigue siendo suyo: sus datos y su decisión.',
     eyebrow: 'Para plataformas',
     h1: ['Su mercado, sus páginas,', 'su decisión.'],
     lede: 'Para un operador que quiere un espacio para su propio mercado: cómo llega un espacio a sus usuarios, qué obtiene usted y qué sigue siendo suyo. Esta página describe el contrato de Space API y el espacio de staging sintético de Geoprocure. Todavía ninguna plataforma real gestiona un espacio, y esta página no menciona precios.',
@@ -320,6 +320,57 @@ export const es: Catalogue = {
       ],
     },
     details: { title: 'Los detalles', lede: 'Las páginas de integración muestran cómo funciona cada parte: la integración, claves y orígenes, la consola, el SDK y los webhooks, y recetas para HTML simple, WordPress, Next.js y Astro.', link: 'Integraciones' },
+  },
+
+  developers: {
+    title: 'Para desarrolladores: integrar el widget o construir sobre Space API',
+    description: 'Dónde está la documentación de Connect, la integración más corta, un breve ejemplo del SDK para su servidor y lo que aún no existe: paquetes npm y MCP.',
+    eyebrow: 'Para desarrolladores',
+    h1: ['Un script,', 'o su propia interfaz.'],
+    lede: `Dos formas de construir con un espacio: la integración, un script y un elemento en su página, o su propia interfaz sobre Space API mediante el SDK, un cliente tipado por el contrato. La documentación de Connect muestra ambas. A ${AS_OF} está en el repositorio de Connect, que todavía no es público.`,
+    toc: [['embed', 'La integración más corta'], ['sdk', 'El SDK en su servidor'], ['docs', 'La documentación'], ['not-yet', 'Aún no disponible']] as [string, string][],
+    embed: {
+      title: 'La integración más corta',
+      lede: 'Colóquela donde deba aparecer el formulario: su clave publicable en el elemento y la dirección de su espacio en el script.',
+      url: 'EMBED_URL representa esta dirección, en la propia instancia de su espacio; no hay un host central:',
+      notes: [
+        'El modo es describe, board, watch o mine; el lado es seeking u offer. Sin idioma, el widget sigue el navegador del visitante.',
+        'La clave publicable solo funciona en los orígenes que su espacio permite. Una clave secreta nunca va en una página: el widget se niega a arrancar con ella.',
+        `A ${AS_OF}, la instancia del espacio de staging sintético de Geoprocure sirve la versión 0.3.0-v1 del widget.`,
+      ],
+    },
+    sdk: {
+      title: 'El SDK en su servidor',
+      lede: 'Una vez, desde su servidor, con la clave secreta: registra su receptor de webhooks y devuelve el secreto de firma, que se muestra solo esta vez.',
+      notes: [
+        `A ${AS_OF} el SDK no está en npm. Se usa desde un clon del repositorio de Connect, donde es un paquete del workspace.`,
+        `La prueba de este ejemplo se ejecuta contra un sustituto, no contra un espacio. A ${AS_OF} el espacio de staging no envía webhooks.`,
+      ],
+    },
+    docs: {
+      title: 'La documentación',
+      lede: `En el repositorio de Connect, en su rama de construcción. A ${AS_OF} el repositorio es privado, así que son rutas, no enlaces.`,
+      items: {
+        embed5: { name: 'Integrar en 5 minutos', body: 'Su clave publicable, el origen de su página en la lista de permitidos, el fragmento y qué hacer si el widget no aparece.' },
+        quickstart: { name: 'Inicio rápido para desarrolladores', body: 'Para su propia interfaz en lugar del widget: una persona describe, confirma, ve las coincidencias, dice sí y encuentra la presentación, mediante el cliente de invitado del SDK. Solo se ha ejecutado contra un ejemplo local con datos sintéticos.' },
+        nextjs: { name: 'El ejemplo de Next.js', body: 'Cada modo del widget, y «mine» leído en el servidor mediante el SDK. Se ejecuta contra un sustituto local, no contra un espacio.' },
+        astro: { name: 'El ejemplo de Astro', body: 'Lo mismo en Astro: cada modo, y «mine» leído en el servidor mediante el SDK. Se ejecuta contra un sustituto local, no contra un espacio.' },
+        embedRef: { name: 'La referencia de la integración', body: 'Cada atributo del elemento, el aviso de datos, el tema y una Content Security Policy.' },
+        sdkRef: { name: 'La referencia del SDK', body: 'El cliente para su servidor con la clave secreta, el cliente de invitado, las claves de idempotencia y la carga de datos.' },
+        webhooks: { name: 'Webhooks', body: 'Registrar un receptor, comprobar la firma de cada entrega, reintentos y rotación. El espacio de staging aún no los envía.' },
+      },
+      more: 'Cómo funciona cada parte, en breve:',
+      link: 'Integraciones',
+    },
+    notYet: {
+      title: 'Aún no disponible',
+      items: [
+        `Paquetes npm: el SDK, el wrapper de React y los paquetes de Next.js y Astro no están publicados a ${AS_OF}. Hoy se ejecutan desde un clon del repositorio de Connect.`,
+        'MCP: previsto, no construido. No hay ningún endpoint MCP que usar.',
+        `El propio repositorio: es privado a ${AS_OF}.`,
+        'Un espacio para probarlo: todavía no se ofrece ninguno a desarrolladores. Los ejemplos se ejecutan contra un ejemplo local o un sustituto.',
+      ],
+    },
   },
 
   verticals: {

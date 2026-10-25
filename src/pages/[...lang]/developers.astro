@@ -1,0 +1,77 @@
+---
+/* For a developer: the shortest embed and a short SDK example, both verbatim from the Connect repository; where its
+   docs and examples are (paths, not links, while the repository is private); and what is not available yet. Words:
+   the catalogue's developers; snippets and paths: src/lib/connect-docs.ts. Each sentence has its row in
+   docs/truth-check.md. */
+import Base from '../../layouts/Base.astro';
+import Toc from '../../components/Toc.astro';
+import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
+import { CONNECT_BRANCH, CONNECT_PUBLIC, CONNECT_REPO, DOC_PATHS, EMBED_SNIPPET, EMBED_URL, SDK_SNIPPET, connectUrl, type DocKey } from '../../lib/connect-docs';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const d = t.developers;
+const docs = (Object.keys(DOC_PATHS) as DocKey[]).map(key => ({ path: DOC_PATHS[key], ...d.docs.items[key] }));
+---
+<Base lang={lang} t={t} fallback={fallback} title={d.title} description={d.description} path="/developers" crumbs={[[t.site.nav.developers, '/developers']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{d.eyebrow}</p>
+      <h1>{d.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{d.lede}</p>
+    </div>
+  </section>
+
+  <div class="wrap doc">
+    <Toc items={d.toc} label={t.site.toc} />
+    <div class="doc-body">
+      <section id="embed" aria-labelledby="embed-title">
+        <h2 id="embed-title">{d.embed.title}</h2>
+        <p>{d.embed.lede}</p>
+        <pre class="snippet" translate="no"><code>{EMBED_SNIPPET}</code></pre>
+        <p>{d.embed.url} <code translate="no">{EMBED_URL}</code></p>
+        <ul class="plain">{d.embed.notes.map(note => <li>{note}</li>)}</ul>
+      </section>
+
+      <section id="sdk" aria-labelledby="sdk-title">
+        <h2 id="sdk-title">{d.sdk.title}</h2>
+        <p>{d.sdk.lede}</p>
+        <pre class="snippet" translate="no"><code>{SDK_SNIPPET}</code></pre>
+        <ul class="plain">{d.sdk.notes.map(note => <li>{note}</li>)}</ul>
+      </section>
+
+      <section id="docs" aria-labelledby="docs-title">
+        <h2 id="docs-title">{d.docs.title}</h2>
+        <p>{d.docs.lede} <code translate="no">{CONNECT_REPO}</code>, <code translate="no">{CONNECT_BRANCH}</code></p>
+        <dl class="docs">
+          {docs.map(doc => (
+            <div>
+              <dt>{doc.name} <code translate="no">{CONNECT_PUBLIC ? <a href={connectUrl(doc.path)}>{doc.path}</a> : doc.path}</code></dt>
+              <dd>{doc.body}</dd>
+            </div>
+          ))}
+        </dl>
+        <p>{d.docs.more} <a href={pathFor(lang, '/platforms')}>{d.docs.link}</a></p>
+      </section>
+
+      <section id="not-yet" aria-labelledby="not-yet-title">
+        <h2 id="not-yet-title">{d.notYet.title}</h2>
+        <ul class="points">{d.notYet.items.map(item => <li>{item}</li>)}</ul>
+        <p class="note">{t.site.synthetic}</p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .snippet { overflow-x: auto; padding: 16px 18px; border-radius: var(--r-2); background: var(--sand); font-size: var(--size-small); line-height: 1.55; }
+  .snippet code { white-space: pre; }
+  .docs { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .docs > div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .docs dt { font-weight: 650; }
+  .docs dt code { display: block; margin-top: 2px; font-weight: 400; font-size: var(--size-small); color: var(--ink-2); overflow-wrap: anywhere; }
+  .docs dd { color: var(--ink-2); }
+  .points { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .points li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+</style>

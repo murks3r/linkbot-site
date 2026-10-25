@@ -15,7 +15,7 @@ export const de: Catalogue = {
     menu: 'Menü',
     toc: 'Auf dieser Seite',
     language: 'Sprache',
-    nav: { how: 'So funktioniert es', sees: 'Wer was sieht', platforms: 'Für Plattformen', verticals: 'Für Branchen', integrations: 'Integrationen' },
+    nav: { how: 'So funktioniert es', sees: 'Wer was sieht', platforms: 'Für Plattformen', verticals: 'Für Branchen', integrations: 'Integrationen', developers: 'Entwickler' },
     footer: {
       product: 'Linkbot',
       legal: 'Rechtliches',
@@ -286,7 +286,7 @@ export const de: Catalogue = {
 
   forPlatforms: {
     title: 'Für Plattformen: was ein Betreiber mit einem Linkbot-Space bekommt',
-    description: 'Für einen Betreiber, der einen Space für seinen Markt will: die vier Wege hinein, was eine Plattform bekommt, und was ihr bleibt: ihre Daten und ihre Entscheidung.',
+    description: 'Für Betreiber, die einen Space für ihren Markt wollen: die vier Wege hinein, was eine Plattform bekommt und was ihr bleibt: ihre Daten und ihre Entscheidung.',
     eyebrow: 'Für Plattformen',
     h1: ['Ihr Markt, Ihre Seiten,', 'Ihre Entscheidung.'],
     lede: 'Für einen Betreiber, der einen Space für seinen eigenen Markt will: wie ein Space Ihre Nutzer erreicht, was Sie bekommen und was Ihnen bleibt. Diese Seite beschreibt den Vertrag der Space-API und Geoprocures synthetischen Staging-Space. Noch betreibt keine echte Plattform einen Space, und diese Seite nennt keine Preise.',
@@ -322,6 +322,57 @@ export const de: Catalogue = {
       ],
     },
     details: { title: 'Die Einzelheiten', lede: 'Die Integrationsseiten zeigen, wie jeder Teil funktioniert: die Einbettung, Schlüssel und Origins, die Konsole, das SDK und Webhooks, und Rezepte für reines HTML, WordPress, Next.js und Astro.', link: 'Integrationen' },
+  },
+
+  developers: {
+    title: 'Für Entwickler: das Widget einbetten oder auf der Space-API bauen',
+    description: 'Wo die Doku von Connect liegt, die kürzeste Einbettung, ein kurzes SDK-Beispiel für Ihren Server und was es noch nicht gibt: npm-Pakete und MCP.',
+    eyebrow: 'Für Entwickler',
+    h1: ['Ein Skript', 'oder Ihre eigene Oberfläche.'],
+    lede: `Zwei Wege, mit einem Space zu bauen: die Einbettung, ein Skript und ein Element auf Ihrer Seite, oder Ihre eigene Oberfläche auf der Space-API über das SDK, einen durch den Vertrag typisierten Client. Die Dokumentation von Connect zeigt beide. Stand ${AS_OF} liegt sie im Connect-Repository, das noch nicht öffentlich ist.`,
+    toc: [['embed', 'Die kürzeste Einbettung'], ['sdk', 'Das SDK auf Ihrem Server'], ['docs', 'Die Dokumentation'], ['not-yet', 'Noch nicht verfügbar']] as [string, string][],
+    embed: {
+      title: 'Die kürzeste Einbettung',
+      lede: 'Setzen Sie sie dorthin, wo das Formular erscheinen soll: Ihren Publishable Key ins Element, die Adresse Ihres Space ins Skript.',
+      url: 'EMBED_URL steht für diese Adresse auf der eigenen Instanz Ihres Space; einen zentralen Host gibt es nicht:',
+      notes: [
+        'Der Modus ist describe, board, watch oder mine; die Seite ist seeking oder offer. Ohne Sprache folgt das Widget dem Browser des Besuchers.',
+        'Der Publishable Key gilt nur auf den Origins, die Ihr Space erlaubt. Ein Secret Key gehört nie in eine Seite: Mit einem solchen startet das Widget nicht.',
+        `Stand ${AS_OF} liefert die Instanz von Geoprocures synthetischem Staging-Space das Widget in der Version 0.3.0-v1 aus.`,
+      ],
+    },
+    sdk: {
+      title: 'Das SDK auf Ihrem Server',
+      lede: 'Einmal von Ihrem Server aus, mit dem Secret Key: Es registriert Ihren Webhook-Empfänger und gibt das Signaturgeheimnis zurück, das nur dieses eine Mal gezeigt wird.',
+      notes: [
+        `Das SDK ist Stand ${AS_OF} nicht auf npm. Es wird aus einem Klon des Connect-Repositorys genutzt, wo es ein Paket des Workspace ist.`,
+        `Der Test dieses Beispiels läuft gegen einen Stellvertreter, nicht gegen einen Space. Stand ${AS_OF} sendet der Staging-Space keine Webhooks.`,
+      ],
+    },
+    docs: {
+      title: 'Die Dokumentation',
+      lede: `Im Connect-Repository, auf seinem Build-Branch. Stand ${AS_OF} ist das Repository privat, deshalb stehen hier Pfade, keine Links.`,
+      items: {
+        embed5: { name: 'Einbetten in 5 Minuten', body: 'Ihr Publishable Key, der Origin Ihrer Seite auf der Freigabeliste, das Snippet und was zu tun ist, wenn das Widget nicht erscheint.' },
+        quickstart: { name: 'Developer-Quickstart', body: 'Für Ihre eigene Oberfläche statt des Widgets: Eine Person beschreibt, bestätigt, sieht die Treffer, sagt Ja und findet die Vorstellung, über den Gast-Client des SDK. Er lief bisher nur gegen ein lokales Beispiel mit synthetischen Daten.' },
+        nextjs: { name: 'Das Next.js-Beispiel', body: 'Jeder Modus des Widgets, und „mine“ auf dem Server über das SDK gelesen. Es läuft gegen einen lokalen Stellvertreter, nicht gegen einen Space.' },
+        astro: { name: 'Das Astro-Beispiel', body: 'Dasselbe in Astro: jeder Modus, und „mine“ auf dem Server über das SDK gelesen. Es läuft gegen einen lokalen Stellvertreter, nicht gegen einen Space.' },
+        embedRef: { name: 'Die Embed-Referenz', body: 'Jedes Attribut des Elements, der Datenhinweis, das Theme und eine Content Security Policy.' },
+        sdkRef: { name: 'Die SDK-Referenz', body: 'Der Client für Ihren Server mit dem Secret Key, der Gast-Client, Idempotenzschlüssel und das Anlegen von Daten.' },
+        webhooks: { name: 'Webhooks', body: 'Einen Empfänger registrieren, die Signatur jeder Zustellung prüfen, Wiederholungen und Rotation. Der Staging-Space sendet sie noch nicht.' },
+      },
+      more: 'Wie jeder Teil funktioniert, in Kürze:',
+      link: 'Integrationen',
+    },
+    notYet: {
+      title: 'Noch nicht verfügbar',
+      items: [
+        `npm-Pakete: Das SDK, der React-Wrapper und die Pakete für Next.js und Astro sind Stand ${AS_OF} nicht veröffentlicht. Heute laufen sie aus einem Klon des Connect-Repositorys.`,
+        'MCP: geplant, nicht gebaut. Es gibt keinen MCP-Endpunkt, den man nutzen kann.',
+        `Das Repository selbst: Es ist Stand ${AS_OF} privat.`,
+        'Ein Space zum Ausprobieren: Für Entwickler gibt es noch keinen. Die Beispiele laufen gegen ein lokales Beispiel oder einen Stellvertreter.',
+      ],
+    },
   },
 
   verticals: {

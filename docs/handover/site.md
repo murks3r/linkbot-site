@@ -75,7 +75,8 @@ It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and
 - `/how-it-works` (#44) opens with the three building blocks (Intake, Watch, Introductions), the rule of both sides' yes and the demo's six steps.
 - `/for-platforms` (S-3): the four ways in (hosted pages and MCP marked not built), what a platform gets, what stays its own. The header's and footer's "For platforms" lead here; `/platforms` and its six pages are now "Integrations".
 - `/demo` (S-4): the six steps are a recorded walkthrough, one step at a time (step buttons, Previous and Next, arrow keys, Home and End, `#step-n` links), a plain list without scripts, no motion under reduced motion. Its pictures, per language, are in `public/material/demo/`. To record them again: start Connect's demo stage in its local rehearsal (its `apps/demo/README.md`), then `node tools/record-demo.cjs <lang>`, one language per fresh start of the stage. Never point it at a space.
-- The build has 76 pages: 15 in each of five languages, plus the 404 page.
+- `/developers` (S-6): the shortest embed and a short SDK example, verbatim from Connect's repository (`src/lib/connect-docs.ts`); Connect's docs and examples as paths, not links, while that repository is private (`CONNECT_PUBLIC`); what is not available yet (npm packages, MCP, a space for developers). In the header and footer.
+- The build has 82 pages: 16 in each of five languages, plus the 404 page and the draft page for intermediaries.
 
 ### The front, since #35
 

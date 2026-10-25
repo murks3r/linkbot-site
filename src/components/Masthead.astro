@@ -1,12 +1,12 @@
 ---
-/* The bar: the brand and the four pages. On narrow screens the pages fold into a menu. The language is not here (third
+/* The bar: the brand and the five pages. On narrow screens the pages fold into a menu. The language is not here (third
    pass, GEO-188): one floating button at the bottom right holds it on every page (LangSwitch, in the footer). */
 import Icon from './Icon.astro';
 import Brand from './Brand.astro';
 import { pathFor, type Catalogue, type Lang } from '../i18n';
 interface Props { lang: Lang; t: Catalogue; path: string }
 const { lang, t, path } = Astro.props;
-const NAV: [string, string][] = [['/how-it-works', t.site.nav.how], ['/who-sees-what', t.site.nav.sees], ['/for-platforms', t.site.nav.platforms], ['/verticals', t.site.nav.verticals]];
+const NAV: [string, string][] = [['/how-it-works', t.site.nav.how], ['/who-sees-what', t.site.nav.sees], ['/for-platforms', t.site.nav.platforms], ['/verticals', t.site.nav.verticals], ['/developers', t.site.nav.developers]];
 const here = (href: string) => (path === href ? 'page' : undefined);
 ---
 <header class="masthead" data-masthead>

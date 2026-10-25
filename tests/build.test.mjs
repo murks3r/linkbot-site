@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { LANGS, DEFAULT_LANG, pathFor, catalogues } from '../src/i18n/index.ts';
 
-const PAGES = ['/', '/how-it-works', '/who-sees-what', '/for-platforms', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
+const PAGES = ['/', '/how-it-works', '/who-sees-what', '/for-platforms', '/developers', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint'];
 const dist = new URL('../dist/', import.meta.url);
 const file = (lang, page) => { const p = pathFor(lang, page); return new URL(`.${p === '/' ? '/index' : p}.html`, dist); };
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
@@ -38,4 +38,12 @@ test('a production build carries no variant switcher and no preview page', { ski
   for (const marker of ['data-variants-panel', 'data-variants-form', "setAttribute('data-v-'", 'Variants.astro']) assert.ok(!html.includes(marker), `${marker} in a production build`);
   assert.ok(!/<html[^>]*data-v-/.test(html), 'an axis attribute on <html> in a production build');
   assert.ok(!existsSync(new URL('__preview/brand.html', dist)), 'the brand board in a production build');
+});
+
+test('while the Connect repository is private, /developers shows its paths and links to none of them', { skip }, () => {
+  for (const lang of LANGS) {
+    const html = readFileSync(file(lang, '/developers'), 'utf8');
+    assert.ok(html.includes('docs/guides/embed-in-five-minutes.md'), `${lang}: the quickstart's path`);
+    assert.doesNotMatch(html, /href="https:\/\/github\.com\/murks3r\/linkbot-connect/, `${lang}: a link into the private repository`);
+  }
 });
