@@ -3,7 +3,7 @@
 Written 2026-10-25 by the Site lane, so that a fresh session can continue without asking anyone. It was updated the same day:
 - after #34, which made `vision/home-redesign` the source of the front;
 - after #35, which merged the front, with the gaps the step-1 session found in this file;
-- in #NN, which made the status sentences true again and dated them.
+- in #38, which made the status sentences true again and dated them.
 
 Read these first, in this order:
 1. `CLAUDE.md`, the binding rules.
@@ -45,7 +45,7 @@ The production deployments on record (GitHub's deployment history, all made by V
 
 Of the project's three production names, only `linkbot-site.vercel.app` is public. The other two, every deployment's own URL and every preview sit behind Vercel's login and send `X-Robots-Tag: noindex`.
 
-### `build/vision`: the site being built, at the merge of #NN
+### `build/vision`: the site being built, at the merge of #38
 
 It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and `/who-sees-what`), plus the 404 page. English sits at the root, then `/de`, `/es`, `/it` and `/fr`.
 - **Its preview** is behind Vercel's login. Find it in the Vercel dashboard under project `linkbot-m3`, Deployments, branch `build/vision`.
@@ -64,7 +64,7 @@ It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and
 | This handover, and its first correction | [#33](https://github.com/murks3r/linkbot-site/pull/33), [#34](https://github.com/murks3r/linkbot-site/pull/34) | `f6148ba`, `2dec13a` |
 | Step 1: the front is B, then A, and C is `/who-sees-what`. It merges `vision/home-redesign` at `a111f6f`, plus fixes. | [#35](https://github.com/murks3r/linkbot-site/pull/35) | `5688598` |
 | The handover, kept current | [#36](https://github.com/murks3r/linkbot-site/pull/36), [#37](https://github.com/murks3r/linkbot-site/pull/37) | `d284ce2`, `66eccbf` |
-| The status sentences, true again and dated. Text and the board run on the staging space, the instance serves the widget, and the console's routes exist since 0.2.9; watches, webhooks and outgoing email are not there yet. It adds `src/i18n/status-date.ts` and `tests/status.test.mjs`. | [#NN](https://github.com/murks3r/linkbot-site/pull/NN) | the merge of #NN |
+| The status sentences, true again and dated. Text and the board run on the staging space, the instance serves the widget, and the console's routes exist since 0.2.9; watches, webhooks and outgoing email are not there yet. It adds `src/i18n/status-date.ts` and `tests/status.test.mjs`. | [#38](https://github.com/murks3r/linkbot-site/pull/38) | the merge of #38 |
 
 ### The front, since #35
 
