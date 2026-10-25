@@ -83,7 +83,24 @@ export const es: Catalogue = {
     eyebrow: 'Cómo funciona',
     h1: ['De una solicitud confirmada', 'a una presentación.'],
     lede: 'Cada paso de abajo está en el contrato de Space API. Donde el espacio de staging aún no ejecuta un paso, la página lo dice.',
-    toc: [['space', 'Un espacio'], ['pack', 'Un pack'], ['describe', 'Cuatro formas de describir'], ['confirm', 'Confirmar'], ['matching', 'Emparejamiento'], ['approval', 'Aprobación y gates'], ['yes', 'El sí de ambas partes'], ['introduction', 'La presentación'], ['after', 'Después'], ['sees', 'Quién ve qué'], ['languages', 'Cinco idiomas'], ['today', 'Qué se ejecuta en el espacio de staging']] as [string, string][],
+    toc: [['blocks', 'Tres piezas'], ['rule', 'El sí de ambas partes'], ['path', 'El camino en seis pasos'], ['space', 'Un espacio'], ['pack', 'Un pack'], ['describe', 'Cuatro formas de describir'], ['confirm', 'Confirmar'], ['matching', 'Emparejamiento'], ['approval', 'Aprobación y gates'], ['yes', 'El sí de ambas partes'], ['introduction', 'La presentación'], ['after', 'Después'], ['sees', 'Quién ve qué'], ['languages', 'Cinco idiomas'], ['today', 'Qué se ejecuta en el espacio de staging']] as [string, string][],
+    blocks: {
+      title: 'Tres piezas',
+      lede: 'Un espacio se compone de tres partes. Cada una es un grupo de rutas del contrato de Space API.',
+      items: [
+        { name: 'Captación', text: 'Un comprador o un proveedor describe una necesidad o una oferta, con el formulario o con sus propias palabras, revisa cada valor y confirma. Antes de la confirmación no se guarda nada, y el servidor comprueba cada valor con el pack del espacio.' },
+        { name: 'Seguimiento', text: `Un seguimiento mantiene abierta una necesidad o una oferta confirmada y avisa solo a su titular cuando algo nuevo encaja, por correo o webhook. El titular lo pausa o lo termina cuando quiere, también desde un enlace. A ${AS_OF}, los correos de seguimiento del espacio de staging van a un buzón de prueba y no llegan a nadie, y todavía no envía webhooks.` },
+        { name: 'Presentaciones', text: 'Cuando ambas partes han dicho que sí y un operador con nombre lo ha aprobado, el servidor presenta a las dos partes y da a cada una un comprobante de quién puede ver qué campos. Después se pregunta a ambas partes por el resultado.' },
+      ],
+    },
+    rule: {
+      title: 'Ninguna presentación sin el sí de ambas partes',
+      paras: [
+        'El emparejamiento encuentra posibles encajes; no presenta a nadie. Cada parte responde a un posible encaje por sí misma. Antes de que ambas digan que sí, la otra parte no sabe nada, y un no posterior revoca un sí.',
+        'El espacio exige además la aprobación de un operador con nombre tras las comprobaciones que fija. El servidor crea una presentación solo cuando se cumplen las tres condiciones, en cualquier orden, y rechaza cualquier otra vía.',
+      ],
+    },
+    path: { title: 'El camino en seis pasos', lede: 'Los seis pasos de la página de demostración, y quién actúa en cada uno.', link: 'La página de demostración' },
     space: {
       title: 'Un espacio es un mercado en una plataforma',
       paras: [
