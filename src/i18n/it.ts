@@ -13,7 +13,7 @@ export const it: Catalogue = {
     menu: 'Menu',
     toc: 'In questa pagina',
     language: 'Lingua',
-    nav: { how: 'Come funziona', sees: 'Chi vede cosa', platforms: 'Per le piattaforme', verticals: 'Per i verticali', integrations: 'Integrazioni' },
+    nav: { how: 'Come funziona', sees: 'Chi vede cosa', platforms: 'Per le piattaforme', verticals: 'Per i verticali', integrations: 'Integrazioni', developers: 'Sviluppatori' },
     footer: {
       product: 'Linkbot',
       legal: 'Informazioni legali',
@@ -284,7 +284,7 @@ export const it: Catalogue = {
 
   forPlatforms: {
     title: 'Per le piattaforme: cosa ottiene un operatore con uno spazio Linkbot',
-    description: 'Per un operatore che vuole uno spazio per il proprio mercato: le quattro vie d’accesso, cosa ottiene una piattaforma e cosa resta suo: i suoi dati e la sua decisione.',
+    description: 'Per chi vuole uno spazio per il proprio mercato: le quattro vie d’accesso, cosa ottiene una piattaforma e cosa resta suo: i suoi dati e la sua decisione.',
     eyebrow: 'Per le piattaforme',
     h1: ['Il Suo mercato, le Sue pagine,', 'la Sua decisione.'],
     lede: 'Per un operatore che vuole uno spazio per il proprio mercato: come uno spazio raggiunge i Suoi utenti, cosa ottiene e cosa resta Suo. Questa pagina descrive il contratto della Space API e lo spazio di staging sintetico di Geoprocure. Nessuna piattaforma reale gestisce ancora uno spazio, e questa pagina non indica prezzi.',
@@ -320,6 +320,57 @@ export const it: Catalogue = {
       ],
     },
     details: { title: 'I dettagli', lede: 'Le pagine di integrazione mostrano come funziona ogni parte: l’incorporamento, chiavi e origini, la console, l’SDK e i webhook, e ricette per HTML semplice, WordPress, Next.js e Astro.', link: 'Integrazioni' },
+  },
+
+  developers: {
+    title: 'Per gli sviluppatori: incorporare il widget o costruire sulla Space API',
+    description: 'Dove si trova la documentazione di Connect, l’incorporamento più breve, un breve esempio SDK per il Suo server e cosa manca ancora: pacchetti npm e MCP.',
+    eyebrow: 'Per gli sviluppatori',
+    h1: ['Uno script,', 'o la Sua interfaccia.'],
+    lede: `Due modi di costruire con uno spazio: l’incorporamento, uno script e un elemento sulla Sua pagina, oppure la Sua interfaccia sulla Space API tramite l’SDK, un client tipizzato dal contratto. La documentazione di Connect mostra entrambi. Al ${AS_OF} si trova nel repository di Connect, che non è ancora pubblico.`,
+    toc: [['embed', 'L’incorporamento più breve'], ['sdk', 'L’SDK sul Suo server'], ['docs', 'La documentazione'], ['not-yet', 'Non ancora disponibile']] as [string, string][],
+    embed: {
+      title: 'L’incorporamento più breve',
+      lede: 'Lo inserisca dove deve comparire il modulo: la Sua chiave pubblicabile nell’elemento e l’indirizzo del Suo spazio nello script.',
+      url: 'EMBED_URL sta per questo indirizzo, sull’istanza propria del Suo spazio; non esiste un host centrale:',
+      notes: [
+        'La modalità è describe, board, watch o mine; il lato è seeking o offer. Senza lingua il widget segue il browser del visitatore.',
+        'La chiave pubblicabile funziona solo sulle origini consentite dal Suo spazio. Una chiave segreta non va mai in una pagina: con essa il widget si rifiuta di partire.',
+        `Al ${AS_OF}, l’istanza dello spazio di staging sintetico di Geoprocure serve la versione 0.3.0-v1 del widget.`,
+      ],
+    },
+    sdk: {
+      title: 'L’SDK sul Suo server',
+      lede: 'Una volta, dal Suo server, con la chiave segreta: registra il Suo ricevitore di webhook e restituisce il segreto di firma, mostrato solo questa volta.',
+      notes: [
+        `Al ${AS_OF} l’SDK non è su npm. Si usa da un clone del repository di Connect, dove è un pacchetto del workspace.`,
+        `Il test di questo esempio gira contro un sostituto, non contro uno spazio. Al ${AS_OF} lo spazio di staging non invia webhook.`,
+      ],
+    },
+    docs: {
+      title: 'La documentazione',
+      lede: `Nel repository di Connect, sul suo branch di build. Al ${AS_OF} il repository è privato, quindi questi sono percorsi, non link.`,
+      items: {
+        embed5: { name: 'Incorporare in 5 minuti', body: 'La Sua chiave pubblicabile, l’origine della Sua pagina nella lista consentita, lo snippet e cosa fare se il widget non compare.' },
+        quickstart: { name: 'Quickstart per sviluppatori', body: 'Per la Sua interfaccia al posto del widget: una persona descrive, conferma, vede le corrispondenze, dice sì e trova la presentazione, tramite il client ospite dell’SDK. Ha girato solo contro un esempio locale con dati sintetici.' },
+        nextjs: { name: 'L’esempio Next.js', body: 'Ogni modalità del widget, e «mine» letto sul server tramite l’SDK. Gira contro un sostituto locale, non contro uno spazio.' },
+        astro: { name: 'L’esempio Astro', body: 'Lo stesso in Astro: ogni modalità, e «mine» letto sul server tramite l’SDK. Gira contro un sostituto locale, non contro uno spazio.' },
+        embedRef: { name: 'Il riferimento dell’incorporamento', body: 'Ogni attributo dell’elemento, l’informativa sui dati, il tema e una Content Security Policy.' },
+        sdkRef: { name: 'Il riferimento dell’SDK', body: 'Il client per il Suo server con la chiave segreta, il client ospite, le chiavi di idempotenza e l’inserimento di dati.' },
+        webhooks: { name: 'Webhook', body: 'Registrare un ricevitore, controllare la firma di ogni consegna, i nuovi tentativi e la rotazione. Lo spazio di staging non li invia ancora.' },
+      },
+      more: 'Come funziona ogni parte, in breve:',
+      link: 'Integrazioni',
+    },
+    notYet: {
+      title: 'Non ancora disponibile',
+      items: [
+        `Pacchetti npm: l’SDK, il wrapper React e i pacchetti Next.js e Astro non sono pubblicati al ${AS_OF}. Oggi girano da un clone del repository di Connect.`,
+        'MCP: previsto, non costruito. Non c’è alcun endpoint MCP da usare.',
+        `Il repository stesso: è privato al ${AS_OF}.`,
+        'Uno spazio su cui provarlo: non ne viene ancora offerto nessuno agli sviluppatori. Gli esempi girano contro un esempio locale o un sostituto.',
+      ],
+    },
   },
 
   verticals: {

@@ -13,7 +13,7 @@ export const fr: Catalogue = {
     menu: 'Menu',
     toc: 'Sur cette page',
     language: 'Langue',
-    nav: { how: 'Comment ça marche', sees: 'Qui voit quoi', platforms: 'Pour les plateformes', verticals: 'Pour les secteurs', integrations: 'Intégrations' },
+    nav: { how: 'Comment ça marche', sees: 'Qui voit quoi', platforms: 'Pour les plateformes', verticals: 'Pour les secteurs', integrations: 'Intégrations', developers: 'Développeurs' },
     footer: {
       product: 'Linkbot',
       legal: 'Informations légales',
@@ -284,7 +284,7 @@ export const fr: Catalogue = {
 
   forPlatforms: {
     title: 'Pour les plateformes : ce qu’un opérateur obtient avec un espace Linkbot',
-    description: 'Pour un opérateur qui veut un espace pour son marché : les quatre voies d’accès, ce qu’obtient une plateforme et ce qui reste à elle : ses données et sa décision.',
+    description: 'Pour l’opérateur qui veut un espace : les quatre voies d’accès, ce qu’obtient une plateforme et ce qui reste à elle : ses données et sa décision.',
     eyebrow: 'Pour les plateformes',
     h1: ['Votre marché, vos pages,', 'votre décision.'],
     lede: 'Pour un opérateur qui veut un espace pour son propre marché : comment un espace atteint vos utilisateurs, ce que vous obtenez et ce qui reste à vous. Cette page décrit le contrat Space API et l’espace staging synthétique de Geoprocure. Aucune plateforme réelle ne fait encore tourner d’espace, et cette page n’indique aucun prix.',
@@ -320,6 +320,57 @@ export const fr: Catalogue = {
       ],
     },
     details: { title: 'Les détails', lede: 'Les pages d’intégration montrent comment fonctionne chaque partie : l’intégration, les clés et origines, la console, le SDK et les webhooks, et des recettes pour HTML simple, WordPress, Next.js et Astro.', link: 'Intégrations' },
+  },
+
+  developers: {
+    title: 'Pour les développeurs : intégrer le widget ou bâtir sur Space API',
+    description: 'Où se trouve la documentation de Connect, l’intégration la plus courte, un court exemple SDK pour votre serveur, et ce qui manque encore : npm et MCP.',
+    eyebrow: 'Pour les développeurs',
+    h1: ['Un script,', 'ou votre propre interface.'],
+    lede: `Deux façons de bâtir avec un espace : l’intégration, un script et un élément sur votre page, ou votre propre interface sur Space API par le SDK, un client typé par le contrat. La documentation de Connect montre les deux. Au ${AS_OF}, elle se trouve dans le dépôt de Connect, qui n’est pas encore public.`,
+    toc: [['embed', 'L’intégration la plus courte'], ['sdk', 'Le SDK sur votre serveur'], ['docs', 'La documentation'], ['not-yet', 'Pas encore disponible']] as [string, string][],
+    embed: {
+      title: 'L’intégration la plus courte',
+      lede: 'Placez-la là où le formulaire doit apparaître : votre clé publiable dans l’élément, l’adresse de votre espace dans le script.',
+      url: 'EMBED_URL désigne cette adresse, sur l’instance propre à votre espace ; il n’y a pas d’hôte central :',
+      notes: [
+        'Le mode est describe, board, watch ou mine ; le côté est seeking ou offer. Sans langue, le widget suit le navigateur du visiteur.',
+        'La clé publiable ne fonctionne que sur les origines que votre espace autorise. Une clé secrète n’a jamais sa place dans une page : le widget refuse de démarrer avec elle.',
+        `Au ${AS_OF}, l’instance de l’espace staging synthétique de Geoprocure sert la version 0.3.0-v1 du widget.`,
+      ],
+    },
+    sdk: {
+      title: 'Le SDK sur votre serveur',
+      lede: 'Une fois, depuis votre serveur, avec la clé secrète : il enregistre votre récepteur de webhooks et renvoie le secret de signature, montré cette seule fois.',
+      notes: [
+        `Au ${AS_OF}, le SDK n’est pas sur npm. On l’utilise depuis un clone du dépôt de Connect, où il est un paquet du workspace.`,
+        `Le test de cet exemple tourne contre un substitut, pas contre un espace. Au ${AS_OF}, l’espace staging n’envoie pas de webhooks.`,
+      ],
+    },
+    docs: {
+      title: 'La documentation',
+      lede: `Dans le dépôt de Connect, sur sa branche de construction. Au ${AS_OF}, le dépôt est privé : ce sont donc des chemins, pas des liens.`,
+      items: {
+        embed5: { name: 'Intégrer en 5 minutes', body: 'Votre clé publiable, l’origine de votre page sur la liste autorisée, l’extrait, et que faire si le widget n’apparaît pas.' },
+        quickstart: { name: 'Démarrage rapide pour développeurs', body: 'Pour votre propre interface au lieu du widget : une personne décrit, confirme, voit les correspondances, dit oui et trouve la mise en relation, par le client invité du SDK. Il n’a tourné que contre un exemple local aux données synthétiques.' },
+        nextjs: { name: 'L’exemple Next.js', body: 'Chaque mode du widget, et « mine » lu sur le serveur par le SDK. Il tourne contre un substitut local, pas contre un espace.' },
+        astro: { name: 'L’exemple Astro', body: 'La même chose en Astro : chaque mode, et « mine » lu sur le serveur par le SDK. Il tourne contre un substitut local, pas contre un espace.' },
+        embedRef: { name: 'La référence de l’intégration', body: 'Chaque attribut de l’élément, la notice sur les données, le thème et une Content Security Policy.' },
+        sdkRef: { name: 'La référence du SDK', body: 'Le client pour votre serveur avec la clé secrète, le client invité, les clés d’idempotence et l’amorçage de données.' },
+        webhooks: { name: 'Webhooks', body: 'Enregistrer un récepteur, contrôler la signature de chaque livraison, les nouvelles tentatives et la rotation. L’espace staging ne les envoie pas encore.' },
+      },
+      more: 'Comment fonctionne chaque partie, en bref :',
+      link: 'Intégrations',
+    },
+    notYet: {
+      title: 'Pas encore disponible',
+      items: [
+        `Paquets npm : le SDK, le wrapper React et les paquets Next.js et Astro ne sont pas publiés au ${AS_OF}. Aujourd’hui, ils tournent depuis un clone du dépôt de Connect.`,
+        'MCP : prévu, pas construit. Il n’existe aucun point d’accès MCP à utiliser.',
+        `Le dépôt lui-même : il est privé au ${AS_OF}.`,
+        'Un espace pour essayer : aucun n’est encore proposé aux développeurs. Les exemples tournent contre un exemple local ou un substitut.',
+      ],
+    },
   },
 
   verticals: {

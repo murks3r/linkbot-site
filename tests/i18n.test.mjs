@@ -46,7 +46,7 @@ test('no catalogue carries a forbidden claim, an empty string or anything privat
     section sets in code (event types, attribute names). A changed one breaks a link or states
     something false. */
 const identifiers = catalogue => [
-  ...['how', 'platforms', 'verticals'].flatMap(page => catalogue[page].toc.map(([id]) => `${page}.toc:${id}`)),
+  ...['how', 'platforms', 'verticals', 'developers'].flatMap(page => catalogue[page].toc.map(([id]) => `${page}.toc:${id}`)),
   ...catalogue.home.ways.items.map(way => `home.ways:${way.status}`),
   ...catalogue.how.describe.items.map(way => `how.describe:${way.status}`),
   ...catalogue.how.today.columns.map(column => `how.today:${column.status}`),
@@ -62,7 +62,7 @@ test('identifiers are the same in every language', () => {
 
 test('every page has a title and a description of a sensible length', () => {
   for (const [lang, catalogue] of Object.entries(catalogues)) {
-    const pages = [...['home', 'how', 'platforms', 'verticals', 'privacy', 'imprint', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];
+    const pages = [...['home', 'how', 'platforms', 'forPlatforms', 'developers', 'verticals', 'privacy', 'imprint', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];
     for (const [key, page] of pages) {
       assert.ok(page.title.length >= 10 && page.title.length <= 80, `${lang}.${key}.title: ${page.title.length} characters`);
       assert.ok(page.description.length >= 50 && page.description.length <= 160, `${lang}.${key}.description: ${page.description.length} characters`);

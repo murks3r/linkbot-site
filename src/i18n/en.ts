@@ -25,7 +25,7 @@ export const en = {
     menu: 'Menu',
     toc: 'On this page',
     language: 'Language',
-    nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals', integrations: 'Integrations' },
+    nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals', integrations: 'Integrations', developers: 'Developers' },
     footer: {
       product: 'Linkbot',
       legal: 'Legal',
@@ -332,6 +332,57 @@ export const en = {
       ],
     },
     details: { title: 'The details', lede: 'The integration pages show how each part works: the embed, keys and origins, the console, the SDK and webhooks, and recipes for plain HTML, WordPress, Next.js and Astro.', link: 'Integrations' },
+  },
+
+  developers: {
+    title: 'For developers: embed the widget or build on the Space API',
+    description: 'Where Connect’s docs are, the shortest embed, a short SDK example for your server, and what is not available yet: npm packages and MCP.',
+    eyebrow: 'For developers',
+    h1: ['One script,', 'or your own interface.'],
+    lede: `Two ways to build with a space: the embed, one script and one element on your page, or your own interface on the Space API through the SDK, a client typed by the contract. Connect’s documentation shows both. As of ${AS_OF} it is in the Connect repository, which is not public yet.`,
+    toc: [['embed', 'The shortest embed'], ['sdk', 'The SDK on your server'], ['docs', 'The documentation'], ['not-yet', 'Not available yet']] as [string, string][],
+    embed: {
+      title: 'The shortest embed',
+      lede: 'Put it where the form should appear, with your publishable key in the element and your space’s address in the script.',
+      url: 'EMBED_URL stands for this address, on your space’s own instance; there is no central host:',
+      notes: [
+        'The mode is describe, board, watch or mine; the side is seeking or offer. Without a language the widget follows the visitor’s browser.',
+        'The publishable key works only on the origins your space allows. A secret key never belongs in a page: the widget refuses to start with one.',
+        `As of ${AS_OF}, the instance of Geoprocure’s synthetic staging space serves the widget’s release 0.3.0-v1.`,
+      ],
+    },
+    sdk: {
+      title: 'The SDK on your server',
+      lede: 'Run once from your server, with the secret key: it registers your webhook receiver and returns the signing secret, which is shown only this once.',
+      notes: [
+        `The SDK is not on npm as of ${AS_OF}. It is used from a clone of the Connect repository, where it is a package of the workspace.`,
+        `This example’s test runs against a stand-in, not a space. As of ${AS_OF} the staging space does not send webhooks.`,
+      ],
+    },
+    docs: {
+      title: 'The documentation',
+      lede: `In the Connect repository, on its build branch. As of ${AS_OF} the repository is private, so these are paths, not links.`,
+      items: {
+        embed5: { name: 'Embed in 5 minutes', body: 'Your publishable key, your page’s origin on the allow list, the snippet, and what to do when the widget does not appear.' },
+        quickstart: { name: 'Developer quickstart', body: 'For your own interface instead of the widget: a person describes, confirms, sees the matches, says yes and finds the introduction, through the SDK’s guest client. It has run only against a local sample with synthetic data.' },
+        nextjs: { name: 'The Next.js example', body: 'Every mode of the widget, and “mine” read on the server through the SDK. It runs against a local stand-in, not a space.' },
+        astro: { name: 'The Astro example', body: 'The same in Astro: every mode, and “mine” read on the server through the SDK. It runs against a local stand-in, not a space.' },
+        embedRef: { name: 'The embed reference', body: 'Every attribute of the element, the data notice, the theme, and a Content Security Policy.' },
+        sdkRef: { name: 'The SDK reference', body: 'The client for your server with the secret key, the guest client, idempotency keys and seeding.' },
+        webhooks: { name: 'Webhooks', body: 'Registering a receiver, checking each delivery’s signature, retries and rotation. The staging space does not send them yet.' },
+      },
+      more: 'How each part works, in short:',
+      link: 'Integrations',
+    },
+    notYet: {
+      title: 'Not available yet',
+      items: [
+        `npm packages: the SDK, the React wrapper and the Next.js and Astro packages are not published as of ${AS_OF}. Today they run from a clone of the Connect repository.`,
+        'MCP: planned, not built. There is no MCP endpoint to use.',
+        `The repository itself: it is private as of ${AS_OF}.`,
+        'A space to try it on: none is offered to developers yet. The examples run against a local sample or a stand-in.',
+      ],
+    },
   },
 
   verticals: {
