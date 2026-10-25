@@ -22,7 +22,7 @@ const STATE = { 'on staging': { tone: 'fit', words: c.states.staging }, built: {
       <p class="lede">{c.lede}</p>
     </div>
   </section>
-  <div class="wrap">
+  <div class="wrap page-body">
     <ol class="log">
       {days.map(([day, entries]) => <li class="day">
         <h2><time datetime={day}>{longDay(lang, day)}</time></h2>
