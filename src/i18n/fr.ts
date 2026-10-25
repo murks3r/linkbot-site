@@ -29,8 +29,6 @@ export const fr: Catalogue = {
   },
 
   home: {
-    title: 'Linkbot : les demandes rencontrent les offres, les personnes décident',
-    description: 'Couche d’appariement pour toute plateforme : espace par marché, demandes et offres en critères confirmés, mise en relation seulement après un double oui.',
     h1: ['Les demandes rencontrent les offres.', 'Les personnes décident.'],
     lede: 'Linkbot est une couche d’appariement qu’une plateforme intègre dans ses propres pages. Un espace par marché. Des demandes et des offres en critères confirmés. Un verdict par critère, jamais un score. Une mise en relation seulement après un oui des deux côtés.',
     actions: { how: 'Comment ça marche', platforms: 'Pour les plateformes' },
@@ -50,16 +48,6 @@ export const fr: Catalogue = {
       { title: 'Des critères, confirmés.', body: 'Une demande ou une offre est un ensemble de critères, chacun avec sa source et son importance. Rien n’est présélectionné, rien n’est deviné, et ce qui n’est pas indiqué reste inconnu. La personne confirme le formulaire ; c’est seulement alors que quelque chose est stocké.' },
       { title: 'Une mise en relation seulement après un double oui.', body: 'L’appariement compare les critères stockés et affiche un verdict par critère. Une mise en relation exige les gates de l’espace, l’approbation d’un opérateur identifié et un oui des deux côtés. Le serveur la crée à ce moment, et refuse toute autre voie.' },
     ],
-    ways: {
-      title: 'Quatre façons de dire ce que vous demandez ou offrez',
-      lede: `Au ${AS_OF}, le formulaire, le texte, le tableau et les suivis tournent sur l’espace staging. Ses e-mails vont dans une boîte de test et n’atteignent personne.`,
-      items: [
-        { name: 'Par formulaire', status: 'now' as Status, body: 'Le formulaire vient du pack : les critères obligatoires d’abord, chaque liste avec « Autre / ne figure pas dans la liste », « Je ne sais pas » et « Indifférent ». Le widget l’affiche dans les pages de la plateforme.' },
-        { name: 'Avec vos propres mots', status: 'now' as Status, body: 'Une lecture propose des valeurs avec la citation dont chacune vient et demande où elle hésite. Elle n’écrase jamais ce qu’une personne a choisi. Sur l’espace staging, ce sont des règles fixes qui lisent, pas un modèle.' },
-        { name: 'Sur le tableau', status: 'now' as Status, body: 'Des demandes et des offres ouvertes, listées seulement quand leur propriétaire l’a choisi, avec les valeurs simplifiées du pack et jamais l’auteur. Répondre à l’une ouvre un brouillon de l’autre côté.' },
-        { name: 'Avec un suivi', status: 'now' as Status, body: 'Un suivi garde une demande ou une offre ouverte et n’informe que son propriétaire quand quelque chose de nouveau correspond.' },
-      ],
-    },
     rules: {
       title: 'Les règles, appliquées par le serveur',
       items: [
@@ -74,9 +62,6 @@ export const fr: Catalogue = {
       ],
       link: 'Comment l’appariement fonctionne, étape par étape',
     },
-    platforms: { title: 'Pour les plateformes', body: 'Un script et un élément mettent un espace sur votre page. Votre page porte une Publishable Key qui ne fonctionne que sur vos origines ; la Secret Key reste sur votre serveur. Votre équipe approuve les dossiers dans une console qui tourne sur votre machine ou derrière votre propre connexion.', link: 'Ce qu’une plateforme obtient' },
-    verticals: { title: 'Pour les secteurs', body: 'Un pack décrit un marché : ses critères, options et unités, ses libellés et questions dans les langues de l’espace, ce que chaque critère divulgue à chaque étape, et les gates dont le marché a besoin. Le premier est celui des minéraux industriels.', link: 'Ce qu’un pack contient' },
-    state: { title: 'État actuel', body: 'Ce site ne montre aucune démo du widget tant qu’il n’existe pas d’espace de démonstration avec des données synthétiques.' },
   },
 
   how: {

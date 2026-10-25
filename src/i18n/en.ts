@@ -41,8 +41,6 @@ export const en = {
   },
 
   home: {
-    title: 'Linkbot: needs meet offers, people decide',
-    description: 'A matching layer any platform can embed: one space per market, needs and offers as confirmed criteria, and an introduction only after both sides say yes.',
     h1: ['Needs meet offers.', 'People decide.'],
     lede: 'Linkbot is a matching layer a platform embeds in its own pages. One space per market. Needs and offers as confirmed criteria. A verdict per criterion, never a score. An introduction only after both sides say yes.',
     actions: { how: 'How it works', platforms: 'For platforms' },
@@ -62,16 +60,6 @@ export const en = {
       { title: 'Criteria, confirmed.', body: 'A need or an offer is a set of criteria, each with its source and its importance. Nothing is pre-selected, nothing is guessed, and what is not stated stays unknown. The person confirms the form; only then is anything stored.' },
       { title: 'An introduction only after both say yes.', body: 'Matching compares the stored criteria and shows a verdict per criterion. An introduction needs the gates of the space, a named operator’s approval and a yes from both sides. The server creates it then, and refuses every other way.' },
     ],
-    ways: {
-      title: 'Four ways to say what you need or offer',
-      lede: `As of ${AS_OF}, the form, text, the board and watches run on the staging space. Its email goes to a test mailbox and reaches no one.`,
-      items: [
-        { name: 'By form', status: 'now' as Status, body: 'The form comes from the pack: required criteria first, every list with “other / not listed”, “don’t know” and “any”. The widget shows it in the platform’s pages.' },
-        { name: 'In your own words', status: 'now' as Status, body: 'A reading proposes values with the quote each came from and asks where it is unsure. It never overwrites what a person chose. On the staging space, fixed rules do the reading, not a model.' },
-        { name: 'On the board', status: 'now' as Status, body: 'Open needs and offers, listed only when their owner opted in, with the pack’s coarsened values and never who posted. Answering one starts a draft on the other side.' },
-        { name: 'With a watch', status: 'now' as Status, body: 'A watch keeps a need or an offer open and tells only its owner when something new fits.' },
-      ],
-    },
     rules: {
       title: 'The rules, enforced by the server',
       items: [
@@ -86,9 +74,6 @@ export const en = {
       ],
       link: 'How matching works, step by step',
     },
-    platforms: { title: 'For platforms', body: 'One script and one element put a space on your page. Your page holds a publishable key that works only on your origins; the secret key stays on your server. Your team approves cases in a console that runs on your machine or behind your own login.', link: 'What a platform gets' },
-    verticals: { title: 'For verticals', body: 'A pack describes a market: its criteria, options and units, its labels and questions in the space’s languages, what each criterion discloses at each stage, and the gates the market needs. The first is industrial minerals.', link: 'What a pack holds' },
-    state: { title: 'Where it stands', body: 'This site shows no demo of the widget until a demo space with synthetic data exists.' },
   },
 
   how: {

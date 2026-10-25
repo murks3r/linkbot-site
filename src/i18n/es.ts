@@ -29,8 +29,6 @@ export const es: Catalogue = {
   },
 
   home: {
-    title: 'Linkbot: solicitudes y ofertas se encuentran, las personas deciden',
-    description: 'Capa de emparejamiento integrable en cualquier plataforma: un espacio por mercado, criterios confirmados y presentación solo tras el sí de ambas partes.',
     h1: ['Solicitudes y ofertas se encuentran.', 'Las personas deciden.'],
     lede: 'Linkbot es una capa de emparejamiento que una plataforma integra en sus propias páginas. Un espacio por mercado. Solicitudes y ofertas como criterios confirmados. Un veredicto por criterio, nunca una puntuación. Una presentación solo cuando ambas partes dicen que sí.',
     actions: { how: 'Cómo funciona', platforms: 'Para plataformas' },
@@ -50,16 +48,6 @@ export const es: Catalogue = {
       { title: 'Criterios confirmados.', body: 'Una solicitud o una oferta es un conjunto de criterios, cada uno con su fuente y su importancia. Nada está preseleccionado, nada se adivina, y lo no declarado sigue desconocido. La persona confirma el formulario; solo entonces se guarda algo.' },
       { title: 'Una presentación solo tras el sí de ambas partes.', body: 'El emparejamiento compara los criterios guardados y muestra un veredicto por criterio. Una presentación requiere los gates del espacio, la aprobación de un operador con nombre y el sí de ambas partes. El servidor la crea entonces, y rechaza cualquier otra vía.' },
     ],
-    ways: {
-      title: 'Cuatro formas de decir lo que solicita u ofrece',
-      lede: `A fecha de ${AS_OF}, el formulario, el texto, el tablón y los seguimientos se ejecutan en el espacio de staging. Su email va a un buzón de prueba y no llega a nadie.`,
-      items: [
-        { name: 'Por formulario', status: 'now' as Status, body: 'El formulario sale del pack: primero los criterios obligatorios, cada lista con «Otro / no está en la lista», «No lo sé» y «Cualquiera». El widget lo muestra en las páginas de la plataforma.' },
-        { name: 'Con sus propias palabras', status: 'now' as Status, body: 'Una lectura propone valores con la cita de la que salió cada uno y pregunta donde no está segura. Nunca sobrescribe lo que una persona eligió. En el espacio de staging leen reglas fijas, no un modelo.' },
-        { name: 'En el tablón', status: 'now' as Status, body: 'Solicitudes y ofertas abiertas, listadas solo si su titular lo eligió, con los valores simplificados que declara el pack y nunca con quién las publicó. Responder a una inicia un borrador en el otro lado.' },
-        { name: 'Con un seguimiento', status: 'now' as Status, body: 'Un seguimiento mantiene abierta una solicitud o una oferta y avisa solo a su titular cuando algo nuevo encaja.' },
-      ],
-    },
     rules: {
       title: 'Las reglas, aplicadas por el servidor',
       items: [
@@ -74,9 +62,6 @@ export const es: Catalogue = {
       ],
       link: 'Cómo funciona el emparejamiento, paso a paso',
     },
-    platforms: { title: 'Para plataformas', body: 'Un script y un elemento ponen un espacio en su página. Su página lleva una publishable key que solo funciona en sus orígenes; la secret key queda en su servidor. Su equipo aprueba casos en una consola que se ejecuta en su máquina o detrás de su propio inicio de sesión.', link: 'Qué recibe una plataforma' },
-    verticals: { title: 'Para verticales', body: 'Un pack describe un mercado: sus criterios, opciones y unidades, sus etiquetas y preguntas en los idiomas del espacio, qué revela cada criterio en cada etapa y los gates que el mercado necesita. El primero es el de minerales industriales.', link: 'Qué contiene un pack' },
-    state: { title: 'Estado actual', body: 'Este sitio no muestra ninguna demo del widget hasta que exista un espacio de demo con datos sintéticos.' },
   },
 
   how: {

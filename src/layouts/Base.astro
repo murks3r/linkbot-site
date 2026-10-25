@@ -1,6 +1,5 @@
 ---
 import '../styles/fonts.css';
-import '../styles/palette.css';
 import '../styles/site.css';
 /* Concept A8's exploration axes (palette, type): inert without the preview's data-v-* attributes. */
 import '../styles/brand-a8.css';
@@ -8,7 +7,6 @@ import '../styles/type-a8.css';
 import SEO from '../components/SEO.astro';
 import Masthead from '../components/Masthead.astro';
 import Footer from '../components/Footer.astro';
-import Air from '../components/Air.astro';
 import Variants from '../components/Variants.astro';
 import { AXES } from '../lib/variants';
 import { DEFAULT_LANG, FALLBACK_NOTICE, type Catalogue, type Lang } from '../i18n';
@@ -19,8 +17,8 @@ const variants = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1';
    language-neutral address of the page ('/how-it-works'); every language gets its own. */
 /* front: a front page (the home, /who-sees-what): the body carries data-front for src/front/theme.css. */
 /* draft: a page for the owner's review in one language only (src/drafts): never indexed, no alternates, no language switch. */
-interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; sky?: boolean; front?: boolean; draft?: boolean }
-const { lang, t, fallback = false, title, description, path, crumbs, sky = false, front = false, draft = false } = Astro.props;
+interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; front?: boolean; draft?: boolean }
+const { lang, t, fallback = false, title, description, path, crumbs, front = false, draft = false } = Astro.props;
 const contentLang = fallback ? DEFAULT_LANG : lang;
 ---
 <!doctype html>
@@ -44,9 +42,8 @@ const contentLang = fallback ? DEFAULT_LANG : lang;
       for (const [id, values] of axes) document.documentElement.setAttribute('data-v-' + id, values.includes(q.get(id)) ? q.get(id) : values[0]);
     </script>}
   </head>
-  <body data-sky={sky ? '' : undefined} data-front={front ? '' : undefined}>
+  <body data-front={front ? '' : undefined}>
     <a class="skip" href="#main">{t.site.skip}</a>
-    <Air mode={sky ? 'living' : 'paper'} />
     <Masthead lang={lang} t={t} path={path} />
     <main id="main" tabindex="-1">
       {fallback && <p class="fallback" lang={lang} role="note"><span class="wrap">{FALLBACK_NOTICE[lang]}</span></p>}
@@ -58,7 +55,8 @@ const contentLang = fallback ? DEFAULT_LANG : lang;
 </html>
 <style is:global>
   main { outline: none; }
-  /* The atmosphere lies under the whole page; everything else is composed above it. */
+  /* The dust is the body's own background (src/styles/site.css); the content is composed above it. */
+  body { position: relative; }
   main, footer { position: relative; z-index: 1; }
   /* A page shown in English for a language that has no translation yet says so first. */
   .fallback { padding: 12px 0; border-bottom: 1px solid var(--line-strong); background: var(--sand); font-size: var(--size-small); font-weight: 600; }

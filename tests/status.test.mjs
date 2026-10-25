@@ -26,7 +26,7 @@ test('every language dates its status sentences', () => {
     const c = catalogues[lang];
     const day = statusDate(lang);
     for (const [where, text] of [
-      ['home.ways.lede', c.home.ways.lede],
+      ['status.lede', c.status.lede],
       ['how.describe.lede', c.how.describe.lede],
       ['how.today.lede', c.how.today.lede],
     ]) assert.ok(text.includes(day), `${lang} ${where} does not name the day of the check (${day})`);

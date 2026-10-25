@@ -70,8 +70,8 @@ The owner's decisions of 2026-10-24 and the reasons for each are in `docs/front/
 - **Concept A8's preview tools:** the brand board at `/__preview/brand` and the variant switcher
   exist only in preview builds with `PUBLIC_PREVIEW_VARIANTS=1`; `tests/build.test.mjs` proves a
   production build carries none of it. `src/styles/palette.css`, a copy of the app's generated
-  tokens (`node scripts/sync-tokens.mjs <app checkout> [--check]`), feeds those tools and the living
-  light of `src/components/Air.astro`, which no page uses since the redesign.
+  tokens (`node scripts/sync-tokens.mjs <app checkout> [--check]`), feeds only the brand board,
+  which imports it.
 
 ## Configuration
 

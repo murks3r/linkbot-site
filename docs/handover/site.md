@@ -76,7 +76,10 @@ It builds 66 pages: 13 in each of five languages (the twelve catalogue pages and
 - `/for-platforms` (S-3): the four ways in (hosted pages and MCP marked not built), what a platform gets, what stays its own. The header's and footer's "For platforms" lead here; `/platforms` and its six pages are now "Integrations".
 - `/demo` (S-4): the six steps are a recorded walkthrough, one step at a time (step buttons, Previous and Next, arrow keys, Home and End, `#step-n` links), a plain list without scripts, no motion under reduced motion. Its pictures, per language, are in `public/material/demo/`. To record them again: start Connect's demo stage in its local rehearsal (its `apps/demo/README.md`), then `node tools/record-demo.cjs <lang>`, one language per fresh start of the stage. Never point it at a space.
 - `/developers` (S-6): the shortest embed and a short SDK example, verbatim from Connect's repository (`src/lib/connect-docs.ts`); Connect's docs and examples as paths, not links, while that repository is private (`CONNECT_PUBLIC`); what is not available yet (npm packages, MCP, a space for developers). In the header and footer.
-- The build has 82 pages: 16 in each of five languages, plus the 404 page and the draft page for intermediaries.
+- The contact section (#49): every page's footer says that contact details follow with Linkbot's domain; no address, no form. `CONTACT_EMAIL` in `src/lib/contact.ts` switches the address on once the owner names the domain. `tests/contact.test.mjs` also fails when any host outside Linkbot's own appears in `dist/` (exceptions named in the test).
+- `/status` (#50): built at build time from the table "The status page" at the end of `docs/truth-check.md` (`src/lib/status.ts`); `/how-it-works#today` renders the same table. To change a status, change the row's State there, then the words in `status.items`. Every row's "Checked" must equal `STATUS_CHECKED` (`tests/status-page.test.mjs`).
+- A8's leftovers removed (S-7, slice 3): the living light (`Air.astro`, `src/scripts/atmosphere.ts`, Base's `sky`), `Flow.astro`, `public/material/print.webp`, the old home's unused copy (`home.title`, `description`, `ways`, `platforms`, `verticals`, `state`) and the variant axis `noise`. `palette.css` is imported by the brand board only.
+- The build has 87 pages: 17 in each of five languages, plus the 404 page and the draft page for intermediaries.
 
 ### The front, since #35
 
@@ -162,15 +165,9 @@ Since 2026-10-25 the orchestrator's provisional defaults hold: the wordmark, Ven
 
 The new front in de, es, it and fr replaced the older home, which is deleted. The native reading goes to GEO-192.
 
-### Step 3: clear out concept A8's leftovers (rule 7)
+### Step 3: concept A8's leftovers, done on 2026-10-25 except the brand board
 
-- `type-a8.css` is still imported.
-- `palette.css` feeds only the brand board `/__preview/brand`, the variant switcher and the living light.
-- The living light (the `living` mode of `Air.astro`, and `src/scripts/atmosphere.ts`) is used by no page.
-- `public/material/print.webp` is unreferenced.
-- The variant axes `noise` and `palette` change nothing any more.
-
-Ask the owner first whether the brand board is still needed.
+What stays waits for the owner's answer on the brand board (GEO-188): `/__preview/brand`, the variant switcher (`Variants.astro`, `src/lib/variants.ts`), `brand-a8.css`, `type-a8.css` and `palette.css`, and the catalogue keys only the board reads (`home.lede`, `actions`, `flow`, `pillars`; `home.h1` also gives the share image its alt text). If the board goes, all of these go with it.
 
 ## 5. Blockers
 

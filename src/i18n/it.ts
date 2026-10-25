@@ -29,8 +29,6 @@ export const it: Catalogue = {
   },
 
   home: {
-    title: 'Linkbot: le richieste incontrano le offerte, le persone decidono',
-    description: 'Uno strato di corrispondenza integrabile in ogni piattaforma: spazio per mercato, richieste e offerte come criteri confermati, presentazione dopo il doppio sì.',
     h1: ['Le richieste incontrano le offerte.', 'Decidono le persone.'],
     lede: 'Linkbot è uno strato di corrispondenza che una piattaforma integra nelle proprie pagine. Uno spazio per mercato. Richieste e offerte come criteri confermati. Un verdetto per criterio, mai un punteggio. Una presentazione solo dopo che entrambe le parti hanno detto sì.',
     actions: { how: 'Come funziona', platforms: 'Per le piattaforme' },
@@ -50,16 +48,6 @@ export const it: Catalogue = {
       { title: 'Criteri, confermati.', body: 'Una richiesta o un’offerta è un insieme di criteri, ciascuno con la propria fonte e la propria importanza. Nulla è preselezionato, nulla è indovinato e ciò che non è dichiarato resta sconosciuto. La persona conferma il modulo; solo allora viene salvato qualcosa.' },
       { title: 'Una presentazione solo dopo il sì di entrambi.', body: 'La corrispondenza confronta i criteri salvati e mostra un verdetto per criterio. Una presentazione richiede i gate dello spazio, l’approvazione di un operatore identificato e un sì da entrambe le parti. Il server la crea allora, e rifiuta ogni altra via.' },
     ],
-    ways: {
-      title: 'Quattro modi per indicare una richiesta o un’offerta',
-      lede: `Al ${AS_OF}, il modulo, il testo, la bacheca e i monitoraggi girano sullo spazio di staging. Le sue email vanno a una casella di prova e non raggiungono nessuno.`,
-      items: [
-        { name: 'Tramite modulo', status: 'now' as Status, body: 'Il modulo nasce dal pack: prima i criteri richiesti, ogni elenco con «Altro / non in elenco», «Non so» e «Qualsiasi». Il widget lo mostra nelle pagine della piattaforma.' },
-        { name: 'Con parole proprie', status: 'now' as Status, body: 'Una lettura propone valori con la citazione da cui ognuno proviene e chiede dove non è sicura. Non sovrascrive mai ciò che una persona ha scelto. Sullo spazio di staging leggono regole fisse, non un modello.' },
-        { name: 'Sulla bacheca', status: 'now' as Status, body: 'Richieste e offerte aperte, elencate solo se il proprietario ha dato il consenso, con i valori resi meno precisi dal pack e mai con chi ha pubblicato. Rispondere a una avvia una bozza dall’altra parte.' },
-        { name: 'Con un monitoraggio', status: 'now' as Status, body: 'Un monitoraggio tiene aperta una richiesta o un’offerta e avvisa solo il suo proprietario quando qualcosa di nuovo corrisponde.' },
-      ],
-    },
     rules: {
       title: 'Le regole, applicate dal server',
       items: [
@@ -74,9 +62,6 @@ export const it: Catalogue = {
       ],
       link: 'Come funziona la corrispondenza, passo per passo',
     },
-    platforms: { title: 'Per le piattaforme', body: 'Uno script e un elemento mettono uno spazio sulla Sua pagina. La Sua pagina contiene una Publishable Key che funziona solo sulle Sue origin; la Secret Key resta sul Suo server. Il Suo team approva i casi in una console che gira sulla Sua macchina o dietro il Suo login.', link: 'Cosa ottiene una piattaforma' },
-    verticals: { title: 'Per i verticali', body: 'Un pack descrive un mercato: i suoi criteri, opzioni e unità, le sue etichette e domande nelle lingue dello spazio, cosa ogni criterio rivela a ogni fase e i gate che il mercato richiede. Il primo è quello dei minerali industriali.', link: 'Cosa contiene un pack' },
-    state: { title: 'A che punto siamo', body: 'Questo sito non mostra alcuna demo del widget finché non esiste uno spazio demo con dati sintetici.' },
   },
 
   how: {
