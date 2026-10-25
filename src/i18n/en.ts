@@ -25,7 +25,7 @@ export const en = {
     menu: 'Menu',
     toc: 'On this page',
     language: 'Language',
-    nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals' },
+    nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals', integrations: 'Integrations' },
     footer: {
       product: 'Linkbot',
       legal: 'Legal',
@@ -249,9 +249,9 @@ export const en = {
   },
 
   platforms: {
-    title: 'For platforms: a Linkbot space on your own pages',
+    title: 'Integrations: a Linkbot space on your own pages',
     description: 'A Linkbot space on your own pages: one script and one element, a publishable key, your own data notice, a console for your team, webhooks for your server.',
-    eyebrow: 'For platforms',
+    eyebrow: 'Integrations',
     h1: ['A space', 'on your own pages.'],
     lede: 'One script and one element show the widget in your page, in your fonts and colours. Your team approves cases in a console on your machine or behind your own login. Your server hears about events through signed webhooks.',
     toc: [['pages', 'Each integration'], ['embed', 'The embed'], ['keys', 'Keys and origins'], ['console', 'The console'], ['server', 'SDK and webhooks'], ['recipes', 'Recipes'], ['state', 'Where it stands']] as [string, string][],
@@ -292,6 +292,46 @@ export const en = {
       ],
     },
     state: { title: 'Where it stands' },
+  },
+
+  forPlatforms: {
+    title: 'For platforms: what an operator gets with a Linkbot space',
+    description: 'For an operator who wants a space for its market: the four ways in, what a platform gets, and what stays its own: its data and its decision.',
+    eyebrow: 'For platforms',
+    h1: ['Your market, your pages,', 'your decision.'],
+    lede: 'For an operator who wants a space for its own market: the ways a space reaches your users, what you get, and what stays yours. This page describes the Space API contract and Geoprocure’s synthetic staging space. No real platform runs a space yet, and this page names no prices.',
+    toc: [['ways', 'Four ways in'], ['gets', 'What you get'], ['yours', 'What stays yours'], ['details', 'The details']] as [string, string][],
+    ways: {
+      title: 'Four ways in',
+      lede: `As of ${AS_OF}, two of them run on the staging space, and two are not built.`,
+      items: [
+        { name: 'Hosted pages', status: 'later' as Status, body: 'A page served for you that you link to instead of embedding. It is not built. Today a space appears only on your own pages, through the embed or through your own server.' },
+        { name: 'The embed', status: 'now' as Status, body: 'One script and one element on your page. The script comes from your space’s own instance; the element carries your publishable key, which works only on the origins your space allows. Its modes: describe, board, watch and mine. The staging instance serves the widget’s release 0.3.0-v1.' },
+        { name: 'The API and the SDK', status: 'now' as Status, body: `Your server talks to the Space API with the secret key, which never appears in a page: it can seed needs and offers, record checks and approvals, and read introductions and outcomes. The SDK gives your server a client typed by the contract. As of ${AS_OF} the SDK is not published; its code is in the Connect repository.` },
+        { name: 'MCP', status: 'later' as Status, body: 'Planned, not built: an MCP server per space, through which an AI agent prepares a need or an offer and a person confirms and answers. The owner chose this direction; its design is proposed and its contract is a skeleton.' },
+      ],
+    },
+    gets: {
+      title: 'What a platform gets',
+      items: [
+        'A space of its own: one instance for one market, with its own database, keys and deletion log.',
+        'A pack with the vocabulary of your market. The form, the reading, the board and the matching rules follow from it.',
+        'A widget that takes your page’s font and text colour, with your own data notice above its confirm button.',
+        'Matching with a verdict per criterion, never a score, and an introduction only after both sides’ yes and your team’s approval.',
+        `A console for your team: the approval queue, cases with their checks, introductions with receipts, and outcomes. It runs on your machine or behind your own login. As of ${AS_OF} it runs on a sample with synthetic data and is not published.`,
+        `Webhooks to your server, carrying ids and states, never contact data. They are in the contract; as of ${AS_OF} the staging space does not send them.`,
+      ],
+    },
+    yours: {
+      title: 'What stays yours',
+      items: [
+        'Your decision. No introduction happens unless a named operator of your team approves it, after the checks your space sets. The system never decides a check, and each side says yes or no for itself.',
+        'Your data. A space’s needs, offers and fits are not shared with another space. Webhooks carry no contact data; your server fetches details with its secret key.',
+        'Your pages. Your own data notice, your font and colours. The widget sets no cookies and sends nothing to anyone but your space.',
+        'Your login. Your team signs in through your own login; there is no Linkbot login for operators.',
+      ],
+    },
+    details: { title: 'The details', lede: 'The integration pages show how each part works: the embed, keys and origins, the console, the SDK and webhooks, and recipes for plain HTML, WordPress, Next.js and Astro.', link: 'Integrations' },
   },
 
   verticals: {

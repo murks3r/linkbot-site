@@ -12,7 +12,7 @@ const p = t.integrations.pages[page];
 const path = `/platforms/${page}`;
 const toc: [string, string][] = [...p.sections.map(s => [s.id, s.title] as [string, string]), ['state', t.integrations.state]];
 ---
-<Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path={path} crumbs={[[t.site.nav.platforms, '/platforms'], [p.nav, path]]}>
+<Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path={path} crumbs={[[t.site.nav.integrations, '/platforms'], [p.nav, path]]}>
   <section class="page-hero">
     <div class="wrap">
       <p class="eyebrow">{t.integrations.eyebrow}</p>

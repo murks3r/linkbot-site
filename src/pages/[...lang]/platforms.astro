@@ -10,7 +10,7 @@ const p = t.platforms;
 const PAGES = ['embed', 'sdk', 'console', 'wordpress', 'nextjs', 'astro'] as const;
 const sections = [['embed', p.embed], ['keys', p.keys], ['console', p.console], ['server', p.server], ['recipes', p.recipes]] as const;
 ---
-<Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path="/platforms" crumbs={[[t.site.nav.platforms, '/platforms']]}>
+<Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path="/platforms" crumbs={[[t.site.nav.integrations, '/platforms']]}>
   <section class="page-hero">
     <div class="wrap">
       <p class="eyebrow">{p.eyebrow}</p>
