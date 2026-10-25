@@ -17,8 +17,10 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/sitemap": "^3.2.1",
+    "@pdf-lib/fontkit": "^1.1.1",
     "@resvg/resvg-js": "^2.6.2",
     "astro": "^5.1.5",
+    "pdf-lib": "^1.17.1",
     "satori": "^0.63.2",
     "typescript": "^5.7.2",
     "wawoff2": "^2.0.1"

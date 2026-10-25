@@ -374,6 +374,15 @@ export const de: Catalogue = {
     source: 'Die Quelle jeder Zeile steht in docs/truth-check.md, im Repository dieser Website.',
     link: 'Der Status, Teil für Teil',
   },
+  sheet: {
+    title: 'Linkbot auf einer Seite',
+    description: 'Linkbot auf einer druckbaren Seite, aus den Seiten dieser Website gemacht: die drei Bausteine, das Ja beider Seiten, was eine Plattform bekommt und behält, und wo jeder Teil steht. Datiert, ohne Preise.',
+    eyebrow: 'Eine Seite',
+    dated: `Stand ${AS_OF}. Beim Bauen der Website aus ihren Seiten erzeugt, sagt also nichts, was dort nicht steht. Es nennt keine Preise.`,
+    pdf: 'Als PDF herunterladen',
+    site: 'Mehr auf dieser Website',
+    link: 'Linkbot auf einer Seite (PDF)',
+  },
   verticals: {
     title: 'Für Branchen: ein Pack pro Markt',
     description: 'Ein Pack enthält das Vokabular eines Marktes: Kriterien, Optionen, Einheiten, Preisgabe je Stufe, Gates und Ergebnisse. Der erste Space: Industrieminerale.',

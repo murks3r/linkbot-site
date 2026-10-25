@@ -372,6 +372,15 @@ export const fr: Catalogue = {
     source: 'La source de chaque ligne se trouve dans docs/truth-check.md, dans le dépôt de ce site.',
     link: 'Le statut, partie par partie',
   },
+  sheet: {
+    title: 'Linkbot en une page',
+    description: 'Linkbot sur une page imprimable, faite à partir des pages de ce site : les trois briques, le oui des deux parties, ce qu’une plateforme obtient et conserve, et où en est chaque partie. Datée, sans prix.',
+    eyebrow: 'Une page',
+    dated: `Au ${AS_OF}. Générée à partir des pages de ce site lors de sa construction, elle ne dit donc rien qu’elles ne disent. Elle n’indique aucun prix.`,
+    pdf: 'Télécharger en PDF',
+    site: 'Plus sur ce site',
+    link: 'Linkbot en une page (PDF)',
+  },
   verticals: {
     title: 'Pour les secteurs : un pack par marché',
     description: 'Un pack porte le vocabulaire d’un marché : critères, options, unités, divulgation par étape, gates, résultats. Premier espace : les minéraux industriels.',

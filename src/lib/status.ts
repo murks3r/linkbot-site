@@ -3,6 +3,7 @@
    The words for each row are in the catalogues (status.items); tests/status-page.test.mjs keeps both in step. */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import type { Catalogue } from '../i18n';
 
 export const STATES = ['on staging', 'built', 'planned'] as const;
 export type State = (typeof STATES)[number];
@@ -28,3 +29,22 @@ export const parseStatus = (markdown: string): StatusRow[] => {
 
 /** The status table of this repository's truth check. Run from the repository's root, as the build and the tests are. */
 export const loadStatus = (): StatusRow[] => parseStatus(readFileSync(join(process.cwd(), 'docs/truth-check.md'), 'utf8'));
+
+/** The catalogue's name for each state's column (status.states). */
+export const COLUMN = { 'on staging': 'staging', built: 'built', planned: 'planned' } as const satisfies Record<State, keyof Catalogue['status']['states']>;
+
+export interface StatusColumn { id: (typeof COLUMN)[State]; title: string; lead: string; items: string[] }
+
+/** The three columns of the status in a catalogue's words, in the order of STATES; throws when a row has no words. */
+export const statusColumns = (t: Catalogue, rows: StatusRow[] = loadStatus()): StatusColumn[] => {
+  const items = t.status.items as Record<string, string>;
+  return STATES.map(state => ({
+    id: COLUMN[state],
+    ...t.status.states[COLUMN[state]],
+    items: rows.filter(row => row.state === state).map(row => {
+      const words = items[row.key];
+      if (!words) throw new Error(`status: the catalogue has no words for “${row.key}” (docs/truth-check.md)`);
+      return words;
+    }),
+  }));
+};

@@ -372,6 +372,15 @@ export const es: Catalogue = {
     source: 'La fuente de cada línea está en docs/truth-check.md, en el repositorio de este sitio.',
     link: 'El estado, parte por parte',
   },
+  sheet: {
+    title: 'Linkbot en una página',
+    description: 'Linkbot en una página imprimible, hecha con las páginas de este sitio: los tres componentes, el sí de ambas partes, lo que una plataforma obtiene y conserva, y en qué punto está cada parte. Con fecha, sin precios.',
+    eyebrow: 'Una página',
+    dated: `A fecha de ${AS_OF}. Generada con las páginas de este sitio al construirlo, así que no dice nada que ellas no digan. No menciona precios.`,
+    pdf: 'Descargar en PDF',
+    site: 'Más en este sitio',
+    link: 'Linkbot en una página (PDF)',
+  },
   verticals: {
     title: 'Para verticales: un pack por mercado',
     description: 'Un pack guarda el vocabulario de un mercado: criterios, opciones, unidades, revelación por etapa, gates y resultados. Primer espacio: minerales industriales.',

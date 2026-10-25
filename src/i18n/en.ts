@@ -384,6 +384,15 @@ export const en = {
     source: 'The source of each line is in docs/truth-check.md, in this site’s repository.',
     link: 'The status, part by part',
   },
+  sheet: {
+    title: 'Linkbot in one page',
+    description: 'Linkbot on one printable page, made from this site’s pages: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.',
+    eyebrow: 'One page',
+    dated: `As of ${AS_OF}. Made from this site’s pages when the site is built, so it says nothing they do not. It names no prices.`,
+    pdf: 'Download as PDF',
+    site: 'More on this site',
+    link: 'Linkbot in one page (PDF)',
+  },
   verticals: {
     title: 'For verticals: a pack per market',
     description: 'A pack holds a market’s vocabulary: criteria, options, units, labels, disclosure per stage, gates and outcomes. The first space: industrial minerals.',
