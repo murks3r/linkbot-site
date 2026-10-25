@@ -50,12 +50,12 @@ export const fr: Catalogue = {
     ],
     ways: {
       title: 'Quatre façons de dire ce que vous demandez ou offrez',
-      lede: `Au ${AS_OF}, le formulaire, le texte et le tableau tournent sur l’espace staging. Les suivis sont dans le contrat et n’y tournent pas encore.`,
+      lede: `Au ${AS_OF}, le formulaire, le texte, le tableau et les suivis tournent sur l’espace staging. Ses e-mails vont dans une boîte de test et n’atteignent personne.`,
       items: [
         { name: 'Par formulaire', status: 'now' as Status, body: 'Le formulaire vient du pack : les critères obligatoires d’abord, chaque liste avec « Autre / ne figure pas dans la liste », « Je ne sais pas » et « Indifférent ». Le widget l’affiche dans les pages de la plateforme.' },
         { name: 'Avec vos propres mots', status: 'now' as Status, body: 'Une lecture propose des valeurs avec la citation dont chacune vient et demande où elle hésite. Elle n’écrase jamais ce qu’une personne a choisi. Sur l’espace staging, ce sont des règles fixes qui lisent, pas un modèle.' },
         { name: 'Sur le tableau', status: 'now' as Status, body: 'Des demandes et des offres ouvertes, listées seulement quand leur propriétaire l’a choisi, avec les valeurs simplifiées du pack et jamais l’auteur. Répondre à l’une ouvre un brouillon de l’autre côté.' },
-        { name: 'Avec un suivi', status: 'contract' as Status, body: 'Un suivi garde une demande ou une offre ouverte et n’informe que son propriétaire quand quelque chose de nouveau correspond.' },
+        { name: 'Avec un suivi', status: 'now' as Status, body: 'Un suivi garde une demande ou une offre ouverte et n’informe que son propriétaire quand quelque chose de nouveau correspond.' },
       ],
     },
     rules: {
@@ -104,7 +104,7 @@ export const fr: Catalogue = {
     },
     describe: {
       title: 'Quatre façons de dire ce que vous demandez ou offrez',
-      lede: `Au ${AS_OF}, le formulaire, le texte et le tableau tournent sur l’espace staging. Les suivis sont dans le contrat et y restent désactivés tant que leur tranche n’est pas déployée.`,
+      lede: `Au ${AS_OF}, le formulaire, le texte, le tableau et les suivis tournent sur l’espace staging. Les webhooks n’y tournent pas encore, et ses e-mails vont dans une boîte de test qui n’atteint personne.`,
       items: [
         { name: 'Par formulaire', status: 'now' as Status, paras: [
           'Le formulaire est généré à partir du pack. Les critères obligatoires viennent d’abord ; le reste se trouve derrière « plus de détails ». Rien n’est présélectionné : ni option, ni unité, ni base, ni type de partie. Chaque liste propose « Autre / ne figure pas dans la liste », « Je ne sais pas » et « Indifférent » là où le pack les permet.',
@@ -117,7 +117,7 @@ export const fr: Catalogue = {
         { name: 'Sur le tableau', status: 'now' as Status, paras: [
           'Le tableau liste les demandes et les offres dont le propriétaire l’a choisi, jamais par défaut. Il n’affiche que les champs que le pack permet à l’étape tableau, simplifiés comme le pack le déclare, et jamais l’auteur. Répondre à une annonce ouvre un brouillon de l’autre côté, dans le même formulaire.',
         ] },
-        { name: 'Avec un suivi', status: 'contract' as Status, paras: [
+        { name: 'Avec un suivi', status: 'now' as Status, paras: [
           'Un suivi garde une demande ou une offre ouverte et informe son propriétaire quand quelque chose de nouveau correspond, par e-mail ou, pour la plateforme, par webhook. Il n’avertit que son propriétaire et ne divulgue jamais plus que le tableau. Une personne peut le mettre en pause, le reprendre ou y mettre fin, aussi depuis le lien d’un message.',
         ] },
       ],
@@ -197,6 +197,7 @@ export const fr: Catalogue = {
           'Décrire une demande ou une offre par formulaire, avec l’avis d’identité là où l’espace en a un',
           'Décrire une demande ou une offre avec vos propres mots, lus par des règles fixes sans modèle',
           'Le tableau, avec les valeurs simplifiées du pack, qui ne liste que ce que son propriétaire a choisi',
+          'Les suivis ; leurs e-mails vont dans une boîte de test et n’atteignent personne',
           'Les réglages, origines, clés et l’entonnoir d’un espace, via la Space API',
           'Confirmer ; le navigateur qui a confirmé gère ce qu’il a créé',
           'L’appariement avec un verdict par critère',
@@ -207,9 +208,8 @@ export const fr: Catalogue = {
           'Le widget, servi par l’instance elle-même depuis une version épinglée (0.3.0-v1)',
         ] },
         { status: 'contract' as Status, title: 'Dans le contrat, pas sur l’espace staging', lead: 'Chacune attend que sa tranche y soit déployée.', items: [
-          'Les suivis et leurs messages',
           'Les webhooks vers le serveur de la plateforme',
-          'Les e-mails qui quittent l’instance ; l’espace staging n’en envoie aucun',
+          'Les e-mails qui atteignent une vraie boîte ; ceux de l’espace staging vont dans une boîte de test',
         ] },
         { status: 'later' as Status, title: 'Pas construit', lead: 'Aucune date promise.', items: [
           'Une démo du widget sur ce site ; elle attend un espace de démonstration avec des données synthétiques',

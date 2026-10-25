@@ -119,11 +119,11 @@ The status sentences name the day of their check: `STATUS_CHECKED` in `src/i18n/
 
 | On the staging space | Not on the staging space |
 | -- | -- |
-| the form; text, read by fixed rules without a model; the board; confirm, matching, gates and approval, introductions, outcomes, deletion; a space's settings, origins, keys and funnel; the widget, served by the instance itself (0.3.0-v1) | watches and their messages; webhooks; email that leaves the instance |
+| the form; text, read by fixed rules without a model; the board; watches (contract 0.2.13, mail to a sink that reaches no one); confirm, matching, gates and approval, introductions, outcomes, deletion; a space's settings, origins, keys and funnel; the widget, served by the instance itself (0.3.0-v1) | webhooks (0.2.14); email that reaches an inbox |
 
 **When to check again:**
 - At least every 14 days: `tests/status.test.mjs` fails after that.
-- As soon as staging's `/health` reports contract 0.2.13. That version is watches (Core-Engine E4, deployed on the owner's go, GEO-184). Watches then move to the staging column in all five catalogues.
+- After Core-Engine's deploy of contract 0.2.15 (E5 webhooks and E6), on the orchestrator's word. Watches moved to the staging column on 2026-10-25 (0.2.13, mail to a sink).
 
 **How to check:**
 - **Read the two sources.**

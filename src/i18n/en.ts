@@ -62,12 +62,12 @@ export const en = {
     ],
     ways: {
       title: 'Four ways to say what you need or offer',
-      lede: `As of ${AS_OF}, the form, text and the board run on the staging space. Watches are in the contract and do not run there yet.`,
+      lede: `As of ${AS_OF}, the form, text, the board and watches run on the staging space. Its email goes to a test mailbox and reaches no one.`,
       items: [
         { name: 'By form', status: 'now' as Status, body: 'The form comes from the pack: required criteria first, every list with “other / not listed”, “don’t know” and “any”. The widget shows it in the platform’s pages.' },
         { name: 'In your own words', status: 'now' as Status, body: 'A reading proposes values with the quote each came from and asks where it is unsure. It never overwrites what a person chose. On the staging space, fixed rules do the reading, not a model.' },
         { name: 'On the board', status: 'now' as Status, body: 'Open needs and offers, listed only when their owner opted in, with the pack’s coarsened values and never who posted. Answering one starts a draft on the other side.' },
-        { name: 'With a watch', status: 'contract' as Status, body: 'A watch keeps a need or an offer open and tells only its owner when something new fits.' },
+        { name: 'With a watch', status: 'now' as Status, body: 'A watch keeps a need or an offer open and tells only its owner when something new fits.' },
       ],
     },
     rules: {
@@ -116,7 +116,7 @@ export const en = {
     },
     describe: {
       title: 'Four ways to say what you need or offer',
-      lede: `As of ${AS_OF}, the form, text and the board run on the staging space. Watches are in the contract and off there until their slice is deployed.`,
+      lede: `As of ${AS_OF}, the form, text, the board and watches run on the staging space. Webhooks do not run there yet, and its email goes to a test mailbox that reaches no one.`,
       items: [
         { name: 'By form', status: 'now' as Status, paras: [
           'The form is generated from the pack. Required criteria come first; the rest sit behind “more details”. Nothing is pre-selected: no option, no unit, no basis, no party type. Every list offers “other / not listed”, “don’t know” and “any” where the pack allows them.',
@@ -129,7 +129,7 @@ export const en = {
         { name: 'On the board', status: 'now' as Status, paras: [
           'The board lists needs and offers whose owner opted in, never by default. It shows only the fields the pack allows at board stage, coarsened as the pack declares, and never who posted. Answering a listing starts a draft on the other side, in the same form.',
         ] },
-        { name: 'With a watch', status: 'contract' as Status, paras: [
+        { name: 'With a watch', status: 'now' as Status, paras: [
           'A watch keeps a need or an offer open and tells its owner when something new fits, by email or, for the platform, by webhook. It notifies only its owner and never discloses more than the board does. A person can pause, resume or end it, also from the link in a message.',
         ] },
       ],
@@ -209,6 +209,7 @@ export const en = {
           'Describing a need or an offer by form, with the identity notice where the space has one',
           'Describing a need or an offer in your own words, read by fixed rules without a model',
           'The board, with the pack’s coarsened values, listing only what its owner opted in',
+          'Watches; their email goes to a test mailbox and reaches no one',
           'A space’s settings, origins, keys and funnel, through the Space API',
           'Confirming; the browser that confirmed manages what it created',
           'Matching with a verdict per criterion',
@@ -219,9 +220,8 @@ export const en = {
           'The widget, served by the instance itself from a pinned release (0.3.0-v1)',
         ] },
         { status: 'contract' as Status, title: 'In the contract, not on the staging space', lead: 'Each waits until its slice is deployed there.', items: [
-          'Watches and their messages',
           'Webhooks to the platform’s server',
-          'Email that leaves the instance; the staging space sends none',
+          'Email that reaches an inbox; the staging space’s email goes to a test mailbox',
         ] },
         { status: 'later' as Status, title: 'Not built', lead: 'Not promised as a date.', items: [
           'A demo of the widget on this site; it waits for a demo space with synthetic data',

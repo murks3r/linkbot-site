@@ -52,12 +52,12 @@ export const de: Catalogue = {
     ],
     ways: {
       title: 'Vier Wege zu sagen, was Sie brauchen oder anbieten',
-      lede: `Stand ${AS_OF}: Formular, Text und Board laufen auf dem Staging-Space. Beobachtungen stehen im Vertrag und laufen dort noch nicht.`,
+      lede: `Stand ${AS_OF}: Formular, Text, Board und Beobachtungen laufen auf dem Staging-Space. Seine E-Mails gehen an ein Testpostfach und erreichen niemanden.`,
       items: [
         { name: 'Per Formular', status: 'now' as Status, body: 'Das Formular kommt aus dem Pack: Pflichtkriterien zuerst, jede Liste mit „Anderes / nicht aufgeführt“, „Weiß nicht“ und „Beliebig“. Das Widget zeigt es auf den Seiten der Plattform.' },
         { name: 'In eigenen Worten', status: 'now' as Status, body: 'Eine Lesung schlägt Werte vor, jeden mit dem Zitat, aus dem er stammt, und fragt nach, wo sie unsicher ist. Sie überschreibt nie, was eine Person gewählt hat. Auf dem Staging-Space lesen feste Regeln, kein Modell.' },
         { name: 'Auf dem Board', status: 'now' as Status, body: 'Offene Anfragen und Angebote, gelistet nur mit Zustimmung der Person, der sie gehören, mit den vergröberten Werten des Packs und nie mit dem Absender. Wer einen Eintrag beantwortet, beginnt einen Entwurf auf der anderen Seite.' },
-        { name: 'Mit einer Beobachtung', status: 'contract' as Status, body: 'Eine Beobachtung hält eine Anfrage oder ein Angebot offen und sagt nur der Person Bescheid, die sie angelegt hat, wenn etwas Neues passt.' },
+        { name: 'Mit einer Beobachtung', status: 'now' as Status, body: 'Eine Beobachtung hält eine Anfrage oder ein Angebot offen und sagt nur der Person Bescheid, die sie angelegt hat, wenn etwas Neues passt.' },
       ],
     },
     rules: {
@@ -106,7 +106,7 @@ export const de: Catalogue = {
     },
     describe: {
       title: 'Vier Wege zu sagen, was Sie brauchen oder anbieten',
-      lede: `Stand ${AS_OF}: Formular, Text und Board laufen auf dem Staging-Space. Beobachtungen stehen im Vertrag und sind dort aus, bis ihr Abschnitt eingespielt ist.`,
+      lede: `Stand ${AS_OF}: Formular, Text, Board und Beobachtungen laufen auf dem Staging-Space. Webhooks laufen dort noch nicht, und seine E-Mails gehen an ein Testpostfach, das niemanden erreicht.`,
       items: [
         { name: 'Per Formular', status: 'now' as Status, paras: [
           'Das Formular wird aus dem Pack erzeugt. Pflichtkriterien kommen zuerst; der Rest steht hinter „Mehr Details“. Nichts ist vorausgewählt: keine Option, keine Einheit, keine Basis, keine Art der Partei. Jede Liste bietet „Anderes / nicht aufgeführt“, „Weiß nicht“ und „Beliebig“, wo das Pack sie erlaubt.',
@@ -119,7 +119,7 @@ export const de: Catalogue = {
         { name: 'Auf dem Board', status: 'now' as Status, paras: [
           'Das Board listet Anfragen und Angebote, deren Besitzer zugestimmt haben, nie von selbst. Es zeigt nur die Felder, die das Pack auf der Board-Stufe erlaubt, vergröbert, wie das Pack es festlegt, und nie, wer eingestellt hat. Wer einen Eintrag beantwortet, beginnt einen Entwurf auf der anderen Seite, im selben Formular.',
         ] },
-        { name: 'Mit einer Beobachtung', status: 'contract' as Status, paras: [
+        { name: 'Mit einer Beobachtung', status: 'now' as Status, paras: [
           'Eine Beobachtung hält eine Anfrage oder ein Angebot offen und sagt der Person Bescheid, die sie angelegt hat, wenn etwas Neues passt: per E-Mail oder, für die Plattform, per Webhook. Sie benachrichtigt nur diese Person und gibt nie mehr preis als das Board. Man kann sie pausieren, fortsetzen oder beenden, auch über den Link in einer Nachricht.',
         ] },
       ],
@@ -199,6 +199,7 @@ export const de: Catalogue = {
           'Eine Anfrage oder ein Angebot per Formular beschreiben, mit dem Identitätshinweis, wo der Space einen hat',
           'Eine Anfrage oder ein Angebot in eigenen Worten beschreiben, gelesen von festen Regeln ohne Modell',
           'Das Board, mit den vergröberten Werten des Packs und nur mit Einträgen, deren Besitzer zugestimmt haben',
+          'Beobachtungen; ihre E-Mails gehen an ein Testpostfach und erreichen niemanden',
           'Einstellungen, Origins, Schlüssel und Funnel eines Space, über die Space-API',
           'Bestätigen; der Browser, der bestätigt hat, verwaltet, was er angelegt hat',
           'Matching mit einem Urteil pro Kriterium',
@@ -209,9 +210,8 @@ export const de: Catalogue = {
           'Das Widget, von der Instanz selbst aus einem festgelegten Release ausgeliefert (0.3.0-v1)',
         ] },
         { status: 'contract' as Status, title: 'Im Vertrag, nicht auf dem Staging-Space', lead: 'Jeder Teil wartet, bis sein Abschnitt dort eingespielt ist.', items: [
-          'Beobachtungen und ihre Nachrichten',
           'Webhooks an den Server der Plattform',
-          'E-Mail, die die Instanz verlässt; der Staging-Space versendet keine',
+          'E-Mail, die ein Postfach erreicht; die E-Mails des Staging-Space gehen an ein Testpostfach',
         ] },
         { status: 'later' as Status, title: 'Nicht gebaut', lead: 'Kein Datum versprochen.', items: [
           'Eine Demo des Widgets auf dieser Seite; sie wartet auf einen Demo-Space mit synthetischen Daten',
