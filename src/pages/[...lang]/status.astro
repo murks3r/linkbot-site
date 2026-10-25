@@ -19,9 +19,9 @@ const s = t.status;
     </div>
   </section>
   <div class="wrap">
-    <Status t={t} />
+    <Status t={t} level="h2" />
     <p class="note">{s.source}</p>
-    <p class="note"><a href={pathFor(lang, '/changelog')}>{t.changelog.link}</a></p>
+    <p><a class="link" href={pathFor(lang, '/changelog')}>{t.changelog.link}</a></p>
     <p class="note">{t.site.synthetic}</p>
   </div>
 </Base>

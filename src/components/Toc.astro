@@ -75,7 +75,7 @@ const { items, label } = Astro.props;
     .toc summary { display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; }
     .toc summary::after { content: ''; width: 8px; height: 8px; margin-left: auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); transition: transform var(--base) var(--ease); }
     .toc-fold[open] summary::after { transform: rotate(-135deg); }
-    .toc-current { display: inline; text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .toc-current { display: inline; text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--ink); min-width: 0; }
     .toc-fold[open] .toc-current { display: none; }
     .toc ol { margin: 0 0 10px; }
   }
