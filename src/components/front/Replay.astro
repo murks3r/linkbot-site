@@ -2,7 +2,8 @@
 /* The recorded walkthrough of the demo page: the six steps of a buyer's path, each with pictures of the widget and the
    operator console recorded on Linkbot Connect's demo stage against its sample Space API (fictional data; how they
    were made: tools/record-demo.cjs), beside the step's words (src/front/demo-copy.ts). Without scripts it is a list;
-   src/front/replay.ts turns it into one step at a time. Every frame carries the label that it is a recording. */
+   src/front/replay.ts turns it into one step at a time. Beneath the steps, outside them, the watch a buyer can set when
+   nothing fits yet. Every frame carries the label that it is a recording. */
 import { FRONT } from '../../front/copy';
 import { type Lang } from '../../i18n';
 interface Props { lang: Lang }
@@ -10,6 +11,7 @@ const { lang } = Astro.props;
 const { demo: D } = FRONT[lang];
 /** The pictures of each step, in public/material/demo/{lang}/, all 640 × 880 CSS pixels. */
 const SHOTS = [['1-request'], ['2-confirmed'], ['3-fits'], ['4-yes', '4-supplier-yes'], ['5-approved'], ['6-introduced', '6-console']] as const;
+const WATCH = ['7-watch', '7-watching'] as const;
 const total = String(D.steps.items.length);
 ---
 <div class="fr-replay" data-replay data-position={D.replay.position}>
@@ -38,6 +40,17 @@ const total = String(D.steps.items.length);
     <button type="button" class="fr-button" data-next>{D.replay.next} <span aria-hidden="true">→</span></button>
   </div>
 </div>
+<section class="fr-step fr-aside" data-count={WATCH.length} aria-labelledby="watch">
+  <div class="fr-screens">
+    {WATCH.map((shot, i) => <img src={`/material/demo/${lang}/${shot}.webp`} alt={D.watch.screens[i]} width="640" height="880" loading="lazy" decoding="async" />)}
+  </div>
+  <div class="fr-caption">
+    <p class="fr-label">{D.replay.label}</p>
+    <h3 id="watch">{D.watch.name}</h3>
+    <p class="fd-who"><span class="eyebrow">{D.steps.who}</span>{D.watch.who}</p>
+    <p class="fr-text">{D.watch.text}</p>
+  </div>
+</section>
 <p class="fr-note">{D.replay.note}</p>
 
 <script>

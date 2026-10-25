@@ -42,6 +42,12 @@ export const DEMO = {
       ['The buyer’s widget under “My requests and offers”: both sides said yes, the request is introduced, and a button shows what the other side shares.', 'The operator console’s introductions: one introduction, in mode direct, listed without contact details.'],
     ],
   },
+  watch: {
+    name: 'If nothing fits yet: a watch',
+    who: 'The buyer',
+    text: 'After confirming, the buyer can keep the request open and watch it: how often, weekly or daily; what to hear about; and, in the email options, at most how many per email and no email before a chosen day. A watch tells only its owner when something new fits, and starts once the email address is confirmed. It runs for 90 days and can be paused, resumed or ended at any time, also from a link in its emails.',
+    screens: ['The buyer’s widget after confirming, with no offers to show yet: a watch set to weekly, on everything that meets the musts, at most 5 per email.', 'The same widget after “Start watching”: the watch waits for the email address to be confirmed, at most 5 per email, until 23 January 2027. The recording sent no email, and the fictional address never resolves.'],
+  },
   space: {
     h2: 'The test space’s board',
     on: 'Below is the widget itself, served by the test space, in board mode: the open requests and offers whose owners chose to show them, coarsened as the pack declares. Answering one starts at step 1, on the other side.',

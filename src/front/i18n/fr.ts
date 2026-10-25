@@ -251,6 +251,12 @@ export const fr: FrontCopy = {
         ['Le widget de l’acheteur sous « Mes demandes et offres » : les deux parties ont dit oui, la demande est mise en relation, et un bouton montre ce que l’autre partie partage.', 'Les mises en relation dans la console de l’opérateur : une mise en relation, en mode direct, listée sans coordonnées.'],
       ],
     },
+    watch: {
+      name: 'Si rien ne convient encore : un suivi',
+      who: 'L’acheteur',
+      text: 'Après avoir confirmé, l’acheteur peut garder la demande ouverte et la suivre : à quelle fréquence, chaque semaine ou chaque jour ; sur quoi être informé ; et, dans les options d’e-mail, au plus combien par e-mail et aucun e-mail avant un jour choisi. Un suivi n’informe que son titulaire lorsque quelque chose de nouveau convient, et commence une fois l’adresse e-mail confirmée. Il dure 90 jours et peut être mis en pause, repris ou arrêté à tout moment, aussi depuis un lien dans ses e-mails.',
+      screens: ['Le widget de l’acheteur après la confirmation, encore sans offre à afficher : un suivi hebdomadaire, sur tout ce qui remplit les critères obligatoires, au plus 5 par e-mail.', 'Le même widget après le lancement du suivi : il attend la confirmation de l’adresse e-mail, au plus 5 par e-mail, jusqu’au 23 janvier 2027. L’enregistrement n’a envoyé aucun e-mail, et l’adresse fictive n’existe pas.'],
+    },
     space: {
       h2: 'Le tableau de l’espace de test',
       on: 'Ci-dessous, le widget lui-même, servi par l’espace de test, en mode tableau : les demandes et offres ouvertes que leurs titulaires ont choisi de montrer, rendues moins précises comme le pack le déclare. Répondre à l’une d’elles commence à l’étape 1, de l’autre côté.',

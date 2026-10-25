@@ -1,6 +1,6 @@
 /* Records the demo page's walkthrough (src/components/front/Replay.astro): the six steps of a buyer's path, with the
-   supplier's yes beside the buyer's, as pictures of the widget and the operator console, from Linkbot Connect's demo
-   stage in its local rehearsal. That rehearsal runs
+   supplier's yes beside the buyer's, as pictures of the widget and the operator console, and the watch a buyer can set
+   when nothing fits yet, from Linkbot Connect's demo stage in its local rehearsal. That rehearsal runs
    the widget, the console and a sample Space API on 127.0.0.1 with fictional data only, and nothing leaves the machine.
    It never points at a space; this script knows no host but 127.0.0.1, and no key.
 
@@ -9,13 +9,16 @@
      pnpm --filter @linkbot-connect/demo start
    Then, here, one language per fresh start of the stage (its sample API keeps the parties in memory):
      node tools/record-demo.cjs <en|de|es|it|fr>
+   The watch's two pictures come from a request alone, so all five languages run on one start of the stage, before any
+   offer is made there:
+     node tools/record-demo.cjs <en|de|es|it|fr> watch
    The pictures go to public/material/demo/<lang>/. The pane pages speak en and de; for es, it and fr the widget is given
    the language on its host element, and the host page's own label is said in that language. */
 const { chromium } = require('playwright');
 const sharp = require('sharp');
 const fs = require('fs');
-const lang = process.argv[2];
-if (!['en', 'de', 'es', 'it', 'fr'].includes(lang)) throw new Error('usage: node tools/record-demo.cjs <en|de|es|it|fr>');
+const [lang, part] = process.argv.slice(2);
+if (!['en', 'de', 'es', 'it', 'fr'].includes(lang) || ![undefined, 'watch'].includes(part)) throw new Error('usage: node tools/record-demo.cjs <en|de|es|it|fr> [watch]');
 const out = require('path').join(__dirname, '..', 'public', 'material', 'demo', lang);
 fs.mkdirSync(out, { recursive: true });
 const T = {
@@ -77,9 +80,35 @@ async function shot(p, name, anchor) {
   await sharp(png).webp({ quality: 74 }).toFile(`${out}/${name}.webp`);
 }
 
+// If nothing fits yet: the buyer's confirmed request, a fictional address that never resolves, a weekly watch on the
+// musts with at most five per email, then the watch as it stands. The sample sends no mail, so it waits for the address.
+async function watch(ctx) {
+  const r = await pane(ctx, 4173); await r.goto(url(4173)); await r.waitForTimeout(800);
+  const w = await fill(r, 'seeking');
+  await w.getByRole('button', { name: T.confirmSeeking }).click(); await r.waitForTimeout(1000);
+  // Until the request has an address, the watch's card asks for one; then it offers the watch.
+  const ask = w.locator('section.lb-card', { has: r.locator('input[type="email"]') });
+  await ask.locator('input[type="email"]').fill('buyer@example.invalid');
+  await ask.locator('button').click(); await r.waitForTimeout(1000);
+  const panel = w.locator('[data-section="watch"]');
+  await panel.locator('input[value="weekly"]').check();
+  await panel.locator('input[value="must_only"]').check();
+  await panel.locator('[data-section="digest"] summary').click();
+  await panel.locator('[data-section="digest"] select').selectOption('5');
+  await shot(r, '7-watch', panel);
+  await panel.locator('[data-action="watch"]').click(); await r.waitForTimeout(1200);
+  // Set, the watch's card stands where the offer of a watch stood: the card after the criteria.
+  await shot(r, '7-watching', w.locator('section.lb-card').nth(1));
+}
+
 (async () => {
   const b = await chromium.launch();
   const ctx = await b.newContext({ viewport: VIEW, deviceScaleFactor: 1.5, locale: lang, reducedMotion: 'reduce' });
+  if (part === 'watch') {
+    await watch(ctx);
+    console.log(lang, 'watch done');
+    return b.close();
+  }
   const r = await pane(ctx, 4173); await r.goto(url(4173)); await r.waitForTimeout(800);
   const wr = await fill(r, 'seeking');
   await shot(r, '1-request');

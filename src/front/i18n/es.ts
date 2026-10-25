@@ -251,6 +251,12 @@ export const es: FrontCopy = {
         ['El widget del comprador en «Mis solicitudes y ofertas»: ambos lados dijeron que sí, la solicitud está presentada y un botón muestra lo que comparte el otro lado.', 'Las presentaciones en la consola del operador: una presentación, en modo directo, listada sin datos de contacto.'],
       ],
     },
+    watch: {
+      name: 'Si aún no encaja nada: un seguimiento',
+      who: 'El comprador',
+      text: 'Tras confirmar, el comprador puede mantener la solicitud abierta y seguirla: con qué frecuencia, semanal o diaria; sobre qué quiere saber; y, en las opciones de correo, como máximo cuántos por correo y ningún correo antes de un día elegido. Un seguimiento avisa solo a su titular cuando algo nuevo encaja, y empieza cuando se confirma la dirección de correo. Dura 90 días y puede pausarse, reanudarse o terminarse en cualquier momento, también desde un enlace en sus correos.',
+      screens: ['El widget del comprador tras confirmar, aún sin ofertas que mostrar: un seguimiento semanal, sobre todo lo que cumple los requisitos imprescindibles, como máximo 5 por correo.', 'El mismo widget tras iniciar el seguimiento: espera a que se confirme la dirección de correo, como máximo 5 por correo, hasta el 23 de enero de 2027. La grabación no envió ningún correo, y la dirección ficticia no existe.'],
+    },
     space: {
       h2: 'El tablón del espacio de prueba',
       on: 'Abajo está el propio widget, servido por el espacio de prueba, en modo tablón: las solicitudes y ofertas abiertas cuyos titulares quisieron mostrarlas, generalizadas como declara el pack. Responder a una empieza en el paso 1, del otro lado.',

@@ -251,6 +251,12 @@ export const it: FrontCopy = {
         ['Il widget dell’acquirente in «Le mie richieste e offerte»: entrambe le parti hanno detto sì, la richiesta è presentata e un pulsante mostra ciò che l’altra parte condivide.', 'Le presentazioni nella console dell’operatore: una presentazione, in modalità diretta, elencata senza dati di contatto.'],
       ],
     },
+    watch: {
+      name: 'Se ancora non c’è nulla di adatto: un monitoraggio',
+      who: 'L’acquirente',
+      text: 'Dopo la conferma, l’acquirente può tenere aperta la richiesta e monitorarla: con che frequenza, settimanale o giornaliera; su che cosa vuole essere informato; e, nelle opzioni e-mail, al massimo quanti per e-mail e nessuna e-mail prima di un giorno scelto. Un monitoraggio avvisa solo il suo titolare quando qualcosa di nuovo è adatto, e inizia quando l’indirizzo e-mail è confermato. Dura 90 giorni e si può mettere in pausa, riprendere o terminare in qualsiasi momento, anche da un link nelle sue e-mail.',
+      screens: ['Il widget dell’acquirente dopo la conferma, ancora senza offerte da mostrare: un monitoraggio settimanale, su tutto ciò che soddisfa i requisiti indispensabili, al massimo 5 per e-mail.', 'Lo stesso widget dopo l’avvio del monitoraggio: attende la conferma dell’indirizzo e-mail, al massimo 5 per e-mail, fino al 23 gennaio 2027. La registrazione non ha inviato alcuna e-mail, e l’indirizzo fittizio non esiste.'],
+    },
     space: {
       h2: 'La bacheca dello spazio di prova',
       on: 'Qui sotto c’è il widget stesso, servito dallo spazio di prova, in modalità bacheca: le richieste e le offerte aperte che i loro titolari hanno scelto di mostrare, rese meno precise come dichiara il pack. Rispondere a una comincia dal passo 1, dall’altra parte.',

@@ -33,6 +33,8 @@
 .fr-caption { display: grid; gap: 10px; align-content: start; max-width: 32rem; }
 .fr-caption h3 { font-size: 1.5rem; }
 .fr-text { font-size: var(--size-small); line-height: 1.55; color: var(--ink-2); }
+.fr-aside { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line-strong); }
+.fr-aside .fr-label { justify-self: start; }
 .fr-note { max-width: 46em; margin-top: 20px; font-size: var(--size-small); line-height: 1.55; color: var(--ink-2); }
 @media (max-width: 760px) { .fr-step, .fr-step[data-count="2"] { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: no-preference) {
