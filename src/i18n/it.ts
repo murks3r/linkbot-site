@@ -372,6 +372,17 @@ export const it: Catalogue = {
     source: 'La fonte di ogni riga è in docs/truth-check.md, nel repository di questo sito.',
     link: 'Lo stato, parte per parte',
   },
+  changelog: {
+    title: 'Novità: i passi del prodotto Linkbot, datati',
+    description: 'Ogni passo di Linkbot che un cliente può notare, datato e con il suo stato: sullo spazio di staging sintetico, oppure realizzato e non ancora lì.',
+    eyebrow: 'Novità',
+    h1: ['Che cosa è cambiato,', 'passo dopo passo.'],
+    lede: 'Una voce per ogni passo del prodotto che un cliente può notare, la più recente per prima. Ognuna dice se gira sullo spazio di staging sintetico o se è realizzata e non ancora lì. Niente di tutto ciò è ancora pubblicato per utenti reali.',
+    states: { staging: 'Sullo spazio di staging', built: 'Realizzato, non ancora sullo spazio di staging' },
+    source: 'Fonte',
+    note: 'Ogni voce proviene da docs/changelog.yml, nel repository di questo sito, e indica la pull request su cui si basa; una voce senza fonte ferma la build.',
+    link: 'Novità',
+  },
   sheet: {
     title: 'Linkbot in una pagina',
     description: 'Linkbot in una pagina stampabile, fatta con le pagine di questo sito: i tre elementi, il sì di entrambe le parti, cosa ottiene e cosa conserva una piattaforma, e a che punto è ogni parte. Con data, senza prezzi.',

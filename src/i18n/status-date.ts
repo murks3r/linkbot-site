@@ -9,7 +9,10 @@ export const STATUS_CHECKED = '2026-10-25';
 
 const LOCALE: Record<Lang, string> = { en: 'en-GB', de: 'de-DE', es: 'es-ES', it: 'it-IT', fr: 'fr-FR' };
 
-/** The day of the last check in a language's own long form, such as "25 October 2026". */
-export const statusDate = (lang: Lang): string =>
+/** A day (YYYY-MM-DD) in a language's own long form, such as "25 October 2026". */
+export const longDay = (lang: Lang, day: string): string =>
   new Intl.DateTimeFormat(LOCALE[lang], { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
-    .format(new Date(`${STATUS_CHECKED}T00:00:00Z`));
+    .format(new Date(`${day}T00:00:00Z`));
+
+/** The day of the last check in a language's own long form. */
+export const statusDate = (lang: Lang): string => longDay(lang, STATUS_CHECKED);
