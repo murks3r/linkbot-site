@@ -18,8 +18,9 @@ const variants = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1';
    catalogue yet (fallback), and then the page says so in the reader's language. path: the
    language-neutral address of the page ('/how-it-works'); every language gets its own. */
 /* front: a front page (the home, /who-sees-what): the body carries data-front for src/front/theme.css. */
-interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; sky?: boolean; front?: boolean }
-const { lang, t, fallback = false, title, description, path, crumbs, sky = false, front = false } = Astro.props;
+/* draft: a page for the owner's review in one language only (src/drafts): never indexed, no alternates, no language switch. */
+interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; sky?: boolean; front?: boolean; draft?: boolean }
+const { lang, t, fallback = false, title, description, path, crumbs, sky = false, front = false, draft = false } = Astro.props;
 const contentLang = fallback ? DEFAULT_LANG : lang;
 ---
 <!doctype html>
@@ -29,7 +30,7 @@ const contentLang = fallback ? DEFAULT_LANG : lang;
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="preload" href="/fonts/lb-display-sans/lb-display-sans-600.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/atkinson-hyperlegible-next/atkinson-hyperlegible-next-vf.woff2" as="font" type="font/woff2" crossorigin />
-    <SEO lang={lang} t={t} title={title} description={description} path={path} crumbs={crumbs} />
+    <SEO lang={lang} t={t} title={title} description={description} path={path} crumbs={crumbs} draft={draft} />
     <!-- Light for everyone (third pass): the page does not follow the system's scheme; ?theme=dark shows the dark palette. -->
     <meta name="theme-color" content="#f4f4f1" data-theme-color />
     <meta name="color-scheme" content="light" data-color-scheme />
@@ -51,7 +52,7 @@ const contentLang = fallback ? DEFAULT_LANG : lang;
       {fallback && <p class="fallback" lang={lang} role="note"><span class="wrap">{FALLBACK_NOTICE[lang]}</span></p>}
       <slot />
     </main>
-    <Footer lang={lang} t={t} path={path} />
+    <Footer lang={lang} t={t} path={path} langs={!draft} />
     {variants && <Variants />}
   </body>
 </html>

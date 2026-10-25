@@ -8,7 +8,7 @@ import sitemap from '@astrojs/sitemap';
    launch domain is to be named by the owner (linkbot-domain-tbd.invalid until then), so a deploy
    sets it.
    A build with PUBLIC_NOINDEX=1 is never indexed; Vercel's preview deployments are behind its
-   login and send X-Robots-Tag: noindex themselves. */
+   login and send X-Robots-Tag: noindex themselves. Drafts for the owner (src/drafts) stay out of the sitemap. */
 const site = process.env.SITE_URL || 'https://linkbot-site.vercel.app';
 const locales = ['en', 'de', 'es', 'it', 'fr'];
 
@@ -19,7 +19,7 @@ export default defineConfig({
   build: { format: 'file', inlineStylesheets: 'auto' },
   i18n: { defaultLocale: 'en', locales, routing: { prefixDefaultLocale: false } },
   integrations: [sitemap({
-    filter: page => !page.endsWith('/404'),
+    filter: page => !page.endsWith('/404') && !page.endsWith('/for-intermediaries'),
     i18n: { defaultLocale: 'en', locales: Object.fromEntries(locales.map(l => [l, l])) },
   })],
 });

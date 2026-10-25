@@ -1,0 +1,41 @@
+---
+/* Draft for the owner's review, English only: what an intermediary (recruiter, broker, agency) gets from Linkbot as an
+   introduction layer. Linked from nowhere, never indexed (Base's draft), out of the sitemap (astro.config.mjs). Words:
+   src/drafts/intermediaries.ts, each sentence with its row in docs/truth-check.md. */
+import Base from '../layouts/Base.astro';
+import Toc from '../components/Toc.astro';
+import { intermediaries as d } from '../drafts/intermediaries';
+import { resolve } from '../i18n';
+const { t } = resolve('en');
+const toc = d.sections.map(s => [s.id, s.title] as [string, string]);
+---
+<Base lang="en" t={t} title={d.title} description={d.description} path="/for-intermediaries" draft>
+  <p class="draft" role="note"><span class="wrap"><strong>{d.banner}</strong> {d.bannerNote}</span></p>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{d.eyebrow}</p>
+      <h1>{d.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{d.lede}</p>
+    </div>
+  </section>
+
+  <div class="wrap doc">
+    <Toc items={toc} label={t.site.toc} />
+    <div class="doc-body">
+      {d.sections.map(s => <section id={s.id} aria-labelledby={`${s.id}-title`}>
+        <h2 id={`${s.id}-title`}>{s.title}</h2>
+        {s.paragraphs.map(p => <p>{p}</p>)}
+      </section>)}
+      <section id="open" aria-labelledby="open-title" class="open">
+        <h2 id="open-title">{d.open.title}</h2>
+        <ul>{d.open.items.map(item => <li>{item}</li>)}</ul>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .draft { padding: 12px 0; border-bottom: 2px solid var(--ink); background: var(--sand); font-size: var(--size-small); }
+  .draft .wrap { display: block; }
+  .open ul { display: grid; gap: 8px; padding-left: 1.2em; list-style: disc; }
+</style>

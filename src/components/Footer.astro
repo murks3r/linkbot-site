@@ -1,8 +1,8 @@
 ---
 import LangSwitch from './LangSwitch.astro';
 import { pathFor, type Catalogue, type Lang } from '../i18n';
-interface Props { lang: Lang; t: Catalogue; path: string }
-const { lang, t, path } = Astro.props;
+interface Props { lang: Lang; t: Catalogue; path: string; langs?: boolean }
+const { lang, t, path, langs = true } = Astro.props;
 const year = new Date().getUTCFullYear();
 ---
 <footer class="footer">
@@ -26,7 +26,7 @@ const year = new Date().getUTCFullYear();
     </nav>
     <p class="footer-line">© {year} {t.site.name}. {t.site.footer.line}</p>
   </div>
-  <LangSwitch lang={lang} t={t} path={path} />
+  {langs && <LangSwitch lang={lang} t={t} path={path} />}
 </footer>
 
 <style>
