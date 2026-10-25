@@ -1,0 +1,129 @@
+# What's new: the one source for /changelog (src/lib/changelog.ts). One entry per product step a customer can notice,
+# written for customers, not as a PR title. Every entry needs:
+#   date     the UTC day it reached its state (quoted, YYYY-MM-DD)
+#   state    "on staging" (runs on the synthetic staging space today) or "built" (merged, not on the staging space yet)
+#   sources  one or more { repo: murks3r/<name>, pr: <number> }; an entry without a source stops the build
+#   text     the sentence in en, de, es, it and fr; every sentence must be true today (docs/truth-check.md)
+# Each lane names its own steps (asked through Maestro); the Site lane writes them down and keeps the state honest.
+# When a "built" entry reaches the staging space, change its state and date.
+
+entries:
+  - date: "2026-10-25"
+    state: on staging
+    sources: [{ repo: murks3r/linkbot, pr: 209 }]
+    text:
+      en: You can keep a search open and get one summary email of new matches instead of one email per match. On the staging space these emails go to a test mailbox and reach no one.
+      de: Sie können eine Suche offen halten und erhalten eine Sammel-E-Mail mit neuen Treffern statt einer E-Mail pro Treffer. Auf dem Staging-Space gehen diese E-Mails an ein Testpostfach und erreichen niemanden.
+      es: Puede mantener una búsqueda abierta y recibir un único correo resumen con las nuevas coincidencias, en lugar de un correo por coincidencia. En el espacio de staging, estos correos van a un buzón de prueba y no llegan a nadie.
+      it: Si può tenere aperta una ricerca e ricevere un'unica email di riepilogo con le nuove corrispondenze, invece di un'email per ciascuna. Sullo spazio di staging queste email vanno a una casella di prova e non raggiungono nessuno.
+      fr: Vous pouvez garder une recherche ouverte et recevoir un seul e-mail récapitulatif des nouvelles correspondances, au lieu d'un e-mail par correspondance. Sur l'espace staging, ces e-mails vont dans une boîte de test et n'atteignent personne.
+
+  - date: "2026-10-25"
+    state: built
+    sources: [{ repo: murks3r/linkbot, pr: 218 }]
+    text:
+      en: The texts Linkbot writes itself are now in German, English, Spanish, Italian and French.
+      de: Die Texte, die Linkbot selbst schreibt, gibt es jetzt auf Deutsch, Englisch, Spanisch, Italienisch und Französisch.
+      es: Los textos que escribe el propio Linkbot están ahora en alemán, inglés, español, italiano y francés.
+      it: I testi che Linkbot scrive da sé sono ora in tedesco, inglese, spagnolo, italiano e francese.
+      fr: Les textes que Linkbot rédige lui-même existent désormais en allemand, anglais, espagnol, italien et français.
+
+  - date: "2026-10-25"
+    state: built
+    sources: [{ repo: murks3r/linkbot-connect, pr: 45 }]
+    text:
+      en: Under “My requests and offers”, a person finds their introduction and can withdraw a request, ask for it to be deleted or export their data.
+      de: Unter „Meine Anfragen und Angebote“ findet man die eigene Vorstellung und kann eine Anfrage zurückziehen, ihre Löschung verlangen oder die eigenen Daten exportieren.
+      es: En «Mis solicitudes y ofertas», cada persona encuentra su presentación y puede retirar una solicitud, pedir que se elimine o exportar sus datos.
+      it: In «Le mie richieste e offerte» una persona trova la propria presentazione e può ritirare una richiesta, chiederne la cancellazione o esportare i propri dati.
+      fr: Dans « Mes demandes et offres », chacun trouve sa mise en relation et peut retirer une demande, en demander la suppression ou exporter ses données.
+
+  - date: "2026-10-25"
+    state: built
+    sources: [{ repo: murks3r/linkbot-connect, pr: 35 }]
+    text:
+      en: Someone who paused their email alerts from a link in one of the emails can resume them under “My requests and offers”.
+      de: Wer seine E-Mail-Benachrichtigungen über einen Link in einer der E-Mails pausiert hat, kann sie unter „Meine Anfragen und Angebote“ wieder aufnehmen.
+      es: Quien haya pausado sus avisos por correo desde un enlace en uno de los correos puede reanudarlos en «Mis solicitudes y ofertas».
+      it: Chi ha messo in pausa i propri avvisi via email da un link in una delle email può riattivarli in «Le mie richieste e offerte».
+      fr: Qui a mis en pause ses alertes par e-mail depuis un lien dans l'un des e-mails peut les reprendre dans « Mes demandes et offres ».
+
+  - date: "2026-10-25"
+    state: built
+    sources: [{ repo: murks3r/geoprocure-platform, pr: 39 }, { repo: murks3r/geoprocure-platform, pr: 48 }]
+    text:
+      en: On Geoprocure, buyers can ask to hear about new offers that fit their request, and suppliers about new requests that fit their offer, by email daily or weekly, with pause and stop at any time.
+      de: Auf Geoprocure können Käufer darum bitten, von neuen passenden Angeboten zu ihrer Anfrage zu hören, und Lieferanten von neuen passenden Anfragen zu ihrem Angebot, per E-Mail täglich oder wöchentlich, jederzeit pausier- und beendbar.
+      es: En Geoprocure, los compradores pueden pedir que se les avise de nuevas ofertas que encajen con su solicitud, y los proveedores de nuevas solicitudes que encajen con su oferta, por correo a diario o cada semana, con pausa y baja en cualquier momento.
+      it: Su Geoprocure gli acquirenti possono chiedere di essere avvisati delle nuove offerte adatte alla loro richiesta, e i fornitori delle nuove richieste adatte alla loro offerta, via email ogni giorno o ogni settimana, con pausa e stop in qualsiasi momento.
+      fr: Sur Geoprocure, les acheteurs peuvent demander à être informés des nouvelles offres qui correspondent à leur demande, et les fournisseurs des nouvelles demandes qui correspondent à leur offre, par e-mail chaque jour ou chaque semaine, avec pause et arrêt à tout moment.
+
+  - date: "2026-10-25"
+    state: built
+    sources: [{ repo: murks3r/geoprocure-platform, pr: 55 }]
+    text:
+      en: A draft page on Geoprocure, “How Geoprocure handles your request”, explains in five languages what happens after you confirm, who sees what, and how to withdraw or delete an entry.
+      de: Eine Entwurfsseite auf Geoprocure, „So geht Geoprocure mit Ihrer Anfrage um“, erklärt in fünf Sprachen, was nach Ihrer Bestätigung geschieht, wer was sieht und wie Sie einen Eintrag zurückziehen oder löschen.
+      es: Una página en borrador de Geoprocure, «Cómo trata Geoprocure su solicitud», explica en cinco idiomas qué ocurre después de confirmar, quién ve qué y cómo retirar o eliminar una entrada.
+      it: Una pagina in bozza su Geoprocure, «Come Geoprocure gestisce la tua richiesta», spiega in cinque lingue che cosa succede dopo la conferma, chi vede che cosa e come ritirare o cancellare una voce.
+      fr: Une page en brouillon sur Geoprocure, « Comment Geoprocure traite votre demande », explique en cinq langues ce qui se passe après la confirmation, qui voit quoi et comment retirer ou supprimer une entrée.
+
+  - date: "2026-10-25"
+    state: on staging
+    sources: [{ repo: murks3r/linkbot, pr: 194 }, { repo: murks3r/linkbot, pr: 215 }]
+    text:
+      en: A space sends its emails, such as confirmation links and action links, through a mail service. On the staging space every email lands in a test mailbox, so none leaves the test.
+      de: Ein Space verschickt seine E-Mails, etwa Bestätigungs- und Aktionslinks, über einen Mail-Dienst. Auf dem Staging-Space landet jede E-Mail in einem Testpostfach, sodass keine den Test verlässt.
+      es: Un espacio envía sus correos, como los enlaces de confirmación y de acción, a través de un servicio de correo. En el espacio de staging cada correo llega a un buzón de prueba, así que ninguno sale de la prueba.
+      it: Uno spazio invia le proprie email, come i link di conferma e di azione, tramite un servizio di posta. Sullo spazio di staging ogni email finisce in una casella di prova, quindi nessuna esce dal test.
+      fr: Un espace envoie ses e-mails, comme les liens de confirmation et d'action, par un service de messagerie. Sur l'espace staging, chaque e-mail arrive dans une boîte de test, si bien qu'aucun ne sort du test.
+
+  - date: "2026-10-25"
+    state: built
+    sources: [{ repo: murks3r/linkbot, pr: 228 }, { repo: murks3r/linkbot, pr: 229 }, { repo: murks3r/linkbot, pr: 231 }, { repo: murks3r/linkbot, pr: 232 }, { repo: murks3r/linkbot, pr: 237 }, { repo: murks3r/linkbot, pr: 238 }, { repo: murks3r/linkbot, pr: 239 }]
+    text:
+      en: A demo space with synthetic buyers and sellers of industrial minerals walks the whole path, from a request to a match, both sides' yes and the introduction, with every email readable on one page and a reset to the start.
+      de: Ein Demo-Space mit synthetischen Käufern und Verkäufern von Industriemineralien geht den ganzen Weg, von der Anfrage über den Treffer und das Ja beider Seiten bis zur Vorstellung, mit jeder E-Mail lesbar auf einer Seite und einem Zurücksetzen auf den Anfang.
+      es: Un espacio de demostración con compradores y vendedores sintéticos de minerales industriales recorre todo el camino, de la solicitud a la coincidencia, el sí de ambas partes y la presentación, con cada correo legible en una sola página y un reinicio al principio.
+      it: Uno spazio dimostrativo con acquirenti e venditori sintetici di minerali industriali percorre l'intero cammino, dalla richiesta alla corrispondenza, al sì di entrambe le parti e alla presentazione, con ogni email leggibile su una sola pagina e un ritorno all'inizio.
+      fr: Un espace de démonstration avec des acheteurs et des vendeurs synthétiques de minéraux industriels parcourt tout le chemin, de la demande à la correspondance, au oui des deux parties et à la mise en relation, avec chaque e-mail lisible sur une seule page et une remise au début.
+
+  - date: "2026-10-24"
+    state: on staging
+    sources: [{ repo: murks3r/linkbot, pr: 193 }]
+    text:
+      en: You can describe what you need or offer in your own words. Linkbot fills in the form's fields from your text by fixed rules, without a model, and you check and confirm them yourself.
+      de: Sie können in eigenen Worten beschreiben, was Sie suchen oder anbieten. Linkbot füllt die Felder des Formulars nach festen Regeln aus Ihrem Text, ohne Modell, und Sie prüfen und bestätigen sie selbst.
+      es: Puede describir lo que necesita u ofrece con sus propias palabras. Linkbot rellena los campos del formulario a partir de su texto con reglas fijas, sin un modelo, y usted los revisa y confirma.
+      it: Si può descrivere con parole proprie ciò che si cerca o si offre. Linkbot compila i campi del modulo dal testo con regole fisse, senza un modello, e li si controlla e conferma di persona.
+      fr: Vous pouvez décrire ce que vous cherchez ou proposez avec vos propres mots. Linkbot remplit les champs du formulaire à partir de votre texte selon des règles fixes, sans modèle, et vous les contrôlez et confirmez vous-même.
+
+  - date: "2026-10-24"
+    state: on staging
+    sources: [{ repo: murks3r/linkbot, pr: 199 }, { repo: murks3r/linkbot-connect, pr: 25 }]
+    text:
+      en: A person can choose to show their request or offer on the space's board. The board shows only the details meant for that stage and not who posted it, and nobody is introduced until both sides have said yes.
+      de: Man kann wählen, die eigene Anfrage oder das eigene Angebot auf dem Board des Space zu zeigen. Das Board zeigt nur die Angaben, die für diese Stufe vorgesehen sind, und nicht, wer sie eingestellt hat; niemand wird vorgestellt, bevor beide Seiten ja gesagt haben.
+      es: Cada persona puede elegir mostrar su solicitud u oferta en el tablón del espacio. El tablón muestra solo los datos previstos para esa etapa, no quién la publicó, y nadie es presentado hasta que ambas partes han dicho que sí.
+      it: Una persona può scegliere di mostrare la propria richiesta o offerta sulla bacheca dello spazio. La bacheca mostra solo i dettagli previsti per quella fase e non chi l'ha pubblicata, e nessuno viene presentato finché entrambe le parti non hanno detto sì.
+      fr: Chacun peut choisir de montrer sa demande ou son offre sur le tableau de l'espace. Le tableau n'affiche que les détails prévus pour cette étape, pas qui l'a publiée, et personne n'est mis en relation tant que les deux parties n'ont pas dit oui.
+
+  - date: "2026-10-24"
+    state: built
+    sources: [{ repo: murks3r/linkbot, pr: 183 }, { repo: murks3r/linkbot, pr: 189 }, { repo: murks3r/linkbot, pr: 190 }, { repo: murks3r/linkbot, pr: 191 }, { repo: murks3r/linkbot, pr: 192 }, { repo: murks3r/linkbot, pr: 204 }]
+    text:
+      en: A space can be set up from one file as its own instance with its own database, and taken down again just as cleanly. A first instance was set up and removed again; none made this way runs today.
+      de: Ein Space lässt sich aus einer Datei als eigene Instanz mit eigener Datenbank aufsetzen und ebenso sauber wieder abbauen. Eine erste Instanz wurde aufgesetzt und wieder entfernt; heute läuft keine, die so entstanden ist.
+      es: Un espacio puede montarse a partir de un solo archivo como instancia propia con su propia base de datos, y desmontarse con la misma limpieza. Se montó una primera instancia y se retiró; hoy no funciona ninguna creada así.
+      it: Uno spazio si può allestire da un unico file come istanza propria con il proprio database, e smontare con la stessa pulizia. Una prima istanza è stata allestita e poi rimossa; oggi non ne gira nessuna creata così.
+      fr: Un espace peut être monté à partir d'un seul fichier comme instance propre avec sa propre base de données, puis démonté tout aussi proprement. Une première instance a été montée puis retirée ; aucune créée ainsi ne tourne aujourd'hui.
+
+  - date: "2026-10-24"
+    state: built
+    sources: [{ repo: murks3r/geoprocure-platform, pr: 28 }]
+    text:
+      en: Geoprocure's home page opens with two choices, “I'm buying” and “I'm selling”, each leading straight to the form for a request or an offer. It is non-binding, and nobody is introduced without your yes.
+      de: Die Startseite von Geoprocure beginnt mit zwei Wegen, „Ich kaufe“ und „Ich verkaufe“; jeder führt direkt zum Formular für eine Anfrage oder ein Angebot. Das ist unverbindlich, und niemand wird ohne Ihr Ja vorgestellt.
+      es: La página de inicio de Geoprocure empieza con dos opciones, «Compro» y «Vendo», y cada una lleva directamente al formulario de una solicitud o una oferta. No es vinculante, y nadie es presentado sin su sí.
+      it: La home page di Geoprocure si apre con due scelte, «Compro» e «Vendo», ognuna delle quali porta direttamente al modulo per una richiesta o un'offerta. Non è vincolante e nessuno viene presentato senza il tuo sì.
+      fr: La page d'accueil de Geoprocure s'ouvre sur deux choix, « J'achète » et « Je vends », qui mènent chacun directement au formulaire d'une demande ou d'une offre. C'est sans engagement, et personne n'est mis en relation sans votre oui.

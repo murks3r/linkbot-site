@@ -3,7 +3,7 @@
    so the page cannot say more than the truth check. Words: the catalogue's status. */
 import Base from '../../layouts/Base.astro';
 import Status from '../../components/Status.astro';
-import { langPaths, resolve, type Lang } from '../../i18n';
+import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
 export const getStaticPaths = () => langPaths();
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -21,6 +21,7 @@ const s = t.status;
   <div class="wrap">
     <Status t={t} />
     <p class="note">{s.source}</p>
+    <p class="note"><a href={pathFor(lang, '/changelog')}>{t.changelog.link}</a></p>
     <p class="note">{t.site.synthetic}</p>
   </div>
 </Base>

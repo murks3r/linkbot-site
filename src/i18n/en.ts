@@ -384,6 +384,17 @@ export const en = {
     source: 'The source of each line is in docs/truth-check.md, in this site’s repository.',
     link: 'The status, part by part',
   },
+  changelog: {
+    title: 'What’s new: Linkbot’s product steps, dated',
+    description: 'Each step of Linkbot a customer can notice, dated, with where it stands: on the synthetic staging space, or built and not yet there.',
+    eyebrow: 'What’s new',
+    h1: ['What changed,', 'step by step.'],
+    lede: 'One entry per product step a customer can notice, newest first. Each says whether it runs on the synthetic staging space or is built and not yet there. Nothing here is published for real users yet.',
+    states: { staging: 'On the staging space', built: 'Built, not on the staging space yet' },
+    source: 'Source',
+    note: 'Every entry comes from docs/changelog.yml in this site’s repository and names the pull request it rests on; an entry without a source stops the build.',
+    link: 'What’s new',
+  },
   sheet: {
     title: 'Linkbot in one page',
     description: 'Linkbot on one printable page, made from this site’s pages: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.',
