@@ -1,7 +1,7 @@
 ---
 /* The home (redesign pass, GEO-188, 2026-10-24): B as the hero, with the Venn as the signature object beside the
-   field; the pack's questions when a line is asked; A's verdict sequence as the second section (what happens after
-   confirm); why it asks instead of guessing; who sees what (a teaser for its own page); the platform and the pack;
+   field; the pack's questions when a line is asked; section A, what happens after confirm (sketch 1, with A's
+   verdict sequence folded beneath it); why it asks instead of guessing; who sees what (a teaser for its own page); the platform and the pack;
    where it stands. Words: src/front/home-copy.ts, b-copy.ts, b-pack.ts, a-copy.ts, a-match.ts, and the stage names of
    c-stages.ts (rows in docs/truth-check.md).
    English only; the four translated languages keep the catalogue's home until the words are translated. */
@@ -10,6 +10,7 @@ import Icon from '../Icon.astro';
 import Reach from './Reach.astro';
 import Question from './Question.astro';
 import Ledger from './Ledger.astro';
+import Story from './Story.astro';
 import Venn from './Venn.astro';
 import Eye from './Eye.astro';
 import { HOME } from '../../front/home-copy';
@@ -76,11 +77,15 @@ const words = JSON.stringify({ ambiguous: WORDS.ambiguous, other: WORDS.other, a
     </div>
   </section>
 
-  <!-- 2 · A's verdict sequence: the same pair in full, standing still until the new illustration is chosen (third pass). -->
+  <!-- 2 · What happens after confirm: sketch 1, one Venn for the whole story; the same pair in full, folded, beneath it. -->
   <section class="fp-section" id="match" aria-labelledby="match-title">
     <div class="wrap">
       <div class="fp-head"><p class="eyebrow">{HOME.ledger.eyebrow}</p><h2 id="match-title">{HOME.ledger.h2}</h2><p>{HOME.ledger.lede}</p></div>
-      <Ledger />
+      <Story />
+      <details class="ask-more hm-pair">
+        <summary><span>{HOME.ledger.pair}</span><Icon name="down" /></summary>
+        <Ledger />
+      </details>
     </div>
   </section>
 

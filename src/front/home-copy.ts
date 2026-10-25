@@ -16,7 +16,25 @@ export const HOME = {
   ledger: {
     eyebrow: 'What happens after confirm',
     h2: 'Watch a need meet an offer',
-    lede: 'Matching compares the stored criteria one by one and shows a verdict per criterion, never a score. Nobody is introduced until a named operator has approved and both sides have said yes. Below: the same synthetic pair, played in full.',
+    lede: 'Matching compares the stored criteria one by one and shows a verdict per criterion, never a score. Nobody is introduced until a named operator has approved and both sides have said yes. Below: the whole story in one figure, and the same synthetic pair criterion by criterion.',
+    pair: 'The pair, criterion by criterion',
+  },
+  /* Section A, sketch 1 "one Venn, the whole story" (owner's provisional default, 2026-10-25). */
+  story: {
+    label: 'A need and an offer overlap; nine criteria get a verdict each in the overlap; both sides say yes and an operator approves; then they are introduced.',
+    need: 'Need',
+    offer: 'Offer',
+    yes: 'Yes',
+    operator: 'An operator approves',
+    introduced: 'Introduced',
+    steps: [
+      { name: 'A need, an offer', text: 'Each side states its criteria.' },
+      { name: 'Criterion by criterion', text: 'A verdict each: meets, partly, conflicts, unknown. Never a score.' },
+      { name: 'Both say yes', text: 'And a named operator approves, after any check the space requires.' },
+      { name: 'Introduced', text: 'Only then. Each side receives a receipt.' },
+    ],
+    note: 'Synthetic · the yeses and the approval can come in any order; the introduction comes last',
+    pause: 'Pause the motion',
   },
   sees: {
     eyebrow: 'Who sees what',

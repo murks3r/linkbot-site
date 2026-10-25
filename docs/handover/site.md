@@ -138,11 +138,11 @@ Each of these is open with the owner and sits behind a review switch today:
 - **The logo:** the wordmark (the default) or the brand lab's quotation mark (`?logo=quote`).
 - **The Venn:** study 1, "approach" (the default), or study 2, "criteria travel" (`?venn=2`).
 - **Icon F-I21:** on the menu button, as today, or also on the ask button (`?icon=match`).
-- **Section A:** sketch 1, "one Venn, the whole story", or sketch 2, "four glyphs". Neither is built.
+- **Section A:** sketch 1, "one Venn, the whole story", or sketch 2, "four glyphs". Sketch 1 is built as the provisional default (`Story.astro`), with A's ledger folded beneath it; sketch 2 is not built.
 - **The reaching arm:** `?arm=pointer`.
 - **Dark:** whether it ever follows the system's scheme.
 
-Do not decide any of them.
+Since 2026-10-25 the orchestrator's provisional defaults hold: the wordmark, Venn study 1, F-I21 on the menu button only, section A sketch 1, the arm off, dark only behind `?theme=dark`. The switches stay until the owner decides. Do not decide any of them.
 
 **Done when:**
 - Each decided option is the only one left in the code, and its switch is gone (rule 7: no dead code).
