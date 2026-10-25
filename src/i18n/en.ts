@@ -31,6 +31,8 @@ export const en = {
       legal: 'Legal',
       imprint: 'Imprint',
       privacy: 'Privacy notice',
+      contact: 'Contact',
+      contactPending: 'Contact details follow with our domain. Linkbot has no domain of its own yet, so this site names no address and has no contact form.',
       line: 'This site sets no cookies, loads nothing from third parties and uses no analytics.',
     },
     status: { now: 'On the staging space', contract: 'In the contract, not on the staging space', later: 'Not built' },

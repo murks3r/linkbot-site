@@ -1,5 +1,6 @@
 ---
 import LangSwitch from './LangSwitch.astro';
+import { CONTACT_EMAIL } from '../lib/contact';
 import { pathFor, type Catalogue, type Lang } from '../i18n';
 interface Props { lang: Lang; t: Catalogue; path: string; langs?: boolean }
 const { lang, t, path, langs = true } = Astro.props;
@@ -25,6 +26,11 @@ const year = new Date().getUTCFullYear();
       <a href={pathFor(lang, '/imprint')}>{t.site.footer.imprint}</a>
       <a href={pathFor(lang, '/privacy')}>{t.site.footer.privacy}</a>
     </nav>
+    <!-- One constant switches the address on, once the owner names Linkbot's domain (src/lib/contact.ts). -->
+    <section id="contact" class="contact" aria-labelledby="footer-contact">
+      <h2 id="footer-contact">{t.site.footer.contact}</h2>
+      {CONTACT_EMAIL ? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> : <p data-contact-pending>{t.site.footer.contactPending}</p>}
+    </section>
     <p class="footer-line">© {year} {t.site.name}. {t.site.footer.line}</p>
   </div>
   {langs && <LangSwitch lang={lang} t={t} path={path} />}
@@ -35,16 +41,17 @@ const year = new Date().getUTCFullYear();
      listed here (third pass): the floating button (LangSwitch) holds it, and the footer ends with room for that button, so
      the last line can always be read clear of it. */
   .footer { background: transparent; border-top: 1px solid var(--line-strong); }
-  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding-block: 56px calc(36px + var(--target) + 32px + env(safe-area-inset-bottom, 0px)); font-size: var(--size-small); }
+  .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)) minmax(0, 1.5fr); gap: 32px 40px; padding-block: 56px calc(36px + var(--target) + 32px + env(safe-area-inset-bottom, 0px)); font-size: var(--size-small); }
   .footer-brand { display: grid; gap: 8px; align-content: start; }
   .footer-brand p { max-width: 30ch; color: var(--ink-2); }
   .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -.028em; line-height: 1; text-decoration: none; justify-self: start; }
-  nav { display: grid; align-content: start; justify-items: start; }
+  nav, .contact { display: grid; align-content: start; justify-items: start; }
+  .contact p { max-width: 34ch; color: var(--ink-2); }
   h2 { margin-bottom: 6px; font-family: var(--text); font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; color: var(--ink-3); }
-  nav a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink); text-decoration: none; }
+  nav a, .contact a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--ink); text-decoration: none; }
   nav a:hover { text-decoration: underline; text-decoration-color: var(--green-line); }
   nav a[aria-current] { font-weight: 650; }
   .footer-line { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line-strong); color: var(--ink-3); }
-  @media (max-width: 48rem) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+  @media (max-width: 48rem) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand, .contact { grid-column: 1 / -1; } }
   @media (max-width: 22.5rem) { .footer-inner { grid-template-columns: 1fr; } }
 </style>
