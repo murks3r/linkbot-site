@@ -214,10 +214,10 @@ export const fr: FrontCopy = {
   demo: {
     meta: {
       title: 'Linkbot : tout le parcours, de la demande à la mise en relation',
-      description: 'Le parcours d’un acheteur dans Linkbot en six étapes, de la demande au oui des deux côtés et à la mise en relation. Sur un espace de test aux données fictives.',
+      description: 'Le parcours d’un acheteur dans Linkbot en six étapes, de la demande au oui des deux côtés et à la mise en relation. Avec des données fictives.',
     },
     hero: {
-      eyebrow: 'Démo · un espace de test aux données fictives',
+      eyebrow: 'Démo · données fictives',
       h1: ['De la demande à la mise en relation,', 'en six étapes.'],
       lede: 'Ce qui se passe entre la première ligne d’un acheteur et le moment où deux entreprises sont mises en relation, étape par étape, et qui agit à chaque étape.',
     },
@@ -260,7 +260,7 @@ export const fr: FrontCopy = {
     space: {
       h2: 'Le tableau de l’espace de test',
       on: 'Ci-dessous, le widget lui-même, servi par l’espace de test, en mode tableau : les demandes et offres ouvertes que leurs titulaires ont choisi de montrer, rendues moins précises comme le pack le déclare. Répondre à l’une d’elles commence à l’étape 1, de l’autre côté.',
-      off: 'Cette version ne montre aucun widget : l’espace de test n’admet pas l’adresse de ce site. Le parcours ci-dessus n’est qu’en mots.',
+      off: 'Cette page ne montre encore aucun widget : il attend un espace de démonstration aux données synthétiques. D’ici là, le parcours ci-dessus est montré en images.',
       notice: 'Un espace de test aux données fictives : n’y saisissez rien de réel. Ses e-mails n’atteignent personne.',
     },
   },

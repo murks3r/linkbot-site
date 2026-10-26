@@ -1,7 +1,8 @@
 ---
 /* The demo page (/demo): a buyer's whole path in six steps as a recorded walkthrough (Replay.astro), then the test
    space's board when the build has one (src/demo/space.ts: preview builds given an embed.js and a publishable key;
-   never production). The widget asks the
+   never production). Without a space the page says nothing about a test space: no test note, no board heading, no
+   notice, only that the widget waits for a demo space (tests/demo.test.mjs). The widget asks the
    Space API on the origin embed.js came from, takes the page's language and shows the page's notice above its confirm
    button (Connect, docs/reference/embed.md). Words: src/front/demo-copy.ts (rows in docs/truth-check.md), in the
    reader's language through src/front/copy.ts. */
@@ -22,7 +23,7 @@ const space = demoSpace({ PUBLIC_DEMO_EMBED_URL: import.meta.env.PUBLIC_DEMO_EMB
     <p class="eyebrow">{D.hero.eyebrow}</p>
     <h1 id="hero-title"><span class="fd-line">{D.hero.h1[0]}</span> <span class="fd-line">{D.hero.h1[1]}</span></h1>
     <p class="lede fd-lede">{D.hero.lede}</p>
-    <p class="fd-test" role="note">{D.test}</p>
+    {space && <p class="fd-test" role="note">{D.test}</p>}
   </div>
 </section>
 
@@ -33,9 +34,9 @@ const space = demoSpace({ PUBLIC_DEMO_EMBED_URL: import.meta.env.PUBLIC_DEMO_EMB
   </div>
 </section>
 
-<section class="fp-section" id="space" aria-labelledby="space-title">
+<section class="fp-section" id="space" aria-labelledby={space ? 'space-title' : undefined}>
   <div class="wrap">
-    <div class="fp-head"><h2 id="space-title">{D.space.h2}</h2><p>{space ? D.space.on : D.space.off}</p><p>{t.site.synthetic}</p><p><a class="link" href={pathFor(lang, '/request-a-demo')}>{t.requestDemo.eyebrow}<Icon name="arrow" /></a></p></div>
+    <div class="fp-head">{space && <h2 id="space-title">{D.space.h2}</h2>}<p>{space ? D.space.on : D.space.off}</p><p>{t.site.synthetic}</p><p><a class="link" href={pathFor(lang, '/request-a-demo')}>{t.requestDemo.eyebrow}<Icon name="arrow" /></a></p></div>
     {space && <>
       <script is:inline src={space.script} async></script>
       <div class="fd-widget" data-linkbot={space.key} data-mode="board" data-side="seeking" data-locale={lang}>

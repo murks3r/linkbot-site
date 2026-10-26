@@ -214,10 +214,10 @@ export const it: FrontCopy = {
   demo: {
     meta: {
       title: 'Linkbot: tutto il percorso, dalla richiesta alla presentazione',
-      description: 'Il percorso di un acquirente in Linkbot in sei passi, dalla richiesta al sì di entrambe le parti e alla presentazione. Su uno spazio di prova con dati fittizi.',
+      description: 'Il percorso di un acquirente in Linkbot in sei passi, dalla richiesta al sì di entrambe le parti e alla presentazione. Con dati fittizi.',
     },
     hero: {
-      eyebrow: 'Demo · uno spazio di prova con dati fittizi',
+      eyebrow: 'Demo · dati fittizi',
       h1: ['Dalla richiesta alla presentazione,', 'in sei passi.'],
       lede: 'Che cosa succede tra la prima riga di un acquirente e il momento in cui due aziende vengono presentate, un passo alla volta, e chi agisce a ogni passo.',
     },
@@ -260,7 +260,7 @@ export const it: FrontCopy = {
     space: {
       h2: 'La bacheca dello spazio di prova',
       on: 'Qui sotto c’è il widget stesso, servito dallo spazio di prova, in modalità bacheca: le richieste e le offerte aperte che i loro titolari hanno scelto di mostrare, rese meno precise come dichiara il pack. Rispondere a una comincia dal passo 1, dall’altra parte.',
-      off: 'Questa versione non mostra alcun widget: lo spazio di prova non ammette l’indirizzo di questo sito. Il percorso qui sopra è solo a parole.',
+      off: 'Questa pagina non mostra ancora alcun widget: attende uno spazio demo con dati sintetici. Fino ad allora il percorso qui sopra è mostrato in immagini.',
       notice: 'Uno spazio di prova con dati fittizi: non inserisca nulla di reale. Le sue email non raggiungono nessuno.',
     },
   },
