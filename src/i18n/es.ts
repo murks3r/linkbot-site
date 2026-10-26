@@ -457,7 +457,7 @@ export const es: Catalogue = {
       items: [
         'No usa cookies ni analíticas ni rastreo.',
         'No carga nada de terceros: las tipografías y las imágenes salen de este sitio.',
-        'No tiene formulario ni cuenta. Nada de lo que escriba llega a nadie.',
+        'No tiene cuenta y no envía a ninguna parte nada de lo que escriba: los campos de la página de inicio funcionan solo en su navegador, y el sitio no guarda nada.',
         'El producto se ejecuta en las páginas de una plataforma, bajo el aviso de datos de esa plataforma, junto a las líneas fijas del widget.',
       ],
     },

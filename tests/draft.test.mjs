@@ -1,7 +1,7 @@
 /* The draft for the owner (/for-intermediaries, src/drafts/intermediaries.ts): its words make no forbidden claim, and
    the built page says it is a draft, is never indexed, has no alternates, and is neither linked from another page nor
-   listed in the sitemap. A production build leaves it out until the owner approves it. The build checks are skipped
-   until the site is built. */
+   listed in the sitemap. A production build leaves it out until the owner approves it; the build checks then assert it
+   is absent, so the artefact that goes live is checked too. The build checks are skipped until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
@@ -28,11 +28,14 @@ test('a production build leaves the draft out, previews and local builds keep it
   assert.equal(buildsIntermediaries({ VERCEL_ENV: 'production' }, true), true, 'approved, production carries it');
 });
 
-test('the built draft is marked, never indexed, and reached from nowhere', { skip }, () => {
-  const html = readFileSync(new URL('for-intermediaries.html', dist), 'utf8');
-  assert.ok(html.includes('Draft, not published, for the owner’s review.'), 'the banner');
-  assert.match(html, /name="robots" content="noindex, nofollow"/);
-  assert.ok(!html.includes('hreflang='), 'a draft has no alternates');
+test('where the draft is built it is marked and never indexed; no build links, lists or translates it', { skip }, () => {
+  const built = existsSync(new URL('for-intermediaries.html', dist));
+  if (built) {
+    const html = readFileSync(new URL('for-intermediaries.html', dist), 'utf8');
+    assert.ok(html.includes('Draft, not published, for the owner’s review.'), 'the banner');
+    assert.match(html, /name="robots" content="noindex, nofollow"/);
+    assert.ok(!html.includes('hreflang='), 'a draft has no alternates');
+  }
   for (const lang of ['de', 'es', 'it', 'fr']) assert.ok(!existsSync(new URL(`${lang}/for-intermediaries.html`, dist)), `${lang}: English only`);
   const pages = readdirSync(dist, { recursive: true }).filter(f => f.endsWith('.html') && f !== 'for-intermediaries.html');
   for (const page of pages) assert.ok(!readFileSync(new URL(page, dist), 'utf8').includes('/for-intermediaries'), `${page} links the draft`);

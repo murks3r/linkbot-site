@@ -457,7 +457,7 @@ export const it: Catalogue = {
       items: [
         'Non imposta cookie e non usa strumenti di analisi né tracciamento.',
         'Non carica nulla da terze parti: i caratteri e le immagini provengono da questo sito.',
-        'Non ha moduli né account. Nulla di ciò che si digita raggiunge qualcuno.',
+        'Non ha account e non invia da nessuna parte nulla di ciò che si digita: i campi della pagina iniziale funzionano solo nel browser, e il sito non salva nulla.',
         'Il prodotto gira sulle pagine di una piattaforma, sotto l’informativa dati di quella piattaforma, accanto alle righe fisse del widget.',
       ],
     },
