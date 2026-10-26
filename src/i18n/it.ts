@@ -239,7 +239,7 @@ export const it: Catalogue = {
       title: 'Ricette: HTML semplice, Astro, Next.js, WordPress',
       paras: [
         'Ogni ricetta è un file che gira nella CI di Connect in tre motori browser contro la build di esempio con dati sintetici: una pagina semplice con una Content Security Policy rigorosa, un componente Astro, una pagina Next.js con il wrapper React e un piccolo plugin WordPress con uno shortcode.',
-        `Al ${AS_OF} girano nella CI di Connect contro la build di esempio, non contro uno spazio; l’istanza di staging stessa serve la release 0.3.0-v1 del widget.`,
+        `Al ${AS_OF} girano nella CI di Connect contro la build di esempio, non contro uno spazio; l’istanza di staging stessa serve la release 0.5.0-v1 del widget.`,
       ],
     },
     state: { title: 'A che punto siamo' },
@@ -257,7 +257,7 @@ export const it: Catalogue = {
       lede: `Al ${AS_OF}, due di esse girano sullo spazio di staging e due non sono costruite.`,
       items: [
         { name: 'Pagine ospitate', status: 'later' as Status, body: 'Una pagina servita per Lei, da collegare invece di incorporare. Non è costruita. Oggi uno spazio compare solo sulle Sue pagine, tramite l’incorporamento o tramite il Suo server.' },
-        { name: 'L’incorporamento', status: 'now' as Status, body: 'Uno script e un elemento sulla Sua pagina. Lo script arriva dall’istanza propria del Suo spazio; l’elemento porta la Sua chiave pubblicabile, che funziona solo sulle origini consentite dal Suo spazio. Le sue modalità: descrizione, bacheca, monitoraggio e i miei. L’istanza di staging serve la versione 0.3.0-v1 del widget.' },
+        { name: 'L’incorporamento', status: 'now' as Status, body: 'Uno script e un elemento sulla Sua pagina. Lo script arriva dall’istanza propria del Suo spazio; l’elemento porta la Sua chiave pubblicabile, che funziona solo sulle origini consentite dal Suo spazio. Le sue modalità: descrizione, bacheca, monitoraggio e i miei. L’istanza di staging serve la versione 0.5.0-v1 del widget.' },
         { name: 'L’API e l’SDK', status: 'now' as Status, body: `Il Suo server parla con la Space API con la chiave segreta, che non compare mai in una pagina: può inserire fabbisogni e offerte, registrare controlli e approvazioni, e leggere presentazioni ed esiti. L’SDK dà al Suo server un client tipizzato dal contratto. Al ${AS_OF} l’SDK non è pubblicato; il suo codice è nel repository di Connect.` },
         { name: 'MCP', status: 'later' as Status, body: 'Previsto, non costruito: un server MCP per spazio, tramite il quale un agente IA prepara un fabbisogno o un’offerta e una persona conferma e risponde. Il titolare ha scelto questa direzione; il suo progetto è proposto e il suo contratto è uno scheletro.' },
       ],
@@ -299,7 +299,7 @@ export const it: Catalogue = {
       notes: [
         'La modalità è describe, board, watch o mine; il lato è seeking o offer. Senza lingua il widget segue il browser del visitatore.',
         'La chiave pubblicabile funziona solo sulle origini consentite dal Suo spazio. Una chiave segreta non va mai in una pagina: con essa il widget si rifiuta di partire.',
-        `Al ${AS_OF}, l’istanza dello spazio di staging sintetico di Geoprocure serve la versione 0.3.0-v1 del widget.`,
+        `Al ${AS_OF}, l’istanza dello spazio di staging sintetico di Geoprocure serve la versione 0.5.0-v1 del widget.`,
       ],
     },
     sdk: {
@@ -359,7 +359,7 @@ export const it: Catalogue = {
       introductions: 'Presentazioni in modalità operatore, con ricevute',
       outcomes: 'Esiti, modifiche, messa in pausa e chiusura',
       deletion: 'Cancellazione con il registro delle cancellazioni dell’istanza',
-      widget: 'Il widget, servito dall’istanza stessa da una release fissata (0.3.0-v1)',
+      widget: 'Il widget, servito dall’istanza stessa da una release fissata (0.5.0-v1)',
       webhooks: 'Webhook verso il server della piattaforma: nel contratto, e l’SDK ne controlla le firme; lo spazio di staging non li invia',
       mail: 'Email che raggiunge una casella reale; le email dello spazio di staging vanno a una casella di prova',
       sdk: 'L’SDK e il wrapper React, nel repository di Connect; non pubblicati su npm',
@@ -529,7 +529,7 @@ export const it: Catalogue = {
             'sessionStorage appartiene all’origin della Sua pagina, quindi ogni script che esegue su quella pagina può leggere la bozza e i token. Non esegua script di cui non si fida sulle pagine che ospitano il widget.',
           ] },
         ] as Section[],
-        state: [`Lo script proviene dall’istanza del Suo spazio. Al ${AS_OF} l’istanza di staging serve la release 0.3.0-v1 del widget da un file fissato, come mostra il suo rapporto di stato; i controlli di Connect sulla bacheca e sui testi del widget sono passati contro quel file servito il 24 ottobre 2026.`],
+        state: [`Lo script proviene dall’istanza del Suo spazio. Al ${AS_OF} l’istanza di staging serve la release 0.5.0-v1 del widget da un file fissato, come mostra il suo rapporto di stato; i controlli di Connect sulla bacheca e sui testi del widget sono passati contro quel file servito il 26 ottobre 2026.`],
       },
       sdk: {
         nav: 'SDK e webhook',
