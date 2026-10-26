@@ -5,7 +5,7 @@
    than 14 days old. Renew it only together with the sentences and their rows in docs/truth-check.md. */
 import type { Lang } from './locales.ts';
 
-export const STATUS_CHECKED = '2026-10-25';
+export const STATUS_CHECKED = '2026-10-26';
 
 const LOCALE: Record<Lang, string> = { en: 'en-GB', de: 'de-DE', es: 'es-ES', it: 'it-IT', fr: 'fr-FR' };
 

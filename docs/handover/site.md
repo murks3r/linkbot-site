@@ -141,16 +141,16 @@ Nothing goes to production.
 
 ### Standing duty: keep the status true
 
-The status sentences name the day of their check: `STATUS_CHECKED` in `src/i18n/status-date.ts`, now 2026-10-25. Each catalogue writes that day into its status sentences. The status as of that day:
+The status sentences name the day of their check: `STATUS_CHECKED` in `src/i18n/status-date.ts`, now 2026-10-26. Each catalogue writes that day into its status sentences. The status as of that day:
 
 | On the staging space | Not on the staging space |
 | -- | -- |
-| the form; text, read by fixed rules without a model; the board; watches (contract 0.2.13, mail to a sink that reaches no one); confirm, matching, gates and approval, introductions, outcomes, deletion; a space's settings, origins, keys and funnel; the widget, served by the instance itself (0.3.0-v1) | webhooks (0.2.14); email that reaches an inbox |
+| the form; text, read by fixed rules without a model; the board; watches (contract 0.2.16, mail to a sink that reaches no one); confirm, matching, gates and approval, introductions, outcomes, deletion; a space's settings, origins, keys and funnel; the widget, served by the instance itself (0.5.0-v1) | webhooks (in the contract since 0.2.14 and deployed, but `features.webhooks` is off until the owner creates the signing key); email that reaches an inbox |
 
 **When to check again:**
-- **Next: on 2026-11-07**, before the V1 PR's go (planned for 2026-11-10). `tests/status.test.mjs` fails 14 days after `STATUS_CHECKED`, that is during 2026-11-08 for the check of 2026-10-25, and it prints a warning from four days before. Renew the status and merge that into `build/vision` before the V1 PR is marked ready, or its CI run fails on the date alone.
+- **Next: on 2026-11-07**, before the V1 PR's go (planned for 2026-11-10). `tests/status.test.mjs` fails 14 days after `STATUS_CHECKED`, that is during 2026-11-09 for the check of 2026-10-26, and it prints a warning from four days before. Renew the status and merge that into `build/vision` before the V1 PR is marked ready, or its CI run fails on the date alone.
 - After that, at least every 14 days; each renewal sets the next re-check day here, one day before the test would fail.
-- After Core-Engine's deploy of contract 0.2.15 (E5 webhooks and E6), on the orchestrator's word (as of 2026-10-25 evening, the sync to contract 0.2.15 and widget 0.4.0-v1 waits for that word; nothing in the copy says webhooks run). Watches moved to the staging column on 2026-10-25 (0.2.13, mail to a sink).
+- When staging's webhooks are switched on (the owner's signing key and host) or staging serves a new widget release. On 2026-10-26 the copy moved to contract 0.2.16 and widget 0.5.0-v1 (E5 and E6 deployed, webhooks off); watches moved to the staging column on 2026-10-25 (0.2.13, mail to a sink).
 
 **How to check:**
 - **Read the two sources.**

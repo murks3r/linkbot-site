@@ -8,6 +8,36 @@
 # When a "built" entry reaches the staging space, change its state and date.
 
 entries:
+  - date: "2026-10-26"
+    state: on staging
+    sources: [{ repo: murks3r/linkbot, pr: 218 }]
+    text:
+      en: The texts Linkbot writes itself are now in German, English, Spanish, Italian and French. The staging space offers German and English, so it writes only in those two.
+      de: Die Texte, die Linkbot selbst schreibt, gibt es jetzt auf Deutsch, Englisch, Spanisch, Italienisch und Französisch. Der Staging-Space bietet Deutsch und Englisch an und schreibt deshalb nur in diesen beiden.
+      es: Los textos que escribe el propio Linkbot están ahora en alemán, inglés, español, italiano y francés. El espacio de staging ofrece alemán e inglés, así que solo escribe en esos dos.
+      it: I testi che Linkbot scrive da sé sono ora in tedesco, inglese, spagnolo, italiano e francese. Lo spazio di staging offre tedesco e inglese, quindi scrive solo in queste due lingue.
+      fr: Les textes que Linkbot rédige lui-même existent désormais en allemand, anglais, espagnol, italien et français. L'espace staging propose l'allemand et l'anglais ; il n'écrit donc que dans ces deux langues.
+
+  - date: "2026-10-26"
+    state: on staging
+    sources: [{ repo: murks3r/linkbot-connect, pr: 45 }]
+    text:
+      en: Under “My requests and offers”, a person finds their introduction and can withdraw a request, ask for it to be deleted or export their data.
+      de: Unter „Meine Anfragen und Angebote“ findet man die eigene Vorstellung und kann eine Anfrage zurückziehen, ihre Löschung verlangen oder die eigenen Daten exportieren.
+      es: En «Mis solicitudes y ofertas», cada persona encuentra su presentación y puede retirar una solicitud, pedir que se elimine o exportar sus datos.
+      it: In «Le mie richieste e offerte» una persona trova la propria presentazione e può ritirare una richiesta, chiederne la cancellazione o esportare i propri dati.
+      fr: Dans « Mes demandes et offres », chacun trouve sa mise en relation et peut retirer une demande, en demander la suppression ou exporter ses données.
+
+  - date: "2026-10-26"
+    state: on staging
+    sources: [{ repo: murks3r/linkbot-connect, pr: 35 }]
+    text:
+      en: Someone who paused their email alerts from a link in one of the emails can resume them under “My requests and offers”.
+      de: Wer seine E-Mail-Benachrichtigungen über einen Link in einer der E-Mails pausiert hat, kann sie unter „Meine Anfragen und Angebote“ wieder aufnehmen.
+      es: Quien haya pausado sus avisos por correo desde un enlace en uno de los correos puede reanudarlos en «Mis solicitudes y ofertas».
+      it: Chi ha messo in pausa i propri avvisi via email da un link in una delle email può riattivarli in «Le mie richieste e offerte».
+      fr: Qui a mis en pause ses alertes par e-mail depuis un lien dans l'un des e-mails peut les reprendre dans « Mes demandes et offres ».
+
   - date: "2026-10-25"
     state: on staging
     sources: [{ repo: murks3r/linkbot, pr: 209 }]
@@ -17,36 +47,6 @@ entries:
       es: Puede mantener una búsqueda abierta y recibir un único correo resumen con las nuevas coincidencias, en lugar de un correo por coincidencia. En el espacio de staging, estos correos van a un buzón de prueba y no llegan a nadie.
       it: Si può tenere aperta una ricerca e ricevere un'unica email di riepilogo con le nuove corrispondenze, invece di un'email per ciascuna. Sullo spazio di staging queste email vanno a una casella di prova e non raggiungono nessuno.
       fr: Vous pouvez garder une recherche ouverte et recevoir un seul e-mail récapitulatif des nouvelles correspondances, au lieu d'un e-mail par correspondance. Sur l'espace staging, ces e-mails vont dans une boîte de test et n'atteignent personne.
-
-  - date: "2026-10-25"
-    state: built
-    sources: [{ repo: murks3r/linkbot, pr: 218 }]
-    text:
-      en: The texts Linkbot writes itself are now in German, English, Spanish, Italian and French.
-      de: Die Texte, die Linkbot selbst schreibt, gibt es jetzt auf Deutsch, Englisch, Spanisch, Italienisch und Französisch.
-      es: Los textos que escribe el propio Linkbot están ahora en alemán, inglés, español, italiano y francés.
-      it: I testi che Linkbot scrive da sé sono ora in tedesco, inglese, spagnolo, italiano e francese.
-      fr: Les textes que Linkbot rédige lui-même existent désormais en allemand, anglais, espagnol, italien et français.
-
-  - date: "2026-10-25"
-    state: built
-    sources: [{ repo: murks3r/linkbot-connect, pr: 45 }]
-    text:
-      en: Under “My requests and offers”, a person finds their introduction and can withdraw a request, ask for it to be deleted or export their data.
-      de: Unter „Meine Anfragen und Angebote“ findet man die eigene Vorstellung und kann eine Anfrage zurückziehen, ihre Löschung verlangen oder die eigenen Daten exportieren.
-      es: En «Mis solicitudes y ofertas», cada persona encuentra su presentación y puede retirar una solicitud, pedir que se elimine o exportar sus datos.
-      it: In «Le mie richieste e offerte» una persona trova la propria presentazione e può ritirare una richiesta, chiederne la cancellazione o esportare i propri dati.
-      fr: Dans « Mes demandes et offres », chacun trouve sa mise en relation et peut retirer une demande, en demander la suppression ou exporter ses données.
-
-  - date: "2026-10-25"
-    state: built
-    sources: [{ repo: murks3r/linkbot-connect, pr: 35 }]
-    text:
-      en: Someone who paused their email alerts from a link in one of the emails can resume them under “My requests and offers”.
-      de: Wer seine E-Mail-Benachrichtigungen über einen Link in einer der E-Mails pausiert hat, kann sie unter „Meine Anfragen und Angebote“ wieder aufnehmen.
-      es: Quien haya pausado sus avisos por correo desde un enlace en uno de los correos puede reanudarlos en «Mis solicitudes y ofertas».
-      it: Chi ha messo in pausa i propri avvisi via email da un link in una delle email può riattivarli in «Le mie richieste e offerte».
-      fr: Qui a mis en pause ses alertes par e-mail depuis un lien dans l'un des e-mails peut les reprendre dans « Mes demandes et offres ».
 
   - date: "2026-10-25"
     state: built

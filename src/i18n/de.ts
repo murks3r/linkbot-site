@@ -241,7 +241,7 @@ export const de: Catalogue = {
       title: 'Rezepte: reines HTML, Astro, Next.js, WordPress',
       paras: [
         'Jedes Rezept ist eine Datei, die in der CI von Connect in drei Browser-Engines gegen den Beispiel-Build mit synthetischen Daten läuft: eine einfache Seite mit strenger Content Security Policy, eine Astro-Komponente, eine Next.js-Seite mit dem React-Wrapper und ein kleines WordPress-Plugin mit einem Shortcode.',
-        `Stand ${AS_OF} laufen sie in der CI von Connect gegen den Beispiel-Build, nicht gegen einen Space; die Staging-Instanz selbst liefert das Release 0.3.0-v1 des Widgets aus.`,
+        `Stand ${AS_OF} laufen sie in der CI von Connect gegen den Beispiel-Build, nicht gegen einen Space; die Staging-Instanz selbst liefert das Release 0.5.0-v1 des Widgets aus.`,
       ],
     },
     state: { title: 'Wo es steht' },
@@ -259,7 +259,7 @@ export const de: Catalogue = {
       lede: `Stand ${AS_OF}: Zwei davon laufen auf dem Staging-Space, zwei sind nicht gebaut.`,
       items: [
         { name: 'Gehostete Seiten', status: 'later' as Status, body: 'Eine für Sie bereitgestellte Seite, auf die Sie verlinken, statt einzubetten. Sie ist nicht gebaut. Heute erscheint ein Space nur auf Ihren eigenen Seiten, über die Einbettung oder über Ihren eigenen Server.' },
-        { name: 'Die Einbettung', status: 'now' as Status, body: 'Ein Skript und ein Element auf Ihrer Seite. Das Skript kommt von der eigenen Instanz Ihres Space; das Element trägt Ihren Publishable Key, der nur auf den Origins gilt, die Ihr Space erlaubt. Seine Modi: Beschreiben, Board, Beobachten und Meine. Die Staging-Instanz liefert das Widget in der Version 0.3.0-v1 aus.' },
+        { name: 'Die Einbettung', status: 'now' as Status, body: 'Ein Skript und ein Element auf Ihrer Seite. Das Skript kommt von der eigenen Instanz Ihres Space; das Element trägt Ihren Publishable Key, der nur auf den Origins gilt, die Ihr Space erlaubt. Seine Modi: Beschreiben, Board, Beobachten und Meine. Die Staging-Instanz liefert das Widget in der Version 0.5.0-v1 aus.' },
         { name: 'Die API und das SDK', status: 'now' as Status, body: `Ihr Server spricht mit dem Secret Key mit der Space-API, und dieser Schlüssel erscheint nie in einer Seite: Er kann Bedarfe und Angebote anlegen, Prüfungen und Freigaben erfassen und Vorstellungen und Ergebnisse lesen. Das SDK gibt Ihrem Server einen Client, der durch den Vertrag typisiert ist. Stand ${AS_OF} ist das SDK nicht veröffentlicht; sein Code liegt im Connect-Repository.` },
         { name: 'MCP', status: 'later' as Status, body: 'Geplant, nicht gebaut: ein MCP-Server je Space, über den ein KI-Agent einen Bedarf oder ein Angebot vorbereitet und ein Mensch bestätigt und antwortet. Der Eigentümer hat diese Richtung gewählt; ihr Entwurf ist vorgeschlagen, ihr Vertrag ein Gerüst.' },
       ],
@@ -301,7 +301,7 @@ export const de: Catalogue = {
       notes: [
         'Der Modus ist describe, board, watch oder mine; die Seite ist seeking oder offer. Ohne Sprache folgt das Widget dem Browser des Besuchers.',
         'Der Publishable Key gilt nur auf den Origins, die Ihr Space erlaubt. Ein Secret Key gehört nie in eine Seite: Mit einem solchen startet das Widget nicht.',
-        `Stand ${AS_OF} liefert die Instanz von Geoprocures synthetischem Staging-Space das Widget in der Version 0.3.0-v1 aus.`,
+        `Stand ${AS_OF} liefert die Instanz von Geoprocures synthetischem Staging-Space das Widget in der Version 0.5.0-v1 aus.`,
       ],
     },
     sdk: {
@@ -361,7 +361,7 @@ export const de: Catalogue = {
       introductions: 'Vorstellungen im Operator-Modus, mit Quittungen',
       outcomes: 'Ergebnisse, Änderungen, Pausieren und Schließen',
       deletion: 'Löschung mit dem Löschprotokoll der Instanz',
-      widget: 'Das Widget, von der Instanz selbst aus einem festgelegten Release ausgeliefert (0.3.0-v1)',
+      widget: 'Das Widget, von der Instanz selbst aus einem festgelegten Release ausgeliefert (0.5.0-v1)',
       webhooks: 'Webhooks an den Server der Plattform: im Vertrag, und das SDK prüft ihre Signaturen; der Staging-Space sendet sie nicht',
       mail: 'E-Mail, die ein Postfach erreicht; die E-Mails des Staging-Space gehen an ein Testpostfach',
       sdk: 'Das SDK und der React-Wrapper, im Connect-Repository; nicht auf npm veröffentlicht',
@@ -531,7 +531,7 @@ export const de: Catalogue = {
             'sessionStorage gehört dem Origin Ihrer Seite, also kann jedes Skript, das Sie auf dieser Seite ausführen, den Entwurf und die Token lesen. Führen Sie auf Seiten mit dem Widget keine Skripte aus, denen Sie nicht vertrauen.',
           ] },
         ] as Section[],
-        state: [`Das Skript kommt von der eigenen Instanz Ihres Space. Stand ${AS_OF} liefert die Staging-Instanz das Release 0.3.0-v1 des Widgets aus einer festgelegten Datei aus, wie ihr Statusbericht zeigt; die Prüfungen von Connect für das Board und für die Formulierungen des Widgets bestanden am 24.10.2026 gegen diese ausgelieferte Datei.`],
+        state: [`Das Skript kommt von der eigenen Instanz Ihres Space. Stand ${AS_OF} liefert die Staging-Instanz das Release 0.5.0-v1 des Widgets aus einer festgelegten Datei aus, wie ihr Statusbericht zeigt; die Prüfungen von Connect für das Board und für die Formulierungen des Widgets bestanden am 26.10.2026 gegen diese ausgelieferte Datei.`],
       },
       sdk: {
         nav: 'SDK und Webhooks',
