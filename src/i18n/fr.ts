@@ -457,7 +457,7 @@ export const fr: Catalogue = {
       items: [
         'Il ne dépose aucun cookie et n’utilise ni mesure d’audience ni suivi.',
         'Il ne charge rien de tiers : les polices et les images viennent de ce site.',
-        'Il n’a ni formulaire ni compte. Rien de ce que vous tapez n’atteint quiconque.',
+        'Il n’a pas de compte et n’envoie nulle part rien de ce que vous tapez : les champs de la page d’accueil fonctionnent uniquement dans votre navigateur, et le site n’enregistre rien.',
         'Le produit tourne sur les pages propres d’une plateforme, sous l’avis de données de cette plateforme, à côté des lignes fixes du widget.',
       ],
     },

@@ -459,7 +459,7 @@ export const de: Catalogue = {
       items: [
         'Sie setzt keine Cookies und nutzt keine Analyse- oder Tracking-Dienste.',
         'Sie lädt nichts von Dritten: Schriften und Bilder kommen von dieser Seite.',
-        'Sie hat kein Formular und kein Konto. Nichts, was Sie tippen, erreicht jemanden.',
+        'Sie hat kein Konto und sendet nichts, was Sie tippen, irgendwohin: Die Felder auf der Startseite arbeiten nur in Ihrem Browser, und die Seite speichert nichts.',
         'Das Produkt läuft auf den eigenen Seiten einer Plattform, unter deren Datenhinweis, neben den festen Zeilen des Widgets.',
       ],
     },
