@@ -463,6 +463,7 @@ export const en = {
     eyebrow: 'Privacy notice',
     h1: 'In preparation',
     lede: 'The privacy notice for this website is being written and reviewed. It appears here once it is released. Nothing is shown until then, because a legal text may not be drafted by guesswork.',
+    released: { description: 'The privacy notice for Linkbot’s website: what the site processes, why, on which legal basis, and your rights.' },
     facts: {
       title: 'What is already true of this site',
       items: [
@@ -480,6 +481,16 @@ export const en = {
     eyebrow: 'Imprint',
     h1: 'In preparation',
     lede: 'The legal notice (provider, address, representatives, register and tax details, contact) is being prepared and appears here once it is confirmed. Nothing is shown until then, because none of it may be invented.',
+    released: { description: 'The legal notice for Linkbot’s website: provider, address, representatives, register and tax details, and contact.' },
+  },
+
+  contact: {
+    title: 'Contact · Linkbot',
+    description: 'How to reach Linkbot. Contact details are in preparation: they follow with Linkbot’s own domain, which does not exist yet.',
+    eyebrow: 'Contact',
+    h1: 'In preparation',
+    released: { h1: 'Write to us', description: 'How to reach Linkbot: the address to write to with a question about Linkbot or about running a space on your platform.' },
+    write: 'Write to {email}.',
   },
 
   notFound: {

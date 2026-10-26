@@ -451,6 +451,7 @@ export const fr: Catalogue = {
     eyebrow: 'Notice de confidentialité',
     h1: 'En préparation',
     lede: 'La notice de confidentialité de ce site est en cours de rédaction et de relecture. Elle apparaîtra ici une fois publiée. Rien n’est affiché d’ici là, car un texte juridique ne peut pas être rédigé au jugé.',
+    released: { description: 'La notice de confidentialité du site de Linkbot : ce que le site traite, pourquoi, sur quelle base juridique, et vos droits.' },
     facts: {
       title: 'Ce qui est déjà vrai de ce site',
       items: [
@@ -468,6 +469,16 @@ export const fr: Catalogue = {
     eyebrow: 'Mentions légales',
     h1: 'En préparation',
     lede: 'Les mentions légales (éditeur, adresse, représentants, registre et données fiscales, contact) sont en préparation et apparaîtront ici une fois confirmées. Rien n’est affiché d’ici là, car rien de cela ne peut être inventé.',
+    released: { description: 'Les mentions légales du site de Linkbot : éditeur, adresse, représentants, registre et données fiscales, et coordonnées.' },
+  },
+
+  contact: {
+    title: 'Contact · Linkbot',
+    description: 'Comment joindre Linkbot. Les coordonnées sont en préparation : elles arriveront avec le domaine propre de Linkbot, qui n’existe pas encore.',
+    eyebrow: 'Contact',
+    h1: 'En préparation',
+    released: { h1: 'Écrivez-nous', description: 'Comment joindre Linkbot : l’adresse à laquelle écrire pour une question sur Linkbot ou sur un espace sur votre plateforme.' },
+    write: 'Écrivez à {email}.',
   },
 
   notFound: {
