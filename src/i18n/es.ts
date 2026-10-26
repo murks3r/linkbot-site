@@ -451,6 +451,7 @@ export const es: Catalogue = {
     eyebrow: 'Aviso de privacidad',
     h1: 'En preparación',
     lede: 'El aviso de privacidad de este sitio web se está redactando y revisando. Aparecerá aquí cuando se publique. Hasta entonces no se muestra nada, porque un texto legal no puede redactarse por conjetura.',
+    released: { description: 'El aviso de privacidad del sitio web de Linkbot: qué trata el sitio, para qué, con qué base jurídica y cuáles son sus derechos.' },
     facts: {
       title: 'Lo que ya es cierto de este sitio',
       items: [
@@ -468,6 +469,16 @@ export const es: Catalogue = {
     eyebrow: 'Aviso legal',
     h1: 'En preparación',
     lede: 'El aviso legal (proveedor, dirección, representantes, datos registrales y fiscales, contacto) se está preparando y aparecerá aquí cuando esté confirmado. Hasta entonces no se muestra nada, porque nada de ello puede inventarse.',
+    released: { description: 'El aviso legal del sitio web de Linkbot: proveedor, dirección, representantes, datos registrales y fiscales, y contacto.' },
+  },
+
+  contact: {
+    title: 'Contacto · Linkbot',
+    description: 'Cómo contactar con Linkbot. Los datos de contacto están en preparación: llegarán con el dominio propio de Linkbot, que aún no existe.',
+    eyebrow: 'Contacto',
+    h1: 'En preparación',
+    released: { h1: 'Escríbanos', description: 'Cómo contactar con Linkbot: la dirección a la que escribir con una pregunta sobre Linkbot o sobre un espacio en su plataforma.' },
+    write: 'Escriba a {email}.',
   },
 
   notFound: {

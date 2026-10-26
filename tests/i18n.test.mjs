@@ -60,10 +60,12 @@ test('identifiers are the same in every language', () => {
 
 test('every page has a title and a description of a sensible length', () => {
   for (const [lang, catalogue] of Object.entries(catalogues)) {
-    const pages = [...['how', 'platforms', 'forPlatforms', 'developers', 'status', 'verticals', 'privacy', 'imprint', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];
+    const pages = [...['how', 'platforms', 'forPlatforms', 'developers', 'status', 'verticals', 'privacy', 'imprint', 'contact', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];
     for (const [key, page] of pages) {
       assert.ok(page.title.length >= 10 && page.title.length <= 80, `${lang}.${key}.title: ${page.title.length} characters`);
       assert.ok(page.description.length >= 50 && page.description.length <= 160, `${lang}.${key}.description: ${page.description.length} characters`);
+      /* A page that shows a placeholder until its text exists (privacy, imprint, contact) describes itself either way. */
+      if (page.released) assert.ok(page.released.description.length >= 50 && page.released.description.length <= 160, `${lang}.${key}.released.description: ${page.released.description.length} characters`);
     }
   }
 });

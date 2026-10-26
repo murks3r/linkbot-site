@@ -1,7 +1,10 @@
 ---
-/* The privacy notice, as a clearly marked placeholder until Trust's T6 drafts are released: no
-   legal text is invented. What is already true of this site is listed, as technical facts. */
+/* The privacy notice: the released text from src/legal/privacy.ts, or, until there is one, a clearly marked placeholder
+   that says it is in preparation. No legal text is invented. What is already true of this site is listed either way, as
+   technical facts. */
 import Base from '../../layouts/Base.astro';
+import LegalText from '../../components/LegalText.astro';
+import { PRIVACY } from '../../legal/privacy';
 import { langPaths, resolve, type Lang } from '../../i18n';
 export const getStaticPaths = () => langPaths();
 interface Props { lang: Lang }
@@ -9,17 +12,18 @@ const { lang } = Astro.props;
 const { t, fallback } = resolve(lang);
 const p = t.privacy;
 ---
-<Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path="/privacy" crumbs={[[t.site.footer.privacy, '/privacy']]}>
+<Base lang={lang} t={t} fallback={fallback} title={p.title} description={PRIVACY ? p.released.description : p.description} path="/privacy" crumbs={[[t.site.footer.privacy, '/privacy']]}>
   <section class="page-hero">
     <div class="wrap">
-      <p class="eyebrow">{p.eyebrow}</p>
-      <h1>{p.h1}</h1>
+      {PRIVACY ? <h1>{p.eyebrow}</h1> : <><p class="eyebrow">{p.eyebrow}</p><h1>{p.h1}</h1></>}
     </div>
   </section>
   <div class="wrap doc-one">
-    <div class="placeholder" role="note" aria-label={p.eyebrow}>
-      <p>{p.lede}</p>
-    </div>
+    {PRIVACY ? <LegalText text={PRIVACY} /> : (
+      <div class="placeholder" role="note" aria-label={p.eyebrow} data-legal-pending>
+        <p>{p.lede}</p>
+      </div>
+    )}
     <section aria-labelledby="facts-title">
       <h2 id="facts-title">{p.facts.title}</h2>
       <ul class="plain">{p.facts.items.map(item => <li>{item}</li>)}</ul>

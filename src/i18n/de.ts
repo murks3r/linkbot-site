@@ -453,6 +453,7 @@ export const de: Catalogue = {
     eyebrow: 'Datenschutzhinweis',
     h1: 'In Vorbereitung',
     lede: 'Der Datenschutzhinweis für diese Website wird geschrieben und geprüft. Er erscheint hier, sobald er freigegeben ist. Bis dahin steht hier nichts, weil ein Rechtstext nicht geraten werden darf.',
+    released: { description: 'Der Datenschutzhinweis der Linkbot-Website: was die Seite verarbeitet, wozu, auf welcher Rechtsgrundlage, und Ihre Rechte.' },
     facts: {
       title: 'Was für diese Seite schon gilt',
       items: [
@@ -470,6 +471,16 @@ export const de: Catalogue = {
     eyebrow: 'Impressum',
     h1: 'In Vorbereitung',
     lede: 'Das Impressum (Anbieter, Anschrift, Vertretung, Register- und Steuerangaben, Kontakt) wird vorbereitet und erscheint hier, sobald es bestätigt ist. Bis dahin steht hier nichts, weil nichts davon erfunden werden darf.',
+    released: { description: 'Das Impressum der Linkbot-Website: Anbieter, Anschrift, Vertretung, Register- und Steuerangaben und Kontakt.' },
+  },
+
+  contact: {
+    title: 'Kontakt · Linkbot',
+    description: 'So erreichen Sie Linkbot. Die Kontaktdaten sind in Vorbereitung: Sie folgen mit Linkbots eigener Domain, die es noch nicht gibt.',
+    eyebrow: 'Kontakt',
+    h1: 'In Vorbereitung',
+    released: { h1: 'Schreiben Sie uns', description: 'So erreichen Sie Linkbot: die Adresse für eine Frage zu Linkbot oder dazu, wie ein Space auf Ihrer Plattform laufen würde.' },
+    write: 'Schreiben Sie an {email}.',
   },
 
   notFound: {
