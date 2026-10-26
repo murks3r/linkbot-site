@@ -5,10 +5,10 @@
 export const DEMO = {
   meta: {
     title: 'Linkbot: the whole path, from a request to an introduction',
-    description: 'A buyer’s path through Linkbot in six steps, from the request to both sides’ yes and the introduction. On a test space with fictional data.',
+    description: 'A buyer’s path through Linkbot in six steps, from the request to both sides’ yes and the introduction. With fictional data.',
   },
   hero: {
-    eyebrow: 'Demo · a test space with fictional data',
+    eyebrow: 'Demo · fictional data',
     h1: ['From a request to an introduction,', 'in six steps.'],
     lede: 'What happens between a buyer’s first line and the moment two companies are introduced, one step at a time, and who acts at each step.',
   },
@@ -51,7 +51,7 @@ export const DEMO = {
   space: {
     h2: 'The test space’s board',
     on: 'Below is the widget itself, served by the test space, in board mode: the open requests and offers whose owners chose to show them, coarsened as the pack declares. Answering one starts at step 1, on the other side.',
-    off: 'This build shows no widget: the test space does not allow this site’s address. The path above is in words only.',
+    off: 'No widget on this page yet: it waits for a demo space with synthetic data. Until then the path above is shown in pictures.',
     notice: 'A test space with fictional data: enter nothing real. Its emails reach no one.',
   },
 } as const;

@@ -214,10 +214,10 @@ export const es: FrontCopy = {
   demo: {
     meta: {
       title: 'Linkbot: todo el recorrido, de la solicitud a la presentación',
-      description: 'El recorrido de un comprador por Linkbot en seis pasos, de la solicitud al sí de ambas partes y la presentación. En un espacio de prueba con datos ficticios.',
+      description: 'El recorrido de un comprador por Linkbot en seis pasos, de la solicitud al sí de ambas partes y la presentación. Con datos ficticios.',
     },
     hero: {
-      eyebrow: 'Demo · un espacio de prueba con datos ficticios',
+      eyebrow: 'Demo · datos ficticios',
       h1: ['De la solicitud a la presentación,', 'en seis pasos.'],
       lede: 'Lo que ocurre entre la primera línea de un comprador y el momento en que dos empresas se presentan, paso a paso, y quién actúa en cada paso.',
     },
@@ -260,7 +260,7 @@ export const es: FrontCopy = {
     space: {
       h2: 'El tablón del espacio de prueba',
       on: 'Abajo está el propio widget, servido por el espacio de prueba, en modo tablón: las solicitudes y ofertas abiertas cuyos titulares quisieron mostrarlas, generalizadas como declara el pack. Responder a una empieza en el paso 1, del otro lado.',
-      off: 'Esta versión no muestra ningún widget: el espacio de prueba no admite la dirección de este sitio. El recorrido de arriba está solo en palabras.',
+      off: 'Esta página aún no muestra ningún widget: espera un espacio de demostración con datos sintéticos. Hasta entonces, el recorrido de arriba se muestra en imágenes.',
       notice: 'Un espacio de prueba con datos ficticios: no introduzca nada real. Sus correos no llegan a nadie.',
     },
   },

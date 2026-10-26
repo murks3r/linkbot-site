@@ -214,10 +214,10 @@ export const de: FrontCopy = {
   demo: {
     meta: {
       title: 'Linkbot: der ganze Weg, von der Anfrage bis zur Vorstellung',
-      description: 'Der Weg eines Einkäufers durch Linkbot in sechs Schritten: von der Anfrage zum Ja beider Seiten und zur Vorstellung. Auf einem Test-Space mit erfundenen Daten.',
+      description: 'Der Weg eines Einkäufers durch Linkbot in sechs Schritten: von der Anfrage zum Ja beider Seiten und zur Vorstellung. Mit erfundenen Daten.',
     },
     hero: {
-      eyebrow: 'Demo · ein Test-Space mit erfundenen Daten',
+      eyebrow: 'Demo · erfundene Daten',
       h1: ['Von der Anfrage bis zur Vorstellung,', 'in sechs Schritten.'],
       lede: 'Was zwischen der ersten Zeile eines Einkäufers und dem Moment geschieht, in dem zwei Unternehmen einander vorgestellt werden, Schritt für Schritt, und wer bei jedem Schritt handelt.',
     },
@@ -260,7 +260,7 @@ export const de: FrontCopy = {
     space: {
       h2: 'Das Board des Test-Space',
       on: 'Unten steht das Widget selbst, vom Test-Space ausgeliefert, im Board-Modus: die offenen Anfragen und Angebote, deren Inhaber sie zeigen wollten, vergröbert, wie das Pack es festlegt. Wer auf einen Eintrag antwortet, beginnt bei Schritt 1, auf der anderen Seite.',
-      off: 'Dieser Build zeigt kein Widget: Der Test-Space lässt die Adresse dieser Website nicht zu. Der Weg oben steht nur in Worten.',
+      off: 'Auf dieser Seite steht noch kein Widget: Es wartet auf einen Demo-Space mit synthetischen Daten. Bis dahin zeigt der Weg oben Bilder.',
       notice: 'Ein Test-Space mit erfundenen Daten: Geben Sie nichts Echtes ein. Seine E-Mails erreichen niemanden.',
     },
   },
