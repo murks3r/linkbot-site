@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>logo check</title>
+<style>
+ body{background:#07090d;color:#e8e6dc;font:14px/1.4 -apple-system,sans-serif;margin:0;padding:24px}
+ .row{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:28px}
+ .cell{background:#0e1216;border:1px solid #232a31;border-radius:8px;padding:16px;display:flex;
+       flex-direction:column;gap:10px;align-items:center;min-width:150px}
+ .light{background:#f4f1ea;color:#14161a;border-color:#d9d3c6}
+ svg{display:block}
+ .name{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+ .small svg{width:16px;height:16px}
+ .stack svg{height:70px;width:auto}
+ h2{font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.6;margin:0 0 14px}
+</style></head>
+<body>
+<h2>Marks 32px — dark / light / 16px small</h2>
+<div class="row" id="marks"></div>
+<h2>Wordmarks + lockups</h2>
+<div class="row" id="locks"></div>
+<script>
+const base='../../04-logo/';
+const dirs=['A-notarial','B-protocol','C-commons'];
+const files=['mark.svg','app-icon.svg','lockup-horizontal.svg','lockup-stacked.svg','wordmark-monoline.svg'];
+(async()=>{
+ for(const d of dirs){
+   const c=document.createElement('div');c.className='cell';
+   const svg=await (await fetch(`${base}${d}/mark.svg`)).text();
+   c.innerHTML=svg+`<div class="name">${d}</div>`;
+   document.getElementById('marks').append(c);
+   const cl=c.cloneNode(true);cl.classList.add('light');document.getElementById('marks').append(cl);
+   const cs=document.createElement('div');cs.className='cell light small';
+   cs.innerHTML=svg+'<div class="name">16px</div>';document.getElementById('marks').append(cs);
+   for(const f of files){
+     const box=document.createElement('div');box.className='cell stack';
+     box.innerHTML=(await (await fetch(`${base}${d}/${f}`)).text())+`<div class="name">${d} ${f.replace('.svg','')}</div>`;
+     document.getElementById('locks').append(box);
+   }
+ }
+})();
+</script></body></html>

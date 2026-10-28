@@ -1,0 +1,109 @@
+/* Linkbot Brand OS 0.1.0 — Protocol candidate direction.
+ * NOT APPROVED. Non-applied artifact: generated from B-protocol.tokens.json.
+ * No runtime file imports this file. */
+
+:root {
+  /* primitives */
+  --lb-b-void: #06080B;
+  --lb-b-panel: #0C1014;
+  --lb-b-raised: #131A20;
+  --lb-b-line: #22303A;
+  --lb-b-line-strong: #425867;
+  --lb-b-line-control: #506472;
+  --lb-b-text: #D6E0E6;
+  --lb-b-dim: #86959F;
+  --lb-b-phosphor: #3BE08C;
+  --lb-b-phosphor-deep: #0A6B41;
+  --lb-b-cyan: #59C8F5;
+  --lb-b-amber: #F0B429;
+  --lb-b-red: #FF7A7A;
+  --lb-b-white: #F7F9FA;
+  --lb-b-ink: #0B0F12;
+  --lb-b-light-line: #C9D3D9;
+  --lb-b-light-control: #899094;
+  --lb-b-light-dim: #5A6A74;
+
+  /* semantic */
+  --lb-canvas: var(--lb-b-void);
+  --lb-surface: var(--lb-b-panel);
+  --lb-surface-raised: var(--lb-b-raised);
+  --lb-text: var(--lb-b-text);
+  --lb-text-muted: var(--lb-b-dim);
+  --lb-brand: var(--lb-b-phosphor);
+  --lb-brand-contrast: var(--lb-b-void);
+  --lb-link: var(--lb-b-cyan);
+  --lb-border-subtle: var(--lb-b-line);
+  --lb-border-control: var(--lb-b-line-strong);
+  --lb-status-granted: var(--lb-b-phosphor);
+  --lb-status-pending: var(--lb-b-amber);
+  --lb-status-denied: var(--lb-b-red);
+  --lb-status-unknown: var(--lb-b-dim);
+  --lb-focus: var(--lb-b-cyan);
+  --lb-focus-ring: var(--lb-b-cyan);
+
+  /* type */
+  --lb-text-12: 12px;
+  --lb-text-13: 13px;
+  --lb-text-14: 14px;
+  --lb-text-16: 16px;
+  --lb-text-18: 18px;
+  --lb-text-20: 20px;
+  --lb-text-24: 24px;
+  --lb-text-30: 30px;
+  --lb-text-38: 38px;
+  --lb-text-48: 48px;
+  --lb-text-60: 60px;
+  --lb-text-76: 76px;
+  --lb-leading-tight: 1.05;
+  --lb-leading-snug: 1.25;
+  --lb-leading-normal: 1.5;
+  --lb-tracking-tighter: -0.03em;
+  --lb-tracking-tight: -0.015em;
+  --lb-tracking-label: 0.14em;
+
+  /* space */
+  --lb-space-3xs: 2px;
+  --lb-space-2xs: 4px;
+  --lb-space-xs: 8px;
+  --lb-space-sm: 12px;
+  --lb-space-md: 16px;
+  --lb-space-lg: 24px;
+  --lb-space-xl: 32px;
+  --lb-space-2xl: 48px;
+  --lb-space-3xl: 64px;
+  --lb-space-4xl: 96px;
+
+  /* radius */
+  --lb-radius-none: 0px;
+  --lb-radius-xs: 2px;
+  --lb-radius-sm: 4px;
+  --lb-radius-md: 8px;
+  --lb-radius-lg: 12px;
+  --lb-radius-xl: 20px;
+  --lb-radius-full: 9999px;
+
+  /* motion */
+  --lb-duration-instant: 80ms;
+  --lb-duration-fast: 160ms;
+  --lb-duration-base: 240ms;
+  --lb-duration-slow: 400ms;
+  --lb-duration-deliberate: 640ms;
+  --lb-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --lb-ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --lb-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --lb-ease-linear: linear;
+
+  /* focus */
+  --lb-focus-width: 2px;
+  --lb-focus-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --lb-duration-instant: 0ms;
+    --lb-duration-fast: 0ms;
+    --lb-duration-base: 0ms;
+    --lb-duration-slow: 0ms;
+    --lb-duration-deliberate: 0ms;
+  }
+}

@@ -1,0 +1,12 @@
+<!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Linkbot social avatar"><title>Linkbot — Protocol mark</title>
+  <rect width="512" height="512" rx="112" fill="#14161A" />
+  <g transform="translate(192 192) scale(4) scale(1)" color="#F4F1EA">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+        <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+        <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+      </g>
+      <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+  </g>
+</svg>

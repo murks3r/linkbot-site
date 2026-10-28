@@ -1,0 +1,4 @@
+# Generator bytecode is not a brand asset.
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linkbot — Protocol specimen (candidate)</title>
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400..700&family=Public+Sans:wght@300..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Specimens work offline with local font fallbacks. No runtime asset is loaded. -->
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --canvas:#F7F9FA;--surface:#FFFFFF;--alt:#EDF1F3;
+  --text:#0B0F12;--muted:#5A6A74;--brand:#0A6B41;
+  --onbrand:#FFFFFF;--link:#0D5B77;--border:#C9D3D9;
+  --control:#899094;--granted:#0A6B41;--pending:#7A5400;
+  --denied:#A32A2A;--unknown:#5A6A74;--focus:#0D5B77;
+  --radius:0px;
+  --f-display:"Space Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;--f-text:"Inter", ui-sans-serif, system-ui, sans-serif;--f-mono:"JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  color-scheme:light;
+}
+[data-mode="dark"]{
+  --canvas:#06080B;--surface:#0C1014;--alt:#131A20;
+  --text:#D6E0E6;--muted:#86959F;--brand:#3BE08C;
+  --onbrand:#06080B;--link:#59C8F5;--border:#22303A;
+  --control:#506472;--granted:#3BE08C;--pending:#F0B429;
+  --denied:#FF7A7A;--unknown:#86959F;--focus:#59C8F5;
+  color-scheme:dark;
+}
+html,body{margin:0;padding:0}
+body{background:var(--canvas);color:var(--text);font-family:var(--f-text);line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+a{color:var(--link)}
+svg{max-width:100%;height:auto}
+:focus-visible{outline:var(--lb-fw,2px) solid var(--focus);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.bar{position:sticky;top:0;z-index:5;background:var(--canvas);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px}
+.bar .lockup svg{height:26px;width:auto;display:block;color:var(--text)}
+.modes{display:flex;gap:6px}
+.modes button{font:inherit;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 12px;border:1px solid var(--control);border-radius:var(--radius);background:transparent;
+  color:var(--text);cursor:pointer}
+.modes button[aria-pressed="true"]{background:var(--brand);color:var(--onbrand);border-color:var(--brand)}
+section{padding:56px 0;border-bottom:1px solid var(--border)}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;letter-spacing:-.02em;line-height:1.08;margin:0}
+h1{font-size:clamp(2rem,4.4vw,3.1rem)}
+h2{font-size:clamp(1.4rem,2.4vw,2rem)}
+h3{font-size:1.15rem}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 12px}
+.lede{font-size:1.08rem;color:var(--muted);max-width:36rem}
+.roles{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;grid-template-columns:repeat(3,1fr)}
+@media(max-width:820px){.roles{grid-template-columns:1fr}}
+.role{background:var(--surface);padding:28px}
+.role .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--brand)}
+.role ul{margin:14px 0 0;padding-left:18px;font-size:.92rem;color:var(--muted)}
+.role p{font-size:.95rem;color:var(--text);opacity:.9}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.logo{display:flex;align-items:center;gap:6px;color:var(--text)}
+.logo svg{display:block;color:inherit}
+.swatch{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+.swatch .chip{height:64px}
+.swatch .meta{padding:10px 12px;font-family:var(--f-mono);font-size:11px;line-height:1.5}
+.swatch .meta b{display:block;font-family:var(--f-text);font-size:12px;letter-spacing:.02em}
+.type-row{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:baseline;
+  padding:14px 0;border-bottom:1px solid var(--border)}
+.type-row .spec{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.mono{font-family:var(--f-mono)}
+.tnum{font-variant-numeric:tabular-nums}
+.status{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--border);
+  border-radius:var(--radius);background:var(--surface);font-size:.92rem}
+.glyph{width:20px;height:20px;flex:0 0 20px;display:grid;place-items:center}
+.dot{width:10px;height:10px;border-radius:50%}
+.ring{width:14px;height:14px;border-radius:50%;border:2px solid currentColor}
+.sq{width:13px;height:13px;border:2px solid currentColor}
+.tri{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;
+  border-bottom:11px solid currentColor}
+.btn{font:inherit;font-size:.92rem;font-weight:500;padding:11px 18px;border-radius:var(--radius);
+  cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px}
+.btn.primary{background:var(--brand);color:var(--onbrand)}
+.btn.secondary{background:transparent;color:var(--text);border-color:var(--control)}
+.btn.quiet{background:transparent;color:var(--link);text-decoration:underline;text-underline-offset:3px}
+.field{display:block;margin-top:14px}
+.field span{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.field input{font:inherit;width:100%;padding:12px 14px;background:var(--surface);color:var(--text);
+  border:1px solid var(--control);border-radius:var(--radius)}
+.receipt{border:1px solid var(--border);border-left:3px solid var(--brand);
+  background:var(--surface);border-radius:var(--radius);padding:16px;font-family:var(--f-mono);font-size:12px}
+.tbl{width:100%;border-collapse:collapse;font-size:.92rem}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)}
+.tbl th{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted)}
+.pulse{transition:transform var(--lb-dur,240ms) cubic-bezier(.2,.7,.2,1),
+  box-shadow var(--lb-dur,240ms) cubic-bezier(.2,.7,.2,1)}
+.pulse.on{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.28)}
+.note{font-size:.85rem;color:var(--muted)}
+.chipset{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.chip{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:var(--radius)}
+.chip-paper{background:#F4F1EA;color:#14161A}
+.chip-ink{background:#14161A;color:#F4F1EA}
+.chip-loose{background:#F4F1EA;color:#14161A}
+.proposed{display:inline-flex;gap:8px;align-items:center;border:2px dashed var(--brand);
+  color:var(--brand);font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;padding:6px 12px;
+  border-radius:var(--radius)}
+@media (prefers-reduced-motion: reduce){
+  *{transition-duration:.001ms !important;animation-duration:.001ms !important}
+  .pulse.on{transform:none;box-shadow:none;outline:2px solid var(--focus)}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="lockup" aria-label="Linkbot lockup"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156.44 27.72" width="156.44" height="27.72" role="img" aria-label="Linkbot horizontal lockup"><title>Linkbot — Protocol mark</title>
+  <g transform="translate(0.00 1.64) scale(0.7639)">
+      <g fill="none" stroke="currentColor" stroke-width="3.168" stroke-linecap="round">
+        <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+        <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+        <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+      </g>
+      <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+  </g>
+  <g transform="translate(35.44 0.00) scale(0.22)">
+      <g transform="translate(7.50 7.50)">
+      <g fill="none" stroke="currentColor" stroke-width="11.0" stroke-linecap="square" stroke-linejoin="miter">
+        <path transform="translate(0.00 0)" d="M0 0 V100 H60" />
+        <path transform="translate(80.00 0)" d="M0 0 V100" />
+        <path transform="translate(98.00 0)" d="M0 100 V0 M0 0 L72 100 M72 100 V0" />
+        <path transform="translate(190.00 0)" d="M0 0 V100 M0 54 L58 0 M0 54 L58 100" />
+        <path transform="translate(268.00 0)" d="M0 0 V100 M0 0 H33 A25 25 0 0 1 33 50 H0 M0 50 H38 A25 25 0 0 1 38 100 H0" />
+        <path transform="translate(354.00 0)" d="M0 30 A30 30 0 0 1 30 0 H36 A30 30 0 0 1 66 30 V70 A30 30 0 0 1 36 100 H30 A30 30 0 0 1 0 70 Z" />
+        <path transform="translate(440.00 0)" d="M0 0 H68 M34 0 V100" />
+      </g>
+        <circle cx="190.00" cy="54.0" r="9.35" fill="currentColor" />
+      </g>
+  </g>
+</svg>
+</div>
+  <div class="modes" role="group" aria-label="Colour mode">
+    <button type="button" data-mode-btn="light" aria-pressed="true">Light</button>
+    <button type="button" data-mode-btn="dark" aria-pressed="false">Dark</button>
+    <button type="button" data-mode-btn="system" aria-pressed="false">System</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <p class="eyebrow">Direction B — Protocol · Linkbot Brand OS v0.1.0 · candidate, not approved</p>
+    <h1>Infrastructure honesty. The state is the interface; UNKNOWN is never rounded up.</h1>
+    <p class="lede">One platform, three experiences. The same identity is shown below as Talent,
+      Employer/HR and Agency see it. Copy preserves the product's actual semantics: an Opportunity is
+      not a Match, a disclosure is not an application, and UNKNOWN is never rounded up.</p>
+    
+  </section>
+
+  <section aria-labelledby="roles-h">
+    <p class="eyebrow">Audience demonstration</p>
+    <h2 id="roles-h">Talent · Employer/HR · Agency</h2>
+    <div class="roles">
+      <article class="role"><p class="tag">Talent</p><h3>PRIVATE_STATE — subject</h3>
+        <p>Rows: claims, evidence, intents, authorities, receipts. Authority for one bounded field set, one recipient, one purpose, one version. Absent stays absent. Null stays null. UNKNOWN stays UNKNOWN.</p><ul><li>claims[] confirmed only when reviewed or edited</li><li>unresolved stays proposed</li></ul></article>
+      <article class="role"><p class="tag">Employer / HR</p><h3>EVALUATION — bounded batch</h3>
+        <p>You hold computation authority for one leased evaluation, not for a pool. The projection carries only allowlisted fields. A descriptor is never accepted as proof of authorisation.</p><ul><li>purpose: recruiting_opportunity_evaluation</li><li>denied: unknown evaluator or domain</li></ul></article>
+      <article class="role"><p class="tag">Agency</p><h3>MANDATE — introduction set</h3>
+        <p>One mandate, several independent introductions. Each candidate carries met / unknown / unmet per requirement. Ordering comes from hard failures, unresolved requirements and preferred evidence — not from a predictive score.</p><ul><li>hard failure blocks</li><li>unknown shortlists for verification only</li></ul></article>
+    </div>
+    <p class="note" style="margin-top:14px">Illustrative compositions using real brand assets. Nothing
+      here is a product screen and no capability is claimed beyond the documented product truths.</p>
+  </section>
+
+  <section aria-labelledby="logo-h">
+    <p class="eyebrow">Logo system</p>
+    <h2 id="logo-h">Small sizes and lockups</h2>
+    <div class="grid">
+      <div class="card"><p class="mono note">16 px · 24 px · 32 px · 48 px</p>
+        <div class="logo" style="gap:16px;margin-top:12px">
+          <span style="width:16px;height:16px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" role="img" aria-label="Linkbot favicon"><title>Linkbot — Protocol mark</title>
+  <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+    <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+    <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+    <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+  </g>
+  <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+</svg>
+</span>
+          <span style="width:24px;height:24px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24" role="img" aria-label="Linkbot favicon"><title>Linkbot — Protocol mark</title>
+  <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+    <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+    <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+    <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+  </g>
+  <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+</svg>
+</span>
+          <span style="width:32px;height:32px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Linkbot favicon"><title>Linkbot — Protocol mark</title>
+  <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+    <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+    <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+    <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+  </g>
+  <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+</svg>
+</span>
+          <span style="width:48px;height:48px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="48" height="48" role="img" aria-label="Linkbot mark"><title>Linkbot — Protocol mark</title>
+  <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+    <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+    <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+  </g>
+  <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+</svg>
+</span>
+        </div></div>
+      <div class="card"><p class="mono note">Mark · wordmark</p>
+        <div style="margin-top:12px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="40" height="40" role="img" aria-label="Linkbot mark"><title>Linkbot — Protocol mark</title>
+  <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+    <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+    <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+  </g>
+  <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+</svg>
+</div>
+        <div style="margin-top:16px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 126" width="550" height="126" role="img" aria-label="Linkbot wordmark"><title>Linkbot — Protocol wordmark</title>
+  <g transform="translate(7.50 7.50)">
+  <g fill="none" stroke="currentColor" stroke-width="11.0" stroke-linecap="square" stroke-linejoin="miter">
+    <path transform="translate(0.00 0)" d="M0 0 V100 H60" />
+    <path transform="translate(80.00 0)" d="M0 0 V100" />
+    <path transform="translate(98.00 0)" d="M0 100 V0 M0 0 L72 100 M72 100 V0" />
+    <path transform="translate(190.00 0)" d="M0 0 V100 M0 54 L58 0 M0 54 L58 100" />
+    <path transform="translate(268.00 0)" d="M0 0 V100 M0 0 H33 A25 25 0 0 1 33 50 H0 M0 50 H38 A25 25 0 0 1 38 100 H0" />
+    <path transform="translate(354.00 0)" d="M0 30 A30 30 0 0 1 30 0 H36 A30 30 0 0 1 66 30 V70 A30 30 0 0 1 36 100 H30 A30 30 0 0 1 0 70 Z" />
+    <path transform="translate(440.00 0)" d="M0 0 H68 M34 0 V100" />
+  </g>
+    <circle cx="190.00" cy="54.0" r="9.35" fill="currentColor" />
+  </g>
+</svg>
+</div></div>
+      <div class="card"><p class="mono note">Horizontal lockup</p><div style="margin-top:12px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156.44 27.72" width="156.44" height="27.72" role="img" aria-label="Linkbot horizontal lockup"><title>Linkbot — Protocol mark</title>
+  <g transform="translate(0.00 1.64) scale(0.7639)">
+      <g fill="none" stroke="currentColor" stroke-width="3.168" stroke-linecap="round">
+        <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+        <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+        <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+      </g>
+      <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+  </g>
+  <g transform="translate(35.44 0.00) scale(0.22)">
+      <g transform="translate(7.50 7.50)">
+      <g fill="none" stroke="currentColor" stroke-width="11.0" stroke-linecap="square" stroke-linejoin="miter">
+        <path transform="translate(0.00 0)" d="M0 0 V100 H60" />
+        <path transform="translate(80.00 0)" d="M0 0 V100" />
+        <path transform="translate(98.00 0)" d="M0 100 V0 M0 0 L72 100 M72 100 V0" />
+        <path transform="translate(190.00 0)" d="M0 0 V100 M0 54 L58 0 M0 54 L58 100" />
+        <path transform="translate(268.00 0)" d="M0 0 V100 M0 0 H33 A25 25 0 0 1 33 50 H0 M0 50 H38 A25 25 0 0 1 38 100 H0" />
+        <path transform="translate(354.00 0)" d="M0 30 A30 30 0 0 1 30 0 H36 A30 30 0 0 1 66 30 V70 A30 30 0 0 1 36 100 H30 A30 30 0 0 1 0 70 Z" />
+        <path transform="translate(440.00 0)" d="M0 0 H68 M34 0 V100" />
+      </g>
+        <circle cx="190.00" cy="54.0" r="9.35" fill="currentColor" />
+      </g>
+  </g>
+</svg>
+</div></div>
+      <div class="card"><p class="mono note">Stacked lockup</p><div style="margin-top:12px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 121 63.16" width="121" height="63.16" role="img" aria-label="Linkbot stacked lockup"><title>Linkbot — Protocol mark</title>
+  <g transform="translate(48.28 0.00) scale(0.7639)">
+      <g fill="none" stroke="currentColor" stroke-width="3.168" stroke-linecap="round">
+        <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+        <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+        <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+      </g>
+      <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+  </g>
+  <g transform="translate(0.00 35.44) scale(0.22)">
+      <g transform="translate(7.50 7.50)">
+      <g fill="none" stroke="currentColor" stroke-width="11.0" stroke-linecap="square" stroke-linejoin="miter">
+        <path transform="translate(0.00 0)" d="M0 0 V100 H60" />
+        <path transform="translate(80.00 0)" d="M0 0 V100" />
+        <path transform="translate(98.00 0)" d="M0 100 V0 M0 0 L72 100 M72 100 V0" />
+        <path transform="translate(190.00 0)" d="M0 0 V100 M0 54 L58 0 M0 54 L58 100" />
+        <path transform="translate(268.00 0)" d="M0 0 V100 M0 0 H33 A25 25 0 0 1 33 50 H0 M0 50 H38 A25 25 0 0 1 38 100 H0" />
+        <path transform="translate(354.00 0)" d="M0 30 A30 30 0 0 1 30 0 H36 A30 30 0 0 1 66 30 V70 A30 30 0 0 1 36 100 H30 A30 30 0 0 1 0 70 Z" />
+        <path transform="translate(440.00 0)" d="M0 0 H68 M34 0 V100" />
+      </g>
+        <circle cx="190.00" cy="54.0" r="9.35" fill="currentColor" />
+      </g>
+  </g>
+</svg>
+</div></div>
+      <div class="card"><p class="mono note">Single colour on paper and on ink</p>
+        <div class="chipset">
+          <span class="chip chip-paper"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" role="img" aria-label="Linkbot mark"><title>Linkbot — Protocol mark</title>
+  <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+    <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+    <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+  </g>
+  <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+</svg>
+</span>
+          <span class="chip chip-ink"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" role="img" aria-label="Linkbot mark"><title>Linkbot — Protocol mark</title>
+  <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+    <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+    <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+  </g>
+  <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+</svg>
+</span>
+          <span class="chip chip-paper chip-loose"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24" role="img" aria-label="Linkbot mark, monochrome"><title>Linkbot — Protocol mark</title>
+  <g fill="none" stroke="#14161A" stroke-width="1.6" stroke-linecap="round">
+    <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+    <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+    <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+  </g>
+  <circle cx="16" cy="16" r="1.8" fill="#14161A" />
+</svg>
+</span>
+        </div></div>
+      <div class="card"><p class="mono note">App plate, ink and inverse</p>
+        <div class="chipset">
+          <span style="width:56px;height:56px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="56" height="56" role="img" aria-label="Linkbot app icon"><title>Linkbot — Protocol mark</title>
+  <rect width="56" height="56" rx="14" fill="#14161A" />
+  <g transform="translate(16 16) scale(1)" color="#F4F1EA">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+        <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+        <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+      </g>
+      <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+  </g>
+</svg>
+</span>
+          <span style="width:56px;height:56px"><!-- Linkbot Brand OS v0.1.0 — editable vector source. Colour is inherited (currentColor). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="56" height="56" role="img" aria-label="Linkbot app icon, inverse"><title>Linkbot — Protocol mark</title>
+  <rect width="56" height="56" rx="14" fill="#F4F1EA" />
+  <g transform="translate(16 16) scale(1)" color="#14161A">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <path d="M27.5 11 V27.5 H4.5 V4.5 H21" />
+        <path d="M6.48 11.56 A10.50 10.50 0 1 1 6.13 19.59" />
+        <path d="M10.56 13.46 A6.00 6.00 0 1 1 10.36 18.05" />
+      </g>
+      <circle cx="16" cy="16" r="1.8" fill="currentColor" />
+  </g>
+</svg>
+</span>
+        </div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="colour-h">
+    <p class="eyebrow">Colour system</p>
+    <h2 id="colour-h">Semantic palette, Protocol</h2>
+    <div class="grid" id="swatches"></div>
+    <p class="note" style="margin-top:14px">Every text and control pair in this system is computed
+      against WCAG 2.1 — see <span class="mono">validation/contrast-report.md</span> in this folder for
+      the exact ratios. Status is never carried by colour alone.</p>
+  </section>
+
+  <section aria-labelledby="type-h">
+    <p class="eyebrow">Typography</p>
+    <h2 id="type-h">Hierarchy</h2>
+    <div class="type-row"><span class="spec mono">display / 40</span>
+      <span style="font-family:var(--f-display);font-size:40px;line-height:1.05;letter-spacing:-.03em">Private by default</span></div>
+    <div class="type-row"><span class="spec mono">headline / 28</span>
+      <span style="font-family:var(--f-display);font-size:28px;line-height:1.1">Permissioned, not published</span></div>
+    <div class="type-row"><span class="spec mono">body / 17</span>
+      <span style="max-width:38rem">An employer asks for one bounded signal. You decide whether to
+        release it. Revoking stops future access; it does not claim that delivered copies were erased.</span></div>
+    <div class="type-row"><span class="spec mono">label / 11 mono</span>
+      <span class="mono" style="letter-spacing:.16em;text-transform:uppercase">Claims · Evidence · Authority · Receipts</span></div>
+    <div class="type-row"><span class="spec mono">numeric / tabular</span>
+      <span class="mono tnum">0123456789 · 90 days · v3 · 4.5:1</span></div>
+  </section>
+
+  <section aria-labelledby="state-h">
+    <p class="eyebrow">State vocabulary</p>
+    <h2 id="state-h">Four states, four carriers</h2>
+    <div class="grid">
+      <div class="status"><span class="glyph" style="color:var(--granted)"><span class="sq"></span></span>
+        <span><b>Confirmed</b> · reviewed by the holder</span></div>
+      <div class="status"><span class="glyph" style="color:var(--pending)"><span class="tri"></span></span>
+        <span><b>Proposed</b> · not yet confirmed</span></div>
+      <div class="status"><span class="glyph" style="color:var(--unknown)"><span class="ring"></span></span>
+        <span><b>Unknown</b> · never rendered as satisfied</span></div>
+      <div class="status"><span class="glyph" style="color:var(--denied)"><span class="dot"></span></span>
+        <span><b>Denied</b> · explicit negative</span></div>
+    </div>
+    <div class="grid" style="margin-top:20px">
+      <div class="receipt">RECEIPT · disclosure #A14<br>recipient: verified employer<br>
+        fields: seniority, employment_country, availability<br>policy: standing v3 · condition: native job<br>
+        recorded: 2026-10-09T09:14Z · revocable for future use</div>
+      <div class="card"><table class="tbl">
+        <caption class="note" style="text-align:left;padding-bottom:8px">Requirement view (agency mandate)</caption>
+        <tr><th>Requirement</th><th>State</th></tr>
+        <tr><td>Senior backend, 5y+</td><td>met</td></tr>
+        <tr><td>EU work authorisation</td><td>unknown → verify</td></tr>
+        <tr><td>Willing to relocate</td><td>unmet → blocked</td></tr>
+      </table></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="comp-h">
+    <p class="eyebrow">Components</p>
+    <h2 id="comp-h">Actions and inputs</h2>
+    <div class="grid">
+      <div class="card"><div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn primary" type="button">Request one signal</button>
+        <button class="btn secondary" type="button">See the request</button>
+        <button class="btn quiet" type="button">Not now</button></div>
+        <p class="note" style="margin-top:12px">One primary action per task. Destructive and
+          restart actions are quiet.</p></div>
+      <div class="card"><label class="field"><span>Signal requested</span>
+        <input value="eligible for senior engineering" readonly /></label>
+        <p class="note" style="margin-top:10px">Control borders meet 3:1 against their surface.</p></div>
+      <div class="card"><p class="note">Keyboard focus</p>
+        <button class="btn secondary" type="button" style="margin-top:10px">Focus me</button>
+        <p class="note" style="margin-top:10px">Focus ring is a token; it is never removed.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="motion-h">
+    <p class="eyebrow">Motion</p>
+    <h2 id="motion-h">One expressive moment</h2>
+    <div class="card"><button class="btn primary pulse" type="button" id="pulseBtn">Trigger the transition</button>
+      <p class="note" style="margin-top:12px">240 ms standard easing, reduced to 0 ms and replaced by a
+        focus outline under <span class="mono">prefers-reduced-motion</span>. No ambient loops, no
+        simulated processing.</p></div>
+  </section>
+
+  <section style="border-bottom:none">
+    <p class="eyebrow">Status of this artifact</p>
+    <h2>Candidate direction, not an approved identity</h2>
+    <p class="lede">Protocol is one of three candidate directions in Linkbot Brand OS v0.1.0.
+      Nothing in this folder changes a runtime file, and no direction has been approved. The
+      recommendation, with its reasoning and the decisions it leaves open, is in
+      <span class="mono">02-directions/PROPOSED.md</span>.</p>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var btns=document.querySelectorAll('[data-mode-btn]');
+  function apply(mode){
+    var dark = mode==='dark' || (mode==='system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    root.setAttribute('data-mode', dark?'dark':'light');
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.modeBtn===mode)); });
+  }
+  btns.forEach(function(b){ b.addEventListener('click', function(){ apply(b.dataset.modeBtn); }); });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ 
+    var cur=document.querySelector('[data-mode-btn][aria-pressed="true"]');
+    if(cur && cur.dataset.modeBtn==='system') apply('system');
+  });
+  apply('light');
+
+  var swatches=[['canvas','Page background'],['surface','Card surface'],['text','Body text'],
+    ['muted','Secondary text'],['brand','Brand / primary action'],['link','Link'],
+    ['border','Decorative rule'],['control','Control border'],['granted','Confirmed'],
+    ['pending','Proposed'],['denied','Denied'],['unknown','Unknown']];
+  var host=document.getElementById('swatches');
+  function paint(){
+    var cs=getComputedStyle(root);
+    host.innerHTML='';
+    swatches.forEach(function(p){
+      var v=cs.getPropertyValue('--'+p[0]).trim();
+      var el=document.createElement('div'); el.className='swatch';
+      el.innerHTML='<div class="chip" style="background:'+v+'"></div>'+
+        '<div class="meta"><b>'+p[1]+'</b>--'+p[0]+'<br>'+v+'</div>';
+      host.appendChild(el);
+    });
+  }
+  btns.forEach(function(b){ b.addEventListener('click', paint); });
+  paint();
+
+  var pb=document.getElementById('pulseBtn');
+  pb.addEventListener('click', function(){
+    pb.classList.add('on');
+    setTimeout(function(){ pb.classList.remove('on'); }, 260);
+  });
+})();
+</script>
+
+</body>
+</html>
