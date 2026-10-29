@@ -14,26 +14,33 @@ related:
 
 # Landing page in the widget design: page plan
 
-**State: a plan, waiting for the owner's approval. Nothing is built from it yet; the build starts after V1.** Written
-2026-10-28 by the Site lane on `build/vision` at `c119b24`; revised 2026-10-29 at `bddbdef` with the owner's page
-principles of 2026-10-29 (a visitor understands in three seconds what is offered and what to do).
+**Approval pending the owner's decision GEO-120 (by 2026-11-11): this page assumes Spaces is the main product. Built
+after V1.**
+
+**State: a plan, waiting for the owner's approval. Nothing is built from it yet.** Written 2026-10-28 by the Site lane
+on `build/vision` at `c119b24`; revised 2026-10-29 at `bddbdef` with the owner's page principles of 2026-10-29 (a
+visitor understands in three seconds what is offered and what to do), and again on 2026-10-29 at `b77c3b4` with the
+owner's feedback of the same day (plain visitor language, the labels "Live" and "Coming soon").
 
 ## For the owner: the six sections in two or three lines each
 
 1. **Opening.** One headline for the platform that visits ("Your platform connects buyers and sellers. Linkbot finds
    who fits."), one subline, one button into the demo. No second button, no paragraph under the headline.
-2. **Three cards.** Intake, Watch, Introductions: one fact each that runs on the staging space today, a status label
-   on the card, one button to that step of the demo. They replace the story, the proposal card and the reasons list.
+2. **Three cards.** "Ask in your market's words", "We keep looking", "Introduced only after two yeses": one sentence
+   each on what it does for the visitor, a label "Live" or "Coming soon", one button to that step of the demo. They
+   replace the story, the proposal card and the reasons list.
 3. **Demo stage.** The recorded walkthrough with the switch "As a buyer" / "As a supplier", one role at a time, three
-   steps each; the fictional data is named on the stage. Unchanged from the first plan.
-4. **Who sees what.** The stage list (board, match, introduction, operator) in the widget's progress style, one link
-   to the full page. Unchanged from the first plan.
-5. **For platforms.** The shortest embed snippet verbatim from Connect's docs, one button to `/for-platforms`.
-6. **Bottom.** "Not your market yet? Tell us what you connect." with one button to `/request-a-demo`, under it the
-   synthetic-data line and the status date; the old status section lives on as the cards' labels.
+   steps each; the stage says it shows fictional data. Unchanged from the first plan.
+4. **Who sees what.** Each step shows only what that step allows, in the widget's progress style, one link to the
+   full page. Unchanged from the first plan.
+5. **For platforms.** The shortest embed snippet verbatim from Connect's docs ("the questions fit your market"), one
+   button to `/for-platforms`.
+6. **Bottom.** "Not your market yet? Tell us what you connect." with one button to `/request-a-demo`, under it one
+   line that everything shown runs with fictional data and the date it was checked; the old status section lives on as
+   the cards' labels.
 
 Across the site: no filter walls. Where a page lists things (`/verticals`, `/platforms`), one tab bar and one search
-field; where a thing stands is a label on its card, never a filter.
+field; whether a thing is "Live" or "Coming soon" is a label on its card, never a filter.
 
 **What it does.** It turns the home (`/`) into the landing page and carries the widget's design onto the whole site,
 so that the site and the widget read as one product. The design source is the widget design spec v1 of 2026-10-28,
@@ -52,9 +59,16 @@ here.
 - Five languages as today; German in the Sie form (it already is); sentence case, no capital-letter labels (§7: the
   `.eyebrow`'s `text-transform: uppercase` goes).
 - One call to action per section; a second one only as a plain text link where a section says so.
-- Status labels use the site's existing three states (`src/components/State.astro`, words in `site.status`): on the
-  staging space, built but not on the staging space, not built. A label is set from the row it cites and dated with
-  `STATUS_CHECKED`; it never filters anything.
+- Plain visitor language in every line of page copy: no internal term (no "pack", no "watch"/"Beobachten", no
+  "staging", no truth-row name); a line says what the part does for the visitor. Internal names stay in this
+  plan's rules, truth-row names and file paths only.
+- Status labels are two words only: **"Live"** and **"Coming soon"** (de "Live" / "Demnächst"; es, fr, it translated
+  when built). "Live" means: runs today on the running Linkbot instance the demo is recorded from, with fictional data
+  (today the staging space, rows `how.today (now)` and `site.synthetic`); "Coming soon" covers everything else (built
+  but not running there, or not built). The site's three states (`src/components/State.astro`, words in `site.status`)
+  are folded into these two when built. A label is set from the row it cites and dated with `STATUS_CHECKED`; it
+  never filters anything. "Live" is a forbidden word today (`tests/forbidden.mjs`, `CLAUDE.md` rule 4); the label
+  needs the owner's exception (decision 8).
 
 ## 1. The page, section by section
 
@@ -67,40 +81,44 @@ replaces on today's home (`src/components/front/Front.astro`, sections 1 to 6).
   **Subline:** "Its widget asks each side what it needs; Linkbot shows a verdict for each criterion and introduces
   the two sides only after both say yes." Truth rows `home.lede`, `home.flow`, `platforms.embed`.
 - **Proof:** none beyond the two lines; the demo is one click away. The ask line of today's home (answered in the
-  browser, the synthetic sample pack) moves to the intake card's step on `/demo` or goes; it does not stay above the
+  browser, fictional sample questions) moves to the first card's step on `/demo` or goes; it does not stay above the
   fold.
 - **Call to action:** one main button into the demo, `/demo#path`. Its label is "Try it" only once `/demo` holds a live
   widget on a demo space; until then it says what it does: "See it step by step" (the recorded walkthrough cannot be
   tried). Decision 5.
 - **Replaces:** section 1 (B hero with the Venn, the text button and the lede). The Venn and its pause control go.
 
-### 1.2 Three cards: Intake, Watch, Introductions
+### 1.2 Three cards: ask, keep looking, introduce
 
-Three cards side by side (stacked on a phone), each with a name, one fact, a status label and one button. No story, no
-figure.
+Three cards side by side (stacked on a phone), each with a name, one sentence on what it does for the visitor, a label
+and one button. No story, no figure. The card names are page copy; the plan's internal names (intake, watch,
+introductions) stay off the page.
 
-| Card | The one fact (English source) | Truth rows | Label today | Button |
+| Card (page copy) | The one sentence (English source) | Truth rows | Label today | Button |
 | -- | -- | -- | -- | -- |
-| Intake | "Each side describes its need or offer in the pack's form or in one line; nothing is stored until it confirms." | `how.describe (form)`, `how.describe (text)`, `how.confirm`, `home.rules` | on the staging space | "See the request" → `/demo#step-1` |
-| Watch | "If nothing fits yet, a watch keeps the request open and tells only its owner when something new fits." | `how.describe (watch)` | on the staging space; the card's small print says its email goes to a test mailbox there | "See a watch" → `/demo#watch` |
-| Introductions | "Two sides are introduced only after a named operator approves and both say yes." | `how.approval`, `how.yes`, `how.introduction, how.sees` | on the staging space (operator mode) | "See the introduction" → `/demo#step-6` |
+| "Ask in your market's words" | "Each side says what it needs or offers, in one line or in questions that fit its market; nothing is stored until it confirms." | `how.describe (form)`, `how.describe (text)`, `how.confirm`, `home.rules` | Live | "See the request" → `/demo#step-1` |
+| "We keep looking" | "If nothing fits yet, Linkbot keeps looking and tells only you when something new fits." | `how.describe (watch)` | Live; the card's small print says that in the demo its emails go to a test mailbox | "See how it keeps looking" → `/demo#keep-looking` |
+| "Introduced only after two yeses" | "Two sides are introduced only after a named person approves and both say yes." | `how.approval`, `how.yes`, `how.introduction, how.sees` | Live (with a named person approving) | "See the introduction" → `/demo#step-6` |
 
-- The anchors `#step-1` to `#step-6` and `#watch` do not exist on `/demo` yet; the build adds them with the role switch
-  (step 4 of the order of work).
+- The anchors `#step-1` to `#step-6` and `#keep-looking` do not exist on `/demo` yet; the build adds them with the
+  role switch (step 4 of the order of work).
+- "Live" on all three cards is true only while the three rows hold on the instance the demo is recorded from; the
+  build re-checks them on the day (step 1 of the order of work).
 - **Replaces:** section 2 (Story and the folded Ledger; the Ledger moves to `/how-it-works`), section 3 ("Why it asks
   instead of guessing") and the first plan's proposal card. The verdict per criterion is shown on the demo stage and
   on `/how-it-works#matching`, not as a fourth card.
 
 ### 1.3 Demo stage: two roles, one after the other
 
-- **Message:** "A request and an offer are introduced only after a named operator approves and both sides say yes."
+- **Message:** "A request and an offer are introduced only after a named person approves and both sides say yes."
   Truth rows `home.flow`, `how.approval`, `how.yes`.
 - **Proof:** the recorded walkthrough that `/demo` shows today (`public/material/demo/<lang>/`, recorded from Connect's
   demo stage with synthetic data), with the switch the spec's §9 asks for on top: "As a buyer" / "As a supplier", one
-  role at a time, never side by side. Three steps per role on the landing page; the full six steps and the watch stay
-  on `/demo`. The stage says it shows fictional data (truth row `site.synthetic`). The pictures are re-recorded once
-  the widget itself carries the spec's design (Connect's work in `packages/embed`); until then they show the widget as
-  staging serves it, and the stage frame around them is the only part in the new design.
+  role at a time, never side by side. Three steps per role on the landing page; the full six steps and the
+  keep-looking step stay on `/demo`. The stage says it shows fictional data (truth row `site.synthetic`). The
+  pictures are re-recorded once the widget itself carries the spec's design (Connect's work in `packages/embed`); until
+  then they show the widget as the running instance serves it, and the stage frame around them is the only part in
+  the new design.
 - **Call to action:** "Walk through all six steps" → `/demo`.
 - **Replaces:** nothing on today's home; new as a section (today it is a link).
 
@@ -114,12 +132,13 @@ figure.
 
 ### 1.5 For platforms
 
-- **Message:** "One script and one element on your page; the questions come from your market's pack."
+- **Message:** "One script and one element on your page; the questions fit your market."
   Truth rows `platforms.embed`, `platforms.keys`, `how.pack`.
 - **Proof:** the shortest embed, verbatim from Connect's repository as `/developers` shows it today
   (`src/lib/connect-docs.ts`). Nothing about a per-space brand in the widget until the widget has it (spec §3 is not
-  built yet). Its label: on the staging space (the instance serves the widget from a pinned release, row
-  `how.today (now)`); the packages are not published (row `how.today (later)`), said in one line under the snippet.
+  built yet). Its label: "Live" (the instance the demo is recorded from serves the widget from a pinned release, row
+  `how.today (now)`); one line under the snippet, labelled "Coming soon": "Add it with your own build tools" (the
+  packages are not published, row `how.today (later)`).
 - **Call to action:** "For platforms" → `/for-platforms`; "For developers" → `/developers` only as a plain text link.
 - **Replaces:** section 5 (the two cards). The verticals card goes; `/verticals` stays, linked from `/for-platforms`
   and the footer.
@@ -127,9 +146,10 @@ figure.
 ### 1.6 Bottom call to action
 
 - **Message:** "Not your market yet? Tell us what you connect." Truth rows `verticals.first`, `verticals.next` (one
-  market's pack today, a second planned), `site.synthetic`.
-- **Proof:** none; under the button one line: everything on the page runs on Geoprocure's synthetic staging space,
-  checked on the `STATUS_CHECKED` date, and a plain text link "The full status" → `/status`.
+  market's questions today, a second market planned), `site.synthetic`.
+- **Proof:** none; under the button one line: "Everything shown here runs with fictional data; checked on
+  <`STATUS_CHECKED`>.", and a plain text link "The full status" → `/status`. (Behind the line: Geoprocure's synthetic
+  space on the staging instance, rows `site.synthetic` and `how.today (now)`; the page does not name it.)
 - **Call to action:** one button → `/request-a-demo`. That page says how to reach Linkbot (`CONTACT_EMAIL` in
   `src/lib/contact.ts`), which is "being prepared" until the owner names the mailbox; until then the button's line
   says so in words rather than promising a reply. Decision 6.
@@ -142,9 +162,9 @@ Header and footer keep their links and the legal column as today.
 | Page | After the plan |
 | -- | -- |
 | `/` | replaced by section 1 above |
-| `/demo` | kept; gets the role switch (§9), an anchor per step (`#step-1` to `#step-6`) and `#watch` for the cards' buttons, and the new tokens; steps and pictures unchanged until re-recorded |
+| `/demo` | kept; gets the role switch (§9), an anchor per step (`#step-1` to `#step-6`) and `#keep-looking` for the cards' buttons, and the new tokens; steps and pictures unchanged until re-recorded; its own copy is brought to the same plain language (no "pack", "watch", "staging") |
 | `/how-it-works` | kept; takes the Ledger (the full synthetic pair) from the home |
-| `/verticals`, `/platforms` | kept; each list becomes one tab bar plus one search field (packs on `/verticals`, the six integration pages on `/platforms`), each entry a card with its status label; no filter by status, no filter wall (decision 7) |
+| `/verticals`, `/platforms` | kept; each list becomes one tab bar plus one search field (markets on `/verticals`, the six integration pages on `/platforms`), each entry a card with its label "Live" or "Coming soon"; no filter by status, no filter wall (decision 7) |
 | `/who-sees-what`, `/for-platforms`, `/developers`, the six `/platforms/*` pages | kept, restyled by the tokens only |
 | `/status`, `/changelog`, `/request-a-demo`, `/contact`, `/imprint`, `/privacy`, `/one-page` and its PDFs | kept, restyled by the tokens only |
 | the intermediaries draft | kept as a draft, out of production as today |
@@ -188,7 +208,7 @@ Each step one PR into `build/vision`, gates as `CLAUDE.md` says.
 3. The new home, sections 1.1 to 1.6, five languages, truth-check rows dated.
 4. `/demo`'s role switch and its step anchors (the cards' buttons point at them); the re-recording waits for Connect's
    widget in the new design.
-5. The tab bar and search field on `/verticals` and `/platforms`, status as labels on the cards.
+5. The tab bar and search field on `/verticals` and `/platforms`, "Live" / "Coming soon" as labels on the cards.
 
 ## 5. Decisions for the owner
 
@@ -201,6 +221,11 @@ Each step one PR into `build/vision`, gates as `CLAUDE.md` says.
    Recommendation: yes; a recorded walkthrough cannot be tried, and the site says nothing that is not true today.
 6. The bottom's "Tell us what you connect" needs a mailbox Linkbot owns. Until the owner names it, `/request-a-demo`
    says the address is being prepared. Recommendation: ship the section with that line rather than leave it out.
-7. Search field on `/verticals` and `/platforms`: with one pack and six integration pages, the tab bar alone shows
+7. Search field on `/verticals` and `/platforms`: with one market and six integration pages, the tab bar alone shows
    everything. Recommendation: build the search field with the tab bar as asked, a plain filter on the entries' names
    in the browser, so it is in place when the lists grow.
+8. The label "Live" is the owner's word (feedback of 2026-10-29), and "live" is on the site's list of claims it may
+   not make (`CLAUDE.md` rule 4, `tests/forbidden.mjs` in all five languages). Recommendation: allow it as the status
+   label only (one string per language in `site.status`, exempted in the test by that key, nowhere in running text),
+   defined as above (runs today on the instance the demo is recorded from, with fictional data) and always shown with
+   the fictional-data line of §1.6 on the same page. Without this exception the build uses "Running" / "Läuft".
