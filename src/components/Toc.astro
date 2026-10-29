@@ -1,0 +1,90 @@
+---
+/* "On this page" (Concept A8). Sticky beside the text on wide screens, a compact fold under the
+   header on narrow ones; the section in view is marked (scrollspy); a click scrolls quickly to the
+   section (about half a second), the section lights briefly so the jump is seen, the address
+   gets the anchor and focus lands on the heading without a second jump. Under reduced motion the
+   jump is immediate and the light does not move. Without scripts it is a list of anchors. */
+interface Props { items: [string, string][]; label: string }
+const { items, label } = Astro.props;
+---
+<nav class="toc" data-toc aria-label={label}>
+  <details class="toc-fold" data-toc-fold open>
+    <summary><span>{label}</span><span class="toc-current" data-toc-current aria-hidden="true"></span></summary>
+    <ol>{items.map(([id, text], index) => <li><a href={`#${id}`} data-toc-link><span>{index + 1}</span>{text}</a></li>)}</ol>
+  </details>
+</nav>
+
+<script>
+  const toc = document.querySelector<HTMLElement>('[data-toc]');
+  if (toc) {
+    const links = [...toc.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')];
+    const fold = toc.querySelector<HTMLDetailsElement>('[data-toc-fold]')!, current = toc.querySelector<HTMLElement>('[data-toc-current]')!;
+    const sections = links.map(a => document.getElementById(a.hash.slice(1))).filter((s): s is HTMLElement => !!s);
+    const still = matchMedia('(prefers-reduced-motion: reduce)'), narrow = matchMedia('(max-width: 63.99rem)');
+    // Narrow screens: folded by default, unfolded on wide ones (where it is a sidebar). On wide ones
+    // the label is not a toggle: no tab stop, and Enter or a click cannot fold the sidebar away.
+    const summary = fold.querySelector<HTMLElement>('summary')!;
+    const foldByWidth = () => { fold.open = !narrow.matches; summary.tabIndex = narrow.matches ? 0 : -1; };
+    foldByWidth(); fold.dataset.ready = ''; narrow.addEventListener('change', foldByWidth);
+    summary.addEventListener('click', event => { if (!narrow.matches) event.preventDefault(); });
+    // The section in view: the last one whose top has passed the reading line.
+    const mark = (id: string) => {
+      for (const a of links) { const on = a.hash === '#' + id; a.toggleAttribute('aria-current', on); if (on) a.setAttribute('aria-current', 'true'); }
+      current.textContent = links.find(a => a.hash === '#' + id)?.textContent?.replace(/^\d+/, '').trim() ?? '';
+    };
+    const line = () => (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 96) + 24;
+    let raf = 0;
+    const spy = () => { raf = 0; const y = line(); let at = sections[0]; for (const s of sections) if (s.getBoundingClientRect().top <= y) at = s; if (at) mark(at.id); };
+    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(spy); }, { passive: true });
+    spy();
+    // A click: scroll there (quickly, eased), light the section, set the address, focus the heading.
+    const heading = (s: HTMLElement) => s.querySelector<HTMLElement>('h2, h3') ?? s;
+    const arrive = (s: HTMLElement, id: string) => {
+      s.classList.remove('is-lit'); void s.offsetWidth; s.classList.add('is-lit');
+      const h = heading(s); if (!h.hasAttribute('tabindex')) h.setAttribute('tabindex', '-1');
+      h.focus({ preventScroll: true }); history.replaceState(null, '', '#' + id); mark(id);
+    };
+    for (const a of links) a.addEventListener('click', event => {
+      const id = a.hash.slice(1), s = document.getElementById(id); if (!s) return;
+      event.preventDefault();
+      if (narrow.matches) fold.open = false;
+      const top = s.getBoundingClientRect().top + scrollY - (parseFloat(getComputedStyle(s).scrollMarginTop) || 0);
+      if (still.matches) { scrollTo(0, top); arrive(s, id); return; }
+      const from = scrollY, dist = top - from, t0 = performance.now(), ms = Math.min(700, Math.max(400, Math.abs(dist) * .35));
+      const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+      const step = (now: number) => { const t = Math.min(1, (now - t0) / ms); scrollTo(0, from + dist * ease(t)); if (t < 1) requestAnimationFrame(step); else arrive(s, id); };
+      requestAnimationFrame(step);
+    });
+  }
+</script>
+
+<style>
+  .toc { font-family: var(--text); }
+  .toc summary { list-style: none; cursor: default; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  .toc summary::-webkit-details-marker { display: none; }
+  .toc-current { display: none; }
+  .toc ol { display: grid; gap: 0; margin-top: 10px; border-left: 2px solid var(--line-strong); }
+  .toc a { display: flex; align-items: center; gap: 10px; min-height: var(--target); padding: 4px 0 4px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: var(--size-small); font-weight: 580; color: var(--ink-2); text-decoration: none; transition: color var(--fast), border-color var(--fast); }
+  .toc a:hover { color: var(--ink); border-left-color: var(--ink); }
+  .toc a[aria-current] { color: var(--ink); font-weight: 650; border-left-color: var(--green); }
+  .toc a span { font-size: var(--size-micro); color: var(--ink-3); width: 1.2em; }
+  @media (min-width: 64rem) { .toc { position: sticky; top: calc(var(--header) + 32px); align-self: start; max-height: calc(100svh - var(--header) - 48px); overflow: auto; } }
+  /* Narrow screens: a compact fold that sticks under the header; the current section's name shows while folded. */
+  @media (max-width: 63.99rem) {
+    .toc { position: sticky; top: var(--header); z-index: 20; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter); background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .toc summary { display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; }
+    .toc summary::after { content: ''; width: 8px; height: 8px; margin-left: auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); transition: transform var(--base) var(--ease); }
+    .toc-fold[open] summary::after { transform: rotate(-135deg); }
+    .toc-current { display: inline; text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--ink); min-width: 0; }
+    .toc-fold[open] .toc-current { display: none; }
+    /* Folded from the first paint where scripts run, so the text below does not jump when the script folds it. */
+    :global(.js) .toc-fold:not([data-ready]) > ol { display: none; }
+    :global(.js) .toc-fold:not([data-ready]) summary::after { transform: rotate(45deg); }
+    .toc ol { margin: 0 0 10px; }
+  }
+  /* The section arrived at lights briefly (a wash that fades), so the jump is seen; under reduced
+     motion it is simply there and gone. */
+  :global(.is-lit) { animation: toc-lit 1.4s var(--ease-out) both; }
+  @keyframes toc-lit { 0% { box-shadow: 0 0 0 10px var(--green-wash), 0 0 0 30px color-mix(in srgb, var(--green-wash) 40%, transparent); background-color: var(--green-wash); } 100% { box-shadow: 0 0 0 10px transparent, 0 0 0 30px transparent; background-color: transparent; } }
+  @media (prefers-reduced-motion: reduce) { :global(.is-lit) { animation: toc-lit-still 1.4s steps(1, end) both; } @keyframes toc-lit-still { 0% { background-color: var(--green-wash); box-shadow: 0 0 0 10px var(--green-wash); } 100% { background-color: transparent; box-shadow: none; } } }
+</style>

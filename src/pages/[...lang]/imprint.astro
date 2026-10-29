@@ -1,0 +1,27 @@
+---
+/* The imprint: the confirmed text from src/legal/imprint.ts, or, until there is one, a clearly marked placeholder that
+   says it is in preparation. Nothing here is invented. */
+import Base from '../../layouts/Base.astro';
+import LegalText from '../../components/LegalText.astro';
+import { IMPRINT } from '../../legal/imprint';
+import { langPaths, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const i = t.imprint;
+---
+<Base lang={lang} t={t} fallback={fallback} title={i.title} description={IMPRINT ? i.released.description : i.description} path="/imprint" crumbs={[[t.site.footer.imprint, '/imprint']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      {IMPRINT ? <h1>{i.eyebrow}</h1> : <><p class="eyebrow">{i.eyebrow}</p><h1>{i.h1}</h1></>}
+    </div>
+  </section>
+  <div class="wrap doc-one">
+    {IMPRINT ? <LegalText text={IMPRINT} /> : (
+      <div class="placeholder" role="note" aria-label={i.eyebrow} data-legal-pending>
+        <p>{i.lede}</p>
+      </div>
+    )}
+  </div>
+</Base>

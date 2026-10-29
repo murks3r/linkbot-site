@@ -1,16 +1,35 @@
 # Linkbot
 
-> Linkbot is building a matching layer that platforms embed in their own pages.
+> Linkbot is a matching layer a platform embeds in its own pages: one space per market, needs
+> and offers as confirmed criteria, a verdict per criterion instead of a score, and an
+> introduction only after both sides say yes. Everything described on the site runs on a
+> synthetic staging space with synthetic data.
 
-## What this site is
-
-A holding page while the Linkbot site is rebuilt. It has no forms, sets no cookies and loads nothing
-from other sites.
-
-## Who operates it
-
-Linkbot OÜ, Tallinn, Estonia.
+This file is a plain-text summary of the public site for machine readers. It is not a ranking
+instruction and makes no claims beyond the pages it links to. The site is in English at the
+root and in German, Spanish, Italian and French under /de, /es, /it and /fr, with the same pages
+in every language.
 
 ## Pages
 
-- [Home](/): this holding page.
+- [Home](/): what Linkbot is; the path from a need to an introduction; the four ways to say
+  what you need or offer and where each stands; the rules the server enforces; for platforms
+  and for verticals.
+- [How it works](/how-it-works): a space, a pack, the four ways to describe, confirming,
+  matching with a verdict per criterion, approval and gates by a named operator, both yes, the
+  introduction in operator or direct mode, outcomes and deletion, who sees what at each stage,
+  five languages, and what works on the staging space today.
+- [For platforms](/platforms): the embed (one script, one element), keys and origins, the
+  console for the platform's team, the SDK and webhooks, the recipes for plain HTML, Astro,
+  Next.js and WordPress.
+- [For verticals](/verticals): what a pack holds, the first space (industrial minerals), more
+  verticals.
+- [Privacy notice](/privacy) and [Imprint](/imprint): in preparation; what is already true of
+  this site.
+
+## Status
+
+[Status](/status) lists, dated, which parts run on Geoprocure's synthetic staging space, which are
+built or in the contract but do not run there, and which are planned. It is built from the
+site's truth check. There is no demo of the widget on this site until a demo space with
+synthetic data exists.

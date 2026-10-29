@@ -1,0 +1,11 @@
+---
+/* The home, in every language: the front the owner picked on 2026-10-24 (GEO-188), B as the hero and section A second
+   (src/components/front/Front.astro), its words from src/front/copy.ts. */
+import Front from '../../components/front/Front.astro';
+import { langPaths, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t } = resolve(lang);
+---
+<Front lang={lang} t={t} />

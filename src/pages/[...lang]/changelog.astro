@@ -1,0 +1,54 @@
+---
+/* What's new: one dated entry per product step a customer can notice, built from docs/changelog.yml
+   (src/lib/changelog.ts), each with where it stands and the pull request it rests on. Words: the catalogue's changelog. */
+import Base from '../../layouts/Base.astro';
+import Mark from '../../components/Mark.astro';
+import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
+import { longDay } from '../../i18n/status-date';
+import { byDay, loadChangelog } from '../../lib/changelog';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const c = t.changelog;
+const days = byDay(loadChangelog());
+const STATE = { 'on staging': { tone: 'fit', words: c.states.staging }, built: { tone: 'tradeoff', words: c.states.built } } as const;
+---
+<Base lang={lang} t={t} fallback={fallback} title={c.title} description={c.description} path="/changelog" crumbs={[[c.eyebrow, '/changelog']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1>{c.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{c.lede}</p>
+    </div>
+  </section>
+  <div class="wrap page-body">
+    <ol class="log">
+      {days.map(([day, entries]) => <li class="day">
+        <h2><time datetime={day}>{longDay(lang, day)}</time></h2>
+        <ul>
+          {entries.map(entry => <li class="entry" data-state={entry.state}>
+            <p>{entry.text[lang]}</p>
+            <p class="meta">
+              <span class="state"><Mark tone={STATE[entry.state].tone} size={10} />{STATE[entry.state].words}</span>
+              <span>{c.source}: {entry.sources.map(source => `${source.repo} #${source.pr}`).join(', ')}</span>
+            </p>
+          </li>)}
+        </ul>
+      </li>)}
+    </ol>
+    <p class="note">{c.note}</p>
+    <p><a class="link" href={pathFor(lang, '/status')}>{t.status.link}</a></p>
+    <p class="note">{t.site.synthetic}</p>
+  </div>
+</Base>
+
+<style>
+  .log { display: grid; gap: clamp(28px, 4vw, 44px); max-width: 72ch; }
+  .day { display: grid; gap: 12px; }
+  .day h2 { font-size: 1.125rem; }
+  .day ul { display: grid; gap: 12px; }
+  .entry { display: grid; gap: 8px; padding: clamp(16px, 2.2vw, 22px); border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--surface); }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: var(--size-small); color: var(--ink-2); }
+  .state { display: inline-flex; align-items: center; gap: 8px; }
+</style>
