@@ -9,8 +9,8 @@ import { statusDate } from './status-date.ts';
 /** The day the status sentences were checked, in English (status-date.ts). */
 const AS_OF = statusDate('en');
 
-/** Where a capability stands on the day of status-date.ts: on the staging space; in the contract, not on it; not built. */
-export type Status = 'now' | 'contract' | 'later';
+/** Where a capability stands on the day of status-date.ts: on the staging space; in the contract, not on it; a prototype, not on it; not built. */
+export type Status = 'now' | 'contract' | 'prototype' | 'later';
 
 /** A row of a two- or three-column table on an integration page. */
 export interface Row { name: string; what: string; more?: string }
@@ -35,7 +35,7 @@ export const en = {
       contactPending: 'Contact details follow with our domain. Linkbot has no domain of its own yet, so this site names no address and has no contact form.',
       line: 'This site sets no cookies, loads nothing from third parties and uses no analytics.',
     },
-    status: { now: 'On the staging space', contract: 'In the contract, not on the staging space', later: 'Not built' },
+    status: { now: 'On the staging space', contract: 'In the contract, not on the staging space', prototype: 'A prototype, not on the staging space', later: 'Not built' },
     synthetic: 'Everything on this site describes the Space API contract and what runs on Geoprocure’s synthetic staging space, with synthetic data. No real person and no real organisation uses it yet.',
     more: 'Read more',
   },
@@ -266,12 +266,12 @@ export const en = {
     toc: [['ways', 'Four ways in'], ['gets', 'What you get'], ['yours', 'What stays yours'], ['details', 'The details']] as [string, string][],
     ways: {
       title: 'Four ways in',
-      lede: `As of ${AS_OF}, two of them run on the staging space, and two are not built.`,
+      lede: `As of ${AS_OF}, two of them run on the staging space. Hosted pages are not built, and MCP is a read-only prototype that is not on the staging space.`,
       items: [
         { name: 'Hosted pages', status: 'later' as Status, body: 'A page served for you that you link to instead of embedding. It is not built. Today a space appears only on your own pages, through the embed or through your own server.' },
         { name: 'The embed', status: 'now' as Status, body: 'One script and one element on your page. The script comes from your space’s own instance; the element carries your publishable key, which works only on the origins your space allows. Its modes: describe, board, watch and mine. The staging instance serves the widget’s release 0.5.0-v1.' },
         { name: 'The API and the SDK', status: 'now' as Status, body: `Your server talks to the Space API with the secret key, which never appears in a page: it can seed needs and offers, record checks and approvals, and read introductions and outcomes. The SDK gives your server a client typed by the contract. As of ${AS_OF} the SDK is not published; its code is in the Connect repository.` },
-        { name: 'MCP', status: 'later' as Status, body: 'Planned, not built: an MCP server per space, through which an AI agent prepares a need or an offer and a person confirms and answers. The owner chose this direction; its design is proposed and its contract is a skeleton.' },
+        { name: 'MCP', status: 'prototype' as Status, body: 'A read-only prototype: an MCP server through which an AI agent reads one space the way a person’s browser would: the form, the board and, with the person’s own token, that person’s requests and their matches. It writes nothing and decides nothing. It is on a development branch, has been tried only with synthetic data, and is not on the staging space. Planned, not built: an agent that prepares a need or an offer, which a person then confirms and answers. The owner chose this direction; its design is proposed.' },
       ],
     },
     gets: {
@@ -341,7 +341,7 @@ export const en = {
       title: 'Not available yet',
       items: [
         `npm packages: the SDK, the React wrapper and the Next.js and Astro packages are not published as of ${AS_OF}. Today they run from a clone of the Connect repository.`,
-        'MCP: planned, not built. There is no MCP endpoint to use.',
+        'MCP: a read-only prototype on a development branch, not published. There is no MCP endpoint to use.',
         `The repository itself: it is private as of ${AS_OF}.`,
         'A space to try it on: none is offered to developers yet. The examples run against a local sample or a stand-in.',
       ],

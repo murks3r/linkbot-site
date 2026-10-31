@@ -23,7 +23,7 @@ export const it: Catalogue = {
       contactPending: 'I recapiti arriveranno con il nostro dominio. Linkbot non ha ancora un dominio proprio, quindi questo sito non indica alcun indirizzo e non ha un modulo di contatto.',
       line: 'Questo sito non imposta cookie, non carica nulla da terze parti e non usa strumenti di analisi.',
     },
-    status: { now: 'Sullo spazio di staging', contract: 'Nel contratto, non sullo spazio di staging', later: 'Non realizzato' },
+    status: { now: 'Sullo spazio di staging', contract: 'Nel contratto, non sullo spazio di staging', prototype: 'Un prototipo, non sullo spazio di staging', later: 'Non realizzato' },
     synthetic: 'Tutto ciò che è descritto in questo sito riguarda il contratto della Space API e ciò che gira sullo spazio di staging sintetico di Geoprocure, con dati sintetici. Nessuna persona reale e nessuna organizzazione reale lo usa ancora.',
     more: 'Leggi di più',
   },
@@ -254,12 +254,12 @@ export const it: Catalogue = {
     toc: [['ways', 'Quattro vie d’accesso'], ['gets', 'Cosa ottiene'], ['yours', 'Cosa resta Suo'], ['details', 'I dettagli']] as [string, string][],
     ways: {
       title: 'Quattro vie d’accesso',
-      lede: `Al ${AS_OF}, due di esse girano sullo spazio di staging e due non sono costruite.`,
+      lede: `Al ${AS_OF}, due di esse girano sullo spazio di staging. Le pagine ospitate non sono costruite, e MCP è un prototipo in sola lettura che non è sullo spazio di staging.`,
       items: [
         { name: 'Pagine ospitate', status: 'later' as Status, body: 'Una pagina servita per Lei, da collegare invece di incorporare. Non è costruita. Oggi uno spazio compare solo sulle Sue pagine, tramite l’incorporamento o tramite il Suo server.' },
         { name: 'L’incorporamento', status: 'now' as Status, body: 'Uno script e un elemento sulla Sua pagina. Lo script arriva dall’istanza propria del Suo spazio; l’elemento porta la Sua chiave pubblicabile, che funziona solo sulle origini consentite dal Suo spazio. Le sue modalità: descrizione, bacheca, monitoraggio e i miei. L’istanza di staging serve la versione 0.5.0-v1 del widget.' },
         { name: 'L’API e l’SDK', status: 'now' as Status, body: `Il Suo server parla con la Space API con la chiave segreta, che non compare mai in una pagina: può inserire fabbisogni e offerte, registrare controlli e approvazioni, e leggere presentazioni ed esiti. L’SDK dà al Suo server un client tipizzato dal contratto. Al ${AS_OF} l’SDK non è pubblicato; il suo codice è nel repository di Connect.` },
-        { name: 'MCP', status: 'later' as Status, body: 'Previsto, non costruito: un server MCP per spazio, tramite il quale un agente IA prepara un fabbisogno o un’offerta e una persona conferma e risponde. Il titolare ha scelto questa direzione; il suo progetto è proposto e il suo contratto è uno scheletro.' },
+        { name: 'MCP', status: 'prototype' as Status, body: 'Un prototipo in sola lettura: un server MCP tramite il quale un agente IA legge uno spazio come farebbe il browser di una persona: il modulo, la bacheca e, con il token proprio della persona, le sue richieste e le loro corrispondenze. Non scrive nulla e non decide nulla. Si trova su un ramo di sviluppo, è stato provato solo con dati sintetici e non è sullo spazio di staging. Previsto, non costruito: un agente che prepara un fabbisogno o un’offerta, che una persona poi conferma e a cui risponde. Il titolare ha scelto questa direzione; il suo progetto è proposto.' },
       ],
     },
     gets: {
@@ -329,7 +329,7 @@ export const it: Catalogue = {
       title: 'Non ancora disponibile',
       items: [
         `Pacchetti npm: l’SDK, il wrapper React e i pacchetti Next.js e Astro non sono pubblicati al ${AS_OF}. Oggi girano da un clone del repository di Connect.`,
-        'MCP: previsto, non costruito. Non c’è alcun endpoint MCP da usare.',
+        'MCP: un prototipo in sola lettura su un ramo di sviluppo, non pubblicato. Non c’è alcun endpoint MCP da usare.',
         `Il repository stesso: è privato al ${AS_OF}.`,
         'Uno spazio su cui provarlo: non ne viene ancora offerto nessuno agli sviluppatori. Gli esempi girano contro un esempio locale o un sostituto.',
       ],
