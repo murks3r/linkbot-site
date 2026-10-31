@@ -8,7 +8,7 @@ console, the Space API); the site explains, it never matches.
 This repository is built in BUILD MODE on the integration branch `build/vision` (see
 `CLAUDE.md`): pull requests target that branch, the fast check in `.github/workflows/check.yml`
 (types, build, unit tests) must be green, previews only, `main` only at milestones with the
-owner's go. The design is concept A8 (the design canvas `design/concept-a8`).
+owner's go. The structure is concept A8 (the design canvas `design/concept-a8`); the design is the widget design spec v1.
 
 ## Pages
 
@@ -44,34 +44,25 @@ every missing address.
   `index.ts`, and the pages, the sitemap and the tests pick it up. A translation is reviewed
   before it is merged.
 
-## Design (concept A8, redesigned on 2026-10-24)
+## Design (the widget design spec v1, since 2026-10-31)
 
-The owner's decisions of 2026-10-24 and the reasons for each are in `docs/front/redesign-2026-10-24.md`.
+The site wears the widget's design so that both read as one product (`docs/front/landing-plan.md` §3).
 
-- **Tokens, light by default.** One palette for light and dark, defined once with `light-dark()` in
-  `src/styles/site.css`. The page does not follow the system's scheme; the dark palette shows only
-  with `?theme=dark`.
-- **Type:** the brand lab's pairing, self-hosted and subset for the five languages
-  (`src/styles/fonts.css`): "LB Display Sans" (IBM Plex Sans SemiBold, renamed as its licence
-  requires) for display, Atkinson Hyperlegible Next for text. Both are under the SIL Open Font
-  License 1.1, with the licence beside the files (`public/fonts/*/OFL.txt`).
-- **The dust:** a tile of single-device-pixel grains on the page's own background, under all
-  content, scrolling with the page (`public/material/dust-*.png`, written by `node scripts/dust.mjs`).
-- **The Venn** (`src/components/front/Venn.astro`): the home's figure, one synthetic pair as nine
-  verdicts in the lens. It loops by itself, pauses off-screen and on its control, and stands still
-  under reduced motion or without scripts.
+- **One token file:** `src/styles/tokens.css` holds the spec's colours, type roles and measures
+  under the spec's names (`--lb-ground`, `--lb-ink`, `--lb-accent` …), and sets the widget's own
+  variables from them. It is the only place a colour is written (`tests/tokens.test.mjs`). Light
+  only; no texture.
+- **Type:** Schibsted Grotesk, one variable file per script range, self-hosted
+  (`src/styles/fonts.css`, licence in `public/fonts/schibsted-grotesk/OFL.txt`); the Latin file is
+  the one Connect's widget serves. Tabular figures only where numbers stand. The share images and
+  the one-page sheet still draw with the earlier faces (`src/lib/brand-fonts.ts`).
+- **The landing page** (`src/components/front/Landing.astro`): six sections, words in
+  `src/front/landing-copy.ts`; the status labels "Live" and "Coming soon" sit on the cards and
+  never filter.
 - **The language** is one floating button with a globe at the bottom right
   (`src/components/LangSwitch.astro`); the header and the footer list no languages.
-- **Review switches for the owner's open choices,** per page and combinable: `?logo=quote` (the
-  wordmark is the default), `?venn=2` (the second motion study), `?icon=match` (icon F-I21 on the
-  ask button), `?arm=pointer` (the arm that follows the pointer), `?theme=dark`.
 - **Evidence and status** use the app's three squares (`src/components/Mark.astro`): solid = on
   the staging space now, split = in the contract and not on staging yet, dashed = not built yet.
-- **Concept A8's preview tools:** the brand board at `/__preview/brand` and the variant switcher
-  exist only in preview builds with `PUBLIC_PREVIEW_VARIANTS=1`; `tests/build.test.mjs` proves a
-  production build carries none of it. `src/styles/palette.css`, a copy of the app's generated
-  tokens (`node scripts/sync-tokens.mjs <app checkout> [--check]`), feeds only the brand board,
-  which imports it.
 
 ## Configuration
 
@@ -79,7 +70,6 @@ The owner's decisions of 2026-10-24 and the reasons for each are in `docs/front/
 |---|---|---|
 | `SITE_URL` | `https://linkbot-site.vercel.app` | canonical origin (canonical links, alternates, Open Graph, sitemap). The default is where production runs today. The launch domain is to be named by the owner (`linkbot-domain-tbd.invalid` until then). |
 | `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
-| `PUBLIC_PREVIEW_VARIANTS` | unset | `1` for a preview with the brand board and the variant switcher |
 
 ## Develop and test
 
@@ -87,16 +77,14 @@ The owner's decisions of 2026-10-24 and the reasons for each are in `docs/front/
 npm ci
 npm run dev
 npm run build                 # astro check + static build to ./dist; also draws each page's preview image
-npm test                      # the catalogues, the palette copy, the production build
+npm test                      # the catalogues, the tokens, the production build
 LINKBOT_APP_DIR=../linkbot npm run test:browser   # every page in every language at 5 widths, the app's WCAG audit, the journeys
-SITE_SCHEME=dark LINKBOT_APP_DIR=../linkbot npm run test:browser   # the same in the dark palette (?theme=dark)
 ```
 
 The browser acceptance needs a checkout of the app (murks3r/linkbot) for its accessibility audit,
 so it runs at milestones, locally; the fast check in CI runs the rest.
 
-No cookies, analytics or third-party requests; the typefaces (LB Display Sans for display,
-Atkinson Hyperlegible Next for text) are self-hosted.
+No cookies, analytics or third-party requests; the typeface (Schibsted Grotesk) is self-hosted.
 
 `vercel.json` holds the framework preset, the install and build commands and the security headers.
 Every branch and pull request gets a preview deployment; production is `main`.
