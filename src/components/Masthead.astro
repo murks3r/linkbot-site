@@ -25,28 +25,27 @@ const here = (href: string) => (path === href ? 'page' : undefined);
 </header>
 
 <style>
-  /* A8: the bar is seamless. It has no fill of its own, so the page's ground and its dust run through it unchanged.
-     While content passes beneath, only a blur, never a tint, keeps the words readable; the blur would wipe the dust
-     out, so the blurred layer carries the same dust tile on top (third pass). No rule marks its edge. */
+  /* A8: the bar is seamless. It has no fill of its own, so the page's ground runs through it unchanged. While content
+     passes beneath, the ground and a blur keep the words readable. No rule marks its edge. */
   .masthead { position: sticky; top: 0; z-index: 30; background: transparent; }
-  .masthead::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); background: var(--dust-tile) 0 0 / var(--dust-size) var(--dust-size) repeat; opacity: 0; transition: opacity var(--base); }
+  .masthead::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); background: var(--lb-ground); opacity: 0; transition: opacity var(--base); }
   .masthead[data-scrolled]::before { opacity: 1; }
   .masthead-inner { display: flex; align-items: center; gap: 12px clamp(16px, 2.6vw, 36px); min-height: 72px; }
   .nav { display: flex; gap: 4px clamp(20px, 2.6vw, 36px); margin-left: auto; }
-  .nav a { position: relative; display: inline-flex; align-items: center; min-height: var(--target); font-size: var(--size-small); font-weight: 560; color: var(--ink-2); text-decoration: none; transition: color var(--fast); }
-  .nav a:hover { color: var(--ink); }
-  .nav a[aria-current='page'] { color: var(--ink); font-weight: 650; }
-  .nav a[aria-current='page']::after { content: ''; position: absolute; left: 0; right: 0; bottom: 8px; height: 1.5px; background: var(--green); }
+  .nav a { position: relative; display: inline-flex; align-items: center; min-height: var(--target); font-size: var(--size-small); font-weight: 560; color: var(--lb-slate); text-decoration: none; transition: color var(--fast); }
+  .nav a:hover { color: var(--lb-ink); }
+  .nav a[aria-current='page'] { color: var(--lb-ink); font-weight: 650; }
+  .nav a[aria-current='page']::after { content: ''; position: absolute; left: 0; right: 0; bottom: 8px; height: 1.5px; background: var(--lb-ink); }
   .menu { position: relative; }
-  .menu summary { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--pill); font-size: var(--size-small); font-weight: 600; cursor: pointer; list-style: none; transition: border-color var(--fast); }
+  .menu summary { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); padding: 0 16px; border: 1px solid var(--lb-line); border-radius: var(--pill); font-size: var(--size-small); font-weight: 600; cursor: pointer; list-style: none; transition: border-color var(--fast); }
   .menu summary::-webkit-details-marker { display: none; }
   .menu summary :global(.icon) { transition: transform var(--base) var(--ease); }
-  .menu[open] summary { border-color: var(--green); }
+  .menu[open] summary { border-color: var(--lb-ink); }
   .menu[open] summary :global(.icon) { transform: rotate(180deg); }
-  .menu-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(280px, calc(100vw - 32px)); padding: 6px; display: grid; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-3); box-shadow: var(--shadow-float); }
+  .menu-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(280px, calc(100vw - 32px)); padding: 6px; display: grid; background: var(--lb-surface); border: 1px solid var(--lb-line); border-radius: var(--r-3); box-shadow: var(--shadow-float); }
   .menu-panel a { display: flex; align-items: center; min-height: var(--target); padding: 0 14px; border-radius: var(--r-2); font-weight: 560; text-decoration: none; }
-  .menu-panel a:hover { background: var(--sand); }
-  .menu-panel a[aria-current] { background: var(--green-wash); font-weight: 650; }
+  .menu-panel a:hover { background: var(--lb-line-quiet); }
+  .menu-panel a[aria-current] { background: var(--lb-accent-soft); font-weight: 650; }
   .menu-main { display: none; }
   @media (forced-colors: active) { .masthead::before { background: none; } }
   @media (max-width: 52rem) {
