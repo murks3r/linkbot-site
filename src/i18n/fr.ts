@@ -23,7 +23,7 @@ export const fr: Catalogue = {
       contactPending: 'Les coordonnées suivront avec notre domaine. Linkbot n’a pas encore de domaine à lui, ce site n’indique donc aucune adresse et n’a pas de formulaire de contact.',
       line: 'Ce site ne dépose aucun cookie, ne charge rien de tiers et n’utilise aucune mesure d’audience.',
     },
-    status: { now: 'Sur l’espace staging', contract: 'Dans le contrat, pas sur l’espace staging', later: 'Pas construit' },
+    status: { now: 'Sur l’espace staging', contract: 'Dans le contrat, pas sur l’espace staging', prototype: 'Un prototype, pas sur l’espace staging', later: 'Pas construit' },
     synthetic: 'Tout sur ce site décrit le contrat Space API et ce qui tourne sur l’espace staging synthétique de Geoprocure, avec des données synthétiques. Aucune personne réelle et aucune organisation réelle ne l’utilise encore.',
     more: 'En savoir plus',
   },
@@ -254,12 +254,12 @@ export const fr: Catalogue = {
     toc: [['ways', 'Quatre voies d’accès'], ['gets', 'Ce que vous obtenez'], ['yours', 'Ce qui reste à vous'], ['details', 'Les détails']] as [string, string][],
     ways: {
       title: 'Quatre voies d’accès',
-      lede: `Au ${AS_OF}, deux d’entre elles tournent sur l’espace staging, et deux ne sont pas construites.`,
+      lede: `Au ${AS_OF}, deux d’entre elles tournent sur l’espace staging. Les pages hébergées ne sont pas construites, et MCP est un prototype en lecture seule qui n’est pas sur l’espace staging.`,
       items: [
         { name: 'Pages hébergées', status: 'later' as Status, body: 'Une page servie pour vous, vers laquelle vous créez un lien au lieu d’intégrer. Elle n’est pas construite. Aujourd’hui, un espace n’apparaît que sur vos propres pages, par l’intégration ou par votre propre serveur.' },
         { name: 'L’intégration', status: 'now' as Status, body: 'Un script et un élément sur votre page. Le script vient de l’instance propre à votre espace ; l’élément porte votre clé publiable, qui ne fonctionne que sur les origines que votre espace autorise. Ses modes : décrire, tableau, suivi et les miens. L’instance staging sert la version 0.5.0-v1 du widget.' },
         { name: 'L’API et le SDK', status: 'now' as Status, body: `Votre serveur parle à Space API avec la clé secrète, qui n’apparaît jamais dans une page : il peut créer des besoins et des offres, enregistrer des contrôles et des approbations, et lire les mises en relation et les résultats. Le SDK donne à votre serveur un client typé par le contrat. Au ${AS_OF}, le SDK n’est pas publié ; son code est dans le dépôt de Connect.` },
-        { name: 'MCP', status: 'later' as Status, body: 'Prévu, non construit : un serveur MCP par espace, par lequel un agent d’IA prépare un besoin ou une offre et une personne confirme et répond. Le propriétaire a choisi cette direction ; sa conception est proposée et son contrat est un squelette.' },
+        { name: 'MCP', status: 'prototype' as Status, body: 'Un prototype en lecture seule : un serveur MCP par lequel un agent d’IA lit un espace comme le ferait le navigateur d’une personne : le formulaire, le tableau et, avec le jeton propre de la personne, ses demandes et leurs correspondances. Il n’écrit rien et ne décide rien. Il se trouve sur une branche de développement, n’a été essayé qu’avec des données synthétiques et n’est pas sur l’espace staging. Prévu, non construit : un agent qui prépare un besoin ou une offre, qu’une personne confirme ensuite et auquel elle répond. Le propriétaire a choisi cette direction ; sa conception est proposée.' },
       ],
     },
     gets: {
@@ -329,7 +329,7 @@ export const fr: Catalogue = {
       title: 'Pas encore disponible',
       items: [
         `Paquets npm : le SDK, le wrapper React et les paquets Next.js et Astro ne sont pas publiés au ${AS_OF}. Aujourd’hui, ils tournent depuis un clone du dépôt de Connect.`,
-        'MCP : prévu, pas construit. Il n’existe aucun point d’accès MCP à utiliser.',
+        'MCP : un prototype en lecture seule sur une branche de développement, non publié. Il n’existe aucun point d’accès MCP à utiliser.',
         `Le dépôt lui-même : il est privé au ${AS_OF}.`,
         'Un espace pour essayer : aucun n’est encore proposé aux développeurs. Les exemples tournent contre un exemple local ou un substitut.',
       ],
