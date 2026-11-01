@@ -16,7 +16,7 @@ const variants = import.meta.env.PUBLIC_PREVIEW_VARIANTS === '1';
    catalogue yet (fallback), and then the page says so in the reader's language. path: the
    language-neutral address of the page ('/how-it-works'); every language gets its own. */
 /* front: a front page (the home, /who-sees-what): the body carries data-front for src/front/theme.css. */
-/* draft: a page for the owner's review in one language only (src/drafts): never indexed, no alternates, no language switch. */
+/* draft: a page for the owner's review (src/drafts): never indexed, no alternates, no language switch. */
 interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; front?: boolean; draft?: boolean }
 const { lang, t, fallback = false, title, description, path, crumbs, front = false, draft = false } = Astro.props;
 const contentLang = fallback ? DEFAULT_LANG : lang;
