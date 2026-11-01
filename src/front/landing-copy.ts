@@ -11,8 +11,10 @@ export const LANDING = {
   opening: {
     h1: 'Your platform connects buyers and sellers. Linkbot finds who fits.',
     sub: 'Its widget asks each side what it needs; Linkbot shows a verdict for each criterion and introduces the two sides only after both say yes.',
-    /* "Try it" only once /demo holds a widget on a demo space (plan, decision 5). */
+    /* "Try it" only once /demo holds a widget on a demo space (plan, decision 5; src/demo/space.ts); /demo's own
+       section for the widget takes it as its heading. */
     button: 'See it step by step',
+    try: 'Try it',
   },
   /* 1.2 · rows how.describe (form), how.describe (text), how.confirm, home.rules; how.describe (watch);
      how.approval, how.yes, how.introduction */

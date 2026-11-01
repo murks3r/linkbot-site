@@ -46,6 +46,7 @@ export const de: FrontCopy = {
       h1: 'Ihre Plattform bringt Käufer und Verkäufer zusammen. Linkbot findet, wer passt.',
       sub: 'Sein Widget fragt jede Seite, was sie braucht; Linkbot zeigt für jedes Kriterium ein Urteil und stellt die beiden Seiten erst vor, wenn beide Ja sagen.',
       button: 'Schritt für Schritt ansehen',
+      try: 'Ausprobieren',
     },
     cards: {
       h2: 'Was es für Sie tut',
@@ -166,8 +167,8 @@ export const de: FrontCopy = {
       h2: 'Der Weg, Schritt für Schritt',
       who: 'Wer handelt',
       items: [
-        { name: 'Die Anfrage', who: 'Der Einkäufer', text: 'Der Einkäufer beschreibt den Bedarf auf der Seite einer Plattform, im Formular, das das Pack des Marktes erzeugt, oder in einer Zeile Text, die feste Regeln lesen und in vorgeschlagene Werte umsetzen. Nichts ist vorausgewählt, und was der Einkäufer nicht angegeben hat, bleibt unbekannt.' },
-        { name: 'Die Kriterien, bestätigt', who: 'Der Einkäufer', text: 'Der Einkäufer prüft jeden Wert und bestätigt. Erst jetzt wird etwas gespeichert: Der Server prüft jeden Wert gegen das Pack und nennt jedes Feld, das nicht passt. Die E-Mail-Adresse wird über einen Link bestätigt.' },
+        { name: 'Die Anfrage', who: 'Der Einkäufer', text: 'Der Einkäufer beschreibt den Bedarf auf der Seite einer Plattform, in einem Formular mit den Fragen seines Marktes, oder in einer Zeile Text, die feste Regeln lesen und in vorgeschlagene Werte umsetzen. Nichts ist vorausgewählt, und was der Einkäufer nicht angegeben hat, bleibt unbekannt.' },
+        { name: 'Die Kriterien, bestätigt', who: 'Der Einkäufer', text: 'Der Einkäufer prüft jeden Wert und bestätigt. Erst jetzt wird etwas gespeichert: Der Server prüft jeden Wert gegen die Fragen des Marktes und nennt jedes Feld, das nicht passt. Die E-Mail-Adresse wird über einen Link bestätigt.' },
         { name: 'Die möglichen Passungen', who: 'Der Space', text: 'Das Matching vergleicht die gespeicherten Kriterien Stück für Stück mit denen der anderen Seite: ein Urteil pro Kriterium, passt, passt teilweise, widerspricht oder unbekannt, nie eine Punktzahl. Eine mögliche Passung zeigt jeder Seite nur die Urteile und einen Hinweis, dass Menschen entscheiden.' },
         { name: 'Beide sagen Ja', who: 'Der Einkäufer und der Lieferant', text: 'Jede Seite beantwortet die mögliche Passung für sich selbst. Bevor beide Ja gesagt haben, erfährt die andere Seite nichts, und ein späteres Nein widerruft ein Ja.' },
         { name: 'Der Operator gibt frei', who: 'Das Team der Plattform', text: 'Ein namentlich genannter Operator hält die Prüfungen fest, die der Space verlangt, und gibt das Paar frei. Eine Freigabe allein gibt nichts preis, und jede Änderung nennt, wer sie vorgenommen hat.' },
@@ -183,7 +184,7 @@ export const de: FrontCopy = {
       previous: 'Vorheriger Schritt',
       next: 'Nächster Schritt',
       screens: [
-        ['Das Widget des Einkäufers: das Formular, das das Beispiel-Pack erzeugt, mit Rohphosphat gewählt und einem P₂O₅-Minimum von 30 %. Die Gewichtung ist als vorgeschlagen markiert, sonst ist nichts gewählt.'],
+        ['Das Widget des Einkäufers: das Formular mit den Fragen des Beispielmarkts, mit Rohphosphat gewählt und einem P₂O₅-Minimum von 30 %. Die Gewichtung ist als vorgeschlagen markiert, sonst ist nichts gewählt.'],
         ['Das Widget des Einkäufers nach dem Bestätigen: Die Anfrage ist aktiv, mit jedem Kriterium und seiner Gewichtung. Noch keine Angebote zu zeigen.'],
         ['Das Widget des Einkäufers: ein Angebot, das passen könnte, mit einem Haken je Kriterium, der Frage „Möchten Sie vorgestellt werden?“ und dem Hinweis, dass Menschen entscheiden.'],
         ['Das Widget des Einkäufers nach dem Ja: „Ihr Ja ist festgehalten. Sample space prüft es zuerst.“', 'Das Widget des Lieferanten: dieselbe mögliche Passung, von der Angebotsseite aus als Anfrage mit einem Haken je Kriterium, nach dem eigenen Ja des Lieferanten, mit denselben Worten.'],
@@ -192,14 +193,15 @@ export const de: FrontCopy = {
       ],
     },
     watch: {
-      name: 'Wenn noch nichts passt: beobachten',
+      name: 'Wenn noch nichts passt: Linkbot sucht weiter',
       who: 'Der Einkäufer',
-      text: 'Nach dem Bestätigen kann der Einkäufer die Anfrage offen halten und beobachten: wie oft, wöchentlich oder täglich; worüber er hören will; und in den E-Mail-Optionen, höchstens wie viele pro E-Mail und keine E-Mail vor einem gewählten Tag. Eine Beobachtung meldet nur ihrem Inhaber, wenn etwas Neues passt, und beginnt, sobald die E-Mail-Adresse bestätigt ist. Sie läuft 90 Tage und lässt sich jederzeit pausieren, fortsetzen oder beenden, auch über einen Link in ihren E-Mails.',
-      screens: ['Das Widget des Einkäufers nach dem Bestätigen, noch ohne Angebote: eine Beobachtung, wöchentlich, auf alles, was die Muss-Kriterien erfüllt, höchstens 5 pro E-Mail.', 'Dasselbe Widget nach „Beobachten starten“: Die Beobachtung wartet darauf, dass die E-Mail-Adresse bestätigt wird, höchstens 5 pro E-Mail, bis zum 23.01.2027. Die Aufnahme hat keine E-Mail gesendet, und die erfundene Adresse existiert nicht.'],
+      text: 'Nach dem Bestätigen kann der Einkäufer die Anfrage offen halten und Linkbot weitersuchen lassen: wie oft, wöchentlich oder täglich; worüber er hören will; und in den E-Mail-Optionen, höchstens wie viele pro E-Mail und keine E-Mail vor einem gewählten Tag. Linkbot meldet dann nur dem Einkäufer, wenn etwas Neues passt, sobald die E-Mail-Adresse bestätigt ist. Die Suche läuft 90 Tage und lässt sich jederzeit pausieren, fortsetzen oder beenden, auch über einen Link in ihren E-Mails.',
+      screens: ['Das Widget des Einkäufers nach dem Bestätigen, noch ohne Angebote: weitersuchen, wöchentlich, nach allem, was die Muss-Kriterien erfüllt, höchstens 5 pro E-Mail.', 'Dasselbe Widget nach „Beobachten starten“: Die Suche wartet darauf, dass die E-Mail-Adresse bestätigt wird, höchstens 5 pro E-Mail, bis zum 23.01.2027. Die Aufnahme hat keine E-Mail gesendet, und die erfundene Adresse existiert nicht.'],
+    },
+    live: {
+      p: 'Unten steht das Widget selbst, auf einem Demo-Space mit erfundenen Daten. Wählen Sie eine Seite und sagen Sie, was Sie brauchen oder anbieten; gespeichert wird erst, wenn Sie bestätigen. Darunter folgt der aufgezeichnete Durchgang.',
     },
     space: {
-      h2: 'Das Board des Test-Space',
-      on: 'Unten steht das Widget selbst, vom Test-Space ausgeliefert, im Board-Modus: die offenen Anfragen und Angebote, deren Inhaber sie zeigen wollten, vergröbert, wie das Pack es festlegt. Wer auf einen Eintrag antwortet, beginnt bei Schritt 1, auf der anderen Seite.',
       off: 'Auf dieser Seite steht noch kein Widget: Es wartet auf einen Demo-Space mit synthetischen Daten. Bis dahin zeigt der Weg oben Bilder.',
       notice: 'Ein Test-Space mit erfundenen Daten: Geben Sie nichts Echtes ein. Seine E-Mails erreichen niemanden.',
     },

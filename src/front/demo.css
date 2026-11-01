@@ -1,5 +1,5 @@
-/* The demo page: the opening with the test-space line, the recorded walkthrough of the six steps, and room for the
-   widget so the page below does not jump while it loads. */
+/* The demo page: the opening with the test-space line, the role switch over each stage, the recorded walkthrough of
+   the six steps, and room for the widget so the page below does not jump while it loads. */
 .fd-hero { padding-block: clamp(40px, 7vw, 96px) 0; }
 .fd-hero-inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-head); align-content: start; justify-items: start; }
 .fd-hero h1 { max-width: 18ch; overflow-wrap: break-word; hyphens: auto; }
@@ -31,7 +31,7 @@
 .fr-screens { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 12px; }
 .fr-screens img { display: block; width: 100%; height: auto; border: 1px solid var(--lb-line); border-radius: var(--r-3); background: var(--lb-surface); }
 .fr-caption { display: grid; gap: 10px; align-content: start; max-width: 32rem; }
-.fr-caption h3 { font-size: 1.5rem; }
+.fr-caption h4 { font-size: 1.5rem; }
 .fr-text { font-size: var(--size-small); line-height: 1.55; color: var(--lb-slate); }
 .fr-aside { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--lb-line); }
 .fr-aside .fr-label { justify-self: start; }
@@ -48,3 +48,5 @@
 .fd-who { display: grid; gap: 2px; font-size: var(--size-small); color: var(--lb-ink); }
 
 .fd-widget { display: block; min-height: 36rem; --linkbot-accent: var(--lb-ink); --linkbot-radius: var(--r-3); }
+.fd-stage { display: grid; gap: 20px; }
+.fd-side-title { font-size: 1.125rem; }
