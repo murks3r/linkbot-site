@@ -16,3 +16,12 @@ export const longDay = (lang: Lang, day: string): string =>
 
 /** The day of the last check in a language's own long form. */
 export const statusDate = (lang: Lang): string => longDay(lang, STATUS_CHECKED);
+
+/* The widget release the staging instance serves (`embed.version` in its health report) and the day
+   that was read. It moves faster than the other status sentences, so it carries its own day; renew
+   both together with the rows that name it in docs/truth-check.md. */
+export const WIDGET_RELEASE = '0.6.1-v1';
+export const WIDGET_CHECKED = '2026-11-01';
+
+/** The day the widget release was read, in a language's own long form. */
+export const widgetDate = (lang: Lang): string => longDay(lang, WIDGET_CHECKED);
