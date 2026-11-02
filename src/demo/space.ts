@@ -1,6 +1,7 @@
-/* Which space the /demo page embeds, if any. The page shows the real widget only when a build is given both the
-   address of the instance's embed.js and a publishable key, as preview environment variables set by whoever holds
-   the key; neither ever enters this public repository. A production build never embeds it (CLAUDE.md: a demo goes on
+/* Which space the /demo page embeds, if any. The page shows the real widget only when a build turns the switch on
+   (PUBLIC_DEMO_LIVE=true; off by default) and is given both the address of the instance's embed.js and a publishable
+   key, as preview environment variables set by whoever holds the key; neither ever enters this public repository.
+   While the switch is off the page shows the recorded walkthrough only and never says "Try it". A production build never embeds it (CLAUDE.md: a demo goes on
    no page real people use until a demo space exists), and a secret key is refused outright. Pure, so
    tests/demo.test.mjs can check every case without a build. */
 export interface DemoSpace {
@@ -13,6 +14,8 @@ export interface DemoSpace {
 export interface DemoEnv {
   PUBLIC_DEMO_EMBED_URL?: string;
   PUBLIC_DEMO_KEY?: string;
+  /** The switch: "true" mounts the widget; anything else, or nothing, leaves the page on the recording. */
+  PUBLIC_DEMO_LIVE?: string;
   VERCEL_ENV?: string;
 }
 
@@ -25,5 +28,7 @@ export function demoSpace(env: DemoEnv): DemoSpace | null {
   let url: URL;
   try { url = new URL(script); } catch { throw new Error('PUBLIC_DEMO_EMBED_URL is not a URL'); }
   if (url.protocol !== 'https:' || !url.pathname.endsWith('/embed.js')) throw new Error('PUBLIC_DEMO_EMBED_URL must be an https address of embed.js');
+  // Checked even while the switch is off, so a secret key is refused before anyone turns it on.
+  if (env.PUBLIC_DEMO_LIVE?.trim() !== 'true') return null;
   return { script: url.href, key };
 }
