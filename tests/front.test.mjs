@@ -1,7 +1,7 @@
 /* The front pages' own words (src/front/*: the landing page, /who-sees-what and /demo, in every language through
    src/front/copy.ts) are checked like the catalogue's: no forbidden claim in the page's language, no empty string,
    nothing private. The translations must keep English's structure: the same cards, the same stages, the same steps;
-   only the words differ. */
+   only the words differ. The home's demo keeps English's steps and its verdicts per criterion. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { FRONT } from '../src/front/copy.ts';
@@ -28,12 +28,12 @@ test('every translation keeps English’s structure and is its own', () => {
   const { en } = FRONT;
   const shape = copy => ({
     stages: copy.stages.map(s => [s.key, s.eyes, s.open, s.fields.map(f => f.verdict ?? null), s.not.length]),
-    lists: [copy.landing.cards.items.length, copy.landing.cards.items.map(card => 'small' in card), copy.c.why.items.length, copy.c.stages.receipt.lines.length, copy.a.ledger.stages.length, copy.demo.steps.items.length],
+    lists: [copy.landing.trial.steps.length, copy.landing.trial.match.criteria.map(c => c.verdict), copy.c.why.items.length, copy.c.stages.receipt.lines.length, copy.a.ledger.stages.length, copy.demo.steps.items.length],
   });
   for (const [lang, copy] of Object.entries(FRONT)) {
     assert.deepEqual(shape(copy), shape(en), `${lang}: the structure differs from English`);
     if (lang === 'en') continue;
-    for (const at of ['landing.opening.sub', 'landing.bottom.line', 'c.hero.lede', 'a.ledger.state', 'demo.test']) {
+    for (const at of ['landing.opening.sub.today', 'landing.trial.yes.declined', 'landing.bottom.line', 'c.hero.lede', 'a.ledger.state', 'demo.test']) {
       const read = obj => at.split('.').reduce((o, k) => o[k], obj);
       assert.notEqual(read(copy), read(en), `${lang}: ${at} is still English`);
     }
