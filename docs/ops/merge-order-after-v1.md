@@ -12,7 +12,7 @@ tags:
 
 A rehearsal, nothing merged. Branch `next/integration-rehearsal` from `origin/build/vision` at `fd50b82`, every open
 draft with a `next/*` head merged one by one with `git merge --no-ff`, in the order below. A conflict was recorded and
-the merge aborted, not resolved. First run 2026-11-02 01:50 UTC; rerun 2026-11-02 09:00 UTC after #77 was rebased
+the merge aborted, not resolved. First run 2026-11-02 01:50 UTC; rerun 2026-11-02 08:00 UTC after #77 was rebased
 (see "The conflict"): all seven drafts now merge without a conflict.
 
 ## The drafts
