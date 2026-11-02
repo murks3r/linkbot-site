@@ -25,7 +25,7 @@ export const fr: FrontCopy = {
           text: 'Un opérateur identifié et actif approuve le dossier. Une approbation seule ne divulgue rien.',
         },
         {
-          name: 'Double oui',
+          name: 'Les deux disent oui',
           text: 'Chaque côté répond pour lui-même. Avant que les deux aient dit oui, l’autre côté n’apprend rien.',
         },
         {
@@ -129,7 +129,7 @@ export const fr: FrontCopy = {
     hero: {
       eyebrow: 'Une couche d’appariement que toute plateforme peut intégrer',
       h1: ['Qui voit quoi,', 'et quand.'],
-      lede: 'Un pack donne une étape à chaque critère, et une étape est le point le plus loin qu’une valeur atteint : le tableau, une correspondance possible, la mise en relation, ou seulement l’équipe de la plateforme. Ci-dessous : une offre synthétique, étape par étape, et le reçu qui borne chaque lecture.',
+      lede: 'Le vocabulaire du marché donne une étape à chaque critère, et une étape est le point le plus loin qu’une valeur atteint : le tableau, une correspondance possible, la mise en relation, ou seulement l’équipe de la plateforme. Ci-dessous : une offre synthétique, étape par étape, et le reçu qui borne chaque lecture.',
       primary: 'Ce qu’une plateforme obtient',
       secondary: 'Qui voit quoi, en entier',
     },
@@ -172,17 +172,17 @@ export const fr: FrontCopy = {
     deletion: { h2: 'Suppression : ce qui part, et ce qui reste' },
     platforms: {
       h2: 'Pour les plateformes',
-      p: 'Un script et un élément mettent un espace sur votre page ; la console de votre équipe tourne sur votre machine ou derrière votre propre connexion ; votre serveur apprend les événements par des webhooks signés, qui sont dans le contrat et ne sont pas encore envoyés par l’espace staging.',
+      p: 'Un script et un élément mettent un espace sur votre page ; la console de votre équipe tourne sur votre machine ou derrière votre propre connexion ; votre serveur apprend les événements par des webhooks signés, qui sont dans le contrat et ne sont pas encore envoyés par l’espace de test.',
       link: 'Ce qu’une plateforme obtient',
     },
     verticals: {
       h2: 'Pour les secteurs',
-      p: 'Un pack décrit un marché : ses critères, options et unités, ses libellés et questions dans les langues de l’espace, ce que chaque critère divulgue à chaque étape, et les gates dont le marché a besoin. Le premier est celui des minéraux industriels.',
-      link: 'Ce qu’un pack contient',
+      p: 'Un vocabulaire du marché décrit un marché : ses critères, options et unités, ses libellés et questions dans les langues de l’espace, ce que chaque critère divulgue à chaque étape, et les gates dont le marché a besoin. Le premier est celui des minéraux industriels.',
+      link: 'Ce que contient un vocabulaire du marché',
     },
     state: {
       h2: 'État actuel',
-      p: 'L’offre ci-dessus est un texte fixe, écrit pour cette page dans le vocabulaire d’un pack synthétique ; le produit n’a pas tourné ici. La page de démo parcourt tout le chemin, étape par étape.',
+      p: 'L’offre ci-dessus est un texte fixe, écrit pour cette page dans un vocabulaire du marché synthétique ; le produit n’a pas tourné ici. La page de démo parcourt tout le chemin, étape par étape.',
     },
   },
   demo: {
@@ -246,7 +246,7 @@ export const fr: FrontCopy = {
       eyes: 3,
       open: 1,
       who: 'Toute personne qui peut voir le tableau',
-      rule: 'Seulement les champs à l’étape tableau, simplifiés comme le pack le déclare, et seulement pour les offres dont le propriétaire a donné son accord. Jamais l’auteur.',
+      rule: 'Seulement les champs à l’étape tableau, simplifiés comme le vocabulaire du marché le déclare, et seulement pour les offres dont le propriétaire a donné son accord. Jamais l’auteur.',
       fields: [
         { label: 'Produit', value: 'Phosphate naturel' },
         { label: 'Teneur en P₂O₅', value: '31–32 %' },
@@ -279,14 +279,14 @@ export const fr: FrontCopy = {
       eyes: 1,
       open: 0.5,
       who: 'En mode opérateur l’équipe de la plateforme ; en mode direct les deux côtés',
-      rule: 'Le nom affiché, l’adresse e-mail confirmée et les critères que le pack garde pour cette étape. Chaque lecture est enregistrée sur le reçu.',
+      rule: 'Le nom affiché, l’adresse e-mail confirmée et les critères que le vocabulaire du marché garde pour cette étape. Chaque lecture est enregistrée sur le reçu.',
       fields: [
         { label: 'Nom affiché', value: 'celui de l’offre, tel qu’il a été donné' },
         { label: 'Adresse e-mail', value: 'une seule, confirmée par un lien' },
-        { label: 'Critères à l’étape mise en relation', value: 'comme le pack le déclare' },
+        { label: 'Critères à l’étape mise en relation', value: 'comme le vocabulaire du marché le déclare' },
       ],
       not: [
-        'Les champs que le pack garde pour l’opérateur',
+        'Les champs que le vocabulaire du marché garde pour l’opérateur',
         'En mode opérateur : quoi que ce soit de l’autre côté ; le reçu de chaque côté dit que les deux ont accepté et que la plateforme les contactera',
       ],
     },
@@ -296,7 +296,7 @@ export const fr: FrontCopy = {
       eyes: 1,
       open: 0.3,
       who: 'Seulement l’équipe de la plateforme',
-      rule: 'Les champs que le pack garde pour la plateforme, comme les détails d’identité pour un contrôle de partie. Ils n’atteignent jamais l’autre côté, et chaque accès est enregistré.',
+      rule: 'Les champs que le vocabulaire du marché garde pour la plateforme, comme les détails d’identité pour un contrôle de partie. Ils n’atteignent jamais l’autre côté, et chaque accès est enregistré.',
       fields: [
         { label: 'Détails d’identité', value: 'pour le contrôle de partie de l’espace, vus par l’équipe' },
         { label: 'L’enregistrement de la gate', value: 'franchie, échouée ou renvoyée, avec une référence et sans données personnelles' },

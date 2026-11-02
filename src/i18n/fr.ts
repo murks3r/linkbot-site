@@ -8,12 +8,12 @@ const AS_OF = statusDate('fr');
 export const fr: Catalogue = {
   site: {
     name: 'Linkbot',
-    claim: 'Une couche d’appariement que toute plateforme peut intégrer.',
+    claim: 'La confiance entre deux entreprises avant qu’elles se rencontrent.',
     skip: 'Aller au contenu',
     menu: 'Menu',
     toc: 'Sur cette page',
     language: 'Langue',
-    nav: { how: 'Comment ça marche', sees: 'Qui voit quoi', platforms: 'Pour les plateformes', verticals: 'Pour les secteurs', integrations: 'Intégrations', developers: 'Développeurs' },
+    nav: { how: 'Comment ça marche', sees: 'Qui voit quoi', platforms: 'Pour les plateformes', verticals: 'Pour les secteurs', integrations: 'Intégrations', developers: 'Développeurs', faq: 'Questions fréquentes' },
     footer: {
       product: 'Linkbot',
       legal: 'Informations légales',
@@ -23,8 +23,8 @@ export const fr: Catalogue = {
       contactPending: 'Les coordonnées suivront avec notre domaine. Linkbot n’a pas encore de domaine à lui, ce site n’indique donc aucune adresse et n’a pas de formulaire de contact.',
       line: 'Ce site ne dépose aucun cookie, ne charge rien de tiers et n’utilise aucune mesure d’audience.',
     },
-    status: { now: 'Sur l’espace staging', contract: 'Dans le contrat, pas sur l’espace staging', later: 'Pas construit' },
-    synthetic: 'Tout sur ce site décrit le contrat Space API et ce qui tourne sur l’espace staging synthétique de Geoprocure, avec des données synthétiques. Aucune personne réelle et aucune organisation réelle ne l’utilise encore.',
+    status: { now: 'Sur l’espace de test', contract: 'Dans le contrat, pas sur l’espace de test', later: 'Pas construit' },
+    synthetic: 'Tout sur ce site décrit le contrat Space API et ce qui tourne sur l’espace de test synthétique, avec des données synthétiques. Aucune personne réelle et aucune organisation réelle ne l’utilise encore.',
     more: 'En savoir plus',
   },
 
@@ -39,14 +39,14 @@ export const fr: Catalogue = {
         { name: 'Confirmer', note: 'rien n’est stocké avant' },
         { name: 'Correspondre', note: 'un verdict par critère' },
         { name: 'Approuver', note: 'un opérateur identifié, après les gates' },
-        { name: 'Double oui', note: 'chaque côté pour lui-même' },
+        { name: 'Les deux disent oui', note: 'chaque côté pour lui-même' },
         { name: 'Mettre en relation', note: 'alors, et seulement alors' },
       ],
     },
     pillars: [
-      { title: 'Un espace par marché.', body: 'Un espace est un marché sur une plateforme, avec sa propre instance, sa base de données et ses clés. Un pack lui donne le vocabulaire de son secteur : les critères, les options, les unités, les questions. Le premier espace est celui de Geoprocure, pour les minéraux industriels.' },
+      { title: 'Un espace par marché.', body: 'Un espace est un marché sur une plateforme, avec sa propre instance, sa base de données et ses clés. Il parle le vocabulaire de son marché : les critères, les options, les unités, les questions. Le premier espace est consacré aux minéraux industriels.' },
       { title: 'Des critères, confirmés.', body: 'Une demande ou une offre est un ensemble de critères, chacun avec sa source et son importance. Rien n’est présélectionné, rien n’est deviné, et ce qui n’est pas indiqué reste inconnu. La personne confirme le formulaire ; c’est seulement alors que quelque chose est stocké.' },
-      { title: 'Une mise en relation seulement après un double oui.', body: 'L’appariement compare les critères stockés et affiche un verdict par critère. Une mise en relation exige les gates de l’espace, l’approbation d’un opérateur identifié et un oui des deux côtés. Le serveur la crée à ce moment, et refuse toute autre voie.' },
+      { title: 'Une mise en relation seulement lorsque les deux disent oui.', body: 'L’appariement compare les critères stockés et affiche un verdict par critère. Une mise en relation exige les gates de l’espace, l’approbation d’un opérateur identifié et un oui des deux côtés. Le serveur la crée à ce moment, et refuse toute autre voie.' },
     ],
     rules: {
       title: 'Les règles, appliquées par le serveur',
@@ -55,7 +55,7 @@ export const fr: Catalogue = {
         'Rien n’est présélectionné : le formulaire n’a pas de valeur par défaut, seulement des suggestions indiquées comme telles.',
         'L’inconnu reste inconnu : un critère qu’un côté n’a pas indiqué n’est jamais compté comme une correspondance.',
         'Rien n’est stocké avant qu’une personne confirme.',
-        'Une correspondance ne divulgue rien : seulement des verdicts, à l’étape que le pack permet, et un avis indiquant que les personnes décident.',
+        'Une correspondance ne divulgue rien : seulement des verdicts, à l’étape que l’espace permet, et un avis indiquant que les personnes décident.',
         'Pas de mise en relation sans les gates, l’approbation d’un opérateur identifié et un oui des deux côtés.',
         'Aucun modèle ne passe outre une condition stricte : Obligatoire et Jamais sont décidés par du code déterministe.',
         'Chaque écriture nomme qui l’a faite et apparaît dans le journal d’audit.',
@@ -66,17 +66,17 @@ export const fr: Catalogue = {
 
   how: {
     title: 'Comment Linkbot fonctionne : d’une demande confirmée à une mise en relation',
-    description: 'Un espace, un pack, quatre façons de décrire une demande ou une offre, un verdict par critère, une approbation, une mise en relation après un double oui.',
+    description: 'Un espace, son vocabulaire du marché, quatre façons de décrire, un verdict par critère, un opérateur qui approuve, une mise en relation si les deux disent oui.',
     eyebrow: 'Comment ça marche',
     h1: ['D’une demande confirmée', 'à une mise en relation.'],
-    lede: 'Chaque étape ci-dessous figure dans le contrat Space API. Là où l’espace staging ne fait pas encore tourner une étape, la page le dit.',
-    toc: [['blocks', 'Trois briques'], ['rule', 'Le oui des deux côtés'], ['path', 'Le parcours en six étapes'], ['space', 'Un espace'], ['pack', 'Un pack'], ['describe', 'Quatre façons de décrire'], ['confirm', 'Confirmer'], ['matching', 'L’appariement'], ['approval', 'Approbation et gates'], ['yes', 'Le double oui'], ['introduction', 'La mise en relation'], ['after', 'Ensuite'], ['sees', 'Qui voit quoi'], ['languages', 'Cinq langues'], ['today', 'Ce qui tourne sur l’espace staging']] as [string, string][],
+    lede: 'Chaque étape ci-dessous figure dans le contrat Space API. Là où l’espace de test ne fait pas encore tourner une étape, la page le dit.',
+    toc: [['blocks', 'Trois briques'], ['rule', 'Le oui des deux côtés'], ['path', 'Le parcours en six étapes'], ['space', 'Un espace'], ['pack', 'Un vocabulaire du marché'], ['describe', 'Quatre façons de décrire'], ['confirm', 'Confirmer'], ['matching', 'L’appariement'], ['approval', 'Approbation et gates'], ['yes', 'Les deux disent oui'], ['introduction', 'La mise en relation'], ['after', 'Ensuite'], ['sees', 'Qui voit quoi'], ['languages', 'Cinq langues'], ['today', 'Ce qui tourne sur l’espace de test']] as [string, string][],
     blocks: {
       title: 'Trois briques',
       lede: 'Un espace se compose de trois parties. Chacune est un groupe de routes du contrat Space API.',
       items: [
-        { name: 'Saisie', text: 'Un acheteur ou un fournisseur décrit un besoin ou une offre, par formulaire ou avec ses propres mots, contrôle chaque valeur et confirme. Rien n’est enregistré avant la confirmation, et le serveur contrôle chaque valeur par rapport au pack de l’espace.' },
-        { name: 'Suivi', text: `Un suivi garde ouvert un besoin ou une offre confirmés et prévient seulement son titulaire quand quelque chose de nouveau correspond, par e-mail ou webhook. Le titulaire le met en pause ou y met fin à tout moment, aussi depuis un lien. Au ${AS_OF}, les e-mails de suivi de l’espace staging vont dans une boîte de test et n’atteignent personne, et il n’envoie pas encore de webhooks.` },
+        { name: 'Saisie', text: 'Un acheteur ou un fournisseur décrit un besoin ou une offre, par formulaire ou avec ses propres mots, contrôle chaque valeur et confirme. Rien n’est enregistré avant la confirmation, et le serveur contrôle chaque valeur par rapport au vocabulaire du marché de l’espace.' },
+        { name: 'Continuer à chercher', text: `Une recherche ouverte garde ouvert un besoin ou une offre confirmés et prévient seulement son titulaire quand quelque chose de nouveau correspond, par e-mail ou webhook. Le titulaire la met en pause ou y met fin à tout moment, aussi depuis un lien. Au ${AS_OF}, les e-mails des recherches ouvertes de l’espace de test vont dans une boîte de test et n’atteignent personne, et il n’envoie pas encore de webhooks.` },
         { name: 'Mises en relation', text: 'Une fois que les deux côtés ont dit oui et qu’un opérateur nommé a approuvé, le serveur met les deux côtés en relation et remet à chacun un reçu indiquant qui peut voir quels champs. Ensuite, on demande aux deux côtés le résultat.' },
       ],
     },
@@ -92,37 +92,37 @@ export const fr: Catalogue = {
       title: 'Un espace est un marché sur une plateforme',
       paras: [
         'Chaque espace est sa propre instance : sa propre application, sa base de données, ses clés et son journal des suppressions. L’adresse de l’instance identifie l’espace ; aucun id d’espace n’apparaît dans un chemin.',
-        'Un espace est configuré avec un pack et une version de celui-ci, les langues qu’il propose, le mode de ses mises en relation, les gates qu’il exige et les origines sur lesquelles ses pages sont autorisées. La page de la plateforme porte une Publishable Key, qui identifie seulement l’espace et ne fonctionne que sur ces origines. La Secret Key reste sur le serveur de la plateforme et n’apparaît jamais dans une page.',
+        'Un espace est configuré avec un vocabulaire du marché et une version de celui-ci, les langues qu’il propose, le mode de ses mises en relation, les gates qu’il exige et les origines sur lesquelles ses pages sont autorisées. La page de la plateforme porte une Publishable Key, qui identifie seulement l’espace et ne fonctionne que sur ces origines. La Secret Key reste sur le serveur de la plateforme et n’apparaît jamais dans une page.',
         'L’appariement tourne à l’intérieur d’un espace. Rien n’en sort : aucune demande, aucune offre et aucune correspondance n’est partagée avec un autre espace.',
-        'Le premier espace est celui de Geoprocure, pour les minéraux industriels. Il tourne sur une instance staging synthétique avec des données synthétiques.',
+        'Le premier espace est consacré aux minéraux industriels. Il tourne comme instance de test avec des données synthétiques.',
       ],
     },
     pack: {
-      title: 'Un pack est le vocabulaire d’un secteur',
+      title: 'Chaque marché a son propre vocabulaire',
       paras: [
-        'Un pack liste les critères qu’une demande et une offre peuvent indiquer, chacun avec son contrôle : un choix, plusieurs choix, un nombre avec une unité, un intervalle, une fenêtre de dates, une liste interrogeable comme les ports, ou du texte libre. Là où une quantité dépend d’une base, le pack le dit, et « Je ne sais pas » garde la base inconnue plutôt que d’en choisir une.',
-        'Le pack dit quelles réponses spéciales un critère permet : « Autre / ne figure pas dans la liste », qui garde les mots de la personne et n’est jamais rapproché d’une option ; « Je ne sais pas » ; et « Indifférent ». Il porte les libellés, les questions, les synonymes et les avis dans les langues de l’espace.',
+        'Le vocabulaire du marché liste les critères qu’une demande et une offre peuvent indiquer, chacun avec son contrôle : un choix, plusieurs choix, un nombre avec une unité, un intervalle, une fenêtre de dates, une liste interrogeable comme les ports, ou du texte libre. Là où une quantité dépend d’une base, le vocabulaire le dit, et « Je ne sais pas » garde la base inconnue plutôt que d’en choisir une.',
+        'Il dit quelles réponses spéciales un critère permet : « Autre / ne figure pas dans la liste », qui garde les mots de la personne et n’est jamais rapproché d’une option ; « Je ne sais pas » ; et « Indifférent ». Il porte les libellés, les questions, les synonymes et les avis dans les langues de l’espace.',
         'Il fixe aussi ce que chaque critère divulgue à chaque étape : sur le tableau, dans une correspondance possible, dans une mise en relation, ou seulement à l’équipe de la plateforme ; comment une valeur est simplifiée pour le tableau ; quelles importances un critère permet ; et les gates et les catégories de résultat du marché.',
-        'Un espace épingle une version de son pack, et le serveur valide chaque soumission contre cette version. On ne fait jamais confiance au client.',
+        'Un espace épingle une version de son vocabulaire, et le serveur valide chaque soumission contre cette version. On ne fait jamais confiance au client.',
       ],
     },
     describe: {
       title: 'Quatre façons de dire ce que vous demandez ou offrez',
-      lede: `Au ${AS_OF}, le formulaire, le texte, le tableau et les suivis tournent sur l’espace staging. Les webhooks n’y tournent pas encore, et ses e-mails vont dans une boîte de test qui n’atteint personne.`,
+      lede: `Au ${AS_OF}, le formulaire, le texte, le tableau et les recherches ouvertes tournent sur l’espace de test. Les webhooks n’y tournent pas encore, et ses e-mails vont dans une boîte de test qui n’atteint personne.`,
       items: [
         { name: 'Par formulaire', status: 'now' as Status, paras: [
-          'Le formulaire est généré à partir du pack. Les critères obligatoires viennent d’abord ; le reste se trouve derrière « plus de détails ». Rien n’est présélectionné : ni option, ni unité, ni base, ni type de partie. Chaque liste propose « Autre / ne figure pas dans la liste », « Je ne sais pas » et « Indifférent » là où le pack les permet.',
-          'Chaque critère porte une importance. Obligatoire et Jamais sont stricts ; Souhaitable, Acceptable et Plutôt pas sont souples. Le pack peut en suggérer une, marquée « suggérée », et la personne peut la changer sauf si le pack la verrouille. Choisir Jamais demande une confirmation séparée.',
+          'Le formulaire est généré à partir du vocabulaire de l’espace. Les critères obligatoires viennent d’abord ; le reste se trouve derrière « plus de détails ». Rien n’est présélectionné : ni option, ni unité, ni base, ni type de partie. Chaque liste propose « Autre / ne figure pas dans la liste », « Je ne sais pas » et « Indifférent » là où le vocabulaire les permet.',
+          'Chaque critère porte une importance. Obligatoire et Jamais sont stricts ; Souhaitable, Acceptable et Plutôt pas sont souples. L’espace peut en suggérer une, marquée « suggérée », et la personne peut la changer sauf si l’espace la verrouille. Choisir Jamais demande une confirmation séparée.',
         ] },
         { name: 'Avec vos propres mots', status: 'now' as Status, paras: [
           'Une personne écrit ce qu’elle demande ou offre. Une lecture propose des valeurs pour les mêmes critères, chacune affichée à côté des mots dont elle vient, et demande où elle ne peut pas décider : une unité, une option, un nombre que deux conventions lisent différemment. Une lecture n’écrase jamais ce qu’une personne a choisi ; une différence devient une question.',
-          'Sur l’espace staging, des règles fixes lisent le texte, sans modèle ; un lecteur avec un modèle attend une politique de lecture approuvée. Quel que soit le lecteur du texte, les conditions strictes restent au code déterministe : aucun modèle ne passe outre un critère Obligatoire ou Jamais.',
+          'Sur l’espace de test, des règles fixes lisent le texte, sans modèle ; un lecteur avec un modèle attend une politique de lecture approuvée. Quel que soit le lecteur du texte, les conditions strictes restent au code déterministe : aucun modèle ne passe outre un critère Obligatoire ou Jamais.',
         ] },
         { name: 'Sur le tableau', status: 'now' as Status, paras: [
-          'Le tableau liste les demandes et les offres dont le propriétaire l’a choisi, jamais par défaut. Il n’affiche que les champs que le pack permet à l’étape tableau, simplifiés comme le pack le déclare, et jamais l’auteur. Répondre à une annonce ouvre un brouillon de l’autre côté, dans le même formulaire.',
+          'Le tableau liste les demandes et les offres dont le propriétaire l’a choisi, jamais par défaut. Il n’affiche que les champs que l’espace permet à l’étape tableau, simplifiés comme l’espace le déclare, et jamais l’auteur. Répondre à une annonce ouvre un brouillon de l’autre côté, dans le même formulaire.',
         ] },
-        { name: 'Avec un suivi', status: 'now' as Status, paras: [
-          'Un suivi garde une demande ou une offre ouverte et informe son propriétaire quand quelque chose de nouveau correspond, par e-mail ou, pour la plateforme, par webhook. Il n’avertit que son propriétaire et ne divulgue jamais plus que le tableau. Une personne peut le mettre en pause, le reprendre ou y mettre fin, aussi depuis le lien d’un message.',
+        { name: 'Avec une recherche ouverte', status: 'now' as Status, paras: [
+          'Une recherche ouverte garde une demande ou une offre ouverte et informe son propriétaire quand quelque chose de nouveau correspond, par e-mail ou, pour la plateforme, par webhook. Elle n’avertit que son propriétaire et ne divulgue jamais plus que le tableau. Une personne peut la mettre en pause, la reprendre ou y mettre fin, aussi depuis le lien d’un message.',
         ] },
       ],
     },
@@ -130,25 +130,25 @@ export const fr: Catalogue = {
       title: 'La confirmation est la première chose stockée',
       paras: [
         'Avant qu’une personne confirme, rien de personnel n’est stocké : décrire, répondre et valider ne laissent rien derrière. Le widget le dit au-dessus du bouton de confirmation : « Rien n’est utilisé avant votre confirmation. » Un brouillon vit dans l’onglet du navigateur et disparaît quand l’onglet se ferme.',
-        'L’étape de confirmation est le formulaire. Le serveur valide chaque valeur contre le pack épinglé et nomme chaque champ en échec. Ce qui est stocké : les critères avec leurs valeurs, sources et importances ; la partie, une personne ou une organisation avec un nom affiché facultatif ; et, si elle est donnée, une adresse e-mail, que la personne confirme par un lien.',
-        'Le navigateur qui a confirmé gère ce qu’il a créé : il affiche « Mes demandes et offres », répond aux correspondances possibles et modifie le suivi, pendant soixante jours à partir de la dernière utilisation, et seulement dans cet onglet. Un nouveau navigateur retrouve l’accès par un lien envoyé à l’adresse confirmée.',
-        'Sur un espace avec un contrôle de partie, comme celui de Geoprocure, l’étape de confirmation affiche l’avis propre à l’espace. La personne coche elle-même le consentement à révéler son identité pour ce contrôle ; rien n’est coché à l’avance, et une confirmation sans cela est refusée.',
+        'L’étape de confirmation est le formulaire. Le serveur valide chaque valeur contre le vocabulaire épinglé et nomme chaque champ en échec. Ce qui est stocké : les critères avec leurs valeurs, sources et importances ; la partie, une personne ou une organisation avec un nom affiché facultatif ; et, si elle est donnée, une adresse e-mail, que la personne confirme par un lien.',
+        'Le navigateur qui a confirmé gère ce qu’il a créé : il affiche « Mes demandes et offres », répond aux correspondances possibles et modifie la recherche ouverte, pendant soixante jours à partir de la dernière utilisation, et seulement dans cet onglet. Un nouveau navigateur retrouve l’accès par un lien envoyé à l’adresse confirmée.',
+        'Sur un espace avec un contrôle de partie l’étape de confirmation affiche l’avis propre à l’espace. La personne coche elle-même le consentement à révéler son identité pour ce contrôle ; rien n’est coché à l’avance, et une confirmation sans cela est refusée.',
       ],
     },
     matching: {
       title: 'L’appariement : un verdict par critère, jamais un score',
       paras: [
         'L’appariement tourne sur les valeurs stockées avec des règles déterministes, après une confirmation, après un changement et une fois par jour. Elle compare les exigences de la demande avec les faits que l’offre indique.',
-        'Pour chaque critère que le pack lui laisse comparer, une correspondance montre un verdict : correspond, correspond en partie, contredit ou inconnu, avec la règle qui l’a décidé et les valeurs stockées qu’elle cite. Une limite respectée correspond, un intervalle qui chevauche la limite correspond en partie, une limite manquée contredit. « Indifférent » du côté de la demande correspond. « Je ne sais pas » ou « Autre » d’un côté ou de l’autre est inconnu, et l’inconnu n’est jamais une correspondance.',
+        'Pour chaque critère que l’espace lui laisse comparer, une correspondance montre un verdict : correspond, correspond en partie, contredit ou inconnu, avec la règle qui l’a décidé et les valeurs stockées qu’elle cite. Une limite respectée correspond, un intervalle qui chevauche la limite correspond en partie, une limite manquée contredit. « Indifférent » du côté de la demande correspond. « Je ne sais pas » ou « Autre » d’un côté ou de l’autre est inconnu, et l’inconnu n’est jamais une correspondance.',
         'Le fait qu’une paire puisse correspondre découle des seules conditions strictes, Obligatoire et Jamais. Rien d’autre ne change ce que l’autre côté voit. Il n’y a pas de score.',
-        'Une correspondance possible ne divulgue rien par elle-même : seulement les verdicts sur les champs que le pack permet à l’étape correspondance, et un avis fixe selon lequel les personnes décident. Quand une demande ou une offre a eu beaucoup de nouvelles correspondances en peu de temps, l’espace retient le reste et une exécution ultérieure les propose.',
+        'Une correspondance possible ne divulgue rien par elle-même : seulement les verdicts sur les champs que l’espace permet à l’étape correspondance, et un avis fixe selon lequel les personnes décident. Quand une demande ou une offre a eu beaucoup de nouvelles correspondances en peu de temps, l’espace retient le reste et une exécution ultérieure les propose.',
       ],
     },
     approval: {
       title: 'Approbation et gates : une personne identifiée, jamais le système',
       paras: [
         'Chaque dossier est approuvé par un opérateur identifié et actif de la plateforme. Avant cela, chaque gate que l’espace exige doit être enregistrée comme franchie par un opérateur identifié. Une gate n’est jamais décidée par le système : l’opérateur enregistre un contrôle fait ailleurs, avec une référence et sans données personnelles.',
-        'La gate exigée par Geoprocure est un contrôle KYC et de sanctions. Elle ne peut pas être levée. Un opérateur peut la renvoyer à un conseil juridique, ce qui la laisse ouverte. Le dernier enregistrement d’une gate décide.',
+        'La gate exigée par le premier espace est un contrôle KYC et de sanctions. Elle ne peut pas être levée. Un opérateur peut la renvoyer à un conseil juridique, ce qui la laisse ouverte. Le dernier enregistrement d’une gate décide.',
         'Une approbation seule ne divulgue rien. Un dossier refusé est enregistré comme refusé ; sa raison reste dans le journal d’audit.',
       ],
     },
@@ -162,8 +162,8 @@ export const fr: Catalogue = {
     introduction: {
       title: 'La mise en relation, dans le mode choisi par l’espace',
       paras: [
-        'En mode opérateur, celui de Geoprocure par défaut, les champs de l’étape mise en relation ne vont qu’à l’équipe de la plateforme : les noms affichés, les adresses e-mail confirmées, les critères que le pack garde pour cette étape. Chaque côté reçoit un reçu qui dit que les deux côtés ont accepté et que la plateforme les contactera, et qui ne porte rien de l’autre côté.',
-        'En mode direct, chaque côté voit les champs de l’autre côté à l’étape mise en relation. L’équipe de la plateforme voit les deux. Un champ que le pack garde pour l’opérateur n’atteint jamais l’autre côté.',
+        'En mode opérateur, celui du premier espace par défaut, les champs de l’étape mise en relation ne vont qu’à l’équipe de la plateforme : les noms affichés, les adresses e-mail confirmées, les critères que l’espace garde pour cette étape. Chaque côté reçoit un reçu qui dit que les deux côtés ont accepté et que la plateforme les contactera, et qui ne porte rien de l’autre côté.',
+        'En mode direct, chaque côté voit les champs de l’autre côté à l’étape mise en relation. L’équipe de la plateforme voit les deux. Un champ que l’espace garde pour l’opérateur n’atteint jamais l’autre côté.',
         'Un reçu enregistre qui peut voir quels champs, et chaque lecture d’une mise en relation y est enregistrée. Ce qui n’est pas dans le reçu n’est jamais révélé plus tard.',
       ],
     },
@@ -177,12 +177,12 @@ export const fr: Catalogue = {
     },
     sees: {
       title: 'Qui voit quoi, étape par étape',
-      lede: 'Le pack donne une étape à chaque critère. Une étape est le plus loin qu’une valeur voyage : une correspondance ne montre pas plus que ce que son étape permet, et un suivi ne divulgue jamais plus que le tableau.',
+      lede: 'L’espace donne une étape à chaque critère. Une étape est le plus loin qu’une valeur voyage : une correspondance ne montre pas plus que ce que son étape permet, et une recherche ouverte ne divulgue jamais plus que le tableau.',
       stages: [
-        { name: 'Tableau', who: 'Toute personne qui peut voir le tableau', what: 'Seulement les champs à l’étape tableau, simplifiés comme le pack le déclare, seulement pour les demandes et les offres dont le propriétaire l’a choisi. Jamais l’auteur.' },
+        { name: 'Tableau', who: 'Toute personne qui peut voir le tableau', what: 'Seulement les champs à l’étape tableau, simplifiés comme l’espace le déclare, seulement pour les demandes et les offres dont le propriétaire l’a choisi. Jamais l’auteur.' },
         { name: 'Correspondance', who: 'Les deux côtés d’une correspondance possible', what: 'Les verdicts sur les champs à l’étape correspondance ou plus bas, avec la règle et les valeurs qu’elle cite. Pas de nom, pas de coordonnées, aucun signe de la réponse de l’autre côté.' },
-        { name: 'Mise en relation', who: 'En mode opérateur l’équipe de la plateforme ; en mode direct les deux côtés', what: 'Le nom affiché, l’adresse e-mail confirmée et les critères que le pack garde pour cette étape. Chaque lecture est enregistrée sur le reçu.' },
-        { name: 'Opérateur', who: 'Seulement l’équipe de la plateforme', what: 'Les champs que le pack garde pour la plateforme, comme les détails d’identité pour un contrôle KYC. Ils n’atteignent jamais l’autre côté, et chaque accès est enregistré.' },
+        { name: 'Mise en relation', who: 'En mode opérateur l’équipe de la plateforme ; en mode direct les deux côtés', what: 'Le nom affiché, l’adresse e-mail confirmée et les critères que l’espace garde pour cette étape. Chaque lecture est enregistrée sur le reçu.' },
+        { name: 'Opérateur', who: 'Seulement l’équipe de la plateforme', what: 'Les champs que l’espace garde pour la plateforme, comme les détails d’identité pour un contrôle KYC. Ils n’atteignent jamais l’autre côté, et chaque accès est enregistré.' },
       ],
     },
     languages: {
@@ -194,8 +194,8 @@ export const fr: Catalogue = {
       ],
     },
     today: {
-      title: 'Ce qui tourne sur l’espace staging, et ce qui ne tourne pas encore',
-      lede: `Contrôlé le ${AS_OF} d’après le rapport d’état de l’espace staging et le plan de Connect : quelles parties y tournent, avec les mêmes carrés que le produit utilise comme preuve.`,
+      title: 'Ce qui tourne sur l’espace de test, et ce qui ne tourne pas encore',
+      lede: `Contrôlé le ${AS_OF} d’après le rapport d’état de l’espace de test et le plan de Connect : quelles parties y tournent, avec les mêmes carrés que le produit utilise comme preuve.`,
     },
   },
 
@@ -232,14 +232,14 @@ export const fr: Catalogue = {
       title: 'Votre serveur : le SDK et les webhooks',
       paras: [
         `Le SDK donne à votre serveur un client typé par le contrat Space API : une route, un champ ou une valeur que le contrat n’a pas est une erreur de type. Il contrôle aussi les livraisons webhook exactement comme le contrat le précise. Au ${AS_OF}, il n’est pas publié ; son code est dans le dépôt Connect.`,
-        `Les webhooks portent des ids et des états, jamais de données de contact ; votre serveur récupère les détails avec sa Secret Key. Les livraisons sont signées et réessayées. Elles sont dans le contrat ; au ${AS_OF}, l’espace staging ne les envoie pas.`,
+        `Les webhooks portent des ids et des états, jamais de données de contact ; votre serveur récupère les détails avec sa Secret Key. Les livraisons sont signées et réessayées. Elles sont dans le contrat ; au ${AS_OF}, l’espace de test ne les envoie pas.`,
       ],
     },
     recipes: {
       title: 'Recettes : HTML simple, Astro, Next.js, WordPress',
       paras: [
         'Chaque recette est un fichier qui tourne dans la CI de Connect sur trois moteurs de navigateur contre la build d’exemple avec données synthétiques : une page simple avec une Content Security Policy stricte, un composant Astro, une page Next.js avec le wrapper React, et un petit plugin WordPress avec un shortcode.',
-        `Au ${AS_OF}, elles tournent dans la CI de Connect contre la build d’exemple, pas contre un espace ; l’instance staging elle-même sert la version 0.5.0-v1 du widget.`,
+        `Au ${AS_OF}, elles tournent dans la CI de Connect contre la build d’exemple, pas contre un espace ; l’instance de test elle-même sert la version 0.5.0-v1 du widget.`,
       ],
     },
     state: { title: 'État actuel' },
@@ -250,14 +250,14 @@ export const fr: Catalogue = {
     description: 'Pour l’opérateur qui veut un espace : les quatre voies d’accès, ce qu’obtient une plateforme et ce qui reste à elle : ses données et sa décision.',
     eyebrow: 'Pour les plateformes',
     h1: ['Votre marché, vos pages,', 'votre décision.'],
-    lede: 'Pour un opérateur qui veut un espace pour son propre marché : comment un espace atteint vos utilisateurs, ce que vous obtenez et ce qui reste à vous. Cette page décrit le contrat Space API et l’espace staging synthétique de Geoprocure. Aucune plateforme réelle ne fait encore tourner d’espace, et cette page n’indique aucun prix.',
+    lede: 'Pour un opérateur qui veut un espace pour son propre marché : comment un espace atteint vos utilisateurs, ce que vous obtenez et ce qui reste à vous. Cette page décrit le contrat Space API et l’espace de test synthétique. Aucune plateforme réelle ne fait encore tourner d’espace, et cette page n’indique aucun prix.',
     toc: [['ways', 'Quatre voies d’accès'], ['gets', 'Ce que vous obtenez'], ['yours', 'Ce qui reste à vous'], ['details', 'Les détails']] as [string, string][],
     ways: {
       title: 'Quatre voies d’accès',
-      lede: `Au ${AS_OF}, deux d’entre elles tournent sur l’espace staging, et deux ne sont pas construites.`,
+      lede: `Au ${AS_OF}, deux d’entre elles tournent sur l’espace de test, et deux ne sont pas construites.`,
       items: [
         { name: 'Pages hébergées', status: 'later' as Status, body: 'Une page servie pour vous, vers laquelle vous créez un lien au lieu d’intégrer. Elle n’est pas construite. Aujourd’hui, un espace n’apparaît que sur vos propres pages, par l’intégration ou par votre propre serveur.' },
-        { name: 'L’intégration', status: 'now' as Status, body: 'Un script et un élément sur votre page. Le script vient de l’instance propre à votre espace ; l’élément porte votre clé publiable, qui ne fonctionne que sur les origines que votre espace autorise. Ses modes : décrire, tableau, suivi et les miens. L’instance staging sert la version 0.5.0-v1 du widget.' },
+        { name: 'L’intégration', status: 'now' as Status, body: 'Un script et un élément sur votre page. Le script vient de l’instance propre à votre espace ; l’élément porte votre clé publiable, qui ne fonctionne que sur les origines que votre espace autorise. Quatre modes : décrire une demande ou une offre, parcourir le tableau, continuer à chercher et mes demandes. L’instance de test sert la version 0.5.0-v1 du widget.' },
         { name: 'L’API et le SDK', status: 'now' as Status, body: `Votre serveur parle à Space API avec la clé secrète, qui n’apparaît jamais dans une page : il peut créer des besoins et des offres, enregistrer des contrôles et des approbations, et lire les mises en relation et les résultats. Le SDK donne à votre serveur un client typé par le contrat. Au ${AS_OF}, le SDK n’est pas publié ; son code est dans le dépôt de Connect.` },
         { name: 'MCP', status: 'later' as Status, body: 'Prévu, non construit : un serveur MCP par espace, par lequel un agent d’IA prépare un besoin ou une offre et une personne confirme et répond. Le propriétaire a choisi cette direction ; sa conception est proposée et son contrat est un squelette.' },
       ],
@@ -266,11 +266,11 @@ export const fr: Catalogue = {
       title: 'Ce qu’obtient une plateforme',
       items: [
         'Un espace à elle : une instance pour un marché, avec sa propre base de données, ses clés et son journal de suppression.',
-        'Un pack avec le vocabulaire de votre marché. Le formulaire, la lecture du texte, le tableau et les règles d’appariement en découlent.',
+        'Le vocabulaire de votre marché : les questions y sont adaptées. Le formulaire, la lecture du texte, le tableau et les règles d’appariement en découlent.',
         'Un widget qui reprend la police et la couleur du texte de votre page, avec votre propre mention sur les données au-dessus de son bouton de confirmation.',
         'Un appariement avec un verdict par critère, jamais un score, et une mise en relation seulement après le oui des deux côtés et l’approbation de votre équipe.',
         `Une console pour votre équipe : la file d’approbation, les dossiers avec leurs contrôles, les mises en relation avec reçus, et les résultats. Elle tourne sur votre machine ou derrière votre propre connexion. Au ${AS_OF}, elle tourne sur un échantillon de données synthétiques et n’est pas publiée.`,
-        `Des webhooks vers votre serveur, avec des ids et des états, jamais de coordonnées. Ils sont dans le contrat ; au ${AS_OF}, l’espace staging ne les envoie pas.`,
+        `Des webhooks vers votre serveur, avec des ids et des états, jamais de coordonnées. Ils sont dans le contrat ; au ${AS_OF}, l’espace de test ne les envoie pas.`,
       ],
     },
     yours: {
@@ -337,21 +337,21 @@ export const fr: Catalogue = {
   },
 
   status: {
-    title: 'Statut : ce qui tourne sur le staging, ce qui est construit, ce qui est prévu',
-    description: 'Où en est chaque partie de Linkbot, d’après la liste de contrôle du site : sur l’espace staging synthétique, construite sans y tourner, ou prévue.',
+    title: 'Statut : ce qui tourne sur l’espace de test, ce qui est fait, ce qui est prévu',
+    description: 'Où en est chaque partie de Linkbot, d’après la liste de contrôle du site : sur l’espace de test synthétique, construite sans y tourner, ou prévue.',
     eyebrow: 'Statut',
     h1: ['Où cela en est,', 'partie par partie.'],
-    lede: `Contrôlé le ${AS_OF} d’après le rapport d’état de l’espace staging et le plan de Connect. Cette page est générée à partir de la liste de contrôle du site ; elle ne dit rien que cette liste ne dise.`,
+    lede: `Contrôlé le ${AS_OF} d’après le rapport d’état de l’espace de test et le plan de Connect. Cette page est générée à partir de la liste de contrôle du site ; elle ne dit rien que cette liste ne dise.`,
     states: {
-      staging: { title: 'Sur l’espace staging', lead: 'Données synthétiques, en allemand et en anglais.' },
-      built: { title: 'Construit ou dans le contrat, pas sur l’espace staging', lead: 'N’y tourne pas et n’est pas publié.' },
+      staging: { title: 'Sur l’espace de test', lead: 'Données synthétiques, en allemand et en anglais.' },
+      built: { title: 'Construit ou dans le contrat, pas sur l’espace de test', lead: 'N’y tourne pas et n’est pas publié.' },
       planned: { title: 'Prévu, pas construit', lead: 'Aucune date promise.' },
     },
     items: {
       form: 'Décrire une demande ou une offre par formulaire, avec l’avis d’identité là où l’espace en a un',
       text: 'Décrire une demande ou une offre avec vos propres mots, lus par des règles fixes sans modèle',
-      board: 'Le tableau, avec les valeurs simplifiées du pack, qui ne liste que ce que son propriétaire a choisi',
-      watches: 'Les suivis ; leurs e-mails vont dans une boîte de test et n’atteignent personne',
+      board: 'Le tableau, avec les valeurs simplifiées de l’espace, qui ne liste que ce que son propriétaire a choisi',
+      watches: 'Les recherches ouvertes ; leurs e-mails vont dans une boîte de test et n’atteignent personne',
       control: 'Les réglages, origines, clés et l’entonnoir d’un espace, via la Space API',
       confirm: 'Confirmer ; le navigateur qui a confirmé gère ce qu’il a créé',
       matching: 'L’appariement avec un verdict par critère',
@@ -360,8 +360,8 @@ export const fr: Catalogue = {
       outcomes: 'Les résultats, les changements, la mise en pause et la fermeture',
       deletion: 'La suppression avec le journal des suppressions de l’instance',
       widget: 'Le widget, servi par l’instance elle-même depuis une version épinglée (0.5.0-v1)',
-      webhooks: 'Les webhooks vers le serveur de la plateforme : dans le contrat, et le SDK contrôle leurs signatures ; l’espace staging ne les envoie pas',
-      mail: 'Les e-mails qui atteignent une vraie boîte ; ceux de l’espace staging vont dans une boîte de test',
+      webhooks: 'Les webhooks vers le serveur de la plateforme : dans le contrat, et le SDK contrôle leurs signatures ; l’espace de test ne les envoie pas',
+      mail: 'Les e-mails qui atteignent une vraie boîte ; ceux de l’espace de test vont dans une boîte de test',
       sdk: 'Le SDK et le wrapper React, dans le dépôt de Connect ; non publiés sur npm',
       console: 'La console pour l’équipe d’une plateforme ; non publiée',
       recipes: 'Des recettes pour WordPress, Next.js et Astro ; elles tournent en CI sur un build d’exemple et ne sont pas publiées comme paquets',
@@ -374,11 +374,11 @@ export const fr: Catalogue = {
   },
   changelog: {
     title: 'Nouveautés : les étapes du produit Linkbot, datées',
-    description: 'Chaque étape de Linkbot qu’un client peut remarquer, datée, avec son état : sur l’espace staging synthétique, ou construite et pas encore là.',
+    description: 'Chaque étape de Linkbot qu’un client peut remarquer, datée, avec son état : sur l’espace de test synthétique, ou construite et pas encore là.',
     eyebrow: 'Nouveautés',
     h1: ['Ce qui a changé,', 'étape par étape.'],
-    lede: 'Une entrée par étape du produit qu’un client peut remarquer, la plus récente d’abord. Chacune dit si elle tourne sur l’espace staging synthétique ou si elle est construite et pas encore là. Rien de tout cela n’est encore publié pour de vrais utilisateurs.',
-    states: { staging: 'Sur l’espace staging', built: 'Construit, pas encore sur l’espace staging' },
+    lede: 'Une entrée par étape du produit qu’un client peut remarquer, la plus récente d’abord. Chacune dit si elle tourne sur l’espace de test synthétique ou si elle est construite et pas encore là. Rien de tout cela n’est encore publié pour de vrais utilisateurs.',
+    states: { staging: 'Sur l’espace de test', built: 'Construit, pas encore sur l’espace de test' },
     source: 'Source',
     note: 'Chaque entrée provient de docs/changelog.yml, dans le dépôt de ce site, et nomme la pull request sur laquelle elle repose ; une entrée sans source arrête la compilation.',
     link: 'Nouveautés',
@@ -413,17 +413,17 @@ export const fr: Catalogue = {
     link: 'Linkbot en une page (PDF)',
   },
   verticals: {
-    title: 'Pour les secteurs : un pack par marché',
-    description: 'Un pack porte le vocabulaire d’un marché : critères, options, unités, divulgation par étape, gates, résultats. Premier espace : les minéraux industriels.',
+    title: 'Pour les secteurs : un vocabulaire par marché',
+    description: 'Chaque marché apporte son propre vocabulaire : critères, options, unités, divulgation par étape, gates, résultats. Premier espace : les minéraux industriels.',
     eyebrow: 'Pour les secteurs',
-    h1: ['Un pack', 'par marché.'],
-    lede: 'Un secteur rejoint Linkbot sous forme de pack : les critères de son marché, les réponses qu’ils permettent, ce que chacun divulgue et quand, et les gates dont le marché a besoin. Un espace épingle le pack ; le formulaire, la lecture, le tableau et les règles d’appariement en découlent.',
-    toc: [['holds', 'Ce qu’un pack contient'], ['first', 'Le premier espace'], ['next', 'D’autres secteurs']] as [string, string][],
+    h1: ['Un vocabulaire', 'par marché.'],
+    lede: 'Un secteur rejoint Linkbot avec son vocabulaire du marché : les critères de son marché, les réponses qu’ils permettent, ce que chacun divulgue et quand, et les gates dont le marché a besoin. Un espace l’épingle ; le formulaire, la lecture, le tableau et les règles d’appariement en découlent.',
+    toc: [['holds', 'Ce que contient un vocabulaire du marché'], ['first', 'Le premier espace'], ['next', 'D’autres secteurs']] as [string, string][],
     holds: {
-      title: 'Ce qu’un pack contient',
+      title: 'Ce que contient un vocabulaire du marché',
       items: [
         'Les critères avec leurs contrôles : un choix, plusieurs choix, un nombre avec une unité, un intervalle, une fenêtre de dates, une liste interrogeable, du texte libre',
-        'Les options, unités et bases, avec les conversions que le pack déclare ; une conversion ne passe que par la base indiquée de l’offre, jamais par supposition',
+        'Les options, unités et bases, avec les conversions que le vocabulaire déclare ; une conversion ne passe que par la base indiquée de l’offre, jamais par supposition',
         'Quelles réponses spéciales chaque critère permet : « Autre / ne figure pas dans la liste », « Je ne sais pas », « Indifférent »',
         'Quelles importances un critère permet, et celle qui est suggérée',
         'L’étape de chaque critère, tableau, correspondance, mise en relation ou opérateur, et comment une valeur est simplifiée pour le tableau',
@@ -434,13 +434,13 @@ export const fr: Catalogue = {
     first: {
       title: 'Le premier espace : les minéraux industriels',
       paras: [
-        'Geoprocure fait tourner le premier espace, pour les minéraux industriels, sur une instance staging synthétique. Sa gate exigée est un contrôle KYC et de sanctions, enregistré par un opérateur identifié et jamais levé. Ses mises en relation se font en mode opérateur : l’équipe de Geoprocure met les deux côtés en contact.',
+        'Le premier espace, pour les minéraux industriels, tourne comme instance de test avec des données synthétiques. Sa gate exigée est un contrôle KYC et de sanctions, enregistré par un opérateur identifié et jamais levé. Ses mises en relation se font en mode opérateur : l’équipe de la plateforme met les deux côtés en contact.',
       ],
     },
     next: {
       title: 'D’autres secteurs',
       paras: [
-        'Un secteur a besoin de son pack et d’une plateforme qui fait tourner l’espace. Un deuxième pack avec des données synthétiques est prévu, afin qu’un espace de démonstration puisse montrer le widget sur ce site sans marché réel.',
+        'Un secteur a besoin de son vocabulaire du marché et d’une plateforme qui fait tourner l’espace. Un deuxième vocabulaire avec des données synthétiques est prévu, afin qu’un espace de démonstration puisse montrer le widget sur ce site sans marché réel.',
       ],
     },
   },
@@ -509,7 +509,7 @@ export const fr: Catalogue = {
             'Une valeur que le widget ne connaît pas bascule sur la valeur par défaut, avec un avertissement dans la console du navigateur. Une langue que l’espace ne propose pas bascule aussi, et le widget le dit à l’écran.',
           ], code: true, columns: ['Attribut', 'Valeurs', 'Défaut'], rows: [
             { name: 'data-linkbot', what: 'votre Publishable Key. Le widget refuse de démarrer avec une Secret Key et vous dit de la renouveler', more: 'obligatoire' },
-            { name: 'data-mode', what: 'describe (dites ce que vous demandez ou offrez), board (parcourez les annonces et répondez-y), mine (mes demandes, mes suivis et les correspondances possibles)', more: 'describe' },
+            { name: 'data-mode', what: 'describe (dites ce que vous demandez ou offrez), board (parcourez les annonces et répondez-y), mine (mes demandes, mes recherches ouvertes et les correspondances possibles)', more: 'describe' },
             { name: 'data-side', what: 'seeking (une demande) ou offer', more: 'seeking' },
             { name: 'data-locale', what: 'en, de, es, it ou fr', more: 'la langue du navigateur du visiteur, puis la valeur par défaut de l’espace' },
             { name: 'data-input', what: 'form, text ou both ; il ne peut que restreindre ce que l’espace permet', more: 'le réglage de l’espace' },
@@ -530,7 +530,7 @@ export const fr: Catalogue = {
             'sessionStorage appartient à l’origine de votre page ; tout script que vous exécutez sur cette page peut donc lire le brouillon et les jetons. N’exécutez aucun script en qui vous n’avez pas confiance sur les pages qui portent le widget.',
           ] },
         ] as Section[],
-        state: [`Le script vient de l’instance propre de votre espace. Au ${AS_OF}, l’instance staging sert la version 0.5.0-v1 du widget depuis un fichier épinglé, comme le montre son rapport d’état ; les contrôles de Connect sur le tableau et sur les textes du widget ont réussi contre ce fichier servi le 26 octobre 2026.`],
+        state: [`Le script vient de l’instance propre de votre espace. Au ${AS_OF}, l’instance de test sert la version 0.5.0-v1 du widget depuis un fichier épinglé, comme le montre son rapport d’état ; les contrôles de Connect sur le tableau et sur les textes du widget ont réussi contre ce fichier servi le 26 octobre 2026.`],
       },
       sdk: {
         nav: 'SDK et webhooks',
@@ -543,11 +543,11 @@ export const fr: Catalogue = {
             'Le client prend la base API de votre espace (https uniquement, sauf sur localhost), votre Secret Key depuis le magasin de secrets de votre serveur (une valeur qui n’a pas la forme d’une Secret Key est refusée) et, si vous le voulez, le fetch de votre environnement. Ses chemins, paramètres, corps et réponses sont ceux du contrat, générés à partir du YAML publié par Core et épinglés par sha256 : une route, un champ ou une valeur que le contrat n’a pas est une erreur de type.',
             'Une nouvelle clé d’idempotence s’obtient en un appel. Les écritures que le contrat marque en ont besoin ; gardez la clé avec l’écriture et renvoyez la même clé quand vous la réessayez, pour que l’espace fasse l’écriture une seule fois.',
           ] },
-          { id: 'seeding', title: 'Semer l’offre de votre propre plateforme', paras: ['Votre serveur sème une offre sur la voie opérateur, et un second opérateur la confirme : quatre yeux. Sur un espace qui contrôle chaque partie, comme celui de Geoprocure, semer l’offre de votre propre organisation compte comme une confirmation ; elle porte donc le consentement à révéler l’identité que demande l’avis de l’espace, et l’espace la refuse sans lui. C’est réservé à votre propre organisation ; le consentement de toute autre partie revient à cette partie, dans le widget.'] },
+          { id: 'seeding', title: 'Semer l’offre de votre propre plateforme', paras: ['Votre serveur sème une offre sur la voie opérateur, et un second opérateur la confirme : quatre yeux. Sur un espace qui contrôle chaque partie semer l’offre de votre propre organisation compte comme une confirmation ; elle porte donc le consentement à révéler l’identité que demande l’avis de l’espace, et l’espace la refuse sans lui. C’est réservé à votre propre organisation ; le consentement de toute autre partie revient à cette partie, dans le widget.'] },
           { id: 'webhooks', title: 'Webhooks', paras: [
             'Enregistrez un point de terminaison avec votre Secret Key, https uniquement. Le secret de signature n’est montré qu’une fois et a sa place dans votre magasin de secrets, jamais dans le code. Chaque livraison porte un id, un horodatage en secondes et une signature : le HMAC-SHA256 de l’horodatage, d’un point et du corps brut, signé avec votre secret.',
             'Refusez une livraison vieille de plus de cinq minutes ou dont la signature ne correspond pas. Le contrôle du SDK fait les deux, en comparant en temps constant avec Web Crypto, dans Node, Deno, Bun et les environnements edge. Contrôlez le corps brut avant de le parser. Répondez 2xx rapidement : toute autre réponse est réessayée avec backoff pendant 24 heures, puis la livraison est marquée comme échouée. Un nouvel essai porte le même id ; traitez donc chaque id une fois, avec les ids dans votre base de données plutôt qu’en mémoire.',
-            `Renouvelez le secret quand il le faut : l’ancien reste valide jusqu’à sept jours, et le contrôle accepte les deux. Les livraisons portent des ids et des états, jamais de données de contact ; récupérez les détails avec votre Secret Key. Le journal des livraisons liste le statut, les tentatives et une empreinte du corps, jamais le corps. Les webhooks sont dans le contrat ; au ${AS_OF}, l’espace staging ne les envoie pas.`,
+            `Renouvelez le secret quand il le faut : l’ancien reste valide jusqu’à sept jours, et le contrôle accepte les deux. Les livraisons portent des ids et des états, jamais de données de contact ; récupérez les détails avec votre Secret Key. Le journal des livraisons liste le statut, les tentatives et une empreinte du corps, jamais le corps. Les webhooks sont dans le contrat ; au ${AS_OF}, l’espace de test ne les envoie pas.`,
           ] },
           { id: 'events', title: 'Types d’événements', paras: ['Chaque événement a un id, un type, l’id de l’espace, l’heure où il s’est produit, la version du contrat et l’objet qu’il concerne, avec son type, son id et son état quand il y en a un. Les types :'], code: true, items: ['intent.confirmed', 'intent.revised', 'intent.status_changed', 'match.proposed', 'match.updated', 'gate.recorded', 'approval.recorded', 'answer.recorded', 'clarification.requested', 'review.recorded', 'introduction.created', 'outcome.recorded', 'watch.delivered', 'channel.verified', 'deletion.completed', 'key.rotated'] },
           { id: 'react', title: 'Le wrapper React', paras: [
@@ -555,7 +555,7 @@ export const fr: Catalogue = {
             `Ses props sont les attributs de l’élément : la Publishable Key et l’adresse du script sont obligatoires (une Secret Key lève une erreur), puis mode, side, locale, input, api, votre avis, un nom de classe et un style pour les variables de thème. Quand une prop que l’embed lit change, le wrapper donne à React un nouvel élément et l’embed redémarre. Une page qui veut le script chargé avant d’afficher un élément peut aussi le demander. Pas publié au ${AS_OF}.`,
           ] },
         ] as Section[],
-        state: [`Le SDK et le wrapper sont construits et testés dans le dépôt Connect et, au ${AS_OF}, pas publiés. Le récepteur du guide des webhooks est testé contre des livraisons d’exemple signées ; l’espace staging n’envoie pas de webhooks.`],
+        state: [`Le SDK et le wrapper sont construits et testés dans le dépôt Connect et, au ${AS_OF}, pas publiés. Le récepteur du guide des webhooks est testé contre des livraisons d’exemple signées ; l’espace de test n’envoie pas de webhooks.`],
       },
       console: {
         nav: 'La console',
@@ -585,14 +585,14 @@ export const fr: Catalogue = {
           { id: 'run', title: 'La lancer', paras: [
             'Sur des données d’exemple : l’API opérateur d’exemple répond de mémoire avec des données synthétiques, n’a besoin d’aucune clé et n’envoie rien sur le réseau, et chaque page le dit dans un bandeau. Elle suit les règles du contrat, pour que vous puissiez les essayer : une gate qui ne peut pas être levée, l’approbation seulement après les gates exigées, une mise en relation seulement avec chaque gate, l’approbation et un oui des deux côtés, et un reçu de lecture quand votre équipe ouvre les coordonnées.',
             'Contre un espace : la base API, votre Secret Key depuis votre magasin de secrets, votre id dans le registre d’opérateurs de l’espace et, si vous voulez l’extrait affiché, la Publishable Key. Derrière votre connexion : un gestionnaire ; votre session décide qui agit, et sans opérateur connecté il répond 401. Derrière un proxy, il lui faut l’adresse publique qu’a utilisée le navigateur.',
-            'Cette voie a tourné contre l’espace staging synthétique de Geoprocure le 23 octobre 2026 : la file, un dossier, les deux sortes de contrôle, l’approbation, une réponse pour l’offre propre de la plateforme, et une mise en relation avec son reçu.',
+            'Cette voie a tourné contre l’espace de test synthétique le 23 octobre 2026 : la file, un dossier, les deux sortes de contrôle, l’approbation, une réponse pour l’offre propre de la plateforme, et une mise en relation avec son reçu.',
           ] },
           { id: 'notyet', title: 'Pas encore là, et pourquoi', items: [
             'Un nouvel espace se crée avec l’outil de configuration de Core, pas depuis la console ; l’assistant en cinq étapes de la console écrit et valide le fichier que cet outil lit.',
             'Pas de « renvoyer » pour une livraison tant qu’il n’y a pas de livraisons réelles sur lesquelles l’essayer.',
           ] },
         ] as Section[],
-        state: ['La console est construite sur le contrat Space API et a tourné contre l’espace staging synthétique le 23 octobre 2026 ; ses tests tournent contre une API opérateur d’exemple avec des données synthétiques.'],
+        state: ['La console est construite sur le contrat Space API et a tourné contre l’espace de test synthétique le 23 octobre 2026 ; ses tests tournent contre une API opérateur d’exemple avec des données synthétiques.'],
       },
       wordpress: {
         nav: 'WordPress',

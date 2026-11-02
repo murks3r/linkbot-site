@@ -1,7 +1,7 @@
 /* The site's words in English: the source every other language is typed against. Every sentence
    states what the Space API contract and the Connect lane's docs provide, nothing
    else: no "verified", "live", "automated", "anonymous", "real-time", "stays private", no invented
-   numbers, no feature the product does not have on the staging space (tests/i18n.test.mjs). A status
+   numbers, no feature the product does not have on the test space (tests/i18n.test.mjs). A status
    sentence names the day it was checked (status-date.ts). */
 
 import { statusDate } from './status-date.ts';
@@ -9,7 +9,7 @@ import { statusDate } from './status-date.ts';
 /** The day the status sentences were checked, in English (status-date.ts). */
 const AS_OF = statusDate('en');
 
-/** Where a capability stands on the day of status-date.ts: on the staging space; in the contract, not on it; not built. */
+/** Where a capability stands on the day of status-date.ts: on the test space; in the contract, not on it; not built. */
 export type Status = 'now' | 'contract' | 'later';
 
 /** A row of a two- or three-column table on an integration page. */
@@ -20,12 +20,12 @@ export interface Section { id: string; title: string; paras?: string[]; items?: 
 export const en = {
   site: {
     name: 'Linkbot',
-    claim: 'A matching layer any platform can embed.',
+    claim: 'Trust between two businesses before they meet.',
     skip: 'Skip to content',
     menu: 'Menu',
     toc: 'On this page',
     language: 'Language',
-    nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals', integrations: 'Integrations', developers: 'Developers' },
+    nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals', integrations: 'Integrations', developers: 'Developers', faq: 'FAQ' },
     footer: {
       product: 'Linkbot',
       legal: 'Legal',
@@ -35,8 +35,8 @@ export const en = {
       contactPending: 'Contact details follow with our domain. Linkbot has no domain of its own yet, so this site names no address and has no contact form.',
       line: 'This site sets no cookies, loads nothing from third parties and uses no analytics.',
     },
-    status: { now: 'On the staging space', contract: 'In the contract, not on the staging space', later: 'Not built' },
-    synthetic: 'Everything on this site describes the Space API contract and what runs on Geoprocure’s synthetic staging space, with synthetic data. No real person and no real organisation uses it yet.',
+    status: { now: 'On the test space', contract: 'In the contract, not on the test space', later: 'Not built' },
+    synthetic: 'Everything on this site describes the Space API contract and what runs on the synthetic test space, with synthetic data. No real person and no real organisation uses it yet.',
     more: 'Read more',
   },
 
@@ -51,12 +51,12 @@ export const en = {
         { name: 'Confirm', note: 'nothing is stored before' },
         { name: 'Fit', note: 'one verdict per criterion' },
         { name: 'Approve', note: 'a named operator, after the gates' },
-        { name: 'Both yes', note: 'each side for itself' },
+        { name: 'Both say yes', note: 'each side for itself' },
         { name: 'Introduce', note: 'then, and only then' },
       ],
     },
     pillars: [
-      { title: 'One space per market.', body: 'A space is one market on one platform, with its own instance, database and keys. A pack gives it the vocabulary of its vertical: the criteria, the options, the units, the questions. The first space is Geoprocure’s, for industrial minerals.' },
+      { title: 'One space per market.', body: 'A space is one market on one platform, with its own instance, database and keys. It speaks the vocabulary of its market: the criteria, the options, the units, the questions. The first space is for industrial minerals.' },
       { title: 'Criteria, confirmed.', body: 'A need or an offer is a set of criteria, each with its source and its importance. Nothing is pre-selected, nothing is guessed, and what is not stated stays unknown. The person confirms the form; only then is anything stored.' },
       { title: 'An introduction only after both say yes.', body: 'Matching compares the stored criteria and shows a verdict per criterion. An introduction needs the gates of the space, a named operator’s approval and a yes from both sides. The server creates it then, and refuses every other way.' },
     ],
@@ -67,7 +67,7 @@ export const en = {
         'Nothing pre-selected: the form has no default values, only suggestions marked as such.',
         'Unknown stays unknown: a criterion one side did not state is never counted as a fit.',
         'Nothing is stored before a person confirms.',
-        'A match discloses nothing: only verdicts, at the stage the pack allows, and a notice that people decide.',
+        'A match discloses nothing: only verdicts, at the stage the space allows, and a notice that people decide.',
         'No introduction without the gates, a named operator’s approval and a yes from both sides.',
         'No model overrules a hard condition: must and never are decided by deterministic code.',
         'Every write names who did it and appears in the audit log.',
@@ -78,17 +78,17 @@ export const en = {
 
   how: {
     title: 'How Linkbot works: from a confirmed need to an introduction',
-    description: 'A space, a pack, four ways to describe a need or an offer, a verdict per criterion, approval by a named operator, an introduction only after both say yes.',
+    description: 'A space and its market vocabulary, four ways to describe a need or offer, a verdict per criterion, an operator’s approval, an introduction after both say yes.',
     eyebrow: 'How it works',
     h1: ['From a confirmed need', 'to an introduction.'],
-    lede: 'Every step below is in the Space API contract. Where the staging space does not run a step yet, the page says so.',
-    toc: [['blocks', 'Three building blocks'], ['rule', 'Both sides’ yes'], ['path', 'The path in six steps'], ['space', 'A space'], ['pack', 'A pack'], ['describe', 'Four ways to describe'], ['confirm', 'Confirm'], ['matching', 'Matching'], ['approval', 'Approval and gates'], ['yes', 'Both yes'], ['introduction', 'The introduction'], ['after', 'Afterwards'], ['sees', 'Who sees what'], ['languages', 'Five languages'], ['today', 'What runs on the staging space']] as [string, string][],
+    lede: 'Every step below is in the Space API contract. Where the test space does not run a step yet, the page says so.',
+    toc: [['blocks', 'Three building blocks'], ['rule', 'Both sides’ yes'], ['path', 'The path in six steps'], ['space', 'A space'], ['pack', 'A market vocabulary'], ['describe', 'Four ways to describe'], ['confirm', 'Confirm'], ['matching', 'Matching'], ['approval', 'Approval and gates'], ['yes', 'Both say yes'], ['introduction', 'The introduction'], ['after', 'Afterwards'], ['sees', 'Who sees what'], ['languages', 'Five languages'], ['today', 'What runs on the test space']] as [string, string][],
     blocks: {
       title: 'Three building blocks',
       lede: 'A space is built from three parts. Each is a group of routes in the Space API contract.',
       items: [
-        { name: 'Intake', text: 'A buyer or a supplier describes a need or an offer, by form or in their own words, checks every value and confirms. Nothing is stored before the confirm, and the server checks every value against the space’s pack.' },
-        { name: 'Watch', text: `A watch keeps a confirmed need or offer open and tells only its owner when something new fits, by email or webhook. The owner pauses or ends it at any time, also from a link. As of ${AS_OF}, the staging space’s watch email goes to a test mailbox and reaches no one, and it sends no webhooks yet.` },
+        { name: 'Intake', text: 'A buyer or a supplier describes a need or an offer, by form or in their own words, checks every value and confirms. Nothing is stored before the confirm, and the server checks every value against the space’s market vocabulary.' },
+        { name: 'Keep looking', text: `An open search keeps a confirmed need or offer open and tells only its owner when something new fits, by email or webhook. The owner pauses or ends it at any time, also from a link. As of ${AS_OF}, the test space’s email for open searches goes to a test mailbox and reaches no one, and it sends no webhooks yet.` },
         { name: 'Introductions', text: 'Once both sides have said yes and a named operator has approved, the server introduces the two sides and gives each a receipt of who may see which fields. Afterwards both sides are asked for the outcome.' },
       ],
     },
@@ -104,37 +104,37 @@ export const en = {
       title: 'A space is one market on one platform',
       paras: [
         'Every space is its own instance: its own application, database, keys and deletion log. The address of the instance identifies the space; no space id appears in any path.',
-        'A space is set up with a pack and a version of it, the languages it offers, the mode of its introductions, the gates it requires and the origins its pages are allowed on. The platform’s page holds a publishable key, which only identifies the space and works only on those origins. The secret key stays on the platform’s server and never appears in a page.',
+        'A space is set up with a market vocabulary and a version of it, the languages it offers, the mode of its introductions, the gates it requires and the origins its pages are allowed on. The platform’s page holds a publishable key, which only identifies the space and works only on those origins. The secret key stays on the platform’s server and never appears in a page.',
         'Matching runs inside a space. Nothing leaves it: no need, no offer and no fit is shared with another space.',
-        'The first space is Geoprocure’s, for industrial minerals. It runs on a synthetic staging instance with synthetic data.',
+        'The first space is for industrial minerals. It runs as a test instance with synthetic data.',
       ],
     },
     pack: {
-      title: 'A pack is the vocabulary of a vertical',
+      title: 'Each market has its own vocabulary',
       paras: [
-        'A pack lists the criteria a need and an offer can state, each with its control: a choice, several choices, a number with a unit, a range, a date window, a searchable list such as ports, or free text. Where a quantity depends on a basis, the pack says so, and “don’t know” keeps the basis unknown rather than picking one.',
-        'The pack says which special answers a criterion allows: “other / not listed”, which keeps the person’s words and is never mapped to an option; “don’t know”; and “any”. It carries the labels, questions, synonyms and notices in the space’s languages.',
+        'The market vocabulary lists the criteria a need and an offer can state, each with its control: a choice, several choices, a number with a unit, a range, a date window, a searchable list such as ports, or free text. Where a quantity depends on a basis, the vocabulary says so, and “don’t know” keeps the basis unknown rather than picking one.',
+        'It says which special answers a criterion allows: “other / not listed”, which keeps the person’s words and is never mapped to an option; “don’t know”; and “any”. It carries the labels, questions, synonyms and notices in the space’s languages.',
         'It also sets what each criterion discloses at each stage: on the board, in a possible fit, in an introduction, or to the platform’s team only; how a value is coarsened for the board; which importances a criterion allows; and the gates and the outcome categories of the market.',
-        'A space pins one version of its pack, and the server validates every submission against that version. The client is never trusted.',
+        'A space pins one version of its vocabulary, and the server validates every submission against that version. The client is never trusted.',
       ],
     },
     describe: {
       title: 'Four ways to say what you need or offer',
-      lede: `As of ${AS_OF}, the form, text, the board and watches run on the staging space. Webhooks do not run there yet, and its email goes to a test mailbox that reaches no one.`,
+      lede: `As of ${AS_OF}, the form, text, the board and open searches run on the test space. Webhooks do not run there yet, and its email goes to a test mailbox that reaches no one.`,
       items: [
         { name: 'By form', status: 'now' as Status, paras: [
-          'The form is generated from the pack. Required criteria come first; the rest sit behind “more details”. Nothing is pre-selected: no option, no unit, no basis, no party type. Every list offers “other / not listed”, “don’t know” and “any” where the pack allows them.',
-          'Each criterion carries an importance. Must and never are hard; nice to have, open to and rather not are soft. The pack may suggest one, marked “suggested”, and the person can change it unless the pack locks it. Choosing never asks for a separate confirmation.',
+          'The form is generated from the space’s vocabulary. Required criteria come first; the rest sit behind “more details”. Nothing is pre-selected: no option, no unit, no basis, no party type. Every list offers “other / not listed”, “don’t know” and “any” where the vocabulary allows them.',
+          'Each criterion carries an importance. Must and never are hard; nice to have, open to and rather not are soft. The space may suggest one, marked “suggested”, and the person can change it unless the space locks it. Choosing never asks for a separate confirmation.',
         ] },
         { name: 'In your own words', status: 'now' as Status, paras: [
           'A person writes what they need or offer. A reading proposes values for the same criteria, each shown next to the words it came from, and asks where it cannot decide: a unit, an option, a number that two conventions read differently. A reading never overwrites what a person chose; a difference becomes a question.',
-          'On the staging space, fixed rules read the text, without a model; a reader that uses a model waits for an approved reading policy. Whatever reads the text, hard conditions stay with deterministic code: no model overrules a must or a never.',
+          'On the test space, fixed rules read the text, without a model; a reader that uses a model waits for an approved reading policy. Whatever reads the text, hard conditions stay with deterministic code: no model overrules a must or a never.',
         ] },
         { name: 'On the board', status: 'now' as Status, paras: [
-          'The board lists needs and offers whose owner opted in, never by default. It shows only the fields the pack allows at board stage, coarsened as the pack declares, and never who posted. Answering a listing starts a draft on the other side, in the same form.',
+          'The board lists needs and offers whose owner opted in, never by default. It shows only the fields the space allows at board stage, coarsened as the space declares, and never who posted. Answering a listing starts a draft on the other side, in the same form.',
         ] },
-        { name: 'With a watch', status: 'now' as Status, paras: [
-          'A watch keeps a need or an offer open and tells its owner when something new fits, by email or, for the platform, by webhook. It notifies only its owner and never discloses more than the board does. A person can pause, resume or end it, also from the link in a message.',
+        { name: 'With an open search', status: 'now' as Status, paras: [
+          'An open search keeps a need or an offer open and tells its owner when something new fits, by email or, for the platform, by webhook. It notifies only its owner and never discloses more than the board does. A person can pause, resume or end it, also from the link in a message.',
         ] },
       ],
     },
@@ -142,25 +142,25 @@ export const en = {
       title: 'Confirming is the first thing that is stored',
       paras: [
         'Before a person confirms, nothing personal is stored: describing, answering and validating leave nothing behind. The widget says so above the confirm button: “Nothing is used until you confirm.” A draft lives in the browser tab and is gone when the tab closes.',
-        'The confirm step is the form. The server validates every value against the pinned pack and names each field that fails. What is stored: the criteria with their values, sources and importances; the party, a person or an organisation with an optional display name; and, if given, an email address, which the person confirms through a link.',
-        'The browser that confirmed manages what it created: it shows “mine”, answers possible fits and changes the watch, for sixty days from last use, and only in that tab. A new browser gets access again through a link sent to the confirmed address.',
-        'On a space with a party check, such as Geoprocure’s, the confirm step shows the space’s own notice. The person ticks the release of their identity for that check themselves; nothing is ticked in advance, and a confirm without it is refused.',
+        'The confirm step is the form. The server validates every value against the pinned vocabulary and names each field that fails. What is stored: the criteria with their values, sources and importances; the party, a person or an organisation with an optional display name; and, if given, an email address, which the person confirms through a link.',
+        'The browser that confirmed manages what it created: it shows “mine”, answers possible fits and changes the open search, for sixty days from last use, and only in that tab. A new browser gets access again through a link sent to the confirmed address.',
+        'On a space with a party check, the confirm step shows the space’s own notice. The person ticks the release of their identity for that check themselves; nothing is ticked in advance, and a confirm without it is refused.',
       ],
     },
     matching: {
       title: 'Matching: one verdict per criterion, never a score',
       paras: [
         'Matching runs on the stored values with deterministic rules, after a confirm, after a change and once a day. It compares the need’s requirements with the facts the offer states.',
-        'For every criterion the pack lets it compare, a match shows one verdict: meets, partly, conflicts or unknown, with the rule that decided it and the stored values it cites. A limit kept is a fit, a limit straddled is partly, a limit missed conflicts. “Any” on the need meets. “Don’t know” or “other” on either side is unknown, and unknown is never a fit.',
+        'For every criterion the space lets it compare, a match shows one verdict: meets, partly, conflicts or unknown, with the rule that decided it and the stored values it cites. A limit kept is a fit, a limit straddled is partly, a limit missed conflicts. “Any” on the need meets. “Don’t know” or “other” on either side is unknown, and unknown is never a fit.',
         'Whether a pair can be a fit at all follows from the hard conditions alone, must and never. Nothing else changes what the other side sees. There is no score.',
-        'A possible fit discloses nothing by itself: only the verdicts on fields the pack allows at match stage, and a fixed notice that people decide. When one need or offer has had many new fits in a short time, the space holds the rest back and a later run proposes them.',
+        'A possible fit discloses nothing by itself: only the verdicts on fields the space allows at match stage, and a fixed notice that people decide. When one need or offer has had many new fits in a short time, the space holds the rest back and a later run proposes them.',
       ],
     },
     approval: {
       title: 'Approval and gates: a named person, never the system',
       paras: [
         'Each case is approved by a named, active operator of the platform. Before that, every gate the space requires has to be recorded as passed by a named operator. A gate is never decided by the system: the operator records a check done elsewhere, with a reference and without personal data.',
-        'Geoprocure’s required gate is a KYC and sanctions check. It cannot be waived. An operator may refer it to counsel, which keeps it open. The latest record of a gate decides.',
+        'The first space’s required gate is a KYC and sanctions check. It cannot be waived. An operator may refer it to counsel, which keeps it open. The latest record of a gate decides.',
         'An approval alone discloses nothing. A declined case is recorded as declined; its reason stays in the audit log.',
       ],
     },
@@ -174,8 +174,8 @@ export const en = {
     introduction: {
       title: 'The introduction, in the mode the space chose',
       paras: [
-        'In operator mode, Geoprocure’s default, the fields at introduction stage go to the platform’s team only: display names, the confirmed email addresses, the criteria the pack keeps for this stage. Each side receives a receipt that says both sides agreed and that the platform will contact them, and that carries nothing of the other side.',
-        'In direct mode, each side sees the other side’s fields at introduction stage. The platform’s team sees both. A field the pack keeps for the operator never reaches the other side.',
+        'In operator mode, the first space’s default, the fields at introduction stage go to the platform’s team only: display names, the confirmed email addresses, the criteria the space keeps for this stage. Each side receives a receipt that says both sides agreed and that the platform will contact them, and that carries nothing of the other side.',
+        'In direct mode, each side sees the other side’s fields at introduction stage. The platform’s team sees both. A field the space keeps for the operator never reaches the other side.',
         'A receipt records who may see which fields, and every read of an introduction is recorded on it. What is not in the receipt is never revealed later.',
       ],
     },
@@ -189,12 +189,12 @@ export const en = {
     },
     sees: {
       title: 'Who sees what, stage by stage',
-      lede: 'The pack gives every criterion a stage. A stage is the furthest a value travels: a match shows no more than its stage allows, and a watch never discloses more than the board does.',
+      lede: 'The space gives every criterion a stage. A stage is the furthest a value travels: a match shows no more than its stage allows, and an open search never discloses more than the board does.',
       stages: [
-        { name: 'Board', who: 'Everyone who can see the board', what: 'Only fields at board stage, coarsened as the pack declares, only for needs and offers whose owner opted in. Never who posted.' },
+        { name: 'Board', who: 'Everyone who can see the board', what: 'Only fields at board stage, coarsened as the space declares, only for needs and offers whose owner opted in. Never who posted.' },
         { name: 'Match', who: 'The two sides of a possible fit', what: 'Verdicts on fields at match stage or lower, with the rule and the values it cites. No name, no contact details, no sign of the other side’s answer.' },
-        { name: 'Introduction', who: 'In operator mode the platform’s team; in direct mode both sides', what: 'Display name, confirmed email address and the criteria the pack keeps for this stage. Every read is recorded on the receipt.' },
-        { name: 'Operator', who: 'The platform’s team only', what: 'Fields the pack keeps for the platform, such as the identity details for a KYC check. They never reach the other side, and every access is recorded.' },
+        { name: 'Introduction', who: 'In operator mode the platform’s team; in direct mode both sides', what: 'Display name, confirmed email address and the criteria the space keeps for this stage. Every read is recorded on the receipt.' },
+        { name: 'Operator', who: 'The platform’s team only', what: 'Fields the space keeps for the platform, such as the identity details for a KYC check. They never reach the other side, and every access is recorded.' },
       ],
     },
     languages: {
@@ -206,8 +206,8 @@ export const en = {
       ],
     },
     today: {
-      title: 'What runs on the staging space, and what does not yet',
-      lede: `Checked on ${AS_OF} against the staging space’s health report and Connect’s plan: which parts run there, with the same squares the product uses for evidence.`,
+      title: 'What runs on the test space, and what does not yet',
+      lede: `Checked on ${AS_OF} against the test space’s health report and Connect’s plan: which parts run there, with the same squares the product uses for evidence.`,
     },
   },
 
@@ -244,14 +244,14 @@ export const en = {
       title: 'Your server: the SDK and webhooks',
       paras: [
         `The SDK gives your server a client typed by the Space API contract: a route, field or value the contract does not have is a type error. It also checks webhook deliveries exactly as the contract specifies. As of ${AS_OF} it is not published; its code is in the Connect repository.`,
-        `Webhooks carry ids and states, never contact data; your server fetches details with its secret key. Deliveries are signed and retried. They are in the contract; as of ${AS_OF} the staging space does not send them.`,
+        `Webhooks carry ids and states, never contact data; your server fetches details with its secret key. Deliveries are signed and retried. They are in the contract; as of ${AS_OF} the test space does not send them.`,
       ],
     },
     recipes: {
       title: 'Recipes: plain HTML, Astro, Next.js, WordPress',
       paras: [
         'Each recipe is a file that runs in Connect’s CI in three browser engines against the sample build with synthetic data: a plain page with a strict Content Security Policy, an Astro component, a Next.js page with the React wrapper, and a small WordPress plugin with a shortcode.',
-        `As of ${AS_OF}, they run in Connect’s CI against the sample build, not against a space; the staging instance itself serves the widget’s release 0.5.0-v1.`,
+        `As of ${AS_OF}, they run in Connect’s CI against the sample build, not against a space; the test instance itself serves the widget’s release 0.5.0-v1.`,
       ],
     },
     state: { title: 'Where it stands' },
@@ -262,14 +262,14 @@ export const en = {
     description: 'For an operator who wants a space for its market: the four ways in, what a platform gets, and what stays its own: its data and its decision.',
     eyebrow: 'For platforms',
     h1: ['Your market, your pages,', 'your decision.'],
-    lede: 'For an operator who wants a space for its own market: the ways a space reaches your users, what you get, and what stays yours. This page describes the Space API contract and Geoprocure’s synthetic staging space. No real platform runs a space yet, and this page names no prices.',
+    lede: 'For an operator who wants a space for its own market: the ways a space reaches your users, what you get, and what stays yours. This page describes the Space API contract and the synthetic test space. No real platform runs a space yet, and this page names no prices.',
     toc: [['ways', 'Four ways in'], ['gets', 'What you get'], ['yours', 'What stays yours'], ['details', 'The details']] as [string, string][],
     ways: {
       title: 'Four ways in',
-      lede: `As of ${AS_OF}, two of them run on the staging space, and two are not built.`,
+      lede: `As of ${AS_OF}, two of them run on the test space, and two are not built.`,
       items: [
         { name: 'Hosted pages', status: 'later' as Status, body: 'A page served for you that you link to instead of embedding. It is not built. Today a space appears only on your own pages, through the embed or through your own server.' },
-        { name: 'The embed', status: 'now' as Status, body: 'One script and one element on your page. The script comes from your space’s own instance; the element carries your publishable key, which works only on the origins your space allows. Its modes: describe, board, watch and mine. The staging instance serves the widget’s release 0.5.0-v1.' },
+        { name: 'The embed', status: 'now' as Status, body: 'One script and one element on your page. The script comes from your space’s own instance; the element carries your publishable key, which works only on the origins your space allows. Four modes: describe a need or an offer, browse the board, keep looking, and my requests. The test instance serves the widget’s release 0.5.0-v1.' },
         { name: 'The API and the SDK', status: 'now' as Status, body: `Your server talks to the Space API with the secret key, which never appears in a page: it can seed needs and offers, record checks and approvals, and read introductions and outcomes. The SDK gives your server a client typed by the contract. As of ${AS_OF} the SDK is not published; its code is in the Connect repository.` },
         { name: 'MCP', status: 'later' as Status, body: 'Planned, not built: an MCP server per space, through which an AI agent prepares a need or an offer and a person confirms and answers. The owner chose this direction; its design is proposed and its contract is a skeleton.' },
       ],
@@ -278,11 +278,11 @@ export const en = {
       title: 'What a platform gets',
       items: [
         'A space of its own: one instance for one market, with its own database, keys and deletion log.',
-        'A pack with the vocabulary of your market. The form, the reading, the board and the matching rules follow from it.',
+        'The vocabulary of your market: the questions fit it. The form, the reading, the board and the matching rules follow from it.',
         'A widget that takes your page’s font and text colour, with your own data notice above its confirm button.',
         'Matching with a verdict per criterion, never a score, and an introduction only after both sides’ yes and your team’s approval.',
         `A console for your team: the approval queue, cases with their checks, introductions with receipts, and outcomes. It runs on your machine or behind your own login. As of ${AS_OF} it runs on a sample with synthetic data and is not published.`,
-        `Webhooks to your server, carrying ids and states, never contact data. They are in the contract; as of ${AS_OF} the staging space does not send them.`,
+        `Webhooks to your server, carrying ids and states, never contact data. They are in the contract; as of ${AS_OF} the test space does not send them.`,
       ],
     },
     yours: {
@@ -311,7 +311,7 @@ export const en = {
       notes: [
         'The mode is describe, board, watch or mine; the side is seeking or offer. Without a language the widget follows the visitor’s browser.',
         'The publishable key works only on the origins your space allows. A secret key never belongs in a page: the widget refuses to start with one.',
-        `As of ${AS_OF}, the instance of Geoprocure’s synthetic staging space serves the widget’s release 0.5.0-v1.`,
+        `As of ${AS_OF}, the instance of the synthetic test space serves the widget’s release 0.5.0-v1.`,
       ],
     },
     sdk: {
@@ -319,7 +319,7 @@ export const en = {
       lede: 'Run once from your server, with the secret key: it registers your webhook receiver and returns the signing secret, which is shown only this once.',
       notes: [
         `The SDK is not on npm as of ${AS_OF}. It is used from a clone of the Connect repository, where it is a package of the workspace.`,
-        `This example’s test runs against a stand-in, not a space. As of ${AS_OF} the staging space does not send webhooks.`,
+        `This example’s test runs against a stand-in, not a space. As of ${AS_OF} the test space does not send webhooks.`,
       ],
     },
     docs: {
@@ -332,7 +332,7 @@ export const en = {
         astro: { name: 'The Astro example', body: 'The same in Astro: every mode, and “mine” read on the server through the SDK. It runs against a local stand-in, not a space.' },
         embedRef: { name: 'The embed reference', body: 'Every attribute of the element, the data notice, the theme, and a Content Security Policy.' },
         sdkRef: { name: 'The SDK reference', body: 'The client for your server with the secret key, the guest client, idempotency keys and seeding.' },
-        webhooks: { name: 'Webhooks', body: 'Registering a receiver, checking each delivery’s signature, retries and rotation. The staging space does not send them yet.' },
+        webhooks: { name: 'Webhooks', body: 'Registering a receiver, checking each delivery’s signature, retries and rotation. The test space does not send them yet.' },
       },
       more: 'How each part works, in short:',
       link: 'Integrations',
@@ -349,21 +349,21 @@ export const en = {
   },
 
   status: {
-    title: 'Status: what runs on the staging space, what is built, what is planned',
-    description: 'Where each part of Linkbot stands, from the site’s truth check: on the synthetic staging space, built but not running there, or planned.',
+    title: 'Status: what runs on the test space, what is built, what is planned',
+    description: 'Where each part of Linkbot stands, from the site’s truth check: on the synthetic test space, built but not running there, or planned.',
     eyebrow: 'Status',
     h1: ['Where it stands,', 'part by part.'],
-    lede: `Checked on ${AS_OF} against the staging space’s health report and Connect’s plan. This page is built from the site’s truth check, so it says nothing that list does not.`,
+    lede: `Checked on ${AS_OF} against the test space’s health report and Connect’s plan. This page is built from the site’s truth check, so it says nothing that list does not.`,
     states: {
-      staging: { title: 'On the staging space', lead: 'Synthetic data, in German and English.' },
-      built: { title: 'Built or in the contract, not on the staging space', lead: 'Not running there and not published.' },
+      staging: { title: 'On the test space', lead: 'Synthetic data, in German and English.' },
+      built: { title: 'Built or in the contract, not on the test space', lead: 'Not running there and not published.' },
       planned: { title: 'Planned, not built', lead: 'Not promised as a date.' },
     },
     items: {
       form: 'Describing a need or an offer by form, with the identity notice where the space has one',
       text: 'Describing a need or an offer in your own words, read by fixed rules without a model',
-      board: 'The board, with the pack’s coarsened values, listing only what its owner opted in',
-      watches: 'Watches; their email goes to a test mailbox and reaches no one',
+      board: 'The board, with the space’s coarsened values, listing only what its owner opted in',
+      watches: 'Open searches; their email goes to a test mailbox and reaches no one',
       control: 'A space’s settings, origins, keys and funnel, through the Space API',
       confirm: 'Confirming; the browser that confirmed manages what it created',
       matching: 'Matching with a verdict per criterion',
@@ -372,8 +372,8 @@ export const en = {
       outcomes: 'Outcomes, changes, pausing and closing',
       deletion: 'Deletion with the instance’s deletion log',
       widget: 'The widget, served by the instance itself from a pinned release (0.5.0-v1)',
-      webhooks: 'Webhooks to the platform’s server: in the contract, and the SDK checks their signatures; the staging space does not send them',
-      mail: 'Email that reaches an inbox; the staging space’s email goes to a test mailbox',
+      webhooks: 'Webhooks to the platform’s server: in the contract, and the SDK checks their signatures; the test space does not send them',
+      mail: 'Email that reaches an inbox; the test space’s email goes to a test mailbox',
       sdk: 'The SDK and the React wrapper, in the Connect repository; not published on npm',
       console: 'The console for a platform’s team; not published',
       recipes: 'Recipes for WordPress, Next.js and Astro; they run in CI against a sample build and are not published as packages',
@@ -386,11 +386,11 @@ export const en = {
   },
   changelog: {
     title: 'What’s new: Linkbot’s product steps, dated',
-    description: 'Each step of Linkbot a customer can notice, dated, with where it stands: on the synthetic staging space, or built and not yet there.',
+    description: 'Each step of Linkbot a customer can notice, dated, with where it stands: on the synthetic test space, or built and not yet there.',
     eyebrow: 'What’s new',
     h1: ['What changed,', 'step by step.'],
-    lede: 'One entry per product step a customer can notice, newest first. Each says whether it runs on the synthetic staging space or is built and not yet there. Nothing here is published for real users yet.',
-    states: { staging: 'On the staging space', built: 'Built, not on the staging space yet' },
+    lede: 'One entry per product step a customer can notice, newest first. Each says whether it runs on the synthetic test space or is built and not yet there. Nothing here is published for real users yet.',
+    states: { staging: 'On the test space', built: 'Built, not on the test space yet' },
     source: 'Source',
     note: 'Every entry comes from docs/changelog.yml in this site’s repository and names the pull request it rests on; an entry without a source stops the build.',
     link: 'What’s new',
@@ -425,17 +425,17 @@ export const en = {
     link: 'Linkbot in one page (PDF)',
   },
   verticals: {
-    title: 'For verticals: a pack per market',
-    description: 'A pack holds a market’s vocabulary: criteria, options, units, labels, disclosure per stage, gates and outcomes. The first space: industrial minerals.',
+    title: 'For verticals: one vocabulary per market',
+    description: 'Each market brings its own vocabulary: criteria, options, units, labels, disclosure per stage, gates and outcomes. The first space: industrial minerals.',
     eyebrow: 'For verticals',
-    h1: ['A pack', 'per market.'],
-    lede: 'A vertical joins Linkbot as a pack: the criteria of its market, the answers they allow, what each one discloses and when, and the gates the market needs. A space pins the pack; the form, the reading, the board and the matching rules follow from it.',
-    toc: [['holds', 'What a pack holds'], ['first', 'The first space'], ['next', 'More verticals']] as [string, string][],
+    h1: ['One vocabulary', 'per market.'],
+    lede: 'A vertical joins Linkbot with its market vocabulary: the criteria of its market, the answers they allow, what each one discloses and when, and the gates the market needs. A space pins it; the form, the reading, the board and the matching rules follow from it.',
+    toc: [['holds', 'What a market vocabulary holds'], ['first', 'The first space'], ['next', 'More verticals']] as [string, string][],
     holds: {
-      title: 'What a pack holds',
+      title: 'What a market vocabulary holds',
       items: [
         'Criteria with their controls: a choice, several choices, a number with a unit, a range, a date window, a searchable list, free text',
-        'Options, units and bases, with the conversions the pack declares; a conversion runs only through the offer’s own stated basis, never by assumption',
+        'Options, units and bases, with the conversions the vocabulary declares; a conversion runs only through the offer’s own stated basis, never by assumption',
         'Which special answers each criterion allows: “other / not listed”, “don’t know”, “any”',
         'Which importances a criterion allows, and the suggested one',
         'The stage of every criterion, board, match, introduction or operator, and how a value is coarsened for the board',
@@ -446,13 +446,13 @@ export const en = {
     first: {
       title: 'The first space: industrial minerals',
       paras: [
-        'Geoprocure runs the first space, for industrial minerals, on a synthetic staging instance. Its required gate is a KYC and sanctions check, recorded by a named operator and never waived. Its introductions run in operator mode: Geoprocure’s team brings both sides together.',
+        'The first space, for industrial minerals, runs as a test instance with synthetic data. Its required gate is a KYC and sanctions check, recorded by a named operator and never waived. Its introductions run in operator mode: the platform’s team brings both sides together.',
       ],
     },
     next: {
       title: 'More verticals',
       paras: [
-        'A vertical needs its pack and a platform that runs the space. A second pack with synthetic data is planned, so that a demo space can show the widget on this site without a real market.',
+        'A vertical needs its market vocabulary and a platform that runs the space. A second vocabulary with synthetic data is planned, so that a demo space can show the widget on this site without a real market.',
       ],
     },
   },
@@ -522,7 +522,7 @@ export const en = {
             'A value the widget does not know falls back to the default, with a warning in the browser console. A language the space does not offer falls back too, and the widget says so on screen.',
           ], code: true, columns: ['Attribute', 'Values', 'Default'], rows: [
             { name: 'data-linkbot', what: 'your publishable key. The widget refuses to start with a secret key and tells you to rotate it', more: 'required' },
-            { name: 'data-mode', what: 'describe (say what you need or offer), board (browse and answer listings), mine (my requests, watches and possible fits)', more: 'describe' },
+            { name: 'data-mode', what: 'describe (say what you need or offer), board (browse and answer listings), mine (my requests, open searches and possible fits)', more: 'describe' },
             { name: 'data-side', what: 'seeking (a need) or offer', more: 'seeking' },
             { name: 'data-locale', what: 'en, de, es, it or fr', more: 'the visitor’s browser language, then the space default' },
             { name: 'data-input', what: 'form, text or both; it can only narrow what the space allows', more: 'the space’s setting' },
@@ -543,7 +543,7 @@ export const en = {
             'sessionStorage belongs to your page’s origin, so any script you run on that page can read the draft and the tokens. Run no scripts you do not trust on pages that carry the widget.',
           ] },
         ] as Section[],
-        state: [`The script comes from your space’s own instance. As of ${AS_OF} the staging instance serves the widget’s release 0.5.0-v1 from a pinned file, as its health report shows; Connect’s checks of the board and of the widget’s wording passed against that served file on 2026-10-26.`],
+        state: [`The script comes from your space’s own instance. As of ${AS_OF} the test instance serves the widget’s release 0.5.0-v1 from a pinned file, as its health report shows; Connect’s checks of the board and of the widget’s wording passed against that served file on 2026-10-26.`],
       },
       sdk: {
         nav: 'SDK and webhooks',
@@ -556,11 +556,11 @@ export const en = {
             'The client takes your space’s API base (https only, except on localhost), your secret key from your server’s secret store (a value that is not shaped like a secret key is refused) and, if you want, your runtime’s fetch. Its paths, parameters, bodies and responses are the contract’s own, generated from the YAML Core posted and pinned by sha256: a route, field or value the contract does not have is a type error.',
             'A fresh idempotency key is one call away. Writes the contract marks need one; keep the key with the write and send the same key when you retry it, so the space does the write once.',
           ] },
-          { id: 'seeding', title: 'Seeding your platform’s own offer', paras: ['Your server seeds an offer on the operator path, and a second operator confirms it: four eyes. On a space that checks each party, such as Geoprocure’s, seeding your own organisation’s offer counts as a confirm, so it carries the identity release the space’s notice asks for, and the space refuses it without one. This is for your own organisation only; anyone else’s release is theirs to give, in the widget.'] },
+          { id: 'seeding', title: 'Seeding your platform’s own offer', paras: ['Your server seeds an offer on the operator path, and a second operator confirms it: four eyes. On a space that checks each party, seeding your own organisation’s offer counts as a confirm, so it carries the identity release the space’s notice asks for, and the space refuses it without one. This is for your own organisation only; anyone else’s release is theirs to give, in the widget.'] },
           { id: 'webhooks', title: 'Webhooks', paras: [
             'Register an endpoint with your secret key, https only. The signing secret is shown once and belongs in your secret store, never in code. Each delivery carries an id, a timestamp in seconds and a signature: the HMAC-SHA256 of the timestamp, a dot and the raw body, keyed with your secret.',
             'Refuse a delivery older than five minutes or whose signature does not match. The SDK’s check does both, comparing in constant time with Web Crypto, in Node, Deno, Bun and edge runtimes. Check the raw body before you parse it. Answer 2xx quickly: anything else is retried with backoff for 24 hours, then the delivery is marked dead. A retry carries the same id, so handle each id once, with the ids in your database rather than in memory.',
-            `Rotate the secret when you need to: the old one stays valid for up to seven days, and the check takes both. Deliveries carry ids and states, never contact data; fetch details with your secret key. The delivery log lists status, attempts and a hash of the body, never the body. Webhooks are in the contract; as of ${AS_OF} the staging space does not send them.`,
+            `Rotate the secret when you need to: the old one stays valid for up to seven days, and the check takes both. Deliveries carry ids and states, never contact data; fetch details with your secret key. The delivery log lists status, attempts and a hash of the body, never the body. Webhooks are in the contract; as of ${AS_OF} the test space does not send them.`,
           ] },
           { id: 'events', title: 'Event types', paras: ['Every event has an id, a type, the space id, the time it occurred, the contract version and the object it is about, with its type, id and state where there is one. The types:'], code: true, items: ['intent.confirmed', 'intent.revised', 'intent.status_changed', 'match.proposed', 'match.updated', 'gate.recorded', 'approval.recorded', 'answer.recorded', 'clarification.requested', 'review.recorded', 'introduction.created', 'outcome.recorded', 'watch.delivered', 'channel.verified', 'deletion.completed', 'key.rotated'] },
           { id: 'react', title: 'The React wrapper', paras: [
@@ -568,7 +568,7 @@ export const en = {
             `Its props are the element’s attributes: the publishable key and the script address are required (a secret key throws), then mode, side, locale, input, api, your notice, a class name and a style for the theme variables. When a prop the embed reads changes, the wrapper gives React a new element and the embed starts afresh. A page that wants the script loaded before it renders an element can ask for that too. Not published as of ${AS_OF}.`,
           ] },
         ] as Section[],
-        state: [`The SDK and the wrapper are built and tested in the Connect repository and, as of ${AS_OF}, not published. The webhooks guide’s receiver is tested against signed sample deliveries; the staging space does not send webhooks.`],
+        state: [`The SDK and the wrapper are built and tested in the Connect repository and, as of ${AS_OF}, not published. The webhooks guide’s receiver is tested against signed sample deliveries; the test space does not send webhooks.`],
       },
       console: {
         nav: 'The console',
@@ -598,14 +598,14 @@ export const en = {
           { id: 'run', title: 'Running it', paras: [
             'On sample data: the sample operator API answers from memory with synthetic data, needs no key and sends nothing over the network, and every page says so in a banner. It follows the contract’s rules, so you can try them: a gate that cannot be waived, approval only after the required gates, an introduction only with every gate, the approval and a yes from both sides, and a read receipt when your team opens the contact details.',
             'Against a space: the API base, your secret key from your secret store, your id in the space’s operator register and, if you want the snippet shown, the publishable key. Behind your login: one handler; your session decides who acts, and without a signed-in operator it answers 401. Behind a proxy it needs the public address the browser used.',
-            'This path ran against Geoprocure’s synthetic staging space on 2026-10-23: the queue, a case, both kinds of check, the approval, an answer for the platform’s own offer, and an introduction with its receipt.',
+            'This path ran against the synthetic test space on 2026-10-23: the queue, a case, both kinds of check, the approval, an answer for the platform’s own offer, and an introduction with its receipt.',
           ] },
           { id: 'notyet', title: 'Not here yet, and why', items: [
             'A new space is created with Core’s provisioning tool, not from the console; the console’s five-step wizard writes and validates the file that tool reads.',
             'No “send again” for a delivery until there are real deliveries to try it on.',
           ] },
         ] as Section[],
-        state: ['The console is built on the Space API contract and ran against the synthetic staging space on 2026-10-23; its tests run against a sample operator API with synthetic data.'],
+        state: ['The console is built on the Space API contract and ran against the synthetic test space on 2026-10-23; its tests run against a sample operator API with synthetic data.'],
       },
       wordpress: {
         nav: 'WordPress',

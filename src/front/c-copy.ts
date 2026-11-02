@@ -11,7 +11,7 @@ export const C = {
   hero: {
     eyebrow: 'A matching layer any platform can embed',
     h1: ['Who sees what,', 'and when.'],
-    lede: 'A pack gives every criterion a stage, and a stage is the furthest a value travels: the board, a possible fit, the introduction, or the platform’s team alone. Below: one synthetic offer, stage by stage, and the receipt that bounds every read.',
+    lede: 'The market vocabulary gives every criterion a stage, and a stage is the furthest a value travels: the board, a possible fit, the introduction, or the platform’s team alone. Below: one synthetic offer, stage by stage, and the receipt that bounds every read.',
     primary: 'What a platform gets',
     secondary: 'Who sees what, in full',
   },
@@ -40,10 +40,10 @@ export const C = {
     ],
   },
   deletion: { h2: 'Deletion: what goes, and what stays' },
-  platforms: { h2: 'For platforms', p: 'One script and one element put a space on your page; the console for your team runs on your machine or behind your own login; your server hears about events through signed webhooks, which are in the contract and not sent by the staging space yet.', link: 'What a platform gets' },
-  verticals: { h2: 'For verticals', p: 'A pack describes a market: its criteria, options and units, its labels and questions in the space’s languages, what each criterion discloses at each stage, and the gates the market needs. The first is industrial minerals.', link: 'What a pack holds' },
+  platforms: { h2: 'For platforms', p: 'One script and one element put a space on your page; the console for your team runs on your machine or behind your own login; your server hears about events through signed webhooks, which are in the contract and not sent by the test space yet.', link: 'What a platform gets' },
+  verticals: { h2: 'For verticals', p: 'A market vocabulary describes a market: its criteria, options and units, its labels and questions in the space’s languages, what each criterion discloses at each stage, and the gates the market needs. The first is industrial minerals.', link: 'What a market vocabulary holds' },
   state: {
     h2: 'Where it stands',
-    p: 'The offer above is fixed text, written for this page in the vocabulary of a synthetic pack; the product did not run here. The demo page walks through the whole path, step by step.',
+    p: 'The offer above is fixed text, written for this page in a synthetic market vocabulary; the product did not run here. The demo page walks through the whole path, step by step.',
   },
 } as const;
