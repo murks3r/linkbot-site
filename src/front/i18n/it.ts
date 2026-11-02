@@ -46,6 +46,7 @@ export const it: FrontCopy = {
       h1: 'La sua piattaforma unisce acquirenti e venditori. Linkbot trova chi corrisponde.',
       sub: 'Il suo widget chiede a ogni parte che cosa cerca; Linkbot mostra un verdetto per ogni criterio e presenta le due parti solo quando entrambe dicono sì.',
       button: 'Vederlo passo per passo',
+      try: 'Lo provi',
     },
     cards: {
       h2: 'Che cosa fa per lei',
@@ -166,8 +167,8 @@ export const it: FrontCopy = {
       h2: 'Il percorso, passo dopo passo',
       who: 'Chi agisce',
       items: [
-        { name: 'La richiesta', who: 'L’acquirente', text: 'L’acquirente descrive il fabbisogno nella pagina di una piattaforma, nel modulo che il pack del mercato genera, oppure in una riga di testo che regole fisse leggono e trasformano in valori proposti. Nulla è preselezionato, e ciò che l’acquirente non ha indicato resta sconosciuto.' },
-        { name: 'I criteri, confermati', who: 'L’acquirente', text: 'L’acquirente controlla ogni valore e conferma. Solo ora viene salvato qualcosa: il server controlla ogni valore rispetto al pack e nomina ogni campo che non lo rispetta. L’indirizzo email viene confermato tramite un link.' },
+        { name: 'La richiesta', who: 'L’acquirente', text: 'L’acquirente descrive il fabbisogno nella pagina di una piattaforma, in un modulo con le domande del suo mercato, oppure in una riga di testo che regole fisse leggono e trasformano in valori proposti. Nulla è preselezionato, e ciò che l’acquirente non ha indicato resta sconosciuto.' },
+        { name: 'I criteri, confermati', who: 'L’acquirente', text: 'L’acquirente controlla ogni valore e conferma. Solo ora viene salvato qualcosa: il server controlla ogni valore rispetto alle domande del mercato e nomina ogni campo che non lo rispetta. L’indirizzo email viene confermato tramite un link.' },
         { name: 'Le possibili corrispondenze', who: 'Lo spazio', text: 'Il matching confronta i criteri salvati con quelli dell’altra parte, uno per uno: un verdetto per criterio, corrisponde, corrisponde in parte, contraddice o sconosciuto, mai un punteggio. Una possibile corrispondenza mostra a ciascuna parte solo i verdetti e un avviso che decidono le persone.' },
         { name: 'Entrambi dicono sì', who: 'L’acquirente e il fornitore', text: 'Ciascuna parte risponde alla possibile corrispondenza per sé. Prima che entrambe abbiano detto sì l’altra parte non sa nulla, e un no successivo revoca un sì.' },
         { name: 'L’operatore approva', who: 'Il team della piattaforma', text: 'Un operatore con nome registra i controlli che lo spazio richiede e approva la coppia. Un’approvazione da sola non rivela nulla, e ogni scrittura indica chi l’ha fatta.' },
@@ -183,7 +184,7 @@ export const it: FrontCopy = {
       previous: 'Passaggio precedente',
       next: 'Passaggio successivo',
       screens: [
-        ['Il widget dell’acquirente: il modulo generato dal pack di esempio, con fosfato naturale scelto e un minimo di P₂O₅ del 30 %. L’importanza è segnata come suggerita, e nient’altro è scelto.'],
+        ['Il widget dell’acquirente: il modulo con le domande del mercato di esempio, con fosfato naturale scelto e un minimo di P₂O₅ del 30 %. L’importanza è segnata come suggerita, e nient’altro è scelto.'],
         ['Il widget dell’acquirente dopo la conferma: la richiesta è attiva, con ogni criterio e la sua importanza. Ancora nessuna offerta da mostrare.'],
         ['Il widget dell’acquirente: un’offerta che potrebbe essere adatta, con un segno di spunta per criterio, la domanda «Desidera essere presentato?» e l’avviso che decidono le persone.'],
         ['Il widget dell’acquirente dopo il sì: «Il Suo sì è registrato. Sample space lo esamina prima.»', 'Il widget del fornitore: la stessa possibile corrispondenza, vista dal lato dell’offerta come una richiesta con un segno di spunta per criterio, dopo il sì del fornitore stesso, con le stesse parole.'],
@@ -197,9 +198,10 @@ export const it: FrontCopy = {
       text: 'Dopo la conferma, l’acquirente può tenere aperta la richiesta e monitorarla: con che frequenza, settimanale o giornaliera; su che cosa vuole essere informato; e, nelle opzioni e-mail, al massimo quanti per e-mail e nessuna e-mail prima di un giorno scelto. Un monitoraggio avvisa solo il suo titolare quando qualcosa di nuovo è adatto, e inizia quando l’indirizzo e-mail è confermato. Dura 90 giorni e si può mettere in pausa, riprendere o terminare in qualsiasi momento, anche da un link nelle sue e-mail.',
       screens: ['Il widget dell’acquirente dopo la conferma, ancora senza offerte da mostrare: un monitoraggio settimanale, su tutto ciò che soddisfa i requisiti indispensabili, al massimo 5 per e-mail.', 'Lo stesso widget dopo l’avvio del monitoraggio: attende la conferma dell’indirizzo e-mail, al massimo 5 per e-mail, fino al 23 gennaio 2027. La registrazione non ha inviato alcuna e-mail, e l’indirizzo fittizio non esiste.'],
     },
+    live: {
+      p: 'Qui sotto c’è il widget stesso, su uno spazio demo con dati fittizi. Scelga una parte e dica di che cosa ha bisogno o che cosa offre; nulla viene salvato finché non conferma. Più sotto segue il percorso registrato.',
+    },
     space: {
-      h2: 'La bacheca dello spazio di prova',
-      on: 'Qui sotto c’è il widget stesso, servito dallo spazio di prova, in modalità bacheca: le richieste e le offerte aperte che i loro titolari hanno scelto di mostrare, rese meno precise come dichiara il pack. Rispondere a una comincia dal passo 1, dall’altra parte.',
       off: 'Questa pagina non mostra ancora alcun widget: attende uno spazio demo con dati sintetici. Fino ad allora il percorso qui sopra è mostrato in immagini.',
       notice: 'Uno spazio di prova con dati fittizi: non inserisca nulla di reale. Le sue email non raggiungono nessuno.',
     },

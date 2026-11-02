@@ -46,6 +46,7 @@ export const fr: FrontCopy = {
       h1: 'Votre plateforme réunit acheteurs et vendeurs. Linkbot trouve qui correspond.',
       sub: 'Son widget demande à chaque côté ce qu’il cherche ; Linkbot montre un verdict pour chaque critère et ne met les deux côtés en relation qu’après le oui des deux.',
       button: 'Voir étape par étape',
+      try: 'Essayez',
     },
     cards: {
       h2: 'Ce qu’il fait pour vous',
@@ -166,8 +167,8 @@ export const fr: FrontCopy = {
       h2: 'Le parcours, étape par étape',
       who: 'Qui agit',
       items: [
-        { name: 'La demande', who: 'L’acheteur', text: 'L’acheteur décrit le besoin sur la page d’une plateforme, dans le formulaire que génère le pack du marché, ou en une ligne de texte que des règles fixes lisent et transforment en valeurs proposées. Rien n’est présélectionné, et ce que l’acheteur n’a pas indiqué reste inconnu.' },
-        { name: 'Les critères, confirmés', who: 'L’acheteur', text: 'L’acheteur contrôle chaque valeur et confirme. C’est seulement alors que quelque chose est enregistré : le serveur contrôle chaque valeur par rapport au pack et nomme chaque champ qui ne convient pas. L’adresse e-mail est confirmée par un lien.' },
+        { name: 'La demande', who: 'L’acheteur', text: 'L’acheteur décrit le besoin sur la page d’une plateforme, dans un formulaire avec les questions de son marché, ou en une ligne de texte que des règles fixes lisent et transforment en valeurs proposées. Rien n’est présélectionné, et ce que l’acheteur n’a pas indiqué reste inconnu.' },
+        { name: 'Les critères, confirmés', who: 'L’acheteur', text: 'L’acheteur contrôle chaque valeur et confirme. C’est seulement alors que quelque chose est enregistré : le serveur contrôle chaque valeur par rapport aux questions du marché et nomme chaque champ qui ne convient pas. L’adresse e-mail est confirmée par un lien.' },
         { name: 'Les correspondances possibles', who: 'L’espace', text: 'Le matching compare les critères enregistrés à ceux de l’autre côté, un par un : un verdict par critère, correspond, correspond en partie, contredit ou inconnu, jamais un score. Une correspondance possible ne montre à chaque côté que les verdicts et un avis indiquant que ce sont les personnes qui décident.' },
         { name: 'Les deux disent oui', who: 'L’acheteur et le fournisseur', text: 'Chaque côté répond à la correspondance possible pour lui-même. Avant que les deux aient dit oui, l’autre côté n’apprend rien, et un non ultérieur révoque un oui.' },
         { name: 'L’opérateur approuve', who: 'L’équipe de la plateforme', text: 'Un opérateur nommé enregistre les contrôles que l’espace exige et approuve la paire. Une approbation seule ne révèle rien, et chaque écriture indique qui l’a faite.' },
@@ -183,7 +184,7 @@ export const fr: FrontCopy = {
       previous: 'Étape précédente',
       next: 'Étape suivante',
       screens: [
-        ['Le widget de l’acheteur : le formulaire que génère le pack d’exemple, avec le phosphate naturel choisi et un minimum de P₂O₅ de 30 %. L’importance est marquée comme suggérée, et rien d’autre n’est choisi.'],
+        ['Le widget de l’acheteur : le formulaire avec les questions du marché d’exemple, avec le phosphate naturel choisi et un minimum de P₂O₅ de 30 %. L’importance est marquée comme suggérée, et rien d’autre n’est choisi.'],
         ['Le widget de l’acheteur après la confirmation : la demande est active, avec chaque critère et son importance. Aucune offre à afficher pour l’instant.'],
         ['Le widget de l’acheteur : une offre qui pourrait convenir, avec une coche par critère, la question « Souhaitez-vous une mise en relation ? » et la mention que ce sont les personnes qui décident.'],
         ['Le widget de l’acheteur après le oui : « Votre oui est enregistré. Sample space l’examine d’abord. »', 'Le widget du fournisseur : la même correspondance possible, vue du côté de l’offre comme une demande avec une coche par critère, après le propre oui du fournisseur, avec les mêmes mots.'],
@@ -197,9 +198,10 @@ export const fr: FrontCopy = {
       text: 'Après avoir confirmé, l’acheteur peut garder la demande ouverte et la suivre : à quelle fréquence, chaque semaine ou chaque jour ; sur quoi être informé ; et, dans les options d’e-mail, au plus combien par e-mail et aucun e-mail avant un jour choisi. Un suivi n’informe que son titulaire lorsque quelque chose de nouveau convient, et commence une fois l’adresse e-mail confirmée. Il dure 90 jours et peut être mis en pause, repris ou arrêté à tout moment, aussi depuis un lien dans ses e-mails.',
       screens: ['Le widget de l’acheteur après la confirmation, encore sans offre à afficher : un suivi hebdomadaire, sur tout ce qui remplit les critères obligatoires, au plus 5 par e-mail.', 'Le même widget après le lancement du suivi : il attend la confirmation de l’adresse e-mail, au plus 5 par e-mail, jusqu’au 23 janvier 2027. L’enregistrement n’a envoyé aucun e-mail, et l’adresse fictive n’existe pas.'],
     },
+    live: {
+      p: 'Ci-dessous, le widget lui-même, sur un espace de démonstration aux données fictives. Choisissez un côté et dites ce dont vous avez besoin ou ce que vous proposez ; rien n’est enregistré avant que vous confirmiez. Le parcours enregistré suit plus bas.',
+    },
     space: {
-      h2: 'Le tableau de l’espace de test',
-      on: 'Ci-dessous, le widget lui-même, servi par l’espace de test, en mode tableau : les demandes et offres ouvertes que leurs titulaires ont choisi de montrer, rendues moins précises comme le pack le déclare. Répondre à l’une d’elles commence à l’étape 1, de l’autre côté.',
       off: 'Cette page ne montre encore aucun widget : il attend un espace de démonstration aux données synthétiques. D’ici là, le parcours ci-dessus est montré en images.',
       notice: 'Un espace de test aux données fictives : n’y saisissez rien de réel. Ses e-mails n’atteignent personne.',
     },

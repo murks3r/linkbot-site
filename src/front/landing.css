@@ -24,14 +24,10 @@
 
 /* 3 · The demo stage: the switch, then one side's pictures. */
 .ln-stage { display: grid; gap: 16px; padding: 24px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
-.ln-switch { display: inline-flex; justify-self: start; padding: 4px; border-radius: var(--pill); background: var(--lb-ground); border: 1px solid var(--lb-line); }
-.ln-switch button { min-height: var(--lb-chip-h); padding: 0 18px; border: 0; border-radius: var(--pill); background: transparent; font-weight: 600; color: var(--lb-slate); }
-.ln-switch button[aria-pressed='true'] { background: var(--lb-ink); color: var(--lb-surface); }
 .ln-recorded { font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-slate); }
 .ln-side { display: grid; gap: 12px; }
 .ln-side + .ln-side { padding-top: 16px; border-top: 1px solid var(--lb-line-quiet); }
 .ln-stage[data-one] .ln-side + .ln-side { padding-top: 0; border-top: 0; }
-.ln-stage[data-one] .ln-side-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .ln-side-title { font-size: 1.125rem; }
 .ln-shots { display: grid; gap: 16px; }
 @media (min-width: 48rem) { .ln-shots { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

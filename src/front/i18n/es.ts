@@ -46,6 +46,7 @@ export const es: FrontCopy = {
       h1: 'Su plataforma une a compradores y vendedores. Linkbot encuentra quién encaja.',
       sub: 'Su widget pregunta a cada parte qué necesita; Linkbot muestra un veredicto para cada criterio y presenta a las dos partes solo cuando ambas dicen que sí.',
       button: 'Verlo paso a paso',
+      try: 'Pruébelo',
     },
     cards: {
       h2: 'Lo que hace por usted',
@@ -166,8 +167,8 @@ export const es: FrontCopy = {
       h2: 'El recorrido, paso a paso',
       who: 'Quién actúa',
       items: [
-        { name: 'La solicitud', who: 'El comprador', text: 'El comprador describe la necesidad en la página de una plataforma, en el formulario que genera el pack del mercado, o en una línea de texto que unas reglas fijas leen y convierten en valores propuestos. Nada está preseleccionado, y lo que el comprador no indicó queda como desconocido.' },
-        { name: 'Los criterios, confirmados', who: 'El comprador', text: 'El comprador revisa cada valor y confirma. Solo entonces se guarda algo: el servidor comprueba cada valor con el pack y nombra cada campo que no lo cumple. La dirección de correo se confirma mediante un enlace.' },
+        { name: 'La solicitud', who: 'El comprador', text: 'El comprador describe la necesidad en la página de una plataforma, en un formulario con las preguntas de su mercado, o en una línea de texto que unas reglas fijas leen y convierten en valores propuestos. Nada está preseleccionado, y lo que el comprador no indicó queda como desconocido.' },
+        { name: 'Los criterios, confirmados', who: 'El comprador', text: 'El comprador revisa cada valor y confirma. Solo entonces se guarda algo: el servidor comprueba cada valor con las preguntas del mercado y nombra cada campo que no lo cumple. La dirección de correo se confirma mediante un enlace.' },
         { name: 'Los posibles encajes', who: 'El espacio', text: 'El matching compara los criterios guardados con los de la otra parte, uno a uno: un veredicto por criterio, encaja, encaja en parte, contradice o desconocido, nunca una puntuación. Un posible encaje muestra a cada parte solo los veredictos y un aviso de que deciden las personas.' },
         { name: 'Ambos dicen sí', who: 'El comprador y el proveedor', text: 'Cada parte responde al posible encaje por sí misma. Antes de que ambas hayan dicho sí, la otra parte no sabe nada, y un no posterior revoca un sí.' },
         { name: 'El operador aprueba', who: 'El equipo de la plataforma', text: 'Un operador con nombre registra las comprobaciones que exige el espacio y aprueba el par. Una aprobación por sí sola no revela nada, y cada escritura indica quién la hizo.' },
@@ -183,7 +184,7 @@ export const es: FrontCopy = {
       previous: 'Paso anterior',
       next: 'Paso siguiente',
       screens: [
-        ['El widget del comprador: el formulario que genera el pack de ejemplo, con roca fosfórica elegida y un mínimo de P₂O₅ del 30 %. La importancia aparece marcada como sugerida y no hay nada más elegido.'],
+        ['El widget del comprador: el formulario con las preguntas del mercado de ejemplo, con roca fosfórica elegida y un mínimo de P₂O₅ del 30 %. La importancia aparece marcada como sugerida y no hay nada más elegido.'],
         ['El widget del comprador tras confirmar: la solicitud está activa, con cada criterio y su importancia. Todavía no hay ofertas que mostrar.'],
         ['El widget del comprador: una oferta que puede encajar, con una marca por criterio, la pregunta «¿Quiere que les presenten?» y el aviso de que deciden las personas.'],
         ['El widget del comprador tras el sí: «Su sí queda registrado. Sample space lo revisa primero.»', 'El widget del proveedor: el mismo posible encaje, visto desde el lado de la oferta como una solicitud con una marca por criterio, tras el propio sí del proveedor, con las mismas palabras.'],
@@ -197,9 +198,10 @@ export const es: FrontCopy = {
       text: 'Tras confirmar, el comprador puede mantener la solicitud abierta y seguirla: con qué frecuencia, semanal o diaria; sobre qué quiere saber; y, en las opciones de correo, como máximo cuántos por correo y ningún correo antes de un día elegido. Un seguimiento avisa solo a su titular cuando algo nuevo encaja, y empieza cuando se confirma la dirección de correo. Dura 90 días y puede pausarse, reanudarse o terminarse en cualquier momento, también desde un enlace en sus correos.',
       screens: ['El widget del comprador tras confirmar, aún sin ofertas que mostrar: un seguimiento semanal, sobre todo lo que cumple los requisitos imprescindibles, como máximo 5 por correo.', 'El mismo widget tras iniciar el seguimiento: espera a que se confirme la dirección de correo, como máximo 5 por correo, hasta el 23 de enero de 2027. La grabación no envió ningún correo, y la dirección ficticia no existe.'],
     },
+    live: {
+      p: 'Abajo está el propio widget, en un espacio de demostración con datos ficticios. Elija una parte y diga lo que necesita u ofrece; no se guarda nada hasta que confirme. Debajo sigue el recorrido grabado.',
+    },
     space: {
-      h2: 'El tablón del espacio de prueba',
-      on: 'Abajo está el propio widget, servido por el espacio de prueba, en modo tablón: las solicitudes y ofertas abiertas cuyos titulares quisieron mostrarlas, generalizadas como declara el pack. Responder a una empieza en el paso 1, del otro lado.',
       off: 'Esta página aún no muestra ningún widget: espera un espacio de demostración con datos sintéticos. Hasta entonces, el recorrido de arriba se muestra en imágenes.',
       notice: 'Un espacio de prueba con datos ficticios: no introduzca nada real. Sus correos no llegan a nadie.',
     },

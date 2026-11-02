@@ -1,7 +1,7 @@
 ---
 /* The landing page (/), the page plan of docs/front/landing-plan.md in its six sections: the opening, three cards, the
-   demo stage with the role switch (one side at a time, spec §9), who sees what, for platforms, and the bottom call to
-   action. One call to action per section. Words: src/front/landing-copy.ts in the reader's language through
+   demo stage with the role switch (one side at a time, spec §9; src/front/sides.ts), who sees what, for platforms, and
+   the bottom call to action. One call to action per section. Words: src/front/landing-copy.ts in the reader's language through
    src/front/copy.ts; the stage's step names and picture descriptions are /demo's (demo-copy.ts), its pictures the
    recorded walkthrough's (src/front/shots.ts). Without scripts the stage shows both sides one below the other. */
 import Base from '../../layouts/Base.astro';
@@ -10,6 +10,7 @@ import { FRONT } from '../../front/copy';
 import { SHOTS, picture } from '../../front/shots';
 import { EMBED_SNIPPET } from '../../lib/connect-docs';
 import { CONTACT_EMAIL } from '../../lib/contact';
+import { buildSpace } from '../../demo/build-space';
 import { statusDate } from '../../i18n/status-date';
 import { pathFor, type Catalogue, type Lang } from '../../i18n';
 import '../../front/theme.css';
@@ -24,6 +25,8 @@ const CARDS = [{ step: 'step-1', state: 'live' }, { step: 'keep-looking', state:
     the supplier's side that is recorded (its yes), as [step index, picture index in that step]. */
 const SIDES = { buyer: [[0, 0], [2, 0], [5, 0]], supplier: [[3, 1]] } as const;
 const shotOf = (step: number, index: number): string => (SHOTS[step] as readonly string[])[index];
+/** "Try it" only when /demo holds the widget on a demo space (plan, decision 5); until then the recorded walkthrough. */
+const live = buildSpace() !== null;
 ---
 <Base lang={lang} t={t} title={L.meta.title} description={L.meta.description} path="/" front>
 
@@ -32,7 +35,7 @@ const shotOf = (step: number, index: number): string => (SHOTS[step] as readonly
     <div class="wrap"><div class="ln-open-inner">
       <h1 id="open-title">{L.opening.h1}</h1>
       <p class="lede">{L.opening.sub}</p>
-      <p><a class="btn btn-primary" href={`${to('/demo')}#path`}>{L.opening.button}<Icon name="arrow" /></a></p>
+      <p><a class="btn btn-primary" href={`${to('/demo')}#${live ? 'try' : 'path'}`}>{live ? L.opening.try : L.opening.button}<Icon name="arrow" /></a></p>
     </div></div>
   </section>
 
@@ -56,14 +59,14 @@ const shotOf = (step: number, index: number): string => (SHOTS[step] as readonly
   <section class="fp-section" id="stage" aria-labelledby="stage-title">
     <div class="wrap">
       <div class="fp-head"><h2 id="stage-title">{L.stage.h2}</h2><p>{L.stage.p}</p></div>
-      <div class="ln-stage" data-stage>
-        <div class="ln-switch" role="group" aria-label={L.stage.roles} hidden data-switch>
-          <button type="button" aria-pressed="true" aria-controls="side-buyer" data-side="buyer">{L.stage.buyer}</button>
-          <button type="button" aria-pressed="false" aria-controls="side-supplier" data-side="supplier">{L.stage.supplier}</button>
+      <div class="ln-stage" data-sides>
+        <div class="fp-switch" role="group" aria-label={L.stage.roles} hidden data-switch>
+          <button type="button" aria-pressed="true" aria-controls="side-buyer" data-show="buyer">{L.stage.buyer}</button>
+          <button type="button" aria-pressed="false" aria-controls="side-supplier" data-show="supplier">{L.stage.supplier}</button>
         </div>
         <p class="ln-recorded">{L.stage.label}</p>
         {(['buyer', 'supplier'] as const).map(side => <section class="ln-side" id={`side-${side}`} aria-label={L.stage[side]} data-panel={side}>
-          <h3 class="ln-side-title">{L.stage[side]}</h3>
+          <h3 class="ln-side-title fp-side-title">{L.stage[side]}</h3>
           <ol class="ln-shots">
             {SIDES[side].map(([step, shot]) => <li>
               <img {...picture(lang, shotOf(step, shot), 3)} alt={D.replay.screens[step][shot]} width="640" height="880" loading="lazy" decoding="async" />
@@ -113,18 +116,6 @@ const shotOf = (step: number, index: number): string => (SHOTS[step] as readonly
 </Base>
 
 <script>
-  /* The role switch: one side at a time (spec §9). Without scripts the switch stays hidden and both sides stand one
-     below the other. */
-  document.querySelectorAll<HTMLElement>('[data-stage]').forEach(stage => {
-    const buttons = [...stage.querySelectorAll<HTMLButtonElement>('[data-side]')];
-    const panels = [...stage.querySelectorAll<HTMLElement>('[data-panel]')];
-    const show = (side: string) => {
-      for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.side === side));
-      for (const panel of panels) panel.hidden = panel.dataset.panel !== side;
-    };
-    for (const button of buttons) button.addEventListener('click', () => show(button.dataset.side!));
-    stage.querySelector<HTMLElement>('[data-switch]')!.hidden = false;
-    stage.toggleAttribute('data-one', true);
-    show('buyer');
-  });
+  import { sides } from '../../front/sides';
+  document.querySelectorAll<HTMLElement>('[data-sides]').forEach(sides);
 </script>
