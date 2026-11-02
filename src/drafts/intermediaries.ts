@@ -56,7 +56,7 @@ export const intermediaries = {
       title: 'A space of your own',
       paragraphs: [
         'A space is one instance for one market, with its own database, keys and deletion log. Its needs, offers and fits are not shared with another space.',
-        'A space pins a pack: the criteria of its market, the answers they allow, what each one discloses and when, and the checks the market needs. The form, the reading, the board and the matching rules follow from it. No pack exists for recruiting, brokerage or agency work; the only pack a space uses today is industrial minerals, Geoprocure’s.',
+        'A space pins a pack: the criteria of its market, the answers they allow, what each one discloses and when, and the checks the market needs. The form, the reading, the board and the matching rules follow from it. A pack for recruiting exists as an early draft, tested on synthetic data only, and no space uses it; no pack exists for brokerage or agency work. The only pack a space uses today is industrial minerals, Geoprocure’s.',
         `Your team approves cases in a console behind your own login; there is no Linkbot login for operators. As of ${AS_OF} the console runs on a sample with synthetic data and is not published.`,
       ],
     },
@@ -73,7 +73,7 @@ export const intermediaries = {
       title: 'Where it stands',
       paragraphs: [
         'Geoprocure’s space, for industrial minerals, is the only example today. It runs on a synthetic staging instance with synthetic data; no real person or organisation uses it.',
-        'No recruiter, broker or agency runs a space, and there is no pack for their markets.',
+        'No recruiter, broker or agency runs a space. The recruiting pack is an early draft that no space uses, and there is no pack for brokerage or agency work.',
       ],
     },
   ] as DraftSection[],
@@ -81,7 +81,7 @@ export const intermediaries = {
     title: 'Open for the owner',
     items: [
       'Whether intermediaries become a second audience of the site at all, and under which name.',
-      'A pack for a first intermediary market, such as recruiting: which criteria, which checks, and which stage discloses what.',
+      'The recruiting draft pack: whether it leaves draft, which checks it needs, and which stage discloses what; and whether brokerage or agency work gets a pack.',
       'Recruiting brings the personal data of candidates into a space. What that requires is for counsel before any page says more.',
     ],
   },
