@@ -1,0 +1,10 @@
+---
+/* Draft for the owner's review, English only: the planned sign-in with Linkbot, in the developer docs. Planned, not
+   built, not decided. Linked from nowhere, never indexed (Base's draft), out of the sitemap (astro.config.mjs), and
+   absent from a production build (getStaticPaths returns no route there; src/drafts/login.ts). Words:
+   src/drafts/login.ts, each sentence with its row in docs/truth-check.md. */
+import DraftPage from '../../components/DraftPage.astro';
+import { buildsLogin, login } from '../../drafts/login';
+export function getStaticPaths() { return buildsLogin({ VERCEL_ENV: process.env.VERCEL_ENV }) ? [{ params: { login: 'login-with-linkbot' } }] : []; }
+---
+<DraftPage d={login} path="/developers/login-with-linkbot" />
