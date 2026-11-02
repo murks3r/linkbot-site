@@ -12,7 +12,8 @@ tags:
 
 A rehearsal, nothing merged. Branch `next/integration-rehearsal` from `origin/build/vision` at `fd50b82`, every open
 draft with a `next/*` head merged one by one with `git merge --no-ff`, in the order below. A conflict was recorded and
-the merge aborted, not resolved. As of 2026-11-02 01:50 UTC.
+the merge aborted, not resolved. First run 2026-11-02 01:50 UTC; rerun 2026-11-02 09:00 UTC after #77 was rebased
+(see "The conflict"): all seven drafts now merge without a conflict.
 
 ## The drafts
 
@@ -23,13 +24,14 @@ the merge aborted, not resolved. As of 2026-11-02 01:50 UTC.
 | 3 | login draft | #73 | `next/docs-login` `0007384` | `build/vision` | none | clean |
 | 4 | a new vertical | #78 | `next/docs-new-vertical` `f051b0b` | `next/docs-login` | #73 | clean |
 | 5 | prepare a request | #79 | `next/docs-prepare` `40bf3a1` | `next/docs-new-vertical` | #78, #73 | clean |
-| 6 | landing page | #74 | `next/landing-v2` `92cbe35` | `build/vision` | none | **conflict**, aborted |
-| 7 | `/demo` | #77 | `next/site-demo` `2f91c56` | `next/landing-v2` | #74 | **conflict** (the same, via #74), aborted |
+| 6 | `/demo` | #77 | `next/site-demo` `62697d0` (was `2f91c56`) | `next/landing-v2` | #74, and #73 by the rebase | clean |
+| 7 | landing page | #74 | `next/landing-v2` `92cbe35` | `build/vision` | none | already contained in #77: "Already up to date" |
 
 `next/pack-guide` is not a branch of this repository: it is murks3r/linkbot draft #333 (`4127d4f`, the pack guide
 NX-PKDOC), which #78 depends on (see below). Not part of this rehearsal.
 
-The rehearsal branch holds merges 1 to 5 (`b41b5db`); #74 and #77 are not in it.
+The rehearsal branch holds merges 1 to 5 (`b41b5db`, first run) and, since the rerun, #77 on top; #74 adds nothing
+after #77. On its own, #74 after #73 still conflicts: its branch is unchanged, the resolution lives in #77.
 
 ## The conflict
 
@@ -40,7 +42,14 @@ The rehearsal branch holds merges 1 to 5 (`b41b5db`); #74 and #77 are not in it.
 - #74 changes one line of that `<style>`: the draft banner's colours `var(--ink)` / `var(--sand)` become
   `var(--lb-ink)` / `var(--lb-line-quiet)`, because #74 replaces the A8 brand tokens with `src/styles/tokens.css`.
 
-Not resolved here. What a resolution has to cover, found in a local trial that was thrown away (not pushed): taking the
+**Resolved in #77 (2026-11-02).** `next/site-demo` was rebased onto a merge of #73 into #74 (`d432292`, then the
+`/demo` commit `62697d0`): the page is #73's one line, and #74's token change moved into
+`src/components/DraftPage.astro:40` (`var(--lb-ink)`, `var(--lb-line-quiet)`); no `var(--ink)` or `var(--sand)` is left
+in `src`. #79's changes to `DraftPage.astro` (the top of the file) merge with it automatically. So #74 merges cleanly
+after #73 only through #77: either #77 into `next/landing-v2` first, or #77 straight into `build/vision` (it carries
+#74).
+
+The first run's note: found in a local trial that was thrown away (not pushed): taking the
 one-line page from #73 leaves `src/components/DraftPage.astro:40` on `var(--ink)` and `var(--sand)`, which #74 no
 longer defines. The build and tests stay green, but the draft banner on every draft page loses its border and
 background. So the same token change belongs in `DraftPage.astro`. In that trial #77 then merged without a further
@@ -48,7 +57,15 @@ conflict, and #80 (`site/fund-fixes`, V1) merged on top without a conflict.
 
 ## Check result
 
-On the rehearsal branch (merges 1 to 5, `b41b5db`), the repository's fast check (it has no `npm run check`; build,
+Rerun 2026-11-02, all seven drafts on the rehearsal branch (merges 1 to 5, then #77; #74 already contained):
+
+- `npm run build`: 0 errors, 114 pages
+- `npm test`: 54/54
+- `npm run typecheck`: 0 errors, 109 files
+- #80 (`site/fund-fixes` `da02e1d`) merges on top without a conflict (`git merge-tree`).
+- #77 on its own (`62697d0`): build 0 errors, `npm test` 48/48, typecheck 0 errors.
+
+First run, on the rehearsal branch (merges 1 to 5, `b41b5db`), the repository's fast check (it has no `npm run check`; build,
 test and typecheck are its fast check):
 
 - `npm run build`: 0 errors, 114 pages
@@ -71,13 +88,13 @@ when it makes Spaces the main product of the site.
 | 3 | #73 login draft | no | no | the sign-in planned further (owner) |
 | 4 | #78 a new vertical | no (draft page, marked planned) | yes: murks3r/linkbot draft #333 (`next/pack-guide`) | owner's review |
 | 5 | #79 prepare a request | no (draft page, marked planned) | yes: murks3r/linkbot draft #334 and murks3r/linkbot-connect draft #92. #334 has moved from `02cfdd1` (the page's source) to `ac5f4d5`: re-read before the merge | after the first release |
-| 6 | #74 landing page | **yes**: the home becomes a landing page for buyers and suppliers in a market, while GEO-120 keeps recruiting as the launch product; needs the owner's word that the home may lead with Spaces | no engine draft; its status step names widget 0.6.0-v1, staging serves 0.6.1-v1 since #80 | not before 2026-11-11 |
-| 7 | #77 `/demo` | **yes**, through #74 (buyer/supplier role switch) | no draft; its live-widget switch needs a synthetic demo space on staging, which does not exist | after V1 |
+| 6 | #77 `/demo` | **yes**, through #74 (buyer/supplier role switch) | no draft; its live-widget switch needs a synthetic demo space on staging, which does not exist | after V1 |
+| 7 | #74 landing page | **yes**: the home becomes a landing page for buyers and suppliers in a market, while GEO-120 keeps recruiting as the launch product; needs the owner's word that the home may lead with Spaces | no engine draft; its status step names widget 0.6.0-v1, staging serves 0.6.1-v1 since #80 | not before 2026-11-11 |
 
 ## Suggested order
 
 1. #80 (V1, before the merge of #56): no conflict with any draft.
 2. #75, #76, #73, #78, #79 as above: clean among themselves; #76, #78 and #79 only once their engine or widget drafts
    are merged, or with their sentences still "planned / on a development branch".
-3. #74 with the conflict resolved (the token change moved into `DraftPage.astro`), then #77; both only after the owner's
-   word on GEO-120 for the home.
+3. #77 (carries #74 and the resolution; merge it into `next/landing-v2` first, or retarget it to `build/vision`), then
+   #74 if still open; both only after the owner's word on GEO-120 for the home.
