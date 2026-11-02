@@ -25,7 +25,7 @@ export const de: Catalogue = {
       contactPending: 'Kontaktdaten folgen mit unserer Domain. Linkbot hat noch keine eigene Domain, deshalb nennt diese Seite keine Adresse und hat kein Kontaktformular.',
       line: 'Diese Seite setzt keine Cookies, lädt nichts von Dritten und nutzt keine Analyse-Dienste.',
     },
-    status: { now: 'Läuft auf dem Staging-Space', contract: 'Im Vertrag, nicht auf dem Staging-Space', later: 'Nicht gebaut' },
+    status: { now: 'Läuft auf dem Staging-Space', contract: 'Im Vertrag, nicht auf dem Staging-Space', prototype: 'Ein Prototyp, nicht auf dem Staging-Space', later: 'Nicht gebaut' },
     synthetic: 'Alles auf dieser Seite beschreibt den Vertrag der Space-API und das, was auf dem synthetischen Staging-Space von Geoprocure läuft, mit synthetischen Daten. Noch nutzt es keine echte Person und keine echte Organisation.',
     more: 'Mehr lesen',
   },
@@ -256,12 +256,12 @@ export const de: Catalogue = {
     toc: [['ways', 'Vier Wege hinein'], ['gets', 'Was Sie bekommen'], ['yours', 'Was Ihnen bleibt'], ['details', 'Die Einzelheiten']] as [string, string][],
     ways: {
       title: 'Vier Wege hinein',
-      lede: `Stand ${AS_OF}: Zwei davon laufen auf dem Staging-Space, zwei sind nicht gebaut.`,
+      lede: `Stand ${AS_OF}: Zwei davon laufen auf dem Staging-Space. Gehostete Seiten sind nicht gebaut, und MCP ist ein lesender Prototyp, der nicht auf dem Staging-Space läuft.`,
       items: [
         { name: 'Gehostete Seiten', status: 'later' as Status, body: 'Eine für Sie bereitgestellte Seite, auf die Sie verlinken, statt einzubetten. Sie ist nicht gebaut. Heute erscheint ein Space nur auf Ihren eigenen Seiten, über die Einbettung oder über Ihren eigenen Server.' },
         { name: 'Die Einbettung', status: 'now' as Status, body: 'Ein Skript und ein Element auf Ihrer Seite. Das Skript kommt von der eigenen Instanz Ihres Space; das Element trägt Ihren Publishable Key, der nur auf den Origins gilt, die Ihr Space erlaubt. Seine Modi: Beschreiben, Board, Beobachten und Meine. Die Staging-Instanz liefert das Widget in der Version 0.5.0-v1 aus.' },
         { name: 'Die API und das SDK', status: 'now' as Status, body: `Ihr Server spricht mit dem Secret Key mit der Space-API, und dieser Schlüssel erscheint nie in einer Seite: Er kann Bedarfe und Angebote anlegen, Prüfungen und Freigaben erfassen und Vorstellungen und Ergebnisse lesen. Das SDK gibt Ihrem Server einen Client, der durch den Vertrag typisiert ist. Stand ${AS_OF} ist das SDK nicht veröffentlicht; sein Code liegt im Connect-Repository.` },
-        { name: 'MCP', status: 'later' as Status, body: 'Geplant, nicht gebaut: ein MCP-Server je Space, über den ein KI-Agent einen Bedarf oder ein Angebot vorbereitet und ein Mensch bestätigt und antwortet. Der Eigentümer hat diese Richtung gewählt; ihr Entwurf ist vorgeschlagen, ihr Vertrag ein Gerüst.' },
+        { name: 'MCP', status: 'prototype' as Status, body: 'Ein lesender Prototyp: ein MCP-Server, über den ein KI-Agent einen Space so liest, wie es der Browser einer Person täte: das Formular, das Board und, mit dem eigenen Token der Person, deren Anfragen und ihre Treffer. Er schreibt nichts und entscheidet nichts. Er liegt auf einem Entwicklungszweig, wurde nur mit synthetischen Daten ausprobiert und läuft nicht auf dem Staging-Space. Geplant, nicht gebaut: ein Agent, der einen Bedarf oder ein Angebot vorbereitet, das ein Mensch dann bestätigt und beantwortet. Der Eigentümer hat diese Richtung gewählt; ihr Entwurf ist vorgeschlagen.' },
       ],
     },
     gets: {
@@ -331,7 +331,7 @@ export const de: Catalogue = {
       title: 'Noch nicht verfügbar',
       items: [
         `npm-Pakete: Das SDK, der React-Wrapper und die Pakete für Next.js und Astro sind Stand ${AS_OF} nicht veröffentlicht. Heute laufen sie aus einem Klon des Connect-Repositorys.`,
-        'MCP: geplant, nicht gebaut. Es gibt keinen MCP-Endpunkt, den man nutzen kann.',
+        'MCP: ein lesender Prototyp auf einem Entwicklungszweig, nicht veröffentlicht. Es gibt keinen MCP-Endpunkt, den man nutzen kann.',
         `Das Repository selbst: Es ist Stand ${AS_OF} privat.`,
         'Ein Space zum Ausprobieren: Für Entwickler gibt es noch keinen. Die Beispiele laufen gegen ein lokales Beispiel oder einen Stellvertreter.',
       ],
