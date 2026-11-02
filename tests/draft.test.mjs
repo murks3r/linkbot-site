@@ -1,5 +1,5 @@
 /* The drafts for the owner (/for-intermediaries, src/drafts/intermediaries.ts; /developers/login-with-linkbot,
-   src/drafts/login.ts): their words make no forbidden claim, and each built page says it is a draft, is never indexed,
+   src/drafts/login.ts; /developers/a-new-vertical, src/drafts/new-vertical.ts): their words make no forbidden claim, and each built page says it is a draft, is never indexed,
    has no alternates, and is neither linked from another page nor listed in the sitemap. A production build leaves a
    draft out until the owner approves it; the build checks then assert it is absent, so the artefact that goes live is
    checked too. The build checks are skipped until the site is built. */
@@ -8,6 +8,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { INTERMEDIARIES_IN_PRODUCTION, buildsIntermediaries, intermediaries } from '../src/drafts/intermediaries.ts';
 import { LOGIN_IN_PRODUCTION, buildsLogin, login } from '../src/drafts/login.ts';
+import { NEW_VERTICAL_IN_PRODUCTION, buildsNewVertical, newVertical } from '../src/drafts/new-vertical.ts';
 import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 
 const strings = value => typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(strings) : value && typeof value === 'object' ? Object.values(value).flatMap(strings) : [];
@@ -17,6 +18,7 @@ const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
 const drafts = [
   { path: '/for-intermediaries', words: intermediaries, builds: buildsIntermediaries, inProduction: INTERMEDIARIES_IN_PRODUCTION },
   { path: '/developers/login-with-linkbot', words: login, builds: buildsLogin, inProduction: LOGIN_IN_PRODUCTION },
+  { path: '/developers/a-new-vertical', words: newVertical, builds: buildsNewVertical, inProduction: NEW_VERTICAL_IN_PRODUCTION },
 ];
 
 for (const { path, words, builds, inProduction } of drafts) {
