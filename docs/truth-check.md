@@ -71,6 +71,8 @@ The words themselves live in `src/i18n/en.ts` (the source) and the other catalog
 
 ## The landing page (`/`, built 2026-10-31 from `docs/front/landing-plan.md`)
 
+**Home v3 (draft branch `next/home-v3`, 2026-11-03).** The opening, the three cards, the demo stage and the who-sees-what strip below are replaced by one headline, its sub-line and the "both say yes" demo; their sentences and rows are the claim table in `docs/front/home-v3.md`. For platforms and the bottom stay as below. The sub-line that says "checks who is real" stays off the page until company checks run on the space and have their row here (`src/front/hero.ts`, `tests/home.test.mjs`).
+
 The home is the landing page of the plan (`src/components/front/Landing.astro`, words in `src/front/landing-copy.ts` and the four translations in `src/front/i18n/`). The section "The home" below describes the earlier home, which it replaces; the rows it names stay the sources. Each sentence rests on rows already in this file; nothing new is claimed. The sentences were read against those rows on 2026-10-31; the status date the page shows stays `STATUS_CHECKED` (2026-10-26) until the status sentences are renewed (plan §4, step 1; staging `/health` at 2026-10-31 11:40 UTC: contract 0.2.18, widget 0.6.0-v1).
 
 | Section | Sentence (English source) | Rows | Label |
