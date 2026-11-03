@@ -1,10 +1,10 @@
 # Reference: the SDK (`@linkbot-hq/sdk`)
 
-For your **server**, with the secret key, and for **your own interface** on the person's side, with the publishable key. The secret key never goes into a browser page: `createSpaceClient` refuses to start in one. The SDK is not published to npm yet (plan §8). Its code is in `packages/sdk`, and the [webhooks guide](../guides/webhooks.md) shows it in use, in code CI runs.
+For your **server**, with the secret key, and for **your own interface** on the person's side, with the publishable key. The secret key never goes into a browser page: `createSpaceClient` refuses to start in one. The SDK is not published to npm yet. Its code is in `packages/sdk`, and the [webhooks guide](../guides/webhooks.md) shows it in use, in code CI runs.
 
 ## `createSpaceClient(options)`
 
-A Space API client typed by the contract. Its types are generated from the YAML Core posted (`packages/contract`, pinned by sha256). Paths, parameters, bodies and responses are the contract's own, so a route, field or value the contract doesn't have is a type error. The routes are listed in the [Space API reference](space-api.md).
+A Space API client typed by the contract. Its types are generated from the contract YAML (`packages/contract`, pinned by sha256). Paths, parameters, bodies and responses are the contract's own, so a route, field or value the contract doesn't have is a type error. The routes are listed in the [Space API reference](space-api.md).
 
 | Option | |
 | --- | --- |

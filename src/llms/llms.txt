@@ -46,7 +46,7 @@ one definition, the same on the site, in the widget and in the docs. They are li
 - [For platforms](/for-platforms) and [Integrations](/platforms): the embed, keys and origins, the console, the SDK
   and webhooks, recipes for plain HTML, Astro, Next.js and WordPress.
 - [Developers](/developers): the shortest embed, an SDK example, and what is not available yet.
-- [Developer docs](/developers/docs), in English: the quickstart in 5 minutes, the widget, the SDK, the CLI (planned),
+- [Developer docs](/developers/docs), in English: the quickstart in 5 minutes, the widget, the SDK, the CLI (built, not published),
   the protocol, the API reference, and what is open and what is hosted. Not published yet: the repository is private.
 - [For verticals](/verticals): what a market vocabulary holds; the first space, industrial minerals.
 - [Status](/status): dated, which parts run on the synthetic test space, which are built or in the contract, which

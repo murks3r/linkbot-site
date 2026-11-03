@@ -318,7 +318,7 @@ export const es: Catalogue = {
         quickstart: { name: 'Inicio rápido (5 minutos)', body: 'Una etiqueta script, tu clave publicable y el origen de tu página; después, el inicio rápido completo y el recorrido de una persona por la API.' },
         widget: { name: 'Widget', body: 'Cada atributo del embed, el wrapper de React y recetas para HTML simple, Astro, Next.js y WordPress.' },
         sdk: { name: 'SDK', body: 'Los clientes tipados para tu servidor y para el lado de la persona, y la comprobación de la firma de los webhooks.' },
-        cli: { name: 'CLI', body: 'El comando linkbot: previsto, no construido.' },
+        cli: { name: 'CLI', body: 'El comando linkbot: probar el widget en tu equipo, integrarlo en tu sitio y comprobar la configuración. Aún no publicado.' },
         protocol: { name: 'Protocolo', body: 'El contrato de la Space API, los tres pasos que respeta y quién tiene cada clave.' },
         api: { name: 'Referencia de la API', body: 'Cada ruta de la Space API, generada a partir del contrato.' },
         open: { name: 'Qué es abierto y qué está alojado', body: 'Lo que una plataforma ejecuta por sí misma y lo que queda en el servicio alojado.' },

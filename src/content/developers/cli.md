@@ -1,15 +1,30 @@
-# CLI: the `linkbot` command (planned)
+# CLI: the `linkbot` command
 
-**Planned, not built.** There is no command to install or run yet. Until there is, the [quickstart](/developers/docs/guides/embed-in-five-minutes) puts the widget on a page by hand, in five minutes.
+**Built, not published.** The command is in the open-core repository (`packages/cli`, version 0.1.0). The repository is not public yet and the command is not on npm; you build it from a clone. Node 20 or later.
 
-## What it is planned to do
+No account, no telemetry, no update check. Nothing is sent to any Linkbot host unless you pass `--api`.
 
-- `linkbot init` puts the widget into a Next.js, Astro or plain HTML project.
-- `linkbot dev` runs a local stand-in of the Space API with a synthetic sample space, so the widget can be tried without a space.
-- `linkbot doctor` checks the configuration: a publishable key (`pk_…`) and never a secret key (`sk_…`), the address of the space's widget, and https everywhere except on your own machine.
+## Try the widget on your machine
 
-It is planned to need no account and send no telemetry, and to reach the network only when it is given the address of a Space API.
+From a clone of the repository:
 
-## Where it stands
+```bash
+git clone OPEN_CORE_REPO_URL linkbot-connect && cd linkbot-connect
+corepack enable && pnpm install
+pnpm --filter "@linkbot-hq/cli..." build
+node packages/cli/dist/linkbot.mjs dev
+```
 
-The package `packages/cli` exists in the open-core export. It holds the checks the three commands will share, and no command yet. Its words on this page come from that package's description.
+Open `http://127.0.0.1:4180/`. The page holds the widget, and a local stand-in answers the Space API (contract 0.2.18) with one sample space of made-up data, kept in memory until you stop the command. Its `/api/space/v0/health` reports `environment: local` and `data_mode: synthetic`.
+
+## The commands
+
+```bash
+linkbot init    [--kind nextjs|astro|html] [--page index.html] [--key pk_…] [--embed-url <url>] [--api <url>] [--origin <origin>]
+linkbot dev     [--port 4180] [--origin <origin>]… [--api <url> --key pk_…]
+linkbot doctor  [--api <url>]
+```
+
+- `linkbot init` finds what your project is (Next.js, Astro or plain HTML) and adds the widget through the integration that fits. It writes `linkbot.config.json` with public values only, adds only the environment values a file lacks, and never overwrites a file. Without `--key` and `--embed-url` it points at the stand-in of `linkbot dev`. A secret key (`sk_…`) is refused.
+- `linkbot dev` runs the stand-in on `127.0.0.1`: the page, the widget's files under `/embed/v0/` and the sample Space API under `/api/space/v0/`. With `--api <url> --key pk_…` the page's widget talks to that Space API instead.
+- `linkbot doctor` checks Node, `linkbot.config.json`, the key's format, the addresses and the origin, and whether a page places the widget. It exits 1 on a failure. With `--api <url>` it asks that Space API for `/health` and `/space` with your key and origin.

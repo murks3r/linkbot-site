@@ -330,7 +330,7 @@ export const en = {
         quickstart: { name: 'Quickstart (5 minutes)', body: 'A script tag, your publishable key and your page’s origin; then the full quickstart and the person’s path through the API.' },
         widget: { name: 'Widget', body: 'Every attribute of the embed, the React wrapper, and recipes for plain HTML, Astro, Next.js and WordPress.' },
         sdk: { name: 'SDK', body: 'The typed clients for your server and for the person’s side, and the webhook signature check.' },
-        cli: { name: 'CLI', body: 'The linkbot command: planned, not built.' },
+        cli: { name: 'CLI', body: 'The linkbot command: try the widget on your machine, put it into your site, check the setup. Not published yet.' },
         protocol: { name: 'Protocol', body: 'The Space API contract, the three steps it keeps, and who holds which key.' },
         api: { name: 'API reference', body: 'Every route of the Space API, generated from the contract.' },
         open: { name: 'What is open, what is hosted', body: 'What a platform runs itself, and what stays with the hosted service.' },

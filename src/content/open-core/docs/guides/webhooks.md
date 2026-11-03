@@ -1,6 +1,6 @@
 # Webhooks: receiving Linkbot's events on your server
 
-> **Not runnable against staging yet.** Space API contract 0.2.14 (Core-Engine's slice E5) serves webhooks, but staging still runs 0.2.13 until Core-Engine's next deploy, so it sends none yet. The receiver below is tested in CI against signed sample deliveries (`examples/webhooks`).
+> **What runs today:** the Space API serves webhooks since contract 0.2.14, and a test space with synthetic data runs 0.2.18. The receiver below is tested in CI against signed sample deliveries (`examples/webhooks`).
 
 Linkbot tells your server when something happens in your space: a match was proposed, a gate was recorded, an introduction was created. Each delivery is thin. It carries ids and states only, never contact data. Fetch details with your secret key when you need them.
 

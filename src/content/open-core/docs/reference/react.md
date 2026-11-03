@@ -1,6 +1,6 @@
 # Reference: the React wrapper (`@linkbot-hq/react`)
 
-`<LinkbotSpace>` renders the same element as the HTML snippet, and loads `embed.js` once per URL. The embed then starts in its own shadow root, which React never touches. It is a client component (`'use client'`), so it works in the Next.js App Router. It adds no global CSS. It is not published to npm yet (plan §8). The [Next.js recipe](../recipes/nextjs.md) shows it in code CI runs.
+`<LinkbotSpace>` renders the same element as the HTML snippet, and loads `embed.js` once per URL. The embed then starts in its own shadow root, which React never touches. It is a client component (`'use client'`), so it works in the Next.js App Router. It adds no global CSS. It is not published to npm yet. The [Next.js recipe](../recipes/nextjs.md) shows it in code CI runs.
 
 | Prop | | Becomes |
 | --- | --- | --- |

@@ -1,6 +1,6 @@
 # Reference: the Space API (contract 0.2.18)
 
-> Generated from `packages/contract/openapi.yaml`, contract 0.2.18 (sha256 `d1a1eb48fd61…`), which is byte for byte what Core posted. Core owns the contract, and the descriptions here are quoted from it. Do not edit this page: run `pnpm --filter @linkbot-hq/contract generate`. CI fails when this page and the contract differ.
+> Generated from `packages/contract/openapi.yaml`, contract 0.2.18 (sha256 `4c4964f3c14b…`), the published contract 0.2.18 with its descriptions edited for this repository (the schema is identical). The descriptions here are quoted from it. Do not edit this page: run `pnpm --filter @linkbot-hq/contract generate`. CI fails when this page and the contract differ.
 
 Base URL: `https://{space_host}/api/space/v0`. Each space is its own instance with its own host. 75 routes.
 
@@ -10,7 +10,7 @@ From a browser, the [embed](embed.md) makes these calls for you, with the publis
 
 | Credential | Header | What it is |
 | --- | --- | --- |
-| publishable key | `Linkbot-Publishable-Key: …` | pk_live_… or pk_test_…; valid only with an allowed Origin header. pk_test_… keys are valid only on instances in data mode synthetic (staging). `*_test_*` keys work only on instances in data mode synthetic and live keys are refused there (`403 key_environment_mismatch`). |
+| publishable key | `Linkbot-Publishable-Key: …` | pk_live_… or pk_test_…; valid only with an allowed Origin header. pk_test_… keys are valid only on instances in data mode synthetic. `*_test_*` keys work only on instances in data mode synthetic and live keys are refused there (`403 key_environment_mismatch`). |
 | guest session | `Authorization: Bearer …` | Guest session token (gs_…), minted by POST /sessions. |
 | owner token | `Authorization: Bearer …` | Owner token (ot_…), issued at confirm; manages what it created. 60 days from last use, revocable by the holder and the platform, reissued through an action link (0.2.1). |
 | secret key | `Authorization: Bearer …` | sk_live_… or sk_test_…; server-to-server only; operator actions carry actor.operator_id. `*_test_*` keys work only on instances in data mode synthetic and live keys are refused there (`403 key_environment_mismatch`). |
@@ -109,7 +109,7 @@ Disclosure with receipt after both yes and approval; outcomes.
 
 ### watches
 
-The subscription type (ADR V1); email and webhook channels; owner only.
+The subscription type; email and webhook channels; owner only.
 
 | Route | What it does | Credential | `Idempotency-Key` |
 | --- | --- | --- | --- |
@@ -136,7 +136,7 @@ Contact channels (email) verified by emailed link.
 | --- | --- | --- | --- |
 | `GET /channels` | The caller's channels and their verification status | owner token |  |
 | `POST /channels` | Add an email channel to the caller's party; sends a verification link (opaque action token) | owner token | required |
-| `POST /mail/feedback` | Bounces and complaints from the instance's mail provider | none |  |
+| `POST /mail/feedback` | Bounces and complaints from the instance's mail provider (served since 0.2.14) | none |  |
 
 ### actions
 
@@ -169,7 +169,7 @@ Operator register (asserted by the platform).
 
 ### keys
 
-The space's API keys: list, create, revoke, rotate with an overlap (v0.3 slice 1).
+The space's API keys: list, create, revoke, rotate with an overlap.
 
 | Route | What it does | Credential | `Idempotency-Key` |
 | --- | --- | --- | --- |
@@ -180,7 +180,7 @@ The space's API keys: list, create, revoke, rotate with an overlap (v0.3 slice 1
 
 ### funnel
 
-Content-free counts along the funnel (v0.3 slice 1).
+Content-free counts along the funnel.
 
 | Route | What it does | Credential | `Idempotency-Key` |
 | --- | --- | --- | --- |
@@ -188,7 +188,7 @@ Content-free counts along the funnel (v0.3 slice 1).
 
 ### parties
 
-A party's own data: the export (v0.3 slice 1).
+A party's own data: its export.
 
 | Route | What it does | Credential | `Idempotency-Key` |
 | --- | --- | --- | --- |

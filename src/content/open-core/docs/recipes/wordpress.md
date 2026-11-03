@@ -1,6 +1,6 @@
 # Recipe: WordPress
 
-> **Not yet run against a real space:** a pilot's synthetic staging space serves the widget release `embed-v0.1.1-m1` at `/embed/v0/embed.js`, with its language files and CORS (since 2026-10-23), but this recipe has not run against it. The plugin is `packages/wordpress/linkbot-space`, version 0.1.0-v1; each version is a tag of this repository, and nothing goes to wordpress.org before the M3 go. CI runs it in a real WordPress 6.8 on PHP 8.3, through WordPress Playground, and loads its pages in Chromium, Firefox and WebKit against the sample build. It checks that:
+> **Not yet run against a real space:** a test space with synthetic data serves the widget release `embed-v0.6.1-v1` at `/embed/v0/embed.js`, with its language files and CORS, but this recipe has not run against it. The plugin is `packages/wordpress/linkbot-space`, version 0.1.0-v1; each version is a tag of this repository, and nothing is on wordpress.org yet. CI runs it in a real WordPress 6.8 on PHP 8.3, through WordPress Playground, and loads its pages in Chromium, Firefox and WebKit against the sample build. It checks that:
 >
 > - the shortcode starts the widget with the space from **Settings → Linkbot** and your notice, and its own attributes win over the settings;
 > - the block shows the space, with its own language and notice;

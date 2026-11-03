@@ -2,7 +2,7 @@
 
 For the person who runs a site and wants a Linkbot space on one of its pages. Three things: a script tag, your publishable key, and your page's origin on the space's allow list. The [quickstart](quickstart.md) has the details, and the [embed reference](../reference/embed.md) every attribute.
 
-> **True as of 2026-10-25.** Each space's own instance serves the widget at `https://{space_host}/embed/v0/embed.js`. The one instance this page's authors have seen serve it is a pilot's synthetic staging space, with the release `embed-v0.3.0-v1`. The snippet below started the widget there on 2026-10-23.
+> **What runs today:** each space's own instance serves the widget at `https://{space_host}/embed/v0/embed.js`. A test space with synthetic data serves the release `embed-v0.6.1-v1` there, and the snippet below has started the widget on it. Hosted spaces for other platforms are coming soon.
 
 ## 1. Get your publishable key (1 minute)
 

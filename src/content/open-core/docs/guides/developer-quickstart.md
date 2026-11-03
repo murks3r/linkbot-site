@@ -2,11 +2,11 @@
 
 For a platform that builds its own interface instead of the widget. A person describes a need, confirms it, sees the matches, says yes, and finds the introduction under their own requests: the same calls the widget makes, through the SDK's `createGuestClient`, typed by the Space API contract (0.2.18).
 
-> **What this page has run against:** only the local sample Space API in this repository (synthetic data, no Core, nothing leaves your machine). Every code block is a region of `examples/sdk-quickstart/quickstart.ts`; its test runs each step there in `pnpm check`. None of it has run against a real space yet. The widget makes the same calls; its describe, answer and confirm have run on a pilot's synthetic staging space with this repository's adapter, its matches, yes and introduction not yet.
+> **What this page has run against:** only the local sample Space API in this repository (synthetic data, no hosted space, nothing leaves your machine). Every code block is a region of `examples/sdk-quickstart/quickstart.ts`; its test runs each step there in `pnpm check`. None of it has run against a real space yet.
 
 ## 1. Install
 
-The SDK is **not on npm yet**: nothing is published before the owner's go. Use it from a clone of this repository (Node 22.12 or later, pnpm):
+The SDK is **not on npm yet**. Use it from a clone of this repository (Node 22.12 or later, pnpm):
 
 ```bash
 git clone OPEN_CORE_REPO_URL
@@ -135,7 +135,7 @@ const answer = await client.POST('/matches/{match_id}/answers', {
 if (!answer.data) throw new Error(`POST answers: ${answer.error?.error}`);
 ```
 
-A yes is not disclosure. The introduction comes only with a yes from both sides and the space team's approval, which Core enforces. In the sample, the space team's seeded offers stand for that team's yes and approval, so the introduction follows at once.
+A yes is not disclosure. The introduction comes only with a yes from both sides and the space team's approval, which the space enforces. In the sample, the space team's seeded offers stand for that team's yes and approval, so the introduction follows at once.
 
 ## 10. The introduction, under the person's own requests
 

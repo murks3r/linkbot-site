@@ -1,6 +1,6 @@
 # Quickstart: a Linkbot space on your page
 
-> **Ran against a real space on 2026-10-23:** a pilot's synthetic staging space serves the widget release `embed-v0.1.1-m1` at `/embed/v0/embed.js`, with its language files and CORS (since 2026-10-23), as each space's instance serves `embed.js` next to its API. The snippet in step 2, as written, started the widget there in Chromium and WebKit, and steps 3 to 5 ran against staging's Space API. Every code block on this page is a file that CI runs in Chromium, Firefox and WebKit against the sample build (synthetic data), with the placeholders filled in. To try it yourself, see "Try it today" at the end. The target is ten minutes from a blank page to a working space.
+> **What runs today:** a test space with synthetic data serves the widget release `embed-v0.6.1-v1` at `/embed/v0/embed.js`, with its language files and CORS, as each space's instance serves `embed.js` next to its API. The snippet in step 2 has started the widget there, and steps 3 to 5 have run against its Space API. Hosted spaces for other platforms are coming soon. Every code block on this page is a file that CI runs in Chromium, Firefox and WebKit against the sample build (synthetic data), with the placeholders filled in. To try it yourself, see "Try it today" at the end. The target is ten minutes from a blank page to a working space.
 
 ## 1. What you need from your space
 

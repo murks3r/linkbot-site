@@ -1,7 +1,8 @@
 {
   "repository": "linkbot-connect",
-  "ref": "next/open-core",
-  "commit": "eb1e519",
+  "ref": "next/publish-fixes",
+  "commit": "b309ad8",
+  "export": "d6ecd3d",
   "name": "Linkbot",
   "scope": "@linkbot-hq",
   "publicRepository": "linkbot-hq/linkbot-connect"
