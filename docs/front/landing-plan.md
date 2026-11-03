@@ -17,7 +17,7 @@ related:
 **Approval pending the owner's decision GEO-120 (by 2026-11-11): this page assumes Spaces is the main product. Built
 after V1.**
 
-**State: a plan, waiting for the owner's approval. Nothing is built from it yet.** Written 2026-10-28 by the Site lane
+**State: built on the draft branch `next/landing-v2` (2026-10-31, steps 2 and 3 of §4 and the anchors of step 4; not merged before 2026-11-11). Steps 1, 4 (the role switch on `/demo` itself) and 5 are open.** Written 2026-10-28 by the Site lane
 on `build/vision` at `c119b24`; revised 2026-10-29 at `bddbdef` with the owner's page principles of 2026-10-29 (a
 visitor understands in three seconds what is offered and what to do), and again on 2026-10-29 at `b77c3b4` with the
 owner's feedback of the same day (plain visitor language, the labels "Live" and "Coming soon").

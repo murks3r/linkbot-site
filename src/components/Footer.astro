@@ -45,18 +45,18 @@ const year = new Date().getUTCFullYear();
   /* A8: no fill of its own, so the page's ground runs on; a rule above it is all that marks it. The language is no longer
      listed here (third pass): the floating button (LangSwitch) holds it, and the footer ends with room for that button, so
      the last line can always be read clear of it. */
-  .footer { background: transparent; border-top: 1px solid var(--line-strong); }
+  .footer { background: transparent; border-top: 1px solid var(--lb-line); }
   .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)) minmax(0, 1.5fr); gap: 32px 40px; padding-block: 56px calc(36px + var(--target) + 32px + env(safe-area-inset-bottom, 0px)); font-size: var(--size-small); }
   .footer-brand { display: grid; gap: 8px; align-content: start; }
-  .footer-brand p { max-width: 30ch; color: var(--ink-2); }
+  .footer-brand p { max-width: 30ch; color: var(--lb-slate); }
   .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -.028em; line-height: 1; text-decoration: none; justify-self: start; }
   nav, .contact { display: grid; align-content: start; justify-items: start; }
-  .contact p { max-width: 34ch; color: var(--ink-2); }
-  h2 { margin-bottom: 6px; font-family: var(--text); font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; color: var(--ink-3); }
-  nav a, .contact a { display: inline-flex; align-items: center; min-height: var(--target); min-width: var(--target); color: var(--ink); text-decoration: none; }
-  nav a:hover { text-decoration: underline; text-decoration-color: var(--green-line); }
+  .contact p { max-width: 34ch; color: var(--lb-slate); }
+  h2 { margin-bottom: 6px; font-family: var(--text); font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; color: var(--lb-slate); }
+  nav a, .contact a { display: inline-flex; align-items: center; min-height: var(--target); min-width: var(--target); color: var(--lb-ink); text-decoration: none; }
+  nav a:hover { text-decoration: underline; text-decoration-color: var(--lb-line); }
   nav a[aria-current] { font-weight: 650; }
-  .footer-line { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line-strong); color: var(--ink-3); }
+  .footer-line { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--lb-line); color: var(--lb-slate); }
   @media (max-width: 48rem) { .footer-inner { grid-template-columns: 1fr 1fr; } .footer-brand, .contact { grid-column: 1 / -1; } }
   @media (max-width: 22.5rem) { .footer-inner { grid-template-columns: 1fr; } }
 </style>

@@ -6,20 +6,12 @@
    nothing fits yet. Every frame carries the label that it is a recording. */
 import { FRONT } from '../../front/copy';
 import { type Lang } from '../../i18n';
+import { SHOTS, WATCH, picture as pictureOf } from '../../front/shots';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const { demo: D } = FRONT[lang];
-/** The pictures of each step, in public/material/demo/{lang}/, all 640 × 880 CSS pixels. */
-const SHOTS = [['1-request'], ['2-confirmed'], ['3-fits'], ['4-yes', '4-supplier-yes'], ['5-approved'], ['6-introduced', '6-console']] as const;
-const WATCH = ['7-watch', '7-watching'] as const;
 const total = String(D.steps.items.length);
-/** Each picture at 480 and 960 px (the half-size copy: src/integrations/demo-images.ts); one picture fills the column up to
-    400 px, two share it. */
-const picture = (shot: string, count: number) => ({
-  src: `/material/demo/${lang}/${shot}.webp`,
-  srcset: `/material/demo/${lang}/${shot}-480.webp 480w, /material/demo/${lang}/${shot}.webp 960w`,
-  sizes: count === 1 ? '(max-width: 760px) 92vw, 400px' : '(max-width: 560px) 92vw, (max-width: 960px) 46vw, 310px',
-});
+const picture = (shot: string, count: number) => pictureOf(lang, shot, count);
 ---
 <div class="fr-replay" data-replay data-position={D.replay.position}>
   <div class="fr-bar">
@@ -47,7 +39,7 @@ const picture = (shot: string, count: number) => ({
     <button type="button" class="fr-button" data-next>{D.replay.next} <span aria-hidden="true">→</span></button>
   </div>
 </div>
-<section class="fr-step fr-aside" data-count={WATCH.length} aria-labelledby="watch">
+<section class="fr-step fr-aside" id="keep-looking" data-count={WATCH.length} aria-labelledby="watch">
   <div class="fr-screens">
     {WATCH.map((shot, i) => <img {...picture(shot, WATCH.length)} alt={D.watch.screens[i]} width="640" height="880" loading="lazy" decoding="async" />)}
   </div>

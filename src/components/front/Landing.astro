@@ -1,0 +1,130 @@
+---
+/* The landing page (/), the page plan of docs/front/landing-plan.md in its six sections: the opening, three cards, the
+   demo stage with the role switch (one side at a time, spec §9), who sees what, for platforms, and the bottom call to
+   action. One call to action per section. Words: src/front/landing-copy.ts in the reader's language through
+   src/front/copy.ts; the stage's step names and picture descriptions are /demo's (demo-copy.ts), its pictures the
+   recorded walkthrough's (src/front/shots.ts). Without scripts the stage shows both sides one below the other. */
+import Base from '../../layouts/Base.astro';
+import Icon from '../Icon.astro';
+import { FRONT } from '../../front/copy';
+import { SHOTS, picture } from '../../front/shots';
+import { EMBED_SNIPPET } from '../../lib/connect-docs';
+import { CONTACT_EMAIL } from '../../lib/contact';
+import { statusDate } from '../../i18n/status-date';
+import { pathFor, type Catalogue, type Lang } from '../../i18n';
+import '../../front/theme.css';
+import '../../front/landing.css';
+interface Props { lang: Lang; t: Catalogue }
+const { lang, t } = Astro.props;
+const { landing: L, demo: D, stages: STAGES } = FRONT[lang];
+const to = (path: string) => pathFor(lang, path);
+/** Where each card's button lands on /demo; "live" while the card's rows hold on the instance the demo is recorded from. */
+const CARDS = [{ step: 'step-1', state: 'live' }, { step: 'keep-looking', state: 'live' }, { step: 'step-6', state: 'live' }] as const;
+/** The demo stage: three steps of the buyer's side (the request, the possible fit, the introduction) and the one step of
+    the supplier's side that is recorded (its yes), as [step index, picture index in that step]. */
+const SIDES = { buyer: [[0, 0], [2, 0], [5, 0]], supplier: [[3, 1]] } as const;
+const shotOf = (step: number, index: number): string => (SHOTS[step] as readonly string[])[index];
+---
+<Base lang={lang} t={t} title={L.meta.title} description={L.meta.description} path="/" front>
+
+  <!-- 1 · The opening: one headline, one subline, one button. -->
+  <section class="ln-open" aria-labelledby="open-title">
+    <div class="wrap"><div class="ln-open-inner">
+      <h1 id="open-title">{L.opening.h1}</h1>
+      <p class="lede">{L.opening.sub}</p>
+      <p><a class="btn btn-primary" href={`${to('/demo')}#path`}>{L.opening.button}<Icon name="arrow" /></a></p>
+    </div></div>
+  </section>
+
+  <!-- 2 · Three cards: a name, one sentence, a label, one button each. -->
+  <section class="fp-section" id="what" aria-labelledby="what-title">
+    <div class="wrap">
+      <h2 id="what-title" class="sr">{L.cards.h2}</h2>
+      <ul class="ln-cards">
+        {L.cards.items.map((card, index) => <li class="ln-card">
+          <p class="ln-label" data-state={CARDS[index].state}>{L.labels[CARDS[index].state]}</p>
+          <h3>{card.name}</h3>
+          <p>{card.text}</p>
+          {'small' in card && <p class="ln-small">{card.small}</p>}
+          <a class="btn btn-secondary" data-size="sm" href={`${to('/demo')}#${CARDS[index].step}`}>{card.button}<Icon name="arrow" /></a>
+        </li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 · The demo stage: one side at a time. -->
+  <section class="fp-section" id="stage" aria-labelledby="stage-title">
+    <div class="wrap">
+      <div class="fp-head"><h2 id="stage-title">{L.stage.h2}</h2><p>{L.stage.p}</p></div>
+      <div class="ln-stage" data-stage>
+        <div class="ln-switch" role="group" aria-label={L.stage.roles} hidden data-switch>
+          <button type="button" aria-pressed="true" aria-controls="side-buyer" data-side="buyer">{L.stage.buyer}</button>
+          <button type="button" aria-pressed="false" aria-controls="side-supplier" data-side="supplier">{L.stage.supplier}</button>
+        </div>
+        <p class="ln-recorded">{L.stage.label}</p>
+        {(['buyer', 'supplier'] as const).map(side => <section class="ln-side" id={`side-${side}`} aria-label={L.stage[side]} data-panel={side}>
+          <h3 class="ln-side-title">{L.stage[side]}</h3>
+          <ol class="ln-shots">
+            {SIDES[side].map(([step, shot]) => <li>
+              <img {...picture(lang, shotOf(step, shot), 3)} alt={D.replay.screens[step][shot]} width="640" height="880" loading="lazy" decoding="async" />
+              <p><span class="ln-step">{step + 1}</span>{D.steps.items[step].name}</p>
+            </li>)}
+          </ol>
+          {side === 'supplier' && <p class="ln-small">{L.stage.supplierNote}</p>}
+        </section>)}
+      </div>
+      <p class="ln-more"><a class="link" href={to('/demo')}>{L.stage.link}<Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <!-- 4 · Who sees what: the stages in the widget's progress style. -->
+  <section class="fp-section" id="sees" aria-labelledby="sees-title">
+    <div class="wrap">
+      <div class="fp-head"><h2 id="sees-title">{L.sees.h2}</h2><p>{L.sees.p}</p></div>
+      <ol class="ln-progress">
+        {STAGES.map(stage => <li><span class="ln-bar" aria-hidden="true"></span><strong>{stage.name}</strong><span>{stage.who}</span></li>)}
+      </ol>
+      <p class="ln-more"><a class="link" href={to('/who-sees-what')}>{L.sees.link}<Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <!-- 5 · For platforms: the shortest embed, verbatim from Connect (src/lib/connect-docs.ts). -->
+  <section class="fp-section" id="platforms" aria-labelledby="platforms-title">
+    <div class="wrap ln-platforms">
+      <div class="fp-head"><h2 id="platforms-title">{L.platforms.h2}</h2><p>{L.platforms.p}</p></div>
+      <div class="ln-snippet">
+        <p class="ln-snippet-head"><span>{L.platforms.snippet}</span><span class="ln-label" data-state="live">{L.labels.live}</span></p>
+        <pre class="fp-code" translate="no"><code>{EMBED_SNIPPET}</code></pre>
+        <p class="ln-snippet-head"><span>{L.platforms.later}</span><span class="ln-label" data-state="soon">{L.labels.soon}</span></p>
+      </div>
+      <p class="ln-actions"><a class="btn btn-secondary" href={to('/for-platforms')}>{L.platforms.button}<Icon name="arrow" /></a><a class="link" href={to('/developers')}>{L.platforms.developers}</a></p>
+    </div>
+  </section>
+
+  <!-- 6 · The bottom: one button, the fictional-data line with the date of the last check. -->
+  <section class="fp-section ln-bottom" id="connect" aria-labelledby="connect-title">
+    <div class="wrap"><div class="ln-bottom-inner">
+      <h2 id="connect-title">{L.bottom.h2}</h2>
+      <p><a class="btn btn-primary" href={to('/request-a-demo')}>{L.bottom.button}<Icon name="arrow" /></a></p>
+      {!CONTACT_EMAIL && <p class="ln-small">{L.bottom.prepared}</p>}
+      <p class="ln-small">{L.bottom.line.replace('{date}', statusDate(lang))} <a href={to('/status')}>{L.bottom.status}</a></p>
+    </div></div>
+  </section>
+</Base>
+
+<script>
+  /* The role switch: one side at a time (spec §9). Without scripts the switch stays hidden and both sides stand one
+     below the other. */
+  document.querySelectorAll<HTMLElement>('[data-stage]').forEach(stage => {
+    const buttons = [...stage.querySelectorAll<HTMLButtonElement>('[data-side]')];
+    const panels = [...stage.querySelectorAll<HTMLElement>('[data-panel]')];
+    const show = (side: string) => {
+      for (const button of buttons) button.setAttribute('aria-pressed', String(button.dataset.side === side));
+      for (const panel of panels) panel.hidden = panel.dataset.panel !== side;
+    };
+    for (const button of buttons) button.addEventListener('click', () => show(button.dataset.side!));
+    stage.querySelector<HTMLElement>('[data-switch]')!.hidden = false;
+    stage.toggleAttribute('data-one', true);
+    show('buyer');
+  });
+</script>

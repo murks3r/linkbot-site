@@ -17,11 +17,11 @@ const { stages } = Astro.props;
 </ol>
 
 <style>
-  .stages { display: grid; border-top: 2px solid var(--ink); }
-  .stage { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
-  .stage-n { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--line-ink); background: var(--surface); font-size: var(--size-micro); font-weight: 700; color: var(--ink-2); }
+  .stages { display: grid; border-top: 2px solid var(--lb-ink); }
+  .stage { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--lb-line-quiet); }
+  .stage-n { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; border: 1.5px solid var(--lb-slate); background: var(--lb-surface); font-size: var(--size-micro); font-weight: 700; color: var(--lb-slate); }
   .stage-body { display: grid; gap: 4px; }
   .stage h3 { font-size: 1.125rem; }
-  .stage-who { font-size: var(--size-micro); font-weight: 650; color: var(--ink-3); }
-  .stage p { font-size: var(--size-small); color: var(--ink-2); }
+  .stage-who { font-size: var(--size-micro); font-weight: 650; color: var(--lb-slate); }
+  .stage p { font-size: var(--size-small); color: var(--lb-slate); }
 </style>

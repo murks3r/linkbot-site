@@ -1,12 +1,10 @@
-/* The site's two typefaces, self-hosted, subset for the five languages (de, en, es, it, fr: Google's "latin" range
-   plus ẞ, the sub- and superscripts and the arrows), nothing loaded from a third party (CLAUDE.md). The pairing is the
-   brand lab's D-P02 (Lane D, exploration-r2-v1): IBM Plex Sans SemiBold for display, Atkinson Hyperlegible Next for
-   text, UI and numerals. Both are under the SIL Open Font License 1.1; Plex carries the reserved font name "Plex", so
-   its subset is renamed "LB Display Sans" as the licence requires (public/fonts/lb-display-sans/OFL.txt). Atkinson
-   lacks the subscript digits (P₂O₅) and the arrows, so a tiny Plex Regular face fills those code points in the text
-   family. Metric-matched fallbacks keep the swap small. */
-@font-face { font-family: 'LB Display Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/lb-display-sans/lb-display-sans-600.woff2') format('woff2'); }
-@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('/fonts/atkinson-hyperlegible-next/atkinson-hyperlegible-next-vf.woff2') format('woff2'); }
-@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('/fonts/lb-display-sans/lb-display-sans-400-symbols.woff2') format('woff2'); unicode-range: U+2070-209F, U+2190-2199, U+0178; }
-@font-face { font-family: 'LB Display Fallback'; src: local('Helvetica Neue'), local('Arial'); size-adjust: 103%; ascent-override: 100%; descent-override: 26%; line-gap-override: 0%; }
-@font-face { font-family: 'Atkinson Fallback'; src: local('Helvetica Neue'), local('Arial'); size-adjust: 99%; ascent-override: 93%; descent-override: 24%; line-gap-override: 0%; }
+/* The site's typeface, Schibsted Grotesk (SIL Open Font License 1.1, public/fonts/schibsted-grotesk/OFL.txt), as the
+   widget design spec v1 §5 sets it: one variable file for weights 400 to 700, self-hosted, nothing loaded from a third
+   party (CLAUDE.md). The Latin file is byte for byte the one Connect's widget serves (embed 0.6.0-v1); Latin Extended
+   covers the rest of the five languages' letters. Both from @fontsource-variable/schibsted-grotesk 5.3.0, as Connect's
+   build takes them. What the font lacks (subscript digits, most arrows) falls back to the system font. The share images
+   and the one-page sheet still draw with the earlier faces (src/lib/brand-fonts.ts). */
+@font-face { font-family: 'Schibsted Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/schibsted-grotesk/schibsted-grotesk-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Schibsted Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/fonts/schibsted-grotesk/schibsted-grotesk-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }

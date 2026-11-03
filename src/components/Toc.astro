@@ -60,22 +60,22 @@ const { items, label } = Astro.props;
 
 <style>
   .toc { font-family: var(--text); }
-  .toc summary { list-style: none; cursor: default; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+  .toc summary { list-style: none; cursor: default; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--lb-slate); }
   .toc summary::-webkit-details-marker { display: none; }
   .toc-current { display: none; }
-  .toc ol { display: grid; gap: 0; margin-top: 10px; border-left: 2px solid var(--line-strong); }
-  .toc a { display: flex; align-items: center; gap: 10px; min-height: var(--target); padding: 4px 0 4px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: var(--size-small); font-weight: 580; color: var(--ink-2); text-decoration: none; transition: color var(--fast), border-color var(--fast); }
-  .toc a:hover { color: var(--ink); border-left-color: var(--ink); }
-  .toc a[aria-current] { color: var(--ink); font-weight: 650; border-left-color: var(--green); }
-  .toc a span { font-size: var(--size-micro); color: var(--ink-3); width: 1.2em; }
+  .toc ol { display: grid; gap: 0; margin-top: 10px; border-left: 2px solid var(--lb-line); }
+  .toc a { display: flex; align-items: center; gap: 10px; min-height: var(--target); padding: 4px 0 4px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: var(--size-small); font-weight: 580; color: var(--lb-slate); text-decoration: none; transition: color var(--fast), border-color var(--fast); }
+  .toc a:hover { color: var(--lb-ink); border-left-color: var(--lb-ink); }
+  .toc a[aria-current] { color: var(--lb-ink); font-weight: 650; border-left-color: var(--lb-ink); }
+  .toc a span { font-size: var(--size-micro); color: var(--lb-slate); width: 1.2em; }
   @media (min-width: 64rem) { .toc { position: sticky; top: calc(var(--header) + 32px); align-self: start; max-height: calc(100svh - var(--header) - 48px); overflow: auto; } }
   /* Narrow screens: a compact fold that sticks under the header; the current section's name shows while folded. */
   @media (max-width: 63.99rem) {
-    .toc { position: sticky; top: var(--header); z-index: 20; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter); background: color-mix(in srgb, var(--paper) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .toc { position: sticky; top: var(--header); z-index: 20; margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter); background: color-mix(in srgb, var(--lb-ground) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--lb-line-quiet); }
     .toc summary { display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; }
     .toc summary::after { content: ''; width: 8px; height: 8px; margin-left: auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); transition: transform var(--base) var(--ease); }
     .toc-fold[open] summary::after { transform: rotate(-135deg); }
-    .toc-current { display: inline; text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--ink); min-width: 0; }
+    .toc-current { display: inline; text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--lb-ink); min-width: 0; }
     .toc-fold[open] .toc-current { display: none; }
     /* Folded from the first paint where scripts run, so the text below does not jump when the script folds it. */
     :global(.js) .toc-fold:not([data-ready]) > ol { display: none; }
@@ -85,6 +85,6 @@ const { items, label } = Astro.props;
   /* The section arrived at lights briefly (a wash that fades), so the jump is seen; under reduced
      motion it is simply there and gone. */
   :global(.is-lit) { animation: toc-lit 1.4s var(--ease-out) both; }
-  @keyframes toc-lit { 0% { box-shadow: 0 0 0 10px var(--green-wash), 0 0 0 30px color-mix(in srgb, var(--green-wash) 40%, transparent); background-color: var(--green-wash); } 100% { box-shadow: 0 0 0 10px transparent, 0 0 0 30px transparent; background-color: transparent; } }
-  @media (prefers-reduced-motion: reduce) { :global(.is-lit) { animation: toc-lit-still 1.4s steps(1, end) both; } @keyframes toc-lit-still { 0% { background-color: var(--green-wash); box-shadow: 0 0 0 10px var(--green-wash); } 100% { background-color: transparent; box-shadow: none; } } }
+  @keyframes toc-lit { 0% { box-shadow: 0 0 0 10px var(--lb-accent-soft), 0 0 0 30px color-mix(in srgb, var(--lb-accent-soft) 40%, transparent); background-color: var(--lb-accent-soft); } 100% { box-shadow: 0 0 0 10px transparent, 0 0 0 30px transparent; background-color: transparent; } }
+  @media (prefers-reduced-motion: reduce) { :global(.is-lit) { animation: toc-lit-still 1.4s steps(1, end) both; } @keyframes toc-lit-still { 0% { background-color: var(--lb-accent-soft); box-shadow: 0 0 0 10px var(--lb-accent-soft); } 100% { background-color: transparent; box-shadow: none; } } }
 </style>
