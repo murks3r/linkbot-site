@@ -1,13 +1,14 @@
 /* Le parole del sito in italiano, tradotte dal catalogo inglese en.ts. */
 import type { Catalogue, Section, Status } from './en.ts';
 import { statusDate } from './status-date.ts';
+import { PUBLIC_NAME } from './terms.ts';
 
 /** The day the status sentences were checked, in this language (status-date.ts). */
 const AS_OF = statusDate('it');
 
 export const it: Catalogue = {
   site: {
-    name: 'Linkbot',
+    name: PUBLIC_NAME,
     claim: 'Fiducia tra due aziende prima di conoscersi.',
     skip: 'Vai al contenuto',
     menu: 'Menu',
@@ -15,12 +16,12 @@ export const it: Catalogue = {
     language: 'Lingua',
     nav: { how: 'Come funziona', sees: 'Chi vede cosa', platforms: 'Per le piattaforme', verticals: 'Per i verticali', integrations: 'Integrazioni', developers: 'Sviluppatori', faq: 'Domande frequenti' },
     footer: {
-      product: 'Linkbot',
+      product: PUBLIC_NAME,
       legal: 'Informazioni legali',
       imprint: 'Note legali',
       privacy: 'Informativa sulla privacy',
       contact: 'Contatti',
-      contactPending: 'I recapiti arriveranno con il nostro dominio. Linkbot non ha ancora un dominio proprio, quindi questo sito non indica alcun indirizzo e non ha un modulo di contatto.',
+      contactPending: `I recapiti arriveranno con il nostro dominio. ${PUBLIC_NAME} non ha ancora un dominio proprio, quindi questo sito non indica alcun indirizzo e non ha un modulo di contatto.`,
       line: 'Questo sito non imposta cookie, non carica nulla da terze parti e non usa strumenti di analisi.',
     },
     status: { now: 'Sullo spazio di prova', contract: 'Nel contratto, non sullo spazio di prova', later: 'Non realizzato' },
@@ -404,13 +405,13 @@ export const it: Catalogue = {
     },
   },
   sheet: {
-    title: 'Linkbot in una pagina',
+    title: `${PUBLIC_NAME} in una pagina`,
     description: 'Linkbot in una pagina stampabile: i tre elementi, il sì di entrambe le parti, cosa ottiene e conserva una piattaforma, e a che punto è ogni parte. Senza prezzi.',
     eyebrow: 'Una pagina',
     dated: `Al ${AS_OF}. Generata dalle pagine di questo sito quando il sito viene costruito, quindi non dice nulla che esse non dicano. Non indica prezzi.`,
     pdf: 'Scarica in PDF',
     site: 'Di più su questo sito',
-    link: 'Linkbot in una pagina (PDF)',
+    link: `${PUBLIC_NAME} in una pagina (PDF)`,
   },
   verticals: {
     title: 'Per i verticali: un vocabolario per mercato',

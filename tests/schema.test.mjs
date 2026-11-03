@@ -10,7 +10,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { LANGS, pathFor } from '../src/i18n/index.ts';
 import { FAQ } from '../src/faq/index.ts';
-import { TERM_KEYS } from '../src/i18n/terms.ts';
+import { PUBLIC_NAME, TERM_KEYS } from '../src/i18n/terms.ts';
 
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const skip = !existsSync(join(dist, 'index.html')) && 'build the site first';
@@ -68,7 +68,7 @@ test('robots.txt lets the AI crawlers in; llms.txt and llms-full.txt are built',
   const robots = readFileSync(join(dist, 'robots.txt'), 'utf8');
   for (const agent of ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'Google-Extended', 'CCBot']) assert.match(robots, new RegExp(`User-agent: ${agent}\\nAllow: /\\n`), agent);
   assert.doesNotMatch(robots, /Disallow/);
-  assert.match(readFileSync(join(dist, 'llms.txt'), 'utf8'), /^# Linkbot\n\n> Linkbot lets two businesses/);
+  assert.ok(readFileSync(join(dist, 'llms.txt'), 'utf8').startsWith(`# ${PUBLIC_NAME}\n\n> ${PUBLIC_NAME} lets two businesses`), 'llms.txt');
   const full = readFileSync(join(dist, 'llms-full.txt'), 'utf8');
   for (const needle of ['Page: /faq', 'Page: /how-it-works', 'Page: /privacy', FAQ.en.items[0].q]) assert.ok(full.includes(needle), `llms-full.txt: ${needle}`);
   assert.doesNotMatch(full.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, ''), /<[a-z][^>]*>/i, 'llms-full.txt carries markup outside its code');

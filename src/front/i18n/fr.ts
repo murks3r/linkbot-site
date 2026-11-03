@@ -1,6 +1,7 @@
 /* fr: the front's words (src/front/copy.ts); the page's sentences are the site's. Not yet read by a native speaker
    (docs/truth-check.md). */
 import type { FrontCopy } from '../copy.ts';
+import { PUBLIC_NAME } from '../../i18n/terms.ts';
 
 export const fr: FrontCopy = {
   a: {
@@ -39,14 +40,14 @@ export const fr: FrontCopy = {
   },
   landing: {
     meta: {
-      title: 'Linkbot : la confiance avant la rencontre',
-      description: 'Linkbot confirme chaque côté, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui. Essayez avec deux entreprises fictives.',
+      title: `${PUBLIC_NAME} : la confiance avant la rencontre`,
+      description: `${PUBLIC_NAME} confirme chaque côté, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui. Essayez avec deux entreprises fictives.`,
     },
     opening: {
       h1: 'La confiance avant la rencontre.',
       sub: {
-        today: 'Linkbot confirme chaque côté, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui.',
-        full: 'Linkbot contrôle qui est réel, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui.',
+        today: `${PUBLIC_NAME} confirme chaque côté, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui.`,
+        full: `${PUBLIC_NAME} contrôle qui est réel, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui.`,
       },
       button: 'Voir étape par étape',
       try: 'Essayez',
@@ -72,7 +73,7 @@ export const fr: FrontCopy = {
       },
       match: {
         title: 'Une correspondance possible, sans noms',
-        p: 'Linkbot compare les deux critère par critère. Chaque côté voit les verdicts, jamais le nom ni le contact de l’autre.',
+        p: `${PUBLIC_NAME} compare les deux critère par critère. Chaque côté voit les verdicts, jamais le nom ni le contact de l’autre.`,
         card: 'Correspondance possible',
         criteria: [
           { label: 'Matériau', value: 'Aluminium', verdict: 'meets' },

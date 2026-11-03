@@ -1,6 +1,6 @@
-# Linkbot
+# {name}
 
-> Linkbot lets two businesses that do not know each other trust each other before they meet, wherever being seen
+> {name} lets two businesses that do not know each other trust each other before they meet, wherever being seen
 > costs something and a lot is at stake. It works in three steps: a check of each side, a private match, and an
 > introduction only when both say yes.
 
@@ -13,8 +13,8 @@ under /de, /es, /it and /fr, with the same pages in every language.
 
 1. Check: each side confirms its email address through a link sent to it; nothing is stored before it confirms. A
    space can require gates, such as a KYC and sanctions check, recorded by a named operator. Checks of a company by
-   Linkbot itself are planned, not built.
-2. Private match: Linkbot compares a need and an offer criterion by criterion and gives a verdict per criterion, never
+   {name} itself are planned, not built.
+2. Private match: {name} compares a need and an offer criterion by criterion and gives a verdict per criterion, never
    a score. Each side sees a board card without names: neither sees the other's name or contact.
 3. Both say yes: a named person at the platform approves the possible fit, then each side answers on its own. Only
    when both say yes do names and email addresses go out, directly or through the platform's team. A no on either side
@@ -24,20 +24,20 @@ under /de, /es, /it and /fr, with the same pages in every language.
 
 - The first space is for B2B trade in industrial minerals. It runs as a test instance with synthetic data; no real
   person and no real organisation uses it yet.
-- A platform embeds Linkbot in its own pages: one script and one element, one space per market.
-- Nothing of Linkbot is published as open source yet. Planned: the widget, the SDK, a command-line tool and the
+- A platform embeds {name} in its own pages: one script and one element, one space per market.
+- Nothing of {name} is published as open source yet. Planned: the widget, the SDK, a command-line tool and the
   protocol description as open source; the checks, the checked history, the matching and the billing as a service
-  Linkbot hosts.
+  {name} hosts.
 
 ## Terms
 
-Linkbot, space, check, private match, board card without names, both say yes, introduction, checked history: each has
+{name}, space, check, private match, board card without names, both say yes, introduction, checked history: each has
 one definition, the same on the site, in the widget and in the docs. They are listed at [FAQ](/faq#terms).
 
 ## Pages
 
 - [Home](/): the headline and a demo of the three steps with two fictional businesses, in the browser only.
-- [FAQ](/faq): what Linkbot is, the problem it solves, how "both say yes" works, what it checks today, what is open
+- [FAQ](/faq): what {name} is, the problem it solves, how "both say yes" works, what it checks today, what is open
   source and what is hosted, who it is for, and the terms.
 - [How it works](/how-it-works): a space and its market vocabulary, the ways to describe a need or an offer,
   confirming, matching with a verdict per criterion, approval and gates, both sides' yes, the introduction, who sees

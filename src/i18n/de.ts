@@ -3,13 +3,14 @@
    Connect-Lane hergeben, nichts darüber hinaus; ein Statussatz nennt den Tag seiner Prüfung (status-date.ts). Sie-Form, wie das Widget. */
 import type { Catalogue, Section, Status } from './en.ts';
 import { statusDate } from './status-date.ts';
+import { PUBLIC_NAME } from './terms.ts';
 
 /** The day the status sentences were checked, in this language (status-date.ts). */
 const AS_OF = statusDate('de');
 
 export const de: Catalogue = {
   site: {
-    name: 'Linkbot',
+    name: PUBLIC_NAME,
     claim: 'Vertrauen zwischen zwei Unternehmen, bevor sie sich kennen.',
     skip: 'Zum Inhalt',
     menu: 'Menü',
@@ -17,12 +18,12 @@ export const de: Catalogue = {
     language: 'Sprache',
     nav: { how: 'So funktioniert es', sees: 'Wer was sieht', platforms: 'Für Plattformen', verticals: 'Für Branchen', integrations: 'Integrationen', developers: 'Entwickler', faq: 'Häufige Fragen' },
     footer: {
-      product: 'Linkbot',
+      product: PUBLIC_NAME,
       legal: 'Rechtliches',
       imprint: 'Impressum',
       privacy: 'Datenschutzhinweis',
       contact: 'Kontakt',
-      contactPending: 'Kontaktdaten folgen mit unserer Domain. Linkbot hat noch keine eigene Domain, deshalb nennt diese Seite keine Adresse und hat kein Kontaktformular.',
+      contactPending: `Kontaktdaten folgen mit unserer Domain. ${PUBLIC_NAME} hat noch keine eigene Domain, deshalb nennt diese Seite keine Adresse und hat kein Kontaktformular.`,
       line: 'Diese Seite setzt keine Cookies, lädt nichts von Dritten und nutzt keine Analyse-Dienste.',
     },
     status: { now: 'Läuft auf dem Test-Space', contract: 'Im Vertrag, nicht auf dem Test-Space', later: 'Nicht gebaut' },
@@ -406,13 +407,13 @@ export const de: Catalogue = {
     },
   },
   sheet: {
-    title: 'Linkbot auf einer Seite',
+    title: `${PUBLIC_NAME} auf einer Seite`,
     description: 'Linkbot auf einer druckbaren Seite: die drei Bausteine, das Ja beider Seiten, was eine Plattform bekommt und behält, und wo jeder Teil steht. Ohne Preise.',
     eyebrow: 'Eine Seite',
     dated: `Stand ${AS_OF}. Beim Bauen der Website aus ihren Seiten erzeugt, sagt also nichts, was dort nicht steht. Es nennt keine Preise.`,
     pdf: 'Als PDF herunterladen',
     site: 'Mehr auf dieser Website',
-    link: 'Linkbot auf einer Seite (PDF)',
+    link: `${PUBLIC_NAME} auf einer Seite (PDF)`,
   },
   verticals: {
     title: 'Für Branchen: ein Vokabular pro Markt',

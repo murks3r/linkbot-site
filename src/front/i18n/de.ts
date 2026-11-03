@@ -1,6 +1,7 @@
 /* de: the front's words (src/front/copy.ts); the page's sentences are the site's. Not yet read by a native speaker
    (docs/truth-check.md). */
 import type { FrontCopy } from '../copy.ts';
+import { PUBLIC_NAME } from '../../i18n/terms.ts';
 
 export const de: FrontCopy = {
   a: {
@@ -39,14 +40,14 @@ export const de: FrontCopy = {
   },
   landing: {
     meta: {
-      title: 'Linkbot: Vertrauen, bevor man sich kennt',
-      description: 'Linkbot bestätigt jede Seite, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen. Ausprobieren mit zwei erfundenen Unternehmen.',
+      title: `${PUBLIC_NAME}: Vertrauen, bevor man sich kennt`,
+      description: `${PUBLIC_NAME} bestätigt jede Seite, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen. Ausprobieren mit zwei erfundenen Unternehmen.`,
     },
     opening: {
       h1: 'Vertrauen, bevor man sich kennt.',
       sub: {
-        today: 'Linkbot bestätigt jede Seite, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen.',
-        full: 'Linkbot prüft, wer echt ist, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen.',
+        today: `${PUBLIC_NAME} bestätigt jede Seite, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen.`,
+        full: `${PUBLIC_NAME} prüft, wer echt ist, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen.`,
       },
       button: 'Schritt für Schritt ansehen',
       try: 'Ausprobieren',
@@ -72,7 +73,7 @@ export const de: FrontCopy = {
       },
       match: {
         title: 'Eine mögliche Passung, ohne Namen',
-        p: 'Linkbot vergleicht beide Kriterium für Kriterium. Jede Seite sieht die Urteile, nie den Namen oder Kontakt der anderen.',
+        p: `${PUBLIC_NAME} vergleicht beide Kriterium für Kriterium. Jede Seite sieht die Urteile, nie den Namen oder Kontakt der anderen.`,
         card: 'Mögliche Passung',
         criteria: [
           { label: 'Material', value: 'Aluminium', verdict: 'meets' },

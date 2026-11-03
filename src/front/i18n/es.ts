@@ -1,6 +1,7 @@
 /* es: the front's words (src/front/copy.ts); the page's sentences are the site's. Not yet read by a native speaker
    (docs/truth-check.md). */
 import type { FrontCopy } from '../copy.ts';
+import { PUBLIC_NAME } from '../../i18n/terms.ts';
 
 export const es: FrontCopy = {
   a: {
@@ -39,14 +40,14 @@ export const es: FrontCopy = {
   },
   landing: {
     meta: {
-      title: 'Linkbot: confianza antes de conocerse',
-      description: 'Linkbot confirma a cada parte, busca el encaje en privado y presenta a dos empresas solo cuando ambas dicen que sí. Pruébelo con dos empresas ficticias.',
+      title: `${PUBLIC_NAME}: confianza antes de conocerse`,
+      description: `${PUBLIC_NAME} confirma a cada parte, busca el encaje en privado y presenta a dos empresas solo cuando ambas dicen que sí. Pruébelo con dos empresas ficticias.`,
     },
     opening: {
       h1: 'Confianza antes de conocerse.',
       sub: {
-        today: 'Linkbot confirma a cada parte, busca el encaje en privado y presenta a dos empresas solo cuando ambas dicen que sí.',
-        full: 'Linkbot comprueba quién es real, busca el encaje en privado y presenta a dos empresas solo cuando ambas dicen que sí.',
+        today: `${PUBLIC_NAME} confirma a cada parte, busca el encaje en privado y presenta a dos empresas solo cuando ambas dicen que sí.`,
+        full: `${PUBLIC_NAME} comprueba quién es real, busca el encaje en privado y presenta a dos empresas solo cuando ambas dicen que sí.`,
       },
       button: 'Verlo paso a paso',
       try: 'Pruébelo',
@@ -72,7 +73,7 @@ export const es: FrontCopy = {
       },
       match: {
         title: 'Un posible encaje, sin nombres',
-        p: 'Linkbot compara a las dos partes criterio por criterio. Cada parte ve los veredictos, nunca el nombre ni el contacto de la otra.',
+        p: `${PUBLIC_NAME} compara a las dos partes criterio por criterio. Cada parte ve los veredictos, nunca el nombre ni el contacto de la otra.`,
         card: 'Posible encaje',
         criteria: [
           { label: 'Material', value: 'Aluminio', verdict: 'meets' },

@@ -1,13 +1,14 @@
 /* Las palabras del sitio en español: traducción del catálogo fuente en inglés. */
 import type { Catalogue, Section, Status } from './en.ts';
 import { statusDate } from './status-date.ts';
+import { PUBLIC_NAME } from './terms.ts';
 
 /** The day the status sentences were checked, in this language (status-date.ts). */
 const AS_OF = statusDate('es');
 
 export const es: Catalogue = {
   site: {
-    name: 'Linkbot',
+    name: PUBLIC_NAME,
     claim: 'Confianza entre dos empresas antes de conocerse.',
     skip: 'Saltar al contenido',
     menu: 'Menú',
@@ -15,12 +16,12 @@ export const es: Catalogue = {
     language: 'Idioma',
     nav: { how: 'Cómo funciona', sees: 'Quién ve qué', platforms: 'Para plataformas', verticals: 'Para verticales', integrations: 'Integraciones', developers: 'Desarrolladores', faq: 'Preguntas frecuentes' },
     footer: {
-      product: 'Linkbot',
+      product: PUBLIC_NAME,
       legal: 'Legal',
       imprint: 'Aviso legal',
       privacy: 'Aviso de privacidad',
       contact: 'Contacto',
-      contactPending: 'Los datos de contacto llegarán con nuestro dominio. Linkbot aún no tiene dominio propio, por eso este sitio no indica ninguna dirección ni tiene formulario de contacto.',
+      contactPending: `Los datos de contacto llegarán con nuestro dominio. ${PUBLIC_NAME} aún no tiene dominio propio, por eso este sitio no indica ninguna dirección ni tiene formulario de contacto.`,
       line: 'Este sitio no usa cookies, no carga nada de terceros y no usa analíticas.',
     },
     status: { now: 'En el espacio de prueba', contract: 'En el contrato, no en el espacio de prueba', later: 'No construido' },
@@ -404,13 +405,13 @@ export const es: Catalogue = {
     },
   },
   sheet: {
-    title: 'Linkbot en una página',
+    title: `${PUBLIC_NAME} en una página`,
     description: 'Linkbot en una página imprimible: los tres componentes, el sí de ambas partes, lo que una plataforma obtiene y conserva, y dónde está cada parte. Sin precios.',
     eyebrow: 'Una página',
     dated: `A fecha de ${AS_OF}. Generada con las páginas de este sitio al construirlo, así que no dice nada que ellas no digan. No menciona precios.`,
     pdf: 'Descargar en PDF',
     site: 'Más en este sitio',
-    link: 'Linkbot en una página (PDF)',
+    link: `${PUBLIC_NAME} en una página (PDF)`,
   },
   verticals: {
     title: 'Para verticales: un vocabulario por mercado',

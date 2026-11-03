@@ -1,6 +1,7 @@
 /* it: the front's words (src/front/copy.ts); the page's sentences are the site's. Not yet read by a native speaker
    (docs/truth-check.md). */
 import type { FrontCopy } from '../copy.ts';
+import { PUBLIC_NAME } from '../../i18n/terms.ts';
 
 export const it: FrontCopy = {
   a: {
@@ -39,14 +40,14 @@ export const it: FrontCopy = {
   },
   landing: {
     meta: {
-      title: 'Linkbot: fiducia prima di conoscersi',
-      description: 'Linkbot conferma ogni parte, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì. Lo provi con due aziende inventate.',
+      title: `${PUBLIC_NAME}: fiducia prima di conoscersi`,
+      description: `${PUBLIC_NAME} conferma ogni parte, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì. Lo provi con due aziende inventate.`,
     },
     opening: {
       h1: 'Fiducia prima di conoscersi.',
       sub: {
-        today: 'Linkbot conferma ogni parte, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì.',
-        full: 'Linkbot controlla chi è reale, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì.',
+        today: `${PUBLIC_NAME} conferma ogni parte, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì.`,
+        full: `${PUBLIC_NAME} controlla chi è reale, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì.`,
       },
       button: 'Vederlo passo per passo',
       try: 'Lo provi',
@@ -72,7 +73,7 @@ export const it: FrontCopy = {
       },
       match: {
         title: 'Una possibile corrispondenza, senza nomi',
-        p: 'Linkbot confronta le due parti criterio per criterio. Ogni parte vede i verdetti, mai il nome o il contatto dell’altra.',
+        p: `${PUBLIC_NAME} confronta le due parti criterio per criterio. Ogni parte vede i verdetti, mai il nome o il contatto dell’altra.`,
         card: 'Possibile corrispondenza',
         criteria: [
           { label: 'Materiale', value: 'Alluminio', verdict: 'meets' },

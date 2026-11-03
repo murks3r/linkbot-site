@@ -1,13 +1,14 @@
 /* Les textes du site en français : traduction du catalogue anglais src/i18n/en.ts. */
 import type { Catalogue, Section, Status } from './en.ts';
 import { statusDate } from './status-date.ts';
+import { PUBLIC_NAME } from './terms.ts';
 
 /** The day the status sentences were checked, in this language (status-date.ts). */
 const AS_OF = statusDate('fr');
 
 export const fr: Catalogue = {
   site: {
-    name: 'Linkbot',
+    name: PUBLIC_NAME,
     claim: 'La confiance entre deux entreprises avant qu’elles se rencontrent.',
     skip: 'Aller au contenu',
     menu: 'Menu',
@@ -15,12 +16,12 @@ export const fr: Catalogue = {
     language: 'Langue',
     nav: { how: 'Comment ça marche', sees: 'Qui voit quoi', platforms: 'Pour les plateformes', verticals: 'Pour les secteurs', integrations: 'Intégrations', developers: 'Développeurs', faq: 'Questions fréquentes' },
     footer: {
-      product: 'Linkbot',
+      product: PUBLIC_NAME,
       legal: 'Informations légales',
       imprint: 'Mentions légales',
       privacy: 'Notice de confidentialité',
       contact: 'Contact',
-      contactPending: 'Les coordonnées suivront avec notre domaine. Linkbot n’a pas encore de domaine à lui, ce site n’indique donc aucune adresse et n’a pas de formulaire de contact.',
+      contactPending: `Les coordonnées suivront avec notre domaine. ${PUBLIC_NAME} n’a pas encore de domaine à lui, ce site n’indique donc aucune adresse et n’a pas de formulaire de contact.`,
       line: 'Ce site ne dépose aucun cookie, ne charge rien de tiers et n’utilise aucune mesure d’audience.',
     },
     status: { now: 'Sur l’espace de test', contract: 'Dans le contrat, pas sur l’espace de test', later: 'Pas construit' },
@@ -404,13 +405,13 @@ export const fr: Catalogue = {
     },
   },
   sheet: {
-    title: 'Linkbot en une page',
+    title: `${PUBLIC_NAME} en une page`,
     description: 'Linkbot sur une page imprimable : les trois briques, le oui des deux parties, ce qu’une plateforme obtient et conserve, et où en est chaque partie. Sans prix.',
     eyebrow: 'Une page',
     dated: `Au ${AS_OF}. Générée à partir des pages de ce site lors de sa construction, elle ne dit donc rien qu’elles ne disent. Elle n’indique aucun prix.`,
     pdf: 'Télécharger en PDF',
     site: 'Plus sur ce site',
-    link: 'Linkbot en une page (PDF)',
+    link: `${PUBLIC_NAME} en une page (PDF)`,
   },
   verticals: {
     title: 'Pour les secteurs : un vocabulaire par marché',

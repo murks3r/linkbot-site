@@ -5,6 +5,7 @@
    sentence names the day it was checked (status-date.ts). */
 
 import { statusDate } from './status-date.ts';
+import { PUBLIC_NAME } from './terms.ts';
 
 /** The day the status sentences were checked, in English (status-date.ts). */
 const AS_OF = statusDate('en');
@@ -19,7 +20,7 @@ export interface Section { id: string; title: string; paras?: string[]; items?: 
 
 export const en = {
   site: {
-    name: 'Linkbot',
+    name: PUBLIC_NAME,
     claim: 'Trust between two businesses before they meet.',
     skip: 'Skip to content',
     menu: 'Menu',
@@ -27,12 +28,12 @@ export const en = {
     language: 'Language',
     nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals', integrations: 'Integrations', developers: 'Developers', faq: 'FAQ' },
     footer: {
-      product: 'Linkbot',
+      product: PUBLIC_NAME,
       legal: 'Legal',
       imprint: 'Imprint',
       privacy: 'Privacy notice',
       contact: 'Contact',
-      contactPending: 'Contact details follow with our domain. Linkbot has no domain of its own yet, so this site names no address and has no contact form.',
+      contactPending: `Contact details follow with our domain. ${PUBLIC_NAME} has no domain of its own yet, so this site names no address and has no contact form.`,
       line: 'This site sets no cookies, loads nothing from third parties and uses no analytics.',
     },
     status: { now: 'On the test space', contract: 'In the contract, not on the test space', later: 'Not built' },
@@ -416,13 +417,13 @@ export const en = {
     },
   },
   sheet: {
-    title: 'Linkbot in one page',
+    title: `${PUBLIC_NAME} in one page`,
     description: 'Linkbot on one printable page: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.',
     eyebrow: 'One page',
     dated: `As of ${AS_OF}. Made from this site’s pages when the site is built, so it says nothing they do not. It names no prices.`,
     pdf: 'Download as PDF',
     site: 'More on this site',
-    link: 'Linkbot in one page (PDF)',
+    link: `${PUBLIC_NAME} in one page (PDF)`,
   },
   verticals: {
     title: 'For verticals: one vocabulary per market',
