@@ -6,11 +6,11 @@ Linkbot has an open part and a hosted part. The open part is everything a platfo
 
 | Open: the open-core repository | Hosted: the Linkbot service |
 | --- | --- |
-| The widget and its one adapter to the Space API | The check of each party |
+| The widget and its one adapter to the Space API | The checks of each party: today each side's email address; company checks are planned, not built |
 | The SDK for your server, with the webhook check | The private match |
 | The React, Next.js, Astro and WordPress integrations | The introduction, only after both say yes |
 | The Space API contract and the types generated from it | The checked history (planned, not built) |
-| The CLI (planned, not built) | Billing |
+| The CLI, the `linkbot` command | Billing (planned, not built) |
 | These docs and the examples | |
 
 ## Why the line is there

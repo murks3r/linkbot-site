@@ -18,7 +18,7 @@ The widget is one script and one element per place it appears. This page lists e
 | `data-locale` | `en`, `de`, `es`, `it`, `fr` | the visitor's browser language, then the space default |
 | `data-input` | `form`, `text` or `both`. It can only narrow what the space allows | the space's setting |
 | `data-api` | your space's API base, `https://{space_host}/api/space/v0`. Only https is accepted, except http on `localhost` | the origin `embed.js` was loaded from, plus `/api/space/v0` |
-| `data-ui` | `current` or `v1`. The second gives the describe mode design v1 (one question per screen) from `embed.v1.js`, which `embed.js` loads from next to itself and checks against the hash it was built with; the other modes keep the current design. For review only until Trust's go | `current` |
+| `data-ui` | `current` or `v1`. The second gives the describe mode design v1 (one question per screen) from `embed.v1.js`, which `embed.js` loads from next to itself and checks against the hash it was built with; the other modes keep the current design. For review only until v1 becomes the default | `current` |
 
 A value the widget doesn't know falls back to the default, with a warning in the browser console. You can put several elements on one page; each one is its own widget. Elements added later, as single-page apps do, start on their own.
 
@@ -26,7 +26,7 @@ If you ask for a language the space doesn't offer, the widget falls back and say
 
 `data-mode="board"` lists the entries whose owners chose to show them, 20 at a time, as the space's pack coarsens them (for example an amount in bands of 5,000 t, a port as its country, a date by month), and says which values are less exact. The filters are the form's own controls, compared the same way. Answering an entry starts a description on the other side, with the entry shown for reference; if its owner has taken it off meanwhile, the widget says so and sends nothing. On a space without a board the widget says so. A person who listed a request can take it off again under `mine`, or right after confirming.
 
-`data-mode="watch"` is for people who want to be told when something fits: it asks for the criteria the pack requires for a match and nothing more, then how often, what about and an email address, and confirms all of it once. The request it creates then shows what may fit, as after `describe`. On a space without watches the widget says so and offers the describe form instead. Under "Email options" a person may also set at most how many go into one email, and a day before which none is sent (contract 0.2.11; Core serves them with its watch slice E4). Both stay unset unless the person sets them, and then the space's own setting applies.
+`data-mode="watch"` is for people who want to be told when something fits: it asks for the criteria the pack requires for a match and nothing more, then how often, what about and an email address, and confirms all of it once. The request it creates then shows what may fit, as after `describe`. On a space without watches the widget says so and offers the describe form instead. Under "Email options" a person may also set at most how many go into one email, and a day before which none is sent (contract 0.2.11; served since contract 0.2.13). Both stay unset unless the person sets them, and then the space's own setting applies.
 
 ## Your data notice
 

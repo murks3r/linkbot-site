@@ -21,8 +21,9 @@ if (CONTACT_EMAIL) OWN.add(CONTACT_EMAIL.split('@')[1]);
 /* Hosts that appear only as identifiers, never as a place a reader or a browser is sent: the JSON-LD vocabulary. XML
    namespaces (xmlns="…") are removed before the scan, and the fonts' licence texts ship verbatim, as their licence
    (SIL OFL 1.1) requires, so they are not read. A template such as https://{space_host}/ names no host. The domains
-   reserved for examples (RFC 2606: example.com, .net, .org and their subdomains) name no one; the developer docs use them. */
-const ALLOWED = new Set(['schema.org']);
+   reserved for examples (RFC 2606: example.com, .net, .org and their subdomains) name no one; the developer docs use them.
+   The loopback address is the reader's own machine, where the CLI's local stand-in runs (/developers/docs/cli). */
+const ALLOWED = new Set(['schema.org', '127.0.0.1']);
 const EXAMPLE = /(^|\.)example\.(com|net|org)$/;
 const LICENCE = /^fonts\/.*\/(OFL|LICENSE[^/]*)\.txt$/;
 const TEXT = /\.(html|xml|txt|js|css|json|svg|webmanifest)$/;

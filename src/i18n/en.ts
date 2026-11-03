@@ -5,6 +5,7 @@
    sentence names the day it was checked (status-date.ts). */
 
 import { statusDate } from './status-date.ts';
+import { PUBLIC_NAME } from './terms.ts';
 
 /** The day the status sentences were checked, in English (status-date.ts). */
 const AS_OF = statusDate('en');
@@ -19,7 +20,7 @@ export interface Section { id: string; title: string; paras?: string[]; items?: 
 
 export const en = {
   site: {
-    name: 'Linkbot',
+    name: PUBLIC_NAME,
     claim: 'Trust between two businesses before they meet.',
     skip: 'Skip to content',
     menu: 'Menu',
@@ -27,12 +28,12 @@ export const en = {
     language: 'Language',
     nav: { how: 'How it works', sees: 'Who sees what', platforms: 'For platforms', verticals: 'For verticals', integrations: 'Integrations', developers: 'Developers', faq: 'FAQ' },
     footer: {
-      product: 'Linkbot',
+      product: PUBLIC_NAME,
       legal: 'Legal',
       imprint: 'Imprint',
       privacy: 'Privacy notice',
       contact: 'Contact',
-      contactPending: 'Contact details follow with our domain. Linkbot has no domain of its own yet, so this site names no address and has no contact form.',
+      contactPending: `Contact details follow with our domain. ${PUBLIC_NAME} has no domain of its own yet, so this site names no address and has no contact form.`,
       line: 'This site sets no cookies, loads nothing from third parties and uses no analytics.',
     },
     status: { now: 'On the test space', contract: 'In the contract, not on the test space', later: 'Not built' },
@@ -251,7 +252,7 @@ export const en = {
       title: 'Recipes: plain HTML, Astro, Next.js, WordPress',
       paras: [
         'Each recipe is a file that runs in Connect’s CI in three browser engines against the sample build with synthetic data: a plain page with a strict Content Security Policy, an Astro component, a Next.js page with the React wrapper, and a small WordPress plugin with a shortcode.',
-        `As of ${AS_OF}, they run in Connect’s CI against the sample build, not against a space; the test instance itself serves the widget’s release 0.5.0-v1.`,
+        `As of ${AS_OF}, they run in Connect’s CI against the sample build, not against a space; the test instance itself serves the widget’s release 0.6.1-v1.`,
       ],
     },
     state: { title: 'Where it stands' },
@@ -269,7 +270,7 @@ export const en = {
       lede: `As of ${AS_OF}, two of them run on the test space, and two are not built.`,
       items: [
         { name: 'Hosted pages', status: 'later' as Status, body: 'A page served for you that you link to instead of embedding. It is not built. Today a space appears only on your own pages, through the embed or through your own server.' },
-        { name: 'The embed', status: 'now' as Status, body: 'One script and one element on your page. The script comes from your space’s own instance; the element carries your publishable key, which works only on the origins your space allows. Four modes: describe a need or an offer, browse the board, keep looking, and my requests. The test instance serves the widget’s release 0.5.0-v1.' },
+        { name: 'The embed', status: 'now' as Status, body: 'One script and one element on your page. The script comes from your space’s own instance; the element carries your publishable key, which works only on the origins your space allows. Four modes: describe a need or an offer, browse the board, keep looking, and my requests. The test instance serves the widget’s release 0.6.1-v1.' },
         { name: 'The API and the SDK', status: 'now' as Status, body: `Your server talks to the Space API with the secret key, which never appears in a page: it can seed needs and offers, record checks and approvals, and read introductions and outcomes. The SDK gives your server a client typed by the contract. As of ${AS_OF} the SDK is not published; its code is in the Connect repository.` },
         { name: 'MCP', status: 'later' as Status, body: 'Planned, not built: an MCP server per space, through which an AI agent prepares a need or an offer and a person confirms and answers. The owner chose this direction; its design is proposed and its contract is a skeleton.' },
       ],
@@ -311,7 +312,7 @@ export const en = {
       notes: [
         'The mode is describe, board, watch or mine; the side is seeking or offer. Without a language the widget follows the visitor’s browser.',
         'The publishable key works only on the origins your space allows. A secret key never belongs in a page: the widget refuses to start with one.',
-        `As of ${AS_OF}, the instance of the synthetic test space serves the widget’s release 0.5.0-v1.`,
+        `As of ${AS_OF}, the instance of the synthetic test space serves the widget’s release 0.6.1-v1.`,
       ],
     },
     sdk: {
@@ -329,7 +330,7 @@ export const en = {
         quickstart: { name: 'Quickstart (5 minutes)', body: 'A script tag, your publishable key and your page’s origin; then the full quickstart and the person’s path through the API.' },
         widget: { name: 'Widget', body: 'Every attribute of the embed, the React wrapper, and recipes for plain HTML, Astro, Next.js and WordPress.' },
         sdk: { name: 'SDK', body: 'The typed clients for your server and for the person’s side, and the webhook signature check.' },
-        cli: { name: 'CLI', body: 'The linkbot command: planned, not built.' },
+        cli: { name: 'CLI', body: 'The linkbot command: try the widget on your machine, put it into your site, check the setup. Not published yet.' },
         protocol: { name: 'Protocol', body: 'The Space API contract, the three steps it keeps, and who holds which key.' },
         api: { name: 'API reference', body: 'Every route of the Space API, generated from the contract.' },
         open: { name: 'What is open, what is hosted', body: 'What a platform runs itself, and what stays with the hosted service.' },
@@ -355,7 +356,7 @@ export const en = {
     h1: ['Where it stands,', 'part by part.'],
     lede: `Checked on ${AS_OF} against the test space’s health report and Connect’s plan. This page is built from the site’s truth check, so it says nothing that list does not.`,
     states: {
-      staging: { title: 'On the test space', lead: 'Synthetic data, in German and English.' },
+      test: { title: 'On the test space', lead: 'Synthetic data, in German and English.' },
       built: { title: 'Built or in the contract, not on the test space', lead: 'Not running there and not published.' },
       planned: { title: 'Planned, not built', lead: 'Not promised as a date.' },
     },
@@ -371,7 +372,7 @@ export const en = {
       introductions: 'Introductions in operator mode, with receipts',
       outcomes: 'Outcomes, changes, pausing and closing',
       deletion: 'Deletion with the instance’s deletion log',
-      widget: 'The widget, served by the instance itself from a pinned release (0.5.0-v1)',
+      widget: 'The widget, served by the instance itself from a pinned release (0.6.1-v1)',
       webhooks: 'Webhooks to the platform’s server: in the contract, and the SDK checks their signatures; the test space does not send them',
       mail: 'Email that reaches an inbox; the test space’s email goes to a test mailbox',
       sdk: 'The SDK and the React wrapper, in the Connect repository; not published on npm',
@@ -386,13 +387,12 @@ export const en = {
   },
   changelog: {
     title: 'What’s new: Linkbot’s product steps, dated',
-    description: 'Each step of Linkbot a customer can notice, dated, with where it stands: on the synthetic test space, or built and not yet there.',
+    description: 'Each step of Linkbot a customer can notice, dated, with where it stands: on the synthetic test space, or built and not available yet.',
     eyebrow: 'What’s new',
     h1: ['What changed,', 'step by step.'],
-    lede: 'One entry per product step a customer can notice, newest first. Each says whether it runs on the synthetic test space or is built and not yet there. Nothing here is published for real users yet.',
-    states: { staging: 'On the test space', built: 'Built, not on the test space yet' },
-    source: 'Source',
-    note: 'Every entry comes from docs/changelog.yml in this site’s repository and names the pull request it rests on; an entry without a source stops the build.',
+    lede: 'One entry per product step a customer can notice, newest first. Each says whether it runs on the synthetic test space or is built and not available yet. Nothing here is published for real users yet.',
+    states: { test: 'On the test space', built: 'Built, not available yet' },
+    note: 'Every entry comes from one file in this site’s repository that names the pull requests it rests on; an entry without them stops the build.',
     link: 'What’s new',
   },
   requestDemo: {
@@ -416,13 +416,13 @@ export const en = {
     },
   },
   sheet: {
-    title: 'Linkbot in one page',
+    title: `${PUBLIC_NAME} in one page`,
     description: 'Linkbot on one printable page: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.',
     eyebrow: 'One page',
     dated: `As of ${AS_OF}. Made from this site’s pages when the site is built, so it says nothing they do not. It names no prices.`,
     pdf: 'Download as PDF',
     site: 'More on this site',
-    link: 'Linkbot in one page (PDF)',
+    link: `${PUBLIC_NAME} in one page (PDF)`,
   },
   verticals: {
     title: 'For verticals: one vocabulary per market',
@@ -543,7 +543,7 @@ export const en = {
             'sessionStorage belongs to your page’s origin, so any script you run on that page can read the draft and the tokens. Run no scripts you do not trust on pages that carry the widget.',
           ] },
         ] as Section[],
-        state: [`The script comes from your space’s own instance. As of ${AS_OF} the test instance serves the widget’s release 0.5.0-v1 from a pinned file, as its health report shows; Connect’s checks of the board and of the widget’s wording passed against that served file on 2026-10-26.`],
+        state: [`The script comes from your space’s own instance. As of ${AS_OF} the test instance serves the widget’s release 0.6.1-v1 from a pinned file, as its health report shows; the served files match the release’s checksums.`],
       },
       sdk: {
         nav: 'SDK and webhooks',
@@ -553,7 +553,7 @@ export const en = {
         lede: `Nothing of the SDK goes into a browser page: the embed takes the publishable key, and the SDK’s client refuses to start in a browser. As of ${AS_OF} it is not published; its code is in the Connect repository.`,
         sections: [
           { id: 'client', title: 'The client', paras: [
-            'The client takes your space’s API base (https only, except on localhost), your secret key from your server’s secret store (a value that is not shaped like a secret key is refused) and, if you want, your runtime’s fetch. Its paths, parameters, bodies and responses are the contract’s own, generated from the YAML Core posted and pinned by sha256: a route, field or value the contract does not have is a type error.',
+            'The client takes your space’s API base (https only, except on localhost), your secret key from your server’s secret store (a value that is not shaped like a secret key is refused) and, if you want, your runtime’s fetch. Its paths, parameters, bodies and responses are the contract’s own, generated from the contract’s YAML (0.2.18) and pinned by sha256: a route, field or value the contract does not have is a type error.',
             'A fresh idempotency key is one call away. Writes the contract marks need one; keep the key with the write and send the same key when you retry it, so the space does the write once.',
           ] },
           { id: 'seeding', title: 'Seeding your platform’s own offer', paras: ['Your server seeds an offer on the operator path, and a second operator confirms it: four eyes. On a space that checks each party, seeding your own organisation’s offer counts as a confirm, so it carries the identity release the space’s notice asks for, and the space refuses it without one. This is for your own organisation only; anyone else’s release is theirs to give, in the widget.'] },
@@ -601,7 +601,7 @@ export const en = {
             'This path ran against the synthetic test space on 2026-10-23: the queue, a case, both kinds of check, the approval, an answer for the platform’s own offer, and an introduction with its receipt.',
           ] },
           { id: 'notyet', title: 'Not here yet, and why', items: [
-            'A new space is created with Core’s provisioning tool, not from the console; the console’s five-step wizard writes and validates the file that tool reads.',
+            'A new space is created with Linkbot’s provisioning tool, not from the console; the console’s five-step wizard writes and validates the file that tool reads.',
             'No “send again” for a delivery until there are real deliveries to try it on.',
           ] },
         ] as Section[],

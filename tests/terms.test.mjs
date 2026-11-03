@@ -82,3 +82,17 @@ test('no public page says pack, watch, Beobachten, staging or Geoprocure (except
   const hits = pages.flatMap(f => [...visible(readFileSync(join(dist, f), 'utf8')).matchAll(new RegExp(INTERNAL, 'gi'))].map(m => `${f}: “${m[0]}”`));
   assert.deepEqual(hits, []);
 });
+
+/* No public page, /developers and its docs included, and neither llms.txt nor llms-full.txt names the team's own
+   working words: a repository owner, a lane or team, an internal host or tool, a ticket id, the engine's team name
+   ("Core" on its own; "open core" is the product's word, written lower-case). Trust's grep of 2026-11-03 (T-PUB2), case
+   as there; visible text, attributes and JSON-LD, not the page's own code. Skipped until the site is built. */
+const TEAM_WORDS = /murks3r|staging|[Pp]ilot|slice [ES]?[0-9]|M[0-9] go|Core posted|Core serves|plan §|Core-Engine|owner.s (go|decision)|owner decision|Geoprocure|GeoProcure|Trust (team|lane)|Connect (team|lane)|ADR [SV][0-9]|lane|Railway|Vercel|Linear|Maestro|DeepSeek|Claude|GEO-[0-9]+|FUND|build\/vision|D-S[0-9]|C-28|Notion|\bCore\b/g;
+const copy = html => html.replace(/<style\b[\s\S]*?<\/style>/g, ' ').replace(/<script\b(?![^>]*application\/ld\+json)[^>]*>[\s\S]*?<\/script>/g, ' ');
+
+test('no public page and no llms file names the team’s own words', { skip: !built && 'build the site first' }, () => {
+  const pages = readdirSync(dist, { recursive: true }).filter(f => (f.endsWith('.html') && !f.startsWith('__preview') && f !== '404.html' && !DRAFTS.test(f)) || /^llms(-full)?\.txt$/.test(f));
+  assert.ok(pages.length > 100, `only ${pages.length} pages`);
+  const hits = pages.flatMap(f => [...copy(readFileSync(join(dist, f), 'utf8')).matchAll(TEAM_WORDS)].map(m => `${f}: “${m[0]}”`));
+  assert.deepEqual(hits, []);
+});

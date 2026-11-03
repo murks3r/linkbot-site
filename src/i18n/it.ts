@@ -1,13 +1,14 @@
 /* Le parole del sito in italiano, tradotte dal catalogo inglese en.ts. */
 import type { Catalogue, Section, Status } from './en.ts';
 import { statusDate } from './status-date.ts';
+import { PUBLIC_NAME } from './terms.ts';
 
 /** The day the status sentences were checked, in this language (status-date.ts). */
 const AS_OF = statusDate('it');
 
 export const it: Catalogue = {
   site: {
-    name: 'Linkbot',
+    name: PUBLIC_NAME,
     claim: 'Fiducia tra due aziende prima di conoscersi.',
     skip: 'Vai al contenuto',
     menu: 'Menu',
@@ -15,12 +16,12 @@ export const it: Catalogue = {
     language: 'Lingua',
     nav: { how: 'Come funziona', sees: 'Chi vede cosa', platforms: 'Per le piattaforme', verticals: 'Per i verticali', integrations: 'Integrazioni', developers: 'Sviluppatori', faq: 'Domande frequenti' },
     footer: {
-      product: 'Linkbot',
+      product: PUBLIC_NAME,
       legal: 'Informazioni legali',
       imprint: 'Note legali',
       privacy: 'Informativa sulla privacy',
       contact: 'Contatti',
-      contactPending: 'I recapiti arriveranno con il nostro dominio. Linkbot non ha ancora un dominio proprio, quindi questo sito non indica alcun indirizzo e non ha un modulo di contatto.',
+      contactPending: `I recapiti arriveranno con il nostro dominio. ${PUBLIC_NAME} non ha ancora un dominio proprio, quindi questo sito non indica alcun indirizzo e non ha un modulo di contatto.`,
       line: 'Questo sito non imposta cookie, non carica nulla da terze parti e non usa strumenti di analisi.',
     },
     status: { now: 'Sullo spazio di prova', contract: 'Nel contratto, non sullo spazio di prova', later: 'Non realizzato' },
@@ -239,7 +240,7 @@ export const it: Catalogue = {
       title: 'Ricette: HTML semplice, Astro, Next.js, WordPress',
       paras: [
         'Ogni ricetta è un file che gira nella CI di Connect in tre motori browser contro la build di esempio con dati sintetici: una pagina semplice con una Content Security Policy rigorosa, un componente Astro, una pagina Next.js con il wrapper React e un piccolo plugin WordPress con uno shortcode.',
-        `Al ${AS_OF} girano nella CI di Connect contro la build di esempio, non contro uno spazio; l’istanza di prova stessa serve la release 0.5.0-v1 del widget.`,
+        `Al ${AS_OF} girano nella CI di Connect contro la build di esempio, non contro uno spazio; l’istanza di prova stessa serve la release 0.6.1-v1 del widget.`,
       ],
     },
     state: { title: 'A che punto siamo' },
@@ -257,7 +258,7 @@ export const it: Catalogue = {
       lede: `Al ${AS_OF}, due di esse girano sullo spazio di prova e due non sono costruite.`,
       items: [
         { name: 'Pagine ospitate', status: 'later' as Status, body: 'Una pagina servita per Lei, da collegare invece di incorporare. Non è costruita. Oggi uno spazio compare solo sulle Sue pagine, tramite l’incorporamento o tramite il Suo server.' },
-        { name: 'L’incorporamento', status: 'now' as Status, body: 'Uno script e un elemento sulla Sua pagina. Lo script arriva dall’istanza propria del Suo spazio; l’elemento porta la Sua chiave pubblicabile, che funziona solo sulle origini consentite dal Suo spazio. Quattro modalità: descrivere una richiesta o un’offerta, sfogliare la bacheca, continuare a cercare e le mie richieste. L’istanza di prova serve la versione 0.5.0-v1 del widget.' },
+        { name: 'L’incorporamento', status: 'now' as Status, body: 'Uno script e un elemento sulla Sua pagina. Lo script arriva dall’istanza propria del Suo spazio; l’elemento porta la Sua chiave pubblicabile, che funziona solo sulle origini consentite dal Suo spazio. Quattro modalità: descrivere una richiesta o un’offerta, sfogliare la bacheca, continuare a cercare e le mie richieste. L’istanza di prova serve la versione 0.6.1-v1 del widget.' },
         { name: 'L’API e l’SDK', status: 'now' as Status, body: `Il Suo server parla con la Space API con la chiave segreta, che non compare mai in una pagina: può inserire fabbisogni e offerte, registrare controlli e approvazioni, e leggere presentazioni ed esiti. L’SDK dà al Suo server un client tipizzato dal contratto. Al ${AS_OF} l’SDK non è pubblicato; il suo codice è nel repository di Connect.` },
         { name: 'MCP', status: 'later' as Status, body: 'Previsto, non costruito: un server MCP per spazio, tramite il quale un agente IA prepara un fabbisogno o un’offerta e una persona conferma e risponde. Il titolare ha scelto questa direzione; il suo progetto è proposto e il suo contratto è uno scheletro.' },
       ],
@@ -299,7 +300,7 @@ export const it: Catalogue = {
       notes: [
         'La modalità è describe, board, watch o mine; il lato è seeking o offer. Senza lingua il widget segue il browser del visitatore.',
         'La chiave pubblicabile funziona solo sulle origini consentite dal Suo spazio. Una chiave segreta non va mai in una pagina: con essa il widget si rifiuta di partire.',
-        `Al ${AS_OF}, l’istanza dello spazio di staging sintetico di Geoprocure serve la versione 0.5.0-v1 del widget.`,
+        `Al ${AS_OF}, l’istanza dello spazio di prova sintetico serve la versione 0.6.1-v1 del widget.`,
       ],
     },
     sdk: {
@@ -307,7 +308,7 @@ export const it: Catalogue = {
       lede: 'Una volta, dal Suo server, con la chiave segreta: registra il Suo ricevitore di webhook e restituisce il segreto di firma, mostrato solo questa volta.',
       notes: [
         `Al ${AS_OF} l’SDK non è su npm. Si usa da un clone del repository di Connect, dove è un pacchetto del workspace.`,
-        `Il test di questo esempio gira contro un sostituto, non contro uno spazio. Al ${AS_OF} lo spazio di staging non invia webhook.`,
+        `Il test di questo esempio gira contro un sostituto, non contro uno spazio. Al ${AS_OF} lo spazio di prova non invia webhook.`,
       ],
     },
     docs: {
@@ -317,7 +318,7 @@ export const it: Catalogue = {
         quickstart: { name: 'Avvio rapido (5 minuti)', body: 'Un tag script, la tua chiave pubblicabile e l’origine della tua pagina; poi l’avvio rapido completo e il percorso di una persona attraverso l’API.' },
         widget: { name: 'Widget', body: 'Ogni attributo dell’embed, il wrapper React e ricette per HTML semplice, Astro, Next.js e WordPress.' },
         sdk: { name: 'SDK', body: 'I client tipizzati per il tuo server e per il lato della persona, e il controllo della firma dei webhook.' },
-        cli: { name: 'CLI', body: 'Il comando linkbot: previsto, non costruito.' },
+        cli: { name: 'CLI', body: 'Il comando linkbot: provare il widget sul proprio computer, inserirlo nel proprio sito, verificare la configurazione. Non ancora pubblicato.' },
         protocol: { name: 'Protocollo', body: 'Il contratto della Space API, i tre passi che rispetta e chi detiene quale chiave.' },
         api: { name: 'Riferimento API', body: 'Ogni rotta della Space API, generata dal contratto.' },
         open: { name: 'Cosa è aperto, cosa è ospitato', body: 'Ciò che una piattaforma gestisce da sé e ciò che resta al servizio ospitato.' },
@@ -343,7 +344,7 @@ export const it: Catalogue = {
     h1: ['A che punto è,', 'parte per parte.'],
     lede: `Controllato il ${AS_OF} con il rapporto di stato dello spazio di prova e il piano di Connect. Questa pagina è generata dalla lista di controllo del sito, quindi non dice nulla che quella lista non dica.`,
     states: {
-      staging: { title: 'Sullo spazio di prova', lead: 'Dati sintetici, in tedesco e inglese.' },
+      test: { title: 'Sullo spazio di prova', lead: 'Dati sintetici, in tedesco e inglese.' },
       built: { title: 'Realizzato o nel contratto, non sullo spazio di prova', lead: 'Non gira lì e non è pubblicato.' },
       planned: { title: 'Previsto, non realizzato', lead: 'Nessuna data promessa.' },
     },
@@ -359,7 +360,7 @@ export const it: Catalogue = {
       introductions: 'Presentazioni in modalità operatore, con ricevute',
       outcomes: 'Esiti, modifiche, messa in pausa e chiusura',
       deletion: 'Cancellazione con il registro delle cancellazioni dell’istanza',
-      widget: 'Il widget, servito dall’istanza stessa da una release fissata (0.5.0-v1)',
+      widget: 'Il widget, servito dall’istanza stessa da una release fissata (0.6.1-v1)',
       webhooks: 'Webhook verso il server della piattaforma: nel contratto, e l’SDK ne controlla le firme; lo spazio di prova non li invia',
       mail: 'Email che raggiunge una casella reale; le email dello spazio di prova vanno a una casella di prova',
       sdk: 'L’SDK e il wrapper React, nel repository di Connect; non pubblicati su npm',
@@ -374,13 +375,12 @@ export const it: Catalogue = {
   },
   changelog: {
     title: 'Novità: i passi del prodotto Linkbot, datati',
-    description: 'Ogni passo di Linkbot che un cliente può notare, datato e con il suo stato: sullo spazio di prova sintetico, oppure realizzato e non ancora lì.',
+    description: 'Ogni passo di Linkbot che un cliente può notare, datato e con il suo stato: sullo spazio di prova sintetico, oppure realizzato e non ancora disponibile.',
     eyebrow: 'Novità',
     h1: ['Che cosa è cambiato,', 'passo dopo passo.'],
-    lede: 'Una voce per ogni passo del prodotto che un cliente può notare, la più recente per prima. Ognuna dice se gira sullo spazio di prova sintetico o se è realizzata e non ancora lì. Niente di tutto ciò è ancora pubblicato per utenti reali.',
-    states: { staging: 'Sullo spazio di prova', built: 'Realizzato, non ancora sullo spazio di prova' },
-    source: 'Fonte',
-    note: 'Ogni voce proviene da docs/changelog.yml, nel repository di questo sito, e indica la pull request su cui si basa; una voce senza fonte ferma la build.',
+    lede: 'Una voce per ogni passo del prodotto che un cliente può notare, la più recente per prima. Ognuna dice se gira sullo spazio di prova sintetico o se è realizzata e non ancora disponibile. Niente di tutto ciò è ancora pubblicato per utenti reali.',
+    states: { test: 'Sullo spazio di prova', built: 'Realizzato, non ancora disponibile' },
+    note: 'Ogni voce proviene da un file nel repository di questo sito che indica le pull request su cui si basa; una voce senza di esse ferma la build.',
     link: 'Novità',
   },
   requestDemo: {
@@ -404,13 +404,13 @@ export const it: Catalogue = {
     },
   },
   sheet: {
-    title: 'Linkbot in una pagina',
+    title: `${PUBLIC_NAME} in una pagina`,
     description: 'Linkbot in una pagina stampabile: i tre elementi, il sì di entrambe le parti, cosa ottiene e conserva una piattaforma, e a che punto è ogni parte. Senza prezzi.',
     eyebrow: 'Una pagina',
     dated: `Al ${AS_OF}. Generata dalle pagine di questo sito quando il sito viene costruito, quindi non dice nulla che esse non dicano. Non indica prezzi.`,
     pdf: 'Scarica in PDF',
     site: 'Di più su questo sito',
-    link: 'Linkbot in una pagina (PDF)',
+    link: `${PUBLIC_NAME} in una pagina (PDF)`,
   },
   verticals: {
     title: 'Per i verticali: un vocabolario per mercato',
@@ -529,7 +529,7 @@ export const it: Catalogue = {
             'sessionStorage appartiene all’origin della Sua pagina, quindi ogni script che esegue su quella pagina può leggere la bozza e i token. Non esegua script di cui non si fida sulle pagine che ospitano il widget.',
           ] },
         ] as Section[],
-        state: [`Lo script proviene dall’istanza del Suo spazio. Al ${AS_OF} l’istanza di prova serve la release 0.5.0-v1 del widget da un file fissato, come mostra il suo rapporto di stato; i controlli di Connect sulla bacheca e sui testi del widget sono passati contro quel file servito il 26 ottobre 2026.`],
+        state: [`Lo script proviene dall’istanza del Suo spazio. Al ${AS_OF} l’istanza di prova serve la release 0.6.1-v1 del widget da un file fissato, come mostra il suo rapporto di stato; i file serviti corrispondono ai checksum della release.`],
       },
       sdk: {
         nav: 'SDK e webhook',
@@ -539,7 +539,7 @@ export const it: Catalogue = {
         lede: `Nulla dell’SDK finisce in una pagina del browser: l’embed prende la Publishable Key, e il client dell’SDK rifiuta di avviarsi in un browser. Al ${AS_OF} non è pubblicato; il suo codice è nel repository di Connect.`,
         sections: [
           { id: 'client', title: 'Il client', paras: [
-            'Il client prende la base API del Suo spazio (solo https, tranne su localhost), la Sua Secret Key dal secret store del Suo server (un valore che non ha la forma di una Secret Key viene rifiutato) e, se vuole, il fetch del Suo runtime. I suoi percorsi, parametri, body e risposte sono quelli del contratto, generati dallo YAML pubblicato da Core e fissati tramite sha256: una route, un campo o un valore che il contratto non prevede è un errore di tipo.',
+            'Il client prende la base API del Suo spazio (solo https, tranne su localhost), la Sua Secret Key dal secret store del Suo server (un valore che non ha la forma di una Secret Key viene rifiutato) e, se vuole, il fetch del Suo runtime. I suoi percorsi, parametri, body e risposte sono quelli del contratto, generati dallo YAML del contratto (0.2.18) e fissati tramite sha256: una route, un campo o un valore che il contratto non prevede è un errore di tipo.',
             'Una chiave di idempotenza nuova è a una sola chiamata di distanza. Le scritture che il contratto contrassegna ne richiedono una; conservi la chiave con la scrittura e invii la stessa chiave quando la ritenta, così lo spazio esegue la scrittura una sola volta.',
           ] },
           { id: 'seeding', title: 'Inserire l’offerta della Sua piattaforma', paras: ['Il Suo server inserisce un’offerta sul percorso operatore, e un secondo operatore la conferma: quattro occhi. Su uno spazio che controlla ogni parte inserire l’offerta della propria organizzazione conta come conferma, quindi porta il consenso a rivelare l’identità che l’avviso dello spazio chiede, e lo spazio la rifiuta senza. Questo vale solo per la propria organizzazione; il consenso di qualunque altra parte spetta a quella parte, nel widget.'] },
@@ -587,7 +587,7 @@ export const it: Catalogue = {
             'Questo percorso ha girato contro lo spazio di prova sintetico il 23 ottobre 2026: la coda, un caso, entrambi i tipi di controllo, l’approvazione, una risposta per l’offerta della piattaforma e una presentazione con la sua ricevuta.',
           ] },
           { id: 'notyet', title: 'Non ancora qui, e perché', items: [
-            'Un nuovo spazio si crea con lo strumento di predisposizione di Core, non dalla console; la procedura guidata in cinque passaggi della console scrive e convalida il file che quello strumento legge.',
+            'Un nuovo spazio si crea con lo strumento di predisposizione di Linkbot, non dalla console; la procedura guidata in cinque passaggi della console scrive e convalida il file che quello strumento legge.',
             'Nessun «invia di nuovo» per una consegna finché non ci sono consegne reali su cui provarlo.',
           ] },
         ] as Section[],

@@ -31,7 +31,7 @@ export const parseStatus = (markdown: string): StatusRow[] => {
 export const loadStatus = (): StatusRow[] => parseStatus(readFileSync(join(process.cwd(), 'docs/truth-check.md'), 'utf8'));
 
 /** The catalogue's name for each state's column (status.states). */
-export const COLUMN = { 'on staging': 'staging', built: 'built', planned: 'planned' } as const satisfies Record<State, keyof Catalogue['status']['states']>;
+export const COLUMN = { 'on staging': 'test', built: 'built', planned: 'planned' } as const satisfies Record<State, keyof Catalogue['status']['states']>;
 
 export interface StatusColumn { id: (typeof COLUMN)[State]; title: string; lead: string; items: string[] }
 

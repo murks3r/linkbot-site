@@ -1,6 +1,6 @@
 # Recipe: a plain HTML page
 
-> **Ran against a real space on 2026-10-23**: against staging's Space API, with the released `embed.js` served from a local stand-in. Since then a pilot's synthetic staging space serves the widget release `embed-v0.1.1-m1` at `/embed/v0/embed.js`, with its language files and CORS (since 2026-10-23). The code below is `examples/html/recipe.html` and `recipe.css`. CI serves that page from a site of its own and runs it in Chromium, Firefox and WebKit against the sample build. It checks that the widget starts under the page's strict CSP, shows the notice, takes the theme and passes axe.
+> **Ran against a real space on 2026-10-23:** against the Space API of a test space with synthetic data, with the released `embed.js` served from a local stand-in. That test space now serves the widget release `embed-v0.6.1-v1` at `/embed/v0/embed.js`, with its language files and CORS. The code below is `examples/html/recipe.html` and `recipe.css`. CI serves that page from a site of its own and runs it in Chromium, Firefox and WebKit against the sample build. It checks that the widget starts under the page's strict CSP, shows the notice, takes the theme and passes axe.
 
 For a site you write by hand, or any CMS that lets you edit a page's HTML.
 
@@ -24,7 +24,7 @@ Put the element where the form should appear. Your notice goes inside it:
 </div>
 ```
 
-The widget asks the Space API on the origin `embed.js` came from, which is right when your space's instance serves `embed.js`, as decided. If you host `embed.js` yourself, add `data-api="https://{space_host}/api/space/v0"`.
+The widget asks the Space API on the origin `embed.js` came from, which is right when your space's instance serves `embed.js`, as it does by default. If you host `embed.js` yourself, add `data-api="https://{space_host}/api/space/v0"`.
 
 For a second place on the same page, such as a board of open requests, add another element with `data-mode="board"`. You still need only one script.
 

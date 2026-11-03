@@ -1,4 +1,4 @@
-/* After the build, writes /llms-full.txt: public/llms.txt first, then the text of every public English page, read from
+/* After the build, writes /llms-full.txt: /llms.txt first (src/pages/llms.txt.ts), then the text of every public English page, read from
    the built page's <main>, so the file cannot say more or less than the pages. Drafts and the 404 page are left out, as
    in the sitemap (astro.config.mjs); the other languages hold the same pages and are named in llms.txt. */
 import type { AstroIntegration } from 'astro';

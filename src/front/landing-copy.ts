@@ -2,18 +2,19 @@
    the "both say yes" demo (src/components/front/Trial.astro), then for platforms and the bottom. Plain visitor language,
    no internal term on the page. The English source of src/front/copy.ts; each sentence has its rows in
    docs/truth-check.md (named per section below) and its line in the claim table of docs/front/home-v3.md. */
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 export const LANDING = {
   meta: {
-    title: 'Linkbot: trust before you meet',
-    description: 'Linkbot confirms each side, matches in private and introduces two businesses only when both say yes. Try it with two fictional businesses.',
+    title: `${PUBLIC_NAME}: trust before you meet`,
+    description: `${PUBLIC_NAME} confirms each side, matches in private and introduces two businesses only when both say yes. Try it with two fictional businesses.`,
   },
   /* 1 · rows how.confirm, home.rules, how.yes. sub.today is true now; sub.full only once company checks run on the space
      (src/front/hero.ts picks one; tests/home.test.mjs keeps full off the built page). */
   opening: {
     h1: 'Trust before you meet.',
     sub: {
-      today: 'Linkbot confirms each side, matches in private and introduces two businesses only when both say yes.',
-      full: 'Linkbot checks who is real, matches in private and introduces two businesses only when both say yes.',
+      today: `${PUBLIC_NAME} confirms each side, matches in private and introduces two businesses only when both say yes.`,
+      full: `${PUBLIC_NAME} checks who is real, matches in private and introduces two businesses only when both say yes.`,
     },
     /* The page's one button (owner, 2026-11-02): the quickstart on /developers (its first section, the shortest embed;
        that page says what is not available yet); beside it only a quiet link to /contact. */
@@ -47,7 +48,7 @@ export const LANDING = {
     },
     match: {
       title: 'A possible fit, without names',
-      p: 'Linkbot compares the two on each criterion. Each side sees the verdicts, never the other’s name or contact.',
+      p: `${PUBLIC_NAME} compares the two on each criterion. Each side sees the verdicts, never the other’s name or contact.`,
       card: 'Possible fit',
       criteria: [
         { label: 'Material', value: 'Aluminium', verdict: 'meets' },

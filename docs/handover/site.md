@@ -131,7 +131,7 @@ On 2026-10-24 a second public Linkbot landing page in the same Vercel team was t
 | PR | Branch → base | Waits on |
 | -- | -- | -- |
 | [#28](https://github.com/murks3r/linkbot-site/pull/28) | `claude/main-legal-notice` → `main` | Counsel's view on the legal notice (GEO-150, GEO-154), a mailbox on a domain Linkbot owns, and then the owner's merge. A production build stops while its placeholders are open (see Gotchas). |
-| [#56](https://github.com/murks3r/linkbot-site/pull/56), the V1 PR, a draft | `build/vision` → `main` | The owner's go, planned for 2026-11-10: mark it ready (one CI run, `check.yml` skips drafts), then merge with a merge commit. Its description lists what production gains, what stays a placeholder and the rollback. Before it is marked ready, the lane renews the status (section 4, due 2026-11-07). `main` was merged into `build/vision` with `-s ours` on 2026-10-25, so it merges without conflicts. |
+| [#56](https://github.com/murks3r/linkbot-site/pull/56), the V1 PR, a draft | `build/vision` → `main` | The owner's go, no fixed date (owner, 2026-11-03): mark it ready (one CI run, `check.yml` skips drafts), then merge with a merge commit. Its description lists what production gains, what stays a placeholder and the rollback. Before it is marked ready, the lane renews the status (section 4, due 2026-11-07). `main` was merged into `build/vision` with `-s ours` on 2026-10-25, so it merges without conflicts. |
 | [#30](https://github.com/murks3r/linkbot-site/pull/30) | `claude/main-domain-placeholder` → `main` | Superseded by the V1 PR, which carries the same placeholder (#31) and replaces both files #30 touches. Recommended: close it unmerged once the owner agrees. |
 | #1, #6 to #21 | old design and parallel branches | Nothing. They stay as they are (owner's order). |
 
@@ -148,7 +148,7 @@ The status sentences name the day of their check: `STATUS_CHECKED` in `src/i18n/
 | the form; text, read by fixed rules without a model; the board; watches (contract 0.2.16, mail to a sink that reaches no one); confirm, matching, gates and approval, introductions, outcomes, deletion; a space's settings, origins, keys and funnel; the widget, served by the instance itself (0.5.0-v1) | webhooks (in the contract since 0.2.14 and deployed, but `features.webhooks` is off until the owner creates the signing key); email that reaches an inbox |
 
 **When to check again:**
-- **Next: on 2026-11-07**, before the V1 PR's go (planned for 2026-11-10). `tests/status.test.mjs` fails 14 days after `STATUS_CHECKED`, that is during 2026-11-09 for the check of 2026-10-26, and it prints a warning from four days before. Renew the status and merge that into `build/vision` before the V1 PR is marked ready, or its CI run fails on the date alone.
+- **Renewed on 2026-11-03** (widget 0.6.1-v1, contract 0.2.18, build `2703525`). `tests/status.test.mjs` fails 14 days after `STATUS_CHECKED`, that is during 2026-11-17 for the check of 2026-11-03, and it prints a warning from four days before. Renew the status and merge that into `build/vision` before the V1 PR is marked ready, or its CI run fails on the date alone.
 - After that, at least every 14 days; each renewal sets the next re-check day here, one day before the test would fail.
 - When staging's webhooks are switched on (the owner's signing key and host) or staging serves a new widget release. On 2026-10-26 the copy moved to contract 0.2.16 and widget 0.5.0-v1 (E5 and E6 deployed, webhooks off); watches moved to the staging column on 2026-10-25 (0.2.13, mail to a sink).
 
