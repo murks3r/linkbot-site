@@ -3,7 +3,7 @@
    data on every page: Organization, WebSite, SoftwareApplication and the page's BreadcrumbList, plus what the page
    adds (ld: /faq's FAQPage and DefinedTermSet). It states only what is true today: the name, the address of this site
    and the definition of Linkbot from src/i18n/terms.ts. Legal name, founding date, address, logo and any price are left
-   out until the owner confirms them; tests/schema.test.mjs reads it back from every built page. Previews (PUBLIC_NOINDEX=1) and drafts are never indexed; a draft has one language and no alternates.
+   out until the owner confirms them; tests/schema.test.mjs reads it back from every built page. Previews (PUBLIC_NOINDEX=1) and drafts are never indexed; a draft has no alternates.
    Each page and language has its own preview image, drawn after the build from this page's og:title and og:description
    (src/integrations/share-images.ts). */
 import { cardPath } from '../lib/share-card';

@@ -11,7 +11,7 @@ import { DEFAULT_LANG, FALLBACK_NOTICE, type Catalogue, type Lang } from '../i18
    language-neutral address of the page ('/how-it-works'); every language gets its own. */
 /* front: a front page (the home, /who-sees-what): the body carries data-front for src/front/theme.css. */
 /* ld: schema.org nodes the page adds to its structured data (src/components/SEO.astro). */
-/* draft: a page for the owner's review in one language only (src/drafts): never indexed, no alternates, no language switch. */
+/* draft: a page for the owner's review (src/drafts): never indexed, no alternates, no language switch. */
 interface Props { lang: Lang; t: Catalogue; fallback?: boolean; title: string; description: string; path: string; crumbs?: [string, string][]; front?: boolean; draft?: boolean; ld?: Record<string, unknown>[] }
 const { lang, t, fallback = false, title, description, path, crumbs, front = false, draft = false, ld } = Astro.props;
 const contentLang = fallback ? DEFAULT_LANG : lang;
