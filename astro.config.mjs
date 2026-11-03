@@ -21,7 +21,7 @@ export default defineConfig({
   build: { format: 'file', inlineStylesheets: 'auto' },
   i18n: { defaultLocale: 'en', locales, routing: { prefixDefaultLocale: false } },
   integrations: [shareImages(), demoImages(), sitemap({
-    filter: page => !page.endsWith('/404') && !page.endsWith('/for-intermediaries'),
+    filter: page => !page.endsWith('/404') && !page.endsWith('/for-intermediaries') && !page.endsWith('/developers/login-with-linkbot'),
     i18n: { defaultLocale: 'en', locales: Object.fromEntries(locales.map(l => [l, l])) },
   })],
 });
