@@ -25,7 +25,7 @@ export const it: FrontCopy = {
           text: 'Un operatore identificato e attivo approva il caso. Un’approvazione da sola non rivela nulla.',
         },
         {
-          name: 'Doppio sì',
+          name: 'Entrambe dicono sì',
           text: 'Ogni parte risponde per sé. Prima che entrambe abbiano detto sì, l’altra parte non apprende nulla.',
         },
         {
@@ -131,7 +131,7 @@ export const it: FrontCopy = {
     hero: {
       eyebrow: 'Uno strato di corrispondenza che ogni piattaforma può integrare',
       h1: ['Chi vede che cosa,', 'e quando.'],
-      lede: 'Un pack assegna a ogni criterio una fase, e una fase è il punto più lontano che un valore raggiunge: la bacheca, una possibile corrispondenza, la presentazione o solo il team della piattaforma. Qui sotto: un’offerta sintetica, fase per fase, e la ricevuta che delimita ogni lettura.',
+      lede: 'Il vocabolario del mercato assegna a ogni criterio una fase, e una fase è il punto più lontano che un valore raggiunge: la bacheca, una possibile corrispondenza, la presentazione o solo il team della piattaforma. Qui sotto: un’offerta sintetica, fase per fase, e la ricevuta che delimita ogni lettura.',
       primary: 'Cosa ottiene una piattaforma',
       secondary: 'Chi vede che cosa, per intero',
     },
@@ -174,17 +174,17 @@ export const it: FrontCopy = {
     deletion: { h2: 'Cancellazione: cosa va via e cosa resta' },
     platforms: {
       h2: 'Per le piattaforme',
-      p: 'Uno script e un elemento mettono uno spazio sulla Sua pagina; la console per il Suo team gira sulla Sua macchina o dietro il Suo login; il Suo server apprende gli eventi tramite webhook firmati, che sono nel contratto e non vengono ancora inviati dallo spazio di staging.',
+      p: 'Uno script e un elemento mettono uno spazio sulla Sua pagina; la console per il Suo team gira sulla Sua macchina o dietro il Suo login; il Suo server apprende gli eventi tramite webhook firmati, che sono nel contratto e non vengono ancora inviati dallo spazio di prova.',
       link: 'Cosa ottiene una piattaforma',
     },
     verticals: {
       h2: 'Per i verticali',
-      p: 'Un pack descrive un mercato: i suoi criteri, opzioni e unità, le sue etichette e domande nelle lingue dello spazio, ciò che ogni criterio rivela a ogni fase e i gate che il mercato richiede. Il primo è quello dei minerali industriali.',
-      link: 'Cosa contiene un pack',
+      p: 'Un vocabolario del mercato descrive un mercato: i suoi criteri, opzioni e unità, le sue etichette e domande nelle lingue dello spazio, ciò che ogni criterio rivela a ogni fase e i gate che il mercato richiede. Il primo è quello dei minerali industriali.',
+      link: 'Cosa contiene un vocabolario del mercato',
     },
     state: {
       h2: 'A che punto siamo',
-      p: 'L’offerta qui sopra è testo fisso, scritto per questa pagina nel vocabolario di un pack sintetico; il prodotto non ha girato qui. La pagina demo percorre tutto il cammino, passo dopo passo.',
+      p: 'L’offerta qui sopra è testo fisso, scritto per questa pagina in un vocabolario del mercato sintetico; il prodotto non ha girato qui. La pagina demo percorre tutto il cammino, passo dopo passo.',
     },
   },
   demo: {
@@ -205,7 +205,7 @@ export const it: FrontCopy = {
         { name: 'La richiesta', who: 'L’acquirente', text: 'L’acquirente descrive il fabbisogno nella pagina di una piattaforma, in un modulo con le domande del suo mercato, oppure in una riga di testo che regole fisse leggono e trasformano in valori proposti. Nulla è preselezionato, e ciò che l’acquirente non ha indicato resta sconosciuto.' },
         { name: 'I criteri, confermati', who: 'L’acquirente', text: 'L’acquirente controlla ogni valore e conferma. Solo ora viene salvato qualcosa: il server controlla ogni valore rispetto alle domande del mercato e nomina ogni campo che non lo rispetta. L’indirizzo email viene confermato tramite un link.' },
         { name: 'Le possibili corrispondenze', who: 'Lo spazio', text: 'Il matching confronta i criteri salvati con quelli dell’altra parte, uno per uno: un verdetto per criterio, corrisponde, corrisponde in parte, contraddice o sconosciuto, mai un punteggio. Una possibile corrispondenza mostra a ciascuna parte solo i verdetti e un avviso che decidono le persone.' },
-        { name: 'Entrambi dicono sì', who: 'L’acquirente e il fornitore', text: 'Ciascuna parte risponde alla possibile corrispondenza per sé. Prima che entrambe abbiano detto sì l’altra parte non sa nulla, e un no successivo revoca un sì.' },
+        { name: 'Entrambe dicono sì', who: 'L’acquirente e il fornitore', text: 'Ciascuna parte risponde alla possibile corrispondenza per sé. Prima che entrambe abbiano detto sì l’altra parte non sa nulla, e un no successivo revoca un sì.' },
         { name: 'L’operatore approva', who: 'Il team della piattaforma', text: 'Un operatore con nome registra i controlli che lo spazio richiede e approva la coppia. Un’approvazione da sola non rivela nulla, e ogni scrittura indica chi l’ha fatta.' },
         { name: 'La presentazione', who: 'Il server', text: 'Quando l’ultima delle tre condizioni è soddisfatta, in qualunque ordine, il server crea la presentazione, e la rifiuta per ogni altra via. Ciascuna parte riceve una ricevuta di chi può vedere quali campi. In modalità diretta, quella registrata qui, ciascuna parte può poi aprire i campi che l’altra condivide in questa fase. Una piattaforma può scegliere invece la modalità operatore: allora solo il suo team vede entrambe le parti e le contatta.' },
       ],
@@ -248,7 +248,7 @@ export const it: FrontCopy = {
       eyes: 3,
       open: 1,
       who: 'Chiunque possa vedere la bacheca',
-      rule: 'Solo i campi alla fase bacheca, resi meno precisi come dichiara il pack, e solo per le offerte il cui proprietario ha dato il consenso. Mai chi ha pubblicato.',
+      rule: 'Solo i campi alla fase bacheca, resi meno precisi come dichiara il vocabolario del mercato, e solo per le offerte il cui proprietario ha dato il consenso. Mai chi ha pubblicato.',
       fields: [
         { label: 'Prodotto', value: 'Fosfato naturale' },
         { label: 'Contenuto di P₂O₅', value: '31–32 %' },
@@ -281,14 +281,14 @@ export const it: FrontCopy = {
       eyes: 1,
       open: 0.5,
       who: 'In modalità operatore il team della piattaforma; in modalità diretta entrambe le parti',
-      rule: 'Nome visualizzato, indirizzo email confermato e i criteri che il pack conserva per questa fase. Ogni lettura viene registrata sulla ricevuta.',
+      rule: 'Nome visualizzato, indirizzo email confermato e i criteri che il vocabolario del mercato conserva per questa fase. Ogni lettura viene registrata sulla ricevuta.',
       fields: [
         { label: 'Nome visualizzato', value: 'quello dell’offerta, come indicato' },
         { label: 'Indirizzo email', value: 'uno, confermato tramite un link' },
-        { label: 'Criteri alla fase presentazione', value: 'come dichiara il pack' },
+        { label: 'Criteri alla fase presentazione', value: 'come dichiara il vocabolario del mercato' },
       ],
       not: [
-        'Campi che il pack riserva all’operatore',
+        'Campi che il vocabolario del mercato riserva all’operatore',
         'In modalità operatore: qualsiasi cosa dell’altra parte; la ricevuta di ogni parte dice che entrambe hanno acconsentito e che la piattaforma le contatterà',
       ],
     },
@@ -298,7 +298,7 @@ export const it: FrontCopy = {
       eyes: 1,
       open: 0.3,
       who: 'Solo il team della piattaforma',
-      rule: 'Campi che il pack riserva alla piattaforma, come i dettagli di identità per un controllo della parte. Non raggiungono mai l’altra parte, e ogni accesso viene registrato.',
+      rule: 'Campi che il vocabolario del mercato riserva alla piattaforma, come i dettagli di identità per un controllo della parte. Non raggiungono mai l’altra parte, e ogni accesso viene registrato.',
       fields: [
         { label: 'Dettagli di identità', value: 'per il controllo della parte dello spazio, visti dal team' },
         { label: 'La registrazione del gate', value: 'superato, non superato o rinviato, con un riferimento e senza dati personali' },

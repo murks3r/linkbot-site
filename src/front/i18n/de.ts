@@ -25,7 +25,7 @@ export const de: FrontCopy = {
           text: 'Ein benannter, aktiver Operator gibt den Fall frei. Eine Freigabe allein gibt nichts preis.',
         },
         {
-          name: 'Beide Ja',
+          name: 'Beide sagen Ja',
           text: 'Jede Seite antwortet für sich. Bevor beide Ja gesagt haben, erfährt die andere Seite nichts.',
         },
         {
@@ -131,7 +131,7 @@ export const de: FrontCopy = {
     hero: {
       eyebrow: 'Eine Matching-Schicht, die jede Plattform einbetten kann',
       h1: ['Wer was sieht,', 'und wann.'],
-      lede: 'Ein Pack gibt jedem Kriterium eine Stufe, und eine Stufe ist der weiteste Punkt, bis zu dem ein Wert gelangt: das Board, eine mögliche Passung, die Vorstellung oder allein das Team der Plattform. Unten: ein synthetisches Angebot, Stufe für Stufe, und die Quittung, die jeden Lesezugriff begrenzt.',
+      lede: 'Das Marktvokabular gibt jedem Kriterium eine Stufe, und eine Stufe ist der weiteste Punkt, bis zu dem ein Wert gelangt: das Board, eine mögliche Passung, die Vorstellung oder allein das Team der Plattform. Unten: ein synthetisches Angebot, Stufe für Stufe, und die Quittung, die jeden Lesezugriff begrenzt.',
       primary: 'Was eine Plattform bekommt',
       secondary: 'Wer was sieht, im Einzelnen',
     },
@@ -174,17 +174,17 @@ export const de: FrontCopy = {
     deletion: { h2: 'Löschung: was geht, und was bleibt' },
     platforms: {
       h2: 'Für Plattformen',
-      p: 'Ein Skript und ein Element bringen einen Space auf Ihre Seite; die Konsole für Ihr Team läuft auf Ihrem Rechner oder hinter Ihrem eigenen Login; Ihr Server erfährt von Ereignissen über signierte Webhooks, die im Vertrag stehen und vom Staging-Space noch nicht gesendet werden.',
+      p: 'Ein Skript und ein Element bringen einen Space auf Ihre Seite; die Konsole für Ihr Team läuft auf Ihrem Rechner oder hinter Ihrem eigenen Login; Ihr Server erfährt von Ereignissen über signierte Webhooks, die im Vertrag stehen und vom Test-Space noch nicht gesendet werden.',
       link: 'Was eine Plattform bekommt',
     },
     verticals: {
       h2: 'Für Branchen',
-      p: 'Ein Pack beschreibt einen Markt: seine Kriterien, Optionen und Einheiten, seine Beschriftungen und Fragen in den Sprachen des Space, was jedes Kriterium auf welcher Stufe preisgibt, und die Gates, die der Markt braucht. Das erste ist das für Industrieminerale.',
-      link: 'Was ein Pack enthält',
+      p: 'Ein Marktvokabular beschreibt einen Markt: seine Kriterien, Optionen und Einheiten, seine Beschriftungen und Fragen in den Sprachen des Space, was jedes Kriterium auf welcher Stufe preisgibt, und die Gates, die der Markt braucht. Das erste ist das für Industrieminerale.',
+      link: 'Was ein Marktvokabular enthält',
     },
     state: {
       h2: 'Wo Linkbot steht',
-      p: 'Das Angebot oben ist fester Text, für diese Seite im Vokabular eines synthetischen Packs geschrieben; das Produkt ist hier nicht gelaufen. Die Demo-Seite geht den ganzen Weg Schritt für Schritt durch.',
+      p: 'Das Angebot oben ist fester Text, für diese Seite in einem synthetischen Marktvokabular geschrieben; das Produkt ist hier nicht gelaufen. Die Demo-Seite geht den ganzen Weg Schritt für Schritt durch.',
     },
   },
   demo: {
@@ -248,7 +248,7 @@ export const de: FrontCopy = {
       eyes: 3,
       open: 1,
       who: 'Alle, die das Board sehen können',
-      rule: 'Nur Felder der Board-Stufe, vergröbert, wie das Pack es festlegt, und nur für Angebote, deren Besitzer zugestimmt haben. Nie, wer eingestellt hat.',
+      rule: 'Nur Felder der Board-Stufe, vergröbert, wie das Marktvokabular es festlegt, und nur für Angebote, deren Besitzer zugestimmt haben. Nie, wer eingestellt hat.',
       fields: [
         { label: 'Produkt', value: 'Rohphosphat' },
         { label: 'P₂O₅-Gehalt', value: '31–32 %' },
@@ -281,14 +281,14 @@ export const de: FrontCopy = {
       eyes: 1,
       open: 0.5,
       who: 'Im Operator-Modus das Team der Plattform; im Direkt-Modus beide Seiten',
-      rule: 'Anzeigename, bestätigte E-Mail-Adresse und die Kriterien, die das Pack für diese Stufe vorsieht. Jeder Lesezugriff wird auf der Quittung vermerkt.',
+      rule: 'Anzeigename, bestätigte E-Mail-Adresse und die Kriterien, die das Marktvokabular für diese Stufe vorsieht. Jeder Lesezugriff wird auf der Quittung vermerkt.',
       fields: [
         { label: 'Anzeigename', value: 'der des Angebots, wie angegeben' },
         { label: 'E-Mail-Adresse', value: 'eine, über einen Link bestätigt' },
-        { label: 'Kriterien der Vorstellungsstufe', value: 'wie das Pack es festlegt' },
+        { label: 'Kriterien der Vorstellungsstufe', value: 'wie das Marktvokabular es festlegt' },
       ],
       not: [
-        'Felder, die das Pack dem Operator vorbehält',
+        'Felder, die das Marktvokabular dem Operator vorbehält',
         'Im Operator-Modus: alles von der anderen Seite; die Quittung jeder Seite sagt, dass beide zugestimmt haben und die Plattform sich meldet',
       ],
     },
@@ -298,7 +298,7 @@ export const de: FrontCopy = {
       eyes: 1,
       open: 0.3,
       who: 'Nur das Team der Plattform',
-      rule: 'Felder, die das Pack der Plattform vorbehält, etwa die Identitätsangaben für eine Prüfung der Partei. Sie erreichen die andere Seite nie, und jeder Zugriff wird festgehalten.',
+      rule: 'Felder, die das Marktvokabular der Plattform vorbehält, etwa die Identitätsangaben für eine Prüfung der Partei. Sie erreichen die andere Seite nie, und jeder Zugriff wird festgehalten.',
       fields: [
         { label: 'Identitätsangaben', value: 'für die Prüfung der Partei des Space, gesehen vom Team' },
         { label: 'Der Eintrag zum Gate', value: 'bestanden, nicht bestanden oder verwiesen, mit einer Referenz und ohne personenbezogene Daten' },

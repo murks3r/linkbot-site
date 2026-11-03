@@ -11,7 +11,7 @@ export const STAGES: Stage[] = [
   {
     key: 'board', name: 'Board', eyes: 3, open: 1,
     who: 'Everyone who can see the board',
-    rule: 'Only fields at board stage, coarsened as the pack declares, and only for offers whose owner opted in. Never who posted.',
+    rule: 'Only fields at board stage, coarsened as the market vocabulary declares, and only for offers whose owner opted in. Never who posted.',
     fields: [
       { label: 'Product', value: 'Rock phosphate' },
       { label: 'P₂O₅ content', value: '31–32 %' },
@@ -38,18 +38,18 @@ export const STAGES: Stage[] = [
   {
     key: 'introduction', name: 'Introduction', eyes: 1, open: .5,
     who: 'In operator mode the platform’s team; in direct mode both sides',
-    rule: 'Display name, confirmed email address and the criteria the pack keeps for this stage. Every read is recorded on the receipt.',
+    rule: 'Display name, confirmed email address and the criteria the market vocabulary keeps for this stage. Every read is recorded on the receipt.',
     fields: [
       { label: 'Display name', value: 'the offer’s, as given' },
       { label: 'Email address', value: 'one, confirmed through a link' },
-      { label: 'Criteria at introduction stage', value: 'as the pack declares' },
+      { label: 'Criteria at introduction stage', value: 'as the market vocabulary declares' },
     ],
-    not: ['Fields the pack keeps for the operator', 'In operator mode: anything of the other side; each side’s receipt says both agreed and the platform will contact them'],
+    not: ['Fields the market vocabulary keeps for the operator', 'In operator mode: anything of the other side; each side’s receipt says both agreed and the platform will contact them'],
   },
   {
     key: 'operator', name: 'Operator', eyes: 1, open: .3,
     who: 'The platform’s team only',
-    rule: 'Fields the pack keeps for the platform, such as the identity details for a party check. They never reach the other side, and every access is recorded.',
+    rule: 'Fields the market vocabulary keeps for the platform, such as the identity details for a party check. They never reach the other side, and every access is recorded.',
     fields: [
       { label: 'Identity details', value: 'for the space’s party check, seen by the team' },
       { label: 'The gate record', value: 'passed, failed or referred, with a reference and no personal data' },

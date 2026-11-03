@@ -17,7 +17,7 @@ export const A = {
     stages: [
       { name: 'Gate', text: 'A named operator records the space’s required check as passed. The system never decides a gate.' },
       { name: 'Approval', text: 'A named, active operator approves the case. An approval alone discloses nothing.' },
-      { name: 'Both yes', text: 'Each side answers for itself. Before both have said yes, the other side learns nothing.' },
+      { name: 'Both say yes', text: 'Each side answers for itself. Before both have said yes, the other side learns nothing.' },
       { name: 'Introduction', text: 'The server creates it when the last of the three conditions is met, in any order, and refuses every other way. Each side receives a receipt.' },
     ],
     notice: 'A possible fit discloses only the verdicts, and a fixed notice that people decide.',

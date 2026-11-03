@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { shareImages } from './src/integrations/share-images.ts';
 import { demoImages } from './src/integrations/demo-images.ts';
+import { llmsFull } from './src/integrations/llms-full.ts';
 
 /* The public site is static and crawlable, in five languages: English at the root, the others
    under /de, /es, /it and /fr (src/i18n). SITE_URL is the canonical origin (canonical links,
@@ -20,7 +21,7 @@ export default defineConfig({
   trailingSlash: 'never',
   build: { format: 'file', inlineStylesheets: 'auto' },
   i18n: { defaultLocale: 'en', locales, routing: { prefixDefaultLocale: false } },
-  integrations: [shareImages(), demoImages(), sitemap({
+  integrations: [shareImages(), demoImages(), llmsFull(), sitemap({
     filter: page => !page.endsWith('/404') && !page.endsWith('/for-intermediaries') && !page.endsWith('/developers/login-with-linkbot'),
     i18n: { defaultLocale: 'en', locales: Object.fromEntries(locales.map(l => [l, l])) },
   })],

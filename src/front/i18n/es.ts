@@ -25,7 +25,7 @@ export const es: FrontCopy = {
           text: 'Un operador activo y con nombre aprueba el caso. Una aprobación por sí sola no revela nada.',
         },
         {
-          name: 'Sí de ambos',
+          name: 'Ambas dicen que sí',
           text: 'Cada parte responde por sí misma. Antes de que ambas hayan dicho que sí, el otro lado no se entera de nada.',
         },
         {
@@ -131,7 +131,7 @@ export const es: FrontCopy = {
     hero: {
       eyebrow: 'Una capa de emparejamiento que cualquier plataforma puede integrar',
       h1: ['Quién ve qué,', 'y cuándo.'],
-      lede: 'El pack da a cada criterio una etapa, y una etapa es lo más lejos que llega un valor: el tablón, una posible coincidencia, la presentación o solo el equipo de la plataforma. Abajo: una oferta sintética, etapa por etapa, y el comprobante que limita cada lectura.',
+      lede: 'El vocabulario del mercado da a cada criterio una etapa, y una etapa es lo más lejos que llega un valor: el tablón, una posible coincidencia, la presentación o solo el equipo de la plataforma. Abajo: una oferta sintética, etapa por etapa, y el comprobante que limita cada lectura.',
       primary: 'Qué recibe una plataforma',
       secondary: 'Quién ve qué, por completo',
     },
@@ -174,17 +174,17 @@ export const es: FrontCopy = {
     deletion: { h2: 'Borrado: qué se va y qué se queda' },
     platforms: {
       h2: 'Para plataformas',
-      p: 'Un script y un elemento ponen un espacio en su página; la consola de su equipo se ejecuta en su máquina o detrás de su propio inicio de sesión; su servidor se entera de los eventos mediante webhooks firmados, que están en el contrato y que el espacio de staging aún no envía.',
+      p: 'Un script y un elemento ponen un espacio en su página; la consola de su equipo se ejecuta en su máquina o detrás de su propio inicio de sesión; su servidor se entera de los eventos mediante webhooks firmados, que están en el contrato y que el espacio de prueba aún no envía.',
       link: 'Qué recibe una plataforma',
     },
     verticals: {
       h2: 'Para verticales',
-      p: 'Un pack describe un mercado: sus criterios, opciones y unidades, sus etiquetas y preguntas en los idiomas del espacio, qué revela cada criterio en cada etapa y los gates que el mercado necesita. El primero es el de minerales industriales.',
-      link: 'Qué contiene un pack',
+      p: 'Un vocabulario del mercado describe un mercado: sus criterios, opciones y unidades, sus etiquetas y preguntas en los idiomas del espacio, qué revela cada criterio en cada etapa y los gates que el mercado necesita. El primero es el de minerales industriales.',
+      link: 'Qué contiene un vocabulario del mercado',
     },
     state: {
       h2: 'Estado actual',
-      p: 'La oferta de arriba es texto fijo, escrito para esta página con el vocabulario de un pack sintético; el producto no se ejecutó aquí. La página de demo recorre todo el camino, paso a paso.',
+      p: 'La oferta de arriba es texto fijo, escrito para esta página con un vocabulario del mercado sintético; el producto no se ejecutó aquí. La página de demo recorre todo el camino, paso a paso.',
     },
   },
   demo: {
@@ -205,7 +205,7 @@ export const es: FrontCopy = {
         { name: 'La solicitud', who: 'El comprador', text: 'El comprador describe la necesidad en la página de una plataforma, en un formulario con las preguntas de su mercado, o en una línea de texto que unas reglas fijas leen y convierten en valores propuestos. Nada está preseleccionado, y lo que el comprador no indicó queda como desconocido.' },
         { name: 'Los criterios, confirmados', who: 'El comprador', text: 'El comprador revisa cada valor y confirma. Solo entonces se guarda algo: el servidor comprueba cada valor con las preguntas del mercado y nombra cada campo que no lo cumple. La dirección de correo se confirma mediante un enlace.' },
         { name: 'Los posibles encajes', who: 'El espacio', text: 'El matching compara los criterios guardados con los de la otra parte, uno a uno: un veredicto por criterio, encaja, encaja en parte, contradice o desconocido, nunca una puntuación. Un posible encaje muestra a cada parte solo los veredictos y un aviso de que deciden las personas.' },
-        { name: 'Ambos dicen sí', who: 'El comprador y el proveedor', text: 'Cada parte responde al posible encaje por sí misma. Antes de que ambas hayan dicho sí, la otra parte no sabe nada, y un no posterior revoca un sí.' },
+        { name: 'Ambas dicen que sí', who: 'El comprador y el proveedor', text: 'Cada parte responde al posible encaje por sí misma. Antes de que ambas hayan dicho sí, la otra parte no sabe nada, y un no posterior revoca un sí.' },
         { name: 'El operador aprueba', who: 'El equipo de la plataforma', text: 'Un operador con nombre registra las comprobaciones que exige el espacio y aprueba el par. Una aprobación por sí sola no revela nada, y cada escritura indica quién la hizo.' },
         { name: 'La presentación', who: 'El servidor', text: 'Cuando se cumple la última de las tres condiciones, en cualquier orden, el servidor crea la presentación, y la rechaza por cualquier otra vía. Cada parte recibe un comprobante de quién puede ver qué campos. En el modo directo, el que se grabó aquí, cada parte puede abrir después los campos que la otra comparte en esta fase. Una plataforma puede elegir en su lugar el modo operador: entonces solo su equipo ve a ambas partes y contacta con ellas.' },
       ],
@@ -248,7 +248,7 @@ export const es: FrontCopy = {
       eyes: 3,
       open: 1,
       who: 'Todo el que puede ver el tablón',
-      rule: 'Solo campos de la etapa de tablón, simplificados como declara el pack, y solo de ofertas cuyo titular lo aceptó. Nunca quién publicó.',
+      rule: 'Solo campos de la etapa de tablón, simplificados como declara el vocabulario del mercado, y solo de ofertas cuyo titular lo aceptó. Nunca quién publicó.',
       fields: [
         { label: 'Producto', value: 'Roca fosfórica' },
         { label: 'Contenido de P₂O₅', value: '31–32 %' },
@@ -281,14 +281,14 @@ export const es: FrontCopy = {
       eyes: 1,
       open: 0.5,
       who: 'En modo de operador, el equipo de la plataforma; en modo directo, ambas partes',
-      rule: 'Nombre visible, dirección de email confirmada y los criterios que el pack guarda para esta etapa. Cada lectura queda registrada en el comprobante.',
+      rule: 'Nombre visible, dirección de email confirmada y los criterios que el vocabulario del mercado guarda para esta etapa. Cada lectura queda registrada en el comprobante.',
       fields: [
         { label: 'Nombre visible', value: 'el de la oferta, tal como se dio' },
         { label: 'Dirección de email', value: 'una, confirmada mediante un enlace' },
-        { label: 'Criterios de la etapa de presentación', value: 'como declara el pack' },
+        { label: 'Criterios de la etapa de presentación', value: 'como declara el vocabulario del mercado' },
       ],
       not: [
-        'Campos que el pack reserva al operador',
+        'Campos que el vocabulario del mercado reserva al operador',
         'En modo de operador: cualquier cosa del otro lado; el comprobante de cada parte dice que ambas aceptaron y que la plataforma se pondrá en contacto con ellas',
       ],
     },
@@ -298,7 +298,7 @@ export const es: FrontCopy = {
       eyes: 1,
       open: 0.3,
       who: 'Solo el equipo de la plataforma',
-      rule: 'Campos que el pack reserva a la plataforma, como los datos de identidad para una comprobación de parte. Nunca llegan al otro lado, y cada acceso queda registrado.',
+      rule: 'Campos que el vocabulario del mercado reserva a la plataforma, como los datos de identidad para una comprobación de parte. Nunca llegan al otro lado, y cada acceso queda registrado.',
       fields: [
         { label: 'Datos de identidad', value: 'para la comprobación de parte del espacio, vistos por el equipo' },
         { label: 'El registro del gate', value: 'superado, fallido o remitido, con una referencia y sin datos personales' },

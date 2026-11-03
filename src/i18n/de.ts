@@ -10,12 +10,12 @@ const AS_OF = statusDate('de');
 export const de: Catalogue = {
   site: {
     name: 'Linkbot',
-    claim: 'Eine Matching-Schicht, die jede Plattform einbetten kann.',
+    claim: 'Vertrauen zwischen zwei Unternehmen, bevor sie sich kennen.',
     skip: 'Zum Inhalt',
     menu: 'Menü',
     toc: 'Auf dieser Seite',
     language: 'Sprache',
-    nav: { how: 'So funktioniert es', sees: 'Wer was sieht', platforms: 'Für Plattformen', verticals: 'Für Branchen', integrations: 'Integrationen', developers: 'Entwickler' },
+    nav: { how: 'So funktioniert es', sees: 'Wer was sieht', platforms: 'Für Plattformen', verticals: 'Für Branchen', integrations: 'Integrationen', developers: 'Entwickler', faq: 'Häufige Fragen' },
     footer: {
       product: 'Linkbot',
       legal: 'Rechtliches',
@@ -25,8 +25,8 @@ export const de: Catalogue = {
       contactPending: 'Kontaktdaten folgen mit unserer Domain. Linkbot hat noch keine eigene Domain, deshalb nennt diese Seite keine Adresse und hat kein Kontaktformular.',
       line: 'Diese Seite setzt keine Cookies, lädt nichts von Dritten und nutzt keine Analyse-Dienste.',
     },
-    status: { now: 'Läuft auf dem Staging-Space', contract: 'Im Vertrag, nicht auf dem Staging-Space', later: 'Nicht gebaut' },
-    synthetic: 'Alles auf dieser Seite beschreibt den Vertrag der Space-API und das, was auf dem synthetischen Staging-Space von Geoprocure läuft, mit synthetischen Daten. Noch nutzt es keine echte Person und keine echte Organisation.',
+    status: { now: 'Läuft auf dem Test-Space', contract: 'Im Vertrag, nicht auf dem Test-Space', later: 'Nicht gebaut' },
+    synthetic: 'Alles auf dieser Seite beschreibt den Vertrag der Space-API und das, was auf dem synthetischen Test-Space läuft, mit synthetischen Daten. Noch nutzt es keine echte Person und keine echte Organisation.',
     more: 'Mehr lesen',
   },
 
@@ -41,12 +41,12 @@ export const de: Catalogue = {
         { name: 'Bestätigen', note: 'vorher wird nichts gespeichert' },
         { name: 'Passung', note: 'ein Urteil pro Kriterium' },
         { name: 'Freigeben', note: 'ein benannter Operator, nach den Gates' },
-        { name: 'Beide Ja', note: 'jede Seite für sich' },
+        { name: 'Beide sagen Ja', note: 'jede Seite für sich' },
         { name: 'Vorstellen', note: 'dann, und nur dann' },
       ],
     },
     pillars: [
-      { title: 'Ein Space pro Markt.', body: 'Ein Space ist ein Markt auf einer Plattform, mit eigener Instanz, Datenbank und eigenen Schlüsseln. Ein Pack gibt ihm das Vokabular seiner Branche: die Kriterien, die Optionen, die Einheiten, die Fragen. Der erste Space ist der von Geoprocure, für Industrieminerale.' },
+      { title: 'Ein Space pro Markt.', body: 'Ein Space ist ein Markt auf einer Plattform, mit eigener Instanz, Datenbank und eigenen Schlüsseln. Er spricht das Vokabular seines Marktes: die Kriterien, die Optionen, die Einheiten, die Fragen. Der erste Space ist für Industrieminerale.' },
       { title: 'Kriterien, bestätigt.', body: 'Eine Anfrage oder ein Angebot ist eine Menge von Kriterien, jedes mit seiner Quelle und seiner Gewichtung. Nichts ist vorausgewählt, nichts wird geraten, und was nicht angegeben ist, bleibt unbekannt. Die Person bestätigt das Formular; erst dann wird etwas gespeichert.' },
       { title: 'Eine Vorstellung erst, wenn beide Ja sagen.', body: 'Das Matching vergleicht die gespeicherten Kriterien und zeigt ein Urteil pro Kriterium. Eine Vorstellung braucht die Gates des Space, die Freigabe eines benannten Operators und ein Ja von beiden Seiten. Dann legt der Server sie an, und jeden anderen Weg verweigert er.' },
     ],
@@ -57,7 +57,7 @@ export const de: Catalogue = {
         'Nichts vorausgewählt: Das Formular hat keine Vorgabewerte, nur Vorschläge, die als solche markiert sind.',
         'Unbekannt bleibt unbekannt: Ein Kriterium, das eine Seite nicht angegeben hat, zählt nie als Passung.',
         'Nichts wird gespeichert, bevor eine Person bestätigt.',
-        'Eine Passung gibt nichts preis: nur Urteile, auf der Stufe, die das Pack erlaubt, und einen Hinweis, dass Menschen entscheiden.',
+        'Eine Passung gibt nichts preis: nur Urteile, auf der Stufe, die der Space erlaubt, und einen Hinweis, dass Menschen entscheiden.',
         'Keine Vorstellung ohne die Gates, die Freigabe eines benannten Operators und ein Ja von beiden Seiten.',
         'Kein Modell überstimmt eine harte Bedingung: Muss und Nie entscheidet deterministischer Code.',
         'Jeder Schreibzugriff nennt, wer ihn ausgelöst hat, und steht im Audit-Log.',
@@ -68,17 +68,17 @@ export const de: Catalogue = {
 
   how: {
     title: 'So funktioniert Linkbot: von der bestätigten Anfrage zur Vorstellung',
-    description: 'Ein Space, ein Pack, vier Wege zu beschreiben, ein Urteil pro Kriterium, Freigabe durch einen benannten Operator, eine Vorstellung erst, wenn beide Ja sagen.',
+    description: 'Ein Space und sein Marktvokabular, vier Wege zu beschreiben, ein Urteil pro Kriterium, die Freigabe eines Operators, eine Vorstellung, wenn beide Ja sagen.',
     eyebrow: 'So funktioniert es',
     h1: ['Von der bestätigten Anfrage', 'zur Vorstellung.'],
-    lede: 'Jeder Schritt unten steht im Vertrag der Space-API. Wo der Staging-Space einen Schritt noch nicht ausführt, sagt die Seite es.',
-    toc: [['blocks', 'Drei Bausteine'], ['rule', 'Das Ja beider Seiten'], ['path', 'Der Weg in sechs Schritten'], ['space', 'Ein Space'], ['pack', 'Ein Pack'], ['describe', 'Vier Wege zu beschreiben'], ['confirm', 'Bestätigen'], ['matching', 'Matching'], ['approval', 'Freigabe und Gates'], ['yes', 'Beide Ja'], ['introduction', 'Die Vorstellung'], ['after', 'Danach'], ['sees', 'Wer sieht was'], ['languages', 'Fünf Sprachen'], ['today', 'Was auf dem Staging-Space läuft']] as [string, string][],
+    lede: 'Jeder Schritt unten steht im Vertrag der Space-API. Wo der Test-Space einen Schritt noch nicht ausführt, sagt die Seite es.',
+    toc: [['blocks', 'Drei Bausteine'], ['rule', 'Das Ja beider Seiten'], ['path', 'Der Weg in sechs Schritten'], ['space', 'Ein Space'], ['pack', 'Ein Marktvokabular'], ['describe', 'Vier Wege zu beschreiben'], ['confirm', 'Bestätigen'], ['matching', 'Matching'], ['approval', 'Freigabe und Gates'], ['yes', 'Beide sagen Ja'], ['introduction', 'Die Vorstellung'], ['after', 'Danach'], ['sees', 'Wer sieht was'], ['languages', 'Fünf Sprachen'], ['today', 'Was auf dem Test-Space läuft']] as [string, string][],
     blocks: {
       title: 'Drei Bausteine',
       lede: 'Ein Space besteht aus drei Teilen. Jeder ist eine Gruppe von Routen im Vertrag der Space-API.',
       items: [
-        { name: 'Erfassung', text: 'Ein Käufer oder ein Anbieter beschreibt einen Bedarf oder ein Angebot, per Formular oder in eigenen Worten, prüft jeden Wert und bestätigt. Vor der Bestätigung wird nichts gespeichert, und der Server prüft jeden Wert gegen das Pack des Space.' },
-        { name: 'Beobachten', text: `Eine Beobachtung hält einen bestätigten Bedarf oder ein Angebot offen und sagt nur dem Eigentümer Bescheid, wenn etwas Neues passt, per E-Mail oder Webhook. Der Eigentümer pausiert oder beendet sie jederzeit, auch über einen Link. Stand ${AS_OF}: Die Beobachtungs-E-Mails des Staging-Space gehen an ein Testpostfach und erreichen niemanden, und Webhooks sendet er noch nicht.` },
+        { name: 'Erfassung', text: 'Ein Käufer oder ein Anbieter beschreibt einen Bedarf oder ein Angebot, per Formular oder in eigenen Worten, prüft jeden Wert und bestätigt. Vor der Bestätigung wird nichts gespeichert, und der Server prüft jeden Wert gegen das Marktvokabular des Space.' },
+        { name: 'Weitersuchen', text: `Eine offene Suche hält einen bestätigten Bedarf oder ein Angebot offen und sagt nur dem Eigentümer Bescheid, wenn etwas Neues passt, per E-Mail oder Webhook. Der Eigentümer pausiert oder beendet sie jederzeit, auch über einen Link. Stand ${AS_OF}: Die E-Mails offener Suchen des Test-Space gehen an ein Testpostfach und erreichen niemanden, und Webhooks sendet er noch nicht.` },
         { name: 'Vorstellungen', text: 'Sobald beide Seiten Ja gesagt haben und ein namentlich genannter Operator freigegeben hat, stellt der Server die beiden Seiten einander vor und gibt jeder eine Quittung, wer welche Felder sehen darf. Danach werden beide Seiten nach dem Ergebnis gefragt.' },
       ],
     },
@@ -94,37 +94,37 @@ export const de: Catalogue = {
       title: 'Ein Space ist ein Markt auf einer Plattform',
       paras: [
         'Jeder Space ist eine eigene Instanz: eigene Anwendung, Datenbank, Schlüssel und eigenes Löschprotokoll. Die Adresse der Instanz bezeichnet den Space; in keinem Pfad steht eine Space-ID.',
-        'Ein Space wird eingerichtet mit einem Pack und einer Version davon, den Sprachen, die er anbietet, dem Modus seiner Vorstellungen, den Gates, die er verlangt, und den Origins, auf denen seine Seiten erlaubt sind. Die Seite der Plattform hält den Publishable Key, der nur den Space bezeichnet und nur auf diesen Origins gilt. Der Secret Key bleibt auf dem Server der Plattform und steht nie in einer Seite.',
+        'Ein Space wird eingerichtet mit einem Marktvokabular und einer Version davon, den Sprachen, die er anbietet, dem Modus seiner Vorstellungen, den Gates, die er verlangt, und den Origins, auf denen seine Seiten erlaubt sind. Die Seite der Plattform hält den Publishable Key, der nur den Space bezeichnet und nur auf diesen Origins gilt. Der Secret Key bleibt auf dem Server der Plattform und steht nie in einer Seite.',
         'Das Matching läuft innerhalb eines Space. Nichts verlässt ihn: Keine Anfrage, kein Angebot und keine Passung wird mit einem anderen Space geteilt.',
-        'Der erste Space ist der von Geoprocure, für Industrieminerale. Er läuft auf einer synthetischen Staging-Instanz mit synthetischen Daten.',
+        'Der erste Space ist für Industrieminerale. Er läuft als Test-Instanz mit synthetischen Daten.',
       ],
     },
     pack: {
-      title: 'Ein Pack ist das Vokabular einer Branche',
+      title: 'Jeder Markt hat sein eigenes Vokabular',
       paras: [
-        'Ein Pack listet die Kriterien, die eine Anfrage und ein Angebot angeben können, jedes mit seinem Eingabeelement: eine Auswahl, mehrere, eine Zahl mit Einheit, ein Bereich, ein Zeitfenster, eine durchsuchbare Liste wie Häfen oder freier Text. Wo eine Menge von einer Basis abhängt, sagt das Pack es, und „Weiß nicht“ lässt die Basis unbekannt, statt eine zu wählen.',
-        'Das Pack sagt, welche besonderen Antworten ein Kriterium erlaubt: „Anderes / nicht aufgeführt“, das die Worte der Person behält und nie auf eine Option abgebildet wird; „Weiß nicht“; und „Beliebig“. Es trägt die Beschriftungen, Fragen, Synonyme und Hinweise in den Sprachen des Space.',
+        'Das Marktvokabular listet die Kriterien, die eine Anfrage und ein Angebot angeben können, jedes mit seinem Eingabeelement: eine Auswahl, mehrere, eine Zahl mit Einheit, ein Bereich, ein Zeitfenster, eine durchsuchbare Liste wie Häfen oder freier Text. Wo eine Menge von einer Basis abhängt, sagt das Vokabular es, und „Weiß nicht“ lässt die Basis unbekannt, statt eine zu wählen.',
+        'Es sagt, welche besonderen Antworten ein Kriterium erlaubt: „Anderes / nicht aufgeführt“, das die Worte der Person behält und nie auf eine Option abgebildet wird; „Weiß nicht“; und „Beliebig“. Es trägt die Beschriftungen, Fragen, Synonyme und Hinweise in den Sprachen des Space.',
         'Es legt auch fest, was jedes Kriterium auf welcher Stufe preisgibt: auf dem Board, in einer möglichen Passung, in einer Vorstellung oder nur gegenüber dem Team der Plattform; wie ein Wert für das Board vergröbert wird; welche Gewichtungen ein Kriterium erlaubt; und die Gates und die Ergebniskategorien des Marktes.',
-        'Ein Space pinnt eine Version seines Packs, und der Server prüft jede Einreichung gegen diese Version. Dem Client wird nie vertraut.',
+        'Ein Space pinnt eine Version seines Vokabulars, und der Server prüft jede Einreichung gegen diese Version. Dem Client wird nie vertraut.',
       ],
     },
     describe: {
       title: 'Vier Wege zu sagen, was Sie brauchen oder anbieten',
-      lede: `Stand ${AS_OF}: Formular, Text, Board und Beobachtungen laufen auf dem Staging-Space. Webhooks laufen dort noch nicht, und seine E-Mails gehen an ein Testpostfach, das niemanden erreicht.`,
+      lede: `Stand ${AS_OF}: Formular, Text, Board und offene Suchen laufen auf dem Test-Space. Webhooks laufen dort noch nicht, und seine E-Mails gehen an ein Testpostfach, das niemanden erreicht.`,
       items: [
         { name: 'Per Formular', status: 'now' as Status, paras: [
-          'Das Formular wird aus dem Pack erzeugt. Pflichtkriterien kommen zuerst; der Rest steht hinter „Mehr Details“. Nichts ist vorausgewählt: keine Option, keine Einheit, keine Basis, keine Art der Partei. Jede Liste bietet „Anderes / nicht aufgeführt“, „Weiß nicht“ und „Beliebig“, wo das Pack sie erlaubt.',
-          'Jedes Kriterium trägt eine Gewichtung. Muss und Nie sind hart; Wünschenswert, Offen dafür und Lieber nicht sind weich. Das Pack kann eine vorschlagen, markiert als Vorschlag, und die Person kann sie ändern, sofern das Pack sie nicht festlegt. Wer Nie wählt, bestätigt das eigens.',
+          'Das Formular wird aus dem Vokabular des Space erzeugt. Pflichtkriterien kommen zuerst; der Rest steht hinter „Mehr Details“. Nichts ist vorausgewählt: keine Option, keine Einheit, keine Basis, keine Art der Partei. Jede Liste bietet „Anderes / nicht aufgeführt“, „Weiß nicht“ und „Beliebig“, wo das Vokabular sie erlaubt.',
+          'Jedes Kriterium trägt eine Gewichtung. Muss und Nie sind hart; Wünschenswert, Offen dafür und Lieber nicht sind weich. Der Space kann eine vorschlagen, markiert als Vorschlag, und die Person kann sie ändern, sofern der Space sie nicht festlegt. Wer Nie wählt, bestätigt das eigens.',
         ] },
         { name: 'In eigenen Worten', status: 'now' as Status, paras: [
           'Eine Person schreibt, was sie braucht oder anbietet. Eine Lesung schlägt Werte für dieselben Kriterien vor, jeden neben den Worten, aus denen er stammt, und fragt nach, wo sie nicht entscheiden kann: eine Einheit, eine Option, eine Zahl, die zwei Schreibweisen verschieden lesen. Eine Lesung überschreibt nie, was eine Person gewählt hat; ein Unterschied wird zur Frage.',
-          'Auf dem Staging-Space lesen feste Regeln den Text, ohne Modell; ein Leser mit Modell wartet auf eine freigegebene Richtlinie für das Lesen. Was auch immer den Text liest: Harte Bedingungen bleiben bei deterministischem Code, kein Modell überstimmt ein Muss oder ein Nie.',
+          'Auf dem Test-Space lesen feste Regeln den Text, ohne Modell; ein Leser mit Modell wartet auf eine freigegebene Richtlinie für das Lesen. Was auch immer den Text liest: Harte Bedingungen bleiben bei deterministischem Code, kein Modell überstimmt ein Muss oder ein Nie.',
         ] },
         { name: 'Auf dem Board', status: 'now' as Status, paras: [
-          'Das Board listet Anfragen und Angebote, deren Besitzer zugestimmt haben, nie von selbst. Es zeigt nur die Felder, die das Pack auf der Board-Stufe erlaubt, vergröbert, wie das Pack es festlegt, und nie, wer eingestellt hat. Wer einen Eintrag beantwortet, beginnt einen Entwurf auf der anderen Seite, im selben Formular.',
+          'Das Board listet Anfragen und Angebote, deren Besitzer zugestimmt haben, nie von selbst. Es zeigt nur die Felder, die der Space auf der Board-Stufe erlaubt, vergröbert, wie der Space es festlegt, und nie, wer eingestellt hat. Wer einen Eintrag beantwortet, beginnt einen Entwurf auf der anderen Seite, im selben Formular.',
         ] },
-        { name: 'Mit einer Beobachtung', status: 'now' as Status, paras: [
-          'Eine Beobachtung hält eine Anfrage oder ein Angebot offen und sagt der Person Bescheid, die sie angelegt hat, wenn etwas Neues passt: per E-Mail oder, für die Plattform, per Webhook. Sie benachrichtigt nur diese Person und gibt nie mehr preis als das Board. Man kann sie pausieren, fortsetzen oder beenden, auch über den Link in einer Nachricht.',
+        { name: 'Mit einer offenen Suche', status: 'now' as Status, paras: [
+          'Eine offene Suche hält eine Anfrage oder ein Angebot offen und sagt der Person Bescheid, die sie angelegt hat, wenn etwas Neues passt: per E-Mail oder, für die Plattform, per Webhook. Sie benachrichtigt nur diese Person und gibt nie mehr preis als das Board. Man kann sie pausieren, fortsetzen oder beenden, auch über den Link in einer Nachricht.',
         ] },
       ],
     },
@@ -132,25 +132,25 @@ export const de: Catalogue = {
       title: 'Bestätigen ist das Erste, was gespeichert wird',
       paras: [
         'Bevor eine Person bestätigt, wird nichts Persönliches gespeichert: Beschreiben, Antworten und Prüfen hinterlassen nichts. Das Widget sagt es über dem Bestätigen-Knopf: Bis zur Bestätigung wird nichts verwendet. Ein Entwurf lebt im Browser-Tab und ist weg, wenn der Tab schließt.',
-        'Der Bestätigungsschritt ist das Formular. Der Server prüft jeden Wert gegen das gepinnte Pack und benennt jedes Feld, das nicht besteht. Gespeichert werden: die Kriterien mit ihren Werten, Quellen und Gewichtungen; die Partei, eine Person oder eine Organisation mit optionalem Anzeigenamen; und, falls angegeben, eine E-Mail-Adresse, die die Person über einen Link bestätigt.',
-        'Der Browser, der bestätigt hat, verwaltet, was er angelegt hat: Er zeigt „Meine“, beantwortet mögliche Passungen und ändert die Beobachtung, sechzig Tage ab der letzten Nutzung und nur in diesem Tab. Ein neuer Browser erhält den Zugang über einen Link an die bestätigte Adresse zurück.',
-        'Auf einem Space mit einer Prüfung der Partei, wie dem von Geoprocure, zeigt der Bestätigungsschritt den eigenen Hinweis des Space. Die Freigabe ihrer Identität für diese Prüfung setzt die Person selbst; nichts ist vorab gesetzt, und ein Bestätigen ohne sie wird abgelehnt.',
+        'Der Bestätigungsschritt ist das Formular. Der Server prüft jeden Wert gegen das gepinnte Vokabular und benennt jedes Feld, das nicht besteht. Gespeichert werden: die Kriterien mit ihren Werten, Quellen und Gewichtungen; die Partei, eine Person oder eine Organisation mit optionalem Anzeigenamen; und, falls angegeben, eine E-Mail-Adresse, die die Person über einen Link bestätigt.',
+        'Der Browser, der bestätigt hat, verwaltet, was er angelegt hat: Er zeigt „Meine“, beantwortet mögliche Passungen und ändert die offene Suche, sechzig Tage ab der letzten Nutzung und nur in diesem Tab. Ein neuer Browser erhält den Zugang über einen Link an die bestätigte Adresse zurück.',
+        'Auf einem Space mit einer Prüfung der Partei zeigt der Bestätigungsschritt den eigenen Hinweis des Space. Die Freigabe ihrer Identität für diese Prüfung setzt die Person selbst; nichts ist vorab gesetzt, und ein Bestätigen ohne sie wird abgelehnt.',
       ],
     },
     matching: {
       title: 'Matching: ein Urteil pro Kriterium, nie ein Score',
       paras: [
         'Das Matching läuft mit deterministischen Regeln auf den gespeicherten Werten: nach einem Bestätigen, nach einer Änderung und einmal am Tag. Es vergleicht die Anforderungen der Anfrage mit den Tatsachen, die das Angebot angibt.',
-        'Für jedes Kriterium, das das Pack vergleichen lässt, zeigt eine Passung ein Urteil: passt, passt teilweise, widerspricht oder unbekannt, mit der Regel, die entschieden hat, und den gespeicherten Werten, die sie anführt. Eine eingehaltene Grenze passt, eine überschnittene passt teilweise, eine verfehlte widerspricht. „Beliebig“ auf Seiten der Anfrage passt. „Weiß nicht“ oder „Andere“ auf einer der beiden Seiten ist unbekannt, und unbekannt ist nie eine Passung.',
+        'Für jedes Kriterium, das der Space vergleichen lässt, zeigt eine Passung ein Urteil: passt, passt teilweise, widerspricht oder unbekannt, mit der Regel, die entschieden hat, und den gespeicherten Werten, die sie anführt. Eine eingehaltene Grenze passt, eine überschnittene passt teilweise, eine verfehlte widerspricht. „Beliebig“ auf Seiten der Anfrage passt. „Weiß nicht“ oder „Andere“ auf einer der beiden Seiten ist unbekannt, und unbekannt ist nie eine Passung.',
         'Ob ein Paar überhaupt passen kann, folgt allein aus den harten Bedingungen, Muss und Nie. Nichts sonst ändert, was die andere Seite sieht. Es gibt keinen Score.',
-        'Eine mögliche Passung gibt von sich aus nichts preis: nur die Urteile zu Feldern, die das Pack auf der Matching-Stufe erlaubt, und einen festen Hinweis, dass Menschen entscheiden. Hatte eine Anfrage oder ein Angebot in kurzer Zeit viele neue Passungen, hält der Space die übrigen zurück, und ein späterer Lauf schlägt sie vor.',
+        'Eine mögliche Passung gibt von sich aus nichts preis: nur die Urteile zu Feldern, die der Space auf der Matching-Stufe erlaubt, und einen festen Hinweis, dass Menschen entscheiden. Hatte eine Anfrage oder ein Angebot in kurzer Zeit viele neue Passungen, hält der Space die übrigen zurück, und ein späterer Lauf schlägt sie vor.',
       ],
     },
     approval: {
       title: 'Freigabe und Gates: eine benannte Person, nie das System',
       paras: [
         'Jeden Fall gibt ein benannter, aktiver Operator der Plattform frei. Davor muss jedes Gate, das der Space verlangt, von einem benannten Operator als bestanden eingetragen sein. Ein Gate entscheidet nie das System: Der Operator trägt eine anderswo erledigte Prüfung ein, mit einer Referenz und ohne personenbezogene Daten.',
-        'Das Pflicht-Gate von Geoprocure ist eine KYC- und Sanktionsprüfung. Es kann nicht erlassen werden. Ein Operator kann es an die Rechtsberatung verweisen, dann bleibt es offen. Der jeweils letzte Eintrag zu einem Gate entscheidet.',
+        'Das Pflicht-Gate des ersten Space ist eine KYC- und Sanktionsprüfung. Es kann nicht erlassen werden. Ein Operator kann es an die Rechtsberatung verweisen, dann bleibt es offen. Der jeweils letzte Eintrag zu einem Gate entscheidet.',
         'Eine Freigabe allein gibt nichts preis. Ein abgelehnter Fall wird als abgelehnt festgehalten; der Grund bleibt im Audit-Log.',
       ],
     },
@@ -164,8 +164,8 @@ export const de: Catalogue = {
     introduction: {
       title: 'Die Vorstellung, im Modus, den der Space gewählt hat',
       paras: [
-        'Im Operator-Modus, der Voreinstellung bei Geoprocure, gehen die Felder der Vorstellungsstufe nur an das Team der Plattform: Anzeigenamen, die bestätigten E-Mail-Adressen, die Kriterien, die das Pack für diese Stufe vorsieht. Jede Seite erhält eine Quittung, die sagt, dass beide Seiten zugestimmt haben und die Plattform sich meldet, und die nichts von der anderen Seite enthält.',
-        'Im Direkt-Modus sieht jede Seite die Felder der anderen Seite auf der Vorstellungsstufe. Das Team der Plattform sieht beide. Ein Feld, das das Pack dem Operator vorbehält, erreicht die andere Seite nie.',
+        'Im Operator-Modus, der Voreinstellung des ersten Space, gehen die Felder der Vorstellungsstufe nur an das Team der Plattform: Anzeigenamen, die bestätigten E-Mail-Adressen, die Kriterien, die der Space für diese Stufe vorsieht. Jede Seite erhält eine Quittung, die sagt, dass beide Seiten zugestimmt haben und die Plattform sich meldet, und die nichts von der anderen Seite enthält.',
+        'Im Direkt-Modus sieht jede Seite die Felder der anderen Seite auf der Vorstellungsstufe. Das Team der Plattform sieht beide. Ein Feld, das der Space dem Operator vorbehält, erreicht die andere Seite nie.',
         'Eine Quittung hält fest, wer welche Felder sehen darf, und jedes Lesen einer Vorstellung wird auf ihr vermerkt. Was nicht in der Quittung steht, wird später nie offengelegt.',
       ],
     },
@@ -179,12 +179,12 @@ export const de: Catalogue = {
     },
     sees: {
       title: 'Wer sieht was, Stufe für Stufe',
-      lede: 'Das Pack gibt jedem Kriterium eine Stufe. Eine Stufe ist das Weiteste, was ein Wert reist: Eine Passung zeigt nicht mehr, als ihre Stufe erlaubt, und eine Beobachtung gibt nie mehr preis als das Board.',
+      lede: 'Der Space gibt jedem Kriterium eine Stufe. Eine Stufe ist das Weiteste, was ein Wert reist: Eine Passung zeigt nicht mehr, als ihre Stufe erlaubt, und eine offene Suche gibt nie mehr preis als das Board.',
       stages: [
-        { name: 'Board', who: 'Alle, die das Board sehen können', what: 'Nur Felder der Board-Stufe, vergröbert, wie das Pack es festlegt, nur für Anfragen und Angebote mit Zustimmung ihrer Besitzer. Nie, wer eingestellt hat.' },
+        { name: 'Board', who: 'Alle, die das Board sehen können', what: 'Nur Felder der Board-Stufe, vergröbert, wie der Space es festlegt, nur für Anfragen und Angebote mit Zustimmung ihrer Besitzer. Nie, wer eingestellt hat.' },
         { name: 'Passung', who: 'Die beiden Seiten einer möglichen Passung', what: 'Urteile zu Feldern der Matching-Stufe oder darunter, mit der Regel und den Werten, die sie anführt. Kein Name, keine Kontaktdaten, kein Hinweis auf die Antwort der anderen Seite.' },
-        { name: 'Vorstellung', who: 'Im Operator-Modus das Team der Plattform; im Direkt-Modus beide Seiten', what: 'Anzeigename, bestätigte E-Mail-Adresse und die Kriterien, die das Pack für diese Stufe vorsieht. Jedes Lesen wird auf der Quittung vermerkt.' },
-        { name: 'Operator', who: 'Nur das Team der Plattform', what: 'Felder, die das Pack der Plattform vorbehält, etwa die Identitätsangaben für eine KYC-Prüfung. Sie erreichen die andere Seite nie, und jeder Zugriff wird festgehalten.' },
+        { name: 'Vorstellung', who: 'Im Operator-Modus das Team der Plattform; im Direkt-Modus beide Seiten', what: 'Anzeigename, bestätigte E-Mail-Adresse und die Kriterien, die der Space für diese Stufe vorsieht. Jedes Lesen wird auf der Quittung vermerkt.' },
+        { name: 'Operator', who: 'Nur das Team der Plattform', what: 'Felder, die der Space der Plattform vorbehält, etwa die Identitätsangaben für eine KYC-Prüfung. Sie erreichen die andere Seite nie, und jeder Zugriff wird festgehalten.' },
       ],
     },
     languages: {
@@ -196,8 +196,8 @@ export const de: Catalogue = {
       ],
     },
     today: {
-      title: 'Was auf dem Staging-Space läuft, und was noch nicht',
-      lede: `Geprüft am ${AS_OF} anhand des Statusberichts des Staging-Space und des Plans von Connect: welche Teile dort laufen, mit denselben Quadraten, die das Produkt für Belege nutzt.`,
+      title: 'Was auf dem Test-Space läuft, und was noch nicht',
+      lede: `Geprüft am ${AS_OF} anhand des Statusberichts des Test-Space und des Plans von Connect: welche Teile dort laufen, mit denselben Quadraten, die das Produkt für Belege nutzt.`,
     },
   },
 
@@ -234,14 +234,14 @@ export const de: Catalogue = {
       title: 'Ihr Server: das SDK und Webhooks',
       paras: [
         `Das SDK gibt Ihrem Server einen Client, der durch den Vertrag der Space-API typisiert ist: Eine Route, ein Feld oder ein Wert, den der Vertrag nicht hat, ist ein Typfehler. Es prüft auch Webhook-Zustellungen genau so, wie der Vertrag es vorgibt. Stand ${AS_OF} ist es nicht veröffentlicht; sein Code liegt im Connect-Repository.`,
-        `Webhooks tragen IDs und Zustände, nie Kontaktdaten; Ihr Server holt Details mit seinem Secret Key. Zustellungen sind signiert und werden wiederholt. Sie stehen im Vertrag; Stand ${AS_OF} sendet der Staging-Space sie nicht.`,
+        `Webhooks tragen IDs und Zustände, nie Kontaktdaten; Ihr Server holt Details mit seinem Secret Key. Zustellungen sind signiert und werden wiederholt. Sie stehen im Vertrag; Stand ${AS_OF} sendet der Test-Space sie nicht.`,
       ],
     },
     recipes: {
       title: 'Rezepte: reines HTML, Astro, Next.js, WordPress',
       paras: [
         'Jedes Rezept ist eine Datei, die in der CI von Connect in drei Browser-Engines gegen den Beispiel-Build mit synthetischen Daten läuft: eine einfache Seite mit strenger Content Security Policy, eine Astro-Komponente, eine Next.js-Seite mit dem React-Wrapper und ein kleines WordPress-Plugin mit einem Shortcode.',
-        `Stand ${AS_OF} laufen sie in der CI von Connect gegen den Beispiel-Build, nicht gegen einen Space; die Staging-Instanz selbst liefert das Release 0.5.0-v1 des Widgets aus.`,
+        `Stand ${AS_OF} laufen sie in der CI von Connect gegen den Beispiel-Build, nicht gegen einen Space; die Test-Instanz selbst liefert das Release 0.5.0-v1 des Widgets aus.`,
       ],
     },
     state: { title: 'Wo es steht' },
@@ -252,14 +252,14 @@ export const de: Catalogue = {
     description: 'Für Betreiber, die einen Space für ihren Markt wollen: die vier Wege hinein, was eine Plattform bekommt und was ihr bleibt: ihre Daten und ihre Entscheidung.',
     eyebrow: 'Für Plattformen',
     h1: ['Ihr Markt, Ihre Seiten,', 'Ihre Entscheidung.'],
-    lede: 'Für einen Betreiber, der einen Space für seinen eigenen Markt will: wie ein Space Ihre Nutzer erreicht, was Sie bekommen und was Ihnen bleibt. Diese Seite beschreibt den Vertrag der Space-API und Geoprocures synthetischen Staging-Space. Noch betreibt keine echte Plattform einen Space, und diese Seite nennt keine Preise.',
+    lede: 'Für einen Betreiber, der einen Space für seinen eigenen Markt will: wie ein Space Ihre Nutzer erreicht, was Sie bekommen und was Ihnen bleibt. Diese Seite beschreibt den Vertrag der Space-API und den synthetischen Test-Space. Noch betreibt keine echte Plattform einen Space, und diese Seite nennt keine Preise.',
     toc: [['ways', 'Vier Wege hinein'], ['gets', 'Was Sie bekommen'], ['yours', 'Was Ihnen bleibt'], ['details', 'Die Einzelheiten']] as [string, string][],
     ways: {
       title: 'Vier Wege hinein',
-      lede: `Stand ${AS_OF}: Zwei davon laufen auf dem Staging-Space, zwei sind nicht gebaut.`,
+      lede: `Stand ${AS_OF}: Zwei davon laufen auf dem Test-Space, zwei sind nicht gebaut.`,
       items: [
         { name: 'Gehostete Seiten', status: 'later' as Status, body: 'Eine für Sie bereitgestellte Seite, auf die Sie verlinken, statt einzubetten. Sie ist nicht gebaut. Heute erscheint ein Space nur auf Ihren eigenen Seiten, über die Einbettung oder über Ihren eigenen Server.' },
-        { name: 'Die Einbettung', status: 'now' as Status, body: 'Ein Skript und ein Element auf Ihrer Seite. Das Skript kommt von der eigenen Instanz Ihres Space; das Element trägt Ihren Publishable Key, der nur auf den Origins gilt, die Ihr Space erlaubt. Seine Modi: Beschreiben, Board, Beobachten und Meine. Die Staging-Instanz liefert das Widget in der Version 0.5.0-v1 aus.' },
+        { name: 'Die Einbettung', status: 'now' as Status, body: 'Ein Skript und ein Element auf Ihrer Seite. Das Skript kommt von der eigenen Instanz Ihres Space; das Element trägt Ihren Publishable Key, der nur auf den Origins gilt, die Ihr Space erlaubt. Vier Modi: Bedarf oder Angebot beschreiben, das Board durchsehen, weitersuchen und meine Anfragen. Die Test-Instanz liefert das Widget in der Version 0.5.0-v1 aus.' },
         { name: 'Die API und das SDK', status: 'now' as Status, body: `Ihr Server spricht mit dem Secret Key mit der Space-API, und dieser Schlüssel erscheint nie in einer Seite: Er kann Bedarfe und Angebote anlegen, Prüfungen und Freigaben erfassen und Vorstellungen und Ergebnisse lesen. Das SDK gibt Ihrem Server einen Client, der durch den Vertrag typisiert ist. Stand ${AS_OF} ist das SDK nicht veröffentlicht; sein Code liegt im Connect-Repository.` },
         { name: 'MCP', status: 'later' as Status, body: 'Geplant, nicht gebaut: ein MCP-Server je Space, über den ein KI-Agent einen Bedarf oder ein Angebot vorbereitet und ein Mensch bestätigt und antwortet. Der Eigentümer hat diese Richtung gewählt; ihr Entwurf ist vorgeschlagen, ihr Vertrag ein Gerüst.' },
       ],
@@ -268,11 +268,11 @@ export const de: Catalogue = {
       title: 'Was eine Plattform bekommt',
       items: [
         'Einen eigenen Space: eine Instanz für einen Markt, mit eigener Datenbank, eigenen Schlüsseln und eigenem Löschprotokoll.',
-        'Ein Pack mit dem Vokabular Ihres Marktes. Das Formular, das Lesen von Text, das Board und die Regeln des Matchings folgen daraus.',
+        'Das Vokabular Ihres Marktes: Die Fragen passen zu ihm. Das Formular, das Lesen von Text, das Board und die Regeln des Matchings folgen daraus.',
         'Ein Widget, das Schrift und Textfarbe Ihrer Seite übernimmt, mit Ihrem eigenen Datenhinweis über seinem Bestätigen-Knopf.',
         'Matching mit einem Urteil je Kriterium, nie einer Punktzahl, und eine Vorstellung erst nach dem Ja beider Seiten und der Freigabe Ihres Teams.',
         `Eine Konsole für Ihr Team: die Freigabe-Warteschlange, Fälle mit ihren Prüfungen, Vorstellungen mit Quittungen und Ergebnisse. Sie läuft auf Ihrem Rechner oder hinter Ihrem eigenen Login. Stand ${AS_OF} läuft sie auf einem Muster mit synthetischen Daten und ist nicht veröffentlicht.`,
-        `Webhooks an Ihren Server, mit IDs und Zuständen, nie mit Kontaktdaten. Sie stehen im Vertrag; Stand ${AS_OF} sendet der Staging-Space sie nicht.`,
+        `Webhooks an Ihren Server, mit IDs und Zuständen, nie mit Kontaktdaten. Sie stehen im Vertrag; Stand ${AS_OF} sendet der Test-Space sie nicht.`,
       ],
     },
     yours: {
@@ -301,7 +301,7 @@ export const de: Catalogue = {
       notes: [
         'Der Modus ist describe, board, watch oder mine; die Seite ist seeking oder offer. Ohne Sprache folgt das Widget dem Browser des Besuchers.',
         'Der Publishable Key gilt nur auf den Origins, die Ihr Space erlaubt. Ein Secret Key gehört nie in eine Seite: Mit einem solchen startet das Widget nicht.',
-        `Stand ${AS_OF} liefert die Instanz von Geoprocures synthetischem Staging-Space das Widget in der Version 0.5.0-v1 aus.`,
+        `Stand ${AS_OF} liefert die Instanz von Geoprocures synthetischem Test-Space das Widget in der Version 0.5.0-v1 aus.`,
       ],
     },
     sdk: {
@@ -309,7 +309,7 @@ export const de: Catalogue = {
       lede: 'Einmal von Ihrem Server aus, mit dem Secret Key: Es registriert Ihren Webhook-Empfänger und gibt das Signaturgeheimnis zurück, das nur dieses eine Mal gezeigt wird.',
       notes: [
         `Das SDK ist Stand ${AS_OF} nicht auf npm. Es wird aus einem Klon des Connect-Repositorys genutzt, wo es ein Paket des Workspace ist.`,
-        `Der Test dieses Beispiels läuft gegen einen Stellvertreter, nicht gegen einen Space. Stand ${AS_OF} sendet der Staging-Space keine Webhooks.`,
+        `Der Test dieses Beispiels läuft gegen einen Stellvertreter, nicht gegen einen Space. Stand ${AS_OF} sendet der Test-Space keine Webhooks.`,
       ],
     },
     docs: {
@@ -322,7 +322,7 @@ export const de: Catalogue = {
         astro: { name: 'Das Astro-Beispiel', body: 'Dasselbe in Astro: jeder Modus, und „mine“ auf dem Server über das SDK gelesen. Es läuft gegen einen lokalen Stellvertreter, nicht gegen einen Space.' },
         embedRef: { name: 'Die Embed-Referenz', body: 'Jedes Attribut des Elements, der Datenhinweis, das Theme und eine Content Security Policy.' },
         sdkRef: { name: 'Die SDK-Referenz', body: 'Der Client für Ihren Server mit dem Secret Key, der Gast-Client, Idempotenzschlüssel und das Anlegen von Daten.' },
-        webhooks: { name: 'Webhooks', body: 'Einen Empfänger registrieren, die Signatur jeder Zustellung prüfen, Wiederholungen und Rotation. Der Staging-Space sendet sie noch nicht.' },
+        webhooks: { name: 'Webhooks', body: 'Einen Empfänger registrieren, die Signatur jeder Zustellung prüfen, Wiederholungen und Rotation. Der Test-Space sendet sie noch nicht.' },
       },
       more: 'Wie jeder Teil funktioniert, in Kürze:',
       link: 'Integrationen',
@@ -339,21 +339,21 @@ export const de: Catalogue = {
   },
 
   status: {
-    title: 'Status: was auf dem Staging-Space läuft, was gebaut ist, was geplant ist',
-    description: 'Wo jeder Teil von Linkbot steht, aus dem Truth-Check der Website: auf dem synthetischen Staging-Space, gebaut, aber dort nicht in Betrieb, oder geplant.',
+    title: 'Status: was auf dem Test-Space läuft, was gebaut ist, was geplant ist',
+    description: 'Wo jeder Teil von Linkbot steht, aus dem Truth-Check der Website: auf dem synthetischen Test-Space, gebaut, aber dort nicht in Betrieb, oder geplant.',
     eyebrow: 'Status',
     h1: ['Wo es steht,', 'Teil für Teil.'],
-    lede: `Geprüft am ${AS_OF} anhand des Statusberichts des Staging-Space und des Plans von Connect. Diese Seite wird aus dem Truth-Check der Website gebaut und sagt nichts, was dort nicht steht.`,
+    lede: `Geprüft am ${AS_OF} anhand des Statusberichts des Test-Space und des Plans von Connect. Diese Seite wird aus dem Truth-Check der Website gebaut und sagt nichts, was dort nicht steht.`,
     states: {
-      staging: { title: 'Läuft auf dem Staging-Space', lead: 'Synthetische Daten, auf Deutsch und Englisch.' },
-      built: { title: 'Gebaut oder im Vertrag, nicht auf dem Staging-Space', lead: 'Läuft dort nicht und ist nicht veröffentlicht.' },
+      staging: { title: 'Läuft auf dem Test-Space', lead: 'Synthetische Daten, auf Deutsch und Englisch.' },
+      built: { title: 'Gebaut oder im Vertrag, nicht auf dem Test-Space', lead: 'Läuft dort nicht und ist nicht veröffentlicht.' },
       planned: { title: 'Geplant, nicht gebaut', lead: 'Kein Datum versprochen.' },
     },
     items: {
       form: 'Eine Anfrage oder ein Angebot per Formular beschreiben, mit dem Identitätshinweis, wo der Space einen hat',
       text: 'Eine Anfrage oder ein Angebot in eigenen Worten beschreiben, gelesen von festen Regeln ohne Modell',
-      board: 'Das Board, mit den vergröberten Werten des Packs und nur mit Einträgen, deren Besitzer zugestimmt haben',
-      watches: 'Beobachtungen; ihre E-Mails gehen an ein Testpostfach und erreichen niemanden',
+      board: 'Das Board, mit den vergröberten Werten des Space und nur mit Einträgen, deren Besitzer zugestimmt haben',
+      watches: 'Offene Suchen; ihre E-Mails gehen an ein Testpostfach und erreichen niemanden',
       control: 'Einstellungen, Origins, Schlüssel und Funnel eines Space, über die Space-API',
       confirm: 'Bestätigen; der Browser, der bestätigt hat, verwaltet, was er angelegt hat',
       matching: 'Matching mit einem Urteil pro Kriterium',
@@ -362,8 +362,8 @@ export const de: Catalogue = {
       outcomes: 'Ergebnisse, Änderungen, Pausieren und Schließen',
       deletion: 'Löschung mit dem Löschprotokoll der Instanz',
       widget: 'Das Widget, von der Instanz selbst aus einem festgelegten Release ausgeliefert (0.5.0-v1)',
-      webhooks: 'Webhooks an den Server der Plattform: im Vertrag, und das SDK prüft ihre Signaturen; der Staging-Space sendet sie nicht',
-      mail: 'E-Mail, die ein Postfach erreicht; die E-Mails des Staging-Space gehen an ein Testpostfach',
+      webhooks: 'Webhooks an den Server der Plattform: im Vertrag, und das SDK prüft ihre Signaturen; der Test-Space sendet sie nicht',
+      mail: 'E-Mail, die ein Postfach erreicht; die E-Mails des Test-Space gehen an ein Testpostfach',
       sdk: 'Das SDK und der React-Wrapper, im Connect-Repository; nicht auf npm veröffentlicht',
       console: 'Die Konsole für das Team einer Plattform; nicht veröffentlicht',
       recipes: 'Rezepte für WordPress, Next.js und Astro; sie laufen in der CI gegen einen Beispiel-Build und sind nicht als Pakete veröffentlicht',
@@ -376,11 +376,11 @@ export const de: Catalogue = {
   },
   changelog: {
     title: 'Neuigkeiten: die Produktschritte von Linkbot, datiert',
-    description: 'Jeder Schritt von Linkbot, den ein Kunde bemerken kann, datiert und mit seinem Stand: auf dem synthetischen Staging-Space oder gebaut und noch nicht dort.',
+    description: 'Jeder Schritt von Linkbot, den ein Kunde bemerken kann, datiert und mit seinem Stand: auf dem synthetischen Test-Space oder gebaut und noch nicht dort.',
     eyebrow: 'Neuigkeiten',
     h1: ['Was sich geändert hat,', 'Schritt für Schritt.'],
-    lede: 'Ein Eintrag pro Produktschritt, den ein Kunde bemerken kann, der neueste zuerst. Jeder sagt, ob er auf dem synthetischen Staging-Space läuft oder gebaut ist und noch nicht dort. Nichts davon ist schon für echte Nutzer veröffentlicht.',
-    states: { staging: 'Auf dem Staging-Space', built: 'Gebaut, noch nicht auf dem Staging-Space' },
+    lede: 'Ein Eintrag pro Produktschritt, den ein Kunde bemerken kann, der neueste zuerst. Jeder sagt, ob er auf dem synthetischen Test-Space läuft oder gebaut ist und noch nicht dort. Nichts davon ist schon für echte Nutzer veröffentlicht.',
+    states: { staging: 'Auf dem Test-Space', built: 'Gebaut, noch nicht auf dem Test-Space' },
     source: 'Quelle',
     note: 'Jeder Eintrag stammt aus docs/changelog.yml im Repository dieser Website und nennt den Pull Request, auf dem er beruht; ein Eintrag ohne Quelle stoppt den Build.',
     link: 'Neuigkeiten',
@@ -415,17 +415,17 @@ export const de: Catalogue = {
     link: 'Linkbot auf einer Seite (PDF)',
   },
   verticals: {
-    title: 'Für Branchen: ein Pack pro Markt',
-    description: 'Ein Pack enthält das Vokabular eines Marktes: Kriterien, Optionen, Einheiten, Preisgabe je Stufe, Gates und Ergebnisse. Der erste Space: Industrieminerale.',
+    title: 'Für Branchen: ein Vokabular pro Markt',
+    description: 'Jeder Markt bringt sein eigenes Vokabular mit: Kriterien, Optionen, Einheiten, Preisgabe je Stufe, Gates und Ergebnisse. Der erste Space: Industrieminerale.',
     eyebrow: 'Für Branchen',
-    h1: ['Ein Pack', 'pro Markt.'],
-    lede: 'Eine Branche kommt als Pack zu Linkbot: die Kriterien ihres Marktes, die Antworten, die sie erlauben, was jedes Kriterium wann preisgibt, und die Gates, die der Markt braucht. Ein Space pinnt das Pack; Formular, Lesung, Board und Matching-Regeln folgen daraus.',
-    toc: [['holds', 'Was ein Pack enthält'], ['first', 'Der erste Space'], ['next', 'Weitere Branchen']] as [string, string][],
+    h1: ['Ein Vokabular', 'pro Markt.'],
+    lede: 'Eine Branche kommt mit ihrem Marktvokabular zu Linkbot: die Kriterien ihres Marktes, die Antworten, die sie erlauben, was jedes Kriterium wann preisgibt, und die Gates, die der Markt braucht. Ein Space pinnt es; Formular, Lesung, Board und Matching-Regeln folgen daraus.',
+    toc: [['holds', 'Was ein Marktvokabular enthält'], ['first', 'Der erste Space'], ['next', 'Weitere Branchen']] as [string, string][],
     holds: {
-      title: 'Was ein Pack enthält',
+      title: 'Was ein Marktvokabular enthält',
       items: [
         'Kriterien mit ihren Eingabeelementen: eine Auswahl, mehrere, eine Zahl mit Einheit, ein Bereich, ein Zeitfenster, eine durchsuchbare Liste, freier Text',
-        'Optionen, Einheiten und Basen, mit den Umrechnungen, die das Pack festlegt; eine Umrechnung läuft nur über die eigene angegebene Basis des Angebots, nie über eine Annahme',
+        'Optionen, Einheiten und Basen, mit den Umrechnungen, die das Vokabular festlegt; eine Umrechnung läuft nur über die eigene angegebene Basis des Angebots, nie über eine Annahme',
         'Welche besonderen Antworten jedes Kriterium erlaubt: „Anderes / nicht aufgeführt“, „Weiß nicht“, „Beliebig“',
         'Welche Gewichtungen ein Kriterium erlaubt, und die vorgeschlagene',
         'Die Stufe jedes Kriteriums, Board, Passung, Vorstellung oder Operator, und wie ein Wert für das Board vergröbert wird',
@@ -436,13 +436,13 @@ export const de: Catalogue = {
     first: {
       title: 'Der erste Space: Industrieminerale',
       paras: [
-        'Geoprocure betreibt den ersten Space, für Industrieminerale, auf einer synthetischen Staging-Instanz. Sein Pflicht-Gate ist eine KYC- und Sanktionsprüfung, eingetragen von einem benannten Operator und nie erlassen. Seine Vorstellungen laufen im Operator-Modus: Das Team von Geoprocure bringt beide Seiten zusammen.',
+        'Der erste Space, für Industrieminerale, läuft als Test-Instanz mit synthetischen Daten. Sein Pflicht-Gate ist eine KYC- und Sanktionsprüfung, eingetragen von einem benannten Operator und nie erlassen. Seine Vorstellungen laufen im Operator-Modus: Das Team der Plattform bringt beide Seiten zusammen.',
       ],
     },
     next: {
       title: 'Weitere Branchen',
       paras: [
-        'Eine Branche braucht ihr Pack und eine Plattform, die den Space betreibt. Ein zweites Pack mit synthetischen Daten ist geplant, damit ein Demo-Space das Widget auf dieser Seite zeigen kann, ohne einen echten Markt.',
+        'Eine Branche braucht ihr Marktvokabular und eine Plattform, die den Space betreibt. Ein zweites Vokabular mit synthetischen Daten ist geplant, damit ein Demo-Space das Widget auf dieser Seite zeigen kann, ohne einen echten Markt.',
       ],
     },
   },
@@ -510,7 +510,7 @@ export const de: Catalogue = {
             'Einen Wert, den das Widget nicht kennt, ersetzt es durch die Voreinstellung, mit einer Warnung in der Browser-Konsole. Eine Sprache, die der Space nicht anbietet, fällt ebenfalls zurück, und das Widget sagt es auf dem Bildschirm.',
           ], code: true, columns: ['Attribut', 'Werte', 'Voreinstellung'], rows: [
             { name: 'data-linkbot', what: 'Ihr Publishable Key. Mit einem Secret Key verweigert das Widget den Start und sagt Ihnen, ihn zu rotieren', more: 'Pflicht' },
-            { name: 'data-mode', what: 'describe (sagen, was Sie brauchen oder anbieten), board (Einträge durchsehen und beantworten), mine (meine Anfragen, Beobachtungen und möglichen Passungen)', more: 'describe' },
+            { name: 'data-mode', what: 'describe (sagen, was Sie brauchen oder anbieten), board (Einträge durchsehen und beantworten), mine (meine Anfragen, offenen Suchen und möglichen Passungen)', more: 'describe' },
             { name: 'data-side', what: 'seeking (eine Anfrage) oder offer (ein Angebot)', more: 'seeking' },
             { name: 'data-locale', what: 'en, de, es, it oder fr', more: 'die Browser-Sprache der Besucherin oder des Besuchers, dann die Voreinstellung des Space' },
             { name: 'data-input', what: 'form, text oder both; es kann nur einschränken, was der Space erlaubt', more: 'die Einstellung des Space' },
@@ -531,7 +531,7 @@ export const de: Catalogue = {
             'sessionStorage gehört dem Origin Ihrer Seite, also kann jedes Skript, das Sie auf dieser Seite ausführen, den Entwurf und die Token lesen. Führen Sie auf Seiten mit dem Widget keine Skripte aus, denen Sie nicht vertrauen.',
           ] },
         ] as Section[],
-        state: [`Das Skript kommt von der eigenen Instanz Ihres Space. Stand ${AS_OF} liefert die Staging-Instanz das Release 0.5.0-v1 des Widgets aus einer festgelegten Datei aus, wie ihr Statusbericht zeigt; die Prüfungen von Connect für das Board und für die Formulierungen des Widgets bestanden am 26.10.2026 gegen diese ausgelieferte Datei.`],
+        state: [`Das Skript kommt von der eigenen Instanz Ihres Space. Stand ${AS_OF} liefert die Test-Instanz das Release 0.5.0-v1 des Widgets aus einer festgelegten Datei aus, wie ihr Statusbericht zeigt; die Prüfungen von Connect für das Board und für die Formulierungen des Widgets bestanden am 26.10.2026 gegen diese ausgelieferte Datei.`],
       },
       sdk: {
         nav: 'SDK und Webhooks',
@@ -544,11 +544,11 @@ export const de: Catalogue = {
             'Der Client nimmt die API-Basis Ihres Space (nur https, außer auf localhost), Ihren Secret Key aus dem geheimen Speicher Ihres Servers (ein Wert, der nicht wie ein Secret Key geformt ist, wird abgelehnt) und auf Wunsch das fetch Ihrer Laufzeit. Seine Pfade, Parameter, Rümpfe und Antworten sind die des Vertrags, erzeugt aus dem YAML, das Core veröffentlicht hat, und per sha256 gepinnt: Eine Route, ein Feld oder ein Wert, den der Vertrag nicht hat, ist ein Typfehler.',
             'Ein frischer Idempotenz-Schlüssel ist einen Aufruf entfernt. Schreibzugriffe, die der Vertrag so markiert, brauchen einen; bewahren Sie den Schlüssel beim Schreibzugriff auf und senden Sie denselben beim Wiederholen, damit der Space den Zugriff einmal ausführt.',
           ] },
-          { id: 'seeding', title: 'Das eigene Angebot Ihrer Plattform anlegen', paras: ['Ihr Server legt ein Angebot auf dem Operator-Weg an, und ein zweiter Operator bestätigt es: vier Augen. Auf einem Space, der jede Partei prüft, wie dem von Geoprocure, zählt das Anlegen des Angebots Ihrer eigenen Organisation als Bestätigen, trägt also die Freigabe der Identität, die der Hinweis des Space verlangt, und der Space lehnt es ohne sie ab. Das gilt nur für Ihre eigene Organisation; die Freigabe anderer geben diese selbst, im Widget.'] },
+          { id: 'seeding', title: 'Das eigene Angebot Ihrer Plattform anlegen', paras: ['Ihr Server legt ein Angebot auf dem Operator-Weg an, und ein zweiter Operator bestätigt es: vier Augen. Auf einem Space, der jede Partei prüft, zählt das Anlegen des Angebots Ihrer eigenen Organisation als Bestätigen, trägt also die Freigabe der Identität, die der Hinweis des Space verlangt, und der Space lehnt es ohne sie ab. Das gilt nur für Ihre eigene Organisation; die Freigabe anderer geben diese selbst, im Widget.'] },
           { id: 'webhooks', title: 'Webhooks', paras: [
             'Registrieren Sie einen Endpunkt mit Ihrem Secret Key, nur https. Das Signaturgeheimnis wird einmal gezeigt und gehört in Ihren geheimen Speicher, nie in Code. Jede Zustellung trägt eine ID, einen Zeitstempel in Sekunden und eine Signatur: HMAC-SHA256 über den Zeitstempel, einen Punkt und den rohen Rumpf, mit Ihrem Geheimnis als Schlüssel.',
             'Lehnen Sie eine Zustellung ab, die älter als fünf Minuten ist oder deren Signatur nicht passt. Die Prüfung des SDK tut beides, mit Vergleich in konstanter Zeit über Web Crypto, in Node, Deno, Bun und Edge-Laufzeiten. Prüfen Sie den rohen Rumpf, bevor Sie ihn parsen. Antworten Sie schnell mit 2xx: Alles andere wird mit wachsenden Abständen 24 Stunden lang wiederholt, danach gilt die Zustellung als tot. Eine Wiederholung trägt dieselbe ID; behandeln Sie jede ID einmal, mit den IDs in Ihrer Datenbank statt im Speicher.',
-            `Rotieren Sie das Geheimnis bei Bedarf: Das alte bleibt bis zu sieben Tage gültig, und die Prüfung nimmt beide. Zustellungen tragen IDs und Zustände, nie Kontaktdaten; Details holen Sie mit Ihrem Secret Key. Das Zustellprotokoll zeigt Status, Versuche und eine Prüfsumme des Rumpfs, nie den Rumpf. Webhooks stehen im Vertrag; Stand ${AS_OF} sendet der Staging-Space sie nicht.`,
+            `Rotieren Sie das Geheimnis bei Bedarf: Das alte bleibt bis zu sieben Tage gültig, und die Prüfung nimmt beide. Zustellungen tragen IDs und Zustände, nie Kontaktdaten; Details holen Sie mit Ihrem Secret Key. Das Zustellprotokoll zeigt Status, Versuche und eine Prüfsumme des Rumpfs, nie den Rumpf. Webhooks stehen im Vertrag; Stand ${AS_OF} sendet der Test-Space sie nicht.`,
           ] },
           { id: 'events', title: 'Ereignistypen', paras: ['Jedes Ereignis hat eine ID, einen Typ, die Space-ID, den Zeitpunkt, die Vertragsversion und das Objekt, um das es geht, mit dessen Typ, ID und Zustand, wo es einen gibt. Die Typen:'], code: true, items: ['intent.confirmed', 'intent.revised', 'intent.status_changed', 'match.proposed', 'match.updated', 'gate.recorded', 'approval.recorded', 'answer.recorded', 'clarification.requested', 'review.recorded', 'introduction.created', 'outcome.recorded', 'watch.delivered', 'channel.verified', 'deletion.completed', 'key.rotated'] },
           { id: 'react', title: 'Der React-Wrapper', paras: [
@@ -556,7 +556,7 @@ export const de: Catalogue = {
             `Seine Props sind die Attribute des Elements: Publishable Key und Skriptadresse sind Pflicht (ein Secret Key wirft einen Fehler), dazu mode, side, locale, input, api, Ihr Hinweis, ein Klassenname und ein style für die Theme-Variablen. Ändert sich ein Prop, das das Embed liest, gibt der Wrapper React ein neues Element, und das Embed startet neu. Eine Seite, die das Skript laden will, bevor sie ein Element rendert, kann auch das verlangen. Stand ${AS_OF} nicht veröffentlicht.`,
           ] },
         ] as Section[],
-        state: [`SDK und Wrapper sind im Connect-Repository gebaut und getestet und Stand ${AS_OF} nicht veröffentlicht. Der Empfänger aus der Webhook-Anleitung ist gegen signierte Beispiel-Zustellungen getestet; der Staging-Space sendet keine Webhooks.`],
+        state: [`SDK und Wrapper sind im Connect-Repository gebaut und getestet und Stand ${AS_OF} nicht veröffentlicht. Der Empfänger aus der Webhook-Anleitung ist gegen signierte Beispiel-Zustellungen getestet; der Test-Space sendet keine Webhooks.`],
       },
       console: {
         nav: 'Die Konsole',
@@ -586,14 +586,14 @@ export const de: Catalogue = {
           { id: 'run', title: 'Sie ausführen', paras: [
             'Mit Beispieldaten: Die Beispiel-Operator-API antwortet aus dem Speicher mit synthetischen Daten, braucht keinen Schlüssel und sendet nichts über das Netz, und jede Seite sagt das in einem Banner. Sie folgt den Regeln des Vertrags, Sie können sie also ausprobieren: ein Gate, das nicht erlassen werden kann, Freigabe erst nach den Pflicht-Gates, eine Vorstellung nur mit jedem Gate, der Freigabe und einem Ja beider Seiten, und eine Lesequittung, wenn Ihr Team die Kontaktdaten öffnet.',
             'Gegen einen Space: die API-Basis, Ihr Secret Key aus Ihrem geheimen Speicher, Ihre ID im Operator-Register des Space und, wenn das Snippet gezeigt werden soll, der Publishable Key. Hinter Ihrem Login: ein Handler; Ihre Sitzung entscheidet, wer handelt, und ohne angemeldeten Operator antwortet er mit 401. Hinter einem Proxy braucht er die öffentliche Adresse, die der Browser verwendet hat.',
-            'Dieser Weg lief am 23.10.2026 gegen den synthetischen Staging-Space von Geoprocure: die Warteschlange, ein Fall, beide Arten von Prüfung, die Freigabe, eine Antwort für das eigene Angebot der Plattform und eine Vorstellung mit ihrer Quittung.',
+            'Dieser Weg lief am 23.10.2026 gegen den synthetischen Test-Space: die Warteschlange, ein Fall, beide Arten von Prüfung, die Freigabe, eine Antwort für das eigene Angebot der Plattform und eine Vorstellung mit ihrer Quittung.',
           ] },
           { id: 'notyet', title: 'Noch nicht hier, und warum', items: [
             'Ein neuer Space entsteht mit dem Werkzeug von Core, nicht in der Konsole; der Assistent der Konsole in fünf Schritten schreibt und prüft die Datei, die dieses Werkzeug liest.',
             'Kein „Erneut senden“ für eine Zustellung, bis es echte Zustellungen gibt, an denen man es ausprobieren kann.',
           ] },
         ] as Section[],
-        state: ['Die Konsole ist auf dem Vertrag der Space-API gebaut und lief am 23.10.2026 gegen den synthetischen Staging-Space; ihre Tests laufen gegen eine Beispiel-Operator-API mit synthetischen Daten.'],
+        state: ['Die Konsole ist auf dem Vertrag der Space-API gebaut und lief am 23.10.2026 gegen den synthetischen Test-Space; ihre Tests laufen gegen eine Beispiel-Operator-API mit synthetischen Daten.'],
       },
       wordpress: {
         nav: 'WordPress',

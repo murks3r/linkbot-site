@@ -31,7 +31,7 @@ const STATE = { 'on staging': { tone: 'fit', words: c.states.staging }, built: {
             <p>{entry.text[lang]}</p>
             <p class="meta">
               <span class="state"><Mark tone={STATE[entry.state].tone} size={10} />{STATE[entry.state].words}</span>
-              <span>{c.source}: {entry.sources.map(source => `${source.repo} #${source.pr}`).join(', ')}</span>
+              <span>{c.source}: <code>{entry.sources.map(source => `${source.repo} #${source.pr}`).join(', ')}</code></span>
             </p>
           </li>)}
         </ul>
@@ -50,5 +50,6 @@ const STATE = { 'on staging': { tone: 'fit', words: c.states.staging }, built: {
   .day ul { display: grid; gap: 12px; }
   .entry { display: grid; gap: 8px; padding: clamp(16px, 2.2vw, 22px); border: 1px solid var(--lb-line); border-radius: var(--r-3); background: var(--lb-surface); }
   .meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: var(--size-small); color: var(--lb-slate); }
+  .meta code { font: inherit; }
   .state { display: inline-flex; align-items: center; gap: 8px; }
 </style>
