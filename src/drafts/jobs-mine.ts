@@ -1,9 +1,9 @@
 /* The draft page /jobs/mine, in English and German: the person's own page in Jobs, the second vertical, once signed in:
    the confirmed criteria, the verdicts each company sees, an answer per role, the companies that never see the person,
    pause, export and delete. A demo on fictional data that runs in the browser only (src/front/mine.ts); nothing of it
-   is built in Jobs, so the page is a draft for the owner's review: linked from nowhere, never indexed, out of the
-   sitemap, and left out of production builds. The criteria, their labels and the roles' values come from the jobs
-   pack's draft and its demo fixtures; the rules from the Jobs spec's draft. Every sentence has its row in
+   is built in Jobs, so the page is a draft for the owner's review: linked from the draft /jobs only, never indexed, out
+   of the sitemap, and left out of production builds. The criteria, their labels and the roles' values come from the
+   jobs pack's draft and its demo fixtures; the rules from the Jobs spec's draft. Every sentence has its row in
    docs/truth-check.md (section "/jobs/mine"). */
 import { PUBLIC_NAME } from '../i18n/terms.ts';
 import type { Answer } from '../front/mine.ts';
@@ -51,7 +51,7 @@ const COMPANY_IDS = ['employer', 'northwind', 'brightfield'] as const;
 export const jobsMine: Record<'en' | 'de', MineDraft> = {
   en: {
     banner: 'Draft, not published: planned, not built.',
-    bannerNote: `This page is linked from nowhere on the site, is never indexed and exists in English and German only. ${PUBLIC_NAME} runs no jobs space today. The demo below uses made-up data and runs in this browser only: it sends nothing and stores nothing.`,
+    bannerNote: `This page is linked from nowhere on the site but the Jobs draft, is never indexed and exists in English and German only. ${PUBLIC_NAME} runs no jobs space today. The demo below uses made-up data and runs in this browser only: it sends nothing and stores nothing.`,
     title: 'Jobs: your own page (planned, draft)',
     description: 'Draft: a person’s own page in Jobs. Criteria, the verdicts companies see, who never sees them, pause, export and delete. Made-up data.',
     eyebrow: 'Jobs · planned · draft',
@@ -180,7 +180,7 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
   },
   de: {
     banner: 'Entwurf, nicht veröffentlicht: geplant, nicht gebaut.',
-    bannerNote: `Diese Seite ist von nirgends auf der Website verlinkt, wird nie indexiert und existiert nur auf Englisch und Deutsch. ${PUBLIC_NAME} betreibt heute keinen Jobs-Space. Die Demo unten nutzt erfundene Daten und läuft nur in diesem Browser: Sie sendet nichts und speichert nichts.`,
+    bannerNote: `Diese Seite ist nur vom Jobs-Entwurf aus verlinkt, wird nie indexiert und existiert nur auf Englisch und Deutsch. ${PUBLIC_NAME} betreibt heute keinen Jobs-Space. Die Demo unten nutzt erfundene Daten und läuft nur in diesem Browser: Sie sendet nichts und speichert nichts.`,
     title: 'Jobs: Ihre eigene Seite (geplant, Entwurf)',
     description: 'Entwurf: die eigene Seite einer Person in Jobs. Kriterien, die Urteile, die Firmen sehen, wer sie nie sieht, Pause, Export, Löschen. Erfundene Daten.',
     eyebrow: 'Jobs · geplant · Entwurf',

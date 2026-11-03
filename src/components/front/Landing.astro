@@ -16,7 +16,6 @@ import { statusDate } from '../../i18n/status-date';
 import { pathFor, type Catalogue, type Lang } from '../../i18n';
 import '../../front/theme.css';
 import '../../front/landing.css';
-import '../../front/trial.css';
 interface Props { lang: Lang; t: Catalogue }
 const { lang, t } = Astro.props;
 const { landing: L } = FRONT[lang];
@@ -69,7 +68,3 @@ const live = buildSpace() !== null;
   </section>
 </Base>
 
-<script>
-  import { mount } from '../../front/trial';
-  document.querySelectorAll<HTMLElement>('[data-trial]').forEach(mount);
-</script>
