@@ -315,7 +315,7 @@ export const de: Catalogue = {
     },
     docs: {
       title: 'Die Dokumentation',
-      lede: `Auf dieser Seite aus dem Open-Core-Export des Connect-Repositorys gerendert, auf Englisch. Stand ${AS_OF} ist das Repository selbst privat, und nichts davon ist veröffentlicht.`,
+      lede: `Auf dieser Seite aus dem open-core-Export des Connect-Repositorys gerendert, auf Englisch. Stand ${AS_OF} ist das Repository selbst privat, und nichts davon ist veröffentlicht.`,
       sections: {
         quickstart: { name: 'Quickstart (5 Minuten)', body: 'Ein Script-Tag, Ihr Publishable Key und der Origin Ihrer Seite; dann der ganze Quickstart und der Weg einer Person durch die API.' },
         widget: { name: 'Widget', body: 'Jedes Attribut des Embeds, der React-Wrapper und Rezepte für reines HTML, Astro, Next.js und WordPress.' },
@@ -541,7 +541,7 @@ export const de: Catalogue = {
         lede: `Nichts vom SDK gehört in eine Browser-Seite: Das Embed nimmt den Publishable Key, und der Client des SDK verweigert den Start in einem Browser. Stand ${AS_OF} ist es nicht veröffentlicht; sein Code liegt im Connect-Repository.`,
         sections: [
           { id: 'client', title: 'Der Client', paras: [
-            'Der Client nimmt die API-Basis Ihres Space (nur https, außer auf localhost), Ihren Secret Key aus dem geheimen Speicher Ihres Servers (ein Wert, der nicht wie ein Secret Key geformt ist, wird abgelehnt) und auf Wunsch das fetch Ihrer Laufzeit. Seine Pfade, Parameter, Rümpfe und Antworten sind die des Vertrags, erzeugt aus dem YAML, das Core veröffentlicht hat, und per sha256 gepinnt: Eine Route, ein Feld oder ein Wert, den der Vertrag nicht hat, ist ein Typfehler.',
+            'Der Client nimmt die API-Basis Ihres Space (nur https, außer auf localhost), Ihren Secret Key aus dem geheimen Speicher Ihres Servers (ein Wert, der nicht wie ein Secret Key geformt ist, wird abgelehnt) und auf Wunsch das fetch Ihrer Laufzeit. Seine Pfade, Parameter, Rümpfe und Antworten sind die des Vertrags, erzeugt aus dem YAML des Vertrags (0.2.18) und per sha256 gepinnt: Eine Route, ein Feld oder ein Wert, den der Vertrag nicht hat, ist ein Typfehler.',
             'Ein frischer Idempotenz-Schlüssel ist einen Aufruf entfernt. Schreibzugriffe, die der Vertrag so markiert, brauchen einen; bewahren Sie den Schlüssel beim Schreibzugriff auf und senden Sie denselben beim Wiederholen, damit der Space den Zugriff einmal ausführt.',
           ] },
           { id: 'seeding', title: 'Das eigene Angebot Ihrer Plattform anlegen', paras: ['Ihr Server legt ein Angebot auf dem Operator-Weg an, und ein zweiter Operator bestätigt es: vier Augen. Auf einem Space, der jede Partei prüft, zählt das Anlegen des Angebots Ihrer eigenen Organisation als Bestätigen, trägt also die Freigabe der Identität, die der Hinweis des Space verlangt, und der Space lehnt es ohne sie ab. Das gilt nur für Ihre eigene Organisation; die Freigabe anderer geben diese selbst, im Widget.'] },
@@ -589,7 +589,7 @@ export const de: Catalogue = {
             'Dieser Weg lief am 23.10.2026 gegen den synthetischen Test-Space: die Warteschlange, ein Fall, beide Arten von Prüfung, die Freigabe, eine Antwort für das eigene Angebot der Plattform und eine Vorstellung mit ihrer Quittung.',
           ] },
           { id: 'notyet', title: 'Noch nicht hier, und warum', items: [
-            'Ein neuer Space entsteht mit dem Werkzeug von Core, nicht in der Konsole; der Assistent der Konsole in fünf Schritten schreibt und prüft die Datei, die dieses Werkzeug liest.',
+            'Ein neuer Space entsteht mit dem Einrichtungswerkzeug von Linkbot, nicht in der Konsole; der Assistent der Konsole in fünf Schritten schreibt und prüft die Datei, die dieses Werkzeug liest.',
             'Kein „Erneut senden“ für eine Zustellung, bis es echte Zustellungen gibt, an denen man es ausprobieren kann.',
           ] },
         ] as Section[],

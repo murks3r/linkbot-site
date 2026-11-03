@@ -540,7 +540,7 @@ export const fr: Catalogue = {
         lede: `Rien du SDK ne va dans une page de navigateur : l’embed prend la Publishable Key, et le client du SDK refuse de démarrer dans un navigateur. Au ${AS_OF}, il n’est pas publié ; son code est dans le dépôt Connect.`,
         sections: [
           { id: 'client', title: 'Le client', paras: [
-            'Le client prend la base API de votre espace (https uniquement, sauf sur localhost), votre Secret Key depuis le magasin de secrets de votre serveur (une valeur qui n’a pas la forme d’une Secret Key est refusée) et, si vous le voulez, le fetch de votre environnement. Ses chemins, paramètres, corps et réponses sont ceux du contrat, générés à partir du YAML publié par Core et épinglés par sha256 : une route, un champ ou une valeur que le contrat n’a pas est une erreur de type.',
+            'Le client prend la base API de votre espace (https uniquement, sauf sur localhost), votre Secret Key depuis le magasin de secrets de votre serveur (une valeur qui n’a pas la forme d’une Secret Key est refusée) et, si vous le voulez, le fetch de votre environnement. Ses chemins, paramètres, corps et réponses sont ceux du contrat, générés à partir du YAML du contrat (0.2.18) et épinglés par sha256 : une route, un champ ou une valeur que le contrat n’a pas est une erreur de type.',
             'Une nouvelle clé d’idempotence s’obtient en un appel. Les écritures que le contrat marque en ont besoin ; gardez la clé avec l’écriture et renvoyez la même clé quand vous la réessayez, pour que l’espace fasse l’écriture une seule fois.',
           ] },
           { id: 'seeding', title: 'Semer l’offre de votre propre plateforme', paras: ['Votre serveur sème une offre sur la voie opérateur, et un second opérateur la confirme : quatre yeux. Sur un espace qui contrôle chaque partie semer l’offre de votre propre organisation compte comme une confirmation ; elle porte donc le consentement à révéler l’identité que demande l’avis de l’espace, et l’espace la refuse sans lui. C’est réservé à votre propre organisation ; le consentement de toute autre partie revient à cette partie, dans le widget.'] },
@@ -588,7 +588,7 @@ export const fr: Catalogue = {
             'Cette voie a tourné contre l’espace de test synthétique le 23 octobre 2026 : la file, un dossier, les deux sortes de contrôle, l’approbation, une réponse pour l’offre propre de la plateforme, et une mise en relation avec son reçu.',
           ] },
           { id: 'notyet', title: 'Pas encore là, et pourquoi', items: [
-            'Un nouvel espace se crée avec l’outil de configuration de Core, pas depuis la console ; l’assistant en cinq étapes de la console écrit et valide le fichier que cet outil lit.',
+            'Un nouvel espace se crée avec l’outil de configuration de Linkbot, pas depuis la console ; l’assistant en cinq étapes de la console écrit et valide le fichier que cet outil lit.',
             'Pas de « renvoyer » pour une livraison tant qu’il n’y a pas de livraisons réelles sur lesquelles l’essayer.',
           ] },
         ] as Section[],

@@ -541,7 +541,7 @@ export const es: Catalogue = {
         lede: `Nada del SDK va a una página de navegador: el embed toma la publishable key, y el cliente del SDK se niega a arrancar en un navegador. A fecha de ${AS_OF} no está publicado; su código está en el repositorio de Connect.`,
         sections: [
           { id: 'client', title: 'El cliente', paras: [
-            'El cliente toma la base de la API de su espacio (solo https, salvo en localhost), su secret key del almacén de secretos de su servidor (un valor que no tenga forma de secret key se rechaza) y, si quiere, el fetch de su runtime. Sus rutas, parámetros, cuerpos y respuestas son los del contrato, generados a partir del YAML que publicó Core y fijados por sha256: una ruta, un campo o un valor que el contrato no tiene es un error de tipos.',
+            'El cliente toma la base de la API de su espacio (solo https, salvo en localhost), su secret key del almacén de secretos de su servidor (un valor que no tenga forma de secret key se rechaza) y, si quiere, el fetch de su runtime. Sus rutas, parámetros, cuerpos y respuestas son los del contrato, generados a partir del YAML del contrato (0.2.18) y fijados por sha256: una ruta, un campo o un valor que el contrato no tiene es un error de tipos.',
             'Una clave de idempotencia nueva está a una llamada. Las escrituras que el contrato marca la necesitan; guarde la clave con la escritura y envíe la misma clave al reintentarla, para que el espacio haga la escritura una sola vez.',
           ] },
           { id: 'seeding', title: 'Sembrar la oferta de su propia plataforma', paras: ['Su servidor siembra una oferta por la vía del operador, y un segundo operador la confirma: cuatro ojos. En un espacio que comprueba cada parte sembrar la oferta de su propia organización cuenta como confirmación, así que lleva la autorización para revelar la identidad que pide el aviso del espacio, y el espacio la rechaza sin ella. Esto es solo para su propia organización; la autorización de cualquier otra parte la da esa parte, en el widget.'] },
@@ -589,7 +589,7 @@ export const es: Catalogue = {
             'Esta vía se ejecutó contra el espacio de prueba sintético el 23 de octubre de 2026: la cola, un caso, ambos tipos de comprobación, la aprobación, una respuesta por la oferta de la propia plataforma y una presentación con su comprobante.',
           ] },
           { id: 'notyet', title: 'Aún no está, y por qué', items: [
-            'Un espacio nuevo se crea con la herramienta de aprovisionamiento de Core, no desde la consola; el asistente de cinco pasos de la consola escribe y valida el archivo que esa herramienta lee.',
+            'Un espacio nuevo se crea con la herramienta de aprovisionamiento de Linkbot, no desde la consola; el asistente de cinco pasos de la consola escribe y valida el archivo que esa herramienta lee.',
             'No hay «reenviar» para una entrega hasta que haya entregas reales con las que probarlo.',
           ] },
         ] as Section[],

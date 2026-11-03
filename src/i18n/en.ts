@@ -553,7 +553,7 @@ export const en = {
         lede: `Nothing of the SDK goes into a browser page: the embed takes the publishable key, and the SDK’s client refuses to start in a browser. As of ${AS_OF} it is not published; its code is in the Connect repository.`,
         sections: [
           { id: 'client', title: 'The client', paras: [
-            'The client takes your space’s API base (https only, except on localhost), your secret key from your server’s secret store (a value that is not shaped like a secret key is refused) and, if you want, your runtime’s fetch. Its paths, parameters, bodies and responses are the contract’s own, generated from the YAML Core posted and pinned by sha256: a route, field or value the contract does not have is a type error.',
+            'The client takes your space’s API base (https only, except on localhost), your secret key from your server’s secret store (a value that is not shaped like a secret key is refused) and, if you want, your runtime’s fetch. Its paths, parameters, bodies and responses are the contract’s own, generated from the contract’s YAML (0.2.18) and pinned by sha256: a route, field or value the contract does not have is a type error.',
             'A fresh idempotency key is one call away. Writes the contract marks need one; keep the key with the write and send the same key when you retry it, so the space does the write once.',
           ] },
           { id: 'seeding', title: 'Seeding your platform’s own offer', paras: ['Your server seeds an offer on the operator path, and a second operator confirms it: four eyes. On a space that checks each party, seeding your own organisation’s offer counts as a confirm, so it carries the identity release the space’s notice asks for, and the space refuses it without one. This is for your own organisation only; anyone else’s release is theirs to give, in the widget.'] },
@@ -601,7 +601,7 @@ export const en = {
             'This path ran against the synthetic test space on 2026-10-23: the queue, a case, both kinds of check, the approval, an answer for the platform’s own offer, and an introduction with its receipt.',
           ] },
           { id: 'notyet', title: 'Not here yet, and why', items: [
-            'A new space is created with Core’s provisioning tool, not from the console; the console’s five-step wizard writes and validates the file that tool reads.',
+            'A new space is created with Linkbot’s provisioning tool, not from the console; the console’s five-step wizard writes and validates the file that tool reads.',
             'No “send again” for a delivery until there are real deliveries to try it on.',
           ] },
         ] as Section[],

@@ -539,7 +539,7 @@ export const it: Catalogue = {
         lede: `Nulla dell’SDK finisce in una pagina del browser: l’embed prende la Publishable Key, e il client dell’SDK rifiuta di avviarsi in un browser. Al ${AS_OF} non è pubblicato; il suo codice è nel repository di Connect.`,
         sections: [
           { id: 'client', title: 'Il client', paras: [
-            'Il client prende la base API del Suo spazio (solo https, tranne su localhost), la Sua Secret Key dal secret store del Suo server (un valore che non ha la forma di una Secret Key viene rifiutato) e, se vuole, il fetch del Suo runtime. I suoi percorsi, parametri, body e risposte sono quelli del contratto, generati dallo YAML pubblicato da Core e fissati tramite sha256: una route, un campo o un valore che il contratto non prevede è un errore di tipo.',
+            'Il client prende la base API del Suo spazio (solo https, tranne su localhost), la Sua Secret Key dal secret store del Suo server (un valore che non ha la forma di una Secret Key viene rifiutato) e, se vuole, il fetch del Suo runtime. I suoi percorsi, parametri, body e risposte sono quelli del contratto, generati dallo YAML del contratto (0.2.18) e fissati tramite sha256: una route, un campo o un valore che il contratto non prevede è un errore di tipo.',
             'Una chiave di idempotenza nuova è a una sola chiamata di distanza. Le scritture che il contratto contrassegna ne richiedono una; conservi la chiave con la scrittura e invii la stessa chiave quando la ritenta, così lo spazio esegue la scrittura una sola volta.',
           ] },
           { id: 'seeding', title: 'Inserire l’offerta della Sua piattaforma', paras: ['Il Suo server inserisce un’offerta sul percorso operatore, e un secondo operatore la conferma: quattro occhi. Su uno spazio che controlla ogni parte inserire l’offerta della propria organizzazione conta come conferma, quindi porta il consenso a rivelare l’identità che l’avviso dello spazio chiede, e lo spazio la rifiuta senza. Questo vale solo per la propria organizzazione; il consenso di qualunque altra parte spetta a quella parte, nel widget.'] },
@@ -587,7 +587,7 @@ export const it: Catalogue = {
             'Questo percorso ha girato contro lo spazio di prova sintetico il 23 ottobre 2026: la coda, un caso, entrambi i tipi di controllo, l’approvazione, una risposta per l’offerta della piattaforma e una presentazione con la sua ricevuta.',
           ] },
           { id: 'notyet', title: 'Non ancora qui, e perché', items: [
-            'Un nuovo spazio si crea con lo strumento di predisposizione di Core, non dalla console; la procedura guidata in cinque passaggi della console scrive e convalida il file che quello strumento legge.',
+            'Un nuovo spazio si crea con lo strumento di predisposizione di Linkbot, non dalla console; la procedura guidata in cinque passaggi della console scrive e convalida il file che quello strumento legge.',
             'Nessun «invia di nuovo» per una consegna finché non ci sono consegne reali su cui provarlo.',
           ] },
         ] as Section[],
