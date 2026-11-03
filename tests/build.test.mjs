@@ -40,11 +40,11 @@ test('a production build carries no variant switcher and no preview page', { ski
   assert.ok(!existsSync(new URL('__preview/brand.html', dist)), 'the brand board in a production build');
 });
 
-test('while the Connect repository is private, /developers shows its paths and links to none of them', { skip }, () => {
+test('while the Connect repository is private, /developers leads into the docs rendered here and never into it', { skip }, () => {
   for (const lang of LANGS) {
     const html = readFileSync(file(lang, '/developers'), 'utf8');
-    assert.ok(html.includes('docs/guides/embed-in-five-minutes.md'), `${lang}: the quickstart's path`);
-    assert.doesNotMatch(html, /href="https:\/\/github\.com\/murks3r\/linkbot-connect/, `${lang}: a link into the private repository`);
+    assert.ok(html.includes('href="/developers/docs/guides/embed-in-five-minutes"'), `${lang}: the quickstart in the docs`);
+    assert.doesNotMatch(html, /href="https:\/\/github\.com\//, `${lang}: a link into a repository`);
   }
 });
 
