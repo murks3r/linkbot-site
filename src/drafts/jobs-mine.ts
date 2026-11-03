@@ -71,7 +71,7 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
       pause: {
         title: 'Your search',
         active: 'Active: companies whose roles may fit see your criteria and verdicts, without your name.',
-        paused: 'Paused: no company sees you and no new role is proposed to you until you resume. Your answers stay as they are.',
+        paused: 'Paused: no company is shown anything new of you and no new role is proposed to you until you resume. A company that already saw your verdicts keeps them in its list, closed and without any update. Your answers stay as they are, and when you resume, everything is as it was.',
         pause: 'Pause my search',
         resume: 'Resume',
       },
@@ -110,7 +110,7 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
       block: {
         title: 'Who never sees you',
         p: 'A company on this list gets no match with you, no card and no count, and it is never told that you listed it.',
-        promise: `Companies you list never see you while they use the domain they confirmed with ${PUBLIC_NAME}. Nothing stronger is promised.`,
+        promise: `Companies you list never see you while they use the domain they confirmed with ${PUBLIC_NAME}. Nothing stronger is promised. A block never undoes an introduction that has already happened.`,
         employer: 'Your current employer',
         block: 'Block',
         unblock: 'Remove from the list',
@@ -200,7 +200,7 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
       pause: {
         title: 'Ihre Suche',
         active: 'Aktiv: Firmen, deren Stellen passen könnten, sehen Ihre Kriterien und Urteile, ohne Ihren Namen.',
-        paused: 'Pausiert: Keine Firma sieht Sie, und Ihnen wird keine neue Stelle vorgeschlagen, bis Sie fortsetzen. Ihre Antworten bleiben, wie sie sind.',
+        paused: 'Pausiert: Keiner Firma wird etwas Neues von Ihnen gezeigt, und Ihnen wird keine neue Stelle vorgeschlagen, bis Sie fortsetzen. Eine Firma, die Ihre Urteile schon gesehen hat, behält sie in ihrer Liste, geschlossen und ohne jede Aktualisierung. Ihre Antworten bleiben, wie sie sind, und wenn Sie fortsetzen, ist alles wie vorher.',
         pause: 'Suche pausieren',
         resume: 'Fortsetzen',
       },
@@ -239,7 +239,7 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
       block: {
         title: 'Wer Sie nie sieht',
         p: 'Eine Firma auf dieser Liste bekommt keinen Abgleich mit Ihnen, keine Karte und keine Zahl, und sie erfährt nie, dass Sie sie eingetragen haben.',
-        promise: `Firmen auf Ihrer Liste sehen Sie nie, solange sie die Domain nutzen, die sie bei ${PUBLIC_NAME} bestätigt haben. Mehr wird nicht versprochen.`,
+        promise: `Firmen auf Ihrer Liste sehen Sie nie, solange sie die Domain nutzen, die sie bei ${PUBLIC_NAME} bestätigt haben. Mehr wird nicht versprochen. Eine Sperre macht keine Vorstellung rückgängig, die schon stattgefunden hat.`,
         employer: 'Ihr aktueller Arbeitgeber',
         block: 'Sperren',
         unblock: 'Von der Liste nehmen',
