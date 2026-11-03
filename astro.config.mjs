@@ -1,19 +1,27 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
-import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import { shareImages } from './src/integrations/share-images.ts';
+import { demoImages } from './src/integrations/demo-images.ts';
+
+/* The public site is static and crawlable, in five languages: English at the root, the others
+   under /de, /es, /it and /fr (src/i18n). SITE_URL is the canonical origin (canonical links,
+   Open Graph and the sitemap derive from it). The default is where production runs today; the
+   launch domain is to be named by the owner (linkbot-domain-tbd.invalid until then), so a deploy
+   sets it.
+   A build with PUBLIC_NOINDEX=1 is never indexed; Vercel's preview deployments are behind its
+   login and send X-Robots-Tag: noindex themselves. Drafts for the owner (src/drafts) stay out of the sitemap. */
+const site = process.env.SITE_URL || 'https://linkbot-site.vercel.app';
+const locales = ['en', 'de', 'es', 'it', 'fr'];
 
 export default defineConfig({
-  // Where production runs today. linkbot.org does not serve this site; the launch domain is the owner's call.
-  site: 'https://linkbot-site.vercel.app',
+  site,
   output: 'static',
-  trailingSlash: 'ignore',
-  integrations: [
-    react(),
-    tailwind({ applyBaseStyles: false }),
-    sitemap(),
-  ],
-  build: { inlineStylesheets: 'auto' },
-  vite: { ssr: { noExternal: ['gsap', 'lenis'] } },
+  trailingSlash: 'never',
+  build: { format: 'file', inlineStylesheets: 'auto' },
+  i18n: { defaultLocale: 'en', locales, routing: { prefixDefaultLocale: false } },
+  integrations: [shareImages(), demoImages(), sitemap({
+    filter: page => !page.endsWith('/404') && !page.endsWith('/for-intermediaries'),
+    i18n: { defaultLocale: 'en', locales: Object.fromEntries(locales.map(l => [l, l])) },
+  })],
 });

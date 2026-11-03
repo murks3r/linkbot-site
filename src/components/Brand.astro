@@ -1,0 +1,19 @@
+---
+/* The brand, top left: two forms for the owner's pick (brief of 2026-10-24), both without a diagram. The wordmark
+   "linkbot", set in the display face; or the quotation-mark logo C-L02 "Anführung" from the brand lab (Lane C,
+   exploration-r2-v1, a one-colour outline, 96 × 96 units) in front of the same wordmark. The page shows the wordmark
+   unless html[data-logo="quote"] is set (the ?logo=quote switch in Base.astro); both forms are in the markup, one is
+   hidden, so nothing loads twice and the pick is a one-line change. */
+interface Props { href: string; name: string }
+const { href, name } = Astro.props;
+---
+<a class="brand" href={href}>
+  <svg class="brand-quote" viewBox="0 0 96 96" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M19 72L30 72C34.42 72 38 68.42 38 64L38 53C38 48.58 34.42 45 30 45L22.5 45C24.21 38.37 30.06 33.38 37.2 33.02L37.17 32.5L42 32.5C43.66 32.5 45 31.16 45 29.5L45 24.5C45 22.84 43.66 21.5 42 21.5L36 21.5L36 22.07C21.94 23.11 11 34.83 11 49L12.07 49C11.39 50.18 11 51.54 11 53L11 64C11 68.42 14.58 72 19 72ZM60 72L71 72C75.42 72 79 68.42 79 64L79 53C79 48.58 75.42 45 71 45L63.5 45C65.21 38.37 71.06 33.38 78.2 33.02L78.17 32.5L83 32.5C84.66 32.5 86 31.16 86 29.5L86 24.5C86 22.84 84.66 21.5 83 21.5L77 21.5L77 22.07C62.94 23.11 52 34.83 52 49L53.07 49C52.39 50.18 52 51.54 52 53L52 64C52 68.42 55.58 72 60 72Z" /></svg>
+  <span class="brand-word">{name.toLowerCase()}</span>
+</a>
+
+<style>
+  .brand { display: inline-flex; align-items: center; gap: 9px; min-height: var(--target); font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -.028em; line-height: 1; text-decoration: none; color: var(--ink); }
+  .brand-quote { display: none; flex: none; margin-top: -2px; }
+  :global(html[data-logo='quote']) .brand-quote { display: block; }
+</style>

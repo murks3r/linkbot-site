@@ -1,0 +1,65 @@
+---
+/* "Linkbot in one page", print-ready: the same structure as the PDF (src/lib/sheet.ts), set for A4 when printed, with
+   the site's header and footer left off the paper. Words: the catalogue's how, forPlatforms, status and sheet. */
+import Base from '../../layouts/Base.astro';
+import { langPaths, resolve, type Lang } from '../../i18n';
+import { sheet, sheetPdfPath } from '../../lib/sheet';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const s = sheet(lang, Astro.site!);
+---
+<Base lang={lang} t={t} fallback={fallback} title={t.sheet.title} description={t.sheet.description} path="/one-page" crumbs={[[t.sheet.eyebrow, '/one-page']]}>
+  <article class="wrap sheet">
+    <header class="sheet-head">
+      <p class="eyebrow">{t.sheet.eyebrow}</p>
+      <h1>{s.title}</h1>
+      <p class="lede">{s.claim}</p>
+      <p class="note">{s.dated}</p>
+      <p class="sheet-pdf"><a href={sheetPdfPath(lang)} download>{t.sheet.pdf}</a></p>
+    </header>
+    <div class="sheet-cols">
+      {s.sections.map(section => <section>
+        <h2>{section.title}</h2>
+        {section.blocks.map(b => b.kind === 'para' ? <p class="para">{b.text}</p>
+          : b.kind === 'list' ? <ul>{b.items.map(item => <li>{item}</li>)}</ul>
+          : <dl>{b.items.map(term => <div><dt>{term.name}</dt> <dd>{term.text}</dd></div>)}</dl>)}
+      </section>)}
+    </div>
+    <footer class="sheet-foot">
+      <p><b>{s.contact.label}:</b> {s.contact.text}</p>
+      <p>{s.synthetic}</p>
+      <p><b>{s.more.label}:</b> {s.more.url}</p>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .sheet { display: grid; gap: 28px; padding-block: clamp(32px, 6vw, 72px); max-width: 64rem; }
+  .sheet-head { display: grid; gap: 10px; }
+  .sheet-cols { columns: 2; column-gap: 40px; }
+  .sheet-cols section { padding-block: 10px 14px; border-top: 2px solid var(--ink); break-inside: avoid; }
+  .sheet-cols h2 { font-size: 1.125rem; margin-bottom: 8px; }
+  .sheet-cols .para { color: var(--ink-2); margin-bottom: 8px; }
+  .sheet-cols ul, .sheet-cols dl { display: grid; gap: 6px; }
+  .sheet-cols li { padding-left: 1em; text-indent: -1em; }
+  .sheet-cols li::before { content: '–'; display: inline-block; width: 1em; text-indent: 0; color: var(--ink-2); }
+  .sheet-cols dt { display: inline; font-weight: 650; color: var(--ink); }
+  .sheet-cols dd { display: inline; }
+  .sheet-foot { display: grid; gap: 6px; padding-top: 14px; border-top: 1px solid var(--line-strong); font-size: var(--size-small); color: var(--ink-2); }
+  @media screen and (max-width: 48rem) { .sheet-cols { columns: 1; } }
+  @page { size: A4; margin: 14mm; }
+  @media print {
+    :global(.masthead), :global(.footer), :global(.skip), .sheet-pdf, .eyebrow { display: none; }
+    .sheet { padding: 0; gap: 12px; max-width: none; font-size: 8.5pt; }
+    .sheet h1 { font-size: 20pt; }
+    .sheet .lede { font-size: 11pt; }
+    .sheet .note { padding: 0; background: none; }
+    .sheet-cols { column-gap: 20px; }
+    .sheet-cols h2 { font-size: 10pt; margin-bottom: 4px; }
+    .sheet-cols section { padding-block: 6px 8px; }
+    .sheet-cols ul, .sheet-cols dl { gap: 3px; }
+    .sheet-foot { font-size: 7.5pt; }
+  }
+</style>

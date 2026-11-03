@@ -1,0 +1,968 @@
+{
+ "a7": {
+  "name": "A7, refined",
+  "tokens": {
+   "--paper": "#fbf8f1",
+   "--lb-cream": "#fbf8f1",
+   "--surface": "#fffdf9",
+   "--ink": "#123a2c",
+   "--green": "#123a2c",
+   "--ink-2": "#37584c",
+   "--ink-3": "#4a685b",
+   "--line": "#e1e3db",
+   "--line-strong": "#ccd2ca",
+   "--line-ink": "#7b9085",
+   "--sand": "#f2f0e9",
+   "--sand-2": "#e8e9e1",
+   "--mist": "#edede5",
+   "--green-hover": "#335549",
+   "--green-press": "#204638",
+   "--green-wash": "#e8e9e1",
+   "--green-line": "#a7b4aa",
+   "--green-rule": "#547165",
+   "--on-green": "#fbf8f1",
+   "--on-green-2": "#c8cec6",
+   "--pink": "#ff9dbb",
+   "--pink-hover": "#ee96b1",
+   "--pink-press": "#e090a8",
+   "--on-pink": "#123a2c",
+   "--blush": "#ffe0e6",
+   "--sage": "#e6e7df",
+   "--dawn": "#fedfc6",
+   "--lb-air-sun": "#fed371",
+   "--lb-air-peach": "#fdc192",
+   "--lb-air-coral": "#fdbca9",
+   "--lb-air-rose": "#fdcfd9",
+   "--lb-air-sky": "#aecef8",
+   "--lb-air-sage": "#bcd3b5",
+   "--lb-air-leaf": "#9cdcb8"
+  },
+  "pairs": [
+   {
+    "label": "ink on --paper",
+    "fg": "--ink",
+    "bg": "--paper",
+    "min": 7,
+    "ratio": 11.87
+   },
+   {
+    "label": "ink-2 on --paper",
+    "fg": "--ink-2",
+    "bg": "--paper",
+    "min": 4.5,
+    "ratio": 7.44
+   },
+   {
+    "label": "ink-3 on --paper",
+    "fg": "--ink-3",
+    "bg": "--paper",
+    "min": 4.5,
+    "ratio": 5.79
+   },
+   {
+    "label": "ink on --surface",
+    "fg": "--ink",
+    "bg": "--surface",
+    "min": 7,
+    "ratio": 12.4
+   },
+   {
+    "label": "ink-2 on --surface",
+    "fg": "--ink-2",
+    "bg": "--surface",
+    "min": 4.5,
+    "ratio": 7.76
+   },
+   {
+    "label": "ink-3 on --surface",
+    "fg": "--ink-3",
+    "bg": "--surface",
+    "min": 4.5,
+    "ratio": 6.04
+   },
+   {
+    "label": "ink on --sand",
+    "fg": "--ink",
+    "bg": "--sand",
+    "min": 7,
+    "ratio": 11.05
+   },
+   {
+    "label": "ink-2 on --sand",
+    "fg": "--ink-2",
+    "bg": "--sand",
+    "min": 4.5,
+    "ratio": 6.92
+   },
+   {
+    "label": "ink-3 on --sand",
+    "fg": "--ink-3",
+    "bg": "--sand",
+    "min": 4.5,
+    "ratio": 5.38
+   },
+   {
+    "label": "ink on --mist",
+    "fg": "--ink",
+    "bg": "--mist",
+    "min": 7,
+    "ratio": 10.7
+   },
+   {
+    "label": "ink-2 on --mist",
+    "fg": "--ink-2",
+    "bg": "--mist",
+    "min": 4.5,
+    "ratio": 6.7
+   },
+   {
+    "label": "ink-3 on --mist",
+    "fg": "--ink-3",
+    "bg": "--mist",
+    "min": 4.5,
+    "ratio": 5.21
+   },
+   {
+    "label": "ink on --green-wash",
+    "fg": "--ink",
+    "bg": "--green-wash",
+    "min": 7,
+    "ratio": 10.3
+   },
+   {
+    "label": "ink-2 on --green-wash",
+    "fg": "--ink-2",
+    "bg": "--green-wash",
+    "min": 4.5,
+    "ratio": 6.45
+   },
+   {
+    "label": "ink-3 on --green-wash",
+    "fg": "--ink-3",
+    "bg": "--green-wash",
+    "min": 4.5,
+    "ratio": 5.02
+   },
+   {
+    "label": "ink on --blush",
+    "fg": "--ink",
+    "bg": "--blush",
+    "min": 7,
+    "ratio": 10.23
+   },
+   {
+    "label": "ink-2 on --blush",
+    "fg": "--ink-2",
+    "bg": "--blush",
+    "min": 4.5,
+    "ratio": 6.41
+   },
+   {
+    "label": "ink-3 on --blush",
+    "fg": "--ink-3",
+    "bg": "--blush",
+    "min": 4.5,
+    "ratio": 4.98
+   },
+   {
+    "label": "line-ink on --paper",
+    "fg": "--line-ink",
+    "bg": "--paper",
+    "min": 3,
+    "ratio": 3.21
+   },
+   {
+    "label": "line-ink on --surface",
+    "fg": "--line-ink",
+    "bg": "--surface",
+    "min": 3,
+    "ratio": 3.35
+   },
+   {
+    "label": "on-green on green",
+    "fg": "--on-green",
+    "bg": "--green",
+    "min": 7,
+    "ratio": 11.87
+   },
+   {
+    "label": "on-green-2 on green",
+    "fg": "--on-green-2",
+    "bg": "--green",
+    "min": 4.5,
+    "ratio": 7.86
+   },
+   {
+    "label": "on-pink on pink",
+    "fg": "--on-pink",
+    "bg": "--pink",
+    "min": 4.5,
+    "ratio": 6.47
+   },
+   {
+    "label": "on-pink on pink-hover",
+    "fg": "--on-pink",
+    "bg": "--pink-hover",
+    "min": 4.5,
+    "ratio": 5.78
+   },
+   {
+    "label": "green on paper (non-text)",
+    "fg": "--green",
+    "bg": "--paper",
+    "min": 3,
+    "ratio": 11.87
+   },
+   {
+    "label": "pink against paper (a spot, not a signal)",
+    "fg": "--pink",
+    "bg": "--paper",
+    "min": 1.3,
+    "ratio": 1.83
+   },
+   {
+    "label": "ink on --lb-air-sun",
+    "fg": "--ink",
+    "bg": "--lb-air-sun",
+    "min": 7,
+    "ratio": 8.86
+   },
+   {
+    "label": "ink-2 on --lb-air-sun",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sun",
+    "min": 4.5,
+    "ratio": 5.55
+   },
+   {
+    "label": "ink on --lb-air-peach",
+    "fg": "--ink",
+    "bg": "--lb-air-peach",
+    "min": 7,
+    "ratio": 7.93
+   },
+   {
+    "label": "ink-2 on --lb-air-peach",
+    "fg": "--ink-2",
+    "bg": "--lb-air-peach",
+    "min": 4.5,
+    "ratio": 4.96
+   },
+   {
+    "label": "ink on --lb-air-coral",
+    "fg": "--ink",
+    "bg": "--lb-air-coral",
+    "min": 7,
+    "ratio": 7.76
+   },
+   {
+    "label": "ink-2 on --lb-air-coral",
+    "fg": "--ink-2",
+    "bg": "--lb-air-coral",
+    "min": 4.5,
+    "ratio": 4.86
+   },
+   {
+    "label": "ink on --lb-air-rose",
+    "fg": "--ink",
+    "bg": "--lb-air-rose",
+    "min": 7,
+    "ratio": 9.06
+   },
+   {
+    "label": "ink-2 on --lb-air-rose",
+    "fg": "--ink-2",
+    "bg": "--lb-air-rose",
+    "min": 4.5,
+    "ratio": 5.67
+   },
+   {
+    "label": "ink on --lb-air-sky",
+    "fg": "--ink",
+    "bg": "--lb-air-sky",
+    "min": 7,
+    "ratio": 7.79
+   },
+   {
+    "label": "ink-2 on --lb-air-sky",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sky",
+    "min": 4.5,
+    "ratio": 4.88
+   },
+   {
+    "label": "ink on --lb-air-sage",
+    "fg": "--ink",
+    "bg": "--lb-air-sage",
+    "min": 7,
+    "ratio": 7.87
+   },
+   {
+    "label": "ink-2 on --lb-air-sage",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sage",
+    "min": 4.5,
+    "ratio": 4.93
+   },
+   {
+    "label": "ink on --lb-air-leaf",
+    "fg": "--ink",
+    "bg": "--lb-air-leaf",
+    "min": 7,
+    "ratio": 8
+   },
+   {
+    "label": "ink-2 on --lb-air-leaf",
+    "fg": "--ink-2",
+    "bg": "--lb-air-leaf",
+    "min": 4.5,
+    "ratio": 5.01
+   }
+  ],
+  "lowest": 1.83
+ },
+ "moss": {
+  "name": "Moss and blush",
+  "tokens": {
+   "--paper": "#f3f4ea",
+   "--lb-cream": "#f3f4ea",
+   "--surface": "#fbfbf4",
+   "--ink": "#124131",
+   "--green": "#124131",
+   "--ink-2": "#365e4f",
+   "--ink-3": "#486c5d",
+   "--line": "#dae0d6",
+   "--line-strong": "#c6d0c5",
+   "--line-ink": "#779284",
+   "--sand": "#eaede3",
+   "--sand-2": "#e1e6db",
+   "--mist": "#e6e9df",
+   "--green-hover": "#335b4c",
+   "--green-press": "#204c3d",
+   "--green-wash": "#e1e6db",
+   "--green-line": "#a2b4a7",
+   "--green-rule": "#537568",
+   "--on-green": "#f3f4ea",
+   "--on-green-2": "#c2cdc1",
+   "--pink": "#ffafc0",
+   "--pink-hover": "#eea7b6",
+   "--pink-press": "#e0a1ad",
+   "--on-pink": "#124131",
+   "--blush": "#fce4e4",
+   "--sage": "#dfe4d9",
+   "--dawn": "#fcdec3",
+   "--lb-air-sun": "#f6d58a",
+   "--lb-air-peach": "#f7c9a2",
+   "--lb-air-coral": "#f6c2ad",
+   "--lb-air-rose": "#f9d2d8",
+   "--lb-air-sky": "#b7d3ee",
+   "--lb-air-sage": "#bbd3b0",
+   "--lb-air-leaf": "#a2dcba"
+  },
+  "pairs": [
+   {
+    "label": "ink on --paper",
+    "fg": "--ink",
+    "bg": "--paper",
+    "min": 7,
+    "ratio": 10.37
+   },
+   {
+    "label": "ink-2 on --paper",
+    "fg": "--ink-2",
+    "bg": "--paper",
+    "min": 4.5,
+    "ratio": 6.6
+   },
+   {
+    "label": "ink-3 on --paper",
+    "fg": "--ink-3",
+    "bg": "--paper",
+    "min": 4.5,
+    "ratio": 5.29
+   },
+   {
+    "label": "ink on --surface",
+    "fg": "--ink",
+    "bg": "--surface",
+    "min": 7,
+    "ratio": 11.07
+   },
+   {
+    "label": "ink-2 on --surface",
+    "fg": "--ink-2",
+    "bg": "--surface",
+    "min": 4.5,
+    "ratio": 7.04
+   },
+   {
+    "label": "ink-3 on --surface",
+    "fg": "--ink-3",
+    "bg": "--surface",
+    "min": 4.5,
+    "ratio": 5.65
+   },
+   {
+    "label": "ink on --sand",
+    "fg": "--ink",
+    "bg": "--sand",
+    "min": 7,
+    "ratio": 9.7
+   },
+   {
+    "label": "ink-2 on --sand",
+    "fg": "--ink-2",
+    "bg": "--sand",
+    "min": 4.5,
+    "ratio": 6.17
+   },
+   {
+    "label": "ink-3 on --sand",
+    "fg": "--ink-3",
+    "bg": "--sand",
+    "min": 4.5,
+    "ratio": 4.95
+   },
+   {
+    "label": "ink on --mist",
+    "fg": "--ink",
+    "bg": "--mist",
+    "min": 7,
+    "ratio": 9.36
+   },
+   {
+    "label": "ink-2 on --mist",
+    "fg": "--ink-2",
+    "bg": "--mist",
+    "min": 4.5,
+    "ratio": 5.95
+   },
+   {
+    "label": "ink-3 on --mist",
+    "fg": "--ink-3",
+    "bg": "--mist",
+    "min": 4.5,
+    "ratio": 4.77
+   },
+   {
+    "label": "ink on --green-wash",
+    "fg": "--ink",
+    "bg": "--green-wash",
+    "min": 7,
+    "ratio": 9.06
+   },
+   {
+    "label": "ink-2 on --green-wash",
+    "fg": "--ink-2",
+    "bg": "--green-wash",
+    "min": 4.5,
+    "ratio": 5.76
+   },
+   {
+    "label": "ink-3 on --green-wash",
+    "fg": "--ink-3",
+    "bg": "--green-wash",
+    "min": 4.5,
+    "ratio": 4.62
+   },
+   {
+    "label": "ink on --blush",
+    "fg": "--ink",
+    "bg": "--blush",
+    "min": 7,
+    "ratio": 9.5
+   },
+   {
+    "label": "ink-2 on --blush",
+    "fg": "--ink-2",
+    "bg": "--blush",
+    "min": 4.5,
+    "ratio": 6.05
+   },
+   {
+    "label": "ink-3 on --blush",
+    "fg": "--ink-3",
+    "bg": "--blush",
+    "min": 4.5,
+    "ratio": 4.85
+   },
+   {
+    "label": "line-ink on --paper",
+    "fg": "--line-ink",
+    "bg": "--paper",
+    "min": 3,
+    "ratio": 3.04
+   },
+   {
+    "label": "line-ink on --surface",
+    "fg": "--line-ink",
+    "bg": "--surface",
+    "min": 3,
+    "ratio": 3.24
+   },
+   {
+    "label": "on-green on green",
+    "fg": "--on-green",
+    "bg": "--green",
+    "min": 7,
+    "ratio": 10.37
+   },
+   {
+    "label": "on-green-2 on green",
+    "fg": "--on-green-2",
+    "bg": "--green",
+    "min": 4.5,
+    "ratio": 7.01
+   },
+   {
+    "label": "on-pink on pink",
+    "fg": "--on-pink",
+    "bg": "--pink",
+    "min": 4.5,
+    "ratio": 6.65
+   },
+   {
+    "label": "on-pink on pink-hover",
+    "fg": "--on-pink",
+    "bg": "--pink-hover",
+    "min": 4.5,
+    "ratio": 5.93
+   },
+   {
+    "label": "green on paper (non-text)",
+    "fg": "--green",
+    "bg": "--paper",
+    "min": 3,
+    "ratio": 10.37
+   },
+   {
+    "label": "pink against paper (a spot, not a signal)",
+    "fg": "--pink",
+    "bg": "--paper",
+    "min": 1.3,
+    "ratio": 1.56
+   },
+   {
+    "label": "ink on --lb-air-sun",
+    "fg": "--ink",
+    "bg": "--lb-air-sun",
+    "min": 7,
+    "ratio": 8.11
+   },
+   {
+    "label": "ink-2 on --lb-air-sun",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sun",
+    "min": 4.5,
+    "ratio": 5.16
+   },
+   {
+    "label": "ink on --lb-air-peach",
+    "fg": "--ink",
+    "bg": "--lb-air-peach",
+    "min": 7,
+    "ratio": 7.57
+   },
+   {
+    "label": "ink-2 on --lb-air-peach",
+    "fg": "--ink-2",
+    "bg": "--lb-air-peach",
+    "min": 4.5,
+    "ratio": 4.82
+   },
+   {
+    "label": "ink on --lb-air-coral",
+    "fg": "--ink",
+    "bg": "--lb-air-coral",
+    "min": 7,
+    "ratio": 7.25
+   },
+   {
+    "label": "ink-2 on --lb-air-coral",
+    "fg": "--ink-2",
+    "bg": "--lb-air-coral",
+    "min": 4.5,
+    "ratio": 4.61
+   },
+   {
+    "label": "ink on --lb-air-rose",
+    "fg": "--ink",
+    "bg": "--lb-air-rose",
+    "min": 7,
+    "ratio": 8.34
+   },
+   {
+    "label": "ink-2 on --lb-air-rose",
+    "fg": "--ink-2",
+    "bg": "--lb-air-rose",
+    "min": 4.5,
+    "ratio": 5.31
+   },
+   {
+    "label": "ink on --lb-air-sky",
+    "fg": "--ink",
+    "bg": "--lb-air-sky",
+    "min": 7,
+    "ratio": 7.43
+   },
+   {
+    "label": "ink-2 on --lb-air-sky",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sky",
+    "min": 4.5,
+    "ratio": 4.73
+   },
+   {
+    "label": "ink on --lb-air-sage",
+    "fg": "--ink",
+    "bg": "--lb-air-sage",
+    "min": 7,
+    "ratio": 7.15
+   },
+   {
+    "label": "ink-2 on --lb-air-sage",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sage",
+    "min": 4.5,
+    "ratio": 4.55
+   },
+   {
+    "label": "ink on --lb-air-leaf",
+    "fg": "--ink",
+    "bg": "--lb-air-leaf",
+    "min": 7,
+    "ratio": 7.38
+   },
+   {
+    "label": "ink-2 on --lb-air-leaf",
+    "fg": "--ink-2",
+    "bg": "--lb-air-leaf",
+    "min": 4.5,
+    "ratio": 4.7
+   }
+  ],
+  "lowest": 1.56
+ },
+ "ink": {
+  "name": "Ink and coral",
+  "tokens": {
+   "--paper": "#fdfcf8",
+   "--lb-cream": "#fdfcf8",
+   "--surface": "#ffffff",
+   "--ink": "#0b2820",
+   "--green": "#0b2820",
+   "--ink-2": "#324a43",
+   "--ink-3": "#455b54",
+   "--line": "#e2e5e0",
+   "--line-strong": "#cdd2cd",
+   "--line-ink": "#788781",
+   "--sand": "#f3f4ef",
+   "--sand-2": "#eaebe7",
+   "--mist": "#eeefeb",
+   "--green-hover": "#2d463f",
+   "--green-press": "#1a352d",
+   "--green-wash": "#eaebe7",
+   "--green-line": "#a6b0aa",
+   "--green-rule": "#4f645e",
+   "--on-green": "#fdfcf8",
+   "--on-green-2": "#c8cdc8",
+   "--pink": "#ff8e9c",
+   "--pink-hover": "#ee8793",
+   "--pink-press": "#df818c",
+   "--on-pink": "#0b2820",
+   "--blush": "#ffdde1",
+   "--sage": "#e7e9e5",
+   "--dawn": "#fee0c9",
+   "--lb-air-sun": "#ffd25e",
+   "--lb-air-peach": "#ffbb85",
+   "--lb-air-coral": "#ffb29b",
+   "--lb-air-rose": "#ffc9d1",
+   "--lb-air-sky": "#a4c9f8",
+   "--lb-air-sage": "#bfd6b6",
+   "--lb-air-leaf": "#98dcb4"
+  },
+  "pairs": [
+   {
+    "label": "ink on --paper",
+    "fg": "--ink",
+    "bg": "--paper",
+    "min": 7,
+    "ratio": 15.28
+   },
+   {
+    "label": "ink-2 on --paper",
+    "fg": "--ink-2",
+    "bg": "--paper",
+    "min": 4.5,
+    "ratio": 9.31
+   },
+   {
+    "label": "ink-3 on --paper",
+    "fg": "--ink-3",
+    "bg": "--paper",
+    "min": 4.5,
+    "ratio": 7.11
+   },
+   {
+    "label": "ink on --surface",
+    "fg": "--ink",
+    "bg": "--surface",
+    "min": 7,
+    "ratio": 15.69
+   },
+   {
+    "label": "ink-2 on --surface",
+    "fg": "--ink-2",
+    "bg": "--surface",
+    "min": 4.5,
+    "ratio": 9.56
+   },
+   {
+    "label": "ink-3 on --surface",
+    "fg": "--ink-3",
+    "bg": "--surface",
+    "min": 4.5,
+    "ratio": 7.3
+   },
+   {
+    "label": "ink on --sand",
+    "fg": "--ink",
+    "bg": "--sand",
+    "min": 7,
+    "ratio": 14.19
+   },
+   {
+    "label": "ink-2 on --sand",
+    "fg": "--ink-2",
+    "bg": "--sand",
+    "min": 4.5,
+    "ratio": 8.65
+   },
+   {
+    "label": "ink-3 on --sand",
+    "fg": "--ink-3",
+    "bg": "--sand",
+    "min": 4.5,
+    "ratio": 6.6
+   },
+   {
+    "label": "ink on --mist",
+    "fg": "--ink",
+    "bg": "--mist",
+    "min": 7,
+    "ratio": 13.58
+   },
+   {
+    "label": "ink-2 on --mist",
+    "fg": "--ink-2",
+    "bg": "--mist",
+    "min": 4.5,
+    "ratio": 8.28
+   },
+   {
+    "label": "ink-3 on --mist",
+    "fg": "--ink-3",
+    "bg": "--mist",
+    "min": 4.5,
+    "ratio": 6.32
+   },
+   {
+    "label": "ink on --green-wash",
+    "fg": "--ink",
+    "bg": "--green-wash",
+    "min": 7,
+    "ratio": 13.1
+   },
+   {
+    "label": "ink-2 on --green-wash",
+    "fg": "--ink-2",
+    "bg": "--green-wash",
+    "min": 4.5,
+    "ratio": 7.98
+   },
+   {
+    "label": "ink-3 on --green-wash",
+    "fg": "--ink-3",
+    "bg": "--green-wash",
+    "min": 4.5,
+    "ratio": 6.09
+   },
+   {
+    "label": "ink on --blush",
+    "fg": "--ink",
+    "bg": "--blush",
+    "min": 7,
+    "ratio": 12.46
+   },
+   {
+    "label": "ink-2 on --blush",
+    "fg": "--ink-2",
+    "bg": "--blush",
+    "min": 4.5,
+    "ratio": 7.6
+   },
+   {
+    "label": "ink-3 on --blush",
+    "fg": "--ink-3",
+    "bg": "--blush",
+    "min": 4.5,
+    "ratio": 5.8
+   },
+   {
+    "label": "line-ink on --paper",
+    "fg": "--line-ink",
+    "bg": "--paper",
+    "min": 3,
+    "ratio": 3.67
+   },
+   {
+    "label": "line-ink on --surface",
+    "fg": "--line-ink",
+    "bg": "--surface",
+    "min": 3,
+    "ratio": 3.76
+   },
+   {
+    "label": "on-green on green",
+    "fg": "--on-green",
+    "bg": "--green",
+    "min": 7,
+    "ratio": 15.28
+   },
+   {
+    "label": "on-green-2 on green",
+    "fg": "--on-green-2",
+    "bg": "--green",
+    "min": 4.5,
+    "ratio": 9.73
+   },
+   {
+    "label": "on-pink on pink",
+    "fg": "--on-pink",
+    "bg": "--pink",
+    "min": 4.5,
+    "ratio": 7.17
+   },
+   {
+    "label": "on-pink on pink-hover",
+    "fg": "--on-pink",
+    "bg": "--pink-hover",
+    "min": 4.5,
+    "ratio": 6.37
+   },
+   {
+    "label": "green on paper (non-text)",
+    "fg": "--green",
+    "bg": "--paper",
+    "min": 3,
+    "ratio": 15.28
+   },
+   {
+    "label": "pink against paper (a spot, not a signal)",
+    "fg": "--pink",
+    "bg": "--paper",
+    "min": 1.3,
+    "ratio": 2.13
+   },
+   {
+    "label": "ink on --lb-air-sun",
+    "fg": "--ink",
+    "bg": "--lb-air-sun",
+    "min": 7,
+    "ratio": 10.93
+   },
+   {
+    "label": "ink-2 on --lb-air-sun",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sun",
+    "min": 4.5,
+    "ratio": 6.66
+   },
+   {
+    "label": "ink on --lb-air-peach",
+    "fg": "--ink",
+    "bg": "--lb-air-peach",
+    "min": 7,
+    "ratio": 9.49
+   },
+   {
+    "label": "ink-2 on --lb-air-peach",
+    "fg": "--ink-2",
+    "bg": "--lb-air-peach",
+    "min": 4.5,
+    "ratio": 5.78
+   },
+   {
+    "label": "ink on --lb-air-coral",
+    "fg": "--ink",
+    "bg": "--lb-air-coral",
+    "min": 7,
+    "ratio": 9.03
+   },
+   {
+    "label": "ink-2 on --lb-air-coral",
+    "fg": "--ink-2",
+    "bg": "--lb-air-coral",
+    "min": 4.5,
+    "ratio": 5.51
+   },
+   {
+    "label": "ink on --lb-air-rose",
+    "fg": "--ink",
+    "bg": "--lb-air-rose",
+    "min": 7,
+    "ratio": 10.85
+   },
+   {
+    "label": "ink-2 on --lb-air-rose",
+    "fg": "--ink-2",
+    "bg": "--lb-air-rose",
+    "min": 4.5,
+    "ratio": 6.61
+   },
+   {
+    "label": "ink on --lb-air-sky",
+    "fg": "--ink",
+    "bg": "--lb-air-sky",
+    "min": 7,
+    "ratio": 9.18
+   },
+   {
+    "label": "ink-2 on --lb-air-sky",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sky",
+    "min": 4.5,
+    "ratio": 5.6
+   },
+   {
+    "label": "ink on --lb-air-sage",
+    "fg": "--ink",
+    "bg": "--lb-air-sage",
+    "min": 7,
+    "ratio": 10.09
+   },
+   {
+    "label": "ink-2 on --lb-air-sage",
+    "fg": "--ink-2",
+    "bg": "--lb-air-sage",
+    "min": 4.5,
+    "ratio": 6.15
+   },
+   {
+    "label": "ink on --lb-air-leaf",
+    "fg": "--ink",
+    "bg": "--lb-air-leaf",
+    "min": 7,
+    "ratio": 9.88
+   },
+   {
+    "label": "ink-2 on --lb-air-leaf",
+    "fg": "--ink-2",
+    "bg": "--lb-air-leaf",
+    "min": 4.5,
+    "ratio": 6.02
+   }
+  ],
+  "lowest": 2.13
+ }
+}

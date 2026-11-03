@@ -1,0 +1,21 @@
+---
+/* The four verdicts of the matching paragraph (Space API contract 0.2.7), as marks that never rely on colour alone:
+   meets = a solid square, partly = a split square, conflicts = a crossed square, unknown = a dashed square (the
+   app's evidence squares, Mark.astro, plus the cross). The word stands beside the mark wherever it appears. */
+interface Props { kind: 'meets' | 'partly' | 'conflicts' | 'unknown'; size?: number }
+const { kind, size = 14 } = Astro.props;
+const h = size - 1.5;
+---
+<svg class="verdict" data-kind={kind} width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true" focusable="false">
+  {kind === 'meets' && <rect x=".75" y=".75" width={h} height={h} fill="currentColor" stroke="currentColor" stroke-width="1.5" />}
+  {kind === 'partly' && <><rect x=".75" y=".75" width={h} height={h} fill="none" stroke="currentColor" stroke-width="1.5" /><path d={`M${size} 0V${size}H0Z`} fill="currentColor" /></>}
+  {kind === 'conflicts' && <><rect x=".75" y=".75" width={h} height={h} fill="none" stroke="currentColor" stroke-width="1.5" /><path d={`M3.5 3.5l${size - 7} ${size - 7}M${size - 3.5} 3.5l${-(size - 7)} ${size - 7}`} stroke="currentColor" stroke-width="1.6" stroke-linecap="round" /></>}
+  {kind === 'unknown' && <rect x=".75" y=".75" width={h} height={h} fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2.6 1.9" />}
+</svg>
+
+<style>
+  .verdict { flex: none; color: var(--ink); }
+  .verdict[data-kind='meets'] { color: var(--blue); }
+  .verdict[data-kind='conflicts'] { color: var(--orange); }
+  .verdict[data-kind='unknown'] { color: var(--ink-3); }
+</style>

@@ -1,0 +1,16 @@
+---
+/* The demo page, in every language: a buyer's whole path in six steps, and the test space's board when the build
+   has one (src/components/front/Demo.astro). Linked from the home's opening. */
+import Base from '../../layouts/Base.astro';
+import Demo from '../../components/front/Demo.astro';
+import { FRONT } from '../../front/copy';
+import { langPaths, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t } = resolve(lang);
+const { demo: D } = FRONT[lang];
+---
+<Base lang={lang} t={t} title={D.meta.title} description={D.meta.description} path="/demo" crumbs={[[t.how.path.link, '/demo']]} front>
+  <Demo lang={lang} t={t} />
+</Base>

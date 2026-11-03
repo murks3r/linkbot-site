@@ -1,0 +1,75 @@
+---
+/* The bar: the brand and the five pages. On narrow screens the pages fold into a menu. The language is not here (third
+   pass, GEO-188): one floating button at the bottom right holds it on every page (LangSwitch, in the footer). */
+import Icon from './Icon.astro';
+import Brand from './Brand.astro';
+import { pathFor, type Catalogue, type Lang } from '../i18n';
+interface Props { lang: Lang; t: Catalogue; path: string }
+const { lang, t, path } = Astro.props;
+const NAV: [string, string][] = [['/how-it-works', t.site.nav.how], ['/who-sees-what', t.site.nav.sees], ['/for-platforms', t.site.nav.platforms], ['/verticals', t.site.nav.verticals], ['/developers', t.site.nav.developers]];
+const here = (href: string) => (path === href ? 'page' : undefined);
+---
+<header class="masthead" data-masthead>
+  <div class="wrap masthead-inner">
+    <Brand href={pathFor(lang, '/')} name={t.site.name} />
+    <nav class="nav" aria-label={t.site.menu}>
+      {NAV.map(([href, label]) => <a href={pathFor(lang, href)} aria-current={here(href)}>{label}</a>)}
+    </nav>
+    <details class="menu menu-main" data-menu>
+      <summary><Icon name="menu" /><span>{t.site.menu}</span></summary>
+      <nav class="menu-panel" aria-label={t.site.menu}>
+        {NAV.map(([href, label]) => <a href={pathFor(lang, href)} aria-current={here(href)}>{label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  /* A8: the bar is seamless. It has no fill of its own, so the page's ground and its dust run through it unchanged.
+     While content passes beneath, only a blur, never a tint, keeps the words readable; the blur would wipe the dust
+     out, so the blurred layer carries the same dust tile on top (third pass). No rule marks its edge. */
+  .masthead { position: sticky; top: 0; z-index: 30; background: transparent; }
+  .masthead::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); background: var(--dust-tile) 0 0 / var(--dust-size) var(--dust-size) repeat; opacity: 0; transition: opacity var(--base); }
+  .masthead[data-scrolled]::before { opacity: 1; }
+  .masthead-inner { display: flex; align-items: center; gap: 12px clamp(16px, 2.6vw, 36px); min-height: 72px; }
+  .nav { display: flex; gap: 4px clamp(20px, 2.6vw, 36px); margin-left: auto; }
+  .nav a { position: relative; display: inline-flex; align-items: center; min-height: var(--target); font-size: var(--size-small); font-weight: 560; color: var(--ink-2); text-decoration: none; transition: color var(--fast); }
+  .nav a:hover { color: var(--ink); }
+  .nav a[aria-current='page'] { color: var(--ink); font-weight: 650; }
+  .nav a[aria-current='page']::after { content: ''; position: absolute; left: 0; right: 0; bottom: 8px; height: 1.5px; background: var(--green); }
+  .menu { position: relative; }
+  .menu summary { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); padding: 0 16px; border: 1px solid var(--line-strong); border-radius: var(--pill); font-size: var(--size-small); font-weight: 600; cursor: pointer; list-style: none; transition: border-color var(--fast); }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu summary :global(.icon) { transition: transform var(--base) var(--ease); }
+  .menu[open] summary { border-color: var(--green); }
+  .menu[open] summary :global(.icon) { transform: rotate(180deg); }
+  .menu-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(280px, calc(100vw - 32px)); padding: 6px; display: grid; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-3); box-shadow: var(--shadow-float); }
+  .menu-panel a { display: flex; align-items: center; min-height: var(--target); padding: 0 14px; border-radius: var(--r-2); font-weight: 560; text-decoration: none; }
+  .menu-panel a:hover { background: var(--sand); }
+  .menu-panel a[aria-current] { background: var(--green-wash); font-weight: 650; }
+  .menu-main { display: none; }
+  @media (forced-colors: active) { .masthead::before { background: none; } }
+  @media (max-width: 52rem) {
+    .masthead-inner { min-height: 64px; }
+    .nav { display: none; }
+    .menu-main { display: block; margin-left: auto; }
+  }
+  @media (max-width: 22.5rem) {
+    .brand { font-size: 1.3rem; }
+    .menu summary { padding: 0 12px; }
+    .menu-main summary span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  }
+</style>
+
+<script>
+  const masthead = document.querySelector<HTMLElement>('[data-masthead]');
+  if (masthead) {
+    // Scrolled, the bar blurs what passes beneath it.
+    const update = () => masthead.toggleAttribute('data-scrolled', window.scrollY > 8);
+    update();
+    addEventListener('scroll', update, { passive: true });
+  }
+  const menus = [...document.querySelectorAll<HTMLDetailsElement>('[data-menu]')];
+  document.addEventListener('pointerdown', event => { for (const menu of menus) if (menu.open && !menu.contains(event.target as Node)) menu.open = false; });
+  for (const menu of menus) menu.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary')?.focus(); } });
+</script>

@@ -1,0 +1,81 @@
+/* Direction A, "Watch a need meet an offer": a document, not a poster. The headline in Archivo at its heaviest
+   weight, the pair as a ledger of hairlines, the verdict words beside their marks, one filled action. Spacing and
+   sizes are the site's tokens; the colours are the front's (theme.css). */
+
+/* ── 1 · The opening ────────────────────────────────────────────────────────────────────────────────── */
+.fa-hero { padding-block: clamp(40px, 7vw, 96px) 0; }
+.fa-hero-inner { display: grid; gap: var(--space-head); align-content: start; }
+.fa-hero h1 { max-width: 12ch; font-weight: 600; font-size: clamp(2.75rem, 1.1rem + 6vw, 6.5rem); line-height: .94; letter-spacing: -.045em; }
+.fa-line { display: block; }
+.fa-lede { max-width: 38em; color: var(--ink); }
+.fa-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: calc(var(--space-block) - var(--space-head)); }
+.fa-ledger { margin-top: var(--space-block); }
+
+/* ── The ledger ──────────────────────────────────────────────────────────────────────────────────────── */
+.ledger { display: grid; gap: 0; }
+.ledger-cap { display: flex; align-items: center; gap: 10px; padding-bottom: 14px; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+.ledger-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px dashed var(--ink-3); }
+.ledger-head { position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 16px; padding: 18px 0 14px; border-top: 2px solid var(--ink); }
+.ledger-side { display: grid; gap: 4px; }
+.ledger-side b { font-family: var(--display); font-size: clamp(1.25rem, 1.05rem + .8vw, 1.75rem); font-weight: 650; letter-spacing: -.02em; line-height: 1.1; }
+.ledger-side[data-side='offer'] { text-align: right; }
+/* The stitch between the two sides: drawn, as both have said yes. */
+.ledger-stitch { align-self: center; width: clamp(40px, 10vw, 160px); height: 1.5px; background: var(--ink); }
+.ledger-table { display: grid; }
+.ledger-row { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 6px 20px; align-items: start; padding: 12px 0; border-top: 1px solid var(--line-strong); font-size: var(--size-small); line-height: 1.45; }
+.ledger-row-head { padding: 8px 0; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+.ledger-crit { display: grid; gap: 2px; }
+.ledger-crit b { font-weight: 650; }
+.ledger-crit small { font-size: var(--size-micro); font-weight: 600; color: var(--ink-3); }
+.ledger-crit small[data-importance='must'] { color: var(--ink); }
+.ledger-val { color: var(--ink-2); }
+.ledger-val::before { content: attr(data-label) ': '; display: none; font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); }
+.ledger-verdict { display: grid; gap: 2px; }
+.ledger-word { display: inline-flex; align-items: center; gap: 8px; font-weight: 650; }
+.ledger-verdict small { font-size: var(--size-micro); color: var(--ink-3); }
+.ledger-row[data-verdict='conflicts'] .ledger-word { color: var(--orange-ink); }
+.ledger-row[data-verdict='meets'] .ledger-word { color: var(--blue); }
+.ledger-row[data-verdict='unknown'] .ledger-word { color: var(--ink-2); }
+.ledger-state { padding: 16px 0; border-top: 2px solid var(--ink); font-weight: 650; max-width: var(--measure); }
+.ledger-stages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px clamp(16px, 3vw, 40px); padding-top: 4px; }
+.ledger-stages li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line-strong); }
+.ledger-n { display: grid; place-items: center; width: 28px; height: 28px; border: 1.5px solid var(--line-ink); border-radius: 50%; font-size: var(--size-micro); font-weight: 700; color: var(--ink-2); }
+.ledger-stages b { display: block; margin-bottom: 4px; font-weight: 650; }
+.ledger-stages p { font-size: var(--size-small); line-height: 1.5; color: var(--ink-2); }
+.ledger-notice { padding: 14px 0; border-top: 1px solid var(--line-strong); border-bottom: 2px solid var(--ink); font-size: var(--size-small); font-weight: 650; }
+.ledger-legend { padding-top: 12px; font-size: var(--size-micro); color: var(--ink-3); max-width: var(--measure); }
+@media (max-width: 64rem) { .ledger-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 48rem) {
+  .ledger-head { grid-template-columns: 1fr; gap: 8px; }
+  .ledger-side[data-side='offer'] { text-align: left; }
+  .ledger-stitch { display: none; }
+  .ledger-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ledger-row-head { display: none; }
+  .ledger-crit { grid-column: 1 / 2; }
+  .ledger-verdict { grid-column: 2 / 3; }
+  .ledger-val { grid-column: 1 / -1; }
+  .ledger-val::before { display: inline; }
+  .ledger-stages { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}
+
+/* ── 2 · Four statements ─────────────────────────────────────────────────────────────────────────────── */
+.fa-four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-block) clamp(20px, 3vw, 40px); }
+.fa-four li { display: grid; gap: 10px; align-content: start; padding-top: 16px; border-top: 1.5px solid var(--ink); }
+.fa-four h3 { font-size: var(--size-h3); }
+.fa-four p { font-size: var(--size-small); line-height: 1.55; color: var(--ink-2); }
+.fa-more { margin-top: var(--space-block); }
+.fp-head .fa-more { margin-top: 0; }
+@media (max-width: 64rem) { .fa-four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 36rem) { .fa-four { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── 4 · For platforms: the words beside the snippet ─────────────────────────────────────────────────── */
+.fa-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: var(--space-block) clamp(32px, 5vw, 72px); align-items: start; }
+.fa-two-head { margin-bottom: 0; }
+.fa-snippet { display: grid; gap: 10px; min-width: 0; }
+@media (max-width: 56rem) { .fa-two { grid-template-columns: minmax(0, 1fr); } }
+
+/* ── 6 · Where it stands ─────────────────────────────────────────────────────────────────────────────── */
+.fa-state .fp-head { margin-bottom: 0; }
+.fa-state .fp-head p { font-size: var(--size-body); color: var(--ink-2); }
+
+/* The four ways' tiles on the front: the site's paper tiles become plain surfaces, so they read in the dark too. */

@@ -1,0 +1,21 @@
+/* The front page's shared classes (the previews of 2026-10-24). The tokens, light and dark, live in src/styles/site.css
+   since the redesign pass made them the whole site's. */
+
+/* ── Shared pieces of the front pages ─────────────────────────────────────────────────────────────────── */
+/* The one filled action: ink on paper, paper on ink in the dark. */
+.btn-ink { background: var(--ink); color: var(--paper); }
+.btn-ink:hover { background: var(--green-hover); color: var(--paper); }
+.btn-ink:active { background: var(--green-press); }
+/* Section rhythm. */
+.fp-section { padding-top: var(--space-section); scroll-margin-top: var(--anchor-top); }
+.fp-section:last-of-type { padding-bottom: var(--space-section); }
+.fp-head { display: grid; gap: var(--space-head); max-width: 46rem; margin-bottom: var(--space-block); }
+.fp-head h2 { font-size: clamp(1.75rem, 1.1rem + 2vw, 3rem); }
+.fp-head p { max-width: 36em; font-size: var(--size-lede); line-height: 1.5; color: var(--ink-2); }
+.fp-eyebrow { font-size: var(--size-micro); font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+/* Lines: one statement per rule. */
+.fp-lines { display: grid; max-width: var(--measure); }
+.fp-lines li { padding: 10px 0; border-top: 1px solid var(--line-strong); font-size: var(--size-small); line-height: 1.5; color: var(--ink); }
+.fp-lines li:last-child { border-bottom: 1px solid var(--line-strong); }
+/* Code, as the integration pages set it. */
+.fp-code { margin: 0; padding: 16px 18px; border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--surface); font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: .86rem; line-height: 1.55; color: var(--ink); overflow-x: auto; white-space: pre; }

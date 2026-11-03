@@ -1,0 +1,93 @@
+---
+/* Who sees what, and when: direction C as its own page (redesign pass, GEO-188, 2026-10-24). One synthetic offer
+   travels through the four disclosure stages; the page shows what each stage shows and withholds, then the receipt;
+   after it, why a platform can let Linkbot near its users, the rules the server enforces and deletion (the
+   catalogue's words), the platform and the pack, where it stands. Words: src/front/c-copy.ts (rows in
+   docs/truth-check.md); the offer: src/front/c-stages.ts; in the reader's language through src/front/copy.ts. */
+import Icon from '../Icon.astro';
+import Reach from './Reach.astro';
+import Eye from './Eye.astro';
+import Verdict from './Verdict.astro';
+import { FRONT } from '../../front/copy';
+import { pathFor, type Catalogue, type Lang } from '../../i18n';
+import '../../front/theme.css';
+import '../../front/c.css';
+interface Props { lang: Lang; t: Catalogue }
+const { lang, t } = Astro.props;
+const to = (path: string) => pathFor(lang, path);
+const { c: C, stages: STAGES, a: A } = FRONT[lang];
+const VERDICT = A.ledger.verdicts;
+---
+<section class="fc-hero" aria-labelledby="hero-title">
+  <div class="wrap fc-hero-inner">
+    <p class="eyebrow">{C.hero.eyebrow}</p>
+    <h1 id="hero-title"><span class="fc-line">{C.hero.h1[0]}</span> <span class="fc-line">{C.hero.h1[1]}</span></h1>
+    <p class="lede fc-lede">{C.hero.lede}</p>
+    <p class="fc-actions">
+      <Reach href={to('/for-platforms')} label={C.hero.primary}><Icon name="arrow" /></Reach>
+      <a class="link" href={`${to('/how-it-works')}#sees`}>{C.hero.secondary}<Icon name="arrow" /></a>
+    </p>
+  </div>
+  <div class="wrap">
+    <figure class="stages" aria-labelledby="stages-cap">
+      <figcaption id="stages-cap" class="stages-cap"><span class="stages-dot" aria-hidden="true"></span>{C.stages.label}</figcaption>
+      <ol class="stage-list">
+        {STAGES.map((stage, index) => <li class="stage" data-stage={stage.key}>
+          <div class="stage-head">
+            <span class="stage-n" aria-hidden="true">{index + 1}</span>
+            <Eye eyes={stage.eyes} open={stage.open} />
+            <h2>{stage.name}</h2>
+          </div>
+          <p class="stage-who"><span class="eyebrow">{C.stages.sees}</span>{stage.who}</p>
+          <p class="stage-rule">{stage.rule}</p>
+          <div class="stage-block">
+            <p class="eyebrow">{C.stages.shows}</p>
+            <dl class="stage-fields">{stage.fields.map(field => <div><dt>{field.label}</dt><dd>{field.verdict && <span class="stage-verdict" data-verdict={field.verdict}><Verdict kind={field.verdict} size={12} />{VERDICT[field.verdict]}</span>}{field.value}</dd></div>)}</dl>
+          </div>
+          <div class="stage-block stage-not">
+            <p class="eyebrow">{C.stages.not}</p>
+            <ul>{stage.not.map(line => <li>{line}</li>)}</ul>
+          </div>
+        </li>)}
+      </ol>
+      <div class="receipt" role="group" aria-labelledby="receipt-title">
+        <div class="receipt-paper">
+          <h3 id="receipt-title">{C.stages.receipt.h3}</h3>
+          <ul>{C.stages.receipt.lines.map(line => <li>{line}</li>)}</ul>
+        </div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<section class="fp-section" id="why" aria-labelledby="why-title">
+  <div class="wrap">
+    <div class="fp-head"><h2 id="why-title">{C.why.h2}</h2></div>
+    <ul class="fc-four">{C.why.items.map(item => <li><h3>{item.h3}</h3><p>{item.p}</p></li>)}</ul>
+  </div>
+</section>
+
+<section class="fp-section" id="rules" aria-labelledby="rules-title">
+  <div class="wrap">
+    <div class="fp-head"><h2 id="rules-title">{t.home.rules.title}</h2></div>
+    <ol class="fc-rules">{t.home.rules.items.map(rule => <li>{rule}</li>)}</ol>
+    <p class="fc-more"><a class="link" href={to('/how-it-works')}>{t.home.rules.link}<Icon name="arrow" /></a></p>
+  </div>
+</section>
+
+<section class="fp-section" id="deletion" aria-labelledby="deletion-title">
+  <div class="wrap">
+    <div class="fp-head"><h2 id="deletion-title">{C.deletion.h2}</h2><p class="fc-para">{t.how.after.paras[2]}</p></div>
+  </div>
+</section>
+
+<section class="fp-section" id="for" aria-labelledby="platforms-title">
+  <div class="wrap fc-two">
+    <div class="fc-card"><h2 id="platforms-title">{C.platforms.h2}</h2><p>{C.platforms.p}</p><a class="link" href={to('/for-platforms')}>{C.platforms.link}<Icon name="arrow" /></a></div>
+    <div class="fc-card"><h2 id="verticals-title">{C.verticals.h2}</h2><p>{C.verticals.p}</p><a class="link" href={to('/verticals')}>{C.verticals.link}<Icon name="arrow" /></a></div>
+  </div>
+</section>
+
+<section class="fp-section fc-state" id="state" aria-labelledby="state-title">
+  <div class="wrap"><div class="fp-head"><h2 id="state-title">{C.state.h2}</h2><p>{t.site.synthetic}</p><p>{C.state.p}</p></div></div>
+</section>

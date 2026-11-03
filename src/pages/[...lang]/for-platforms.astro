@@ -1,0 +1,46 @@
+---
+/* For an operator who wants a space: the four ways in, each with where it stands; what a platform gets; what stays its
+   own (its data, its decision); then the integration pages (/platforms) for the details. No prices. Words: the
+   catalogue's forPlatforms, each sentence with its row in docs/truth-check.md. */
+import Base from '../../layouts/Base.astro';
+import Toc from '../../components/Toc.astro';
+import Ways from '../../components/Ways.astro';
+import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const p = t.forPlatforms;
+const lists = [['gets', p.gets], ['yours', p.yours]] as const;
+---
+<Base lang={lang} t={t} fallback={fallback} title={p.title} description={p.description} path="/for-platforms" crumbs={[[t.site.nav.platforms, '/for-platforms']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{p.eyebrow}</p>
+      <h1>{p.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{p.lede}</p>
+    </div>
+  </section>
+
+  <div class="wrap doc">
+    <Toc items={p.toc} label={t.site.toc} />
+    <div class="doc-body">
+      <section id="ways" aria-labelledby="ways-title">
+        <h2 id="ways-title">{p.ways.title}</h2>
+        <p>{p.ways.lede}</p>
+        <Ways t={t} items={p.ways.items} />
+      </section>
+      {lists.map(([id, s]) => <section id={id} aria-labelledby={`${id}-title`}><h2 id={`${id}-title`}>{s.title}</h2><ul class="points">{s.items.map(item => <li>{item}</li>)}</ul></section>)}
+      <section id="details" aria-labelledby="details-title">
+        <h2 id="details-title">{p.details.title}</h2>
+        <p>{p.details.lede} <a href={pathFor(lang, '/platforms')}>{p.details.link}</a></p>
+        <p class="note">{t.site.synthetic}</p>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .points { display: grid; gap: 0; border-top: 2px solid var(--ink); }
+  .points li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+</style>

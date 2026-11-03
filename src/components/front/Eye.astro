@@ -1,0 +1,17 @@
+---
+/* Eyes, drawn in the same ink line as the reaching arm: how many see at a stage, and how far open the stage is. A
+   decoration beside the stage's name, aria-hidden; the words carry the meaning. */
+interface Props { eyes: number; open: number; size?: number }
+const { eyes, open, size = 28 } = Astro.props;
+const h = 9 * open;
+---
+<span class="eyes" aria-hidden="true">
+  {Array.from({ length: eyes }).map(() => <svg width={size} height={size} viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d={`M3 14Q14 ${14 - h} 25 14Q14 ${14 + h} 3 14Z`} />
+    {open > .4 ? <circle cx="14" cy="14" r={2.2 + 2.2 * open} /> : <circle cx="14" cy="14" r="1.2" fill="currentColor" />}
+  </svg>)}
+</span>
+
+<style>
+  .eyes { display: inline-flex; gap: 2px; color: var(--ink); }
+</style>

@@ -1,0 +1,32 @@
+---
+/* Where each part of the product stands, in three columns with the same squares the product uses for evidence:
+   solid = on the staging space, split = built or in the contract and not on it, dashed = not built. The rows come from
+   the truth check's status table (src/lib/status.ts), the words from the catalogue's status. */
+import Mark from './Mark.astro';
+import type { Catalogue } from '../i18n';
+import { statusColumns } from '../lib/status';
+/* level: the columns' heading level, h3 under a section's h2 (/how-it-works#today), h2 straight under the page's h1 (/status). */
+interface Props { t: Catalogue; level?: 'h2' | 'h3' }
+const { t, level: Heading = 'h3' } = Astro.props;
+const TONE = { staging: 'fit', built: 'tradeoff', planned: 'unknown' } as const;
+const columns = statusColumns(t);
+---
+<div class="today">
+  {columns.map(column => <section class="today-col" aria-labelledby={`today-${column.id}`} data-tone={column.id}>
+    <Heading id={`today-${column.id}`}><Mark tone={TONE[column.id]} size={14} />{column.title}</Heading>
+    <p>{column.lead}</p>
+    <ul>{column.items.map(item => <li>{item}</li>)}</ul>
+  </section>)}
+</div>
+
+<style>
+  .today { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .today-col { display: grid; gap: 10px; align-content: start; padding: clamp(18px, 2.4vw, 26px); border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--surface); }
+  .today-col :is(h2, h3) { display: flex; align-items: center; gap: 10px; font-size: 1.125rem; }
+  .today-col > p { font-size: var(--size-small); color: var(--ink-2); }
+  .today-col ul { display: grid; gap: 6px; padding-top: 8px; border-top: 1px solid var(--line); font-size: var(--size-small); }
+  .today-col li { padding-left: 1em; text-indent: -1em; }
+  .today-col li::before { content: '·'; display: inline-block; width: 1em; text-indent: 0; color: var(--ink-3); }
+  .today-col[data-tone='planned'] { color: var(--ink-2); }
+  @media (max-width: 56rem) { .today { grid-template-columns: minmax(0, 1fr); } }
+</style>
