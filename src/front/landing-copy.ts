@@ -15,6 +15,10 @@ export const LANDING = {
       today: 'Linkbot confirms each side, matches in private and introduces two businesses only when both say yes.',
       full: 'Linkbot checks who is real, matches in private and introduces two businesses only when both say yes.',
     },
+    /* The page's one button (owner, 2026-11-02): the quickstart on /developers (its first section, the shortest embed;
+       that page says what is not available yet); beside it only a quiet link to /contact. */
+    start: 'Start in 5 minutes',
+    contact: 'Contact',
     /* The link to /demo under the demo: "Try it" only once /demo holds a widget on a demo space (plan, decision 5;
        src/demo/space.ts); /demo's own section for the widget takes it as its heading. */
     button: 'See it step by step',
@@ -26,7 +30,7 @@ export const LANDING = {
      how.introduction (direct or through the platform's team), site.synthetic (fictional data). */
   trial: {
     h2: 'Try it: one buyer, one supplier',
-    label: 'Fictional businesses · runs in your browser, nothing is sent',
+    label: 'Made-up example data · runs in your browser, nothing is sent',
     steps: ['Check', 'Private match', 'Both say yes'],
     progress: 'Steps',
     buyer: { role: 'Buyer', name: 'Northfield Fittings', wants: 'Needs', text: 'Aluminium housings, 5,000 a year, ISO 9001, delivered within the EU' },
@@ -78,12 +82,13 @@ export const LANDING = {
     supplier: 'As a supplier',
     supplierNote: 'Of the supplier’s side, only its yes is recorded so far; the supplier describes its offer in the same widget.',
   },
-  /* 3 · rows platforms.embed, platforms.keys, how.pack; how.today (now), how.today (later) */
+  /* 3 · rows platforms.embed, platforms.keys, how.pack, how.today (later). Hosted access for other platforms is
+     "Coming soon" (owner, 2026-11-02): the page never says a platform can use it today. */
   platforms: {
     h2: 'For platforms',
     p: 'One script and one element on your page; the questions fit your market.',
     snippet: 'The shortest embed',
-    later: 'Add it with your own build tools',
+    hosted: 'Hosted access for other platforms',
     button: 'For platforms',
     developers: 'For developers',
   },
@@ -91,7 +96,7 @@ export const LANDING = {
   bottom: {
     h2: 'Not your market yet? Tell us what you connect.',
     button: 'Tell us what you connect',
-    prepared: 'The address to write to is being prepared; the page behind the button says how you will reach us.',
+    prepared: 'The address to write to is being prepared; the page behind the link says how you will reach us.',
     line: 'Everything shown here runs with fictional data; checked on {date}.',
     status: 'The full status',
   },

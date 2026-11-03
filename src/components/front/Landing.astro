@@ -1,7 +1,8 @@
 ---
 /* The home (/), version 3 (owner's plan of 2026-11-02; docs/front/home-v3.md): one headline with the problem and the
-   promise, its sub-line (src/front/hero.ts picks today's or the full one), and directly under it the "both say yes" demo
-   (Trial.astro); then for platforms and the bottom call to action. Words: src/front/landing-copy.ts in the reader's
+   promise, its sub-line (src/front/hero.ts picks today's or the full one), the page's one button with a quiet contact
+   link beside it, and directly under them the "both say yes" demo (Trial.astro); then for platforms and the bottom, both
+   with quiet links only (owner's page rules of 2026-10-29: one headline, one line, one button). Words: src/front/landing-copy.ts in the reader's
    language through src/front/copy.ts. */
 import Base from '../../layouts/Base.astro';
 import Icon from '../Icon.astro';
@@ -25,12 +26,16 @@ const live = buildSpace() !== null;
 ---
 <Base lang={lang} t={t} title={L.meta.title} description={L.meta.description} path="/" front>
 
-  <!-- 1 · One headline, its sub-line, and directly under it the demo. -->
+  <!-- 1 · One headline, its sub-line, the one button, and directly under it the demo. -->
   <section class="ln-open" aria-labelledby="open-title">
     <div class="wrap">
       <div class="ln-open-inner">
         <h1 id="open-title">{L.opening.h1}</h1>
         <p class="lede">{L.opening.sub[SUBLINE]}</p>
+        <p class="ln-actions ln-start">
+          <a class="btn btn-primary" href={`${to('/developers')}#embed`}>{L.opening.start}<Icon name="arrow" /></a>
+          <a class="link ln-quiet" href={to('/contact')}>{L.opening.contact}</a>
+        </p>
       </div>
       <Trial T={L.trial} />
       <p class="ln-actions">
@@ -45,19 +50,19 @@ const live = buildSpace() !== null;
     <div class="wrap ln-platforms">
       <div class="fp-head"><h2 id="platforms-title">{L.platforms.h2}</h2><p>{L.platforms.p}</p></div>
       <div class="ln-snippet">
-        <p class="ln-snippet-head"><span>{L.platforms.snippet}</span><span class="ln-label" data-state="live">{L.labels.live}</span></p>
+        <p class="ln-snippet-head"><span>{L.platforms.snippet}</span></p>
         <pre class="fp-code" translate="no"><code>{EMBED_SNIPPET}</code></pre>
-        <p class="ln-snippet-head"><span>{L.platforms.later}</span><span class="ln-label" data-state="soon">{L.labels.soon}</span></p>
+        <p class="ln-snippet-head"><span>{L.platforms.hosted}</span><span class="ln-label" data-state="soon">{L.labels.soon}</span></p>
       </div>
-      <p class="ln-actions"><a class="btn btn-secondary" href={to('/for-platforms')}>{L.platforms.button}<Icon name="arrow" /></a><a class="link" href={to('/developers')}>{L.platforms.developers}</a></p>
+      <p class="ln-actions"><a class="link" href={to('/for-platforms')}>{L.platforms.button}<Icon name="arrow" /></a><a class="link" href={to('/developers')}>{L.platforms.developers}</a></p>
     </div>
   </section>
 
-  <!-- 3 · The bottom: one button, the fictional-data line with the date of the last check. -->
+  <!-- 3 · The bottom: one quiet link, the fictional-data line with the date of the last check. -->
   <section class="fp-section ln-bottom" id="connect" aria-labelledby="connect-title">
     <div class="wrap"><div class="ln-bottom-inner">
       <h2 id="connect-title">{L.bottom.h2}</h2>
-      <p><a class="btn btn-primary" href={to('/request-a-demo')}>{L.bottom.button}<Icon name="arrow" /></a></p>
+      <p><a class="link" href={to('/request-a-demo')}>{L.bottom.button}<Icon name="arrow" /></a></p>
       {!CONTACT_EMAIL && <p class="ln-small">{L.bottom.prepared}</p>}
       <p class="ln-small">{L.bottom.line.replace('{date}', statusDate(lang))} <a href={to('/status')}>{L.bottom.status}</a></p>
     </div></div>

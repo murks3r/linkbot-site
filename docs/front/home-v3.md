@@ -100,3 +100,14 @@ Desktop 1440 × 900, mobile 390 × 844 at 2× (full page from the second step on
 
 More: `home-v3/en-desktop-3-match.webp` (the possible fit), `home-v3/en-desktop-6-declined.webp` (one no),
 `home-v3/en-desktop-nojs.webp` (without scripts).
+
+## The owner's page rules (2026-10-29, checked after the readable-for-AI branch)
+
+- One headline, one line, one button: the H1, the sub-line (TODAY; FULL stays off until the owner's go), and the page's
+  only `.btn`, "Start in 5 minutes" → `/developers#embed` (the shortest embed; that page lists what is not available
+  yet). Beside it only a quiet link to `/contact`. For platforms and the bottom keep quiet links, no buttons.
+- The demo's label names its data: "Made-up example data · runs in your browser, nothing is sent" (five languages).
+- No "Live" label on the home: hosted access for other platforms is "Coming soon". The home names no internal word
+  (pack, watch, Beobachten, staging) and not Geoprocure.
+- `tests/home.test.mjs` ("the built home keeps the owner's page rules") checks all of this on the built home in every
+  language. Screenshots: `docs/front/home-v3/rules-*.webp` (en, de; mobile top and full page, desktop top).

@@ -1,6 +1,7 @@
 /* The home, version 3: the "both say yes" demo's states (src/front/trial.ts, pure logic) and the sub-line's truth: the
    built home says today's sub-line (src/front/hero.ts) and never the full one, which claims company checks that do not
-   run yet, in any language. The demo makes no network call: its script names no address. The build checks are skipped
+   run yet, in any language; and it keeps the owner's page rules (one button, to the quickstart, beside it a quiet
+   contact link; the demo names its made-up data; no "Live" label, no internal word). The demo makes no network call: its script names no address. The build checks are skipped
    until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -47,6 +48,21 @@ test('the built home says today’s sub-line, never the full one', { skip }, () 
     assert.ok(home.includes(opening.sub.today), `${lang}: today’s sub-line is missing`);
     assert.ok(!home.includes(opening.sub.full), `${lang}: the full sub-line is on the page`);
     assert.equal((home.match(/<h1[\s>]/g) ?? []).length, 1, `${lang}: not exactly one headline`);
+  }
+});
+
+test('the built home keeps the owner’s page rules in every language', { skip }, () => {
+  for (const lang of LANGS) {
+    const { opening, trial, labels } = FRONT[lang].landing;
+    const home = readFileSync(new URL(lang === 'en' ? 'index.html' : `${lang}.html`, dist), 'utf8');
+    const main = home.slice(home.indexOf('<main'), home.indexOf('</main>'));
+    const buttons = main.match(/<a [^>]*class="btn[ "][^>]*>/g) ?? [];
+    assert.equal(buttons.length, 1, `${lang}: not exactly one button`);
+    assert.match(buttons[0], /href="[^"]*\/developers#embed"/, `${lang}: the one button does not lead to the quickstart`);
+    assert.ok(main.includes(`>${opening.start}<`) && main.includes(`>${opening.contact}</a>`), `${lang}: the button or the contact link is missing`);
+    assert.ok(main.includes(trial.label), `${lang}: the demo does not say it uses made-up example data`);
+    assert.ok(!main.includes(`>${labels.live}</span>`), `${lang}: a “Live” label on the home`);
+    assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\b(pack|packs|watch|staging|Geoprocure)\b|Beobacht/i, `${lang}: an internal word on the home`);
   }
 });
 
