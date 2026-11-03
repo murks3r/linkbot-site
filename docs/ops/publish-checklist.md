@@ -35,16 +35,18 @@ on this branch, with the command named.
 
 ## 1. Merge order (S, then O)
 
-1. **`build/vision` first.** It carries the status renewal to widget `0.6.1-v1` (`STATUS_CHECKED` 2026-11-03); the
-   `next/*` line still says `0.5.0-v1` with 2026-10-26 (`src/i18n/status-date.ts`, `docs/truth-check.md`). Merge
-   `build/vision` into the line before anything else, so no page names an old release.
+1. **`build/vision` is in this line.** Its status renewal (#83, `41c9fb5`: widget `0.6.1-v1`, `STATUS_CHECKED`
+   2026-11-03) was merged into `next/publish-ready` on 2026-11-03 in the line's words ("test space", "test instance",
+   no "staging" or "Geoprocure" on a public page; Trust T-PUB finding 1). If `build/vision` moves again, merge it in
+   again before the publication.
 2. **The `next/*` line in order:** landing v2 → site demo → home v3 → readable for AI → developer docs → this branch
    (each PR is based on the one before). The developer-docs PR already holds the docs drafts (login, a new vertical,
    prepare a request). The access, intermediaries and fund-fix PRs go into `build/vision` on their own. The rehearsal
    of this order is `docs/ops/merge-order-after-v1.md` on `next/integration-rehearsal`.
 3. **Status within 14 days.** `tests/status.test.mjs` fails once `STATUS_CHECKED` is older than 14 days. On the day of
    publication, read the test space's health report again and renew the status sentences (`docs/truth-check.md`,
-   pre-merge step 1 of the `build/vision` → `main` PR).
+   pre-merge step 1 of the `build/vision` → `main` PR); the day itself is one line, `STATUS_CHECKED` in
+   `src/i18n/status-date.ts`. The changelog's states too (`docs/changelog.yml`, row `changelog.states`).
 4. `npm run typecheck`, `npm run build`, `npm test`; then the CI run on the final head of the PR into `main`
    (`CLAUDE.md`: CI only at a milestone).
 

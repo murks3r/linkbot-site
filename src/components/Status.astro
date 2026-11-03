@@ -8,7 +8,7 @@ import { statusColumns } from '../lib/status';
 /* level: the columns' heading level, h3 under a section's h2 (/how-it-works#today), h2 straight under the page's h1 (/status). */
 interface Props { t: Catalogue; level?: 'h2' | 'h3' }
 const { t, level: Heading = 'h3' } = Astro.props;
-const TONE = { staging: 'fit', built: 'tradeoff', planned: 'unknown' } as const;
+const TONE = { test: 'fit', built: 'tradeoff', planned: 'unknown' } as const;
 const columns = statusColumns(t);
 ---
 <div class="today">

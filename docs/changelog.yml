@@ -1,8 +1,10 @@
 # What's new: the one source for /changelog (src/lib/changelog.ts). One entry per product step a customer can notice,
 # written for customers, not as a PR title. Every entry needs:
 #   date     the UTC day it reached its state (quoted, YYYY-MM-DD)
-#   state    "on staging" (runs on the synthetic staging space today) or "built" (merged, not on the staging space yet)
-#   sources  one or more { repo: murks3r/<name>, pr: <number> }; an entry without a source stops the build
+#   state    "on staging" (runs on the synthetic staging space today) or "built" (merged, not available to anyone yet:
+#            switched off, not set up as an instance, or a tool no customer reaches); the page says "Built, not available yet"
+#   sources  one or more { repo: murks3r/<name>, pr: <number> }; an entry without a source stops the build. They stay in
+#            this file and are not rendered: they name private repositories (Trust, T-PUB finding 6, 2026-11-03)
 #   text     the sentence in en, de, es, it and fr; every sentence must be true today (docs/truth-check.md)
 # Each lane names its own steps (asked through Maestro); the Site lane writes them down and keeps the state honest.
 # When a "built" entry reaches the staging space, change its state and date.
