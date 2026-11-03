@@ -1,0 +1,43 @@
+---
+/* The developer docs' navigation (src/lib/open-core-docs.ts): every section with its pages, the current one marked;
+   what is planned is named without a link. A list of links without scripts; a fold on narrow screens. */
+import { SECTIONS, itemRoute, type DocItem } from '../lib/open-core-docs';
+interface Props { current: string; titles: Record<string, string> }
+const { current, titles } = Astro.props;
+const label = (item: DocItem) => ('planned' in item ? item.planned : titles[itemRoute(item)!] ?? '');
+---
+<nav class="docs-nav" aria-label="Developer docs">
+  <details open>
+    <summary>Developer docs</summary>
+    {SECTIONS.map(section => (
+      <div class="docs-nav-group">
+        <p class="docs-nav-title" id={`nav-${section.id}`}>{section.title}</p>
+        <ul aria-labelledby={`nav-${section.id}`}>
+          {section.items.map(item => {
+            const href = itemRoute(item);
+            return <li>{href
+              ? <a href={href} aria-current={href === current ? 'page' : undefined}>{label(item)}</a>
+              : <span>{label(item)} <em class="docs-nav-planned">planned</em></span>}</li>;
+          })}
+        </ul>
+      </div>
+    ))}
+  </details>
+</nav>
+
+<style>
+  .docs-nav { font-size: var(--size-small); }
+  .docs-nav summary { font-weight: 650; cursor: pointer; padding: 8px 0; }
+  @media (min-width: 64rem) {
+    .docs-nav { position: sticky; top: var(--anchor-top); align-self: start; max-height: calc(100vh - var(--anchor-top)); overflow-y: auto; }
+    .docs-nav summary { pointer-events: none; list-style: none; }
+    .docs-nav summary::-webkit-details-marker { display: none; }
+  }
+  .docs-nav-group { padding: 10px 0; border-top: 1px solid var(--lb-line-quiet); }
+  .docs-nav-title { font-weight: 650; margin-bottom: 4px; }
+  .docs-nav ul { display: grid; gap: 2px; }
+  .docs-nav a, .docs-nav span { display: block; padding: 3px 0; color: var(--lb-slate); text-decoration: none; }
+  .docs-nav a:hover { color: var(--lb-ink); }
+  .docs-nav a[aria-current='page'] { color: var(--lb-ink); font-weight: 650; }
+  .docs-nav-planned { font-style: normal; font-size: 0.85em; padding: 0 6px; border: 1px solid var(--lb-line); border-radius: 999px; }
+</style>

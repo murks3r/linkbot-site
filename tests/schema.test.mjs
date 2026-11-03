@@ -71,5 +71,5 @@ test('robots.txt lets the AI crawlers in; llms.txt and llms-full.txt are built',
   assert.match(readFileSync(join(dist, 'llms.txt'), 'utf8'), /^# Linkbot\n\n> Linkbot lets two businesses/);
   const full = readFileSync(join(dist, 'llms-full.txt'), 'utf8');
   for (const needle of ['Page: /faq', 'Page: /how-it-works', 'Page: /privacy', FAQ.en.items[0].q]) assert.ok(full.includes(needle), `llms-full.txt: ${needle}`);
-  assert.doesNotMatch(full.replace(/```[\s\S]*?```/g, ''), /<[a-z][^>]*>/i, 'llms-full.txt carries markup outside its code blocks');
+  assert.doesNotMatch(full.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, ''), /<[a-z][^>]*>/i, 'llms-full.txt carries markup outside its code');
 });

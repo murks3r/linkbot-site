@@ -20,8 +20,10 @@ const OWN = new Set([new URL(process.env.SITE_URL || 'https://linkbot-site.verce
 if (CONTACT_EMAIL) OWN.add(CONTACT_EMAIL.split('@')[1]);
 /* Hosts that appear only as identifiers, never as a place a reader or a browser is sent: the JSON-LD vocabulary. XML
    namespaces (xmlns="…") are removed before the scan, and the fonts' licence texts ship verbatim, as their licence
-   (SIL OFL 1.1) requires, so they are not read. A template such as https://{space_host}/ names no host. */
+   (SIL OFL 1.1) requires, so they are not read. A template such as https://{space_host}/ names no host. The domains
+   reserved for examples (RFC 2606: example.com, .net, .org and their subdomains) name no one; the developer docs use them. */
 const ALLOWED = new Set(['schema.org']);
+const EXAMPLE = /(^|\.)example\.(com|net|org)$/;
 const LICENCE = /^fonts\/.*\/(OFL|LICENSE[^/]*)\.txt$/;
 const TEXT = /\.(html|xml|txt|js|css|json|svg|webmanifest)$/;
 
@@ -67,7 +69,7 @@ test('no host outside Linkbot’s own appears in the build output', { skip }, ()
       ...[...text.matchAll(/(?:^|[\s"'(=])\/\/([a-z0-9-]+(?:\.[a-z0-9-]+)+)/gi)].map(match => match[1]),
       ...[...text.matchAll(/[a-z0-9._%+-]+@([a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,})\b/gi)].map(match => match[1]),
     ];
-    for (const host of hosts.map(host => host.toLowerCase())) if (!OWN.has(host) && !ALLOWED.has(host)) hits.push(`${where}: ${host}`);
+    for (const host of hosts.map(host => host.toLowerCase())) if (!OWN.has(host) && !ALLOWED.has(host) && !EXAMPLE.test(host)) hits.push(`${where}: ${host}`);
   }
   assert.deepEqual([...new Set(hits)], [], 'a host outside Linkbot’s own in the build output');
 });

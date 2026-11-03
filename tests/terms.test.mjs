@@ -66,18 +66,18 @@ test('the FAQ has the same six questions in every language, no forbidden claim, 
 });
 
 /* The built public pages (the sitemap's: no draft, no 404, no preview) say none of the team's own words, and /developers
-   alone may (it is a developer's page). Code and preformatted text are identifiers, not copy. Skipped until the site is built. */
+   with its docs under /developers/docs alone may (they are a developer's pages). Code and preformatted text are identifiers, not copy. Skipped until the site is built. */
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const built = existsSync(join(dist, 'index.html'));
-const DRAFTS = /(^|\/)(for-intermediaries|developers\/login-with-linkbot)\.html$/;
+const DRAFTS = /(^|\/)(for-intermediaries|developers\/(login-with-linkbot|a-new-vertical|prepare-a-request))\.html$/;
 const visible = html => [
   html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '',
   ...[...html.matchAll(/<meta (?:name="description"|property="og:(?:title|description)") content="([^"]*)"/g)].map(m => m[1]),
   html.replace(/<(script|style|code|pre|svg)\b[\s\S]*?<\/\1>/g, ' ').replace(/<head>[\s\S]*?<\/head>/, ' ').replace(/<[^>]+>/g, ' '),
 ].join(' ').replace(/&#39;|&#x27;/g, "'").replace(/&amp;/g, '&');
 
-test('no public page says pack, watch, Beobachten, staging or Geoprocure (except /developers)', { skip: !built && 'build the site first' }, () => {
-  const pages = readdirSync(dist, { recursive: true }).filter(f => f.endsWith('.html') && !f.startsWith('__preview') && f !== '404.html' && !DRAFTS.test(f) && !/(^|\/)developers\.html$/.test(f));
+test('no public page says pack, watch, Beobachten, staging or Geoprocure (except /developers and its docs)', { skip: !built && 'build the site first' }, () => {
+  const pages = readdirSync(dist, { recursive: true }).filter(f => f.endsWith('.html') && !f.startsWith('__preview') && f !== '404.html' && !DRAFTS.test(f) && !/(^|\/)developers(\.html$|\/docs[./])/.test(f));
   assert.ok(pages.length > 100, `only ${pages.length} pages`);
   const hits = pages.flatMap(f => [...visible(readFileSync(join(dist, f), 'utf8')).matchAll(new RegExp(INTERNAL, 'gi'))].map(m => `${f}: “${m[0]}”`));
   assert.deepEqual(hits, []);
