@@ -1,8 +1,8 @@
 /* The drafts for the owner (/for-intermediaries, src/drafts/intermediaries.ts; /developers/login-with-linkbot,
    src/drafts/login.ts; /developers/a-new-vertical, src/drafts/new-vertical.ts; /developers/prepare-a-request, in five
-   languages, src/drafts/prepare.ts): their words make no forbidden claim in their language, and each built page says it
-   is a draft, is never indexed, has no alternates, exists only in the languages it has words for, and is neither
-   linked from another page nor listed in the sitemap. A production build leaves a draft out until the owner approves
+   languages, src/drafts/prepare.ts; /jobs/mine, in English and German, src/drafts/jobs-mine.ts): their words make no
+   forbidden claim in their language, and each built page says it is a draft, is never indexed, has no alternates,
+   exists only in the languages it has words for, and is neither linked from another page nor listed in the sitemap. A production build leaves a draft out until the owner approves
    it; the build checks then assert it is absent, so the artefact that goes live is checked too. The build checks are
    skipped until the site is built. */
 import test from 'node:test';
@@ -12,6 +12,7 @@ import { INTERMEDIARIES_IN_PRODUCTION, buildsIntermediaries, intermediaries } fr
 import { LOGIN_IN_PRODUCTION, buildsLogin, login } from '../src/drafts/login.ts';
 import { NEW_VERTICAL_IN_PRODUCTION, buildsNewVertical, newVertical } from '../src/drafts/new-vertical.ts';
 import { PREPARE_IN_PRODUCTION, buildsPrepare, prepare } from '../src/drafts/prepare.ts';
+import { JOBS_MINE_IN_PRODUCTION, buildsJobsMine, jobsMine } from '../src/drafts/jobs-mine.ts';
 import { LANGS } from '../src/i18n/locales.ts';
 import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 
@@ -24,6 +25,7 @@ const drafts = [
   { path: '/developers/login-with-linkbot', words: { en: login }, builds: buildsLogin, inProduction: LOGIN_IN_PRODUCTION },
   { path: '/developers/a-new-vertical', words: { en: newVertical }, builds: buildsNewVertical, inProduction: NEW_VERTICAL_IN_PRODUCTION },
   { path: '/developers/prepare-a-request', words: prepare, builds: buildsPrepare, inProduction: PREPARE_IN_PRODUCTION },
+  { path: '/jobs/mine', words: jobsMine, builds: buildsJobsMine, inProduction: JOBS_MINE_IN_PRODUCTION },
 ];
 
 for (const { path, words, builds, inProduction } of drafts) {
