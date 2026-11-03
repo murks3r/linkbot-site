@@ -1,0 +1,69 @@
+/* The person's own page in Jobs as a demo (src/components/front/Mine.astro) in the widget design spec v1: the tokens of
+   src/styles/tokens.css, no shadows, no gradients, as the home's demo (src/front/trial.css). */
+
+/* Which parts show: with scripts the demo's state (data-off, src/front/mine.ts), without them the signed-in page and no
+   buttons (data-story-off). */
+.js [data-mine] [data-off], html:not(.js) [data-mine] [data-story-off], html:not(.js) [data-mine] button { display: none !important; }
+
+.mn { display: grid; gap: 16px; margin-block: 8px 40px; padding: clamp(16px, 3vw, 28px); border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.mn-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.mn-top h2 { font-size: 1.25rem; }
+.mn-label { font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-slate); }
+.mn-page { display: grid; gap: 16px; }
+.mn-two { display: grid; gap: 16px; }
+@media (min-width: 48rem) { .mn-two { grid-template-columns: 1fr 1fr; } }
+
+/* A panel: a title, a line, what it holds. */
+.mn-panel { display: grid; gap: 12px; justify-items: start; align-content: start; padding: 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-ground); }
+.mn-panel > p, .mn-role > p { max-width: 44em; font-size: var(--lb-size-help); line-height: 1.5; }
+.mn-panel h3 { font-size: 1.125rem; }
+.mn-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.mn-key { font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-slate); }
+.mn-quiet { display: inline-flex; align-items: flex-start; gap: 8px; font-size: var(--lb-size-help); color: var(--lb-slate); }
+.mn-quiet svg { flex: none; margin-top: 3px; }
+.mn-ok { display: inline-flex; align-items: center; gap: 6px; color: var(--lb-accent); font-weight: 600; font-size: var(--lb-size-help); }
+.mn-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.mn-said { font-size: var(--lb-size-help); line-height: 1.45; font-weight: 600; display: inline-flex; gap: 6px; align-items: flex-start; }
+.mn-said svg { flex: none; margin-top: 3px; color: var(--lb-accent); }
+.mn-result { display: inline-flex; gap: 8px; align-items: flex-start; padding: 12px 14px; border-radius: var(--lb-field-r); background: var(--lb-accent-soft); font-weight: 600; }
+.mn-result[data-tone='no'] { background: var(--lb-line-quiet); }
+.mn-result svg { flex: none; margin-top: 3px; }
+
+/* The criteria: musts, then nice to have, one line each. */
+.mn-group { display: grid; gap: 4px; width: 100%; }
+.mn-list { display: grid; width: 100%; }
+.mn-list div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2px 12px; padding: 8px 0; border-top: 1px solid var(--lb-line-quiet); font-size: var(--lb-size-help); }
+.mn-list dt { font-weight: 600; }
+
+/* A role: its card's facts, then the verdict on each of the person's criteria. */
+.mn-role { display: grid; gap: 10px; justify-items: start; width: 100%; padding: 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.mn-role h4 { font-size: 1rem; }
+.mn-facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.mn-facts li { padding: 2px 10px; border: 1px solid var(--lb-line); border-radius: var(--pill); font-size: var(--lb-size-footer); }
+.mn-verdicts { width: 100%; border-collapse: collapse; font-size: var(--lb-size-help); }
+.mn-verdicts th, .mn-verdicts td { padding: 8px 12px 8px 0; border-top: 1px solid var(--lb-line-quiet); text-align: left; vertical-align: top; }
+.mn-verdicts thead th { border-top: 0; color: var(--lb-slate); font-weight: 600; }
+.mn-verdicts tbody th { font-weight: 600; }
+.mn-verdict { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; white-space: nowrap; }
+@media (max-width: 40rem) {
+  .mn-verdicts thead { display: none; }
+  .mn-verdicts tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; padding: 8px 0; border-top: 1px solid var(--lb-line-quiet); }
+  .mn-verdicts th, .mn-verdicts td { padding: 0; border: 0; }
+  .mn-verdicts td:nth-child(2) { grid-column: 1; color: var(--lb-slate); }
+  .mn-verdicts td:nth-child(3) { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+}
+.mn-hidden { display: inline-flex; gap: 8px; align-items: flex-start; font-size: var(--lb-size-help); color: var(--lb-slate); }
+.mn-hidden svg { flex: none; margin-top: 3px; }
+
+/* The block list: who never sees the person, the promise in plain words. */
+.mn-promise { padding: 12px 14px; border-left: 4px solid var(--lb-accent); background: var(--lb-surface); font-weight: 600; }
+.mn-companies { display: grid; width: 100%; }
+.mn-companies li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 16px; padding: 10px 0; border-top: 1px solid var(--lb-line-quiet); }
+.mn-companies li > :is(.mn-ok, .mn-quiet) { grid-column: 1; }
+.mn-companies li > button { grid-column: 2; grid-row: 1 / span 2; }
+.mn-company { display: grid; gap: 2px; font-weight: 600; font-size: var(--lb-size-help); }
+.mn-domain { font-weight: 400; color: var(--lb-slate); font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: .85em; }
+.mn-history { display: grid; gap: 6px; }
+.mn-history li { display: inline-flex; gap: 8px; align-items: center; font-size: var(--lb-size-help); }
+.mn-history svg { color: var(--lb-accent); }
+.mn-ask { display: grid; gap: 10px; }

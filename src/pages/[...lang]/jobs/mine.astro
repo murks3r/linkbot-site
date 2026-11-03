@@ -1,0 +1,19 @@
+---
+/* Draft for the owner's review, in English and German: the person's own page in Jobs once signed in, with a demo on
+   fictional data that runs in the browser only (src/components/front/Mine.astro). Planned, not built. Linked from
+   nowhere, never indexed (Base's draft), out of the sitemap (astro.config.mjs), and absent from a production build
+   (getStaticPaths returns no route there). Words: src/drafts/jobs-mine.ts, each sentence with its row in
+   docs/truth-check.md. */
+import DraftPage from '../../../components/DraftPage.astro';
+import Mine from '../../../components/front/Mine.astro';
+import { buildsJobsMine, jobsMine, type MineDraft } from '../../../drafts/jobs-mine';
+import { DEFAULT_LANG, type Lang } from '../../../i18n';
+export function getStaticPaths() {
+  if (!buildsJobsMine({ VERCEL_ENV: process.env.VERCEL_ENV })) return [];
+  return (Object.entries(jobsMine) as [Lang, MineDraft][]).map(([lang, d]) => ({ params: { lang: lang === DEFAULT_LANG ? undefined : lang }, props: { d, lang } }));
+}
+const { d, lang } = Astro.props as { d: MineDraft; lang: Lang };
+---
+<DraftPage d={d} lang={lang} path="/jobs/mine">
+  <Mine D={d.demo} />
+</DraftPage>

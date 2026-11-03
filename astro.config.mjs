@@ -26,7 +26,7 @@ export default defineConfig({
   markdown: { remarkPlugins: [remarkOpenCoreLinks], shikiConfig: { theme: 'github-light' } },
   integrations: [shareImages(), demoImages(), llmsFull(), sitemap({
     filter: page => !page.endsWith('/404') && !page.endsWith('/for-intermediaries') && !page.endsWith('/developers/login-with-linkbot')
-      && !page.endsWith('/developers/a-new-vertical') && !page.endsWith('/developers/prepare-a-request'),
+      && !page.endsWith('/developers/a-new-vertical') && !page.endsWith('/developers/prepare-a-request') && !page.endsWith('/jobs/mine'),
     i18n: { defaultLocale: 'en', locales: Object.fromEntries(locales.map(l => [l, l])) },
   })],
 });
