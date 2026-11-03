@@ -71,7 +71,7 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
       pause: {
         title: 'Your search',
         active: 'Active: companies whose roles may fit see your criteria and verdicts, without your name.',
-        paused: 'Paused: no company is shown anything new of you and no new role is proposed to you until you resume. A company that already saw your verdicts keeps them in its list, closed and without any update. Your answers stay as they are, and when you resume, everything is as it was.',
+        paused: 'Paused: you are left out of matching and no new role is proposed to you until you resume. A company that had not been matched with you sees nothing, then or later. A company that already saw your criteria and verdicts keeps the match in its list, closed, with what it already saw and no update; it learns that the match closed because your search is paused, nothing more. Neither side can answer while it is paused. Your criteria, answers and list stay as they are; when you resume, matching runs again and the answers you gave before the pause stand.',
         pause: 'Pause my search',
         resume: 'Resume',
       },
@@ -200,7 +200,7 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
       pause: {
         title: 'Ihre Suche',
         active: 'Aktiv: Firmen, deren Stellen passen könnten, sehen Ihre Kriterien und Urteile, ohne Ihren Namen.',
-        paused: 'Pausiert: Keiner Firma wird etwas Neues von Ihnen gezeigt, und Ihnen wird keine neue Stelle vorgeschlagen, bis Sie fortsetzen. Eine Firma, die Ihre Urteile schon gesehen hat, behält sie in ihrer Liste, geschlossen und ohne jede Aktualisierung. Ihre Antworten bleiben, wie sie sind, und wenn Sie fortsetzen, ist alles wie vorher.',
+        paused: 'Pausiert: Sie sind vom Abgleich ausgenommen, und Ihnen wird keine neue Stelle vorgeschlagen, bis Sie fortsetzen. Eine Firma, die noch keinen Abgleich mit Ihnen hatte, sieht nichts, weder jetzt noch später. Eine Firma, die Ihre Kriterien und Urteile schon gesehen hat, behält den Abgleich in ihrer Liste, geschlossen, mit dem, was sie schon gesehen hat, und ohne jede Aktualisierung; sie erfährt, dass er geschlossen wurde, weil Ihre Suche pausiert ist, mehr nicht. Solange pausiert ist, kann keine Seite antworten. Ihre Kriterien, Antworten und Ihre Liste bleiben, wie sie sind; wenn Sie fortsetzen, läuft der Abgleich wieder, und die Antworten von vor der Pause gelten weiter.',
         pause: 'Suche pausieren',
         resume: 'Fortsetzen',
       },
