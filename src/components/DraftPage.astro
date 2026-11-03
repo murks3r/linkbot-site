@@ -1,17 +1,17 @@
 ---
 /* A draft page for the owner's review (src/drafts/draft.ts), in English unless the draft has its own words for lang:
    the banner, the hero, what a draft puts in its slot (a demo), the sections with their table of contents, and what is
-   open. Never indexed (Base's draft), without alternates and without the language switch. */
+   open. Never indexed (Base's draft), without alternates and without the language switch; ld adds schema.org nodes. */
 import Base from '../layouts/Base.astro';
 import Toc from './Toc.astro';
 import type { Draft } from '../drafts/draft';
 import { resolve, type Lang } from '../i18n';
-interface Props { d: Draft; path: string; lang?: Lang }
-const { d, path, lang = 'en' } = Astro.props;
+interface Props { d: Draft; path: string; lang?: Lang; ld?: Record<string, unknown>[] }
+const { d, path, lang = 'en', ld } = Astro.props;
 const { t } = resolve(lang);
 const toc = d.sections.map(s => [s.id, s.title] as [string, string]);
 ---
-<Base lang={lang} t={t} title={d.title} description={d.description} path={path} draft>
+<Base lang={lang} t={t} title={d.title} description={d.description} path={path} ld={ld} draft>
   <p class="draft" role="note"><span class="wrap"><strong>{d.banner}</strong> {d.bannerNote}</span></p>
   <section class="page-hero">
     <div class="wrap">
