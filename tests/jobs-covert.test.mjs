@@ -1,7 +1,7 @@
 /* The covert yes on a real posting (src/jobs/interest.ts, the shape J2-5 plans) and its stand-in
-   (src/jobs/interest-stub.ts): only a signed-in, checked person says yes, once per posting; the yes goes to the
-   source and the employer's board there (a stub until J2-5); withdrawing takes it off the person's list and out of every count; a
-   block covers the domain and its subdomains and applies before counting. The words say who is seen, and when. */
+   (src/jobs/interest-stub.ts): only a signed-in, checked person says yes, once per posting; the yes goes to the party
+   the catalogue names (none until J2-5, and then it counts for no company); withdrawing takes it off the person's list
+   and out of every count; a block covers the domain and its subdomains and applies before counting. The words say who is seen, and when. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { SIGNED_OUT, canSay, countFor, covers, mine, partyOf, sayYes, withdraw } from '../src/jobs/interest.ts';
@@ -15,13 +15,13 @@ const ats = RECORDED.find(p => p.source === 'greenhouse');
 const other = RECORDED.find(p => p.source === 'personio');
 const memory = () => { const m = new Map(); return { getItem: k => m.get(k) ?? null, setItem: (k, v) => m.set(k, v) }; };
 
-test('the yes goes to the source and the employer’s board there, never to the application system’s host', () => {
-  assert.equal(partyOf(ats), 'greenhouse:fabrikamroboticsexample');
-  assert.equal(partyOf(other), 'personio:northwind-analytics-example');
-  assert.equal(partyOf({ id: 'x', source: 'lever', original_url: 'https://jobs.lever.co/Acme/123' }), 'lever:acme');
-  assert.equal(partyOf({ id: 'x', source: 'recruitee', original_url: 'https://acme.recruitee.com/o/role' }), 'recruitee:acme');
-  const twoOnOneSystem = RECORDED.filter(p => p.source === 'personio').map(partyOf);
-  assert.equal(new Set(twoOnOneSystem).size, twoOnOneSystem.length, 'two employers on one system are two parties');
+test('the yes goes to the party the catalogue names, never one read from the posting’s address', () => {
+  assert.ok(RECORDED.every(p => p.party === null), 'no posting carries a party key until J2-5 gives one');
+  assert.equal(partyOf(ats), null);
+  assert.equal(partyOf({ ...ats, party: 'company-made-up' }), 'company-made-up');
+  const s = sayYes({ person: MADE_UP_PERSON, interests: [] }, ats, '2026-11-04T10:00:00Z');
+  assert.equal(s.interests[0].party, null, 'kept for the person');
+  assert.equal(countFor([{ person: MADE_UP_PERSON, interest: s.interests[0] }], 'greenhouse:fabrikamroboticsexample'), 0, 'counted for no company');
 });
 
 test('only a signed-in, checked person says yes, once; withdraw takes it off the list', () => {

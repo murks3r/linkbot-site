@@ -7,7 +7,7 @@ import { canSay, mine, said, type Session } from '../jobs/interest';
 import { interests } from '../jobs/interest-stub';
 import type { Posting as CataloguePosting } from '../jobs/catalogue';
 
-type Posting = Pick<CataloguePosting, 'id' | 'source' | 'original_url'>;
+type Posting = Pick<CataloguePosting, 'id' | 'party'>;
 type Listed = { title: string; employer: string; href: string };
 interface MineSource { lang: string; postings: Record<string, Listed>; saidOn: string; withdraw: string; withdrawn: string }
 

@@ -57,6 +57,9 @@ export interface Posting {
       (Recruitee's close_at), never derived. */
   posted_at: string | null;
   valid_through: string | null;
+  /** The unclaimed company party a covert yes on the posting goes to, as the jobs space keys it (J2-5); null while J2-5
+      gives none, and for good where no employer domain is proven (T-J2 FUND 3). Never derived from original_url. */
+  party: string | null;
 }
 
 export interface Query { q: string; where: string; mode: WorkMode | ''; since: number }
