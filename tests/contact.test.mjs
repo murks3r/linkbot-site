@@ -24,6 +24,11 @@ if (CONTACT_EMAIL) OWN.add(CONTACT_EMAIL.split('@')[1]);
    reserved for examples (RFC 2606: example.com, .net, .org and their subdomains, and the .example top-level domain) name
    no one; the developer docs and the made-up postings of the draft job board use them. */
 const ALLOWED = new Set(['schema.org']);
+/* The job board links each posting to its original at its source (the owner's J2 decision): the hosts the allowed
+   sources serve postings from (src/jobs/catalogue.ts, SOURCES). Only these hosts, and only on the draft job pages, which
+   are never in a production build; the made-up postings name made-up employers there, ending in "example". */
+const SOURCE_HOSTS = /^(boards\.greenhouse\.io|job-boards\.greenhouse\.io|jobs\.lever\.co|jobs\.ashbyhq\.com|apply\.workable\.com|[a-z0-9-]+\.jobs\.personio\.de|[a-z0-9-]+\.recruitee\.com)$/;
+const JOB_PAGE = /^([a-z]{2}\/)?jobs(\.html|\/[a-z0-9-]+\.html)$/;
 const EXAMPLE = /(^|\.)example\.(com|net|org)$|\.example$/;
 const LICENCE = /^fonts\/.*\/(OFL|LICENSE[^/]*)\.txt$/;
 const TEXT = /\.(html|xml|txt|js|css|json|svg|webmanifest)$/;
@@ -70,7 +75,7 @@ test('no host outside Linkbot’s own appears in the build output', { skip }, ()
       ...[...text.matchAll(/(?:^|[\s"'(=])\/\/([a-z0-9-]+(?:\.[a-z0-9-]+)+)/gi)].map(match => match[1]),
       ...[...text.matchAll(/[a-z0-9._%+-]+@([a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,})\b/gi)].map(match => match[1]),
     ];
-    for (const host of hosts.map(host => host.toLowerCase())) if (!OWN.has(host) && !ALLOWED.has(host) && !EXAMPLE.test(host)) hits.push(`${where}: ${host}`);
+    for (const host of hosts.map(host => host.toLowerCase())) if (!OWN.has(host) && !ALLOWED.has(host) && !EXAMPLE.test(host) && !(JOB_PAGE.test(where) && SOURCE_HOSTS.test(host))) hits.push(`${where}: ${host}`);
   }
   assert.deepEqual([...new Set(hits)], [], 'a host outside Linkbot’s own in the build output');
 });

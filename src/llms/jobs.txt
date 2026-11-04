@@ -3,16 +3,15 @@
 
 This section is part of the file only in builds that carry the draft jobs pages; a production build has neither.
 
-- [Jobs](/jobs): a draft of the planned job board. Planned: postings from employers' own application systems and from
-  the job search of Germany's Federal Employment Agency, each with its source, the day it was fetched and a link to
-  the original posting. No job catalogue runs today: the postings on the board are made up in the shape the catalogue
+- [Jobs](/jobs): a draft of the planned job board. Planned: postings from employers' own application systems whose terms
+  allow reading them, each with its source, the day it was fetched and a link to the original posting; no posting
+  text is kept, the original carries it. No job catalogue runs today: the postings on the board are made up in the shape the catalogue
   is planned to have. The board is a schema.org ItemList of the postings still open.
-- Each open posting has a draft page at `/jobs/<id>`: its facts, its text as the source gives it, the link to the
-  original posting and schema.org JobPosting with what the posting states, nothing added. A posting past its
-  valid-through date has no page and no place in the sitemap.
+- Each open posting has a draft page at `/jobs/<id>`: its facts, the link to the original posting (which carries the
+  text) and schema.org JobPosting with what the posting states, nothing added. A closing date is shown only when the
+  source states one; a posting past it has no page and no place in the sitemap.
 - Planned on top, not built: a covert yes for a person in work, with the same three steps. A check of each side; a
   private match, where a company sees the criteria and a verdict per criterion without the person's name, never a
   score; an introduction only when both say yes. A no on either side reveals nothing to the other.
 - [Your own page in Jobs](/jobs/mine): a draft, in English and German, of what a person sees once signed in.
-- The board, the posting pages and /jobs are in English, German, Spanish, Italian and French; a posting's own text
-  stays in the language its source gives it.
+- The board, the posting pages and /jobs are in English, German, Spanish, Italian and French.

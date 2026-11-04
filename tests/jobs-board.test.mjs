@@ -21,6 +21,8 @@ import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 const TODAY = '2026-11-04';
 const llmsPart = name => readFileSync(new URL(`../src/llms/${name}.txt`, import.meta.url), 'utf8');
 const llmsText = withJobs => compose(llmsPart('llms'), llmsPart('jobs'), withJobs);
+/* The hosts each allowed source serves its postings from (the address forms of J2-FIX-D). */
+const SOURCE_HOST = { personio: /\.jobs\.personio\.de$/, greenhouse: /^(boards|job-boards)\.greenhouse\.io$/, lever: /^jobs\.lever\.co$/, ashby: /^jobs\.ashbyhq\.com$/, workable: /^apply\.workable\.com$/, recruitee: /\.recruitee\.com$/ };
 const ids = list => list.map(p => p.id);
 const byId = id => RECORDED.find(p => p.id === id);
 const strings = value => typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(strings) : value && typeof value === 'object' ? Object.values(value).flatMap(strings) : [];
@@ -28,16 +30,18 @@ const shape = value => Array.isArray(value) ? 'list' : value && typeof value ===
 
 test('the board shows live postings only, newest first', () => {
   const all = search(RECORDED, EMPTY_QUERY, TODAY);
-  assert.ok(!ids(all).includes('smartrecruiters-wingtip-accounting-7'), 'past its valid-through date');
+  assert.ok(!ids(all).includes('recruitee-wingtip-accounting-7'), 'past its valid-through date');
   assert.equal(all.length, RECORDED.length - 1);
   assert.deepEqual(all.map(p => p.posted_at), [...all.map(p => p.posted_at)].sort().reverse());
-  assert.ok(isLive(byId('lever-contoso-logistics-ops-14'), '2026-12-31'), 'shown on its last day');
-  assert.ok(!isLive(byId('lever-contoso-logistics-ops-14'), '2027-01-01'), 'gone the day after');
+  assert.ok(isLive(byId('recruitee-adventure-works-ws-marketing'), '2026-12-31'), 'shown on its last day');
+  assert.ok(!isLive(byId('recruitee-adventure-works-ws-marketing'), '2027-01-01'), 'gone the day after');
+  assert.ok(isLive(byId('lever-contoso-logistics-ops-14'), '2030-01-01'), 'no closing date stated, none derived');
 });
 
 test('every word must match; case and accents do not matter', () => {
   assert.deepEqual(ids(search(RECORDED, { ...EMPTY_QUERY, q: 'data ANALYST' }, TODAY)), ['personio-northwind-4711']);
-  assert.deepEqual(ids(search(RECORDED, { ...EMPTY_QUERY, q: 'go postgresql' }, TODAY)), ['greenhouse-fabrikam-88213']);
+  assert.deepEqual(ids(search(RECORDED, { ...EMPTY_QUERY, q: 'backend FABRIKAM' }, TODAY)), ['greenhouse-fabrikam-88213'], 'the title and the employer');
+  assert.deepEqual(ids(search(RECORDED, { ...EMPTY_QUERY, q: 'postgresql' }, TODAY)), [], 'no posting text here; the read API searches it');
   assert.deepEqual(ids(search(RECORDED, { ...EMPTY_QUERY, q: 'data nurse' }, TODAY)), []);
   assert.deepEqual(ids(search(RECORDED, { ...EMPTY_QUERY, where: 'zurich' }, TODAY)), ['workable-litware-csm-dach']);
 });
@@ -77,7 +81,8 @@ test('JobPosting states what the posting states and points to the original', () 
   assert.equal(ld['@type'], 'JobPosting');
   assert.equal(ld.title, p.title);
   assert.equal(ld.datePosted, p.posted_at);
-  assert.equal(ld.validThrough, p.valid_through);
+  assert.equal(ld.validThrough, undefined, 'Personio states no closing date');
+  assert.equal(jobPostingSchema(byId('recruitee-adventure-works-ws-marketing'), 'x').validThrough, '2026-12-31');
   assert.equal(ld.hiringOrganization.name, p.employer);
   assert.equal(ld.jobLocation.address.addressCountry, 'DE');
   assert.deepEqual(ld.baseSalary.value, { '@type': 'QuantitativeValue', unitText: 'YEAR', minValue: 46000, maxValue: 54000 });
@@ -89,9 +94,14 @@ test('JobPosting states what the posting states and points to the original', () 
   assert.equal(remote.jobLocationType, 'TELECOMMUTE');
   assert.equal(remote.baseSalary, undefined, 'no salary stated, none given');
   assert.equal(remote.validThrough, undefined);
-  assert.equal(jobPostingSchema(byId('ba-musterwerk-10000-1203'), 'x').employmentType, 'FULL_TIME', 'the agency’s VOLLZEIT');
+  assert.equal(jobPostingSchema(byId('personio-musterwerk-1203'), 'x').employmentType, 'FULL_TIME', 'VOLLZEIT');
   assert.ok(!('employmentType' in jobPostingSchema(byId('recruitee-adventure-works-ws-marketing'), 'x')), 'a type the board cannot read is left out');
-  assert.ok(!('employmentType' in jobPostingSchema(byId('smartrecruiters-wingtip-accounting-7'), 'x')), 'none stated, none given');
+  assert.ok(!('employmentType' in jobPostingSchema(byId('recruitee-wingtip-accounting-7'), 'x')), 'none stated, none given');
+  for (const p of RECORDED) {
+    const node = jobPostingSchema(p, 'x');
+    assert.ok(!('description' in node) && !('inLanguage' in node), `${p.id}: no posting text`);
+    assert.equal('validThrough' in node, p.valid_through !== null, `${p.id}: validThrough only when the source states it`);
+  }
 });
 
 test('an employment type reads as the board’s word, else as the source writes it', () => {
@@ -121,18 +131,22 @@ test('llms.txt carries the jobs section only where the jobs pages are built', ()
   assert.doesNotMatch(section, FORBIDDEN.en);
 });
 
-test('the stand-in postings carry every field, lead nowhere real and hold no contact person', () => {
+test('the stand-in postings come from allowed sources, carry every field, keep no text and use their source’s address form', () => {
   for (const p of RECORDED) {
-    for (const key of ['id', 'title', 'employer', 'location', 'work_mode', 'employment_type', 'salary', 'source', 'fetched_at', 'original_url', 'posted_at', 'valid_through', 'language', 'description']) assert.ok(key in p, `${p.id}: ${key}`);
+    for (const key of ['id', 'title', 'employer', 'location', 'work_mode', 'employment_type', 'salary', 'source', 'fetched_at', 'original_url', 'posted_at', 'valid_through']) assert.ok(key in p, `${p.id}: ${key}`);
+    assert.ok(!('description' in p) && !('language' in p), `${p.id}: no posting text`);
     assert.match(p.id, /^[a-z0-9-]+$/);
     assert.notEqual(p.id, 'mine', 'the person’s own page lives at /jobs/mine');
     assert.ok(SOURCES.includes(p.source), p.source);
     assert.ok(p.work_mode === null || WORK_MODES.includes(p.work_mode));
-    assert.match(new URL(p.original_url).hostname, /\.example$/, `${p.id}: a made-up posting leads nowhere real`);
+    assert.match(new URL(p.original_url).hostname, SOURCE_HOST[p.source], `${p.id}: the address form of ${p.source}`);
+    assert.match(p.original_url, /example/, `${p.id}: a made-up employer slug`);
+    if (p.source !== 'recruitee') assert.equal(p.valid_through, null, `${p.id}: only Recruitee states a closing date`);
     assert.ok(!Number.isNaN(Date.parse(p.fetched_at)));
-    for (const text of p.description) assert.doesNotMatch(text, /@|\+?\d[\d /-]{7,}\d|Herr |Frau |Ansprechpartner|contact person/i, `${p.id}: no contact person`);
   }
   assert.equal(new Set(RECORDED.map(p => p.id)).size, RECORDED.length);
+  assert.deepEqual([...SOURCES].sort(), Object.keys(SOURCE_HOST).sort(), 'the sources: no Federal Employment Agency, no SmartRecruiters');
+  for (const lang of LANGS) assert.deepEqual(Object.keys(jobsBoard[lang].board.sources).sort(), [...SOURCES].sort(), `${lang}: a label for each source, no other`);
 });
 
 test('the board’s words make no forbidden claim and match in the five languages', () => {

@@ -1,6 +1,6 @@
 /* The job board's words, in the five languages: the search on the draft /jobs (src/components/front/Board.astro) and
    the posting's own draft page /jobs/<id> (src/pages/[...lang]/jobs/[id].astro). The board is planned to read the job
-   catalogue (postings from employers' own application systems and the Federal Employment Agency's job search, each
+   catalogue (postings from employers' own application systems whose terms allow it, each
    with source, fetched date and the link to the original); until its read API exists it reads made-up postings in the
    same shape (src/jobs/recorded.ts). The covert yes is planned and shown disabled. Both pages follow /jobs: drafts for
    the owner, never indexed, out of the sitemap, left out of production builds (buildsJobsPage). Every sentence has its
@@ -39,12 +39,11 @@ export interface PostingWords extends Omit<Draft, 'title' | 'eyebrow' | 'h1' | '
   notStated: string;
   original: { button: string; note: string };
   covert: { button: string; soon: string; p: string };
-  posting: { h2: string; note: string };
 }
 
 const today = (en: boolean) => en
-  ? `${PUBLIC_NAME} runs no job catalogue today: the collector and its read API are drafts on development branches, none merged. The postings on these pages are made up in the shape the catalogue is planned to have, and their addresses end in .example, which leads nowhere.`
-  : `${PUBLIC_NAME} betreibt heute keinen Stellenkatalog: Der Sammler und seine Lese-Schnittstelle sind Entwürfe auf Entwicklungszweigen, keiner zusammengeführt. Die Stellen auf diesen Seiten sind erfunden, in der Form, die der Katalog haben soll, und ihre Adressen enden auf .example, das nirgends hinführt.`;
+  ? `${PUBLIC_NAME} runs no job catalogue today: the collector and its read API are drafts on development branches, none merged. The postings on these pages are made up in the shape the catalogue is planned to have, Each links to the address form of its source with a made-up employer whose name ends in “example”, so it leads to no posting. The catalogue keeps no posting text; the original carries it.`
+  : `${PUBLIC_NAME} betreibt heute keinen Stellenkatalog: Der Sammler und seine Lese-Schnittstelle sind Entwürfe auf Entwicklungszweigen, keiner zusammengeführt. Die Stellen auf diesen Seiten sind erfunden, in der Form, die der Katalog haben soll, Jede verlinkt die Adressform ihrer Quelle mit einem erfundenen Arbeitgeber, dessen Name auf „example“ endet, und führt so zu keiner Anzeige. Der Katalog speichert keinen Anzeigentext; die Originalanzeige trägt ihn.`;
 
 export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords }> = {
   en: {
@@ -60,7 +59,7 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
       noScript: 'All postings, newest first. The search needs scripts.',
       modes: { on_site: 'On site', hybrid: 'Hybrid', remote: 'Remote' },
       employment: { full_time: 'Full time', part_time: 'Part time', contract: 'Contract', temporary: 'Temporary', internship: 'Internship', apprenticeship: 'Apprenticeship' },
-      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', smartrecruiters: 'SmartRecruiters', recruitee: 'Recruitee', ba: 'Federal Employment Agency' },
+      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', recruitee: 'Recruitee' },
       salary: { per: { year: 'a year', month: 'a month', hour: 'an hour' }, from: 'from', upTo: 'up to' },
       sourceLine: 'Source: {source} · fetched {date}',
     },
@@ -78,7 +77,6 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
         soon: 'Coming soon',
         p: `Planned: one tap tells the company that someone is interested, as criteria and a verdict on each, without a name. It learns who you are only when it says yes to you too. Companies on your block list, your current employer first, see nothing of it while they use the domain they confirmed with ${PUBLIC_NAME}.`,
       },
-      posting: { h2: 'The posting', note: 'The text as the source gives it, unchanged.' },
       sections: [
         {
           id: 'today',
@@ -110,7 +108,7 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
       noScript: 'Alle Stellen, die neuesten zuerst. Die Suche braucht Skripte.',
       modes: { on_site: 'Vor Ort', hybrid: 'Hybrid', remote: 'Remote' },
       employment: { full_time: 'Vollzeit', part_time: 'Teilzeit', contract: 'Freie Mitarbeit', temporary: 'Befristet', internship: 'Praktikum', apprenticeship: 'Ausbildung' },
-      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', smartrecruiters: 'SmartRecruiters', recruitee: 'Recruitee', ba: 'Bundesagentur für Arbeit' },
+      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', recruitee: 'Recruitee' },
       salary: { per: { year: 'im Jahr', month: 'im Monat', hour: 'pro Stunde' }, from: 'ab', upTo: 'bis' },
       sourceLine: 'Quelle: {source} · abgerufen am {date}',
     },
@@ -128,7 +126,6 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
         soon: 'Demnächst',
         p: `Geplant: Ein Tippen sagt der Firma, dass jemand Interesse hat, als Kriterien mit einem Urteil zu jedem, ohne Namen. Wer Sie sind, erfährt sie erst, wenn sie auch Ja zu Ihnen sagt. Firmen auf Ihrer Sperrliste, Ihr aktueller Arbeitgeber zuerst, sehen nichts davon, solange sie die Domain nutzen, die sie bei ${PUBLIC_NAME} bestätigt haben.`,
       },
-      posting: { h2: 'Die Anzeige', note: 'Der Text, wie die Quelle ihn liefert, unverändert.' },
       sections: [
         {
           id: 'today',
@@ -160,7 +157,7 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
       noScript: 'Todos los anuncios, los más recientes primero. La búsqueda necesita scripts.',
       modes: { on_site: 'Presencial', hybrid: 'Híbrido', remote: 'En remoto' },
       employment: { full_time: 'Jornada completa', part_time: 'Jornada parcial', contract: 'Por cuenta propia', temporary: 'Temporal', internship: 'Prácticas', apprenticeship: 'Contrato de aprendizaje' },
-      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', smartrecruiters: 'SmartRecruiters', recruitee: 'Recruitee', ba: 'Agencia Federal de Empleo de Alemania' },
+      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', recruitee: 'Recruitee' },
       salary: { per: { year: 'al año', month: 'al mes', hour: 'por hora' }, from: 'desde', upTo: 'hasta' },
       sourceLine: 'Fuente: {source} · obtenido el {date}',
     },
@@ -178,12 +175,11 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
         soon: 'Próximamente',
         p: `Previsto: un toque le dice a la empresa que alguien está interesado, como criterios y un veredicto de cada uno, sin nombre. Solo sabe quién es usted cuando ella también le dice que sí. Las empresas de su lista de bloqueo, empezando por su empleador actual, no ven nada de esto mientras usen el dominio que confirmaron con ${PUBLIC_NAME}.`,
       },
-      posting: { h2: 'El anuncio', note: 'El texto tal como lo da la fuente, sin cambios.' },
       sections: [
         {
           id: 'today',
           title: 'Lo que existe hoy',
-          paragraphs: [`${PUBLIC_NAME} no gestiona hoy ningún catálogo de empleo: el recolector y su API de lectura son borradores en ramas de desarrollo, ninguno integrado. Los anuncios de estas páginas son inventados, con la forma que se prevé para el catálogo, y sus direcciones terminan en .example, que no lleva a ninguna parte.`, 'El sí discreto no está construido: el botón está desactivado.'],
+          paragraphs: [`${PUBLIC_NAME} no gestiona hoy ningún catálogo de empleo: el recolector y su API de lectura son borradores en ramas de desarrollo, ninguno integrado. Los anuncios de estas páginas son inventados, con la forma que se prevé para el catálogo, Cada uno enlaza a la forma de dirección de su fuente con un empleador inventado cuyo nombre termina en «example», así que no lleva a ningún anuncio. El catálogo no guarda el texto de los anuncios; lo lleva el original.`, 'El sí discreto no está construido: el botón está desactivado.'],
         },
       ],
       open: {
@@ -210,7 +206,7 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
       noScript: 'Tutti gli annunci, i più recenti per primi. La ricerca richiede gli script.',
       modes: { on_site: 'In sede', hybrid: 'Ibrido', remote: 'Da remoto' },
       employment: { full_time: 'Tempo pieno', part_time: 'Tempo parziale', contract: 'Collaborazione autonoma', temporary: 'A termine', internship: 'Tirocinio', apprenticeship: 'Apprendistato' },
-      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', smartrecruiters: 'SmartRecruiters', recruitee: 'Recruitee', ba: 'Agenzia federale per il lavoro tedesca' },
+      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', recruitee: 'Recruitee' },
       salary: { per: { year: 'l’anno', month: 'al mese', hour: 'all’ora' }, from: 'da', upTo: 'fino a' },
       sourceLine: 'Fonte: {source} · recuperato il {date}',
     },
@@ -228,12 +224,11 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
         soon: 'Prossimamente',
         p: `Previsto: un tocco dice all’azienda che qualcuno è interessato, come criteri e un verdetto su ciascuno, senza nome. L’azienda viene a sapere chi è Lei solo quando dice sì anche a Lei. Le aziende nel Suo elenco dei blocchi, a cominciare dal Suo attuale datore di lavoro, non ne vedono nulla finché usano il dominio che hanno confermato con ${PUBLIC_NAME}.`,
       },
-      posting: { h2: 'L’annuncio', note: 'Il testo come lo fornisce la fonte, invariato.' },
       sections: [
         {
           id: 'today',
           title: 'Che cosa esiste oggi',
-          paragraphs: [`${PUBLIC_NAME} oggi non gestisce alcun catalogo di annunci: il raccoglitore e la sua API di lettura sono bozze su rami di sviluppo, nessuna integrata. Gli annunci su queste pagine sono inventati, nella forma prevista per il catalogo, e i loro indirizzi finiscono con .example, che non porta da nessuna parte.`, 'Il sì riservato non è costruito: il pulsante è disabilitato.'],
+          paragraphs: [`${PUBLIC_NAME} oggi non gestisce alcun catalogo di annunci: il raccoglitore e la sua API di lettura sono bozze su rami di sviluppo, nessuna integrata. Gli annunci su queste pagine sono inventati, nella forma prevista per il catalogo, Ognuno rimanda alla forma di indirizzo della sua fonte con un datore di lavoro inventato il cui nome finisce con «example», quindi non porta ad alcun annuncio. Il catalogo non conserva il testo degli annunci; lo porta l’originale.`, 'Il sì riservato non è costruito: il pulsante è disabilitato.'],
         },
       ],
       open: {
@@ -260,7 +255,7 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
       noScript: 'Toutes les annonces, les plus récentes d’abord. La recherche a besoin de scripts.',
       modes: { on_site: 'Sur site', hybrid: 'Hybride', remote: 'À distance' },
       employment: { full_time: 'Temps plein', part_time: 'Temps partiel', contract: 'Contrat de prestation', temporary: 'Temporaire', internship: 'Stage', apprenticeship: 'Apprentissage' },
-      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', smartrecruiters: 'SmartRecruiters', recruitee: 'Recruitee', ba: 'Agence fédérale pour l’emploi (Allemagne)' },
+      sources: { personio: 'Personio', greenhouse: 'Greenhouse', lever: 'Lever', ashby: 'Ashby', workable: 'Workable', recruitee: 'Recruitee' },
       salary: { per: { year: 'par an', month: 'par mois', hour: 'par heure' }, from: 'à partir de', upTo: 'jusqu’à' },
       sourceLine: 'Source : {source} · récupéré le {date}',
     },
@@ -278,13 +273,12 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
         soon: 'Bientôt',
         p: `Prévu : un geste dit à l’entreprise que quelqu’un est intéressé, sous forme de critères et d’un verdict sur chacun, sans nom. Elle ne sait qui vous êtes que lorsqu’elle vous dit oui aussi. Les entreprises de votre liste de blocage, votre employeur actuel en premier, n’en voient rien tant qu’elles utilisent le domaine qu’elles ont confirmé auprès de ${PUBLIC_NAME}.`,
       },
-      posting: { h2: 'L’annonce', note: 'Le texte tel que la source le donne, sans modification.' },
       sections: [
         {
           id: 'today',
           title: 'Ce qui existe aujourd’hui',
           paragraphs: [
-            `${PUBLIC_NAME} ne fait fonctionner aucun catalogue d’emplois aujourd’hui : le collecteur et son API de lecture sont des brouillons sur des branches de développement, aucun fusionné. Les annonces de ces pages sont inventées, dans la forme que le catalogue doit avoir, et leurs adresses se terminent par .example, qui ne mène nulle part.`,
+            `${PUBLIC_NAME} ne fait fonctionner aucun catalogue d’emplois aujourd’hui : le collecteur et son API de lecture sont des brouillons sur des branches de développement, aucun fusionné. Les annonces de ces pages sont inventées, dans la forme que le catalogue doit avoir, Chacune renvoie à la forme d’adresse de sa source avec un employeur inventé dont le nom se termine par « example », et ne mène donc à aucune annonce. Le catalogue ne conserve pas le texte des annonces ; l’original le porte.`,
             'Le oui discret n’est pas construit : le bouton est désactivé.',
           ],
         },

@@ -35,16 +35,15 @@ const UNIT: Record<Salary['period'], string> = { year: 'YEAR', month: 'MONTH', h
 /** schema.org's employment types; an apprenticeship and any type the board cannot read have none and are left out. */
 const EMPLOYMENT_TYPE: Partial<Record<EmploymentKind, string>> = { full_time: 'FULL_TIME', part_time: 'PART_TIME', contract: 'CONTRACTOR', temporary: 'TEMPORARY', internship: 'INTERN' };
 
-/** The posting as schema.org JobPosting: what the source states, nothing added. Its url is the original posting (the
-    page a person applies on); the draft page that shows it is mainEntityOfPage. */
+/** The posting as schema.org JobPosting: what the source states, nothing added. No description: the catalogue keeps no
+    posting text (J2-FIX-B); the url, the original posting, carries it. validThrough only when the source states a
+    closing date. The draft page that shows it is mainEntityOfPage. */
 export const jobPostingSchema = (p: Posting, pageUrl: string): Record<string, unknown> => {
   const kind = employmentKind(p.employment_type);
   const employmentType = kind && EMPLOYMENT_TYPE[kind];
   return {
     '@type': 'JobPosting',
     title: p.title,
-    description: p.description.join('\n\n'),
-    inLanguage: p.language,
     datePosted: p.posted_at ?? p.fetched_at.slice(0, 10),
     ...(employmentType && { employmentType }),
     ...(p.valid_through && { validThrough: p.valid_through }),

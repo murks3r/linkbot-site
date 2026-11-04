@@ -1,8 +1,12 @@
 /* The stand-in for the job catalogue until its read API exists: made-up postings in the catalogue's shape
-   (src/jobs/catalogue.ts). Employers, places, texts and addresses are invented; the addresses end in .example, which
-   never resolves, so "To the original posting" leads nowhere real. One posting is past its valid-through date, so the
-   board's rule that it disappears is visible in the data. No contact person, as the catalogue drops them at ingest. The employment types are
-   spelled as different sources spell them; one is a word the board has no translation for. */
+   (src/jobs/catalogue.ts), only from the sources the catalogue may read (Personio, Greenhouse, Lever, Ashby, Workable,
+   Recruitee). Employers, places and ids are invented; each link has the address form of its source (a Personio
+   subdomain, a Greenhouse or Workable board, a Lever or Ashby page, a Recruitee subdomain) with a made-up employer slug
+   that ends in "example", so it names no real employer and leads to no posting. No posting text: the catalogue keeps
+   none (J2-FIX-B), the link to the original carries it. valid_through only where the source states a closing date
+   (Recruitee's close_at); one Recruitee posting is past it, so the board's rule that it disappears is visible in the
+   data. The employment types are spelled as different sources spell them; one is a word the board has no translation
+   for. */
 import type { Posting } from './catalogue.ts';
 
 const FETCHED = '2026-11-04T03:00:00Z';
@@ -18,16 +22,9 @@ export const RECORDED: readonly Posting[] = [
     salary: { min: 46000, max: 54000, currency: 'EUR', period: 'year' },
     source: 'personio',
     fetched_at: FETCHED,
-    original_url: 'https://northwind-analytics.example/jobs/4711',
+    original_url: 'https://northwind-analytics-example.jobs.personio.de/job/4711',
     posted_at: '2026-11-02',
-    valid_through: '2027-01-31',
-    language: 'de',
-    description: [
-      'Wir sind ein Team aus zwölf Menschen, das Händlern hilft, ihre Lager- und Verkaufsdaten zu verstehen.',
-      'Deine Aufgaben: Berichte in SQL und Python bauen, Dashboards pflegen, Fragen aus dem Vertrieb mit Zahlen beantworten.',
-      'Das bringst du mit: ein abgeschlossenes Studium oder eine Ausbildung mit Bezug zu Daten, gutes SQL, Deutsch und Englisch im Arbeitsalltag.',
-      'Wir bieten: zwei Tage im Büro in Berlin-Kreuzberg, drei Tage von zu Hause, 30 Tage Urlaub.',
-    ],
+    valid_through: null,
   },
   {
     id: 'greenhouse-fabrikam-88213',
@@ -39,15 +36,9 @@ export const RECORDED: readonly Posting[] = [
     salary: null,
     source: 'greenhouse',
     fetched_at: FETCHED,
-    original_url: 'https://fabrikam-robotics.example/careers/88213',
+    original_url: 'https://boards.greenhouse.io/fabrikamroboticsexample/jobs/88213',
     posted_at: '2026-10-29',
     valid_through: null,
-    language: 'en',
-    description: [
-      'Fabrikam builds the software that plans routes for warehouse robots.',
-      'You will own services written in Go that schedule thousands of robot moves a minute, and you will review the designs of two other engineers.',
-      'We look for six or more years of backend work, experience with PostgreSQL, and English for daily work. You can work from anywhere in Germany.',
-    ],
   },
   {
     id: 'lever-contoso-logistics-ops-14',
@@ -59,15 +50,9 @@ export const RECORDED: readonly Posting[] = [
     salary: { min: 58000, max: 66000, currency: 'EUR', period: 'year' },
     source: 'lever',
     fetched_at: FETCHED,
-    original_url: 'https://contoso-logistics.example/jobs/ops-14',
+    original_url: 'https://jobs.lever.co/contoso-logistics-example/0b4f7a52-3c1e-4d8a-9f60-1e2d3c4b5a14',
     posted_at: '2026-10-20',
-    valid_through: '2026-12-31',
-    language: 'en',
-    description: [
-      'Lead the early shift of our warehouse in Hamburg-Billbrook: 40 people, two loading docks, one goal of shipping every order on the day it comes in.',
-      'You plan the shifts, keep safety rules, and work with our transport team on late trucks.',
-      'Three years of leading a team in logistics; German and English.',
-    ],
+    valid_through: null,
   },
   {
     id: 'ashby-tailspin-design-3',
@@ -79,35 +64,23 @@ export const RECORDED: readonly Posting[] = [
     salary: { min: 55000, max: 65000, currency: 'EUR', period: 'year' },
     source: 'ashby',
     fetched_at: FETCHED,
-    original_url: 'https://tailspin-health.example/careers/design-3',
+    original_url: 'https://jobs.ashbyhq.com/tailspin-health-example/7c9e2f10-5a3b-4c6d-8e1f-2a3b4c5d6e03',
     posted_at: '2026-10-31',
-    valid_through: '2027-02-28',
-    language: 'en',
-    description: [
-      'Tailspin Health makes the app nurses use to hand over a patient at the end of a shift.',
-      'You design new flows from the first sketch to the shipped screen, and you test them with nurses in two hospitals in Vienna.',
-      'A portfolio with work you shipped, and good English; German helps.',
-    ],
+    valid_through: null,
   },
   {
-    id: 'ba-musterwerk-10000-1203',
+    id: 'personio-musterwerk-1203',
     title: 'Industriemechaniker (m/w/d)',
     employer: 'Musterwerk Metallbau GmbH',
     location: { place: 'Chemnitz', country: 'DE' },
     work_mode: 'on_site',
     employment_type: 'VOLLZEIT',
     salary: { min: 19, max: 23, currency: 'EUR', period: 'hour' },
-    source: 'ba',
+    source: 'personio',
     fetched_at: FETCHED,
-    original_url: 'https://musterwerk-metallbau.example/karriere/industriemechaniker',
+    original_url: 'https://musterwerk-metallbau-example.jobs.personio.de/job/1203',
     posted_at: '2026-10-27',
-    valid_through: '2026-12-15',
-    language: 'de',
-    description: [
-      'Für unsere Fertigung in Chemnitz suchen wir zur Verstärkung eine Industriemechanikerin oder einen Industriemechaniker in Vollzeit.',
-      'Ihre Aufgaben: Wartung und Instandsetzung unserer Biege- und Schweißanlagen, Einrichten neuer Maschinen, Fehlersuche im Zweischichtbetrieb.',
-      'Ihr Profil: abgeschlossene Ausbildung als Industriemechaniker oder vergleichbar, Erfahrung mit Hydraulik und Pneumatik.',
-    ],
+    valid_through: null,
   },
   {
     id: 'workable-litware-csm-dach',
@@ -119,15 +92,9 @@ export const RECORDED: readonly Posting[] = [
     salary: { min: 95000, max: 110000, currency: 'CHF', period: 'year' },
     source: 'workable',
     fetched_at: FETCHED,
-    original_url: 'https://litware.example/jobs/csm-dach',
+    original_url: 'https://apply.workable.com/litware-example/j/C5D7A1B2E3/',
     posted_at: '2026-11-03',
-    valid_through: '2027-01-15',
-    language: 'de',
-    description: [
-      'Litware entwickelt Software für die Buchhaltung kleiner Treuhandbüros in der Schweiz, in Deutschland und in Österreich.',
-      'Du betreust rund 60 Kundinnen und Kunden, führst sie durch die Einführung und hörst zu, wenn etwas nicht passt.',
-      'Wir arbeiten zwei Tage pro Woche gemeinsam im Büro in Zürich-Oerlikon.',
-    ],
+    valid_through: null,
   },
   {
     id: 'recruitee-adventure-works-ws-marketing',
@@ -139,32 +106,22 @@ export const RECORDED: readonly Posting[] = [
     salary: { min: 15, max: null, currency: 'EUR', period: 'hour' },
     source: 'recruitee',
     fetched_at: FETCHED,
-    original_url: 'https://adventure-works.example/jobs/werkstudent-marketing',
+    original_url: 'https://adventureworksexample.recruitee.com/o/werkstudent-marketing',
     posted_at: '2026-10-12',
     valid_through: '2026-12-31',
-    language: 'de',
-    description: [
-      'Adventure Works verkauft Outdoor-Ausrüstung aus zweiter Hand.',
-      'Du planst unseren Newsletter, schreibst Texte für neue Produkte und wertest aus, was unsere Kundinnen und Kunden lesen.',
-      '16 bis 20 Stunden pro Woche, neben dem Studium, im Büro in Köln-Ehrenfeld oder von zu Hause.',
-    ],
   },
   {
-    id: 'smartrecruiters-wingtip-accounting-7',
+    id: 'recruitee-wingtip-accounting-7',
     title: 'Buchhalter (m/w/d)',
     employer: 'Wingtip Finanz GmbH',
     location: { place: 'Leipzig', country: 'DE' },
     work_mode: 'on_site',
     employment_type: null,
     salary: null,
-    source: 'smartrecruiters',
+    source: 'recruitee',
     fetched_at: '2026-10-30T03:00:00Z',
-    original_url: 'https://wingtip-finanz.example/karriere/7',
+    original_url: 'https://wingtipfinanzexample.recruitee.com/o/buchhaltung-7',
     posted_at: '2026-09-15',
     valid_through: '2026-10-31',
-    language: 'de',
-    description: [
-      'Diese Stelle ist abgelaufen und erscheint deshalb nicht auf dem Board.',
-    ],
   },
 ];

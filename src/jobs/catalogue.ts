@@ -1,6 +1,7 @@
 /* The job catalogue as the job board reads it: one public posting with the fields the planned read API names (source,
    fetched_at, original_url, employer, location, work mode, employment type and salary if stated, posted and
-   valid-through dates), plus the title, the text as the source gives it and its language. The read API's own contract
+   valid-through dates), plus the title. No posting text: the catalogue keeps none (J2-FIX-B); the link to the original
+   carries it, and a search over the text is the read API's q filter, server side. The read API's own contract
    (murks3r/linkbot, contracts/jobs-catalogue/openapi.yaml, 0.1.0-draft) nests employer and location differently; the
    board takes its shape once that contract is merged. Postings only, never a person. Until the API exists the
    board reads a stub of the same shape (src/jobs/recorded.ts); search and filters are pure functions here, so the
@@ -9,8 +10,9 @@
 export const WORK_MODES = ['on_site', 'hybrid', 'remote'] as const;
 export type WorkMode = typeof WORK_MODES[number];
 
-/** The employers' own application systems and the Federal Employment Agency's job search; nothing else is a source. */
-export const SOURCES = ['personio', 'greenhouse', 'lever', 'ashby', 'workable', 'smartrecruiters', 'recruitee', 'ba'] as const;
+/** The employers' own application systems whose terms allow reading their public feeds; nothing else is a source. The
+    Federal Employment Agency's job search and SmartRecruiters forbid automated reading and are not sources. */
+export const SOURCES = ['personio', 'greenhouse', 'lever', 'ashby', 'workable', 'recruitee'] as const;
 export type Source = typeof SOURCES[number];
 
 /** The employment types the board names in words. The catalogue gives the type as the source writes it, not
@@ -46,13 +48,10 @@ export interface Posting {
   /** When the catalogue fetched the posting (ISO 8601). */
   fetched_at: string;
   original_url: string;
-  /** Dates as YYYY-MM-DD, when the posting gives them. */
+  /** Dates as YYYY-MM-DD. posted_at when the posting gives it; valid_through only when the source states a closing date
+      (Recruitee's close_at), never derived. */
   posted_at: string | null;
   valid_through: string | null;
-  /** The language of the posting's text, as a BCP 47 tag. */
-  language: string;
-  /** The posting's text as the source gives it, one paragraph each. */
-  description: string[];
 }
 
 export interface Query { q: string; where: string; mode: WorkMode | ''; since: number }
@@ -89,15 +88,15 @@ const fold = (text: string) => text.toLocaleLowerCase('de').normalize('NFD').rep
 export const isLive = (posting: Posting, today: string): boolean =>
   posting.valid_through === null || day(posting.valid_through) >= day(today);
 
-/** The live postings that fit the query, newest first. Every word of q must appear in the title, the employer or the
-    text; where must appear in the place or the country's name (countryNames, in the page's language and in English). */
+/** The live postings that fit the query, newest first. Every word of q must appear in the title or the employer (the
+    stand-in holds no text; the read API searches the text server side); where must appear in the place or the country's name (countryNames, in the page's language and in English). */
 export const search = (postings: readonly Posting[], query: Query, today: string, countryNames: (code: string) => string[] = () => []): Posting[] => {
   const words = fold(query.q).split(/\s+/).filter(Boolean);
   const where = fold(query.where);
   return postings
     .filter(p => isLive(p, today))
     .filter(p => {
-      const text = fold([p.title, p.employer, ...p.description].join(' '));
+      const text = fold([p.title, p.employer].join(' '));
       return words.every(w => text.includes(w));
     })
     .filter(p => !where || [p.location.place, p.location.country, ...countryNames(p.location.country)].some(n => fold(n).includes(where)))

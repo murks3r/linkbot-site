@@ -33,7 +33,7 @@ export const jobsPage: Record<Lang, JobsDraft> = {
     description: `Draft: a job board on ${PUBLIC_NAME} with postings straight from employers, source and fetched date on each, and a covert yes. Made-up data.`,
     eyebrow: 'Jobs · planned · draft',
     h1: ['Jobs straight from the employers.', 'Say yes in confidence.'],
-    lede: `Planned: a free board of postings taken from employers’ own application systems and from the job search of Germany’s Federal Employment Agency, each with its source, the day it was fetched and a link to the original. On top, a covert yes for a person in work: the company learns that someone is interested, as criteria without a name, and learns who it is only when it says yes too. ${PUBLIC_NAME} checks both sides, and a no reveals nothing. The page names no date.`,
+    lede: `Planned: a free board of postings taken from employers’ own application systems, each with its source, the day it was fetched and a link to the original. On top, a covert yes for a person in work: the company learns that someone is interested, as criteria without a name, and learns who it is only when it says yes too. ${PUBLIC_NAME} checks both sides, and a no reveals nothing. The page names no date.`,
     demo: {
       h2: 'Try it: one person, one company',
       label: 'Made-up example data · runs in your browser, nothing is sent',
@@ -142,7 +142,7 @@ export const jobsPage: Record<Lang, JobsDraft> = {
     description: `Entwurf: eine Stellenbörse bei ${PUBLIC_NAME} mit Stellen direkt von den Arbeitgebern, Quelle und Abrufdatum an jeder, und ein verdecktes Ja. Erfundene Daten.`,
     eyebrow: 'Jobs · geplant · Entwurf',
     h1: ['Stellen direkt von den Arbeitgebern.', 'Vertraulich Ja sagen.'],
-    lede: `Geplant: eine kostenlose Börse mit Stellen aus den Bewerbungssystemen der Arbeitgeber selbst und aus der Jobsuche der Bundesagentur für Arbeit, jede mit Quelle, Abrufdatum und Link zur Originalanzeige. Darauf ein verdecktes Ja für Angestellte: Die Firma erfährt, dass jemand Interesse hat, als Kriterien ohne Namen, und wer es ist, erst wenn sie auch Ja sagt. ${PUBLIC_NAME} prüft beide Seiten, und ein Nein verrät nichts. Die Seite nennt kein Datum.`,
+    lede: `Geplant: eine kostenlose Börse mit Stellen aus den Bewerbungssystemen der Arbeitgeber selbst, jede mit Quelle, Abrufdatum und Link zur Originalanzeige. Darauf ein verdecktes Ja für Angestellte: Die Firma erfährt, dass jemand Interesse hat, als Kriterien ohne Namen, und wer es ist, erst wenn sie auch Ja sagt. ${PUBLIC_NAME} prüft beide Seiten, und ein Nein verrät nichts. Die Seite nennt kein Datum.`,
     demo: {
       h2: 'Probieren Sie es aus: eine Person, eine Firma',
       label: 'Erfundene Beispieldaten · läuft in Ihrem Browser, nichts wird gesendet',
@@ -251,7 +251,7 @@ export const jobsPage: Record<Lang, JobsDraft> = {
     description: `Borrador: un tablón de empleo en ${PUBLIC_NAME} con anuncios de los propios empleadores, fuente y fecha de obtención en cada uno, y un sí discreto. Datos inventados.`,
     eyebrow: 'Jobs · previsto · borrador',
     h1: ['Anuncios directamente de los empleadores.', 'Diga que sí con discreción.'],
-    lede: `Previsto: un tablón gratuito de anuncios tomados de los propios sistemas de candidaturas de los empleadores y de la búsqueda de empleo de la Agencia Federal de Empleo de Alemania, cada uno con su fuente, el día en que se obtuvo y un enlace al original. Encima, un sí discreto para quien ya trabaja: la empresa sabe que alguien está interesado, como criterios sin nombre, y solo sabe quién es cuando ella también dice que sí. ${PUBLIC_NAME} comprueba a ambas partes, y un no no revela nada. La página no indica ninguna fecha.`,
+    lede: `Previsto: un tablón gratuito de anuncios tomados de los propios sistemas de candidaturas de los empleadores, cada uno con su fuente, el día en que se obtuvo y un enlace al original. Encima, un sí discreto para quien ya trabaja: la empresa sabe que alguien está interesado, como criterios sin nombre, y solo sabe quién es cuando ella también dice que sí. ${PUBLIC_NAME} comprueba a ambas partes, y un no no revela nada. La página no indica ninguna fecha.`,
     demo: {
       h2: 'Pruébelo: una persona, una empresa',
       label: 'Datos de ejemplo inventados · se ejecuta en su navegador, no se envía nada',
@@ -360,7 +360,7 @@ export const jobsPage: Record<Lang, JobsDraft> = {
     description: `Bozza: una bacheca di lavoro su ${PUBLIC_NAME} con annunci direttamente dai datori di lavoro, fonte e data di recupero su ciascuno, e un sì riservato. Dati inventati.`,
     eyebrow: 'Jobs · previsto · bozza',
     h1: ['Annunci direttamente dai datori di lavoro.', 'Dire sì in modo riservato.'],
-    lede: `Previsto: una bacheca gratuita di annunci presi dai sistemi di candidatura dei datori di lavoro stessi e dalla ricerca di lavoro dell’Agenzia federale per il lavoro tedesca, ciascuno con la sua fonte, il giorno in cui è stato recuperato e un link all’originale. In più, un sì riservato per chi ha già un lavoro: l’azienda viene a sapere che qualcuno è interessato, come criteri senza nome, e viene a sapere chi è solo quando dice sì anch’essa. ${PUBLIC_NAME} controlla entrambe le parti e un no non rivela nulla. La pagina non indica alcuna data.`,
+    lede: `Previsto: una bacheca gratuita di annunci presi dai sistemi di candidatura dei datori di lavoro stessi, ciascuno con la sua fonte, il giorno in cui è stato recuperato e un link all’originale. In più, un sì riservato per chi ha già un lavoro: l’azienda viene a sapere che qualcuno è interessato, come criteri senza nome, e viene a sapere chi è solo quando dice sì anch’essa. ${PUBLIC_NAME} controlla entrambe le parti e un no non rivela nulla. La pagina non indica alcuna data.`,
     demo: {
       h2: 'Provi: una persona, un’azienda',
       label: 'Dati di esempio inventati · funziona nel Suo browser, non viene inviato nulla',
@@ -469,7 +469,7 @@ export const jobsPage: Record<Lang, JobsDraft> = {
     description: `Brouillon : un tableau d’emplois sur ${PUBLIC_NAME}, annonces des employeurs eux-mêmes, source et date de récupération sur chacune, un oui discret. Données inventées.`,
     eyebrow: 'Jobs · prévu · brouillon',
     h1: ['Des annonces directement des employeurs.', 'Dites oui en confidence.'],
-    lede: `Prévu : un tableau gratuit d’annonces tirées des systèmes de candidature propres aux employeurs et de la recherche d’emploi de l’Agence fédérale pour l’emploi allemande, chacune avec sa source, le jour où elle a été récupérée et un lien vers l’original. En plus, un oui discret pour une personne en poste : l’entreprise apprend que quelqu’un est intéressé, sous forme de critères sans nom, et ne sait qui c’est que lorsqu’elle dit oui aussi. ${PUBLIC_NAME} contrôle les deux côtés, et un non ne révèle rien. La page ne donne aucune date.`,
+    lede: `Prévu : un tableau gratuit d’annonces tirées des systèmes de candidature propres aux employeurs, chacune avec sa source, le jour où elle a été récupérée et un lien vers l’original. En plus, un oui discret pour une personne en poste : l’entreprise apprend que quelqu’un est intéressé, sous forme de critères sans nom, et ne sait qui c’est que lorsqu’elle dit oui aussi. ${PUBLIC_NAME} contrôle les deux côtés, et un non ne révèle rien. La page ne donne aucune date.`,
     demo: {
       h2: 'Essayez : une personne, une entreprise',
       label: 'Données d’exemple inventées · fonctionne dans votre navigateur, rien n’est envoyé',

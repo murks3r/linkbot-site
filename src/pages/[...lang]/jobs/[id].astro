@@ -1,6 +1,6 @@
 ---
-/* Draft for the owner's review, in the five languages: one posting of the job board, as the source gives it, with its
-   facts, "To the original posting" and the planned covert yes, disabled until it is built. One page per live posting
+/* Draft for the owner's review, in the five languages: one posting of the job board: its facts as the source states them
+   (no posting text, the original carries it), "To the original posting" and the planned covert yes, disabled until it is built. One page per live posting
    of the catalogue (until its read API exists, the made-up postings of src/jobs/recorded.ts); schema.org JobPosting.
    Linked only from the draft /jobs, never indexed (Base's draft), out of the sitemap (astro.config.mjs), and absent
    from a production build as /jobs is (buildsJobsPage). Words: src/drafts/jobs-board.ts. */
@@ -35,7 +35,8 @@ const facts: [string, string][] = [
   [W.facts.employment, employment(p.employment_type, B.employment) ?? W.notStated],
   [W.facts.salary, pay ?? W.notStated],
   [W.facts.posted, p.posted_at ? date(p.posted_at, lang) : W.notStated],
-  [W.facts.validThrough, p.valid_through ? date(p.valid_through, lang) : W.notStated],
+  /* Only when the source states a closing date; the catalogue never derives one. */
+  ...(p.valid_through ? [[W.facts.validThrough, date(p.valid_through, lang)] as [string, string]] : []),
   [W.facts.source, B.sources[p.source]],
   [W.facts.fetched, date(p.fetched_at, lang)],
 ];
@@ -56,10 +57,5 @@ const ld = jobPostingSchema(p, new URL(pathFor(lang, path), Astro.site).toString
         <p id="covert-p">{W.covert.p}</p>
       </div>
     </div>
-    <section class="po-text" aria-labelledby="posting-title">
-      <h2 id="posting-title">{W.posting.h2}</h2>
-      <p class="po-note">{W.posting.note}</p>
-      <div class="po-quote" lang={p.language}>{p.description.map(text => <p>{text}</p>)}</div>
-    </section>
   </div>
 </DraftPage>
