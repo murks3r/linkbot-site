@@ -1,0 +1,64 @@
+---
+/* Draft for the owner's review, in English and German: one posting of the job board, as the source gives it, with its
+   facts, "To the original posting" and the planned covert yes, disabled until it is built. One page per live posting
+   of the catalogue (until its read API exists, the made-up postings of src/jobs/recorded.ts); schema.org JobPosting.
+   Linked only from the draft /jobs, never indexed (Base's draft), out of the sitemap (astro.config.mjs), and absent
+   from a production build as /jobs is (buildsJobsPage). Words: src/drafts/jobs-board.ts. */
+import DraftPage from '../../../components/DraftPage.astro';
+import Icon from '../../../components/Icon.astro';
+import { buildsJobsPage } from '../../../drafts/jobs-page';
+import { jobsBoard } from '../../../drafts/jobs-board';
+import { EMPTY_QUERY, search, type Posting } from '../../../jobs/catalogue';
+import { date, jobPostingSchema, place, salary } from '../../../jobs/format';
+import { RECORDED } from '../../../jobs/recorded';
+import { DEFAULT_LANG, pathFor } from '../../../i18n';
+import '../../../front/board.css';
+export function getStaticPaths() {
+  if (!buildsJobsPage({ VERCEL_ENV: process.env.VERCEL_ENV })) return [];
+  const live = search(RECORDED, EMPTY_QUERY, new Date().toISOString().slice(0, 10));
+  return (['en', 'de'] as const).flatMap(lang => live.map(posting => ({ params: { lang: lang === DEFAULT_LANG ? undefined : lang, id: posting.id }, props: { lang, posting } })));
+}
+const { lang, posting: p } = Astro.props as { lang: 'en' | 'de'; posting: Posting };
+const { board: B, posting: W } = jobsBoard[lang];
+const path = `/jobs/${p.id}`;
+const d = {
+  ...W,
+  title: W.titleOf.replace('{title}', p.title).replace('{employer}', p.employer),
+  eyebrow: p.employer,
+  h1: [p.title],
+  lede: [place(p, lang), p.work_mode && B.modes[p.work_mode]].filter(Boolean).join(' · '),
+};
+const pay = salary(p.salary, lang, B.salary);
+const facts: [string, string][] = [
+  [W.facts.place, place(p, lang)],
+  [W.facts.mode, p.work_mode ? B.modes[p.work_mode] : W.notStated],
+  [W.facts.salary, pay ?? W.notStated],
+  [W.facts.posted, p.posted_at ? date(p.posted_at, lang) : W.notStated],
+  [W.facts.validThrough, p.valid_through ? date(p.valid_through, lang) : W.notStated],
+  [W.facts.source, B.sources[p.source]],
+  [W.facts.fetched, date(p.fetched_at, lang)],
+];
+const ld = jobPostingSchema(p, new URL(pathFor(lang, path), Astro.site).toString());
+---
+<DraftPage d={d} lang={lang} path={path} ld={[ld]}>
+  <div class="wrap po">
+    <a class="po-back link" href={pathFor(lang, '/jobs')}><Icon name="arrow" />{W.back}</a>
+    <dl class="po-facts">{facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+    <div class="po-actions">
+      <div class="po-action">
+        <a class="btn btn-primary" href={p.original_url} rel="noopener nofollow" target="_blank">{W.original.button}<Icon name="out" /></a>
+        <p>{W.original.note}</p>
+      </div>
+      <div class="po-action">
+        <button type="button" class="btn" disabled aria-describedby="covert-soon covert-p">{W.covert.button}</button>
+        <span class="po-soon" id="covert-soon">{W.covert.soon}</span>
+        <p id="covert-p">{W.covert.p}</p>
+      </div>
+    </div>
+    <section class="po-text" aria-labelledby="posting-title">
+      <h2 id="posting-title">{W.posting.h2}</h2>
+      <p class="po-note">{W.posting.note}</p>
+      <div class="po-quote" lang={p.language}>{p.description.map(text => <p>{text}</p>)}</div>
+    </section>
+  </div>
+</DraftPage>

@@ -1,6 +1,6 @@
-/* The draft page /jobs, in English and German: Jobs, the second vertical, in one headline for both sides (a person in
-   work looking in confidence, a company filling a role in confidence), the home's "both say yes" demo in a jobs version
-   (src/components/front/Trial.astro: the person in the buyer's place, the company in the supplier's), the link to the
+/* The draft page /jobs, in English and German: Jobs, the second vertical: the job board's search over the catalogue
+   (src/drafts/jobs-board.ts; made-up postings until the catalogue's read API exists), the home's "both say yes" demo
+   in a jobs version (src/components/front/Trial.astro: the person in the buyer's place, the company in the supplier's), the link to the
    person's own page (/jobs/mine), and two FAQ entries that are also the page's schema.org FAQPage. Nothing of it is
    built in Jobs, so the page is a draft for the owner's review: linked from nowhere, never indexed, out of the sitemap,
    and left out of production builds. The role's values are the jobs pack draft's role A (as on /jobs/mine); the rules
@@ -27,12 +27,12 @@ export interface JobsDraft extends Draft {
 export const jobsPage: Record<'en' | 'de', JobsDraft> = {
   en: {
     banner: 'Draft, not published: planned, not built.',
-    bannerNote: `This page is linked from nowhere on the site, is never indexed and exists in English and German only. ${PUBLIC_NAME} runs no jobs space today. The demo below uses made-up data and runs in this browser only: it sends nothing and stores nothing.`,
-    title: 'Jobs: look for a role or fill one, in confidence (planned, draft)',
-    description: `Draft: Jobs on ${PUBLIC_NAME}. A covert search for people in work, confidential hiring for companies, an introduction only when both say yes. Made-up data.`,
+    bannerNote: `This page is linked from nowhere on the site, is never indexed and exists in English and German only. ${PUBLIC_NAME} runs no job catalogue and no jobs space today. The postings below are made up in the shape the catalogue is planned to have, and the demo uses made-up data too. Both run in this browser only: they send nothing and store nothing.`,
+    title: 'Jobs: postings straight from the employers, a yes in confidence (planned, draft)',
+    description: `Draft: a job board on ${PUBLIC_NAME} with postings straight from employers, source and fetched date on each, and a covert yes. Made-up data.`,
     eyebrow: 'Jobs · planned · draft',
-    h1: ['Look for your next job in confidence.', 'Fill a role the same way.'],
-    lede: `Jobs is planned for two sides that cannot be seen looking: a person in work who searches covertly, and a company that fills a role confidentially. ${PUBLIC_NAME} checks both sides, matches them as criteria only, and introduces them only when both say yes. Before that, neither sees the other’s name, and a no reveals nothing. The page names no date.`,
+    h1: ['Jobs straight from the employers.', 'Say yes in confidence.'],
+    lede: `Planned: a free board of postings taken from employers’ own application systems and from the job search of Germany’s Federal Employment Agency, each with its source, the day it was fetched and a link to the original. On top, a covert yes for a person in work: the company learns that someone is interested, as criteria without a name, and learns who it is only when it says yes too. ${PUBLIC_NAME} checks both sides, and a no reveals nothing. The page names no date.`,
     demo: {
       h2: 'Try it: one person, one company',
       label: 'Made-up example data · runs in your browser, nothing is sent',
@@ -118,6 +118,7 @@ export const jobsPage: Record<'en' | 'de', JobsDraft> = {
         title: 'What exists today',
         paragraphs: [
           `None of this page is built in Jobs, and ${PUBLIC_NAME} runs no jobs space, not even with made-up data. The jobs criteria, the role cards, the company side and the sign-in are drafts on development branches, none merged; the block list is not built yet.`,
+          'There is no job catalogue yet either: the collector and its read API are drafts on development branches, none merged, and the postings on the board are made up.',
           'Today a person’s only check is the email address they confirm through a link.',
         ],
       },
@@ -135,12 +136,12 @@ export const jobsPage: Record<'en' | 'de', JobsDraft> = {
   },
   de: {
     banner: 'Entwurf, nicht veröffentlicht: geplant, nicht gebaut.',
-    bannerNote: `Diese Seite ist von nirgends auf der Website verlinkt, wird nie indexiert und existiert nur auf Englisch und Deutsch. ${PUBLIC_NAME} betreibt heute keinen Jobs-Space. Die Demo unten nutzt erfundene Daten und läuft nur in diesem Browser: Sie sendet nichts und speichert nichts.`,
-    title: 'Jobs: eine Stelle suchen oder besetzen, vertraulich (geplant, Entwurf)',
-    description: `Entwurf: Jobs bei ${PUBLIC_NAME}. Verdeckte Suche für Angestellte, vertrauliche Besetzung für Firmen, eine Vorstellung erst, wenn beide Ja sagen. Erfundene Daten.`,
+    bannerNote: `Diese Seite ist von nirgends auf der Website verlinkt, wird nie indexiert und existiert nur auf Englisch und Deutsch. ${PUBLIC_NAME} betreibt heute keinen Stellenkatalog und keinen Jobs-Space. Die Stellen unten sind erfunden, in der Form, die der Katalog haben soll, und auch die Demo nutzt erfundene Daten. Beides läuft nur in diesem Browser: Es sendet nichts und speichert nichts.`,
+    title: 'Jobs: Stellen direkt von den Arbeitgebern, ein vertrauliches Ja (geplant, Entwurf)',
+    description: `Entwurf: eine Stellenbörse bei ${PUBLIC_NAME} mit Stellen direkt von den Arbeitgebern, Quelle und Abrufdatum an jeder, und ein verdecktes Ja. Erfundene Daten.`,
     eyebrow: 'Jobs · geplant · Entwurf',
-    h1: ['Den nächsten Job vertraulich suchen.', 'Eine Stelle genauso besetzen.'],
-    lede: `Jobs ist für zwei Seiten geplant, die beim Suchen nicht gesehen werden dürfen: eine angestellte Person, die verdeckt sucht, und eine Firma, die eine Stelle vertraulich besetzt. ${PUBLIC_NAME} prüft beide Seiten, gleicht sie nur über Kriterien ab und stellt sie erst vor, wenn beide Ja sagen. Vorher sieht keine Seite den Namen der anderen, und ein Nein verrät nichts. Die Seite nennt kein Datum.`,
+    h1: ['Stellen direkt von den Arbeitgebern.', 'Vertraulich Ja sagen.'],
+    lede: `Geplant: eine kostenlose Börse mit Stellen aus den Bewerbungssystemen der Arbeitgeber selbst und aus der Jobsuche der Bundesagentur für Arbeit, jede mit Quelle, Abrufdatum und Link zur Originalanzeige. Darauf ein verdecktes Ja für Angestellte: Die Firma erfährt, dass jemand Interesse hat, als Kriterien ohne Namen, und wer es ist, erst wenn sie auch Ja sagt. ${PUBLIC_NAME} prüft beide Seiten, und ein Nein verrät nichts. Die Seite nennt kein Datum.`,
     demo: {
       h2: 'Probieren Sie es aus: eine Person, eine Firma',
       label: 'Erfundene Beispieldaten · läuft in Ihrem Browser, nichts wird gesendet',
@@ -226,6 +227,7 @@ export const jobsPage: Record<'en' | 'de', JobsDraft> = {
         title: 'Was es heute gibt',
         paragraphs: [
           `Nichts von dieser Seite ist in Jobs gebaut, und ${PUBLIC_NAME} betreibt keinen Jobs-Space, auch nicht mit erfundenen Daten. Die Jobs-Kriterien, die Stellenkarten, die Firmenseite und die Anmeldung sind Entwürfe auf Entwicklungszweigen, keiner zusammengeführt; die Sperrliste ist noch nicht gebaut.`,
+          'Einen Stellenkatalog gibt es auch noch nicht: Der Sammler und seine Lese-Schnittstelle sind Entwürfe auf Entwicklungszweigen, keiner zusammengeführt, und die Stellen auf der Börse sind erfunden.',
           'Heute ist die einzige Prüfung einer Person die E-Mail-Adresse, die sie über einen Link bestätigt.',
         ],
       },

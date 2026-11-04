@@ -1,0 +1,67 @@
+---
+/* The job board's search (the draft /jobs): what, where, work mode and posting date over the live postings, a card per
+   posting with title, employer, place, work mode, salary if stated, source and fetched date, each linking its own
+   page. Without scripts every live posting shows, newest first, and the form stays hidden; with them the search runs
+   in the browser over the same postings (src/front/board.ts, src/jobs/catalogue.ts) and the address keeps the query.
+   Words: src/drafts/jobs-board.ts. */
+import Icon from '../Icon.astro';
+import { EMPTY_QUERY, WORK_MODES, search, type Posting } from '../../jobs/catalogue';
+import { date, place, salary } from '../../jobs/format';
+import { pathFor } from '../../i18n';
+import type { BoardWords } from '../../drafts/jobs-board';
+import '../../front/board.css';
+interface Props { W: BoardWords; lang: 'en' | 'de'; postings: readonly Posting[]; today: string }
+const { W, lang, postings, today } = Astro.props;
+const live = search(postings, EMPTY_QUERY, today);
+const count = (n: number) => n === 0 ? W.count.none : n === 1 ? W.count.one : W.count.other.replace('{n}', String(n));
+---
+<section class="wrap bd" aria-labelledby="board-title" data-board data-lang={lang}>
+  <div class="bd-top">
+    <h2 id="board-title">{W.h2}</h2>
+    <p class="bd-label">{W.label}</p>
+  </div>
+  <script type="application/json" data-board-source set:html={JSON.stringify({ postings: live, count: W.count })} />
+
+  <form class="bd-form" role="search" aria-labelledby="board-title" data-board-form>
+    <label class="bd-field bd-q">
+      <span>{W.q.label}</span>
+      <span class="bd-input"><Icon name="search" /><input type="search" name="q" placeholder={W.q.hint} autocomplete="off" enterkeyhint="search" /></span>
+    </label>
+    <label class="bd-field bd-where">
+      <span>{W.where.label}</span>
+      <span class="bd-input"><Icon name="pin" /><input type="text" name="where" placeholder={W.where.hint} autocomplete="off" /></span>
+    </label>
+    <label class="bd-field">
+      <span>{W.mode.label}</span>
+      <select name="mode"><option value="">{W.mode.any}</option>{WORK_MODES.map(m => <option value={m}>{W.modes[m]}</option>)}</select>
+    </label>
+    <label class="bd-field">
+      <span>{W.since.label}</span>
+      <select name="since"><option value="">{W.since.any}</option><option value="7">{W.since.days7}</option><option value="30">{W.since.days30}</option></select>
+    </label>
+    <button type="reset" class="btn btn-secondary bd-clear" data-size="sm">{W.clear}</button>
+  </form>
+
+  <p class="bd-count" role="status" data-board-count>{count(live.length)}</p>
+  <p class="bd-noscript">{W.noScript}</p>
+  <ol class="bd-list" data-board-list>
+    {live.map(p => {
+      const pay = salary(p.salary, lang, W.salary);
+      return <li class="bd-card" data-posting={p.id}>
+        <h3><a href={pathFor(lang, `/jobs/${p.id}`)}>{p.title}</a></h3>
+        <p class="bd-employer">{p.employer}</p>
+        <ul class="bd-facts">
+          <li><Icon name="pin" />{place(p, lang)}</li>
+          {p.work_mode && <li>{W.modes[p.work_mode]}</li>}
+          {pay && <li>{pay}</li>}
+        </ul>
+        <p class="bd-source">{W.sourceLine.replace('{source}', W.sources[p.source]).replace('{date}', date(p.fetched_at, lang))}</p>
+      </li>;
+    })}
+  </ol>
+</section>
+
+<script>
+  import { mount } from '../../front/board';
+  document.querySelectorAll<HTMLElement>('[data-board]').forEach(mount);
+</script>

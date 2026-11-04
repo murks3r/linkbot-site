@@ -15,6 +15,8 @@ import { NEW_VERTICAL_IN_PRODUCTION, buildsNewVertical, newVertical } from '../s
 import { PREPARE_IN_PRODUCTION, buildsPrepare, prepare } from '../src/drafts/prepare.ts';
 import { JOBS_MINE_IN_PRODUCTION, buildsJobsMine, jobsMine } from '../src/drafts/jobs-mine.ts';
 import { JOBS_PAGE_IN_PRODUCTION, buildsJobsPage, jobsPage } from '../src/drafts/jobs-page.ts';
+import { EMPTY_QUERY, search } from '../src/jobs/catalogue.ts';
+import { RECORDED } from '../src/jobs/recorded.ts';
 import { LANGS } from '../src/i18n/locales.ts';
 import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 
@@ -22,12 +24,15 @@ const strings = value => typeof value === 'string' ? [value] : Array.isArray(val
 const dist = new URL('../dist/', import.meta.url);
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
 
+/* Each live posting's draft page links back to the board (tests/jobs-board.test.mjs checks the pages themselves). */
+const postings = search(RECORDED, EMPTY_QUERY, new Date().toISOString().slice(0, 10)).map(p => `/jobs/${p.id}`);
+
 const drafts = [
   { path: '/for-intermediaries', words: { en: intermediaries }, builds: buildsIntermediaries, inProduction: INTERMEDIARIES_IN_PRODUCTION },
   { path: '/developers/login-with-linkbot', words: { en: login }, builds: buildsLogin, inProduction: LOGIN_IN_PRODUCTION },
   { path: '/developers/a-new-vertical', words: { en: newVertical }, builds: buildsNewVertical, inProduction: NEW_VERTICAL_IN_PRODUCTION },
   { path: '/developers/prepare-a-request', words: prepare, builds: buildsPrepare, inProduction: PREPARE_IN_PRODUCTION },
-  { path: '/jobs', words: jobsPage, builds: buildsJobsPage, inProduction: JOBS_PAGE_IN_PRODUCTION },
+  { path: '/jobs', words: jobsPage, builds: buildsJobsPage, inProduction: JOBS_PAGE_IN_PRODUCTION, linkedFrom: postings },
   { path: '/jobs/mine', words: jobsMine, builds: buildsJobsMine, inProduction: JOBS_MINE_IN_PRODUCTION, linkedFrom: ['/jobs'] },
 ];
 
