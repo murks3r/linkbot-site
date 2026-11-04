@@ -7,10 +7,10 @@
 import Icon from '../Icon.astro';
 import { EMPTY_QUERY, WORK_MODES, search, type Posting } from '../../jobs/catalogue';
 import { date, place, salary } from '../../jobs/format';
-import { pathFor } from '../../i18n';
+import { pathFor, type Lang } from '../../i18n';
 import type { BoardWords } from '../../drafts/jobs-board';
 import '../../front/board.css';
-interface Props { W: BoardWords; lang: 'en' | 'de'; postings: readonly Posting[]; today: string }
+interface Props { W: BoardWords; lang: Lang; postings: readonly Posting[]; today: string }
 const { W, lang, postings, today } = Astro.props;
 const live = search(postings, EMPTY_QUERY, today);
 const count = (n: number) => n === 0 ? W.count.none : n === 1 ? W.count.one : W.count.other.replace('{n}', String(n));

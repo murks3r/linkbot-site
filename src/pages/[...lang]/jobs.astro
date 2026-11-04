@@ -1,5 +1,5 @@
 ---
-/* Draft for the owner's review, in English and German: Jobs. First the job board's search over the catalogue
+/* Draft for the owner's review, in the five languages: Jobs. First the job board's search over the catalogue
    (src/components/front/Board.astro; until the catalogue's read API exists, the made-up postings of
    src/jobs/recorded.ts), each card linking the posting's own draft page; then the "both say yes" demo in a jobs version
    on fictional data that runs in the browser only (src/components/front/Trial.astro), the link to the person's own
@@ -13,22 +13,29 @@ import Board from '../../components/front/Board.astro';
 import Trial from '../../components/front/Trial.astro';
 import { buildsJobsPage, jobsPage, type JobsDraft } from '../../drafts/jobs-page';
 import { jobsBoard } from '../../drafts/jobs-board';
+import { jobsMine } from '../../drafts/jobs-mine';
+import { EMPTY_QUERY, search } from '../../jobs/catalogue';
+import { boardSchema } from '../../jobs/format';
 import { RECORDED } from '../../jobs/recorded';
 import { faqSchema } from '../../faq';
-import { DEFAULT_LANG, pathFor } from '../../i18n';
+import { DEFAULT_LANG, pathFor, type Lang } from '../../i18n';
 export function getStaticPaths() {
   if (!buildsJobsPage({ VERCEL_ENV: process.env.VERCEL_ENV })) return [];
-  return (Object.entries(jobsPage) as ['en' | 'de', JobsDraft][]).map(([lang, d]) => ({ params: { lang: lang === DEFAULT_LANG ? undefined : lang }, props: { d, lang } }));
+  return (Object.entries(jobsPage) as [Lang, JobsDraft][]).map(([lang, d]) => ({ params: { lang: lang === DEFAULT_LANG ? undefined : lang }, props: { d, lang } }));
 }
-const { d, lang } = Astro.props as { d: JobsDraft; lang: 'en' | 'de' };
+const { d, lang } = Astro.props as { d: JobsDraft; lang: Lang };
 const page = { ...d, sections: [...d.faq, ...d.sections] };
+const today = new Date().toISOString().slice(0, 10);
 const faq = faqSchema({ items: d.faq.map(f => ({ q: f.title, a: f.paragraphs })) });
+const board = boardSchema(search(RECORDED, EMPTY_QUERY, today), jobsBoard[lang].board.h2, p => new URL(pathFor(lang, `/jobs/${p.id}`), Astro.site).toString());
+/* The person's own page exists in English and German; the other languages link the English one and say so. */
+const mine = pathFor(lang in jobsMine ? lang : DEFAULT_LANG, '/jobs/mine');
 ---
-<DraftPage d={page} lang={lang} path="/jobs" ld={[faq]}>
-  <Board W={jobsBoard[lang].board} lang={lang} postings={RECORDED} today={new Date().toISOString().slice(0, 10)} />
+<DraftPage d={page} lang={lang} path="/jobs" ld={[faq, board]}>
+  <Board W={jobsBoard[lang].board} lang={lang} postings={RECORDED} today={today} />
   <div class="wrap jobs-demo">
     <Trial T={d.demo} />
-    <p class="jobs-mine">{d.mine.p} <a class="link" href={pathFor(lang, '/jobs/mine')}>{d.mine.link}<Icon name="arrow" /></a></p>
+    <p class="jobs-mine">{d.mine.p} <a class="link" href={mine}>{d.mine.link}<Icon name="arrow" /></a></p>
   </div>
 </DraftPage>
 

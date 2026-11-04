@@ -1,7 +1,8 @@
 /* The stand-in for the job catalogue until its read API exists: made-up postings in the catalogue's shape
    (src/jobs/catalogue.ts). Employers, places, texts and addresses are invented; the addresses end in .example, which
    never resolves, so "To the original posting" leads nowhere real. One posting is past its valid-through date, so the
-   board's rule that it disappears is visible in the data. No contact person, as the catalogue drops them at ingest. */
+   board's rule that it disappears is visible in the data. No contact person, as the catalogue drops them at ingest. The employment types are
+   spelled as different sources spell them; one is a word the board has no translation for. */
 import type { Posting } from './catalogue.ts';
 
 const FETCHED = '2026-11-04T03:00:00Z';
@@ -13,6 +14,7 @@ export const RECORDED: readonly Posting[] = [
     employer: 'Northwind Analytics GmbH',
     location: { place: 'Berlin', country: 'DE' },
     work_mode: 'hybrid',
+    employment_type: 'FULL_TIME',
     salary: { min: 46000, max: 54000, currency: 'EUR', period: 'year' },
     source: 'personio',
     fetched_at: FETCHED,
@@ -33,6 +35,7 @@ export const RECORDED: readonly Posting[] = [
     employer: 'Fabrikam Robotics',
     location: { place: 'Munich', country: 'DE' },
     work_mode: 'remote',
+    employment_type: 'FullTime',
     salary: null,
     source: 'greenhouse',
     fetched_at: FETCHED,
@@ -52,6 +55,7 @@ export const RECORDED: readonly Posting[] = [
     employer: 'Contoso Logistics',
     location: { place: 'Hamburg', country: 'DE' },
     work_mode: 'on_site',
+    employment_type: 'full-time',
     salary: { min: 58000, max: 66000, currency: 'EUR', period: 'year' },
     source: 'lever',
     fetched_at: FETCHED,
@@ -71,6 +75,7 @@ export const RECORDED: readonly Posting[] = [
     employer: 'Tailspin Health',
     location: { place: 'Vienna', country: 'AT' },
     work_mode: 'hybrid',
+    employment_type: 'PartTime',
     salary: { min: 55000, max: 65000, currency: 'EUR', period: 'year' },
     source: 'ashby',
     fetched_at: FETCHED,
@@ -90,6 +95,7 @@ export const RECORDED: readonly Posting[] = [
     employer: 'Musterwerk Metallbau GmbH',
     location: { place: 'Chemnitz', country: 'DE' },
     work_mode: 'on_site',
+    employment_type: 'VOLLZEIT',
     salary: { min: 19, max: 23, currency: 'EUR', period: 'hour' },
     source: 'ba',
     fetched_at: FETCHED,
@@ -109,6 +115,7 @@ export const RECORDED: readonly Posting[] = [
     employer: 'Litware AG',
     location: { place: 'Zürich', country: 'CH' },
     work_mode: 'hybrid',
+    employment_type: 'full_time',
     salary: { min: 95000, max: 110000, currency: 'CHF', period: 'year' },
     source: 'workable',
     fetched_at: FETCHED,
@@ -128,6 +135,7 @@ export const RECORDED: readonly Posting[] = [
     employer: 'Adventure Works',
     location: { place: 'Köln', country: 'DE' },
     work_mode: 'hybrid',
+    employment_type: 'Werkstudent',
     salary: { min: 15, max: null, currency: 'EUR', period: 'hour' },
     source: 'recruitee',
     fetched_at: FETCHED,
@@ -147,6 +155,7 @@ export const RECORDED: readonly Posting[] = [
     employer: 'Wingtip Finanz GmbH',
     location: { place: 'Leipzig', country: 'DE' },
     work_mode: 'on_site',
+    employment_type: null,
     salary: null,
     source: 'smartrecruiters',
     fetched_at: '2026-10-30T03:00:00Z',

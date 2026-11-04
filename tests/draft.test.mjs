@@ -1,7 +1,7 @@
 /* The drafts for the owner (/for-intermediaries, src/drafts/intermediaries.ts; /developers/login-with-linkbot,
    src/drafts/login.ts; /developers/a-new-vertical, src/drafts/new-vertical.ts; /developers/prepare-a-request, in five
-   languages, src/drafts/prepare.ts; /jobs and /jobs/mine, in English and German, src/drafts/jobs-page.ts and
-   src/drafts/jobs-mine.ts): their words make no forbidden claim in their language, and each built page says it is a
+   languages, src/drafts/prepare.ts; /jobs, in five languages, src/drafts/jobs-page.ts; /jobs/mine, in English and
+   German, src/drafts/jobs-mine.ts): their words make no forbidden claim in their language, and each built page says it is a
    draft, is never indexed, has no alternates, exists only in the languages it has words for, and is neither linked from
    another page (but the drafts it names as linking it) nor listed in the sitemap. A production build leaves a draft out until the owner approves
    it; the build checks then assert it is absent, so the artefact that goes live is checked too. The build checks are
