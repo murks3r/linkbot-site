@@ -1,0 +1,68 @@
+/* The job board (src/components/front/Board.astro) and a posting's page (src/pages/[...lang]/jobs/[id].astro) in the
+   widget design spec v1: the tokens of src/styles/tokens.css, no shadows, no gradients, as /jobs/mine
+   (src/front/mine.css). Phone first: one column, the form's fields stacked; wider screens put the fields in a row. */
+
+/* Without scripts every posting shows and the form stays hidden; with them the hint goes. */
+html:not(.js) .bd-form, html:not(.js) .bd-count, .js .bd-noscript { display: none; }
+
+.bd { display: grid; gap: 16px; margin-block: 8px 40px; }
+.bd-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.bd-top h2 { font-size: 1.25rem; }
+.bd-label, .bd-noscript { font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-slate); }
+
+/* The form: a label over each field, fields at least a tap high, text at 16 px or more so a phone does not zoom. On a
+   phone the two lists share a row, so the first postings show on the first screen. */
+.bd-form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; padding: 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.bd-field { display: grid; gap: 6px; min-width: 0; font-size: var(--lb-size-label); font-weight: 600; }
+.bd-input { position: relative; display: block; }
+.bd-input svg { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); color: var(--lb-slate); pointer-events: none; }
+.bd-field input, .bd-field select { width: 100%; min-height: var(--lb-field-h); padding: 0 14px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-ground); font-size: var(--lb-size-body); font-weight: 400; color: var(--lb-ink); }
+.bd-input input { padding-left: 40px; }
+.bd-field input::placeholder { color: var(--lb-slate); }
+.bd-field input:focus-visible, .bd-field select:focus-visible { outline: var(--lb-focus); outline-offset: var(--lb-focus-offset); }
+.bd-q, .bd-where, .bd-clear { grid-column: 1 / -1; }
+.bd-clear { justify-self: start; }
+@media (min-width: 48rem) {
+  .bd-form { grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) auto; align-items: end; }
+  .bd-q, .bd-where, .bd-clear { grid-column: auto; }
+  .bd-clear { min-height: var(--lb-field-h); }
+}
+
+.bd-count { font-weight: 600; }
+
+/* A card per posting: the title links its page, and the whole card is the link's target. */
+.bd-list { display: grid; gap: 12px; }
+@media (min-width: 48rem) { .bd-list { grid-template-columns: 1fr 1fr; } }
+.bd-card { position: relative; display: grid; gap: 8px; align-content: start; padding: 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.bd-card[hidden] { display: none; }
+.bd-card:hover { border-color: var(--lb-ink); }
+.bd-card:focus-within { outline: var(--lb-focus); outline-offset: var(--lb-focus-offset); }
+.bd-card h3 { font-size: 1.125rem; line-height: 1.3; overflow-wrap: anywhere; }
+.bd-card h3 a { color: inherit; text-decoration: none; }
+.bd-card h3 a:focus-visible { outline: none; }
+.bd-card h3 a::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+.bd-employer { font-weight: 600; color: var(--lb-slate); }
+.bd-facts, .po-facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.bd-facts li { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border: 1px solid var(--lb-line); border-radius: var(--pill); font-size: var(--lb-size-footer); }
+.bd-source { font-size: var(--lb-size-footer); color: var(--lb-slate); }
+
+/* A posting's page: back to the board, the facts, the two actions, the text as the source gives it. */
+.po { display: grid; gap: 24px; padding-bottom: var(--space-block); }
+.po-back { display: inline-flex; align-items: center; gap: 6px; min-height: var(--target); font-weight: 600; }
+.po-back svg { transform: scaleX(-1); }
+.po-facts { display: grid; gap: 0; padding: 0 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.po-facts div { display: grid; grid-template-columns: minmax(0, 9em) minmax(0, 1fr); gap: 2px 12px; padding: 10px 0; border-top: 1px solid var(--lb-line-quiet); font-size: var(--lb-size-help); }
+.po-facts div:first-child { border-top: 0; }
+.po-facts dt { font-weight: 600; color: var(--lb-slate); }
+.po-facts dd { overflow-wrap: anywhere; }
+.po-actions { display: grid; gap: 16px; }
+@media (min-width: 48rem) { .po-actions { grid-template-columns: 1fr 1fr; } }
+.po-action { display: grid; gap: 8px; align-content: start; justify-items: start; padding: 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.po-action p { max-width: 44em; font-size: var(--lb-size-help); line-height: 1.5; color: var(--lb-slate); }
+.po-action .btn { width: 100%; }
+.po-action .btn[disabled] { cursor: not-allowed; background: var(--lb-line-quiet); border-color: var(--lb-line); color: var(--lb-slate); }
+.po-soon { padding: 2px 10px; border-radius: var(--pill); background: var(--lb-marker); font-size: var(--lb-size-footer); font-weight: 600; color: var(--lb-ink); }
+.po-text { display: grid; gap: 12px; max-width: var(--prose); }
+.po-text h2 { font-size: 1.25rem; }
+.po-note { font-size: var(--lb-size-help); color: var(--lb-slate); }
+.po-quote { display: grid; gap: 12px; padding-left: 16px; border-left: 3px solid var(--lb-line); }

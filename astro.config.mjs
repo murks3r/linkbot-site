@@ -12,7 +12,7 @@ import { remarkOpenCoreLinks } from './src/integrations/open-core-links.ts';
    launch domain is to be named by the owner (linkbot-domain-tbd.invalid until then), so a deploy
    sets it.
    A build with PUBLIC_NOINDEX=1 is never indexed; Vercel's preview deployments are behind its
-   login and send X-Robots-Tag: noindex themselves. Drafts for the owner (src/drafts) stay out of the sitemap.
+   login and send X-Robots-Tag: noindex themselves. Drafts for the owner (src/drafts) stay out of the sitemap, /jobs with each posting's page under it.
    The developer docs are Markdown (src/content.config.ts); their links point into the site (remarkOpenCoreLinks). */
 const site = process.env.SITE_URL || 'https://linkbot-site.vercel.app';
 const locales = ['en', 'de', 'es', 'it', 'fr'];
@@ -26,7 +26,7 @@ export default defineConfig({
   markdown: { remarkPlugins: [remarkOpenCoreLinks], shikiConfig: { theme: 'github-light' } },
   integrations: [shareImages(), demoImages(), llmsFull(), sitemap({
     filter: page => !page.endsWith('/404') && !page.endsWith('/for-intermediaries') && !page.endsWith('/developers/login-with-linkbot')
-      && !page.endsWith('/developers/a-new-vertical') && !page.endsWith('/developers/prepare-a-request') && !page.endsWith('/jobs/mine') && !page.endsWith('/jobs'),
+      && !page.endsWith('/developers/a-new-vertical') && !page.endsWith('/developers/prepare-a-request') && !/\/jobs(\/[^/]+)?$/.test(page),
     i18n: { defaultLocale: 'en', locales: Object.fromEntries(locales.map(l => [l, l])) },
   })],
 });
