@@ -6,8 +6,8 @@
    none (J2-FIX-B), the link to the original carries it. valid_through only where the source states a closing date
    (Recruitee's close_at); one Recruitee posting is past it, so the board's rule that it disappears is visible in the
    data. The employment types are spelled as different sources spell them; one is a word the board has no translation
-   for. party is null on every posting: J2-5, which keys a posting to its company party, is not built, and the stand-in
-   makes no key up. */
+   for. board is the employer's board id at its source, the one its made-up link names, as the catalogue contract's
+   employer.board delivers it. */
 import type { Posting } from './catalogue.ts';
 
 const FETCHED = '2026-11-04T03:00:00Z';
@@ -26,7 +26,7 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://northwind-analytics-example.jobs.personio.de/job/4711',
     posted_at: '2026-11-02',
     valid_through: null,
-    party: null,
+    board: 'northwind-analytics-example',
   },
   {
     id: 'greenhouse-fabrikam-88213',
@@ -41,7 +41,7 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://boards.greenhouse.io/fabrikamroboticsexample/jobs/88213',
     posted_at: '2026-10-29',
     valid_through: null,
-    party: null,
+    board: 'fabrikamroboticsexample',
   },
   {
     id: 'lever-contoso-logistics-ops-14',
@@ -56,7 +56,7 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://jobs.lever.co/contoso-logistics-example/0b4f7a52-3c1e-4d8a-9f60-1e2d3c4b5a14',
     posted_at: '2026-10-20',
     valid_through: null,
-    party: null,
+    board: 'contoso-logistics-example',
   },
   {
     id: 'ashby-tailspin-design-3',
@@ -71,7 +71,7 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://jobs.ashbyhq.com/tailspin-health-example/7c9e2f10-5a3b-4c6d-8e1f-2a3b4c5d6e03',
     posted_at: '2026-10-31',
     valid_through: null,
-    party: null,
+    board: 'tailspin-health-example',
   },
   {
     id: 'personio-musterwerk-1203',
@@ -86,7 +86,7 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://musterwerk-metallbau-example.jobs.personio.de/job/1203',
     posted_at: '2026-10-27',
     valid_through: null,
-    party: null,
+    board: 'musterwerk-metallbau-example',
   },
   {
     id: 'workable-litware-csm-dach',
@@ -101,7 +101,7 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://apply.workable.com/litware-example/j/C5D7A1B2E3/',
     posted_at: '2026-11-03',
     valid_through: null,
-    party: null,
+    board: 'litware-example',
   },
   {
     id: 'recruitee-adventure-works-ws-marketing',
@@ -116,7 +116,7 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://adventureworksexample.recruitee.com/o/werkstudent-marketing',
     posted_at: '2026-10-12',
     valid_through: '2026-12-31',
-    party: null,
+    board: 'adventureworksexample',
   },
   {
     id: 'recruitee-wingtip-accounting-7',
@@ -131,6 +131,6 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://wingtipfinanzexample.recruitee.com/o/buchhaltung-7',
     posted_at: '2026-09-15',
     valid_through: '2026-10-31',
-    party: null,
+    board: 'wingtipfinanzexample',
   },
 ];

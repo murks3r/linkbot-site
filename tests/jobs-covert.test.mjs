@@ -1,7 +1,8 @@
 /* The covert yes on a real posting (src/jobs/interest.ts, the shape J2-5 plans) and its stand-in
    (src/jobs/interest-stub.ts): only a signed-in, checked person says yes, once per posting; the yes goes to the party
-   the catalogue names (none until J2-5, and then it counts for no company); withdrawing takes it off the person's list
-   and out of every count; a block covers the domain and its subdomains and applies before counting. The words say who is seen, and when. */
+   keyed "<source>:<board>" as J2-5 keys it (none without a board, and then no yes); withdrawing takes it off the
+   person's list and out of every count; a block covers the confirmed domain and its subdomains and applies at the
+   claim, before any count. The words say who is seen, and when. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { SIGNED_OUT, canSay, countFor, covers, mine, partyOf, sayYes, withdraw } from '../src/jobs/interest.ts';
@@ -15,13 +16,20 @@ const ats = RECORDED.find(p => p.source === 'greenhouse');
 const other = RECORDED.find(p => p.source === 'personio');
 const memory = () => { const m = new Map(); return { getItem: k => m.get(k) ?? null, setItem: (k, v) => m.set(k, v) }; };
 
-test('the yes goes to the party the catalogue names, never one read from the posting’s address', () => {
-  assert.ok(RECORDED.every(p => p.party === null), 'no posting carries a party key until J2-5 gives one');
-  assert.equal(partyOf(ats), null);
-  assert.equal(partyOf({ ...ats, party: 'company-made-up' }), 'company-made-up');
-  const s = sayYes({ person: MADE_UP_PERSON, interests: [] }, ats, '2026-11-04T10:00:00Z');
-  assert.equal(s.interests[0].party, null, 'kept for the person');
-  assert.equal(countFor([{ person: MADE_UP_PERSON, interest: s.interests[0] }], 'greenhouse:fabrikamroboticsexample'), 0, 'counted for no company');
+test('the yes goes to "<source>:<board>", as the catalogue delivers both; no board, no key and no yes', () => {
+  assert.equal(partyOf(ats), 'greenhouse:fabrikamroboticsexample');
+  assert.equal(partyOf(other), 'personio:northwind-analytics-example');
+  for (const p of RECORDED) {
+    assert.equal(partyOf(p), `${p.source}:${p.board}`, p.id);
+    assert.ok(!partyOf(p).includes(new URL(p.original_url).hostname), `${p.id}: never the host of the original`);
+  }
+  const lever = RECORDED.filter(p => p.source === 'personio').map(partyOf);
+  assert.equal(new Set(lever).size, lever.length, 'two employers on one application system are two parties');
+  const boardless = { ...ats, board: null };
+  assert.equal(partyOf(boardless), null);
+  const s = { person: MADE_UP_PERSON, interests: [] };
+  assert.deepEqual(sayYes(s, boardless, '2026-11-05T10:00:00Z'), s, 'no key, no yes');
+  assert.equal(sayYes(s, ats, '2026-11-05T10:00:00Z').interests[0].party, 'greenhouse:fabrikamroboticsexample');
 });
 
 test('only a signed-in, checked person says yes, once; withdraw takes it off the list', () => {
@@ -40,13 +48,21 @@ test('only a signed-in, checked person says yes, once; withdraw takes it off the
   assert.equal(canSay(s, ats.id), true, 'a withdrawn yes can be said again');
 });
 
-test('a block covers the domain and its subdomains and applies before counting', () => {
+test('a block applies at the claim, against the domain the company confirmed, before any count', () => {
   assert.ok(covers('www.Northwind.example', 'jobs.northwind.example'));
   assert.ok(!covers('wind.example', 'northwind.example'));
-  assert.ok(!covers('northwind.example', 'personio:northwind'), 'a board id is never covered until J2-5 ties it to a domain');
-  const party = 'northwind.example';
-  const yes = (blocked, state = 'covert') => ({ person: { ...MADE_UP_PERSON, blocked }, interest: { posting_id: 'x', party, at: '', state } });
-  assert.equal(countFor([yes([]), yes(['northwind.example']), yes([], 'withdrawn'), yes(['other.example'])], party), 2);
+  const party = 'greenhouse:fabrikamroboticsexample';
+  const claim = { party, domain: 'fabrikam.example' };
+  const yes = (blocked, state = 'covert', on = party) => ({ person: { ...MADE_UP_PERSON, blocked }, interest: { posting_id: 'x', party: on, at: '', state } });
+  assert.equal(countFor([
+    yes([]),
+    yes(['fabrikam.example']),
+    yes(['www.fabrikam.example']),
+    yes([], 'withdrawn'),
+    yes(['other.example']),
+    yes([], 'covert', 'greenhouse:someoneelse'),
+  ], claim), 2, 'blocked people, withdrawn yeses and other parties are left out');
+  assert.equal(countFor([yes(['fabrikam.example'])], { party, domain: 'careers.fabrikam.example' }), 0, 'a block covers the confirmed domain’s subdomains');
 });
 
 test('the stand-in keeps the session in its storage and sends nothing', () => {

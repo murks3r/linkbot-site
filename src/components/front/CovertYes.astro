@@ -9,7 +9,7 @@ import type { Posting } from '../../jobs/catalogue';
 import '../../front/covert.css';
 interface Props { W: PostingWords['covert']; posting: Posting; mine: string }
 const { W, posting: p, mine } = Astro.props;
-const data = JSON.stringify({ id: p.id, party: p.party });
+const data = JSON.stringify({ id: p.id, source: p.source, board: p.board });
 ---
 <section class="po-action cy" data-covert={data} aria-labelledby="covert-title">
   <h2 id="covert-title" class="cy-title">{W.title}</h2>
