@@ -1,0 +1,43 @@
+---
+/* The person's covert yeses on /jobs/mine (the draft): each posting they said yes to covertly, newest first, with the
+   day and "Withdraw". Behaviour: src/front/covert.ts against the stand-in src/jobs/interest-stub.ts; the postings'
+   titles come from the catalogue's stand-in (src/jobs/recorded.ts); words: src/drafts/jobs-mine.ts. */
+import Icon from '../Icon.astro';
+import type { MineDraft } from '../../drafts/jobs-mine';
+import { EMPTY_QUERY, search } from '../../jobs/catalogue';
+import { RECORDED } from '../../jobs/recorded';
+import { pathFor, type Lang } from '../../i18n';
+import '../../front/covert.css';
+interface Props { W: MineDraft['covert']; lang: Lang }
+const { W, lang } = Astro.props;
+const source = {
+  lang,
+  postings: Object.fromEntries(search(RECORDED, EMPTY_QUERY, new Date().toISOString().slice(0, 10)).map(p => [p.id, { title: p.title, employer: p.employer, href: pathFor(lang, `/jobs/${p.id}`) }])),
+  saidOn: W.saidOn,
+  withdraw: W.withdraw,
+  withdrawn: W.withdrawn,
+};
+---
+<section class="wrap cm" aria-labelledby="covert-mine-title" data-covert-mine>
+  <script type="application/json" data-covert-source set:html={JSON.stringify(source)} />
+  <h2 id="covert-mine-title">{W.title}</h2>
+  <p class="cy-label">{W.label}</p>
+  <p>{W.p}</p>
+  <div data-when="out">
+    <p data-note>{W.signIn.p}</p>
+    <button type="button" class="btn" data-act="sign-in">{W.signIn.button}</button>
+  </div>
+  <div data-when="empty" hidden>
+    <p data-note>{W.empty}</p>
+    <a class="link" href={pathFor(lang, '/jobs')}>{W.board}<Icon name="arrow" /></a>
+  </div>
+  <div data-when="list" hidden>
+    <ul class="cm-list" data-covert-list></ul>
+  </div>
+  <p class="sr" aria-live="polite" data-live></p>
+</section>
+
+<script>
+  import { mountMine } from '../../front/covert';
+  document.querySelectorAll<HTMLElement>('[data-covert-mine]').forEach(mountMine);
+</script>

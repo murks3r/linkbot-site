@@ -1,0 +1,39 @@
+---
+/* The covert yes on a posting's page (the draft /jobs/<id>): signed out, a sign-in prompt; signed in and checked, one
+   button and one line on what happens; said, the note, the way to /jobs/mine and "Withdraw". Behaviour:
+   src/front/covert.ts against the stand-in src/jobs/interest-stub.ts; words: src/drafts/jobs-board.ts. Rendered signed
+   out; without scripts nothing can be pressed, and the prompt says so. */
+import Icon from '../Icon.astro';
+import type { PostingWords } from '../../drafts/jobs-board';
+import type { Posting } from '../../jobs/catalogue';
+import '../../front/covert.css';
+interface Props { W: PostingWords['covert']; posting: Posting; mine: string }
+const { W, posting: p, mine } = Astro.props;
+const data = JSON.stringify({ id: p.id, source: p.source, original_url: p.original_url });
+---
+<section class="po-action cy" data-covert={data} aria-labelledby="covert-title">
+  <h2 id="covert-title" class="cy-title">{W.title}</h2>
+  <p class="cy-label">{W.label}</p>
+  <div data-when="out">
+    <p data-note>{W.signIn.p}</p>
+    <button type="button" class="btn" data-act="sign-in">{W.signIn.button}</button>
+    <noscript><p>{W.noScript}</p></noscript>
+  </div>
+  <div data-when="ready" hidden>
+    <button type="button" class="btn btn-primary" data-act="say" aria-describedby="covert-line">{W.button}</button>
+    <p id="covert-line" class="cy-line" data-note>{W.line}</p>
+  </div>
+  <div data-when="said" hidden>
+    <p class="cy-said" data-note>{W.said}</p>
+    <a class="link" href={mine}>{W.mine}<Icon name="arrow" /></a>
+    <button type="button" class="btn" data-act="withdraw">{W.withdraw}</button>
+  </div>
+  <p hidden data-withdrawn>{W.withdrawn}</p>
+  <p class="cy-note">{W.note}</p>
+  <p class="sr" aria-live="polite" data-live></p>
+</section>
+
+<script>
+  import { mountPosting } from '../../front/covert';
+  document.querySelectorAll<HTMLElement>('[data-covert]').forEach(mountPosting);
+</script>
