@@ -1,11 +1,16 @@
 /* The job catalogue as the job board reads it: one public posting with the fields the planned read API names (source,
    fetched_at, original_url, employer, location, work mode, employment type and salary if stated, posted and
    valid-through dates), plus the title. No posting text: the catalogue keeps none (J2-FIX-B); the link to the original
-   carries it, and a search over the text is the read API's q filter, server side. The read API's own contract
-   (murks3r/linkbot, contracts/jobs-catalogue/openapi.yaml, 0.1.0-draft) nests employer and location differently; the
-   board takes its shape once that contract is merged. Postings only, never a person. Until the API exists the
+   carries it, and a search over the text is the read API's q filter, server side. The read API's own contract,
+   pinned: murks3r/linkbot contracts/jobs-catalogue/openapi.yaml 0.1.0-draft at 76559ac (sha256 d287fade…557e; CONTRACT
+   below). It agrees here on the two rules of J2-FIX-B (no route serves the text; valid_through only when the source
+   states a closing date) and nests employer and location differently and names more sources (ba, smartrecruiters)
+   than the board shows; the board takes its shape when the API runs on a staging instance. Postings only, never a person. Until the API exists the
    board reads a stub of the same shape (src/jobs/recorded.ts); search and filters are pure functions here, so the
    browser (src/front/board.ts) and the tests (tests/jobs-board.test.mjs) run the same code. */
+
+/** The catalogue contract this board is written against (J2-FIX-B, 2026-11-04). */
+export const CONTRACT = { repo: 'murks3r/linkbot', path: 'contracts/jobs-catalogue/openapi.yaml', version: '0.1.0-draft', commit: '76559ac', sha256: 'd287fade9116bc24058cc483044de0828698bc5775de470368d1ff56ba75557e' } as const;
 
 export const WORK_MODES = ['on_site', 'hybrid', 'remote'] as const;
 export type WorkMode = typeof WORK_MODES[number];
