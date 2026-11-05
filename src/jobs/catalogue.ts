@@ -2,15 +2,16 @@
    fetched_at, original_url, employer, location, work mode, employment type and salary if stated, posted and
    valid-through dates), plus the title. No posting text: the catalogue keeps none (J2-FIX-B); the link to the original
    carries it, and a search over the text is the read API's q filter, server side. The read API's own contract,
-   pinned: murks3r/linkbot contracts/jobs-catalogue/openapi.yaml 0.1.0-draft at 76559ac (sha256 d287fade…557e; CONTRACT
-   below). It agrees here on the two rules of J2-FIX-B (no route serves the text; valid_through only when the source
-   states a closing date) and nests employer and location differently and names more sources (ba, smartrecruiters)
-   than the board shows; the board takes its shape when the API runs on a staging instance. Postings only, never a person. Until the API exists the
+   pinned: murks3r/linkbot contracts/jobs-catalogue/openapi.yaml 0.1.1-draft at 5aa57b7, on the J2-5 draft #404 (sha256
+   1c94ee5d…16bf; CONTRACT below). It agrees here on the two rules of J2-FIX-B (no route serves the text; valid_through
+   only when the source states a closing date) and on 0.1.1's party and employer.domain (taken as delivered, never
+   rebuilt), and nests employer and location differently and names more sources (ba, smartrecruiters) than the board
+   shows; the board takes its shape when the API runs on a staging instance. Postings only, never a person. Until the API exists the
    board reads a stub of the same shape (src/jobs/recorded.ts); search and filters are pure functions here, so the
    browser (src/front/board.ts) and the tests (tests/jobs-board.test.mjs) run the same code. */
 
-/** The catalogue contract this board is written against (J2-FIX-B, 2026-11-04). */
-export const CONTRACT = { repo: 'murks3r/linkbot', path: 'contracts/jobs-catalogue/openapi.yaml', version: '0.1.0-draft', commit: '76559ac', sha256: 'd287fade9116bc24058cc483044de0828698bc5775de470368d1ff56ba75557e' } as const;
+/** The catalogue contract this board is written against (J2-5 draft, 2026-11-05; T-J2d FUND 13). */
+export const CONTRACT = { repo: 'murks3r/linkbot', path: 'contracts/jobs-catalogue/openapi.yaml', version: '0.1.1-draft', commit: '5aa57b7', sha256: '1c94ee5df45de62c79344744833d7eb1b3e058cd2de15bf88cbdbec3872716bf' } as const;
 
 export const WORK_MODES = ['on_site', 'hybrid', 'remote'] as const;
 export type WorkMode = typeof WORK_MODES[number];
@@ -57,10 +58,13 @@ export interface Posting {
       (Recruitee's close_at), never derived. */
   posted_at: string | null;
   valid_through: string | null;
-  /** The employer's board id at its source, as the contract's employer.board delivers it (lower case, no host, no
-      URL); null for a source without boards. With source it names the unclaimed company party (src/jobs/interest.ts,
-      partyOf). */
-  board: string | null;
+  /** The publisher's key "<source>:<board>" exactly as the catalogue delivers it (contract 0.1.1 party); null without a
+      board. A jobs space holds the posting's unclaimed company under it (J2-5). Taken as delivered, never rebuilt. */
+  party: string | null;
+  /** The employer's own domain, only when the board registry holds the employer's page as evidence for it (contract
+      0.1.1 employer.domain); null otherwise. Never the key: without it the posting is unclaimable and takes no covert
+      yes (src/jobs/interest.ts, claimableParty). */
+  employer_domain: string | null;
 }
 
 export interface Query { q: string; where: string; mode: WorkMode | ''; since: number }

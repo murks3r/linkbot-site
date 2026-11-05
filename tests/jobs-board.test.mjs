@@ -15,6 +15,7 @@ import { employmentKind } from '../src/jobs/catalogue.ts';
 import { llmsText as compose } from '../src/llms/compose.ts';
 import { LANGS } from '../src/i18n/locales.ts';
 import { RECORDED } from '../src/jobs/recorded.ts';
+import { claimableParty } from '../src/jobs/interest.ts';
 import { jobsBoard } from '../src/drafts/jobs-board.ts';
 import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 
@@ -184,8 +185,11 @@ test('each live posting has its draft page in the five languages, linked from th
       assert.ok(html.includes(`"url":"${p.original_url}"`), 'its url is the original');
       assert.ok(html.includes(`href="${p.original_url}"`), 'the link to the original');
       assert.ok(html.includes(W.posting.original.button));
-      assert.ok(html.includes(`data-covert="`), 'the covert yes');
-      assert.ok(html.includes(W.posting.covert.signIn.button), 'signed out, the sign-in prompt');
+      if (claimableParty(p) === null) assert.ok(!html.includes('data-covert='), `${p.id}: unclaimable, no covert yes`);
+      else {
+        assert.ok(html.includes(`data-covert="`), 'the covert yes');
+        assert.ok(html.includes(W.posting.covert.signIn.button), 'signed out, the sign-in prompt');
+      }
       const board = readFileSync(new URL(`${prefix}jobs.html`, dist), 'utf8');
       assert.ok(board.includes(`href="/${prefix}jobs/${p.id}"`), 'the board links it');
       assert.ok(board.includes(`/${prefix}jobs/${p.id}","name":`), 'the board’s ItemList names it');

@@ -1,10 +1,11 @@
 /* The covert yes, in the shape the jobs space plans for it (J2-5, Core-Engine, a draft): a real posting becomes, on its
-   first interest, a `seeking` intent held by an unclaimed company party, keyed "<source>:<board>" (partyOf; Core-Engine's
-   rule for J2-5, 2026-11-05); a checked person's covert yes is an interest on it. The person's block list (domains, as
-   the blocks draft normalises them: lower case, no "www.", a subdomain is covered) applies when a company claims its
-   postings with a domain it confirmed (J2-6), before it sees any count or summary (countFor). Pure rules over a session,
-   so the browser (src/front/covert.ts) and the tests (tests/jobs-covert.test.mjs) run the same code; where the session
-   lives is src/jobs/interest-stub.ts. */
+   first interest, a `seeking` intent held by an unclaimed company party under the catalogue's party key
+   "<source>:<board>" (Core-Engine's rule for J2-5, 2026-11-05; spec 8.3); a checked person's covert yes is an interest
+   on it, and only on a posting whose employer domain the catalogue holds evidence for (claimableParty; catalogue
+   0.1.1-draft). The person's block list (domains, as the blocks draft normalises them: lower case, no "www.", a
+   subdomain is covered) applies when a company claims its postings with a domain it confirmed (J2-6), before it sees
+   any count or summary (countFor). Pure rules over a session, so the browser (src/front/covert.ts) and the tests
+   (tests/jobs-covert.test.mjs) run the same code; where the session lives is src/jobs/interest-stub.ts. */
 import type { Posting } from './catalogue.ts';
 
 /** The checks a person can have passed. Today there is one: the email address confirmed through a link. */
@@ -22,12 +23,12 @@ export const SIGNED_OUT: Session = { person: null, interests: [] };
 /** A domain as a block compares it: lower case, no "www.". */
 export const domain = (value: string): string => value.trim().toLowerCase().replace(/^www\./, '');
 
-/** The unclaimed company party a posting's interests go to, as J2-5 keys it: "<source>:<board>", both as the catalogue
-    delivers them (source plus employer.board). Never the host of original_url: on an application system that is the
-    system's host, shared by every employer on it (T-J2 FUND 7). No board, no key: no company can claim such a posting,
-    so the page offers no covert yes on it. */
-export const partyOf = (posting: Pick<Posting, 'source' | 'board'>): string | null =>
-  posting.board ? `${posting.source}:${posting.board}` : null;
+/** The party a covert yes on this posting goes to: the catalogue's party key, as delivered, never rebuilt from the board
+    or the host of original_url (T-J2 FUND 7). Null when the posting is unclaimable, that is without a party or without
+    an evidenced employer domain (catalogue 0.1.1-draft, spec 8.3; the engine answers 409 posting_unclaimable): then the
+    page shows no covert yes (T-J2d FUND 13). Against the jobs space this becomes the posting's can_say_yes. */
+export const claimableParty = (posting: Pick<Posting, 'party' | 'employer_domain'>): string | null =>
+  posting.party !== null && posting.employer_domain !== null ? posting.party : null;
 
 /** Whether a block on `blocked` covers a domain a company confirmed: the same domain or one of its subdomains. An
     unclaimed party has no domain, so nothing is compared before the claim (T-J2 FUND 3). */
@@ -46,8 +47,8 @@ export const said = (s: Session, postingId: string): Interest | undefined =>
 export const canSay = (s: Session, postingId: string): boolean =>
   s.person !== null && isChecked(s.person) && !said(s, postingId);
 
-export const sayYes = (s: Session, posting: Pick<Posting, 'id' | 'source' | 'board'>, at: string): Session => {
-  const party = partyOf(posting);
+export const sayYes = (s: Session, posting: Pick<Posting, 'id' | 'party' | 'employer_domain'>, at: string): Session => {
+  const party = claimableParty(posting);
   return party !== null && canSay(s, posting.id)
     ? { ...s, interests: [...s.interests.filter(i => i.posting_id !== posting.id), { posting_id: posting.id, party, at, state: 'covert' }] }
     : s;

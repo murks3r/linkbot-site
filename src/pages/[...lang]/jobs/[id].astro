@@ -8,7 +8,7 @@
 import DraftPage from '../../../components/DraftPage.astro';
 import Icon from '../../../components/Icon.astro';
 import CovertYes from '../../../components/front/CovertYes.astro';
-import { partyOf } from '../../../jobs/interest';
+import { claimableParty } from '../../../jobs/interest';
 import { buildsJobsPage } from '../../../drafts/jobs-page';
 import { jobsMine } from '../../../drafts/jobs-mine';
 import { jobsBoard } from '../../../drafts/jobs-board';
@@ -57,8 +57,9 @@ const ld = jobPostingSchema(p, new URL(pathFor(lang, path), Astro.site).toString
         <a class="btn btn-secondary" href={p.original_url} rel="noopener nofollow" target="_blank">{W.original.button}<Icon name="out" /></a>
         <p>{W.original.note}</p>
       </div>
-      {/* No board, no party key: no company could claim this posting, so it offers no covert yes (partyOf). */}
-      {partyOf(p) !== null && <CovertYes W={W.covert} posting={p} mine={mine} />}
+      {/* Without the catalogue's party and an evidenced employer domain no company can claim this posting, so it offers
+          no covert yes (claimableParty; T-J2d FUND 13). */}
+      {claimableParty(p) !== null && <CovertYes W={W.covert} posting={p} mine={mine} />}
     </div>
   </div>
 </DraftPage>

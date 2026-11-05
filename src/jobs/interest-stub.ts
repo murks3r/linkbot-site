@@ -2,7 +2,8 @@
    pages and src/front/covert.ts reach the covert yes only through `interests`. It keeps the session in this browser
    tab (sessionStorage, gone when the tab closes) and sends nothing. The one person who can sign in is made up: their
    email address counts as confirmed, the one check that exists today, and their made-up current employer is on their
-   block list. A yes goes to the posting's party, "<source>:<board>" (src/jobs/interest.ts); no company claims one here. */
+   block list. A yes goes to the posting's party as the catalogue delivers it, only on a claimable posting (src/jobs/interest.ts);
+   no company claims one here. */
 import type { Posting } from './catalogue.ts';
 import { SIGNED_OUT, sayYes, withdraw, type Person, type Session } from './interest.ts';
 
@@ -10,7 +11,7 @@ export interface Interests {
   read(): Session;
   signIn(): Session;
   signOut(): Session;
-  say(posting: Pick<Posting, 'id' | 'source' | 'board'>): Session;
+  say(posting: Pick<Posting, 'id' | 'party' | 'employer_domain'>): Session;
   withdraw(postingId: string): Session;
 }
 
