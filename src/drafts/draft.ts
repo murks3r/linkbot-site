@@ -2,7 +2,10 @@
    linked from nowhere, never indexed, out of the sitemap, and left out of production builds until the owner approves
    it. tests/draft.test.mjs checks each draft. */
 
-export interface DraftSection { id: string; title: string; paragraphs: string[] }
+/** A request or a response shown as it is sent, under its label; the data in it is made up. */
+export interface DraftExample { label: string; code: string }
+
+export interface DraftSection { id: string; title: string; paragraphs: string[]; examples?: DraftExample[] }
 
 export interface Draft {
   banner: string;

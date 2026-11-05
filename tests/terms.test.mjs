@@ -69,7 +69,7 @@ test('the FAQ has the same six questions in every language, no forbidden claim, 
    with its docs under /developers/docs alone may (they are a developer's pages). Code and preformatted text are identifiers, not copy. Skipped until the site is built. */
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const built = existsSync(join(dist, 'index.html'));
-const DRAFTS = /(^|\/)(for-intermediaries|developers\/(login-with-linkbot|a-new-vertical|prepare-a-request))\.html$/;
+const DRAFTS = /(^|\/)(for-intermediaries|developers\/(login-with-linkbot|a-new-vertical|prepare-a-request|three-calls))\.html$/;
 const visible = html => [
   html.match(/<title>([^<]*)<\/title>/)?.[1] ?? '',
   ...[...html.matchAll(/<meta (?:name="description"|property="og:(?:title|description)") content="([^"]*)"/g)].map(m => m[1]),

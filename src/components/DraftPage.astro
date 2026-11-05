@@ -1,6 +1,6 @@
 ---
 /* A draft page for the owner's review (src/drafts/draft.ts), in English unless the draft has its own words for lang:
-   the banner, the hero, the sections with their table of contents, and what is open. Never indexed (Base's draft),
+   the banner, the hero, the sections with their table of contents and examples, and what is open. Never indexed (Base's draft),
    without alternates and without the language switch. */
 import Base from '../layouts/Base.astro';
 import Toc from './Toc.astro';
@@ -27,6 +27,7 @@ const toc = d.sections.map(s => [s.id, s.title] as [string, string]);
       {d.sections.map(s => <section id={s.id} aria-labelledby={`${s.id}-title`}>
         <h2 id={`${s.id}-title`}>{s.title}</h2>
         {s.paragraphs.map(p => <p>{p}</p>)}
+        {s.examples?.map(e => <figure class="example"><figcaption>{e.label}</figcaption><pre><code>{e.code}</code></pre></figure>)}
       </section>)}
       <section id="open" aria-labelledby="open-title" class="open">
         <h2 id="open-title">{d.open.title}</h2>
@@ -39,5 +40,9 @@ const toc = d.sections.map(s => [s.id, s.title] as [string, string]);
 <style>
   .draft { padding: 12px 0; border-bottom: 2px solid var(--lb-ink); background: var(--lb-line-quiet); font-size: var(--size-small); }
   .draft .wrap { display: block; }
+  .example { margin: 16px 0 0; }
+  .example figcaption { font-size: var(--size-small); font-weight: 650; margin-bottom: 6px; }
+  .example pre { overflow-x: auto; padding: 16px 18px; border: 1px solid var(--lb-line); border-radius: var(--r-2); background: var(--lb-surface); font-size: var(--size-small); line-height: 1.55; }
+  .example pre code { overflow-wrap: normal; }
   .open ul { display: grid; gap: 8px; padding-left: 1.2em; list-style: disc; }
 </style>

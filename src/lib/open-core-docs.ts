@@ -23,7 +23,7 @@ export const SECTIONS: DocSection[] = [
   { id: 'protocol', title: 'Protocol', items: [{ doc: 'protocol/README.md' }] },
   { id: 'api', title: 'API reference', items: [{ doc: 'reference/space-api.md' }] },
   { id: 'open', title: 'What is open, what is hosted', items: [{ page: 'open-and-hosted' }] },
-  { id: 'planned', title: 'Planned', items: [{ planned: 'Login with Linkbot' }, { planned: 'A new vertical' }, { planned: 'Prepare a request with an agent' }] },
+  { id: 'planned', title: 'Planned', items: [{ planned: 'Login with Linkbot' }, { planned: 'A new vertical' }, { planned: 'Prepare a request with an agent' }, { planned: 'Three calls for a vertical' }] },
 ];
 
 /** The export's files the site renders: those in SECTIONS, plus its own index. */

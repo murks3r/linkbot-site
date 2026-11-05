@@ -1,7 +1,8 @@
 ---
 /* Drafts for the owner's review in the developer docs: the planned sign-in with Linkbot (src/drafts/login.ts) and a
    new vertical as a pack (src/drafts/new-vertical.ts), in English only; preparing a request with an agent
-   (src/drafts/prepare.ts), in five languages. Planned, not on the staging space. Linked from nowhere, never indexed
+   (src/drafts/prepare.ts), in five languages; the three calls for a vertical (src/drafts/three-calls.ts), in English
+   only. Planned, not on the staging space. Linked from nowhere, never indexed
    (Base's draft), out of the sitemap (astro.config.mjs), and absent from a production build (getStaticPaths returns no
    route there). Each sentence has its row in docs/truth-check.md. */
 import DraftPage from '../../../components/DraftPage.astro';
@@ -10,12 +11,14 @@ import { DEFAULT_LANG, LANGS, type Lang } from '../../../i18n';
 import { buildsLogin, login } from '../../../drafts/login';
 import { buildsNewVertical, newVertical } from '../../../drafts/new-vertical';
 import { buildsPrepare, prepare } from '../../../drafts/prepare';
+import { buildsThreeCalls, threeCalls } from '../../../drafts/three-calls';
 export function getStaticPaths() {
   const env = { VERCEL_ENV: process.env.VERCEL_ENV };
   const drafts: [string, Partial<Record<Lang, Draft>>, boolean][] = [
     ['login-with-linkbot', { en: login }, buildsLogin(env)],
     ['a-new-vertical', { en: newVertical }, buildsNewVertical(env)],
     ['prepare-a-request', prepare, buildsPrepare(env)],
+    ['three-calls', { en: threeCalls }, buildsThreeCalls(env)],
   ];
   return drafts.filter(([, , builds]) => builds).flatMap(([draft, words]) => LANGS.flatMap(lang => {
     const d = words[lang];
