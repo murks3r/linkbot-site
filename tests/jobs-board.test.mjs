@@ -4,7 +4,7 @@
    board is a schema.org ItemList; the stand-in postings carry every field the catalogue names, lead nowhere real and
    hold no contact person; the words make no forbidden claim, in five languages of the same shape. Once built, each
    live posting has its page in the five languages (banner, noindex, JobPosting, the link to the original, the covert
-   yes disabled), linked from the boards only, never from the sitemap; an expired one has none. llms.txt carries the
+   yes against its stand-in), linked from the boards only, never from the sitemap; an expired one has none. llms.txt carries the
    jobs section exactly when the build carries the jobs pages. The build checks are skipped until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -15,6 +15,7 @@ import { employmentKind } from '../src/jobs/catalogue.ts';
 import { llmsText as compose } from '../src/llms/compose.ts';
 import { LANGS } from '../src/i18n/locales.ts';
 import { RECORDED } from '../src/jobs/recorded.ts';
+import { claimableParty } from '../src/jobs/interest.ts';
 import { jobsBoard } from '../src/drafts/jobs-board.ts';
 import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 
@@ -159,7 +160,7 @@ test('the board’s words make no forbidden claim and match in the five language
   }
   for (const lang of LANGS) assert.deepEqual(shape(jobsBoard[lang]), shape(jobsBoard.en), lang);
   assert.equal(jobsBoard.de.posting.original.button, 'Zur Originalanzeige');
-  assert.equal(jobsBoard.de.posting.covert.soon, 'Demnächst');
+  assert.equal(jobsBoard.de.posting.covert.button, 'Verdeckt Ja');
 });
 
 const dist = new URL('../dist/', import.meta.url);
@@ -184,8 +185,11 @@ test('each live posting has its draft page in the five languages, linked from th
       assert.ok(html.includes(`"url":"${p.original_url}"`), 'its url is the original');
       assert.ok(html.includes(`href="${p.original_url}"`), 'the link to the original');
       assert.ok(html.includes(W.posting.original.button));
-      assert.match(html, /<button[^>]*disabled[^>]*>/, 'the covert yes is disabled');
-      assert.ok(html.includes(W.posting.covert.soon));
+      if (claimableParty(p) === null) assert.ok(!html.includes('data-covert='), `${p.id}: unclaimable, no covert yes`);
+      else {
+        assert.ok(html.includes(`data-covert="`), 'the covert yes');
+        assert.ok(html.includes(W.posting.covert.signIn.button), 'signed out, the sign-in prompt');
+      }
       const board = readFileSync(new URL(`${prefix}jobs.html`, dist), 'utf8');
       assert.ok(board.includes(`href="/${prefix}jobs/${p.id}"`), 'the board links it');
       assert.ok(board.includes(`/${prefix}jobs/${p.id}","name":`), 'the board’s ItemList names it');

@@ -6,7 +6,9 @@
    none (J2-FIX-B), the link to the original carries it. valid_through only where the source states a closing date
    (Recruitee's close_at); one Recruitee posting is past it, so the board's rule that it disappears is visible in the
    data. The employment types are spelled as different sources spell them; one is a word the board has no translation
-   for. */
+   for. party is the publisher's key "<source>:<board>" as catalogue 0.1.1 delivers it, the board being the one the
+   made-up link names; employer_domain is a made-up domain under .example where the registry would hold evidence for
+   it. One posting has a board but no evidenced domain: it is unclaimable and its page offers no covert yes. */
 import type { Posting } from './catalogue.ts';
 
 const FETCHED = '2026-11-04T03:00:00Z';
@@ -25,6 +27,8 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://northwind-analytics-example.jobs.personio.de/job/4711',
     posted_at: '2026-11-02',
     valid_through: null,
+    party: 'personio:northwind-analytics-example',
+    employer_domain: 'northwind-analytics.example',
   },
   {
     id: 'greenhouse-fabrikam-88213',
@@ -39,6 +43,8 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://boards.greenhouse.io/fabrikamroboticsexample/jobs/88213',
     posted_at: '2026-10-29',
     valid_through: null,
+    party: 'greenhouse:fabrikamroboticsexample',
+    employer_domain: 'fabrikam-robotics.example',
   },
   {
     id: 'lever-contoso-logistics-ops-14',
@@ -53,6 +59,8 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://jobs.lever.co/contoso-logistics-example/0b4f7a52-3c1e-4d8a-9f60-1e2d3c4b5a14',
     posted_at: '2026-10-20',
     valid_through: null,
+    party: 'lever:contoso-logistics-example',
+    employer_domain: 'contoso-logistics.example',
   },
   {
     id: 'ashby-tailspin-design-3',
@@ -67,6 +75,8 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://jobs.ashbyhq.com/tailspin-health-example/7c9e2f10-5a3b-4c6d-8e1f-2a3b4c5d6e03',
     posted_at: '2026-10-31',
     valid_through: null,
+    party: 'ashby:tailspin-health-example',
+    employer_domain: 'tailspin-health.example',
   },
   {
     id: 'personio-musterwerk-1203',
@@ -81,6 +91,8 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://musterwerk-metallbau-example.jobs.personio.de/job/1203',
     posted_at: '2026-10-27',
     valid_through: null,
+    party: 'personio:musterwerk-metallbau-example',
+    employer_domain: 'musterwerk-metallbau.example',
   },
   {
     id: 'workable-litware-csm-dach',
@@ -95,6 +107,8 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://apply.workable.com/litware-example/j/C5D7A1B2E3/',
     posted_at: '2026-11-03',
     valid_through: null,
+    party: 'workable:litware-example',
+    employer_domain: 'litware.example',
   },
   {
     id: 'recruitee-adventure-works-ws-marketing',
@@ -109,6 +123,8 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://adventureworksexample.recruitee.com/o/werkstudent-marketing',
     posted_at: '2026-10-12',
     valid_through: '2026-12-31',
+    party: 'recruitee:adventureworksexample',
+    employer_domain: 'adventure-works.example',
   },
   {
     id: 'recruitee-wingtip-accounting-7',
@@ -123,5 +139,25 @@ export const RECORDED: readonly Posting[] = [
     original_url: 'https://wingtipfinanzexample.recruitee.com/o/buchhaltung-7',
     posted_at: '2026-09-15',
     valid_through: '2026-10-31',
+    party: 'recruitee:wingtipfinanzexample',
+    employer_domain: 'wingtip-finanz.example',
+  },
+  {
+    /* A board the registry holds no employer page for: party set, employer_domain null, so no company can claim it and
+       its page offers no covert yes (catalogue 0.1.1-draft, spec 8.3; T-J2d FUND 13). */
+    id: 'lever-proseware-support-22',
+    title: 'Support Engineer (Dutch, English)',
+    employer: 'Proseware B.V.',
+    location: { place: 'Rotterdam', country: 'NL' },
+    work_mode: 'on_site',
+    employment_type: 'Full-time',
+    salary: null,
+    source: 'lever',
+    fetched_at: FETCHED,
+    original_url: 'https://jobs.lever.co/proseware-example/4e8d2c61-9b7a-4f35-a0c2-7d6e5f4a3b22',
+    posted_at: '2026-10-15',
+    valid_through: null,
+    party: 'lever:proseware-example',
+    employer_domain: null,
   },
 ];

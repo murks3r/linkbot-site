@@ -1,12 +1,16 @@
 ---
 /* Draft for the owner's review, in the five languages: one posting of the job board: its facts as the source states them
-   (no posting text, the original carries it), "To the original posting" and the planned covert yes, disabled until it is built. One page per live posting
+   (no posting text, the original carries it), "To the original posting" and the covert yes against its stand-in
+   (src/jobs/interest-stub.ts). One page per live posting
    of the catalogue (until its read API exists, the made-up postings of src/jobs/recorded.ts); schema.org JobPosting.
    Linked only from the draft /jobs, never indexed (Base's draft), out of the sitemap (astro.config.mjs), and absent
    from a production build as /jobs is (buildsJobsPage). Words: src/drafts/jobs-board.ts. */
 import DraftPage from '../../../components/DraftPage.astro';
 import Icon from '../../../components/Icon.astro';
+import CovertYes from '../../../components/front/CovertYes.astro';
+import { claimableParty } from '../../../jobs/interest';
 import { buildsJobsPage } from '../../../drafts/jobs-page';
+import { jobsMine } from '../../../drafts/jobs-mine';
 import { jobsBoard } from '../../../drafts/jobs-board';
 import { EMPTY_QUERY, search, type Posting } from '../../../jobs/catalogue';
 import { date, employment, jobPostingSchema, place, salary } from '../../../jobs/format';
@@ -19,6 +23,8 @@ export function getStaticPaths() {
   return LANGS.flatMap(lang => live.map(posting => ({ params: { lang: lang === DEFAULT_LANG ? undefined : lang, id: posting.id }, props: { lang, posting } })));
 }
 const { lang, posting: p } = Astro.props as { lang: Lang; posting: Posting };
+/* /jobs/mine exists in English and German only; the other languages link the English page. */
+const mine = pathFor(lang in jobsMine ? lang : DEFAULT_LANG, '/jobs/mine');
 const { board: B, posting: W } = jobsBoard[lang];
 const path = `/jobs/${p.id}`;
 const d = {
@@ -48,14 +54,12 @@ const ld = jobPostingSchema(p, new URL(pathFor(lang, path), Astro.site).toString
     <dl class="po-facts">{facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
     <div class="po-actions">
       <div class="po-action">
-        <a class="btn btn-primary" href={p.original_url} rel="noopener nofollow" target="_blank">{W.original.button}<Icon name="out" /></a>
+        <a class="btn btn-secondary" href={p.original_url} rel="noopener nofollow" target="_blank">{W.original.button}<Icon name="out" /></a>
         <p>{W.original.note}</p>
       </div>
-      <div class="po-action">
-        <button type="button" class="btn" disabled aria-describedby="covert-soon covert-p">{W.covert.button}</button>
-        <span class="po-soon" id="covert-soon">{W.covert.soon}</span>
-        <p id="covert-p">{W.covert.p}</p>
-      </div>
+      {/* Without the catalogue's party and an evidenced employer domain no company can claim this posting, so it offers
+          no covert yes (claimableParty; T-J2d FUND 13). */}
+      {claimableParty(p) !== null && <CovertYes W={W.covert} posting={p} mine={mine} />}
     </div>
   </div>
 </DraftPage>

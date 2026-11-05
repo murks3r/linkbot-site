@@ -43,7 +43,13 @@ export interface MineDemo {
   deletion: { title: string; p: string; button: string; ask: string; yes: string; no: string; done: string; again: string };
   signOut: string;
 }
-export interface MineDraft extends Draft { demo: MineDemo }
+/** The person's covert yeses on real postings (src/components/front/CovertMine.astro); {date} and {title} filled in. */
+export interface CovertMine {
+  title: string; label: string; p: string;
+  signIn: { p: string; button: string };
+  empty: string; board: string; saidOn: string; withdraw: string; withdrawn: string;
+}
+export interface MineDraft extends Draft { covert: CovertMine; demo: MineDemo }
 
 const ROLE_IDS = ['a', 'b', 'c'] as const;
 const COMPANY_IDS = ['employer', 'northwind', 'brightfield'] as const;
@@ -51,12 +57,23 @@ const COMPANY_IDS = ['employer', 'northwind', 'brightfield'] as const;
 export const jobsMine: Record<'en' | 'de', MineDraft> = {
   en: {
     banner: 'Draft, not published: planned, not built.',
-    bannerNote: `This page is linked from nowhere on the site but the Jobs draft, is never indexed and exists in English and German only. ${PUBLIC_NAME} runs no jobs space today. The demo below uses made-up data and runs in this browser only: it sends nothing and stores nothing.`,
+    bannerNote: `This page is linked from nowhere on the site but the Jobs drafts, is never indexed and exists in English and German only. ${PUBLIC_NAME} runs no jobs space today. The demo below uses made-up data and runs in this browser only: it sends nothing and stores nothing.`,
     title: 'Jobs: your own page (planned, draft)',
     description: 'Draft: a person’s own page in Jobs. Criteria, the verdicts companies see, who never sees them, pause, export and delete. Made-up data.',
     eyebrow: 'Jobs · planned · draft',
     h1: ['Your own page in Jobs:', 'what companies see, and who never sees you.'],
     lede: `Jobs is planned so that a person can look for a new role without their current employer finding out: ${PUBLIC_NAME} checks both sides, matches roles and people as criteria only, and introduces them only when both said yes. This is the page where the person sees what they confirmed, what each company sees about them, and who never sees them at all. The page names no date.`,
+    covert: {
+      title: 'Your covert yeses',
+      label: 'Made-up person · in this browser tab only, nothing is sent',
+      p: 'Each posting on the job board you said yes to covertly. The company learns who you are only when it unlocks you, and you can withdraw it at any time.',
+      signIn: { p: 'Sign in to see your covert yeses.', button: 'Sign in (made-up person)' },
+      empty: 'No covert yes yet. Say one on a posting on the job board.',
+      board: 'To the job board',
+      saidOn: 'said yes on {date}',
+      withdraw: 'Withdraw',
+      withdrawn: 'Withdrawn: {title}. The company never learns who you are.',
+    },
     demo: {
       h2: 'Try it',
       label: 'Made-up data · in this browser only',
@@ -180,12 +197,23 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
   },
   de: {
     banner: 'Entwurf, nicht veröffentlicht: geplant, nicht gebaut.',
-    bannerNote: `Diese Seite ist nur vom Jobs-Entwurf aus verlinkt, wird nie indexiert und existiert nur auf Englisch und Deutsch. ${PUBLIC_NAME} betreibt heute keinen Jobs-Space. Die Demo unten nutzt erfundene Daten und läuft nur in diesem Browser: Sie sendet nichts und speichert nichts.`,
+    bannerNote: `Diese Seite ist nur von den Jobs-Entwürfen aus verlinkt, wird nie indexiert und existiert nur auf Englisch und Deutsch. ${PUBLIC_NAME} betreibt heute keinen Jobs-Space. Die Demo unten nutzt erfundene Daten und läuft nur in diesem Browser: Sie sendet nichts und speichert nichts.`,
     title: 'Jobs: Ihre eigene Seite (geplant, Entwurf)',
     description: 'Entwurf: die eigene Seite einer Person in Jobs. Kriterien, die Urteile, die Firmen sehen, wer sie nie sieht, Pause, Export, Löschen. Erfundene Daten.',
     eyebrow: 'Jobs · geplant · Entwurf',
     h1: ['Ihre eigene Seite in Jobs:', 'was Firmen sehen, und wer Sie nie sieht.'],
     lede: `Jobs ist so geplant, dass eine Person eine neue Stelle suchen kann, ohne dass ihr aktueller Arbeitgeber davon erfährt: ${PUBLIC_NAME} prüft beide Seiten, gleicht Stellen und Personen nur über Kriterien ab und stellt sie erst vor, wenn beide Ja gesagt haben. Auf dieser Seite sieht die Person, was sie bestätigt hat, was jede Firma über sie sieht und wer sie gar nicht sieht. Die Seite nennt kein Datum.`,
+    covert: {
+      title: 'Ihre verdeckten Jas',
+      label: 'Erfundene Person · nur in diesem Browser-Tab, nichts wird gesendet',
+      p: 'Jede Stelle der Stellenbörse, zu der Sie verdeckt Ja gesagt haben. Wer Sie sind, erfährt die Firma erst, wenn sie Sie freischaltet, und Sie können es jederzeit zurückziehen.',
+      signIn: { p: 'Melden Sie sich an, um Ihre verdeckten Jas zu sehen.', button: 'Anmelden (erfundene Person)' },
+      empty: 'Noch kein verdecktes Ja. Sagen Sie eines bei einer Stelle der Stellenbörse.',
+      board: 'Zur Stellenbörse',
+      saidOn: 'Ja gesagt am {date}',
+      withdraw: 'Zurückziehen',
+      withdrawn: 'Zurückgezogen: {title}. Die Firma erfährt nie, wer Sie sind.',
+    },
     demo: {
       h2: 'Selbst ausprobieren',
       label: 'Erfundene Daten · nur in diesem Browser',
