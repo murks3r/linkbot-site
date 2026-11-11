@@ -1,5 +1,5 @@
 /* Linkbot's fixed terms, the one source for the site, the widget and the docs: each term once per language, with one
-   definition that is true today (docs/truth-check.md). /faq shows them as its glossary and as schema.org DefinedTerms;
+   definition that is true today (docs/truth-check.md). The marketing site shows them as its glossary;
    the Connect lane takes the same words for the widget. `avoid` lists the synonyms the copy may not use for a term;
    tests/terms.test.mjs fails when one appears in any catalogue, front copy or FAQ.
    "Verified history" (the owner's plan) is written "checked history": BUILD MODE bans "verified" (CLAUDE.md, rule 4),

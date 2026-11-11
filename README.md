@@ -1,9 +1,12 @@
-# Linkbot — public site
+# Sensalio — developer site (docs.sensalio.de)
 
-The crawlable public pages for Linkbot, in five languages: what a space is, how matching works,
-for platforms, for verticals, and the privacy notice and imprint as marked placeholders until
-their texts are released. The product itself runs on a platform's own pages (the widget, the
-console, the Space API); the site explains, it never matches.
+The crawlable developer pages for Sensalio: the start page with the 5-minute quickstart and a demo of "both say yes",
+`/developers`, the developer docs under `/developers/docs` (English), the status, the changelog, and the privacy
+notice, imprint and contact page as marked placeholders until their texts are released. What Sensalio is, for readers
+who are not developers, is the marketing site `sensalio.de` (Verticals' `products/sensalio`, agreed 2026-11-11,
+`src/lib/marketing.ts`); the marketing pages that lived here redirect there (`vercel.json`, `tests/redirects.test.mjs`).
+The product itself runs on a platform's own pages (the widget, the console, the Space API); the site explains, it
+never matches.
 
 This repository is built in BUILD MODE on the integration branch `build/vision` (see
 `CLAUDE.md`): pull requests target that branch, the fast check in `.github/workflows/check.yml`
@@ -14,13 +17,12 @@ owner's go. The structure is concept A8 (the design canvas `design/concept-a8`);
 
 | Route | What it does |
 |---|---|
-| `/` | in English: write a need in one line and see the questions the synthetic sample pack asks back and what a confirm would store (in the browser only), beside the Venn of one synthetic pair; the same pair verdict by verdict and the four steps before an introduction; why it asks instead of guessing; who sees what; for platforms, for verticals; where it stands. The four other languages keep the catalogue's home (what Linkbot is, the path from a need to an introduction, the four ways with where each stands, the rules, for whom, where it stands) until the front is translated |
-| `/who-sees-what` | one synthetic offer through the four disclosure stages, what each shows and withholds, the receipt; why a platform can let Linkbot near its users; the rules; deletion (English for every language until translated) |
-| `/how-it-works` | a space, a pack, the four ways to describe, confirming, matching, approval and gates, both yes, the introduction, afterwards, who sees what, five languages, what works today |
-| `/platforms` | the embed, keys and origins, the console, the SDK and webhooks, the recipes, and the six integration pages |
-| `/platforms/embed`, `/platforms/sdk`, `/platforms/console`, `/platforms/wordpress`, `/platforms/nextjs`, `/platforms/astro` | one page per integration, each with only what the Connect lane's docs show today, rendered from the catalogue by `src/components/Integration.astro` |
-| `/verticals` | what a pack holds, the first space, more verticals |
-| `/privacy`, `/imprint` | placeholders that say the texts are in preparation; nothing legal is invented |
+| `/` | one headline, the 5-minute quickstart as the one button, the docs beside it, the "both say yes" demo with two fictional businesses (in the browser only), the shortest embed, and a link to `sensalio.de` |
+| `/developers` | the shortest embed, an SDK example, the docs by section, and what is not available yet |
+| `/developers/docs/…` | Connect's open-core export and the site's own two pages, in English (`src/lib/open-core-docs.ts`) |
+| `/status`, `/changelog` | where each part stands, dated; one entry per product step |
+| `/privacy`, `/imprint`, `/contact` | placeholders that say the texts are in preparation; nothing legal is invented |
+| redirects | `/faq`, `/how-it-works`, `/who-sees-what`, `/demo`, `/request-a-demo`, `/verticals`, `/one-page` and the one-page PDFs go to `sensalio.de` (German at its root, English under `/en`); `/platforms/*` go to their page in the docs, `/platforms`, `/platforms/console` and `/for-platforms` to `/developers` |
 
 English is at the root; German, Spanish, Italian and French are under `/de`, `/es`, `/it` and
 `/fr`, with the same routes. All five languages have their own catalogue; a language added without
@@ -68,9 +70,8 @@ The site wears the widget's design so that both read as one product (`docs/front
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `SITE_URL` | `https://sensalio.de` | canonical origin (canonical links, alternates, Open Graph, schema.org, robots.txt, sitemap). The default is the site's domain (owner, 2026-11-11); a build for another origin sets it. |
+| `SITE_URL` | `https://docs.sensalio.de` | canonical origin (canonical links, alternates, Open Graph, schema.org, robots.txt, sitemap). The default is the developer site's domain (agreed with Verticals, 2026-11-11; the marketing site is `sensalio.de`); a build for another origin sets it. |
 | `CONTACT_EMAIL` | unset | the contact address, a mailbox on `sensalio.de` (suggested: `hallo@sensalio.de`, created by the owner); unset, every page says contact details are in preparation |
-| `PUBLIC_DEMO_EMBED_URL`, `PUBLIC_DEMO_KEY` | unset | the live demo's space: `https://space.sensalio.de/embed/v0/embed.js` and its publishable key; unset, the site shows no live demo (`src/demo/space.ts`) |
 | `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
 
 The public name is one constant, `PUBLIC_NAME` in `src/i18n/terms.ts` (`Sensalio`; every page's own copy, `llms.txt`, site name, schema.org); the legal entity is `LEGAL_NAME` beside it (`Linkbot OÜ` until the register entry). The developer docs under `/developers/docs` are Connect's export and keep its wording.

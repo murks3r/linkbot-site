@@ -46,12 +46,7 @@ test('no catalogue carries a forbidden claim, an empty string or anything privat
     section sets in code (event types, attribute names). A changed one breaks a link or states
     something false. */
 const identifiers = catalogue => [
-  ...['how', 'platforms', 'verticals', 'developers'].flatMap(page => catalogue[page].toc.map(([id]) => `${page}.toc:${id}`)),
-  ...catalogue.how.describe.items.map(way => `how.describe:${way.status}`),
-  ...Object.entries(catalogue.integrations.pages).flatMap(([key, page]) => page.sections.flatMap(section => [
-    `${key}.section:${section.id}`,
-    ...(section.code ? [...(section.items ?? []), ...(section.rows ?? []).map(row => row.name)].map(value => `${key}.${section.id}.code:${value}`) : []),
-  ])),
+  ...catalogue.developers.toc.map(([id]) => `developers.toc:${id}`),
 ];
 
 test('identifiers are the same in every language', () => {
@@ -60,7 +55,7 @@ test('identifiers are the same in every language', () => {
 
 test('every page has a title and a description of a sensible length', () => {
   for (const [lang, catalogue] of Object.entries(catalogues)) {
-    const pages = [...['how', 'platforms', 'forPlatforms', 'developers', 'status', 'verticals', 'privacy', 'imprint', 'contact', 'notFound'].map(key => [key, catalogue[key]]), ...Object.entries(catalogue.integrations.pages).map(([key, page]) => [`integrations.${key}`, page])];
+    const pages = ['developers', 'status', 'changelog', 'privacy', 'imprint', 'contact', 'notFound'].map(key => [key, catalogue[key]]);
     for (const [key, page] of pages) {
       assert.ok(page.title.length >= 10 && page.title.length <= 80, `${lang}.${key}.title: ${page.title.length} characters`);
       assert.ok(page.description.length >= 50 && page.description.length <= 160, `${lang}.${key}.description: ${page.description.length} characters`);
@@ -80,9 +75,9 @@ test('a language without a catalogue falls back to English and says so; one with
 
 test('addresses: English at the root, every other language under its prefix', () => {
   assert.equal(pathFor('en', '/'), '/');
-  assert.equal(pathFor('en', '/how-it-works'), '/how-it-works');
+  assert.equal(pathFor('en', '/developers'), '/developers');
   assert.equal(pathFor('de', '/'), '/de');
-  assert.equal(pathFor('de', '/how-it-works'), '/de/how-it-works');
+  assert.equal(pathFor('de', '/developers'), '/de/developers');
   assert.deepEqual(langPaths().map(p => p.params.lang), [undefined, 'de', 'es', 'it', 'fr']);
   assert.deepEqual(langPaths().map(p => p.props.lang), [...LANGS]);
 });

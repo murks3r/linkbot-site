@@ -1,54 +1,42 @@
-# {name}
+# {name} docs
 
 > {name} lets two businesses that do not know each other trust each other before they meet, wherever being seen
 > costs something and a lot is at stake. It works in three steps: a check of each side, a private match, and an
-> introduction only when both say yes.
+> introduction only when both say yes. These are its developer docs: how a platform embeds {name} or builds its own
+> interface on the Space API.
 
-This file is a plain-text summary of the public site for language models. It makes no claim beyond the pages it links
-to, and every sentence is true on the day of the site's status check (see Status). The full text of every English page
-is in [llms-full.txt](/llms-full.txt). The site is in English at the root and in German, Spanish, Italian and French
-under /de, /es, /it and /fr, with the same pages in every language.
+This file is a plain-text summary of the developer site for language models. It makes no claim beyond the pages it
+links to, and every sentence is true on the day of the site's status check (see Status). The full text of every
+English page is in [llms-full.txt](/llms-full.txt). What {name} is, for readers who are not developers, is on
+[sensalio.de](https://sensalio.de/en). The developer docs are in English; the start page, Developers, Status, the
+changelog and the legal pages are also in German, Spanish, Italian and French under /de, /es, /it and /fr.
 
-## The three steps
+## Not published yet
 
-1. Check: each side confirms its email address through a link sent to it; nothing is stored before it confirms. A
-   space can require gates, such as a KYC and sanctions check, recorded by a named operator. Checks of a company by
-   {name} itself are planned, not built.
-2. Private match: {name} compares a need and an offer criterion by criterion and gives a verdict per criterion, never
-   a score. Each side sees a board card without names: neither sees the other's name or contact.
-3. Both say yes: a named person at the platform approves the possible fit, then each side answers on its own. Only
-   when both say yes do names and email addresses go out, directly or through the platform's team. A no on either side
-   reveals nothing to the other.
+The open-core repository is not public and its packages are not on npm; the licence is not chosen yet. Hosted access
+for other platforms is coming soon. The examples run against a local sample space with made-up example data.
 
-## Where it stands
+## Docs
 
-- The first space is for B2B trade in industrial minerals. It runs as a test instance with synthetic data; no real
-  person and no real organisation uses it yet.
-- A platform embeds {name} in its own pages: one script and one element, one space per market.
-- Nothing of {name} is published as open source yet. Planned: the widget, the SDK, a command-line tool and the
-  protocol description as open source; the checks, the checked history, the matching and the billing as a service
-  {name} hosts.
-
-## Terms
-
-{name}, space, check, private match, board card without names, both say yes, introduction, checked history: each has
-one definition, the same on the site, in the widget and in the docs. They are listed at [FAQ](/faq#terms).
+- [Docs home](/developers/docs): the index of the docs.
+- [Quickstart (5 minutes)](/developers/docs/guides/embed-in-five-minutes): the shortest embed, one script and one
+  element on a page, and the developer quickstart through a local sample space.
+- [Widget](/developers/docs/reference/embed): the embed's attributes, the React component and the recipes for plain
+  HTML, Astro, Next.js and WordPress, and what an integrator tells its visitors about privacy.
+- [SDK](/developers/docs/reference/sdk): the client for a platform's server, typed by the contract, and webhooks.
+- [CLI](/developers/docs/cli): the command-line tool, built, not published.
+- [Protocol](/developers/docs/protocol): the line between the open part and the hosted service.
+- [API reference](/developers/docs/reference/space-api): the Space API's routes, generated from its contract.
+- [What is open, what is hosted](/developers/docs/open-and-hosted): the widget, the SDK, the CLI and the protocol
+  description as open source; the checks, the checked history, the matching and the billing as a service {name}
+  hosts.
 
 ## Pages
 
-- [Home](/): the headline and a demo of the three steps with two fictional businesses, in the browser only.
-- [FAQ](/faq): what {name} is, the problem it solves, how "both say yes" works, what it checks today, what is open
-  source and what is hosted, who it is for, and the terms.
-- [How it works](/how-it-works): a space and its market vocabulary, the ways to describe a need or an offer,
-  confirming, matching with a verdict per criterion, approval and gates, both sides' yes, the introduction, who sees
-  what at each stage.
-- [Who sees what](/who-sees-what): one synthetic offer, stage by stage.
-- [For platforms](/for-platforms) and [Integrations](/platforms): the embed, keys and origins, the console, the SDK
-  and webhooks, recipes for plain HTML, Astro, Next.js and WordPress.
+- [Home](/): the headline, the quickstart, a demo of "both say yes" with two fictional businesses, in the browser
+  only, and the shortest embed.
 - [Developers](/developers): the shortest embed, an SDK example, and what is not available yet.
-- [Developer docs](/developers/docs), in English: the quickstart in 5 minutes, the widget, the SDK, the CLI (built, not published),
-  the protocol, the API reference, and what is open and what is hosted. Not published yet: the repository is private.
-- [For verticals](/verticals): what a market vocabulary holds; the first space, industrial minerals.
 - [Status](/status): dated, which parts run on the synthetic test space, which are built or in the contract, which
   are planned.
+- [Changelog](/changelog): what is new, one dated entry per product step, each with where it stands.
 - [Privacy notice](/privacy), [Imprint](/imprint) and [Contact](/contact): in preparation.

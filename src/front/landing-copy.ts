@@ -1,32 +1,29 @@
-/* The home (/), version 3 (owner's plan of 2026-11-02): one headline with the problem and the promise, directly under it
-   the "both say yes" demo (src/components/front/Trial.astro), then for platforms and the bottom. Plain visitor language,
-   no internal term on the page. The English source of src/front/copy.ts; each sentence has its rows in
+/* The home (/) of the developer site (docs.sensalio.de, agreed with Verticals 2026-11-11): one headline with the problem
+   and the promise, the 5-minute quickstart as the one button, the docs beside it, the "both say yes" demo as a small
+   proof (src/components/front/Trial.astro), the shortest embed and, for readers who are not developers, a link to the
+   marketing site sensalio.de (src/lib/marketing.ts). Plain language, no internal term on the page. The English source of src/front/copy.ts; each sentence has its rows in
    docs/truth-check.md (named per section below) and its line in the claim table of docs/front/home-v3.md. */
 import { PUBLIC_NAME } from '../i18n/terms.ts';
 export const LANDING = {
   meta: {
-    title: `${PUBLIC_NAME}: trust before you meet`,
-    description: `${PUBLIC_NAME} confirms each side, matches in private and introduces two businesses only when both say yes. Try it with two fictional businesses.`,
+    title: `${PUBLIC_NAME} for developers: trust before you meet, in your platform`,
+    description: `Embed ${PUBLIC_NAME} with one script and one element, or build your own interface on the Space API. Try “both say yes” with two fictional businesses.`,
   },
   /* 1 · rows how.confirm, home.rules, how.yes. sub.today is true now; sub.full only once company checks run on the space
      (src/front/hero.ts picks one; tests/home.test.mjs keeps full off the built page). */
   opening: {
-    h1: 'Trust before you meet.',
+    h1: 'Trust before you meet, built into your platform.',
     sub: {
       today: `${PUBLIC_NAME} confirms each side, matches in private and introduces two businesses only when both say yes.`,
       full: `${PUBLIC_NAME} checks who is real, matches in private and introduces two businesses only when both say yes.`,
     },
-    /* The page's one button (owner, 2026-11-02): the quickstart on /developers (its first section, the shortest embed;
-       that page says what is not available yet); beside it only a quiet link to /contact. */
+    /* The page's one button (owner, 2026-11-02): the docs' quickstart in 5 minutes (its page says what is not published
+       yet); beside it only a quiet link to the docs. */
     start: 'Start in 5 minutes',
-    contact: 'Contact',
-    /* The link to /demo under the demo: "Try it" only once /demo holds a widget on a demo space (plan, decision 5;
-       src/demo/space.ts); /demo's own section for the widget takes it as its heading. */
-    button: 'See it step by step',
-    try: 'Try it',
+    docs: 'Read the docs',
   },
   /* 2 · The demo. rows how.confirm (the email address confirmed through a link; nothing stored before confirm),
-     home.lede (a verdict per criterion), how.sees and the /who-sees-what match stage (no name, no contact), how.approval
+     home.lede (a verdict per criterion), how.sees (no name, no contact), how.approval
      (a named person approves; approval discloses nothing), how.yes (each side answers alone; nothing before both yes),
      how.introduction (direct or through the platform's team), site.synthetic (fictional data). */
   trial: {
@@ -74,30 +71,20 @@ export const LANDING = {
       declined: 'No introduction. One side said no, so neither learns who the other is.',
       reset: 'Start again',
     },
-    more: 'Who sees what, step by step',
-  },
-  /* /demo's role switch and its note on the supplier's side (src/components/front/Demo.astro). */
-  stage: {
-    roles: 'Whose side to show',
-    buyer: 'As a buyer',
-    supplier: 'As a supplier',
-    supplierNote: 'Of the supplier’s side, only its yes is recorded so far; the supplier describes its offer in the same widget.',
   },
   /* 3 · rows platforms.embed, platforms.keys, how.pack, how.today (later). Hosted access for other platforms is
      "Coming soon" (owner, 2026-11-02): the page never says a platform can use it today. */
-  platforms: {
-    h2: 'For platforms',
+  embed: {
+    h2: 'The shortest embed',
     p: 'One script and one element on your page; the questions fit your market.',
-    snippet: 'The shortest embed',
     hosted: 'Hosted access for other platforms',
-    button: 'For platforms',
     developers: 'For developers',
+    docs: 'All docs',
   },
-  /* 4 · rows verticals.first, verticals.next, site.synthetic, how.today (now); the address: src/lib/contact.ts */
+  /* 4 · rows site.synthetic, how.today (now). What Sensalio is, for readers who are not developers: the marketing site. */
   bottom: {
-    h2: 'Not your market yet? Tell us what you connect.',
-    button: 'Tell us what you connect',
-    prepared: 'The address to write to is being prepared; the page behind the link says how you will reach us.',
+    h2: `Not a developer? What ${PUBLIC_NAME} is, in plain words.`,
+    button: 'Read it on sensalio.de',
     line: 'Everything shown here runs with fictional data; checked on {date}.',
     status: 'The full status',
   },

@@ -1,7 +1,8 @@
 /* The home, version 3: the "both say yes" demo's states (src/front/trial.ts, pure logic) and the sub-line's truth: the
    built home says today's sub-line (src/front/hero.ts) and never the full one, which claims company checks that do not
-   run yet, in any language; and it keeps the owner's page rules (one button, to the quickstart, beside it a quiet
-   contact link; the demo names its made-up data; no "Live" label, no internal word). The demo makes no network call: its script names no address. The build checks are skipped
+   run yet, in any language; and it keeps the owner's page rules (one button, to the docs' quickstart, beside it a
+   quiet link to the docs; the demo names its made-up data; no "Live" label, no internal word; for readers who are not
+   developers, a link to the marketing site in their language). The demo makes no network call: its script names no address. The build checks are skipped
    until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -10,6 +11,7 @@ import { START, STORY, reduce, end, holds, canAdvance } from '../src/front/trial
 import { SUBLINE } from '../src/front/hero.ts';
 import { FRONT } from '../src/front/copy.ts';
 import { LANGS } from '../src/i18n/index.ts';
+import { marketingHome } from '../src/lib/marketing.ts';
 
 const dist = new URL('../dist/', import.meta.url);
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
@@ -58,8 +60,9 @@ test('the built home keeps the owner’s page rules in every language', { skip }
     const main = home.slice(home.indexOf('<main'), home.indexOf('</main>'));
     const buttons = main.match(/<a [^>]*class="btn[ "][^>]*>/g) ?? [];
     assert.equal(buttons.length, 1, `${lang}: not exactly one button`);
-    assert.match(buttons[0], /href="[^"]*\/developers#embed"/, `${lang}: the one button does not lead to the quickstart`);
-    assert.ok(main.includes(`>${opening.start}<`) && main.includes(`>${opening.contact}</a>`), `${lang}: the button or the contact link is missing`);
+    assert.match(buttons[0], /href="\/developers\/docs\/guides\/embed-in-five-minutes"/, `${lang}: the one button does not lead to the quickstart`);
+    assert.ok(main.includes(`>${opening.start}<`) && main.includes(`href="/developers/docs"`) && main.includes(`>${opening.docs}</a>`), `${lang}: the button or the docs link is missing`);
+    assert.ok(main.includes(`href="${marketingHome(lang)}"`), `${lang}: no link to the marketing site`);
     assert.ok(main.includes(trial.label), `${lang}: the demo does not say it uses made-up example data`);
     assert.ok(!main.includes(`>${labels.live}</span>`), `${lang}: a “Live” label on the home`);
     assert.doesNotMatch(main.replace(/<[^>]+>/g, ' '), /\b(pack|packs|watch|staging|Geoprocure)\b|Beobacht/i, `${lang}: an internal word on the home`);
