@@ -6,6 +6,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import DocsNav from '../../../components/DocsNav.astro';
 import { resolve } from '../../../i18n';
+import { PUBLIC_NAME } from '../../../i18n/terms';
 import { DOCS_BASE, DOC_FILES, docDescription, docRoute, docTitle, pageRoute } from '../../../lib/open-core-docs';
 import source from '../../../content/open-core/SOURCE.json';
 
@@ -24,7 +25,7 @@ const { t } = resolve('en');
 const title = titles[route];
 const crumbs: [string, string][] = [[t.site.nav.developers, '/developers'], ['Docs', DOCS_BASE], ...(route === DOCS_BASE ? [] : [[title, route] as [string, string]])];
 ---
-<Base lang="en" t={t} title={route === DOCS_BASE ? title : `${title} · Linkbot docs`} description={docDescription(entry.body ?? '')} path={route} crumbs={crumbs} oneLanguage>
+<Base lang="en" t={t} title={route === DOCS_BASE ? title : `${title} · ${PUBLIC_NAME} docs`} description={docDescription(entry.body ?? '')} path={route} crumbs={crumbs} oneLanguage>
   <p class="docs-note" role="note"><span class="wrap"><strong>Not published yet.</strong> The open-core repository is not public and its packages are not on npm; hosted access for other platforms is coming soon. The examples run against a local sample space with made-up example data. <code>OPEN_CORE_REPO_URL</code> stands for the repository's address, named when it is published.</span></p>
   <div class="wrap doc docs">
     <DocsNav current={route} titles={titles} />

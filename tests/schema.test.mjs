@@ -2,7 +2,7 @@
    indexable page in every language carries one JSON-LD block that parses, with Organization, WebSite,
    SoftwareApplication and a BreadcrumbList whose items are absolute and numbered from 1; /faq adds a FAQPage whose
    questions and answers are the page's own text, and a DefinedTermSet of the terms. No node states a price, a rating
-   or an address. robots.txt names the AI crawlers, and llms.txt and llms-full.txt are built. Skipped until the site is built. */
+   or an address; the Organization names the legal entity (legalName, src/i18n/terms.ts). robots.txt names the AI crawlers, and llms.txt and llms-full.txt are built. Skipped until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { LANGS, pathFor } from '../src/i18n/index.ts';
 import { FAQ } from '../src/faq/index.ts';
-import { PUBLIC_NAME, TERM_KEYS } from '../src/i18n/terms.ts';
+import { LEGAL_NAME, PUBLIC_NAME, TERM_KEYS } from '../src/i18n/terms.ts';
 
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const skip = !existsSync(join(dist, 'index.html')) && 'build the site first';
@@ -30,11 +30,12 @@ test('every page carries Organization, WebSite, SoftwareApplication and a Breadc
     for (const node of nodes) {
       assert.equal(node['@context'], 'https://schema.org', `${name}: @context`);
       assert.ok(typeof node['@type'] === 'string', `${name}: @type`);
-      for (const key of ['offers', 'aggregateRating', 'address', 'foundingDate', 'legalName', 'logo']) assert.ok(!(key in node), `${name}: ${node['@type']} states ${key}`);
+      for (const key of ['offers', 'aggregateRating', 'address', 'foundingDate', 'logo']) assert.ok(!(key in node), `${name}: ${node['@type']} states ${key}`);
     }
     const byType = Object.fromEntries(nodes.map(node => [node['@type'], node]));
     for (const type of ['Organization', 'WebSite', 'SoftwareApplication', 'BreadcrumbList']) assert.ok(byType[type], `${name}: ${type}`);
     assert.ok(byType.Organization.name && byType.Organization.url && byType.Organization.description, `${name}: Organization`);
+    assert.equal(byType.Organization.legalName, LEGAL_NAME, `${name}: Organization legalName`);
     assert.equal(byType.WebSite.publisher['@id'], byType.Organization['@id'], `${name}: WebSite publisher`);
     assert.ok(byType.SoftwareApplication.applicationCategory && byType.SoftwareApplication.operatingSystem, `${name}: SoftwareApplication`);
     byType.BreadcrumbList.itemListElement.forEach((item, index) => {

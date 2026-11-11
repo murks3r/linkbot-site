@@ -1,10 +1,10 @@
 # What is open, what is hosted
 
-Linkbot has an open part and a hosted part. The open part is everything a platform puts on its own site or server to plug a space in. The hosted part is the service behind the Space API that does the checking, the private match and the introductions.
+{name} has an open part and a hosted part. The open part is everything a platform puts on its own site or server to plug a space in. The hosted part is the service behind the Space API that does the checking, the private match and the introductions.
 
 **Nothing is published yet.** The repository with the open part is not public, and its packages are not on npm. The licence is not chosen yet. Hosted access for other platforms: coming soon. These docs show the open part as it is prepared for publication.
 
-| Open: the open-core repository | Hosted: the Linkbot service |
+| Open: the open-core repository | Hosted: the {name} service |
 | --- | --- |
 | The widget and its one adapter to the Space API | The checks of each party: today each side's email address; company checks are planned, not built |
 | The SDK for your server, with the webhook check | The private match |

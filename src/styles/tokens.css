@@ -2,20 +2,28 @@
    of 2026-10-28, §5 (the workspace's plan/design/linkbot-widget-design/DESIGN-SPEC.md), under the spec's own names, and
    the same values Connect's widget serves from packages/embed/src/v1/styles.css (embed 0.6.0-v1, read 2026-10-31), so
    the site and the widget read as one product. Light only: the spec has no dark values. tests/tokens.test.mjs checks
-   that this file holds exactly the spec's colours and that no other stylesheet in src/ writes one. */
+   that this file holds exactly the spec's colours plus Sensalio's five and that no other stylesheet in src/ writes one.
+   Sensalio (BRAND.md, 2026-11-10): the brand's colours under its own names; the page, the text, the main action and the
+   marker take them, the rest of the spec stays. Sun gold is for the mark and for areas, never for text on paper. */
 :root {
   color-scheme: light;
-  --lb-ground: #F2F4F1;        /* the page */
+  --sn-navy: #14213D;          /* the brand's navy: the mark's left half, text, the main action */
+  --sn-gold: #C9962B;          /* sun gold: the mark's right half and areas, never text on paper */
+  --sn-gold-light: #E3B655;    /* light gold on navy, and the marker */
+  --sn-paper: #F6F2E8;         /* paper: the page */
+  --sn-gold-text: #8A6416;     /* gold for text on paper */
+
+  --lb-ground: var(--sn-paper);   /* the page (spec: #F2F4F1) */
   --lb-surface: #FFFFFF;       /* fields, lists, cards */
-  --lb-ink: #1D2928;           /* text, active toggles */
+  --lb-ink: var(--sn-navy);       /* text, active toggles (spec: #1D2928) */
   --lb-slate: #556360;         /* secondary text, at least 4.5:1 on ground and surface */
   --lb-line: #C5CECA;          /* borders */
   --lb-line-quiet: #E3E8E6;    /* quiet dividers */
   --lb-track: #D3DAD7;         /* inactive progress */
-  --lb-accent: #2B4FA3;        /* the main action, a choice, progress */
+  --lb-accent: var(--sn-navy);    /* the main action, a choice, progress (spec: #2B4FA3) */
   --lb-accent-soft: #E8EEF9;   /* a chosen row */
   --lb-accent-soft-2: #C9D5EE; /* the middle of a range */
-  --lb-marker: #F6DC7E;        /* only marked values and the active step */
+  --lb-marker: var(--sn-gold-light); /* only marked values and the active step (spec: #F6DC7E) */
 
   /* Type (§5): Schibsted Grotesk, self-hosted (src/styles/fonts.css); numerals tabular. */
   --lb-font: 'Schibsted Grotesk', system-ui, sans-serif;

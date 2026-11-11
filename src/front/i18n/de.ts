@@ -126,7 +126,7 @@ export const de: FrontCopy = {
   },
   c: {
     meta: {
-      title: 'Linkbot: wer was sieht, und wann',
+      title: `${PUBLIC_NAME}: wer was sieht, und wann`,
       description: 'Eine Matching-Schicht, die jede Plattform einbetten kann, gebaut um eine Frage: wer was sieht, und wann. Ein synthetisches Angebot, Stufe für Stufe.',
     },
     hero: {
@@ -152,7 +152,7 @@ export const de: FrontCopy = {
       },
     },
     why: {
-      h2: 'Warum eine Plattform Linkbot an ihre Nutzer heranlassen kann',
+      h2: `Warum eine Plattform ${PUBLIC_NAME} an ihre Nutzer heranlassen kann`,
       items: [
         {
           h3: 'Ein Space pro Markt, auf einer eigenen Instanz',
@@ -160,7 +160,7 @@ export const de: FrontCopy = {
         },
         {
           h3: 'Ihre Seiten, Ihre Schlüssel, Ihr Team',
-          p: 'Das Widget läuft in Ihren Seiten unter Ihrem eigenen Datenhinweis. Ihre Seite hält einen Publishable Key, der nur auf Ihren Origins gilt; der Secret Key bleibt auf Ihrem Server; Ihr Team gibt Fälle in einer Konsole hinter Ihrem eigenen Login frei, und es gibt keinen Linkbot-Login für Operatoren.',
+          p: `Das Widget läuft in Ihren Seiten unter Ihrem eigenen Datenhinweis. Ihre Seite hält einen Publishable Key, der nur auf Ihren Origins gilt; der Secret Key bleibt auf Ihrem Server; Ihr Team gibt Fälle in einer Konsole hinter Ihrem eigenen Login frei, und es gibt keinen ${PUBLIC_NAME}-Login für Operatoren.`,
         },
         {
           h3: 'Eine benannte Person, nie das System',
@@ -184,14 +184,14 @@ export const de: FrontCopy = {
       link: 'Was ein Marktvokabular enthält',
     },
     state: {
-      h2: 'Wo Linkbot steht',
+      h2: `Wo ${PUBLIC_NAME} steht`,
       p: 'Das Angebot oben ist fester Text, für diese Seite in einem synthetischen Marktvokabular geschrieben; das Produkt ist hier nicht gelaufen. Die Demo-Seite geht den ganzen Weg Schritt für Schritt durch.',
     },
   },
   demo: {
     meta: {
-      title: 'Linkbot: der ganze Weg, von der Anfrage bis zur Vorstellung',
-      description: 'Der Weg eines Einkäufers durch Linkbot in sechs Schritten: von der Anfrage zum Ja beider Seiten und zur Vorstellung. Mit erfundenen Daten.',
+      title: `${PUBLIC_NAME}: der ganze Weg, von der Anfrage bis zur Vorstellung`,
+      description: `Der Weg eines Einkäufers durch ${PUBLIC_NAME} in sechs Schritten: von der Anfrage zum Ja beider Seiten und zur Vorstellung. Mit erfundenen Daten.`,
     },
     hero: {
       eyebrow: 'Demo · erfundene Daten',
@@ -214,7 +214,7 @@ export const de: FrontCopy = {
     replay: {
       label: 'Aufgezeichneter Durchgang · erfundene Daten',
       lede: 'Bilder des Widgets und der Operator-Konsole bei jedem Schritt, aufgenommen auf einem Computer. Jede Partei, jedes Unternehmen und jeder Wert darin ist erfunden.',
-      note: 'Aufgenommen am 25. Oktober 2026 auf der Demo-Bühne von Linkbot Connect, die das Widget und die Operator-Konsole auf einem Computer gegen eine Beispiel-Space-API laufen lässt. Nichts auf diesen Bildern hat einen Space oder einen Menschen erreicht. Die Aufnahme stellt im Modus direkt vor: Nach der Freigabe durch den Operator kann jede Seite öffnen, was die andere teilt.',
+      note: `Aufgenommen am 25. Oktober 2026 auf der Demo-Bühne von ${PUBLIC_NAME} Connect, die das Widget und die Operator-Konsole auf einem Computer gegen eine Beispiel-Space-API laufen lässt. Nichts auf diesen Bildern hat einen Space oder einen Menschen erreicht. Die Aufnahme stellt im Modus direkt vor: Nach der Freigabe durch den Operator kann jede Seite öffnen, was die andere teilt.`,
       steps: 'Die sechs Schritte',
       position: 'Schritt {n} von {total}',
       previous: 'Vorheriger Schritt',
@@ -229,9 +229,9 @@ export const de: FrontCopy = {
       ],
     },
     watch: {
-      name: 'Wenn noch nichts passt: Linkbot sucht weiter',
+      name: `Wenn noch nichts passt: ${PUBLIC_NAME} sucht weiter`,
       who: 'Der Einkäufer',
-      text: 'Nach dem Bestätigen kann der Einkäufer die Anfrage offen halten und Linkbot weitersuchen lassen: wie oft, wöchentlich oder täglich; worüber er hören will; und in den E-Mail-Optionen, höchstens wie viele pro E-Mail und keine E-Mail vor einem gewählten Tag. Linkbot meldet dann nur dem Einkäufer, wenn etwas Neues passt, sobald die E-Mail-Adresse bestätigt ist. Die Suche läuft 90 Tage und lässt sich jederzeit pausieren, fortsetzen oder beenden, auch über einen Link in ihren E-Mails.',
+      text: `Nach dem Bestätigen kann der Einkäufer die Anfrage offen halten und ${PUBLIC_NAME} weitersuchen lassen: wie oft, wöchentlich oder täglich; worüber er hören will; und in den E-Mail-Optionen, höchstens wie viele pro E-Mail und keine E-Mail vor einem gewählten Tag. ${PUBLIC_NAME} meldet dann nur dem Einkäufer, wenn etwas Neues passt, sobald die E-Mail-Adresse bestätigt ist. Die Suche läuft 90 Tage und lässt sich jederzeit pausieren, fortsetzen oder beenden, auch über einen Link in ihren E-Mails.`,
       screens: ['Das Widget des Einkäufers nach dem Bestätigen, noch ohne Angebote: weitersuchen, wöchentlich, nach allem, was die Muss-Kriterien erfüllt, höchstens 5 pro E-Mail.', 'Dasselbe Widget nach „Beobachten starten“: Die Suche wartet darauf, dass die E-Mail-Adresse bestätigt wird, höchstens 5 pro E-Mail, bis zum 23.01.2027. Die Aufnahme hat keine E-Mail gesendet, und die erfundene Adresse existiert nicht.'],
     },
     live: {

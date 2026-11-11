@@ -31,7 +31,7 @@ export const it: Catalogue = {
 
   home: {
     h1: ['Le richieste incontrano le offerte.', 'Decidono le persone.'],
-    lede: 'Linkbot è uno strato di corrispondenza che una piattaforma integra nelle proprie pagine. Uno spazio per mercato. Richieste e offerte come criteri confermati. Un verdetto per criterio, mai un punteggio. Una presentazione solo dopo che entrambe le parti hanno detto sì.',
+    lede: `${PUBLIC_NAME} è uno strato di corrispondenza che una piattaforma integra nelle proprie pagine. Uno spazio per mercato. Richieste e offerte come criteri confermati. Un verdetto per criterio, mai un punteggio. Una presentazione solo dopo che entrambe le parti hanno detto sì.`,
     actions: { how: 'Come funziona', platforms: 'Per le piattaforme' },
     flow: {
       label: 'Da una richiesta a una presentazione',
@@ -66,7 +66,7 @@ export const it: Catalogue = {
   },
 
   how: {
-    title: 'Come funziona Linkbot: da una richiesta confermata a una presentazione',
+    title: `Come funziona ${PUBLIC_NAME}: da una richiesta confermata a una presentazione`,
     description: 'Lo spazio e il suo vocabolario, quattro modi di descrivere, un verdetto per criterio, un operatore che approva, una presentazione se entrambe dicono sì.',
     eyebrow: 'Come funziona',
     h1: ['Da una richiesta confermata', 'a una presentazione.'],
@@ -201,8 +201,8 @@ export const it: Catalogue = {
   },
 
   platforms: {
-    title: 'Integrazioni: uno spazio Linkbot sulle Sue pagine',
-    description: 'Uno spazio Linkbot sulle Sue pagine: uno script e un elemento, una Publishable Key, la Sua informativa dati, la console per il team, i webhook per il server.',
+    title: `Integrazioni: uno spazio ${PUBLIC_NAME} sulle Sue pagine`,
+    description: `Uno spazio ${PUBLIC_NAME} sulle Sue pagine: uno script e un elemento, una Publishable Key, la Sua informativa dati, la console per il team, i webhook per il server.`,
     eyebrow: 'Integrazioni',
     h1: ['Uno spazio', 'sulle Sue pagine.'],
     lede: 'Uno script e un elemento mostrano il widget nella Sua pagina, con i Suoi font e i Suoi colori. Il Suo team approva i casi in una console sulla Sua macchina o dietro il Suo login. Il Suo server riceve gli eventi tramite webhook firmati.',
@@ -225,7 +225,7 @@ export const it: Catalogue = {
     console: {
       title: 'La console per il Suo team',
       paras: [
-        'La console mostra la coda di approvazione, ogni caso con i suoi gate e la sua approvazione, le presentazioni con le ricevute, gli esiti, gli endpoint webhook e gli operatori. Gira su una Sua macchina o dietro il Suo login; la Secret Key resta sul suo server. Non esiste un login Linkbot per gli operatori.',
+        `La console mostra la coda di approvazione, ogni caso con i suoi gate e la sua approvazione, le presentazioni con le ricevute, gli esiti, gli endpoint webhook e gli operatori. Gira su una Sua macchina o dietro il Suo login; la Secret Key resta sul suo server. Non esiste un login ${PUBLIC_NAME} per gli operatori.`,
         'Le sue schermate per impostazioni e modifiche dei criteri, chiavi, origin e funnel usano le route che la Space API ha dal contratto 0.2.9.',
       ],
     },
@@ -247,7 +247,7 @@ export const it: Catalogue = {
   },
 
   forPlatforms: {
-    title: 'Per le piattaforme: cosa ottiene un operatore con uno spazio Linkbot',
+    title: `Per le piattaforme: cosa ottiene un operatore con uno spazio ${PUBLIC_NAME}`,
     description: 'Per chi vuole uno spazio per il proprio mercato: le quattro vie d’accesso, cosa ottiene una piattaforma e cosa resta suo: i suoi dati e la sua decisione.',
     eyebrow: 'Per le piattaforme',
     h1: ['Il Suo mercato, le Sue pagine,', 'la Sua decisione.'],
@@ -280,7 +280,7 @@ export const it: Catalogue = {
         'La Sua decisione. Nessuna presentazione avviene senza che un operatore con nome del Suo team la approvi, dopo i controlli fissati dal Suo spazio. Il sistema non decide mai un controllo, e ogni parte dice sì o no per conto proprio.',
         'I Suoi dati. Fabbisogni, offerte e corrispondenze di uno spazio non vengono condivisi con un altro spazio. I webhook non portano dati di contatto; il Suo server recupera i dettagli con la sua chiave segreta.',
         'Le Sue pagine. La Sua informativa sui dati, il Suo carattere e i Suoi colori. Il widget non imposta cookie e non invia nulla a nessuno se non al Suo spazio.',
-        'Il Suo login. Il Suo team accede tramite il Suo login; non esiste un login Linkbot per gli operatori.',
+        `Il Suo login. Il Suo team accede tramite il Suo login; non esiste un login ${PUBLIC_NAME} per gli operatori.`,
       ],
     },
     details: { title: 'I dettagli', lede: 'Le pagine di integrazione mostrano come funziona ogni parte: l’incorporamento, chiavi e origini, la console, l’SDK e i webhook, e ricette per HTML semplice, WordPress, Next.js e Astro.', link: 'Integrazioni' },
@@ -339,7 +339,7 @@ export const it: Catalogue = {
 
   status: {
     title: 'Stato: cosa gira sullo spazio di prova, cosa è realizzato, cosa è previsto',
-    description: 'Dove si trova ogni parte di Linkbot, secondo la lista di controllo del sito: sullo spazio di prova sintetico, realizzata ma non in esecuzione lì, o prevista.',
+    description: `Dove si trova ogni parte di ${PUBLIC_NAME}, secondo la lista di controllo del sito: sullo spazio di prova sintetico, realizzata ma non in esecuzione lì, o prevista.`,
     eyebrow: 'Stato',
     h1: ['A che punto è,', 'parte per parte.'],
     lede: `Controllato il ${AS_OF} con il rapporto di stato dello spazio di prova e il piano di Connect. Questa pagina è generata dalla lista di controllo del sito, quindi non dice nulla che quella lista non dica.`,
@@ -374,8 +374,8 @@ export const it: Catalogue = {
     link: 'Lo stato, parte per parte',
   },
   changelog: {
-    title: 'Novità: i passi del prodotto Linkbot, datati',
-    description: 'Ogni passo di Linkbot che un cliente può notare, datato e con il suo stato: sullo spazio di prova sintetico, oppure realizzato e non ancora disponibile.',
+    title: `Novità: i passi del prodotto ${PUBLIC_NAME}, datati`,
+    description: `Ogni passo di ${PUBLIC_NAME} che un cliente può notare, datato e con il suo stato: sullo spazio di prova sintetico, oppure realizzato e non ancora disponibile.`,
     eyebrow: 'Novità',
     h1: ['Che cosa è cambiato,', 'passo dopo passo.'],
     lede: 'Una voce per ogni passo del prodotto che un cliente può notare, la più recente per prima. Ognuna dice se gira sullo spazio di prova sintetico o se è realizzata e non ancora disponibile. Niente di tutto ciò è ancora pubblicato per utenti reali.',
@@ -385,7 +385,7 @@ export const it: Catalogue = {
   },
   requestDemo: {
     title: 'Richiedere una demo: cosa si può vedere oggi e cosa seguirà',
-    description: 'Come funziona oggi una demo di Linkbot: un percorso registrato su un solo computer, con dati fittizi. Più avanti una sessione guidata, ancora senza data.',
+    description: `Come funziona oggi una demo di ${PUBLIC_NAME}: un percorso registrato su un solo computer, con dati fittizi. Più avanti una sessione guidata, ancora senza data.`,
     eyebrow: 'Richiedere una demo',
     h1: ['Una demo,', 'come si può dare oggi.'],
     lede: 'Non c’è ancora nulla da prenotare, e questa pagina non raccoglie nulla. Dice cosa si può vedere ora, cosa è previsto e come potrete contattarci.',
@@ -396,7 +396,7 @@ export const it: Catalogue = {
     },
     later: {
       title: 'Più avanti: una sessione guidata',
-      body: 'Previsto: una sessione per il team di una piattaforma, in cui Linkbot mostra il widget e la console su uno spazio di prova con dati fittizi e risponde alle domande. Servono uno spazio demo e recapiti pubblicati. Nessuno dei due esiste ancora, quindi non c’è una data e non c’è nulla da prenotare.',
+      body: `Previsto: una sessione per il team di una piattaforma, in cui ${PUBLIC_NAME} mostra il widget e la console su uno spazio di prova con dati fittizi e risponde alle domande. Servono uno spazio demo e recapiti pubblicati. Nessuno dei due esiste ancora, quindi non c’è una data e non c’è nulla da prenotare.`,
     },
     contact: {
       title: 'Come richiederla',
@@ -405,7 +405,7 @@ export const it: Catalogue = {
   },
   sheet: {
     title: `${PUBLIC_NAME} in una pagina`,
-    description: 'Linkbot in una pagina stampabile: i tre elementi, il sì di entrambe le parti, cosa ottiene e conserva una piattaforma, e a che punto è ogni parte. Senza prezzi.',
+    description: `${PUBLIC_NAME} in una pagina stampabile: i tre elementi, il sì di entrambe le parti, cosa ottiene e conserva una piattaforma, e lo stato di ogni parte. Senza prezzi.`,
     eyebrow: 'Una pagina',
     dated: `Al ${AS_OF}. Generata dalle pagine di questo sito quando il sito viene costruito, quindi non dice nulla che esse non dicano. Non indica prezzi.`,
     pdf: 'Scarica in PDF',
@@ -417,7 +417,7 @@ export const it: Catalogue = {
     description: 'Ogni mercato porta il proprio vocabolario: criteri, opzioni, unità, etichette, rivelazione per fase, gate ed esiti. Il primo spazio: minerali industriali.',
     eyebrow: 'Per i verticali',
     h1: ['Un vocabolario', 'per mercato.'],
-    lede: 'Un verticale entra in Linkbot con il suo vocabolario del mercato: i criteri del suo mercato, le risposte che consentono, cosa ognuno rivela e quando, e i gate che il mercato richiede. Uno spazio lo fissa; il modulo, la lettura, la bacheca e le regole di corrispondenza ne derivano.',
+    lede: `Un verticale entra in ${PUBLIC_NAME} con il suo vocabolario del mercato: i criteri del suo mercato, le risposte che consentono, cosa ognuno rivela e quando, e i gate che il mercato richiede. Uno spazio lo fissa; il modulo, la lettura, la bacheca e le regole di corrispondenza ne derivano.`,
     toc: [['holds', 'Cosa contiene un vocabolario del mercato'], ['first', 'Il primo spazio'], ['next', 'Altri verticali']] as [string, string][],
     holds: {
       title: 'Cosa contiene un vocabolario del mercato',
@@ -446,12 +446,12 @@ export const it: Catalogue = {
   },
 
   privacy: {
-    title: 'Informativa sulla privacy · Linkbot',
+    title: `Informativa sulla privacy · ${PUBLIC_NAME}`,
     description: 'L’informativa sulla privacy di questo sito è in preparazione. Già vero: il sito non imposta cookie, non carica nulla da terze parti e non usa analisi.',
     eyebrow: 'Informativa sulla privacy',
     h1: 'In preparazione',
     lede: 'L’informativa sulla privacy di questo sito è in fase di stesura e revisione. Comparirà qui una volta pubblicata. Fino ad allora non viene mostrato nulla, perché un testo legale non può essere redatto a tentativi.',
-    released: { description: 'L’informativa sulla privacy del sito di Linkbot: cosa tratta il sito, perché, su quale base giuridica, e i diritti degli interessati.' },
+    released: { description: `L’informativa sulla privacy del sito di ${PUBLIC_NAME}: cosa tratta il sito, perché, su quale base giuridica, e i diritti degli interessati.` },
     facts: {
       title: 'Cosa è già vero di questo sito',
       items: [
@@ -464,25 +464,25 @@ export const it: Catalogue = {
   },
 
   imprint: {
-    title: 'Note legali · Linkbot',
-    description: 'Le note legali del sito di Linkbot: dati del fornitore e contatti. Il testo è in preparazione.',
+    title: `Note legali · ${PUBLIC_NAME}`,
+    description: `Le note legali del sito di ${PUBLIC_NAME}: dati del fornitore e contatti. Il testo è in preparazione.`,
     eyebrow: 'Note legali',
     h1: 'In preparazione',
     lede: 'Le note legali (fornitore, indirizzo, rappresentanti, registro e dati fiscali, contatti) sono in preparazione e compariranno qui una volta confermate. Fino ad allora non viene mostrato nulla, perché nulla di esse può essere inventato.',
-    released: { description: 'Le note legali del sito di Linkbot: fornitore, indirizzo, rappresentanti, registro e dati fiscali, e contatti.' },
+    released: { description: `Le note legali del sito di ${PUBLIC_NAME}: fornitore, indirizzo, rappresentanti, registro e dati fiscali, e contatti.` },
   },
 
   contact: {
-    title: 'Contatti · Linkbot',
-    description: 'Come contattare Linkbot. I contatti sono in preparazione: arriveranno con il dominio proprio di Linkbot, che non esiste ancora.',
+    title: `Contatti · ${PUBLIC_NAME}`,
+    description: `Come contattare ${PUBLIC_NAME}. I contatti sono in preparazione: arriveranno con il dominio proprio di ${PUBLIC_NAME}, che non esiste ancora.`,
     eyebrow: 'Contatti',
     h1: 'In preparazione',
-    released: { h1: 'Come scriverci', description: 'Come contattare Linkbot: l’indirizzo a cui scrivere per una domanda su Linkbot o su uno spazio sulla propria piattaforma.' },
+    released: { h1: 'Come scriverci', description: `Come contattare ${PUBLIC_NAME}: l’indirizzo a cui scrivere per una domanda su ${PUBLIC_NAME} o su uno spazio sulla propria piattaforma.` },
     write: 'L’indirizzo è {email}.',
   },
 
   notFound: {
-    title: 'Pagina non trovata · Linkbot',
+    title: `Pagina non trovata · ${PUBLIC_NAME}`,
     description: 'Questa pagina non esiste. Vada alla pagina iniziale o legga il sito in un’altra lingua.',
     eyebrow: 'Pagina non trovata',
     h1: 'Non c’è nulla qui.',
@@ -498,7 +498,7 @@ export const it: Catalogue = {
     pages: {
       embed: {
         nav: 'L’embed',
-        title: 'L’embed: uno script, un elemento · Linkbot per le piattaforme',
+        title: `L’embed: uno script, un elemento · ${PUBLIC_NAME} per le piattaforme`,
         description: 'Cosa imposta la pagina sull’embed: attributi, la Sua informativa dati, variabili del tema, Content Security Policy, cosa il widget conserva e invia.',
         h1: ['Uno script,', 'un elemento.'],
         lede: 'Il widget è uno script e un elemento per ogni punto in cui compare. La Sua pagina imposta la sua chiave, la sua modalità, il suo lato e la sua lingua; tutto il resto proviene dal Suo spazio.',
@@ -533,8 +533,8 @@ export const it: Catalogue = {
       },
       sdk: {
         nav: 'SDK e webhook',
-        title: 'L’SDK, il wrapper React e i webhook · Linkbot per le piattaforme',
-        description: 'Un client server tipizzato dal contratto della Space API, il controllo dei webhook, il wrapper React e come il Suo server riceve gli eventi di Linkbot.',
+        title: `L’SDK, il wrapper React e i webhook · ${PUBLIC_NAME} per le piattaforme`,
+        description: `Un client server tipizzato dal contratto della Space API, il controllo dei webhook, il wrapper React e come il Suo server riceve gli eventi di ${PUBLIC_NAME}.`,
         h1: ['Il Suo server,', 'tipizzato dal contratto.'],
         lede: `Nulla dell’SDK finisce in una pagina del browser: l’embed prende la Publishable Key, e il client dell’SDK rifiuta di avviarsi in un browser. Al ${AS_OF} non è pubblicato; il suo codice è nel repository di Connect.`,
         sections: [
@@ -558,10 +558,10 @@ export const it: Catalogue = {
       },
       console: {
         nav: 'La console',
-        title: 'La console per il Suo team · Linkbot per le piattaforme',
+        title: `La console per il Suo team · ${PUBLIC_NAME} per le piattaforme`,
         description: 'La coda di approvazione, casi con gate e approvazione, presentazioni con ricevute, esiti, webhook e operatori, sulla Sua macchina o dietro il Suo login.',
         h1: ['La console del Suo team,', 'dietro il Suo login.'],
-        lede: 'La console è un piccolo server, l’unico posto in cui viene usata la Secret Key dello spazio, più la pagina in cui lavora il Suo team. Non esiste un login Linkbot per gli operatori: la Sua piattaforma fa accedere il suo team. La esegue sulla Sua macchina come strumento locale, o monta il suo handler dietro il login della Sua piattaforma. Non è mai una pagina Linkbot pubblica.',
+        lede: `La console è un piccolo server, l’unico posto in cui viene usata la Secret Key dello spazio, più la pagina in cui lavora il Suo team. Non esiste un login ${PUBLIC_NAME} per gli operatori: la Sua piattaforma fa accedere il suo team. La esegue sulla Sua macchina come strumento locale, o monta il suo handler dietro il login della Sua piattaforma. Non è mai una pagina ${PUBLIC_NAME} pubblica.`,
         sections: [
           { id: 'views', title: 'Cosa mostra', columns: ['Vista', 'Cosa mostra'], rows: [
             { name: 'Coda di approvazione', what: 'Casi in attesa del Suo team, senza identità: la corrispondenza per criterio, le risposte di entrambe le parti, i gate mancanti.' },
@@ -587,7 +587,7 @@ export const it: Catalogue = {
             'Questo percorso ha girato contro lo spazio di prova sintetico il 23 ottobre 2026: la coda, un caso, entrambi i tipi di controllo, l’approvazione, una risposta per l’offerta della piattaforma e una presentazione con la sua ricevuta.',
           ] },
           { id: 'notyet', title: 'Non ancora qui, e perché', items: [
-            'Un nuovo spazio si crea con lo strumento di predisposizione di Linkbot, non dalla console; la procedura guidata in cinque passaggi della console scrive e convalida il file che quello strumento legge.',
+            `Un nuovo spazio si crea con lo strumento di predisposizione di ${PUBLIC_NAME}, non dalla console; la procedura guidata in cinque passaggi della console scrive e convalida il file che quello strumento legge.`,
             'Nessun «invia di nuovo» per una consegna finché non ci sono consegne reali su cui provarlo.',
           ] },
         ] as Section[],
@@ -595,7 +595,7 @@ export const it: Catalogue = {
       },
       wordpress: {
         nav: 'WordPress',
-        title: 'WordPress · Linkbot per le piattaforme',
+        title: `WordPress · ${PUBLIC_NAME} per le piattaforme`,
         description: 'Un piccolo plugin aggiunge lo shortcode per ogni editor: installarlo, metterlo dove deve comparire il modulo, tenere lontani dallo script i plugin di caching.',
         h1: ['Uno shortcode', 'per ogni editor.'],
         lede: 'Incollare lo snippet in un blocco HTML personalizzato funziona solo per gli utenti a cui WordPress consente di pubblicare script, il che esclude gli editor sulle reti multisite. Il plugin aggiunge uno shortcode che funziona per ogni editor, carica lo script una volta per pagina tramite il caricamento script di WordPress e controlla ogni valore che stampa.',
@@ -612,7 +612,7 @@ export const it: Catalogue = {
       },
       nextjs: {
         nav: 'Next.js',
-        title: 'Next.js · Linkbot per le piattaforme',
+        title: `Next.js · ${PUBLIC_NAME} per le piattaforme`,
         description: 'Il wrapper React nell’App Router: un componente client renderizzabile da un componente server, le variabili pubbliche, la policy, i webhook in un route handler.',
         h1: ['Il wrapper', 'nell’App Router.'],
         lede: 'Usi il wrapper React. È un client component, quindi un server component può renderizzarlo: l’indirizzo dello script e la Sua Publishable Key come prop, la modalità, il lato e la lingua, la Sua informativa dati e le variabili del tema nel suo style.',
@@ -625,7 +625,7 @@ export const it: Catalogue = {
       },
       astro: {
         nav: 'Astro',
-        title: 'Astro · Linkbot per le piattaforme',
+        title: `Astro · ${PUBLIC_NAME} per le piattaforme`,
         description: 'Un componente: lo script lasciato inline così Astro non lo raggruppa, l’informativa tramite un wrapper, tre variabili pubbliche e una build statica.',
         h1: ['Un componente,', 'una build statica.'],
         lede: 'Copi un componente nel Suo sito. Renderizza il tag script e l’elemento da tre variabili pubbliche: l’indirizzo dello script sull’istanza del Suo spazio, la Sua Publishable Key e, se lo script proviene da un’altra origin, la Sua base API. La pagina non ha bisogno di un server: una build Astro statica funziona.',

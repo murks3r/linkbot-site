@@ -68,10 +68,11 @@ The site wears the widget's design so that both read as one product (`docs/front
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `SITE_URL` | `https://linkbot-site.vercel.app` | canonical origin (canonical links, alternates, Open Graph, sitemap). The default is where production runs today. The launch domain is to be named by the owner (`linkbot-domain-tbd.invalid` until then). |
+| `SITE_URL` | `https://sensalio-domain-tbd.invalid` | canonical origin (canonical links, alternates, Open Graph, sitemap). No domain is bought yet, so the default is a placeholder that never resolves; a deploy sets the real origin. |
+| `CONTACT_EMAIL` | unset | the contact address, a mailbox on the owner's domain; unset, every page says contact details follow with the domain |
 | `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
 
-The public name is one constant, `PUBLIC_NAME` in `src/i18n/terms.ts` (home, FAQ, terms, `llms.txt`, site name, schema.org).
+The public name is one constant, `PUBLIC_NAME` in `src/i18n/terms.ts` (`Sensalio`; every page's own copy, `llms.txt`, site name, schema.org); the legal entity is `LEGAL_NAME` beside it (`Linkbot OÜ` until the register entry). The developer docs under `/developers/docs` are Connect's export and keep its wording.
 The steps from preview to the public address, with the values the owner names: `docs/ops/publish-checklist.md`.
 
 ## Develop and test

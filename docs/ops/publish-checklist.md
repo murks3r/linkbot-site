@@ -60,12 +60,12 @@ on this branch, with the command named.
 - **Checked 2026-11-03:** a build with `PUBLIC_NAME = 'Probename'` showed the old name nowhere in the visible text of
   `/`, `/de`, `/faq`, `/fr/faq`; `llms.txt` opened with `# Probename`; the FAQ's schema.org questions read "Für wen ist
   Probename?". The constant was set back to `Linkbot`; the built `llms.txt` is byte for byte the old file.
-- **Not covered yet (same probe):** the other pages' own copy still writes the name out: 121 of 136 built pages
-  (catalogue texts of how it works, for platforms, integrations, status, changelog, verticals, the one-page sheet and its
-  PDF, the legal placeholders) and 79 mentions in `llms-full.txt`. The developer docs are Connect's export, where
-  "Linkbot" is also a code name (`window.Linkbot`, package scope). **Recommendation:** once the name is chosen, one
-  mechanical pass over `src/i18n/*.ts`, `src/front/*` and `src/lib/sheet.ts` with the same conversion (string → template
-  with `PUBLIC_NAME`, code identifiers left alone), and ask the Connect lane how the docs name the product.
+- **Done 2026-11-11 (Sensalio, owner 2026-11-10):** `PUBLIC_NAME = 'Sensalio'`; every page's own copy reads the
+  constant (catalogues, front copy, drafts, the site's Markdown and the changelog via `{name}`), and `tests/name.test.mjs`
+  now reads every source and every built page and `llms-full.txt`. Left as written: code identifiers (`window.Linkbot`,
+  the `Linkbot-*` headers, package names), Connect's code samples, the legal entity (`LEGAL_NAME = 'Linkbot OÜ'`, schema.org
+  `legalName`, until the register entry) and the developer docs under `/developers/docs`, which are Connect's export:
+  they rename when that export does.
 - Code identifiers, repository and package names stay Linkbot (owner, 2026-11-03).
 
 ## 3. Domain switch (O, then S)
@@ -76,13 +76,14 @@ on this branch, with the command named.
 | 3.2 | Vercel, project of this repository → Settings → Domains: add `<domain>` and `www.<domain>`; set `www.<domain>` to redirect (308) to `<domain>` | `<domain>`, `www.<domain>` | O |
 | 3.3 | DNS at the registrar: the records Vercel shows in step 3.2. Vercel's documented defaults are an `A` record for the apex to `76.76.21.21` and a `CNAME` for `www` to `cname.vercel-dns.com`; use the values the dashboard shows for this project | as shown | O |
 | 3.4 | Vercel → Settings → Environment Variables, **Production only**: `SITE_URL=https://<domain>` (no trailing slash). Not on Preview: previews keep the default and Vercel's login | `https://<domain>` | O |
-| 3.5 | `CONTACT_EMAIL` in `src/lib/contact.ts`; then replace every `linkbot-domain-tbd.invalid` (`git grep -n linkbot-domain-tbd.invalid`) and reword the contact rows of `docs/truth-check.md` | `contact@<domain>` or as named | S |
+| 3.5 | Vercel → Environment Variables, Production only: `CONTACT_EMAIL` (read by `src/lib/contact.ts`); then replace every `sensalio-domain-tbd.invalid` (`git grep -n sensalio-domain-tbd.invalid`) and reword the contact rows of `docs/truth-check.md` | `contact@<domain>` or as named | S |
 | 3.6 | Redirect from `linkbot-site.vercel.app` (§4), in the same PR as 3.5 | snippet below | S |
 | 3.7 | After the deploy: `curl -sI https://<domain>/` → 200; `curl -s https://<domain>/ \| grep canonical` → `https://<domain>/`; `curl -s https://<domain>/robots.txt` names `https://<domain>/sitemap-index.xml`; `curl -sI https://linkbot-site.vercel.app/faq` → 308 to `https://<domain>/faq` | | S |
 
 **`SITE_URL` from the environment: done.** `astro.config.mjs` reads `SITE_URL`; the canonical links, the language
 alternates, `og:url`, `og:image`, schema.org, the sitemap and `robots.txt` derive from it; `llms.txt` links relatively.
-The default without it stays `https://linkbot-site.vercel.app`.
+Without it the origin is the placeholder `https://sensalio-domain-tbd.invalid` (2026-11-10): the Vercel project must set
+`SITE_URL` before a build is shown anywhere, Preview included, or its canonical links point nowhere.
 **Checked 2026-11-03:** `SITE_URL=https://linkbot-domain-tbd.invalid npx astro build` → 136 pages; no file in `dist/`
 names `linkbot-site.vercel.app`; `dist/de/faq.html` has `canonical` and `og:image` on the env origin; 140 sitemap
 entries on it; `robots.txt` points at its sitemap and `llms.txt`.

@@ -43,7 +43,7 @@ export const en = {
 
   home: {
     h1: ['Needs meet offers.', 'People decide.'],
-    lede: 'Linkbot is a matching layer a platform embeds in its own pages. One space per market. Needs and offers as confirmed criteria. A verdict per criterion, never a score. An introduction only after both sides say yes.',
+    lede: `${PUBLIC_NAME} is a matching layer a platform embeds in its own pages. One space per market. Needs and offers as confirmed criteria. A verdict per criterion, never a score. An introduction only after both sides say yes.`,
     actions: { how: 'How it works', platforms: 'For platforms' },
     flow: {
       label: 'From a need to an introduction',
@@ -78,7 +78,7 @@ export const en = {
   },
 
   how: {
-    title: 'How Linkbot works: from a confirmed need to an introduction',
+    title: `How ${PUBLIC_NAME} works: from a confirmed need to an introduction`,
     description: 'A space and its market vocabulary, four ways to describe a need or offer, a verdict per criterion, an operator’s approval, an introduction after both say yes.',
     eyebrow: 'How it works',
     h1: ['From a confirmed need', 'to an introduction.'],
@@ -213,8 +213,8 @@ export const en = {
   },
 
   platforms: {
-    title: 'Integrations: a Linkbot space on your own pages',
-    description: 'A Linkbot space on your own pages: one script and one element, a publishable key, your own data notice, a console for your team, webhooks for your server.',
+    title: `Integrations: a ${PUBLIC_NAME} space on your own pages`,
+    description: `A ${PUBLIC_NAME} space on your own pages: one script and one element, a publishable key, your own data notice, a console for your team, webhooks for your server.`,
     eyebrow: 'Integrations',
     h1: ['A space', 'on your own pages.'],
     lede: 'One script and one element show the widget in your page, in your fonts and colours. Your team approves cases in a console on your machine or behind your own login. Your server hears about events through signed webhooks.',
@@ -237,7 +237,7 @@ export const en = {
     console: {
       title: 'The console for your team',
       paras: [
-        'The console shows the approval queue, each case with its gates and approval, the introductions with their receipts, the outcomes, the webhook endpoints and the operators. It runs on a machine of yours or behind your own login; the secret key stays on its server. There is no Linkbot login for operators.',
+        `The console shows the approval queue, each case with its gates and approval, the introductions with their receipts, the outcomes, the webhook endpoints and the operators. It runs on a machine of yours or behind your own login; the secret key stays on its server. There is no ${PUBLIC_NAME} login for operators.`,
         'Its screens for settings and criteria overrides, keys, origins and the funnel use the routes the Space API has had since contract 0.2.9.',
       ],
     },
@@ -259,7 +259,7 @@ export const en = {
   },
 
   forPlatforms: {
-    title: 'For platforms: what an operator gets with a Linkbot space',
+    title: `For platforms: what an operator gets with a ${PUBLIC_NAME} space`,
     description: 'For an operator who wants a space for its market: the four ways in, what a platform gets, and what stays its own: its data and its decision.',
     eyebrow: 'For platforms',
     h1: ['Your market, your pages,', 'your decision.'],
@@ -292,7 +292,7 @@ export const en = {
         'Your decision. No introduction happens unless a named operator of your team approves it, after the checks your space sets. The system never decides a check, and each side says yes or no for itself.',
         'Your data. A space’s needs, offers and fits are not shared with another space. Webhooks carry no contact data; your server fetches details with its secret key.',
         'Your pages. Your own data notice, your font and colours. The widget sets no cookies and sends nothing to anyone but your space.',
-        'Your login. Your team signs in through your own login; there is no Linkbot login for operators.',
+        `Your login. Your team signs in through your own login; there is no ${PUBLIC_NAME} login for operators.`,
       ],
     },
     details: { title: 'The details', lede: 'The integration pages show how each part works: the embed, keys and origins, the console, the SDK and webhooks, and recipes for plain HTML, WordPress, Next.js and Astro.', link: 'Integrations' },
@@ -351,7 +351,7 @@ export const en = {
 
   status: {
     title: 'Status: what runs on the test space, what is built, what is planned',
-    description: 'Where each part of Linkbot stands, from the site’s truth check: on the synthetic test space, built but not running there, or planned.',
+    description: `Where each part of ${PUBLIC_NAME} stands, from the site’s truth check: on the synthetic test space, built but not running there, or planned.`,
     eyebrow: 'Status',
     h1: ['Where it stands,', 'part by part.'],
     lede: `Checked on ${AS_OF} against the test space’s health report and Connect’s plan. This page is built from the site’s truth check, so it says nothing that list does not.`,
@@ -386,8 +386,8 @@ export const en = {
     link: 'The status, part by part',
   },
   changelog: {
-    title: 'What’s new: Linkbot’s product steps, dated',
-    description: 'Each step of Linkbot a customer can notice, dated, with where it stands: on the synthetic test space, or built and not available yet.',
+    title: `What’s new: ${PUBLIC_NAME}’s product steps, dated`,
+    description: `Each step of ${PUBLIC_NAME} a customer can notice, dated, with where it stands: on the synthetic test space, or built and not available yet.`,
     eyebrow: 'What’s new',
     h1: ['What changed,', 'step by step.'],
     lede: 'One entry per product step a customer can notice, newest first. Each says whether it runs on the synthetic test space or is built and not available yet. Nothing here is published for real users yet.',
@@ -397,7 +397,7 @@ export const en = {
   },
   requestDemo: {
     title: 'Request a demo: what you can see today, and what follows',
-    description: 'How a Linkbot demo works today: a walkthrough recorded on one computer, with fictional data. A guided session follows later; there is no date yet.',
+    description: `How a ${PUBLIC_NAME} demo works today: a walkthrough recorded on one computer, with fictional data. A guided session follows later; there is no date yet.`,
     eyebrow: 'Request a demo',
     h1: ['A demo,', 'as it can be given today.'],
     lede: 'There is nothing to book yet, and this page collects nothing. It says what you can see now, what is planned, and how you will reach us.',
@@ -408,7 +408,7 @@ export const en = {
     },
     later: {
       title: 'Later: a guided session',
-      body: 'Planned: a session for a platform’s team, in which Linkbot shows the widget and the console on a test space with fictional data and answers questions. It needs a demo space and published contact details. Neither exists yet, so there is no date and nothing to book.',
+      body: `Planned: a session for a platform’s team, in which ${PUBLIC_NAME} shows the widget and the console on a test space with fictional data and answers questions. It needs a demo space and published contact details. Neither exists yet, so there is no date and nothing to book.`,
     },
     contact: {
       title: 'How to ask',
@@ -417,7 +417,7 @@ export const en = {
   },
   sheet: {
     title: `${PUBLIC_NAME} in one page`,
-    description: 'Linkbot on one printable page: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.',
+    description: `${PUBLIC_NAME} on one printable page: the three building blocks, both sides’ yes, what a platform gets and keeps, and where each part stands. Dated, no prices.`,
     eyebrow: 'One page',
     dated: `As of ${AS_OF}. Made from this site’s pages when the site is built, so it says nothing they do not. It names no prices.`,
     pdf: 'Download as PDF',
@@ -429,7 +429,7 @@ export const en = {
     description: 'Each market brings its own vocabulary: criteria, options, units, labels, disclosure per stage, gates and outcomes. The first space: industrial minerals.',
     eyebrow: 'For verticals',
     h1: ['One vocabulary', 'per market.'],
-    lede: 'A vertical joins Linkbot with its market vocabulary: the criteria of its market, the answers they allow, what each one discloses and when, and the gates the market needs. A space pins it; the form, the reading, the board and the matching rules follow from it.',
+    lede: `A vertical joins ${PUBLIC_NAME} with its market vocabulary: the criteria of its market, the answers they allow, what each one discloses and when, and the gates the market needs. A space pins it; the form, the reading, the board and the matching rules follow from it.`,
     toc: [['holds', 'What a market vocabulary holds'], ['first', 'The first space'], ['next', 'More verticals']] as [string, string][],
     holds: {
       title: 'What a market vocabulary holds',
@@ -458,12 +458,12 @@ export const en = {
   },
 
   privacy: {
-    title: 'Privacy notice · Linkbot',
+    title: `Privacy notice · ${PUBLIC_NAME}`,
     description: 'The privacy notice for this website is in preparation. What is already true: the site sets no cookies, loads nothing from third parties and uses no analytics.',
     eyebrow: 'Privacy notice',
     h1: 'In preparation',
     lede: 'The privacy notice for this website is being written and reviewed. It appears here once it is released. Nothing is shown until then, because a legal text may not be drafted by guesswork.',
-    released: { description: 'The privacy notice for Linkbot’s website: what the site processes, why, on which legal basis, and your rights.' },
+    released: { description: `The privacy notice for ${PUBLIC_NAME}’s website: what the site processes, why, on which legal basis, and your rights.` },
     facts: {
       title: 'What is already true of this site',
       items: [
@@ -476,25 +476,25 @@ export const en = {
   },
 
   imprint: {
-    title: 'Imprint · Linkbot',
-    description: 'The legal notice for Linkbot’s website: provider and contact details. The text is in preparation.',
+    title: `Imprint · ${PUBLIC_NAME}`,
+    description: `The legal notice for ${PUBLIC_NAME}’s website: provider and contact details. The text is in preparation.`,
     eyebrow: 'Imprint',
     h1: 'In preparation',
     lede: 'The legal notice (provider, address, representatives, register and tax details, contact) is being prepared and appears here once it is confirmed. Nothing is shown until then, because none of it may be invented.',
-    released: { description: 'The legal notice for Linkbot’s website: provider, address, representatives, register and tax details, and contact.' },
+    released: { description: `The legal notice for ${PUBLIC_NAME}’s website: provider, address, representatives, register and tax details, and contact.` },
   },
 
   contact: {
-    title: 'Contact · Linkbot',
-    description: 'How to reach Linkbot. Contact details are in preparation: they follow with Linkbot’s own domain, which does not exist yet.',
+    title: `Contact · ${PUBLIC_NAME}`,
+    description: `How to reach ${PUBLIC_NAME}. Contact details are in preparation: they follow with ${PUBLIC_NAME}’s own domain, which does not exist yet.`,
     eyebrow: 'Contact',
     h1: 'In preparation',
-    released: { h1: 'Write to us', description: 'How to reach Linkbot: the address to write to with a question about Linkbot or about running a space on your platform.' },
+    released: { h1: 'Write to us', description: `How to reach ${PUBLIC_NAME}: the address to write to with a question about ${PUBLIC_NAME} or about running a space on your platform.` },
     write: 'Write to {email}.',
   },
 
   notFound: {
-    title: 'Page not found · Linkbot',
+    title: `Page not found · ${PUBLIC_NAME}`,
     description: 'This page does not exist. Go to the home page, or read the site in another language.',
     eyebrow: 'Page not found',
     h1: 'There’s nothing here.',
@@ -512,7 +512,7 @@ export const en = {
     pages: {
       embed: {
         nav: 'The embed',
-        title: 'The embed: one script, one element · Linkbot for platforms',
+        title: `The embed: one script, one element · ${PUBLIC_NAME} for platforms`,
         description: 'What a page sets on the embed: the element’s attributes, your data notice, the theme variables, the Content Security Policy, what the widget keeps and sends.',
         h1: ['One script,', 'one element.'],
         lede: 'The widget is one script and one element per place it appears. Your page sets its key, its mode, its side and its language; everything else comes from your space.',
@@ -547,8 +547,8 @@ export const en = {
       },
       sdk: {
         nav: 'SDK and webhooks',
-        title: 'The SDK, the React wrapper and webhooks · Linkbot for platforms',
-        description: 'A server client typed by the Space API contract, the webhook check, the React wrapper, and how your server receives Linkbot’s events.',
+        title: `The SDK, the React wrapper and webhooks · ${PUBLIC_NAME} for platforms`,
+        description: `A server client typed by the Space API contract, the webhook check, the React wrapper, and how your server receives ${PUBLIC_NAME}’s events.`,
         h1: ['Your server,', 'typed by the contract.'],
         lede: `Nothing of the SDK goes into a browser page: the embed takes the publishable key, and the SDK’s client refuses to start in a browser. As of ${AS_OF} it is not published; its code is in the Connect repository.`,
         sections: [
@@ -572,10 +572,10 @@ export const en = {
       },
       console: {
         nav: 'The console',
-        title: 'The console for your team · Linkbot for platforms',
+        title: `The console for your team · ${PUBLIC_NAME} for platforms`,
         description: 'The approval queue, cases with gates and approval, introductions with receipts, outcomes, webhooks and operators, on your machine or behind your own login.',
         h1: ['Your team’s console,', 'behind your own login.'],
-        lede: 'The console is a small server, the only place the space’s secret key is used, plus the page your team works in. There is no Linkbot login for operators: your platform signs its team in. You run it on your own machine as a local tool, or mount its handler behind your platform’s login. It is never a public Linkbot page.',
+        lede: `The console is a small server, the only place the space’s secret key is used, plus the page your team works in. There is no ${PUBLIC_NAME} login for operators: your platform signs its team in. You run it on your own machine as a local tool, or mount its handler behind your platform’s login. It is never a public ${PUBLIC_NAME} page.`,
         sections: [
           { id: 'views', title: 'What it shows', columns: ['View', 'What it shows'], rows: [
             { name: 'Approval queue', what: 'Cases waiting for your team, with no identities: the fit per criterion, both sides’ answers, missing gates.' },
@@ -601,7 +601,7 @@ export const en = {
             'This path ran against the synthetic test space on 2026-10-23: the queue, a case, both kinds of check, the approval, an answer for the platform’s own offer, and an introduction with its receipt.',
           ] },
           { id: 'notyet', title: 'Not here yet, and why', items: [
-            'A new space is created with Linkbot’s provisioning tool, not from the console; the console’s five-step wizard writes and validates the file that tool reads.',
+            `A new space is created with ${PUBLIC_NAME}’s provisioning tool, not from the console; the console’s five-step wizard writes and validates the file that tool reads.`,
             'No “send again” for a delivery until there are real deliveries to try it on.',
           ] },
         ] as Section[],
@@ -609,7 +609,7 @@ export const en = {
       },
       wordpress: {
         nav: 'WordPress',
-        title: 'WordPress · Linkbot for platforms',
+        title: `WordPress · ${PUBLIC_NAME} for platforms`,
         description: 'A small plugin adds the shortcode for every editor: install it, put it where the form should appear, keep caching plugins away from the script.',
         h1: ['A shortcode', 'for every editor.'],
         lede: 'Pasting the snippet into a Custom HTML block works only for users WordPress lets post scripts, which excludes editors on multisite networks. The plugin adds a shortcode that works for every editor, loads the script once per page through WordPress’s own script loading, and checks every value it prints.',
@@ -626,7 +626,7 @@ export const en = {
       },
       nextjs: {
         nav: 'Next.js',
-        title: 'Next.js · Linkbot for platforms',
+        title: `Next.js · ${PUBLIC_NAME} for platforms`,
         description: 'The React wrapper in the App Router: a client component a server component can render, the public variables, the policy, webhooks in a route handler.',
         h1: ['The wrapper', 'in the App Router.'],
         lede: 'Use the React wrapper. It is a client component, so a server component can render it: the script address and your publishable key as props, the mode, the side and the language, your data notice, and the theme variables in its style.',
@@ -639,7 +639,7 @@ export const en = {
       },
       astro: {
         nav: 'Astro',
-        title: 'Astro · Linkbot for platforms',
+        title: `Astro · ${PUBLIC_NAME} for platforms`,
         description: 'One component: the script left inline so Astro does not bundle it, the notice through a wrapper, three public variables, and a static build.',
         h1: ['One component,', 'a static build.'],
         lede: 'Copy one component into your site. It renders the script tag and the element from three public variables: the script address on your space’s instance, your publishable key and, if the script comes from another origin, your API base. The page needs no server: a static Astro build works.',

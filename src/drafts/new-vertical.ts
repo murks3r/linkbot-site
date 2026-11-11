@@ -4,6 +4,7 @@
    is a draft for the owner's review: linked from nowhere, never indexed, out of the sitemap, and left out of
    production builds. Every sentence has its row in docs/truth-check.md (section "/developers/a-new-vertical"). */
 import { buildsDraft, type Draft } from './draft.ts';
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 
 /** Whether a production build carries the draft. Set it to true once the way is merged and the owner approves the page. */
 export const NEW_VERTICAL_IN_PRODUCTION = false;
@@ -14,12 +15,12 @@ export const buildsNewVertical = (env: { VERCEL_ENV?: string }, inProduction = N
 
 export const newVertical: Draft = {
   banner: 'Draft, not published: planned, not on the staging space.',
-  bannerNote: 'This page is linked from nowhere on the site, is never indexed and exists in English only. Part of the way it describes is on a development branch of Linkbot’s repository and not merged; none of it runs on the staging space, and its example pack holds synthetic data only.',
+  bannerNote: `This page is linked from nowhere on the site, is never indexed and exists in English only. Part of the way it describes is on a development branch of ${PUBLIC_NAME}’s repository and not merged; none of it runs on the staging space, and its example pack holds synthetic data only.`,
   title: 'A new vertical (planned, draft)',
   description: 'Draft: what a pack is, and the steps from a scaffold to a registered pack, with a synthetic example vertical. Planned, not on the staging space.',
   eyebrow: 'Developers · planned · draft',
   h1: ['A new vertical:', 'one pack, nothing else.'],
-  lede: 'How a vertical joins Linkbot: as a pack, written and checked step by step, with no change to the engine. The example is expert engagements, a second vertical with synthetic data that went through every step below. The page names no date and no customer.',
+  lede: `How a vertical joins ${PUBLIC_NAME}: as a pack, written and checked step by step, with no change to the engine. The example is expert engagements, a second vertical with synthetic data that went through every step below. The page names no date and no customer.`,
   sections: [
     {
       id: 'pack',
@@ -31,9 +32,9 @@ export const newVertical: Draft = {
     },
     {
       id: 'today',
-      title: 'Today: a way inside Linkbot’s repository',
+      title: `Today: a way inside ${PUBLIC_NAME}’s repository`,
       paragraphs: [
-        'A pack is written in Linkbot’s own repository. A platform cannot add a pack itself, and there is no hosted service for it.',
+        `A pack is written in ${PUBLIC_NAME}’s own repository. A platform cannot add a pack itself, and there is no hosted service for it.`,
         'The check of step 5 is on the repository’s integration branch for the first release. The one-command scaffold, the check of the pins, the reading rule of step 6 and the example pack are on a development branch and not merged. Every pack is a draft, and none has left that state.',
       ],
     },
@@ -111,7 +112,7 @@ export const newVertical: Draft = {
   open: {
     title: 'Open',
     items: [
-      'Whether a pack can be written outside Linkbot’s repository, and by whom.',
+      `Whether a pack can be written outside ${PUBLIC_NAME}’s repository, and by whom.`,
       'Whether a person, such as an independent expert, may be a party in expert engagements.',
       'A coarse band for a duration or a budget on a board card; today the format has a band for tonnes only.',
       'The engine accepting a pack version with a reading rule.',

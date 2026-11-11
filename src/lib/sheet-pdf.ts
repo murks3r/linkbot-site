@@ -13,7 +13,7 @@ const M = 36;
 const GAP = 24;
 const COL = (A4.width - 2 * M - GAP) / 2;
 const hex = (value: string) => rgb(...([1, 3, 5].map(i => parseInt(value.slice(i, i + 2), 16) / 255) as [number, number, number]));
-const C = { ink: hex('#15171a'), ink2: hex('#4a4f55'), line: hex('#cfd1cb') };
+const C = { ink: hex('#14213D'), ink2: hex('#4a4f55'), line: hex('#cfd1cb') };
 const TEXT = { size: 7.6, leading: 9.6 };
 
 interface Run { text: string; font: PDFFont; size: number }

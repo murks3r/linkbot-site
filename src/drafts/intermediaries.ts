@@ -4,6 +4,7 @@
    docs/truth-check.md (section "/for-intermediaries"). */
 import { statusDate } from '../i18n/status-date.ts';
 import { buildsDraft, type Draft } from './draft.ts';
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 
 /** Whether a production build carries the draft. Set it to true once the owner approves the page. */
 export const INTERMEDIARIES_IN_PRODUCTION = false;
@@ -21,7 +22,7 @@ export const intermediaries: Draft = {
   description: 'Draft for the owner: what a recruiter, broker or agency gets: intake, watch, an introduction after both sides’ yes, its own space, the embed and the API.',
   eyebrow: 'For intermediaries · draft',
   h1: ['Two sides you bring together,', 'introduced only after both say yes.'],
-  lede: 'For a recruiter, a broker or an agency whose work is to bring a need and an offer together: what Linkbot does as the layer under that work, and what it does not do yet. This page describes the Space API contract and Geoprocure’s synthetic staging space, which is the only space running today. No intermediary runs a space, and this page names no prices.',
+  lede: `For a recruiter, a broker or an agency whose work is to bring a need and an offer together: what ${PUBLIC_NAME} does as the layer under that work, and what it does not do yet. This page describes the Space API contract and Geoprocure’s synthetic staging space, which is the only space running today. No intermediary runs a space, and this page names no prices.`,
   sections: [
     {
       id: 'intake',
@@ -55,7 +56,7 @@ export const intermediaries: Draft = {
       paragraphs: [
         'A space is one instance for one market, with its own database, keys and deletion log. Its needs, offers and fits are not shared with another space.',
         'A space pins a pack: the criteria of its market, the answers they allow, what each one discloses and when, and the checks the market needs. The form, the reading, the board and the matching rules follow from it. No pack exists for recruiting, brokerage or agency work; the only pack a space uses today is industrial minerals, Geoprocure’s.',
-        `Your team approves cases in a console behind your own login; there is no Linkbot login for operators. As of ${AS_OF} the console runs on a sample with synthetic data and is not published.`,
+        `Your team approves cases in a console behind your own login; there is no ${PUBLIC_NAME} login for operators. As of ${AS_OF} the console runs on a sample with synthetic data and is not published.`,
       ],
     },
     {

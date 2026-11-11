@@ -6,6 +6,7 @@
    docs/truth-check.md (section "/developers/prepare-a-request"). */
 import type { Lang } from '../i18n/locales.ts';
 import { buildsDraft, type Draft } from './draft.ts';
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 
 /** Whether a production build carries the draft. Set it to true once both parts run on the staging space and the owner approves the page. */
 export const PREPARE_IN_PRODUCTION = false;
@@ -36,7 +37,7 @@ export const prepare: Record<Lang, Draft> = {
         id: 'today',
         title: 'Today: two drafts, not on the staging space',
         paragraphs: [
-          'The agent’s part is a tool of the read-only prototype for the Model Context Protocol (MCP), on a development branch of Linkbot’s repository. It runs on the agent’s own machine and refuses a space that does not hold synthetic data.',
+          `The agent’s part is a tool of the read-only prototype for the Model Context Protocol (MCP), on a development branch of ${PUBLIC_NAME}’s repository. It runs on the agent’s own machine and refuses a space that does not hold synthetic data.`,
           'The form’s part is a change to the widget’s describe mode, on a development branch of the widget; no widget release carries it. Neither part is merged, and neither runs on the staging space.',
         ],
       },
@@ -100,7 +101,7 @@ export const prepare: Record<Lang, Draft> = {
         id: 'today',
         title: 'Heute: zwei Entwürfe, nicht auf dem Staging-Space',
         paragraphs: [
-          'Der Teil des Agenten ist ein Werkzeug des Lese-Prototyps für das Model Context Protocol (MCP), auf einem Entwicklungszweig des Linkbot-Repositorys. Er läuft auf dem eigenen Rechner des Agenten und verweigert einen Space, der keine synthetischen Daten enthält.',
+          `Der Teil des Agenten ist ein Werkzeug des Lese-Prototyps für das Model Context Protocol (MCP), auf einem Entwicklungszweig des ${PUBLIC_NAME}-Repositorys. Er läuft auf dem eigenen Rechner des Agenten und verweigert einen Space, der keine synthetischen Daten enthält.`,
           'Der Teil des Formulars ist eine Änderung am Beschreiben-Modus des Widgets, auf einem Entwicklungszweig des Widgets; kein Widget-Release enthält sie. Keiner der beiden Teile ist zusammengeführt, und keiner läuft auf dem Staging-Space.',
         ],
       },
@@ -164,7 +165,7 @@ export const prepare: Record<Lang, Draft> = {
         id: 'today',
         title: 'Hoy: dos borradores, no están en el espacio de staging',
         paragraphs: [
-          'La parte del agente es una herramienta del prototipo de solo lectura para el Model Context Protocol (MCP), en una rama de desarrollo del repositorio de Linkbot. Funciona en la propia máquina del agente y rechaza un espacio que no contenga datos sintéticos.',
+          `La parte del agente es una herramienta del prototipo de solo lectura para el Model Context Protocol (MCP), en una rama de desarrollo del repositorio de ${PUBLIC_NAME}. Funciona en la propia máquina del agente y rechaza un espacio que no contenga datos sintéticos.`,
           'La parte del formulario es un cambio en el modo de descripción del widget, en una rama de desarrollo del widget; ninguna versión del widget lo incluye. Ninguna de las dos partes está fusionada y ninguna funciona en el espacio de staging.',
         ],
       },
@@ -228,7 +229,7 @@ export const prepare: Record<Lang, Draft> = {
         id: 'today',
         title: 'Oggi: due bozze, non sullo spazio di staging',
         paragraphs: [
-          'La parte dell’agente è uno strumento del prototipo in sola lettura per il Model Context Protocol (MCP), su un ramo di sviluppo del repository di Linkbot. Funziona sulla macchina dell’agente stesso e rifiuta uno spazio che non contenga dati sintetici.',
+          `La parte dell’agente è uno strumento del prototipo in sola lettura per il Model Context Protocol (MCP), su un ramo di sviluppo del repository di ${PUBLIC_NAME}. Funziona sulla macchina dell’agente stesso e rifiuta uno spazio che non contenga dati sintetici.`,
           'La parte del modulo è una modifica alla modalità di descrizione del widget, su un ramo di sviluppo del widget; nessuna versione del widget la contiene. Nessuna delle due parti è unita, e nessuna funziona sullo spazio di staging.',
         ],
       },
@@ -292,7 +293,7 @@ export const prepare: Record<Lang, Draft> = {
         id: 'today',
         title: 'Aujourd’hui : deux brouillons, pas sur l’espace de staging',
         paragraphs: [
-          'La partie de l’agent est un outil du prototype en lecture seule pour le Model Context Protocol (MCP), sur une branche de développement du dépôt de Linkbot. Il tourne sur la propre machine de l’agent et refuse un espace qui ne contient pas de données synthétiques.',
+          `La partie de l’agent est un outil du prototype en lecture seule pour le Model Context Protocol (MCP), sur une branche de développement du dépôt de ${PUBLIC_NAME}. Il tourne sur la propre machine de l’agent et refuse un espace qui ne contient pas de données synthétiques.`,
           'La partie du formulaire est une modification du mode de description du widget, sur une branche de développement du widget ; aucune version du widget ne la contient. Aucune des deux parties n’est fusionnée, et aucune ne tourne sur l’espace de staging.',
         ],
       },

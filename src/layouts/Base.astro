@@ -24,10 +24,11 @@ const contentLang = fallback ? DEFAULT_LANG : lang;
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="preload" href="/fonts/schibsted-grotesk/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
     <SEO lang={lang} t={t} title={title} description={description} path={path} crumbs={crumbs} draft={draft} oneLanguage={oneLanguage} ld={ld} />
-    <!-- Light only: the widget design spec has no dark values. The colour is --lb-ground (src/styles/tokens.css). -->
-    <meta name="theme-color" content="#F2F4F1" />
+    <!-- Light only: the widget design spec has no dark values. The colour is --lb-ground, Sensalio's paper (src/styles/tokens.css). -->
+    <meta name="theme-color" content="#F6F2E8" />
     <meta name="color-scheme" content="light" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!-- Scripts mark the page so enhancements (the masthead's blur, the table of contents) can take
          over from the complete, static version every page ships with. -->
     <script is:inline>document.documentElement.classList.add('js');</script>

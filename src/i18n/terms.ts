@@ -7,10 +7,14 @@
 import type { Lang } from './locales.ts';
 
 /** The name the public reads: on the home, in the FAQ and its terms, in llms.txt (the head of llms-full.txt), in the header and
-    footer and in schema.org (owner, 2026-11-03: the public name changes, the choice is open; inside, it stays Linkbot).
-    Changing this line renames all of them; tests/name.test.mjs fails where those sources write the name out. Code
-    identifiers, repository and package names stay Linkbot. */
-export const PUBLIC_NAME = 'Linkbot';
+    footer and in schema.org, and every page's own copy (owner, 2026-11-10: the company and the platform are Sensalio;
+    BRAND.md of the same day). Changing this line renames all of them; tests/name.test.mjs fails where a source or a
+    built page writes the old name out. Code identifiers, repository and package names stay Linkbot. */
+export const PUBLIC_NAME = 'Sensalio';
+
+/** The legal entity, until the rename to Sensalio OÜ is entered in the Estonian Business Register (BRAND.md: imprints
+    and privacy texts keep this name until then). schema.org's Organization carries it as legalName. */
+export const LEGAL_NAME = 'Linkbot OÜ';
 
 export const TERM_KEYS = ['linkbot', 'space', 'check', 'privateMatch', 'boardCard', 'bothSayYes', 'introduction', 'checkedHistory'] as const;
 export type TermKey = (typeof TERM_KEYS)[number];

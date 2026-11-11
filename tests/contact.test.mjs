@@ -1,6 +1,6 @@
 /* The contact path is true today: Linkbot has no domain of its own yet, so no page names an address or sends a form,
-   and every page says that contact details follow with the domain. One constant (src/lib/contact.ts) switches the
-   address on once the owner names the domain. And the build sends no one anywhere else: no host outside Linkbot's own
+   and every page says that contact details follow with the domain. CONTACT_EMAIL in the build's environment
+   (src/lib/contact.ts) switches the address on once the owner's domain exists. And the build sends no one anywhere else: no host outside Linkbot's own
    appears in the build output, apart from the identifiers listed in ALLOWED below. Skipped until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -11,12 +11,12 @@ import { CONTACT_EMAIL } from '../src/lib/contact.ts';
 import { LANGS, catalogues } from '../src/i18n/index.ts';
 
 const UNOWNED = ['linkbot', 'org'].join('.');
-const PLACEHOLDER = 'linkbot-domain-tbd.invalid';
+const PLACEHOLDER = 'sensalio-domain-tbd.invalid';
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const skip = !existsSync(join(dist, 'index.html')) && 'build the site first';
 
 /* Linkbot's own hosts: where production runs (astro.config.mjs) and, once named, the domain of the contact address. */
-const OWN = new Set([new URL(process.env.SITE_URL || 'https://linkbot-site.vercel.app').host, PLACEHOLDER]);
+const OWN = new Set([new URL(process.env.SITE_URL || `https://${PLACEHOLDER}`).host, PLACEHOLDER]);
 if (CONTACT_EMAIL) OWN.add(CONTACT_EMAIL.split('@')[1]);
 /* Hosts that appear only as identifiers, never as a place a reader or a browser is sent: the JSON-LD vocabulary. XML
    namespaces (xmlns="…") are removed before the scan, and the fonts' licence texts ship verbatim, as their licence

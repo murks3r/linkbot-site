@@ -4,6 +4,7 @@
    left out of production builds. Every sentence has its row in docs/truth-check.md (section
    "/developers/login-with-linkbot"). */
 import { buildsDraft, type Draft } from './draft.ts';
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 
 /** Whether a production build carries the draft. Set it to true once the sign-in is built and the owner approves the page. */
 export const LOGIN_IN_PRODUCTION = false;
@@ -14,20 +15,20 @@ export const buildsLogin = (env: { VERCEL_ENV?: string }, inProduction = LOGIN_I
 
 export const login: Draft = {
   banner: 'Draft, not published: a planned feature, not built.',
-  bannerNote: 'This page is linked from nowhere on the site, is never indexed and exists in English only. Sign-in with Linkbot is a plan for after the first release; nothing on this page is built, and none of it is decided.',
-  title: 'Login with Linkbot (planned, draft)',
-  description: 'Draft: the planned sign-in with Linkbot, one account for the people who use a space and one page with their own entries. Not built, not decided.',
+  bannerNote: `This page is linked from nowhere on the site, is never indexed and exists in English only. Sign-in with ${PUBLIC_NAME} is a plan for after the first release; nothing on this page is built, and none of it is decided.`,
+  title: `Login with ${PUBLIC_NAME} (planned, draft)`,
+  description: `Draft: the planned sign-in with ${PUBLIC_NAME}, one account for the people who use a space and one page with their own entries. Not built, not decided.`,
   eyebrow: 'Developers · planned · draft',
-  h1: ['Login with Linkbot:', 'planned, not built.'],
-  lede: 'What a sign-in with Linkbot is meant to give the people who use a space, and what works today without it. Everything this page calls planned is a plan for after the first release: it is not built, not in the Space API contract and not decided. The page names no date.',
+  h1: [`Login with ${PUBLIC_NAME}:`, 'planned, not built.'],
+  lede: `What a sign-in with ${PUBLIC_NAME} is meant to give the people who use a space, and what works today without it. Everything this page calls planned is a plan for after the first release: it is not built, not in the Space API contract and not decided. The page names no date.`,
   sections: [
     {
       id: 'today',
       title: 'Today: no accounts',
       paragraphs: [
-        'Today nobody signs in to Linkbot, and there is no password. A person who describes a need or an offer confirms it, and confirms their email address through a link.',
+        `Today nobody signs in to ${PUBLIC_NAME}, and there is no password. A person who describes a need or an offer confirms it, and confirms their email address through a link.`,
         'The browser that confirmed manages what it created: it shows “mine”, answers possible fits and changes the watch, for sixty days from last use, and only in that tab. A new browser gets access again through a link sent to the confirmed address.',
-        'Operators do not sign in to Linkbot either. Your platform signs its team in, and the console runs on your machine or behind your own login.',
+        `Operators do not sign in to ${PUBLIC_NAME} either. Your platform signs its team in, and the console runs on your machine or behind your own login.`,
       ],
     },
     {
@@ -36,7 +37,7 @@ export const login: Draft = {
       paragraphs: [
         'A person signs in with a link sent to their email address, without a password.',
         'After signing in, the person sees one page with their own needs, offers and watches, in place of one link per entry. That page is visible only after signing in.',
-        'The accounts, the sign-in and the sessions sit with Linkbot, not with each platform.',
+        `The accounts, the sign-in and the sessions sit with ${PUBLIC_NAME}, not with each platform.`,
       ],
     },
     {
@@ -57,7 +58,7 @@ export const login: Draft = {
   open: {
     title: 'Open before anything is built',
     items: [
-      'Who is responsible for the account data: Linkbot alone, Linkbot together with the platform, or the platform with Linkbot working on its behalf. This is for the owner, with counsel.',
+      `Who is responsible for the account data: ${PUBLIC_NAME} alone, ${PUBLIC_NAME} together with the platform, or the platform with ${PUBLIC_NAME} working on its behalf. This is for the owner, with counsel.`,
       'Which sign-in service carries the accounts, and what it costs.',
       'How an account is tied to the entries a person has already confirmed through an email link.',
       'What a platform may see of an account, and for what purpose.',
