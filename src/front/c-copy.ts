@@ -3,9 +3,11 @@
    and each has a row in docs/truth-check.md. The stages themselves are src/front/c-stages.ts; the rules and the
    deletion paragraph are the catalogue's own strings (src/i18n/en.ts). The English source of src/front/copy.ts; no
    forbidden word (tests/front.test.mjs). */
+
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 export const C = {
   meta: {
-    title: 'Linkbot: who sees what, and when',
+    title: `${PUBLIC_NAME}: who sees what, and when`,
     description: 'A matching layer any platform can embed, built around one question: who sees what, and when. One synthetic offer, stage by stage, and the receipt.',
   },
   hero: {
@@ -31,10 +33,10 @@ export const C = {
     },
   },
   why: {
-    h2: 'Why a platform can let Linkbot near its users',
+    h2: `Why a platform can let ${PUBLIC_NAME} near its users`,
     items: [
       { h3: 'One space per market, on its own instance', p: 'A space is one market on one platform, with its own application, database, keys and deletion log. Matching runs inside it; no need, no offer and no fit is shared with another space.' },
-      { h3: 'Your pages, your keys, your team', p: 'The widget runs in your pages under your own data notice. Your page holds a publishable key that works only on your origins; the secret key stays on your server; your team approves cases in a console behind your own login, and there is no Linkbot login for operators.' },
+      { h3: 'Your pages, your keys, your team', p: `The widget runs in your pages under your own data notice. Your page holds a publishable key that works only on your origins; the secret key stays on your server; your team approves cases in a console behind your own login, and there is no ${PUBLIC_NAME} login for operators.` },
       { h3: 'A named person, never the system', p: 'Gates are recorded by a named operator, with a reference and without personal data, and a named operator approves. An approval alone discloses nothing; every write names who did it and appears in the audit log.' },
       { h3: 'People decide, each for themselves', p: 'Each side answers a possible fit for its own side. Before both have said yes the other side learns nothing, and a later no revokes a yes. The server creates the introduction when the last condition is met, and refuses every other way.' },
     ],

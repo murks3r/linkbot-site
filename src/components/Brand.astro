@@ -1,12 +1,14 @@
 ---
-/* The brand, top left: the wordmark "linkbot" in the site's face, without a diagram. */
+/* The brand, top left: Sensalio's horizontal lockup from the logo kit (public/brand, BRAND.md of 2026-11-10), the name
+   in outlines as the kit supplies it; the link's text is the public name for those who do not see the picture. */
 interface Props { href: string; name: string }
 const { href, name } = Astro.props;
 ---
 <a class="brand" href={href}>
-  <span class="brand-word">{name.toLowerCase()}</span>
+  <img class="brand-logo" src="/brand/sensalio-horizontal.svg" alt={name} width="122" height="36" />
 </a>
 
 <style>
-  .brand { display: inline-flex; align-items: center; gap: 9px; min-height: var(--target); font-family: var(--display); font-size: 1.375rem; font-weight: 700; letter-spacing: -.02em; line-height: 1; text-decoration: none; color: var(--lb-ink); }
+  .brand { display: inline-flex; align-items: center; justify-self: start; min-height: var(--target); text-decoration: none; }
+  .brand-logo { display: block; height: 36px; width: auto; }
 </style>

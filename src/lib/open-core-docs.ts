@@ -2,6 +2,7 @@
    copied by tools/sync-open-core-docs.mjs; SOURCE.json names the commit) and the site's own two pages
    (src/content/developers), in English, rendered at build time. This file holds their order, their addresses and the
    rule for links inside them; pure, so tests/developers-docs.test.mjs checks it without a build. */
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 
 export const DOCS_BASE = '/developers/docs';
 
@@ -23,7 +24,7 @@ export const SECTIONS: DocSection[] = [
   { id: 'protocol', title: 'Protocol', items: [{ doc: 'protocol/README.md' }] },
   { id: 'api', title: 'API reference', items: [{ doc: 'reference/space-api.md' }] },
   { id: 'open', title: 'What is open, what is hosted', items: [{ page: 'open-and-hosted' }] },
-  { id: 'planned', title: 'Planned', items: [{ planned: 'Login with Linkbot' }, { planned: 'A new vertical' }, { planned: 'Prepare a request with an agent' }] },
+  { id: 'planned', title: 'Planned', items: [{ planned: `Login with ${PUBLIC_NAME}` }, { planned: 'A new vertical' }, { planned: 'Prepare a request with an agent' }] },
 ];
 
 /** The export's files the site renders: those in SECTIONS, plus its own index. */

@@ -3,10 +3,12 @@
    no "pack", "watch" or "staging". Every step restates what the Space API contract
    provides today, and each sentence has a row in docs/truth-check.md. The English source of src/front/copy.ts; no
    forbidden word (tests/front.test.mjs). */
+
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 export const DEMO = {
   meta: {
-    title: 'Linkbot: the whole path, from a request to an introduction',
-    description: 'A buyer’s path through Linkbot in six steps, from the request to both sides’ yes and the introduction. With fictional data.',
+    title: `${PUBLIC_NAME}: the whole path, from a request to an introduction`,
+    description: `A buyer’s path through ${PUBLIC_NAME} in six steps, from the request to both sides’ yes and the introduction. With fictional data.`,
   },
   hero: {
     eyebrow: 'Demo · fictional data',
@@ -29,7 +31,7 @@ export const DEMO = {
   replay: {
     label: 'Recorded walkthrough · fictional data',
     lede: 'Pictures of the widget and the operator console at each step, recorded on one computer. Every party, company and value in them is fictional.',
-    note: 'Recorded on 25 October 2026 on Linkbot Connect’s demo stage, which runs the widget and the operator console against a sample Space API on one computer. Nothing in these pictures reached a space or a person. The recording introduces in mode direct: after the operator’s approval each side can open what the other shares.',
+    note: `Recorded on 25 October 2026 on ${PUBLIC_NAME} Connect’s demo stage, which runs the widget and the operator console against a sample Space API on one computer. Nothing in these pictures reached a space or a person. The recording introduces in mode direct: after the operator’s approval each side can open what the other shares.`,
     steps: 'The six steps',
     position: 'Step {n} of {total}',
     previous: 'Previous step',
@@ -44,9 +46,9 @@ export const DEMO = {
     ],
   },
   watch: {
-    name: 'If nothing fits yet: Linkbot keeps looking',
+    name: `If nothing fits yet: ${PUBLIC_NAME} keeps looking`,
     who: 'The buyer',
-    text: 'After confirming, the buyer can keep the request open and have Linkbot keep looking: how often, weekly or daily; what to hear about; and, in the email options, at most how many per email and no email before a chosen day. Linkbot then tells only the buyer when something new fits, starting once the email address is confirmed. It keeps looking for 90 days and can be paused, resumed or ended at any time, also from a link in its emails.',
+    text: `After confirming, the buyer can keep the request open and have ${PUBLIC_NAME} keep looking: how often, weekly or daily; what to hear about; and, in the email options, at most how many per email and no email before a chosen day. ${PUBLIC_NAME} then tells only the buyer when something new fits, starting once the email address is confirmed. It keeps looking for 90 days and can be paused, resumed or ended at any time, also from a link in its emails.`,
     screens: ['The buyer’s widget after confirming, with no offers to show yet: keep looking weekly, for everything that meets the musts, at most 5 per email.', 'The same widget after “Start watching”: the search waits for the email address to be confirmed, at most 5 per email, until 23 January 2027. The recording sent no email, and the fictional address never resolves.'],
   },
   /* Only while the switch is on (src/demo/space.ts); its heading and button are the landing page's "Try it". */

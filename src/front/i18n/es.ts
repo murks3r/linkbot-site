@@ -126,7 +126,7 @@ export const es: FrontCopy = {
   },
   c: {
     meta: {
-      title: 'Linkbot: quién ve qué, y cuándo',
+      title: `${PUBLIC_NAME}: quién ve qué, y cuándo`,
       description: 'Una capa de emparejamiento que cualquier plataforma puede integrar, en torno a una pregunta: quién ve qué, y cuándo. Una oferta sintética, etapa por etapa.',
     },
     hero: {
@@ -152,7 +152,7 @@ export const es: FrontCopy = {
       },
     },
     why: {
-      h2: 'Por qué una plataforma puede dejar que Linkbot se acerque a sus usuarios',
+      h2: `Por qué una plataforma puede dejar que ${PUBLIC_NAME} se acerque a sus usuarios`,
       items: [
         {
           h3: 'Un espacio por mercado, en su propia instancia',
@@ -160,7 +160,7 @@ export const es: FrontCopy = {
         },
         {
           h3: 'Sus páginas, sus claves, su equipo',
-          p: 'El widget se ejecuta en sus páginas bajo su propio aviso de datos. Su página lleva una publishable key que solo funciona en sus orígenes; la secret key queda en su servidor; su equipo aprueba casos en una consola detrás de su propio inicio de sesión, y no hay un inicio de sesión de Linkbot para operadores.',
+          p: `El widget se ejecuta en sus páginas bajo su propio aviso de datos. Su página lleva una publishable key que solo funciona en sus orígenes; la secret key queda en su servidor; su equipo aprueba casos en una consola detrás de su propio inicio de sesión, y no hay un inicio de sesión de ${PUBLIC_NAME} para operadores.`,
         },
         {
           h3: 'Una persona con nombre, nunca el sistema',
@@ -190,8 +190,8 @@ export const es: FrontCopy = {
   },
   demo: {
     meta: {
-      title: 'Linkbot: todo el recorrido, de la solicitud a la presentación',
-      description: 'El recorrido de un comprador por Linkbot en seis pasos, de la solicitud al sí de ambas partes y la presentación. Con datos ficticios.',
+      title: `${PUBLIC_NAME}: todo el recorrido, de la solicitud a la presentación`,
+      description: `El recorrido de un comprador por ${PUBLIC_NAME} en seis pasos, de la solicitud al sí de ambas partes y la presentación. Con datos ficticios.`,
     },
     hero: {
       eyebrow: 'Demo · datos ficticios',
@@ -214,7 +214,7 @@ export const es: FrontCopy = {
     replay: {
       label: 'Recorrido grabado · datos ficticios',
       lede: 'Imágenes del widget y de la consola del operador en cada paso, grabadas en un solo ordenador. Cada parte, empresa y valor que aparece en ellas es ficticio.',
-      note: 'Grabado el 25 de octubre de 2026 en el escenario de demostración de Linkbot Connect, que ejecuta el widget y la consola del operador contra una API de espacio de ejemplo en un solo ordenador. Nada de estas imágenes llegó a un espacio ni a una persona. La grabación presenta en modo directo: tras la aprobación del operador, cada lado puede abrir lo que el otro comparte.',
+      note: `Grabado el 25 de octubre de 2026 en el escenario de demostración de ${PUBLIC_NAME} Connect, que ejecuta el widget y la consola del operador contra una API de espacio de ejemplo en un solo ordenador. Nada de estas imágenes llegó a un espacio ni a una persona. La grabación presenta en modo directo: tras la aprobación del operador, cada lado puede abrir lo que el otro comparte.`,
       steps: 'Los seis pasos',
       position: 'Paso {n} de {total}',
       previous: 'Paso anterior',

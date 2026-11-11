@@ -1,10 +1,12 @@
 /* What's new: one dated entry per product step a customer can notice, read at build time from docs/changelog.yml, the
    one source for /changelog. Every entry names its sources (a repository of murks3r and a PR number each), says honestly where
-   it stands, and has its sentence in every language; an entry that lacks any of it throws, so the build stops. */
+   it stands, and has its sentence in every language; an entry that lacks any of it throws, so the build stops. The
+   sentences write the public name as {name}, filled in from PUBLIC_NAME (src/i18n/terms.ts). */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
 import { LANGS, type Lang } from '../i18n/locales.ts';
+import { PUBLIC_NAME } from '../i18n/terms.ts';
 
 export const ENTRY_STATES = ['on staging', 'built'] as const;
 export type EntryState = (typeof ENTRY_STATES)[number];
@@ -29,7 +31,7 @@ const entry = (raw: unknown, index: number): Entry => {
   for (const lang of LANGS) if (typeof text[lang] !== 'string' || !(text[lang] as string).trim()) throw new Error(`${at}: no text in ${lang}`);
   const extra = Object.keys(text).filter(key => !(LANGS as readonly string[]).includes(key));
   if (extra.length) throw new Error(`${at}: text in a language the site does not offer (${extra.join(', ')})`);
-  return { date, state, sources: sources.map(({ repo, pr }) => ({ repo, pr })), text: text as Record<Lang, string> };
+  return { date, state, sources: sources.map(({ repo, pr }) => ({ repo, pr })), text: Object.fromEntries(LANGS.map(lang => [lang, (text[lang] as string).replaceAll('{name}', PUBLIC_NAME)])) as Record<Lang, string> };
 };
 
 /** The entries of a changelog, newest first; throws on any malformed entry, so a bad edit stops the build. */

@@ -1,5 +1,6 @@
-/* How to reach Linkbot. Linkbot has no domain of its own yet (CLAUDE.md, "Domains and identification"), so the site
-   names no address and has no contact form: it says that contact details follow with the domain. The owner's domain
-   switches it on: set CONTACT_EMAIL to a mailbox on that domain, and every page's contact section shows it as a link.
-   Never an address on a domain Linkbot does not own, never the .invalid placeholder (tests/contact.test.mjs). */
-export const CONTACT_EMAIL: string | null = null;
+/* How to reach the site's owner. The site's domain is sensalio.de (owner, 2026-11-11); the mailbox on it is the owner's
+   to create (suggested: hallo@sensalio.de). The address comes only from the environment: a build with CONTACT_EMAIL set
+   shows it as a link in every page's contact section, and a build without it says the details are in preparation and
+   has no contact form. Never an
+   address on a domain the owner does not own, never the .invalid placeholder (tests/contact.test.mjs). */
+export const CONTACT_EMAIL: string | null = process.env.CONTACT_EMAIL?.trim() || null;

@@ -126,7 +126,7 @@ export const fr: FrontCopy = {
   },
   c: {
     meta: {
-      title: 'Linkbot : qui voit quoi, et quand',
+      title: `${PUBLIC_NAME} : qui voit quoi, et quand`,
       description: 'Une couche d’appariement que toute plateforme peut intégrer, autour d’une question : qui voit quoi, et quand. Une offre synthétique, étape par étape.',
     },
     hero: {
@@ -152,7 +152,7 @@ export const fr: FrontCopy = {
       },
     },
     why: {
-      h2: 'Pourquoi une plateforme peut laisser Linkbot approcher ses utilisateurs',
+      h2: `Pourquoi une plateforme peut laisser ${PUBLIC_NAME} approcher ses utilisateurs`,
       items: [
         {
           h3: 'Un espace par marché, sur sa propre instance',
@@ -160,7 +160,7 @@ export const fr: FrontCopy = {
         },
         {
           h3: 'Vos pages, vos clés, votre équipe',
-          p: 'Le widget tourne dans vos pages sous votre propre avis de données. Votre page porte une Publishable Key qui ne fonctionne que sur vos origines ; la Secret Key reste sur votre serveur ; votre équipe approuve les dossiers dans une console derrière votre propre connexion, et il n’existe pas de connexion Linkbot pour les opérateurs.',
+          p: `Le widget tourne dans vos pages sous votre propre avis de données. Votre page porte une Publishable Key qui ne fonctionne que sur vos origines ; la Secret Key reste sur votre serveur ; votre équipe approuve les dossiers dans une console derrière votre propre connexion, et il n’existe pas de connexion ${PUBLIC_NAME} pour les opérateurs.`,
         },
         {
           h3: 'Une personne identifiée, jamais le système',
@@ -190,8 +190,8 @@ export const fr: FrontCopy = {
   },
   demo: {
     meta: {
-      title: 'Linkbot : tout le parcours, de la demande à la mise en relation',
-      description: 'Le parcours d’un acheteur dans Linkbot en six étapes, de la demande au oui des deux côtés et à la mise en relation. Avec des données fictives.',
+      title: `${PUBLIC_NAME} : tout le parcours, de la demande à la mise en relation`,
+      description: `Le parcours d’un acheteur dans ${PUBLIC_NAME} en six étapes, de la demande au oui des deux côtés et à la mise en relation. Avec des données fictives.`,
     },
     hero: {
       eyebrow: 'Démo · données fictives',
@@ -214,7 +214,7 @@ export const fr: FrontCopy = {
     replay: {
       label: 'Parcours enregistré · données fictives',
       lede: 'Des images du widget et de la console de l’opérateur à chaque étape, enregistrées sur un seul ordinateur. Chaque partie, entreprise et valeur qui y figure est fictive.',
-      note: 'Enregistré le 25 octobre 2026 sur la scène de démonstration de Linkbot Connect, qui fait tourner le widget et la console de l’opérateur contre une Space API d’exemple sur un seul ordinateur. Rien de ces images n’a atteint un espace ni une personne. L’enregistrement met en relation en mode direct : après l’approbation de l’opérateur, chaque partie peut ouvrir ce que l’autre partage.',
+      note: `Enregistré le 25 octobre 2026 sur la scène de démonstration de ${PUBLIC_NAME} Connect, qui fait tourner le widget et la console de l’opérateur contre une Space API d’exemple sur un seul ordinateur. Rien de ces images n’a atteint un espace ni une personne. L’enregistrement met en relation en mode direct : après l’approbation de l’opérateur, chaque partie peut ouvrir ce que l’autre partage.`,
       steps: 'Les six étapes',
       position: 'Étape {n} sur {total}',
       previous: 'Étape précédente',

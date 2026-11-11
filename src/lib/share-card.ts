@@ -1,20 +1,21 @@
 /* The link preview image of a page (1200 × 630 PNG), drawn at build time from the page's own title and description,
    so a shared link shows exactly what the page says and nothing more. Satori lays out the card, resvg renders it; no
-   service is called. The palette is the site's light one (src/styles/site.css). */
+   service is called. Paper and ink are Sensalio's (src/styles/tokens.css, --sn-paper and --sn-navy). */
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 import { brandFonts } from './brand-fonts';
+import { PUBLIC_NAME } from '../i18n/terms';
 
 export const CARD = { width: 1200, height: 630 } as const;
-const C = { paper: '#f4f4f1', ink: '#15171a', ink2: '#4a4f55', line: '#cfd1cb' } as const;
+const C = { paper: '#F6F2E8', ink: '#14213D', ink2: '#4a4f55', line: '#cfd1cb' } as const;
 
 export interface Card { brand: string; title: string; description: string }
 
-/** A page title as headline and soft second line: "How Linkbot works: from …" splits at the colon, "Imprint · Linkbot" drops the brand. */
+/** A page title as headline and soft second line: "How Sensalio works: from …" splits at the colon, "Imprint · Sensalio" drops the brand. */
 export const splitTitle = (title: string): [string, string?] => {
   const [head, ...rest] = title.split(/: | · /);
   const soft = rest.join(': ');
-  return soft && soft !== 'Linkbot' ? [head, soft] : [head];
+  return soft && soft !== PUBLIC_NAME ? [head, soft] : [head];
 };
 
 /** The address of a page's preview image: /og/<lang>/<path>.png, the home as "home". */

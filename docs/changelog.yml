@@ -14,11 +14,11 @@ entries:
     state: on staging
     sources: [{ repo: murks3r/linkbot, pr: 218 }]
     text:
-      en: The texts Linkbot writes itself are now in German, English, Spanish, Italian and French. The test space offers German and English, so it writes only in those two.
-      de: Die Texte, die Linkbot selbst schreibt, gibt es jetzt auf Deutsch, Englisch, Spanisch, Italienisch und Französisch. Der Test-Space bietet Deutsch und Englisch an und schreibt deshalb nur in diesen beiden.
-      es: Los textos que escribe el propio Linkbot están ahora en alemán, inglés, español, italiano y francés. El espacio de prueba ofrece alemán e inglés, así que solo escribe en esos dos.
-      it: I testi che Linkbot scrive da sé sono ora in tedesco, inglese, spagnolo, italiano e francese. Lo spazio di prova offre tedesco e inglese, quindi scrive solo in queste due lingue.
-      fr: Les textes que Linkbot rédige lui-même existent désormais en allemand, anglais, espagnol, italien et français. L'espace de test propose l'allemand et l'anglais ; il n'écrit donc que dans ces deux langues.
+      en: The texts {name} writes itself are now in German, English, Spanish, Italian and French. The test space offers German and English, so it writes only in those two.
+      de: Die Texte, die {name} selbst schreibt, gibt es jetzt auf Deutsch, Englisch, Spanisch, Italienisch und Französisch. Der Test-Space bietet Deutsch und Englisch an und schreibt deshalb nur in diesen beiden.
+      es: Los textos que escribe el propio {name} están ahora en alemán, inglés, español, italiano y francés. El espacio de prueba ofrece alemán e inglés, así que solo escribe en esos dos.
+      it: I testi che {name} scrive da sé sono ora in tedesco, inglese, spagnolo, italiano e francese. Lo spazio di prova offre tedesco e inglese, quindi scrive solo in queste due lingue.
+      fr: Les textes que {name} rédige lui-même existent désormais en allemand, anglais, espagnol, italien et français. L'espace de test propose l'allemand et l'anglais ; il n'écrit donc que dans ces deux langues.
 
   - date: "2026-10-26"
     state: on staging
@@ -94,11 +94,11 @@ entries:
     state: on staging
     sources: [{ repo: murks3r/linkbot, pr: 193 }]
     text:
-      en: You can describe what you need or offer in your own words. Linkbot fills in the form's fields from your text by fixed rules, without a model, and you check and confirm them yourself.
-      de: Sie können in eigenen Worten beschreiben, was Sie suchen oder anbieten. Linkbot füllt die Felder des Formulars nach festen Regeln aus Ihrem Text, ohne Modell, und Sie prüfen und bestätigen sie selbst.
-      es: Puede describir lo que necesita u ofrece con sus propias palabras. Linkbot rellena los campos del formulario a partir de su texto con reglas fijas, sin un modelo, y usted los revisa y confirma.
-      it: Si può descrivere con parole proprie ciò che si cerca o si offre. Linkbot compila i campi del modulo dal testo con regole fisse, senza un modello, e li si controlla e conferma di persona.
-      fr: Vous pouvez décrire ce que vous cherchez ou proposez avec vos propres mots. Linkbot remplit les champs du formulaire à partir de votre texte selon des règles fixes, sans modèle, et vous les contrôlez et confirmez vous-même.
+      en: You can describe what you need or offer in your own words. {name} fills in the form's fields from your text by fixed rules, without a model, and you check and confirm them yourself.
+      de: Sie können in eigenen Worten beschreiben, was Sie suchen oder anbieten. {name} füllt die Felder des Formulars nach festen Regeln aus Ihrem Text, ohne Modell, und Sie prüfen und bestätigen sie selbst.
+      es: Puede describir lo que necesita u ofrece con sus propias palabras. {name} rellena los campos del formulario a partir de su texto con reglas fijas, sin un modelo, y usted los revisa y confirma.
+      it: Si può descrivere con parole proprie ciò che si cerca o si offre. {name} compila i campi del modulo dal testo con regole fisse, senza un modello, e li si controlla e conferma di persona.
+      fr: Vous pouvez décrire ce que vous cherchez ou proposez avec vos propres mots. {name} remplit les champs du formulaire à partir de votre texte selon des règles fixes, sans modèle, et vous les contrôlez et confirmez vous-même.
 
   - date: "2026-10-24"
     state: on staging

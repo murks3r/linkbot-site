@@ -2,7 +2,7 @@
 
 **Built, not published.** The command is in the open-core repository (`packages/cli`, version 0.1.0). The repository is not public yet and the command is not on npm; you build it from a clone. Node 20 or later.
 
-No account, no telemetry, no update check. Nothing is sent to any Linkbot host unless you pass `--api`.
+No account, no telemetry, no update check. Nothing is sent to any {name} host unless you pass `--api`.
 
 ## Try the widget on your machine
 

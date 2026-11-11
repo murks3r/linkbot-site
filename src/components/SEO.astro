@@ -2,19 +2,19 @@
 /* Page metadata, in the page's language, with every other language as an alternate. Structured
    data on every page: Organization, WebSite, SoftwareApplication and the page's BreadcrumbList, plus what the page
    adds (ld: /faq's FAQPage and DefinedTermSet). It states only what is true today: the name, the address of this site
-   and the definition of Linkbot from src/i18n/terms.ts. Legal name, founding date, address, logo and any price are left
-   out until the owner confirms them; tests/schema.test.mjs reads it back from every built page. Previews (PUBLIC_NOINDEX=1) and drafts are never indexed; a draft has no alternates, nor has a page in one language only (oneLanguage: the developer docs).
+   the definition of the public name and the legal entity's name from src/i18n/terms.ts. Founding date, address, logo and
+   any price are left out until the owner confirms them; tests/schema.test.mjs reads it back from every built page. Previews (PUBLIC_NOINDEX=1) and drafts are never indexed; a draft has no alternates, nor has a page in one language only (oneLanguage: the developer docs).
    Each page and language has its own preview image, drawn after the build from this page's og:title and og:description
    (src/integrations/share-images.ts). */
 import { cardPath } from '../lib/share-card';
 import { DEFAULT_LANG, LANGS, pathFor, type Catalogue, type Lang } from '../i18n';
-import { TERMS } from '../i18n/terms';
+import { LEGAL_NAME, TERMS } from '../i18n/terms';
 interface Props { lang: Lang; t: Catalogue; title: string; description: string; path: string; crumbs?: [string, string][]; draft?: boolean; oneLanguage?: boolean; ld?: Record<string, unknown>[] }
 const { lang, t, title, description, path, crumbs = [], draft = false, oneLanguage = false, ld = [] } = Astro.props;
 const alternates = !draft && !oneLanguage;
 const NOINDEX = draft || import.meta.env.PUBLIC_NOINDEX === '1';
 const OG_LOCALE: Record<Lang, string> = { en: 'en_GB', de: 'de_DE', es: 'es_ES', it: 'it_IT', fr: 'fr_FR' };
-const site = Astro.site ?? new URL('https://linkbot-site.vercel.app');
+const site = Astro.site ?? new URL('https://sensalio.de');
 const url = (l: Lang, p = path) => new URL(pathFor(l, p), site).toString();
 const canonical = url(lang);
 const image = new URL(cardPath(lang, path), site).toString();
@@ -23,7 +23,7 @@ const about = TERMS[lang].linkbot.definition;
 /* A page that names no crumbs is one step below the home, under its own title. */
 const trail: [string, string][] = path === '/' ? [] : crumbs.length ? crumbs : [[title, path]];
 const graph: Record<string, unknown>[] = [
-  { '@type': 'Organization', '@id': org, name: t.site.name, url: site.origin, description: about },
+  { '@type': 'Organization', '@id': org, name: t.site.name, legalName: LEGAL_NAME, url: site.origin, description: about },
   { '@type': 'WebSite', name: t.site.name, url: url(lang, '/'), inLanguage: lang, publisher: { '@id': org } },
   { '@type': 'SoftwareApplication', name: t.site.name, url: url(lang, '/'), applicationCategory: 'BusinessApplication', operatingSystem: 'Web', description: about, inLanguage: lang, publisher: { '@id': org } },
   { '@type': 'BreadcrumbList', itemListElement: [[t.site.name, '/'], ...trail].map(([name, href], index) => ({ '@type': 'ListItem', position: index + 1, name, item: url(lang, href) })) },

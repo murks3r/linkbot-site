@@ -1,4 +1,5 @@
 ---
+import Brand from './Brand.astro';
 import LangSwitch from './LangSwitch.astro';
 import { CONTACT_EMAIL } from '../lib/contact';
 import { pathFor, type Catalogue, type Lang } from '../i18n';
@@ -9,7 +10,7 @@ const year = new Date().getUTCFullYear();
 <footer class="footer">
   <div class="wrap footer-inner">
     <div class="footer-brand">
-      <a class="brand" href={pathFor(lang, '/')}>{t.site.name.toLowerCase()}</a>
+      <Brand href={pathFor(lang, '/')} name={t.site.name} />
       <p>{t.site.claim}</p>
     </div>
     <nav aria-labelledby="footer-product">
@@ -32,7 +33,7 @@ const year = new Date().getUTCFullYear();
       <a href={pathFor(lang, '/privacy')}>{t.site.footer.privacy}</a>
       <a href={pathFor(lang, '/contact')}>{t.site.footer.contact}</a>
     </nav>
-    <!-- One constant switches the address on, once the owner names Linkbot's domain (src/lib/contact.ts). -->
+    <!-- One constant switches the address on, once the owner's domain exists: CONTACT_EMAIL in the build's environment (src/lib/contact.ts). -->
     <section id="contact" class="contact" aria-labelledby="footer-contact">
       <h2 id="footer-contact">{t.site.footer.contact}</h2>
       {CONTACT_EMAIL ? <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> : <p data-contact-pending>{t.site.footer.contactPending}</p>}
@@ -50,7 +51,6 @@ const year = new Date().getUTCFullYear();
   .footer-inner { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr)) minmax(0, 1.5fr); gap: 32px 40px; padding-block: 56px calc(36px + var(--target) + 32px + env(safe-area-inset-bottom, 0px)); font-size: var(--size-small); }
   .footer-brand { display: grid; gap: 8px; align-content: start; }
   .footer-brand p { max-width: 30ch; color: var(--lb-slate); }
-  .brand { display: inline-flex; align-items: center; min-height: var(--target); font-family: var(--display); font-size: 1.375rem; font-weight: 600; letter-spacing: -.028em; line-height: 1; text-decoration: none; justify-self: start; }
   nav, .contact { display: grid; align-content: start; justify-items: start; }
   .contact p { max-width: 34ch; color: var(--lb-slate); }
   h2 { margin-bottom: 6px; font-family: var(--text); font-size: var(--size-micro); font-weight: 650; letter-spacing: .04em; color: var(--lb-slate); }
