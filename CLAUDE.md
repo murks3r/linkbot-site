@@ -37,9 +37,12 @@ API contract; the site states nothing they do not provide. The live demo of the 
 watch, mine) arrives only once a synthetic demo space exists; until then there is no demo on the site, and a sample
 build is never used on a page real people use.
 
-## Domains and identification (owner, 2026-10-24)
+## Domains and identification (owner, 2026-10-24; domain 2026-11-11)
 
-* Linkbot has no domain of its own yet. Where a Linkbot domain is meant, write `linkbot-domain-tbd.invalid` (an
+* **2026-11-11:** the site's domain is `sensalio.de` (`SITE_URL`'s default); the engine's widget host is
+  `space.sensalio.de`, Second Look lives on `check.sensalio.de`. The rules below stay for any other Linkbot address
+  that is not yet named.
+* Linkbot had no domain of its own before that. Where a Linkbot domain is meant, write `linkbot-domain-tbd.invalid` (an
   address: `contact@linkbot-domain-tbd.invalid`; prose: "[Linkbot domain: to be named by the owner]"). The `.invalid`
   name never resolves. The owner names the real domain once it is registered.
 * Never send mail, links or data to a domain Linkbot does not own. The third-party domain that earlier site copy and

@@ -21,7 +21,7 @@ export const es: Catalogue = {
       imprint: 'Aviso legal',
       privacy: 'Aviso de privacidad',
       contact: 'Contacto',
-      contactPending: `Los datos de contacto llegarán con nuestro dominio. ${PUBLIC_NAME} aún no tiene dominio propio, por eso este sitio no indica ninguna dirección ni tiene formulario de contacto.`,
+      contactPending: `Los datos de contacto están en preparación, por eso este sitio aún no indica ninguna dirección ni tiene formulario de contacto.`,
       line: 'Este sitio no usa cookies, no carga nada de terceros y no usa analíticas.',
     },
     status: { now: 'En el espacio de prueba', contract: 'En el contrato, no en el espacio de prueba', later: 'No construido' },
@@ -474,7 +474,7 @@ export const es: Catalogue = {
 
   contact: {
     title: `Contacto · ${PUBLIC_NAME}`,
-    description: `Cómo contactar con ${PUBLIC_NAME}. Los datos de contacto están en preparación: llegarán con el dominio propio de ${PUBLIC_NAME}, que aún no existe.`,
+    description: `Cómo contactar con ${PUBLIC_NAME}. Los datos de contacto están en preparación: esta página indicará la dirección en cuanto exista su buzón.`,
     eyebrow: 'Contacto',
     h1: 'En preparación',
     released: { h1: 'Escríbanos', description: `Cómo contactar con ${PUBLIC_NAME}: la dirección a la que escribir con una pregunta sobre ${PUBLIC_NAME} o sobre un espacio en su plataforma.` },

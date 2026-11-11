@@ -68,8 +68,9 @@ The site wears the widget's design so that both read as one product (`docs/front
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `SITE_URL` | `https://sensalio-domain-tbd.invalid` | canonical origin (canonical links, alternates, Open Graph, sitemap). No domain is bought yet, so the default is a placeholder that never resolves; a deploy sets the real origin. |
-| `CONTACT_EMAIL` | unset | the contact address, a mailbox on the owner's domain; unset, every page says contact details follow with the domain |
+| `SITE_URL` | `https://sensalio.de` | canonical origin (canonical links, alternates, Open Graph, schema.org, robots.txt, sitemap). The default is the site's domain (owner, 2026-11-11); a build for another origin sets it. |
+| `CONTACT_EMAIL` | unset | the contact address, a mailbox on `sensalio.de` (suggested: `hallo@sensalio.de`, created by the owner); unset, every page says contact details are in preparation |
+| `PUBLIC_DEMO_EMBED_URL`, `PUBLIC_DEMO_KEY` | unset | the live demo's space: `https://space.sensalio.de/embed/v0/embed.js` and its publishable key; unset, the site shows no live demo (`src/demo/space.ts`) |
 | `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
 
 The public name is one constant, `PUBLIC_NAME` in `src/i18n/terms.ts` (`Sensalio`; every page's own copy, `llms.txt`, site name, schema.org); the legal entity is `LEGAL_NAME` beside it (`Linkbot OÜ` until the register entry). The developer docs under `/developers/docs` are Connect's export and keep its wording.

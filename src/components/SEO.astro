@@ -14,7 +14,7 @@ const { lang, t, title, description, path, crumbs = [], draft = false, oneLangua
 const alternates = !draft && !oneLanguage;
 const NOINDEX = draft || import.meta.env.PUBLIC_NOINDEX === '1';
 const OG_LOCALE: Record<Lang, string> = { en: 'en_GB', de: 'de_DE', es: 'es_ES', it: 'it_IT', fr: 'fr_FR' };
-const site = Astro.site ?? new URL('https://sensalio-domain-tbd.invalid');
+const site = Astro.site ?? new URL('https://sensalio.de');
 const url = (l: Lang, p = path) => new URL(pathFor(l, p), site).toString();
 const canonical = url(lang);
 const image = new URL(cardPath(lang, path), site).toString();

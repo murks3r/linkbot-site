@@ -21,7 +21,7 @@ export const fr: Catalogue = {
       imprint: 'Mentions légales',
       privacy: 'Notice de confidentialité',
       contact: 'Contact',
-      contactPending: `Les coordonnées suivront avec notre domaine. ${PUBLIC_NAME} n’a pas encore de domaine à lui, ce site n’indique donc aucune adresse et n’a pas de formulaire de contact.`,
+      contactPending: `Les coordonnées sont en préparation, ce site n’indique donc encore aucune adresse et n’a pas de formulaire de contact.`,
       line: 'Ce site ne dépose aucun cookie, ne charge rien de tiers et n’utilise aucune mesure d’audience.',
     },
     status: { now: 'Sur l’espace de test', contract: 'Dans le contrat, pas sur l’espace de test', later: 'Pas construit' },
@@ -474,7 +474,7 @@ export const fr: Catalogue = {
 
   contact: {
     title: `Contact · ${PUBLIC_NAME}`,
-    description: `Comment joindre ${PUBLIC_NAME}. Les coordonnées sont en préparation : elles arriveront avec le domaine propre de ${PUBLIC_NAME}, qui n’existe pas encore.`,
+    description: `Comment joindre ${PUBLIC_NAME}. Les coordonnées sont en préparation : cette page indiquera l’adresse dès que sa boîte existera.`,
     eyebrow: 'Contact',
     h1: 'En préparation',
     released: { h1: 'Écrivez-nous', description: `Comment joindre ${PUBLIC_NAME} : l’adresse à laquelle écrire pour une question sur ${PUBLIC_NAME} ou sur un espace sur votre plateforme.` },

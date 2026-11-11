@@ -33,7 +33,7 @@ export const en = {
       imprint: 'Imprint',
       privacy: 'Privacy notice',
       contact: 'Contact',
-      contactPending: `Contact details follow with our domain. ${PUBLIC_NAME} has no domain of its own yet, so this site names no address and has no contact form.`,
+      contactPending: `Contact details are in preparation, so this site names no address yet and has no contact form.`,
       line: 'This site sets no cookies, loads nothing from third parties and uses no analytics.',
     },
     status: { now: 'On the test space', contract: 'In the contract, not on the test space', later: 'Not built' },
@@ -486,7 +486,7 @@ export const en = {
 
   contact: {
     title: `Contact · ${PUBLIC_NAME}`,
-    description: `How to reach ${PUBLIC_NAME}. Contact details are in preparation: they follow with ${PUBLIC_NAME}’s own domain, which does not exist yet.`,
+    description: `How to reach ${PUBLIC_NAME}. Contact details are in preparation: this page names the address once its mailbox exists.`,
     eyebrow: 'Contact',
     h1: 'In preparation',
     released: { h1: 'Write to us', description: `How to reach ${PUBLIC_NAME}: the address to write to with a question about ${PUBLIC_NAME} or about running a space on your platform.` },

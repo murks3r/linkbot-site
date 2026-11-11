@@ -23,7 +23,7 @@ export const de: Catalogue = {
       imprint: 'Impressum',
       privacy: 'Datenschutzhinweis',
       contact: 'Kontakt',
-      contactPending: `Kontaktdaten folgen mit unserer Domain. ${PUBLIC_NAME} hat noch keine eigene Domain, deshalb nennt diese Seite keine Adresse und hat kein Kontaktformular.`,
+      contactPending: `Die Kontaktdaten sind in Vorbereitung, deshalb nennt diese Seite noch keine Adresse und hat kein Kontaktformular.`,
       line: 'Diese Seite setzt keine Cookies, lädt nichts von Dritten und nutzt keine Analyse-Dienste.',
     },
     status: { now: 'Läuft auf dem Test-Space', contract: 'Im Vertrag, nicht auf dem Test-Space', later: 'Nicht gebaut' },
@@ -476,7 +476,7 @@ export const de: Catalogue = {
 
   contact: {
     title: `Kontakt · ${PUBLIC_NAME}`,
-    description: `So erreichen Sie ${PUBLIC_NAME}. Die Kontaktdaten sind in Vorbereitung: Sie folgen mit Linkbots eigener Domain, die es noch nicht gibt.`,
+    description: `So erreichen Sie ${PUBLIC_NAME}. Die Kontaktdaten sind in Vorbereitung: Diese Seite nennt die Adresse, sobald ihr Postfach eingerichtet ist.`,
     eyebrow: 'Kontakt',
     h1: 'In Vorbereitung',
     released: { h1: 'Schreiben Sie uns', description: `So erreichen Sie ${PUBLIC_NAME}: die Adresse für eine Frage zu ${PUBLIC_NAME} oder dazu, wie ein Space auf Ihrer Plattform laufen würde.` },

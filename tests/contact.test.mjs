@@ -1,6 +1,6 @@
-/* The contact path is true today: Linkbot has no domain of its own yet, so no page names an address or sends a form,
-   and every page says that contact details follow with the domain. CONTACT_EMAIL in the build's environment
-   (src/lib/contact.ts) switches the address on once the owner's domain exists. And the build sends no one anywhere else: no host outside Linkbot's own
+/* The contact path is true today: until the mailbox on the site's domain exists no page names an address or sends a
+   form, and every page says that contact details are in preparation. CONTACT_EMAIL in the build's environment
+   (src/lib/contact.ts) switches the address on. And the build sends no one anywhere else: no host outside Linkbot's own
    appears in the build output, apart from the identifiers listed in ALLOWED below. Skipped until the site is built. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -11,12 +11,13 @@ import { CONTACT_EMAIL } from '../src/lib/contact.ts';
 import { LANGS, catalogues } from '../src/i18n/index.ts';
 
 const UNOWNED = ['linkbot', 'org'].join('.');
-const PLACEHOLDER = 'sensalio-domain-tbd.invalid';
+const DOMAIN = 'sensalio.de';
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const skip = !existsSync(join(dist, 'index.html')) && 'build the site first';
 
-/* Linkbot's own hosts: where production runs (astro.config.mjs) and, once named, the domain of the contact address. */
-const OWN = new Set([new URL(process.env.SITE_URL || `https://${PLACEHOLDER}`).host, PLACEHOLDER]);
+/* Linkbot's own hosts: the site's domain and its subdomains (space., check.), where production runs
+   (astro.config.mjs) and, once named, the domain of the contact address. */
+const OWN = new Set([new URL(process.env.SITE_URL || `https://${DOMAIN}`).host, DOMAIN]);
 if (CONTACT_EMAIL) OWN.add(CONTACT_EMAIL.split('@')[1]);
 /* Hosts that appear only as identifiers, never as a place a reader or a browser is sent: the JSON-LD vocabulary. XML
    namespaces (xmlns="…") are removed before the scan, and the fonts' licence texts ship verbatim, as their licence
@@ -52,7 +53,7 @@ test('every page carries the contact section, and an address only when one is se
     const mails = [...html.matchAll(/mailto:([^"'?\s>]*)/g)].map(match => match[1]);
     if (CONTACT_EMAIL === null) {
       assert.deepEqual(mails, [], `${where}: a mail address, though Linkbot has none yet`);
-      assert.ok(pending.some(words => html.includes(words)), `${where}: the contact section does not say that details follow with the domain`);
+      assert.ok(pending.some(words => html.includes(words)), `${where}: the contact section does not say that details are in preparation`);
     } else {
       assert.ok(mails.length > 0 && mails.every(mail => mail === CONTACT_EMAIL), `${where}: mail addresses ${mails.join(', ')}`);
     }
@@ -70,7 +71,7 @@ test('no host outside Linkbot’s own appears in the build output', { skip }, ()
       ...[...text.matchAll(/(?:^|[\s"'(=])\/\/([a-z0-9-]+(?:\.[a-z0-9-]+)+)/gi)].map(match => match[1]),
       ...[...text.matchAll(/[a-z0-9._%+-]+@([a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,})\b/gi)].map(match => match[1]),
     ];
-    for (const host of hosts.map(host => host.toLowerCase())) if (!OWN.has(host) && !ALLOWED.has(host) && !EXAMPLE.test(host)) hits.push(`${where}: ${host}`);
+    for (const host of hosts.map(host => host.toLowerCase())) if (!OWN.has(host) && !host.endsWith(`.${DOMAIN}`) && !ALLOWED.has(host) && !EXAMPLE.test(host)) hits.push(`${where}: ${host}`);
   }
   assert.deepEqual([...new Set(hits)], [], 'a host outside Linkbot’s own in the build output');
 });
