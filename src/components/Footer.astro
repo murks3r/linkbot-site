@@ -2,6 +2,8 @@
 import Brand from './Brand.astro';
 import LangSwitch from './LangSwitch.astro';
 import { CONTACT_EMAIL } from '../lib/contact';
+import { DOCS_BASE } from '../lib/open-core-docs';
+import { MARKETING_ORIGIN, marketingHome } from '../lib/marketing';
 import { pathFor, type Catalogue, type Lang } from '../i18n';
 interface Props { lang: Lang; t: Catalogue; path: string; langs?: boolean }
 const { lang, t, path, langs = true } = Astro.props;
@@ -15,17 +17,11 @@ const year = new Date().getUTCFullYear();
     </div>
     <nav aria-labelledby="footer-product">
       <h2 id="footer-product">{t.site.footer.product}</h2>
-      <a href={pathFor(lang, '/how-it-works')}>{t.site.nav.how}</a>
-      <a href={pathFor(lang, '/who-sees-what')}>{t.site.nav.sees}</a>
-      <a href={pathFor(lang, '/for-platforms')}>{t.site.nav.platforms}</a>
-      <a href={pathFor(lang, '/platforms')}>{t.site.nav.integrations}</a>
-      <a href={pathFor(lang, '/verticals')}>{t.site.nav.verticals}</a>
+      <a href={DOCS_BASE}>{t.site.nav.docs}</a>
       <a href={pathFor(lang, '/developers')}>{t.site.nav.developers}</a>
-      <a href={pathFor(lang, '/faq')}>{t.site.nav.faq}</a>
-      <a href={pathFor(lang, '/request-a-demo')}>{t.requestDemo.eyebrow}</a>
       <a href={pathFor(lang, '/status')}>{t.status.eyebrow}</a>
       <a href={pathFor(lang, '/changelog')}>{t.changelog.link}</a>
-      <a href={pathFor(lang, '/one-page')}>{t.sheet.title}</a>
+      <a href={marketingHome(lang)} translate="no">{new URL(MARKETING_ORIGIN).host}</a>
     </nav>
     <nav aria-labelledby="footer-legal">
       <h2 id="footer-legal">{t.site.footer.legal}</h2>

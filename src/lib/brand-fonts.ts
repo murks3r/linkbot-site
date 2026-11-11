@@ -1,4 +1,4 @@
-/* The site's two typefaces as TrueType, for what the build draws itself (the share images, the one-page sheet): the
+/* The site's two typefaces as TrueType, for what the build draws itself (the share images): the
    same self-hosted WOFF2 files the pages load (src/styles/fonts.css), decompressed at build time, so no font is copied
    or fetched. Display: LB Display Sans SemiBold (IBM Plex, renamed as its licence requires); text: Atkinson
    Hyperlegible Next, at its default instance. */

@@ -1,5 +1,5 @@
 /* Where each part of the product stands, read at build time from the table "The status page" in docs/truth-check.md:
-   the one source for /status and for the section on /how-it-works, so a page cannot say more than the truth check.
+   the one source for /status, so the page cannot say more than the truth check.
    The words for each row are in the catalogues (status.items); tests/status-page.test.mjs keeps both in step. */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';

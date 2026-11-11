@@ -7,10 +7,9 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DOCS_BASE, SECTIONS, itemRoute } from '../lib/open-core-docs.ts';
 
-/** The English pages in reading order: what Linkbot is first, the legal pages last. */
-export const LLMS_PAGES = ['/', '/faq', '/how-it-works', '/who-sees-what', '/demo', '/for-platforms', '/developers', '/platforms',
-  '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro',
-  '/verticals', '/status', '/changelog', '/one-page', '/request-a-demo', '/contact', '/imprint', '/privacy',
+/** The English pages in reading order: the start page first, the legal pages last. What Sensalio is, for readers who
+    are not developers, is on the marketing site (src/lib/marketing.ts), which links here. */
+export const LLMS_PAGES = ['/', '/developers', '/status', '/changelog', '/contact', '/imprint', '/privacy',
   /* The developer docs (English only), in their navigation's order. */
   DOCS_BASE, ...SECTIONS.flatMap(section => section.items.map(itemRoute).filter((route): route is string => route !== null))];
 

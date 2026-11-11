@@ -19,7 +19,7 @@ export const FALLBACK_NOTICE: Record<Lang, string> = {
 
 export const isLang = (value: unknown): value is Lang => typeof value === 'string' && (LANGS as readonly string[]).includes(value);
 
-/** The address of a page in a language: `/how-it-works` in English, `/de/how-it-works` in German. */
+/** The address of a page in a language: `/developers` in English, `/de/developers` in German. */
 export const pathFor = (lang: Lang, path: string): string => {
   const clean = path === '/' ? '' : path;
   return lang === DEFAULT_LANG ? clean || '/' : `/${lang}${clean}`;

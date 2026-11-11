@@ -70,6 +70,19 @@ The words themselves live in `src/i18n/en.ts` (the source) and the other catalog
 - **Network (D-V1, GEO-189):** nothing on the site about matching across spaces until it runs on staging; where the copy touches the subject it says that nothing leaves a space (`how.space`).
 - **Mail (D-V3, GEO-191):** no provider is named anywhere; where a page describes notifications it says Linkbot sends them, nothing more (`how.describe` watch, `how.after`).
 
+## The developer start page (`/` on docs.sensalio.de, branch `next/sensalio-docs`, 2026-11-11)
+
+The marketing pages moved to `sensalio.de` (Verticals); this site keeps the developer pages, and its home is the
+developer start page (`src/components/front/Landing.astro`, `src/front/landing-copy.ts`). The sub-line, the "both say
+yes" demo and the fictional-data line are unchanged and keep the rows below. New sentences:
+
+| Sentence (English source) | Rows |
+| -- | -- |
+| "Trust before you meet, built into your platform." / meta: "Embed Sensalio with one script and one element, or build your own interface on the Space API." | platforms.embed, developers (the embed and the SDK on the Space API) |
+| button "Start in 5 minutes" (to the docs' quickstart, whose page says nothing is published yet) / "Read the docs" | developers.docs |
+| "The shortest embed" / "One script and one element on your page; the questions fit your market." / "Hosted access for other platforms: Coming soon" | platforms.embed, how.pack, how.today (later) |
+| "Not a developer? What Sensalio is, in plain words." / "Read it on sensalio.de" | the marketing site, `src/lib/marketing.ts` |
+
 ## The landing page (`/`, built 2026-10-31 from `docs/front/landing-plan.md`)
 
 **Home v3 (draft branch `next/home-v3`, 2026-11-03).** The opening, the three cards, the demo stage and the who-sees-what strip below are replaced by one headline, its sub-line and the "both say yes" demo; their sentences and rows are the claim table in `docs/front/home-v3.md`. For platforms and the bottom stay as below. The sub-line that says "checks who is real" stays off the page until company checks run on the space and have their row here (`src/front/hero.ts`, `tests/home.test.mjs`).

@@ -5,7 +5,7 @@
    docs/truth-check.md. */
 import Base from '../../layouts/Base.astro';
 import Toc from '../../components/Toc.astro';
-import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
+import { langPaths, resolve, type Lang } from '../../i18n';
 import { EMBED_SNIPPET, EMBED_URL, SDK_SNIPPET } from '../../lib/connect-docs';
 import { LINKED_SECTIONS } from '../../lib/open-core-docs';
 export const getStaticPaths = () => langPaths();
@@ -53,7 +53,6 @@ const docs = LINKED_SECTIONS.map(({ id, href }) => ({ href, ...d.docs.sections[i
             </div>
           ))}
         </dl>
-        <p>{d.docs.more} <a href={pathFor(lang, '/platforms')}>{d.docs.link}</a></p>
       </section>
 
       <section id="not-yet" aria-labelledby="not-yet-title">

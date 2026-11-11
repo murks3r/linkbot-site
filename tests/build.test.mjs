@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { LANGS, DEFAULT_LANG, pathFor, catalogues } from '../src/i18n/index.ts';
 
-const PAGES = ['/', '/how-it-works', '/who-sees-what', '/for-platforms', '/developers', '/status', '/platforms', '/platforms/embed', '/platforms/sdk', '/platforms/console', '/platforms/wordpress', '/platforms/nextjs', '/platforms/astro', '/verticals', '/privacy', '/imprint', '/contact'];
+const PAGES = ['/', '/developers', '/status', '/changelog', '/privacy', '/imprint', '/contact'];
 const dist = new URL('../dist/', import.meta.url);
 const file = (lang, page) => { const p = pathFor(lang, page); return new URL(`.${p === '/' ? '/index' : p}.html`, dist); };
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
@@ -21,7 +21,7 @@ test('every page exists in every language and says which language it is in', { s
     /* Where English stands in, none of the reader's own catalogue is on the page: not the skip link, the masthead or a
        section the page takes from the catalogue. */
     const own = content !== lang ? catalogues[lang] : undefined;
-    if (own) for (const words of [own.site.skip, own.site.nav.how, own.home.rules.title]) assert.ok(!html.includes(words), `${lang} ${page}: English stands in, yet the page carries “${words}”`);
+    if (own) for (const words of [own.site.skip, own.site.nav.developers, own.developers.eyebrow]) assert.ok(!html.includes(words), `${lang} ${page}: English stands in, yet the page carries “${words}”`);
     for (const other of LANGS) assert.ok(html.includes(`hreflang="${other}"`), `${lang} ${page}: alternate ${other}`);
     assert.ok(html.includes('hreflang="x-default"'), `${lang} ${page}: x-default alternate`);
     assert.doesNotMatch(html, /name="robots" content="noindex/, `${lang} ${page}: indexable`);

@@ -1,4 +1,4 @@
-/* The drafts for the owner (/for-intermediaries, src/drafts/intermediaries.ts; /developers/login-with-linkbot,
+/* The drafts for the owner (/developers/login-with-linkbot,
    src/drafts/login.ts; /developers/a-new-vertical, src/drafts/new-vertical.ts; /developers/prepare-a-request, in five
    languages, src/drafts/prepare.ts): their words make no forbidden claim in their language, and each built page says it
    is a draft, is never indexed, has no alternates, exists only in the languages it has words for, and is neither
@@ -8,7 +8,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { INTERMEDIARIES_IN_PRODUCTION, buildsIntermediaries, intermediaries } from '../src/drafts/intermediaries.ts';
 import { LOGIN_IN_PRODUCTION, buildsLogin, login } from '../src/drafts/login.ts';
 import { NEW_VERTICAL_IN_PRODUCTION, buildsNewVertical, newVertical } from '../src/drafts/new-vertical.ts';
 import { PREPARE_IN_PRODUCTION, buildsPrepare, prepare } from '../src/drafts/prepare.ts';
@@ -20,7 +19,6 @@ const dist = new URL('../dist/', import.meta.url);
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
 
 const drafts = [
-  { path: '/for-intermediaries', words: { en: intermediaries }, builds: buildsIntermediaries, inProduction: INTERMEDIARIES_IN_PRODUCTION },
   { path: '/developers/login-with-linkbot', words: { en: login }, builds: buildsLogin, inProduction: LOGIN_IN_PRODUCTION },
   { path: '/developers/a-new-vertical', words: { en: newVertical }, builds: buildsNewVertical, inProduction: NEW_VERTICAL_IN_PRODUCTION },
   { path: '/developers/prepare-a-request', words: prepare, builds: buildsPrepare, inProduction: PREPARE_IN_PRODUCTION },

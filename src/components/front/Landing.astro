@@ -1,17 +1,18 @@
 ---
-/* The home (/), version 3 (owner's plan of 2026-11-02; docs/front/home-v3.md): one headline with the problem and the
-   promise, its sub-line (src/front/hero.ts picks today's or the full one), the page's one button with a quiet contact
-   link beside it, and directly under them the "both say yes" demo (Trial.astro); then for platforms and the bottom, both
-   with quiet links only (owner's page rules of 2026-10-29: one headline, one line, one button). Words: src/front/landing-copy.ts in the reader's
-   language through src/front/copy.ts. */
+/* The home (/) of the developer site (docs.sensalio.de, agreed with Verticals 2026-11-11): one headline with the problem
+   and the promise, its sub-line (src/front/hero.ts picks today's or the full one), the page's one button to the docs'
+   5-minute quickstart with a quiet link to the docs beside it, and directly under them the "both say yes" demo
+   (Trial.astro) as a small proof; then the shortest embed, and the bottom with a quiet link to the marketing site
+   (owner's page rules of 2026-10-29: one headline, one line, one button). Words: src/front/landing-copy.ts in the
+   reader's language through src/front/copy.ts. */
 import Base from '../../layouts/Base.astro';
 import Icon from '../Icon.astro';
 import Trial from './Trial.astro';
 import { FRONT } from '../../front/copy';
 import { SUBLINE } from '../../front/hero';
 import { EMBED_SNIPPET } from '../../lib/connect-docs';
-import { CONTACT_EMAIL } from '../../lib/contact';
-import { buildSpace } from '../../demo/build-space';
+import { DOCS_BASE, LINKED_SECTIONS } from '../../lib/open-core-docs';
+import { marketingHome } from '../../lib/marketing';
 import { statusDate } from '../../i18n/status-date';
 import { pathFor, type Catalogue, type Lang } from '../../i18n';
 import '../../front/theme.css';
@@ -21,8 +22,9 @@ interface Props { lang: Lang; t: Catalogue }
 const { lang, t } = Astro.props;
 const { landing: L } = FRONT[lang];
 const to = (path: string) => pathFor(lang, path);
-/** "Try it" only when /demo holds the widget on a demo space (plan, decision 5); until then the recorded walkthrough. */
-const live = buildSpace() !== null;
+/* The docs are in English only: their links say so to a reader of another language. */
+const docsLang = lang === 'en' ? undefined : 'en';
+const quickstart = LINKED_SECTIONS.find(section => section.id === 'quickstart')!.href;
 ---
 <Base lang={lang} t={t} title={L.meta.title} description={L.meta.description} path="/" front>
 
@@ -33,37 +35,31 @@ const live = buildSpace() !== null;
         <h1 id="open-title">{L.opening.h1}</h1>
         <p class="lede">{L.opening.sub[SUBLINE]}</p>
         <p class="ln-actions ln-start">
-          <a class="btn btn-primary" href={`${to('/developers')}#embed`}>{L.opening.start}<Icon name="arrow" /></a>
-          <a class="link ln-quiet" href={to('/contact')}>{L.opening.contact}</a>
+          <a class="btn btn-primary" href={quickstart} hreflang={docsLang}>{L.opening.start}<Icon name="arrow" /></a>
+          <a class="link ln-quiet" href={DOCS_BASE} hreflang={docsLang}>{L.opening.docs}</a>
         </p>
       </div>
       <Trial T={L.trial} />
-      <p class="ln-actions">
-        <a class="link" href={`${to('/demo')}#${live ? 'try' : 'path'}`}>{live ? L.opening.try : L.opening.button}<Icon name="arrow" /></a>
-        <a class="link" href={to('/who-sees-what')}>{L.trial.more}<Icon name="arrow" /></a>
-      </p>
     </div>
   </section>
 
-  <!-- 2 · For platforms: the shortest embed, verbatim from Connect (src/lib/connect-docs.ts). -->
-  <section class="fp-section" id="platforms" aria-labelledby="platforms-title">
+  <!-- 2 · The shortest embed, verbatim from Connect (src/lib/connect-docs.ts). -->
+  <section class="fp-section" id="embed" aria-labelledby="embed-title">
     <div class="wrap ln-platforms">
-      <div class="fp-head"><h2 id="platforms-title">{L.platforms.h2}</h2><p>{L.platforms.p}</p></div>
+      <div class="fp-head"><h2 id="embed-title">{L.embed.h2}</h2><p>{L.embed.p}</p></div>
       <div class="ln-snippet">
-        <p class="ln-snippet-head"><span>{L.platforms.snippet}</span></p>
         <pre class="fp-code" translate="no"><code>{EMBED_SNIPPET}</code></pre>
-        <p class="ln-snippet-head"><span>{L.platforms.hosted}</span><span class="ln-label" data-state="soon">{L.labels.soon}</span></p>
+        <p class="ln-snippet-head"><span>{L.embed.hosted}</span><span class="ln-label" data-state="soon">{L.labels.soon}</span></p>
       </div>
-      <p class="ln-actions"><a class="link" href={to('/for-platforms')}>{L.platforms.button}<Icon name="arrow" /></a><a class="link" href={to('/developers')}>{L.platforms.developers}</a></p>
+      <p class="ln-actions"><a class="link" href={to('/developers')}>{L.embed.developers}<Icon name="arrow" /></a><a class="link" href={DOCS_BASE} hreflang={docsLang}>{L.embed.docs}</a></p>
     </div>
   </section>
 
-  <!-- 3 · The bottom: one quiet link, the fictional-data line with the date of the last check. -->
-  <section class="fp-section ln-bottom" id="connect" aria-labelledby="connect-title">
+  <!-- 3 · The bottom: one quiet link to the marketing site, the fictional-data line with the date of the last check. -->
+  <section class="fp-section ln-bottom" id="about" aria-labelledby="about-title">
     <div class="wrap"><div class="ln-bottom-inner">
-      <h2 id="connect-title">{L.bottom.h2}</h2>
-      <p><a class="link" href={to('/request-a-demo')}>{L.bottom.button}<Icon name="arrow" /></a></p>
-      {!CONTACT_EMAIL && <p class="ln-small">{L.bottom.prepared}</p>}
+      <h2 id="about-title">{L.bottom.h2}</h2>
+      <p><a class="link" href={marketingHome(lang)}>{L.bottom.button}<Icon name="arrow" /></a></p>
       <p class="ln-small">{L.bottom.line.replace('{date}', statusDate(lang))} <a href={to('/status')}>{L.bottom.status}</a></p>
     </div></div>
   </section>
