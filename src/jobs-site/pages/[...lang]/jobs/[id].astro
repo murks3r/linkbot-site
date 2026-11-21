@@ -1,0 +1,69 @@
+---
+/* One listing of the jobs site, in English and German: the facts the posting states, its source, the day it was
+   fetched and its label (sourced until the employer claimed it), "To the original posting", and where private interest
+   stands for it: not open yet, or, without the catalogue's party and the employer's evidenced domain, a line that
+   interest cannot be passed on (the jobs launch plan, section 2). One page per listing the board shows; none when the
+   board is refreshing. schema.org JobPosting. Words: src/drafts/jobs-board.ts (facts) and src/jobs-site/copy.ts. */
+import Jobs from '../../../layouts/Jobs.astro';
+import Icon from '../../../../components/Icon.astro';
+import { jobsBoard } from '../../../../drafts/jobs-board';
+import { claimableParty } from '../../../../jobs/interest';
+import { labelOf } from '../../../../jobs/feed';
+import type { Posting } from '../../../../jobs/catalogue';
+import { date, employment, jobPostingSchema, place, salary } from '../../../../jobs/format';
+import { pathFor } from '../../../../i18n/locales';
+import { JOBS_COPY } from '../../../copy';
+import { JOBS_LANGS, PARTICIPATING, boardState, type JobsLang } from '../../../data';
+import '../../../../front/board.css';
+export async function getStaticPaths() {
+  const state = await boardState();
+  if (state.kind !== 'listings') return [];
+  return JOBS_LANGS.flatMap(lang => state.postings.map(posting => ({ params: { lang: lang === 'en' ? undefined : lang, id: posting.id }, props: { lang, posting } })));
+}
+const { lang, posting: p } = Astro.props as { lang: JobsLang; posting: Posting };
+const { board: B, posting: W } = jobsBoard[lang];
+const C = JOBS_COPY[lang].posting;
+const path = `/jobs/${p.id}`;
+const fill = (s: string) => s.replace('{title}', p.title).replace('{employer}', p.employer);
+const pay = salary(p.salary, lang, B.salary);
+const facts: [string, string][] = [
+  [W.facts.place, place(p, lang)],
+  [W.facts.mode, p.work_mode ? B.modes[p.work_mode] : W.notStated],
+  [W.facts.employment, employment(p.employment_type, B.employment) ?? W.notStated],
+  [W.facts.salary, pay ?? W.notStated],
+  [W.facts.posted, p.posted_at ? date(p.posted_at, lang) : W.notStated],
+  ...(p.valid_through ? [[W.facts.validThrough, date(p.valid_through, lang)] as [string, string]] : []),
+  [W.facts.source, B.sources[p.source]],
+  [W.facts.fetched, date(p.fetched_at, lang)],
+];
+const label = labelOf(p, PARTICIPATING) === 'participating' ? C.participating : C.sourced.replace('{date}', date(p.fetched_at, lang));
+const ld = jobPostingSchema(p, new URL(pathFor(lang, path), Astro.site).toString());
+---
+<Jobs lang={lang} title={fill(C.titleOf)} description={fill(C.description)} path={path} ld={[ld]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{p.employer}</p>
+      <h1>{p.title}</h1>
+      <p class="lede">{[place(p, lang), p.work_mode && B.modes[p.work_mode]].filter(Boolean).join(' · ')}</p>
+    </div>
+  </section>
+  <div class="wrap po">
+    <a class="po-back link" href={pathFor(lang, '/')}><Icon name="arrow" />{W.back}</a>
+    <p class="po-label" data-label>{label}</p>
+    <dl class="po-facts">{facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+    <div class="po-actions">
+      <div class="po-action">
+        <a class="btn btn-secondary" href={p.original_url} rel="noopener nofollow" target="_blank">{W.original.button}<Icon name="out" /></a>
+        <p>{W.original.note}</p>
+      </div>
+      <div class="po-action">
+        <h2>{C.interest.title}</h2>
+        <p data-interest>{claimableParty(p) !== null ? C.interest.reachable : C.interest.unreachable}</p>
+      </div>
+    </div>
+  </div>
+</Jobs>
+
+<style>
+  .po-label { color: var(--lb-slate); font-size: var(--size-small); font-weight: 600; }
+</style>

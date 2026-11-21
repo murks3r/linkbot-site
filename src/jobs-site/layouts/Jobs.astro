@@ -1,0 +1,107 @@
+---
+/* Every page of the jobs site: its name from PUBLIC_NAME, a bar with the board and the three pages, a footer with
+   "Powered by Linkbot", the legal placeholders and the other language. Metadata in the page's language; noindex until
+   the owner's publication go (JOBS_PUBLISHED, src/jobs-site/data.ts); schema.org WebSite plus what the page adds (ld).
+   The site's styles are the Linkbot site's own (src/styles). */
+import '../../styles/tokens.css';
+import '../../styles/fonts.css';
+import '../../styles/site.css';
+import Brand from '../../components/Brand.astro';
+import Icon from '../../components/Icon.astro';
+import { JOBS_COPY } from '../copy';
+import { JOBS_LANGS, JOBS_NAME, PUBLISHED, type JobsLang } from '../data';
+import { pathFor } from '../../i18n/locales';
+interface Props { lang: JobsLang; title: string; description: string; path: string; ld?: Record<string, unknown>[] }
+const { lang, title, description, path, ld = [] } = Astro.props;
+const S = JOBS_COPY[lang].site;
+const site = Astro.site!;
+const url = (l: JobsLang, p = path) => new URL(pathFor(l, p), site).toString();
+const other = JOBS_LANGS.find(l => l !== lang)!;
+const NAV: [string, string][] = [['/', S.nav.board], ['/how-it-works', S.nav.how], ['/companies', S.nav.companies], ['/sources', S.nav.sources]];
+const here = (href: string) => (path === href ? 'page' : undefined);
+const graph = [{ '@type': 'WebSite', name: JOBS_NAME, url: url(lang, '/'), inLanguage: lang }, ...ld].map(node => ({ '@context': 'https://schema.org', ...node }));
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="preload" href="/fonts/schibsted-grotesk/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url(lang)} />
+    {JOBS_LANGS.map(l => <link rel="alternate" hreflang={l} href={url(l)} />)}
+    {!PUBLISHED && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={JOBS_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url(lang)} />
+    <meta name="theme-color" content="#F2F4F1" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script type="application/ld+json" set:html={JSON.stringify(graph)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{S.skip}</a>
+    <header class="jm">
+      <div class="wrap jm-inner">
+        <Brand href={pathFor(lang, '/')} name={JOBS_NAME} />
+        <nav class="jm-nav" aria-label={S.menu}>
+          {NAV.map(([href, label]) => <a href={pathFor(lang, href)} aria-current={here(href)}>{label}</a>)}
+        </nav>
+        <details class="jm-menu">
+          <summary><Icon name="menu" /><span>{S.menu}</span></summary>
+          <nav class="jm-panel" aria-label={S.menu}>
+            {NAV.map(([href, label]) => <a href={pathFor(lang, href)} aria-current={here(href)}>{label}</a>)}
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="jf">
+      <div class="wrap jf-inner">
+        <div class="jf-brand">
+          <a class="jf-name" href={pathFor(lang, '/')}>{JOBS_NAME}</a>
+          <p>{S.footer.claim}</p>
+        </div>
+        <nav aria-label={S.footer.site}>
+          {NAV.map(([href, label]) => <a href={pathFor(lang, href)}>{label}</a>)}
+        </nav>
+        <nav aria-label={S.footer.legal}>
+          <a href={pathFor(lang, '/imprint')}>{S.footer.imprint}</a>
+          <a href={pathFor(lang, '/privacy')}>{S.footer.privacy}</a>
+          <a href={pathFor(other, path)} hreflang={other} lang={other}>{S.footer.other}</a>
+        </nav>
+        <p class="jf-line">© {new Date().getUTCFullYear()} {JOBS_NAME} · {S.footer.powered}</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  main { outline: none; }
+  .jm { position: sticky; top: 0; z-index: 30; background: var(--lb-ground); border-bottom: 1px solid var(--lb-line-quiet); }
+  .jm-inner { display: flex; align-items: center; gap: 12px clamp(16px, 2.6vw, 36px); min-height: 64px; }
+  .jm-nav { display: flex; gap: 4px clamp(20px, 2.6vw, 32px); margin-left: auto; }
+  .jm-nav a, .jm-panel a { display: inline-flex; align-items: center; min-height: var(--target); font-size: var(--size-small); font-weight: 560; color: var(--lb-slate); text-decoration: none; }
+  .jm-nav a:hover, .jm-nav a[aria-current='page'] { color: var(--lb-ink); }
+  .jm-nav a[aria-current='page'] { font-weight: 650; }
+  .jm-menu { display: none; position: relative; margin-left: auto; }
+  .jm-menu summary { display: inline-flex; align-items: center; gap: 8px; min-height: var(--target); padding: 0 16px; border: 1px solid var(--lb-line); border-radius: var(--pill); font-size: var(--size-small); font-weight: 600; cursor: pointer; list-style: none; }
+  .jm-menu summary::-webkit-details-marker { display: none; }
+  .jm-panel { position: absolute; right: 0; top: calc(100% + 8px); width: min(260px, calc(100vw - 32px)); padding: 6px; display: grid; background: var(--lb-surface); border: 1px solid var(--lb-line); border-radius: var(--r-3); box-shadow: var(--shadow-float); }
+  .jm-panel a { padding: 0 14px; color: var(--lb-ink); }
+  @media (max-width: 48rem) { .jm-nav { display: none; } .jm-menu { display: block; } }
+  .jf { border-top: 1px solid var(--lb-line); }
+  .jf-inner { display: grid; grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)); gap: 24px 40px; padding-block: 48px calc(32px + env(safe-area-inset-bottom, 0px)); font-size: var(--size-small); }
+  .jf-brand { display: grid; gap: 8px; align-content: start; }
+  .jf-brand p { max-width: 36ch; color: var(--lb-slate); }
+  .jf-name { font-family: var(--display); font-size: 1.25rem; font-weight: 650; text-decoration: none; color: var(--lb-ink); }
+  .jf nav { display: grid; align-content: start; justify-items: start; }
+  .jf nav a { display: inline-flex; align-items: center; min-height: var(--target); color: var(--lb-ink); text-decoration: none; }
+  .jf nav a:hover { text-decoration: underline; }
+  .jf-line { grid-column: 1 / -1; padding-top: 16px; border-top: 1px solid var(--lb-line); color: var(--lb-slate); }
+  @media (max-width: 48rem) { .jf-inner { grid-template-columns: 1fr 1fr; } .jf-brand { grid-column: 1 / -1; } }
+</style>

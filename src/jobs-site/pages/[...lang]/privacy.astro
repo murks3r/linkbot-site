@@ -1,0 +1,9 @@
+---
+/* /privacy of the jobs site, in English and German. Words: src/jobs-site/copy.ts (privacy). */
+import Prose from '../../components/Prose.astro';
+import { JOBS_COPY } from '../../copy';
+import { JOBS_LANGS, type JobsLang } from '../../data';
+export const getStaticPaths = () => JOBS_LANGS.map(lang => ({ params: { lang: lang === 'en' ? undefined : lang }, props: { lang } }));
+const { lang } = Astro.props as { lang: JobsLang };
+---
+<Prose P={JOBS_COPY[lang].privacy} lang={lang} path="/privacy" />

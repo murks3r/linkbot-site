@@ -3,15 +3,16 @@
    posting with title, employer, place, work mode, salary if stated, source and fetched date, each linking its own
    page. Without scripts every live posting shows, newest first, and the form stays hidden; with them the search runs
    in the browser over the same postings (src/front/board.ts, src/jobs/catalogue.ts) and the address keeps the query.
-   Words: src/drafts/jobs-board.ts. */
+   Words: src/drafts/jobs-board.ts. The jobs site (src/jobs-site) also gives each card its label (labelOf) and a link to
+   the original posting (original). */
 import Icon from '../Icon.astro';
 import { EMPTY_QUERY, WORK_MODES, search, type Posting } from '../../jobs/catalogue';
 import { date, place, salary } from '../../jobs/format';
 import { pathFor, type Lang } from '../../i18n';
 import type { BoardWords } from '../../drafts/jobs-board';
 import '../../front/board.css';
-interface Props { W: BoardWords; lang: Lang; postings: readonly Posting[]; today: string }
-const { W, lang, postings, today } = Astro.props;
+interface Props { W: BoardWords; lang: Lang; postings: readonly Posting[]; today: string; original?: string; labelOf?: (p: Posting) => string }
+const { W, lang, postings, today, original, labelOf } = Astro.props;
 const live = search(postings, EMPTY_QUERY, today);
 const count = (n: number) => n === 0 ? W.count.none : n === 1 ? W.count.one : W.count.other.replace('{n}', String(n));
 ---
@@ -56,6 +57,8 @@ const count = (n: number) => n === 0 ? W.count.none : n === 1 ? W.count.one : W.
           {pay && <li>{pay}</li>}
         </ul>
         <p class="bd-source">{W.sourceLine.replace('{source}', W.sources[p.source]).replace('{date}', date(p.fetched_at, lang))}</p>
+        {labelOf && <p class="bd-source">{labelOf(p)}</p>}
+        {original && <a class="bd-original link" href={p.original_url} rel="noopener nofollow" target="_blank">{original}<Icon name="out" /></a>}
       </li>;
     })}
   </ol>
