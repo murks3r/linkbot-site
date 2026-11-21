@@ -1,0 +1,22 @@
+---
+/* The person's own page on the jobs site, in English and German. Not open yet: what it will hold, and the demo on
+   made-up data that runs in the browser only (src/components/front/Mine.astro, words src/drafts/jobs-mine.ts). */
+import Jobs from '../../../layouts/Jobs.astro';
+import Mine from '../../../../components/front/Mine.astro';
+import { jobsMine } from '../../../../drafts/jobs-mine';
+import { JOBS_COPY } from '../../../copy';
+import { JOBS_LANGS, type JobsLang } from '../../../data';
+export const getStaticPaths = () => JOBS_LANGS.map(lang => ({ params: { lang: lang === 'en' ? undefined : lang }, props: { lang } }));
+const { lang } = Astro.props as { lang: JobsLang };
+const M = JOBS_COPY[lang].mine;
+---
+<Jobs lang={lang} title={M.title} description={M.description} path="/jobs/mine">
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{M.eyebrow}</p>
+      <h1>{M.h1}</h1>
+      <p class="lede">{M.lede}</p>
+    </div>
+  </section>
+  <Mine D={jobsMine[lang].demo} />
+</Jobs>

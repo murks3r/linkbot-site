@@ -17,7 +17,23 @@ import { remarkOpenCoreLinks } from './src/integrations/open-core-links.ts';
 const site = process.env.SITE_URL || 'https://linkbot-site.vercel.app';
 const locales = ['en', 'de', 'es', 'it', 'fr'];
 
-export default defineConfig({
+/* SITE_TARGET=jobs (npm run build:jobs) builds the jobs site instead: its own pages only (src/jobs-site/pages: the board
+   as the home page, each listing, /jobs/mine, /companies, /how-it-works, /sources, imprint and privacy), in English and
+   German, into dist-jobs/. No developer docs and no Linkbot page exist in that build. Its origin is SITE_URL (the
+   .invalid placeholder until the owner names a domain); its sitemap is written only with the owner's publication go
+   (JOBS_PUBLISHED=1, src/jobs-site/data.ts). */
+const jobs = defineConfig({
+  site: process.env.SITE_URL || 'https://jobs-domain-tbd.invalid',
+  srcDir: './src/jobs-site',
+  outDir: './dist-jobs',
+  output: 'static',
+  trailingSlash: 'never',
+  build: { format: 'file', inlineStylesheets: 'auto' },
+  i18n: { defaultLocale: 'en', locales: ['en', 'de'], routing: { prefixDefaultLocale: false } },
+  integrations: process.env.JOBS_PUBLISHED === '1' ? [sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', de: 'de' } } })] : [],
+});
+
+export default process.env.SITE_TARGET === 'jobs' ? jobs : defineConfig({
   site,
   output: 'static',
   trailingSlash: 'never',

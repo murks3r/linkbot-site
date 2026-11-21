@@ -10,7 +10,8 @@ const LOCALE: Record<Lang, string> = { en: 'en-GB', de: 'de-DE', es: 'es-ES', it
 export const countryNames = (lang: Lang) => (code: string): string[] =>
   [...new Set(([lang, 'en'] as const).map(l => new Intl.DisplayNames([LOCALE[l]], { type: 'region' }).of(code) ?? code))];
 
-export const place = (p: Posting, lang: Lang): string => `${p.location.place}, ${countryNames(lang)(p.location.country)[0]}`;
+/** The place with its country; a posting that names no place shows its country alone. */
+export const place = (p: Posting, lang: Lang): string => [p.location.place, countryNames(lang)(p.location.country)[0]].filter(Boolean).join(', ');
 
 export const date = (iso: string, lang: Lang): string =>
   new Intl.DateTimeFormat(LOCALE[lang], { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(iso.length === 10 ? `${iso}T00:00:00Z` : iso));
@@ -48,7 +49,7 @@ export const jobPostingSchema = (p: Posting, pageUrl: string): Record<string, un
     ...(employmentType && { employmentType }),
     ...(p.valid_through && { validThrough: p.valid_through }),
     hiringOrganization: { '@type': 'Organization', name: p.employer },
-    jobLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: p.location.place, addressCountry: p.location.country } },
+    jobLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', ...(p.location.place && { addressLocality: p.location.place }), addressCountry: p.location.country } },
     ...(p.work_mode === 'remote' && { jobLocationType: 'TELECOMMUTE', applicantLocationRequirements: { '@type': 'Country', name: p.location.country } }),
     ...(p.salary && (p.salary.min !== null || p.salary.max !== null) && {
       baseSalary: {

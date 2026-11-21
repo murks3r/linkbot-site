@@ -1,0 +1,29 @@
+---
+/* A text page of the jobs site (/companies, /how-it-works, /sources and the legal placeholders): the hero and its
+   sections, each with an anchor. Words: src/jobs-site/copy.ts. */
+import Jobs from '../layouts/Jobs.astro';
+import type { ProsePage } from '../copy';
+import type { JobsLang } from '../data';
+interface Props { P: ProsePage; lang: JobsLang; path: string }
+const { P, lang, path } = Astro.props;
+---
+<Jobs lang={lang} title={P.title} description={P.description} path={path}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{P.eyebrow}</p>
+      <h1>{P.h1}</h1>
+      <p class="lede">{P.lede}</p>
+    </div>
+  </section>
+  {P.sections.length > 0 && <div class="wrap prose">
+    {P.sections.map(s => <section id={s.id} aria-labelledby={`${s.id}-title`}>
+      <h2 id={`${s.id}-title`}>{s.title}</h2>
+      {s.paragraphs.map(p => <p>{p}</p>)}
+    </section>)}
+  </div>}
+</Jobs>
+
+<style>
+  .prose { display: grid; gap: var(--space-section); max-width: 48rem; padding-bottom: var(--band); }
+  .prose section { display: grid; gap: var(--space-head); scroll-margin-top: 80px; }
+</style>

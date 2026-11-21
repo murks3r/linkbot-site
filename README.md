@@ -71,6 +71,19 @@ The site wears the widget's design so that both read as one product (`docs/front
 | `SITE_URL` | `https://linkbot-site.vercel.app` | canonical origin (canonical links, alternates, Open Graph, sitemap). The default is where production runs today. The launch domain is to be named by the owner (`linkbot-domain-tbd.invalid` until then). |
 | `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
 
+**The jobs site** is a second build target of this repository: `npm run build:jobs` (`SITE_TARGET=jobs`) builds
+`src/jobs-site` alone into `./dist-jobs`: the job board as the home page, each listing at `/jobs/<id>`, `/jobs/mine`,
+`/companies`, `/how-it-works`, `/sources`, imprint and privacy (placeholders), in English (root) and German (`/de`), and
+no Linkbot page. Its variables (`src/jobs-site/data.ts`):
+
+| Variable | Default | Meaning |
+|---|---|---|
+| `PUBLIC_NAME` | `Jobs` | the name the public reads (no name is chosen yet) |
+| `SITE_URL` | `https://jobs-domain-tbd.invalid` | its origin |
+| `JOBS_PUBLISHED` | unset | `1`: the owner's publication go. Until then every page is `noindex`, robots.txt refuses every crawler and no sitemap is written |
+| `JOBS_CATALOGUE_URL` | unset | the catalogue's read API (base ending in `/jobs-catalogue`); unset or failing, the board falls back to the snapshot |
+| `JOBS_SNAPSHOT` | `.cache/jobs-snapshot.json` | the last good read, rewritten by every good read; without one the board says the listings are being refreshed and turns the search off |
+
 The public name is one constant, `PUBLIC_NAME` in `src/i18n/terms.ts` (home, FAQ, terms, `llms.txt`, site name, schema.org).
 The steps from preview to the public address, with the values the owner names: `docs/ops/publish-checklist.md`.
 
@@ -80,6 +93,7 @@ The steps from preview to the public address, with the values the owner names: `
 npm ci
 npm run dev
 npm run build                 # astro check + static build to ./dist; also draws each page's preview image
+npm run build:jobs            # the jobs site, static, to ./dist-jobs (tests/jobs-site.test.mjs reads it)
 npm test                      # the catalogues, the tokens, the production build
 LINKBOT_APP_DIR=../linkbot npm run test:browser   # every page in every language at 5 widths, the app's WCAG audit, the journeys
 ```

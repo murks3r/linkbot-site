@@ -29,3 +29,7 @@ dist-preview/
 
 # Local tooling
 .claude/
+
+# The jobs site (npm run build:jobs) and its last good catalogue read
+dist-jobs/
+.cache/
