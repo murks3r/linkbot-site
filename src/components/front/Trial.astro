@@ -1,5 +1,6 @@
 ---
-/* The home's "both say yes" demo: buyer and supplier side by side (stacked on a phone), Linkbot's step in between.
+/* The "both say yes" demo, on the home and in a jobs version on the draft /jobs (the person as buyer, the company as
+   supplier): buyer and supplier side by side (stacked on a phone), Linkbot's step in between.
    Behaviour and states: src/front/trial.ts (no network call, nothing stored); words: landing.trial in the reader's
    language (src/front/copy.ts). Rendered in the demo's first state for scripts (data-off) and as the whole path without
    them (data-story-off, src/front/trial.css). */
@@ -7,6 +8,7 @@ import Icon from '../Icon.astro';
 import Verdict from './Verdict.astro';
 import { START, STORY, holds } from '../../front/trial';
 import type { FrontCopy } from '../../front/copy';
+import '../../front/trial.css';
 interface Props { T: FrontCopy['landing']['trial'] }
 const { T } = Astro.props;
 const SIDES = ['buyer', 'supplier'] as const;
@@ -87,3 +89,8 @@ const when = (conditions: string) => ({ 'data-if': conditions, 'data-off': !hold
   </div>
   <p class="sr" role="status" data-say></p>
 </section>
+
+<script>
+  import { mount } from '../../front/trial';
+  document.querySelectorAll<HTMLElement>('[data-trial]').forEach(mount);
+</script>

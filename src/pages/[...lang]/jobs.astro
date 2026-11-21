@@ -1,0 +1,32 @@
+---
+/* Draft for the owner's review, in English and German: Jobs, both sides in one headline, the "both say yes" demo in a
+   jobs version on fictional data that runs in the browser only (src/components/front/Trial.astro), the link to the
+   person's own page, and two FAQ entries that are also its schema.org FAQPage. Planned, not built. Linked from nowhere,
+   never indexed (Base's draft), out of the sitemap (astro.config.mjs), and absent from a production build
+   (getStaticPaths returns no route there). Words: src/drafts/jobs-page.ts, each sentence with its row in
+   docs/truth-check.md. */
+import DraftPage from '../../components/DraftPage.astro';
+import Icon from '../../components/Icon.astro';
+import Trial from '../../components/front/Trial.astro';
+import { buildsJobsPage, jobsPage, type JobsDraft } from '../../drafts/jobs-page';
+import { faqSchema } from '../../faq';
+import { DEFAULT_LANG, pathFor, type Lang } from '../../i18n';
+export function getStaticPaths() {
+  if (!buildsJobsPage({ VERCEL_ENV: process.env.VERCEL_ENV })) return [];
+  return (Object.entries(jobsPage) as [Lang, JobsDraft][]).map(([lang, d]) => ({ params: { lang: lang === DEFAULT_LANG ? undefined : lang }, props: { d, lang } }));
+}
+const { d, lang } = Astro.props as { d: JobsDraft; lang: Lang };
+const page = { ...d, sections: [...d.faq, ...d.sections] };
+const faq = faqSchema({ items: d.faq.map(f => ({ q: f.title, a: f.paragraphs })) });
+---
+<DraftPage d={page} lang={lang} path="/jobs" ld={[faq]}>
+  <div class="wrap jobs-demo">
+    <Trial T={d.demo} />
+    <p class="jobs-mine">{d.mine.p} <a class="link" href={pathFor(lang, '/jobs/mine')}>{d.mine.link}<Icon name="arrow" /></a></p>
+  </div>
+</DraftPage>
+
+<style>
+  .jobs-demo { display: grid; gap: 16px; padding-bottom: var(--band); }
+  .jobs-mine { color: var(--lb-slate); }
+</style>

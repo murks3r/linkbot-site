@@ -12,7 +12,7 @@ export type { Faq } from './en.ts';
 export const FAQ: Record<Lang, Faq> = { en, de, es, it, fr };
 
 /** The questions and answers as schema.org Question nodes, the answer's paragraphs joined. */
-export const faqSchema = (faq: Faq) => ({
+export const faqSchema = (faq: { items: readonly { q: string; a: readonly string[] }[] }) => ({
   '@type': 'FAQPage',
   mainEntity: faq.items.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a.join(' ') } })),
 });
