@@ -90,7 +90,7 @@ export const jobsBoard: Record<Lang, { board: BoardWords; posting: PostingWords 
           'The catalogue’s read API and its first daily run.',
           'The covert yes and what a company pays to unlock a person: the price and the payment provider are the owner’s.',
           'The name and the domain under which the board appears to people.',
-          'Whether and when this page is published: the owner’s go.',
+          'Whether and when this page is published is still to be decided.',
         ],
       },
     },

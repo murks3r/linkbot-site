@@ -129,9 +129,9 @@ export const jobsPage: Record<Lang, JobsDraft> = {
       items: [
         'The name and the domain under which Jobs appears to people.',
         'How a company is checked before it sees anyone; control of its domain is the first planned check.',
-        'Whether a closed pilot with invited people starts, and who is invited. This is for the owner.',
+        'Whether a closed trial with invited people starts, and who is invited. This is for the owner.',
         'Whether counsel’s questions on the jobs criteria are answered before real people take part.',
-        'Whether and when this page is published: the owner’s go.',
+        'Whether and when this page is published is still to be decided.',
       ],
     },
   },

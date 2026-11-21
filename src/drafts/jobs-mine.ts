@@ -171,7 +171,7 @@ export const jobsMine: Record<'en' | 'de', MineDraft> = {
       title: 'Open before real people use it',
       items: [
         'The name and the domain under which Jobs appears to people.',
-        'Whether a closed pilot with invited people starts, who is invited, and from which sender address. This is for the owner.',
+        'Whether a closed trial with invited people starts, who is invited, and from which sender address. This is for the owner.',
         'Whether counsel’s questions on the jobs criteria are answered before real people take part.',
         'Which sign-in service carries the accounts, and how an account is tied to entries confirmed through an email link.',
         'How a person can be checked beyond the confirmed email address without their employer learning of it.',
