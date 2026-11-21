@@ -1,7 +1,7 @@
 /* The drafts for the owner (/for-intermediaries, src/drafts/intermediaries.ts; /developers/login-with-linkbot,
    src/drafts/login.ts; /developers/a-new-vertical, src/drafts/new-vertical.ts; /developers/prepare-a-request, in five
-   languages, src/drafts/prepare.ts; /jobs and /jobs/mine, in English and German, src/drafts/jobs-page.ts and
-   src/drafts/jobs-mine.ts): their words make no forbidden claim in their language, and each built page says it is a
+   languages, src/drafts/prepare.ts; /jobs, in five languages, src/drafts/jobs-page.ts; /jobs/mine, in English and
+   German, src/drafts/jobs-mine.ts): their words make no forbidden claim in their language, and each built page says it is a
    draft, is never indexed, has no alternates, exists only in the languages it has words for, and is neither linked from
    another page (but the drafts it names as linking it) nor listed in the sitemap. A production build leaves a draft out until the owner approves
    it; the build checks then assert it is absent, so the artefact that goes live is checked too. The build checks are
@@ -15,6 +15,8 @@ import { NEW_VERTICAL_IN_PRODUCTION, buildsNewVertical, newVertical } from '../s
 import { PREPARE_IN_PRODUCTION, buildsPrepare, prepare } from '../src/drafts/prepare.ts';
 import { JOBS_MINE_IN_PRODUCTION, buildsJobsMine, jobsMine } from '../src/drafts/jobs-mine.ts';
 import { JOBS_PAGE_IN_PRODUCTION, buildsJobsPage, jobsPage } from '../src/drafts/jobs-page.ts';
+import { EMPTY_QUERY, search } from '../src/jobs/catalogue.ts';
+import { RECORDED } from '../src/jobs/recorded.ts';
 import { LANGS } from '../src/i18n/locales.ts';
 import { FORBIDDEN, PRIVATE } from './forbidden.mjs';
 
@@ -22,12 +24,15 @@ const strings = value => typeof value === 'string' ? [value] : Array.isArray(val
 const dist = new URL('../dist/', import.meta.url);
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
 
+/* Each live posting's draft page links back to the board (tests/jobs-board.test.mjs checks the pages themselves). */
+const postings = search(RECORDED, EMPTY_QUERY, new Date().toISOString().slice(0, 10)).map(p => `/jobs/${p.id}`);
+
 const drafts = [
   { path: '/for-intermediaries', words: { en: intermediaries }, builds: buildsIntermediaries, inProduction: INTERMEDIARIES_IN_PRODUCTION },
   { path: '/developers/login-with-linkbot', words: { en: login }, builds: buildsLogin, inProduction: LOGIN_IN_PRODUCTION },
   { path: '/developers/a-new-vertical', words: { en: newVertical }, builds: buildsNewVertical, inProduction: NEW_VERTICAL_IN_PRODUCTION },
   { path: '/developers/prepare-a-request', words: prepare, builds: buildsPrepare, inProduction: PREPARE_IN_PRODUCTION },
-  { path: '/jobs', words: jobsPage, builds: buildsJobsPage, inProduction: JOBS_PAGE_IN_PRODUCTION },
+  { path: '/jobs', words: jobsPage, builds: buildsJobsPage, inProduction: JOBS_PAGE_IN_PRODUCTION, linkedFrom: postings },
   { path: '/jobs/mine', words: jobsMine, builds: buildsJobsMine, inProduction: JOBS_MINE_IN_PRODUCTION, linkedFrom: ['/jobs'] },
 ];
 

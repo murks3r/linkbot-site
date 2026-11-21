@@ -1,8 +1,11 @@
 /* After the build, writes /llms-full.txt: /llms.txt first (src/pages/llms.txt.ts), then the text of every public English page, read from
    the built page's <main>, so the file cannot say more or less than the pages. Drafts and the 404 page are left out, as
-   in the sitemap (astro.config.mjs); the other languages hold the same pages and are named in llms.txt. */
+   in the sitemap (astro.config.mjs), except the draft jobs pages in a build that carries them: llms.txt names them in
+   its jobs section, so their English text follows (JOBS_PAGES). The other languages hold the same pages and are named
+   in llms.txt. */
 import type { AstroIntegration } from 'astro';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DOCS_BASE, SECTIONS, itemRoute } from '../lib/open-core-docs.ts';
@@ -13,6 +16,13 @@ export const LLMS_PAGES = ['/', '/faq', '/how-it-works', '/who-sees-what', '/dem
   '/verticals', '/status', '/changelog', '/one-page', '/request-a-demo', '/contact', '/imprint', '/privacy',
   /* The developer docs (English only), in their navigation's order. */
   DOCS_BASE, ...SECTIONS.flatMap(section => section.items.map(itemRoute).filter((route): route is string => route !== null))];
+
+/** The draft jobs pages in a build that carries them: the board, the person's own page, then each posting's page. */
+export const jobsPages = async (root: string): Promise<string[]> => {
+  if (!existsSync(join(root, 'jobs.html'))) return [];
+  const postings = (await readdir(join(root, 'jobs'))).filter(f => f.endsWith('.html') && f !== 'mine.html').sort();
+  return ['/jobs', ...(existsSync(join(root, 'jobs', 'mine.html')) ? ['/jobs/mine'] : []), ...postings.map(f => `/jobs/${f.slice(0, -5)}`)];
+};
 
 const ENTITIES: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
 const decode = (value: string) => value.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, name: string) =>
@@ -46,13 +56,14 @@ export const llmsFull = (): AstroIntegration => ({
     'astro:build:done': async ({ dir, logger }) => {
       const root = fileURLToPath(dir);
       const parts = [await readFile(join(root, 'llms.txt'), 'utf8')];
-      for (const page of LLMS_PAGES) {
+      const pages = [...LLMS_PAGES, ...await jobsPages(root)];
+      for (const page of pages) {
         const html = await readFile(join(root, page === '/' ? 'index.html' : `${page.slice(1)}.html`), 'utf8');
         const title = decode(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? page);
         parts.push(`\n---\n\n# ${title}\n\nPage: ${page}\n\n${pageText(html)}\n`);
       }
       await writeFile(join(root, 'llms-full.txt'), parts.join(''));
-      logger.info(`llms-full.txt: ${LLMS_PAGES.length} pages`);
+      logger.info(`llms-full.txt: ${pages.length} pages`);
     },
   },
 });
