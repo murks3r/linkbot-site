@@ -1,7 +1,7 @@
 ---
 /* A draft page for the owner's review (src/drafts/draft.ts), in English unless the draft has its own words for lang:
-   the banner, the hero, the sections with their table of contents, and what is open. Never indexed (Base's draft),
-   without alternates and without the language switch. */
+   the banner, the hero, what a draft puts in its slot (a demo), the sections with their table of contents, and what is
+   open. Never indexed (Base's draft), without alternates and without the language switch. */
 import Base from '../layouts/Base.astro';
 import Toc from './Toc.astro';
 import type { Draft } from '../drafts/draft';
@@ -20,6 +20,7 @@ const toc = d.sections.map(s => [s.id, s.title] as [string, string]);
       <p class="lede">{d.lede}</p>
     </div>
   </section>
+  <slot />
 
   <div class="wrap doc">
     <Toc items={toc} label={t.site.toc} />
