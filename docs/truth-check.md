@@ -4,7 +4,7 @@ Every page that goes live is re-read on the day it goes live against what the pr
 
 The words themselves live in `src/i18n/en.ts` (the source) and the other catalogues; every language says the same thing, so a row covers all five. "Where" names the catalogue key.
 
-**Sources.** `H` = the staging space’s health report (`GET /health` on its Space API, which needs no key; this public file does not name the host), read on 2026-11-03 at 00:36 UTC (contract 0.2.18, build `2703525`, widget `embed.version: 0.6.1-v1` with `embed.origin: pinned_release`, mail adapter `sink`, `data_mode: synthetic`, flags `spaces_enabled`; the served `embed.js`, `embed.v1.js` and `locales/de.json` fetched the same minute match the `SHA256SUMS` of Connect’s release `embed-v0.6.1-v1`; before that on 2026-10-26 at 13:30 UTC, contract 0.2.16 and widget 0.5.0-v1, and on 2026-10-25 at 16:36 UTC, contract 0.2.13 and widget 0.3.0-v1). `P` = the Connect lane’s plan, `docs/plan/connect-plan.md` in murks3r/linkbot-connect on `build/vision` at `b5969ac`, read on 2026-10-25: its status line, §1 and §2; and Connect’s `docs/handover/connect.md` on `build/vision` at `64bff6d`, read on 2026-10-26 (staging serves `embed-v0.5.0-v1` since Core-Engine’s CE-M3 on 2026-10-26; Connect’s checks against the served file passed at 03:23 UTC: the wording in five languages, the language fallback, the board’s read-only tests and the watch dry run; E4 with watches on since 2026-10-25, 02:05 UTC; staging’s mail goes to a sink since 2026-10-25, 02:36 UTC). Re-read on 2026-11-03: the plan at `618415c` (last changed `7d6cda4`, 2026-10-25; §1: the SDK built and not published, the console built on a sample operator API), Connect’s handover at `618415c` (nothing published on npm or elsewhere; `embed-v0.6.1-v1` cut on 2026-10-31; the console built on a sample operator API) and Core-Engine’s handover at `2703525` (widget `embed-v0.6.1-v1` since CE-W2 on 2026-10-31, 11:55 UTC; flags on `form`, `matching`, `approval`, `email`, `text_reader`, `board`, `watches`, off `webhooks` and `party_gates`; languages de and en). Core-Engine’s `docs/handover/core-engine.md` in murks3r/linkbot on `build/vision` at `52053d4`, read on 2026-10-26, names staging’s flags: E5 (contract 0.2.14, webhooks) and E6 (0.2.15, one language chain) are deployed, `features.webhooks` is off and no signing key exists, so the webhook routes answer `409 feature_disabled`; the space offers de and en. Every status sentence names the day of this check (`src/i18n/status-date.ts`), and `tests/status.test.mjs` fails once that day is more than 14 days old. `C` = the Space API contract 0.2.7 (the staging space serves 0.2.18, `H`) (`contracts/space-api/openapi.yaml` in murks3r/linkbot; its info text has the invariants, the matching, approval, introduction, mail and deletion paragraphs, the owner-token and language rules). `D` = the Connect lane's docs in murks3r/linkbot-connect (`docs/…`). `L` = a Linear decision. `R` = this repository. A row marked **unfinished** states something true today that another lane's work will change (a route that answers "not implemented", a package not published, a slice being built).
+**Sources.** `H` = the staging space’s health report (`GET /health` on its Space API, which needs no key; this public file does not name the host), read on 2026-11-21 at 02:40 UTC, unchanged since 2026-11-03 (same build `2703525`, contract 0.2.18, widget 0.6.1-v1 `pinned_release`, mail adapter `sink`, `data_mode: synthetic`, flags `spaces_enabled`; Connect's plan still last changed at `7d6cda4`); first read on 2026-11-03 at 00:36 UTC (contract 0.2.18, build `2703525`, widget `embed.version: 0.6.1-v1` with `embed.origin: pinned_release`, mail adapter `sink`, `data_mode: synthetic`, flags `spaces_enabled`; the served `embed.js`, `embed.v1.js` and `locales/de.json` fetched the same minute match the `SHA256SUMS` of Connect’s release `embed-v0.6.1-v1`; before that on 2026-10-26 at 13:30 UTC, contract 0.2.16 and widget 0.5.0-v1, and on 2026-10-25 at 16:36 UTC, contract 0.2.13 and widget 0.3.0-v1). `P` = the Connect lane’s plan, `docs/plan/connect-plan.md` in murks3r/linkbot-connect on `build/vision` at `b5969ac`, read on 2026-10-25: its status line, §1 and §2; and Connect’s `docs/handover/connect.md` on `build/vision` at `64bff6d`, read on 2026-10-26 (staging serves `embed-v0.5.0-v1` since Core-Engine’s CE-M3 on 2026-10-26; Connect’s checks against the served file passed at 03:23 UTC: the wording in five languages, the language fallback, the board’s read-only tests and the watch dry run; E4 with watches on since 2026-10-25, 02:05 UTC; staging’s mail goes to a sink since 2026-10-25, 02:36 UTC). Re-read on 2026-11-03: the plan at `618415c` (last changed `7d6cda4`, 2026-10-25; §1: the SDK built and not published, the console built on a sample operator API), Connect’s handover at `618415c` (nothing published on npm or elsewhere; `embed-v0.6.1-v1` cut on 2026-10-31; the console built on a sample operator API) and Core-Engine’s handover at `2703525` (widget `embed-v0.6.1-v1` since CE-W2 on 2026-10-31, 11:55 UTC; flags on `form`, `matching`, `approval`, `email`, `text_reader`, `board`, `watches`, off `webhooks` and `party_gates`; languages de and en). Core-Engine’s `docs/handover/core-engine.md` in murks3r/linkbot on `build/vision` at `52053d4`, read on 2026-10-26, names staging’s flags: E5 (contract 0.2.14, webhooks) and E6 (0.2.15, one language chain) are deployed, `features.webhooks` is off and no signing key exists, so the webhook routes answer `409 feature_disabled`; the space offers de and en. Every status sentence names the day of this check (`src/i18n/status-date.ts`), and `tests/status.test.mjs` fails once that day is more than 14 days old. `C` = the Space API contract 0.2.7 (the staging space serves 0.2.18, `H`) (`contracts/space-api/openapi.yaml` in murks3r/linkbot; its info text has the invariants, the matching, approval, introduction, mail and deletion paragraphs, the owner-token and language rules). `D` = the Connect lane's docs in murks3r/linkbot-connect (`docs/…`). `L` = a Linear decision. `R` = this repository. A row marked **unfinished** states something true today that another lane's work will change (a route that answers "not implemented", a package not published, a slice being built).
 
 | Where | Claim | Backed by | Checked | Unfinished |
 | -- | -- | -- | -- | -- |
@@ -223,23 +223,23 @@ A draft for the owner's review: linked from nowhere, never indexed (`noindex, no
 
 | Key | State | Backed by | Checked |
 | -- | -- | -- | -- |
-| form | on staging | row `how.describe (form)` | 2026-11-03 |
-| text | on staging | row `how.describe (text)` | 2026-11-03 |
-| board | on staging | row `how.describe (board)` | 2026-11-03 |
-| watches | on staging | row `how.describe (watch)` (H, mail adapter `sink`) | 2026-11-03 |
-| control | on staging | row `how.today (now)` (P §2, 0.2.9, slice E1) | 2026-11-03 |
-| confirm | on staging | row `how.today (now)` | 2026-11-03 |
-| matching | on staging | row `how.today (now)` | 2026-11-03 |
-| gates | on staging | row `how.today (now)` | 2026-11-03 |
-| introductions | on staging | row `how.today (now)` | 2026-11-03 |
-| outcomes | on staging | row `how.today (now)` | 2026-11-03 |
-| deletion | on staging | row `how.today (now)` (H `deletion_log.configured: true`) | 2026-11-03 |
-| widget | on staging | row `how.today (now)` (H `embed.origin: pinned_release`, `embed.version: 0.6.1-v1`) | 2026-11-03 |
-| webhooks | built | row `how.today (contract)`; row `platforms.server` (the SDK verifies deliveries; Core-Engine's `features.webhooks` off on staging) | 2026-11-03 |
-| mail | built | row `how.today (contract)` (H `mail.adapter: sink`; a mail provider waits for D-V3) | 2026-11-03 |
-| sdk | built | row `developers.notYet`; row `integrations.sdk` (P §1: the SDK, not published) | 2026-11-03 |
-| console | built | row `forPlatforms.gets[4]` (P §1; P decision 4: nothing published before M3) | 2026-11-03 |
-| recipes | built | row `platforms.recipes` (D `recipes/*.md`; they run in Connect's CI against the sample build) | 2026-11-03 |
-| reader | planned | row `how.describe (text)` (a model reader waits for the reading policy and Core-Engine E7) | 2026-11-03 |
-| mcp | planned | row `forPlatforms.ways.items[3]` (planned, not built; the contract is a skeleton) | 2026-11-03 |
-| demo | planned | row `site.synthetic, how.today` (the demo waits for a demo space) | 2026-11-03 |
+| form | on staging | row `how.describe (form)` | 2026-11-21 |
+| text | on staging | row `how.describe (text)` | 2026-11-21 |
+| board | on staging | row `how.describe (board)` | 2026-11-21 |
+| watches | on staging | row `how.describe (watch)` (H, mail adapter `sink`) | 2026-11-21 |
+| control | on staging | row `how.today (now)` (P §2, 0.2.9, slice E1) | 2026-11-21 |
+| confirm | on staging | row `how.today (now)` | 2026-11-21 |
+| matching | on staging | row `how.today (now)` | 2026-11-21 |
+| gates | on staging | row `how.today (now)` | 2026-11-21 |
+| introductions | on staging | row `how.today (now)` | 2026-11-21 |
+| outcomes | on staging | row `how.today (now)` | 2026-11-21 |
+| deletion | on staging | row `how.today (now)` (H `deletion_log.configured: true`) | 2026-11-21 |
+| widget | on staging | row `how.today (now)` (H `embed.origin: pinned_release`, `embed.version: 0.6.1-v1`) | 2026-11-21 |
+| webhooks | built | row `how.today (contract)`; row `platforms.server` (the SDK verifies deliveries; Core-Engine's `features.webhooks` off on staging) | 2026-11-21 |
+| mail | built | row `how.today (contract)` (H `mail.adapter: sink`; a mail provider waits for D-V3) | 2026-11-21 |
+| sdk | built | row `developers.notYet`; row `integrations.sdk` (P §1: the SDK, not published) | 2026-11-21 |
+| console | built | row `forPlatforms.gets[4]` (P §1; P decision 4: nothing published before M3) | 2026-11-21 |
+| recipes | built | row `platforms.recipes` (D `recipes/*.md`; they run in Connect's CI against the sample build) | 2026-11-21 |
+| reader | planned | row `how.describe (text)` (a model reader waits for the reading policy and Core-Engine E7) | 2026-11-21 |
+| mcp | planned | row `forPlatforms.ways.items[3]` (planned, not built; the contract is a skeleton) | 2026-11-21 |
+| demo | planned | row `site.synthetic, how.today` (the demo waits for a demo space) | 2026-11-21 |
