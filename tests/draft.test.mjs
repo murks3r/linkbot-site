@@ -24,7 +24,8 @@ const strings = value => typeof value === 'string' ? [value] : Array.isArray(val
 const dist = new URL('../dist/', import.meta.url);
 const skip = !existsSync(new URL('index.html', dist)) && 'build the site first';
 
-/* Each live posting's draft page links back to the board (tests/jobs-board.test.mjs checks the pages themselves). */
+/* Each live posting's draft page links back to the board and, through its covert yes, to /jobs/mine, which links the board and
+   the postings it lists (tests/jobs-board.test.mjs checks the pages themselves). */
 const postings = search(RECORDED, EMPTY_QUERY, new Date().toISOString().slice(0, 10)).map(p => `/jobs/${p.id}`);
 
 const drafts = [
@@ -32,8 +33,8 @@ const drafts = [
   { path: '/developers/login-with-linkbot', words: { en: login }, builds: buildsLogin, inProduction: LOGIN_IN_PRODUCTION },
   { path: '/developers/a-new-vertical', words: { en: newVertical }, builds: buildsNewVertical, inProduction: NEW_VERTICAL_IN_PRODUCTION },
   { path: '/developers/prepare-a-request', words: prepare, builds: buildsPrepare, inProduction: PREPARE_IN_PRODUCTION },
-  { path: '/jobs', words: jobsPage, builds: buildsJobsPage, inProduction: JOBS_PAGE_IN_PRODUCTION, linkedFrom: postings },
-  { path: '/jobs/mine', words: jobsMine, builds: buildsJobsMine, inProduction: JOBS_MINE_IN_PRODUCTION, linkedFrom: ['/jobs'] },
+  { path: '/jobs', words: jobsPage, builds: buildsJobsPage, inProduction: JOBS_PAGE_IN_PRODUCTION, linkedFrom: [...postings, '/jobs/mine'] },
+  { path: '/jobs/mine', words: jobsMine, builds: buildsJobsMine, inProduction: JOBS_MINE_IN_PRODUCTION, linkedFrom: ['/jobs', ...postings] },
 ];
 
 const fileFor = (path, lang) => `${lang === 'en' ? '' : `${lang}/`}${path.slice(1)}.html`;
