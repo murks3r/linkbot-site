@@ -1,0 +1,28 @@
+---
+/* Contact: the address from src/lib/contact.ts, or, until the owner names Linkbot's domain, a clearly marked placeholder
+   that says contact details are in preparation and follow with the domain. No form, nothing collected. */
+import Base from '../../layouts/Base.astro';
+import { CONTACT_EMAIL } from '../../lib/contact';
+import { langPaths, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const c = t.contact;
+const [before, after] = c.write.split('{email}');
+---
+<Base lang={lang} t={t} fallback={fallback} title={c.title} description={CONTACT_EMAIL ? c.released.description : c.description} path="/contact" crumbs={[[t.site.footer.contact, '/contact']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1>{CONTACT_EMAIL ? c.released.h1 : c.h1}</h1>
+    </div>
+  </section>
+  <div class="wrap doc-one">
+    {CONTACT_EMAIL ? <p>{before}<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>{after}</p> : (
+      <div class="placeholder" role="note" aria-label={c.eyebrow}>
+        <p data-contact-pending>{t.site.footer.contactPending}</p>
+      </div>
+    )}
+  </div>
+</Base>

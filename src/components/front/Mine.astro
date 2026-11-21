@@ -1,0 +1,150 @@
+---
+/* The person's own page in Jobs as a demo on fictional data (the draft /jobs/mine): sign in, the search's state, the
+   confirmed criteria, what each company sees, the block list, the history, export and delete. Behaviour and states:
+   src/front/mine.ts (no network call, nothing stored); words: src/drafts/jobs-mine.ts. Rendered signed out for scripts
+   (data-off) and as the signed-in page without them (data-story-off, src/front/mine.css). */
+import Icon from '../Icon.astro';
+import Verdict from './Verdict.astro';
+import { CRITERIA, type MineDemo } from '../../drafts/jobs-mine';
+import { holds, start, story } from '../../front/mine';
+import '../../front/mine.css';
+interface Props { D: MineDemo }
+const { D } = Astro.props;
+const first = start(D.roles.list.map(r => r.id), D.block.first, D.block.companies.map(c => c.id));
+const told = story(first);
+/** The attributes of an element shown only while its conditions hold (mine.ts, holds). */
+const when = (conditions: string) => ({ 'data-if': conditions, 'data-off': !holds(conditions, first) || undefined, 'data-story-off': !holds(conditions, told) || undefined });
+const page = 'signed:in deletion:none|asked';
+const shown = D.roles.list.filter(r => !r.hidden);
+const ANSWERS = ['interested', 'declined', 'later'] as const;
+const source = {
+  note: D.exporting.note,
+  file: D.exporting.file,
+  blocked: D.block.first,
+  criteria: CRITERIA.map(c => ({ criterion: D.criteria.labels[c], value: D.criteria.values[c], importance: D.criteria.musts.includes(c) ? D.criteria.must : D.criteria.nice })),
+  roles: shown.map(r => ({ id: r.id, title: r.title })),
+  companies: D.block.companies.map(c => ({ id: c.id, domain: c.domain })),
+  history: D.history.entries,
+};
+const groups = [[D.criteria.must, D.criteria.musts], [D.criteria.nice, CRITERIA.filter(c => !D.criteria.musts.includes(c))]] as const;
+---
+<section class="wrap mn" aria-labelledby="mine-title" data-mine>
+  <div class="mn-top">
+    <h2 id="mine-title">{D.h2}</h2>
+    <p class="mn-label">{D.label}</p>
+  </div>
+  <script type="application/json" data-mine-source set:html={JSON.stringify(source)} />
+
+  <div class="mn-panel mn-signin" data-group {...when('signed:out deletion:none')}>
+    <h3>{D.signIn.title}</h3>
+    <p>{D.signIn.p}</p>
+    <button type="button" class="btn btn-primary" data-size="sm" data-act="sign-in">{D.signIn.button}<Icon name="arrow" /></button>
+    <p class="mn-quiet"><Icon name="info" />{D.signIn.planned}</p>
+  </div>
+
+  <div class="mn-panel mn-done" data-group {...when('deletion:done')}>
+    <p class="mn-result" data-note>{D.deletion.done}</p>
+    <button type="button" class="btn btn-secondary" data-size="sm" data-act="reset">{D.deletion.again}</button>
+  </div>
+
+  <div class="mn-page" {...when(page)}>
+    <div class="mn-bar" data-group>
+      <p class="mn-ok" data-note><Icon name="check" />{D.signIn.signedIn}</p>
+      <button type="button" class="btn btn-secondary" data-size="sm" data-act="sign-out">{D.signOut}</button>
+    </div>
+
+    <div class="mn-panel" data-group>
+      <h3>{D.pause.title}</h3>
+      <p {...when('paused:no')}>{D.pause.active}</p>
+      <p class="mn-result" data-tone="no" data-note {...when('paused:yes')}><Icon name="pause" />{D.pause.paused}</p>
+      <button type="button" class="btn btn-secondary" data-size="sm" data-act="pause" {...when('paused:no')}><Icon name="pause" />{D.pause.pause}</button>
+      <button type="button" class="btn btn-primary" data-size="sm" data-act="resume" {...when('paused:yes')}><Icon name="play" />{D.pause.resume}</button>
+    </div>
+
+    <div class="mn-panel">
+      <h3>{D.criteria.title}</h3>
+      <p>{D.criteria.p}</p>
+      {groups.map(([name, keys]) => <div class="mn-group">
+        <p class="mn-key">{name}</p>
+        <dl class="mn-list">
+          {keys.map(c => <div><dt>{D.criteria.labels[c]}</dt><dd>{D.criteria.values[c]}</dd></div>)}
+        </dl>
+      </div>)}
+      <p class="mn-quiet">{D.criteria.change}</p>
+    </div>
+
+    <div class="mn-panel">
+      <h3>{D.roles.title}</h3>
+      <p>{D.roles.p}</p>
+      {shown.map(role => <article class="mn-role" aria-labelledby={`mn-role-${role.id}`} data-group>
+        <h4 id={`mn-role-${role.id}`}>{role.title}</h4>
+        <ul class="mn-facts">{role.facts.map(f => <li>{f}</li>)}</ul>
+        <table class="mn-verdicts">
+          <thead><tr><th scope="col"><span class="sr">{D.criteria.title}</span></th><th scope="col">{D.roles.yours}</th><th scope="col">{D.roles.sees}</th></tr></thead>
+          <tbody>
+            {CRITERIA.map(c => role.verdicts[c] && <tr>
+              <th scope="row">{D.criteria.labels[c]}</th>
+              <td>{D.criteria.values[c]}</td>
+              <td><span class="mn-verdict" data-kind={role.verdicts[c]}><Verdict kind={role.verdicts[c]!} />{D.roles.verdicts[role.verdicts[c]!]}</span></td>
+            </tr>)}
+          </tbody>
+        </table>
+        <p class="mn-quiet">{D.roles.salary}</p>
+        <div class="mn-buttons" {...when(`role-${role.id}:open|later paused:no`)}>
+          {ANSWERS.map(answer => <button type="button" class:list={['btn', answer === 'interested' ? 'btn-primary' : 'btn-secondary']} data-size="sm" data-act={`answer:${role.id}=${answer}`}>{D.roles.answers[answer]}<span class="sr">: {role.title}</span></button>)}
+        </div>
+        <p class="mn-quiet" {...when(`role-${role.id}:open|later paused:yes`)}>{D.roles.paused}</p>
+        {ANSWERS.map(answer => <p class="mn-said" data-note {...when(`role-${role.id}:${answer}`)}>{answer === 'interested' && <Icon name="check" />}{D.roles.said[answer]}</p>)}
+        <button type="button" class="btn btn-secondary" data-size="sm" data-act={`answer:${role.id}=open`} {...when(`role-${role.id}:interested|declined paused:no`)}>{D.roles.reopen}<span class="sr">: {role.title}</span></button>
+      </article>)}
+      {D.roles.list.some(r => r.hidden) && <p class="mn-hidden"><Icon name="eye" />{D.roles.hidden}</p>}
+    </div>
+
+    <div class="mn-panel">
+      <h3>{D.block.title}</h3>
+      <p>{D.block.p}</p>
+      <p class="mn-promise">{D.block.promise}</p>
+      <ul class="mn-companies">
+        {D.block.companies.map(c => <li data-group>
+          <span class="mn-company">{c.employer && <span class="mn-key">{D.block.employer}</span>}{c.name}<span class="mn-domain">{c.domain}</span></span>
+          <span class="mn-ok" {...when(`block-${c.id}:on`)}><Icon name="close" />{D.block.on}</span>
+          <span class="mn-quiet" {...when(`block-${c.id}:off`)}>{D.block.off}</span>
+          <button type="button" class="btn btn-secondary" data-size="sm" data-act={`unblock:${c.id}`} {...when(`block-${c.id}:on`)}>{D.block.unblock}<span class="sr">: {c.name}</span></button>
+          <button type="button" class="btn btn-primary" data-size="sm" data-act={`block:${c.id}`} {...when(`block-${c.id}:off`)}>{D.block.block}<span class="sr">: {c.name}</span></button>
+        </li>)}
+      </ul>
+    </div>
+
+    <div class="mn-panel">
+      <h3>{D.history.title}</h3>
+      <p>{D.history.p}</p>
+      <ul class="mn-history">{D.history.entries.map(e => <li><Icon name="check" />{e}</li>)}</ul>
+    </div>
+
+    <div class="mn-two">
+      <div class="mn-panel">
+        <h3>{D.exporting.title}</h3>
+        <p>{D.exporting.p}</p>
+        <button type="button" class="btn btn-secondary" data-size="sm" data-act="export"><Icon name="down" />{D.exporting.button}</button>
+      </div>
+      <div class="mn-panel" data-group>
+        <h3>{D.deletion.title}</h3>
+        <p>{D.deletion.p}</p>
+        <button type="button" class="btn btn-secondary" data-size="sm" data-act="delete" {...when('deletion:none')}>{D.deletion.button}</button>
+        <div class="mn-ask" {...when('deletion:asked')}>
+          <p class="mn-said" data-note>{D.deletion.ask}</p>
+          <div class="mn-buttons">
+            <button type="button" class="btn btn-primary" data-size="sm" data-act="confirm-delete">{D.deletion.yes}</button>
+            <button type="button" class="btn btn-secondary" data-size="sm" data-act="keep">{D.deletion.no}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="sr" role="status" data-say></p>
+</section>
+
+<script>
+  import { mount } from '../../front/mine';
+  document.querySelectorAll<HTMLElement>('[data-mine]').forEach(mount);
+</script>

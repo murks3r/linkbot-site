@@ -1,0 +1,38 @@
+#!/bin/sh
+# Secret scan before every push: gitleaks over the commits this push would send, redacted. Any finding, or any
+# error (gitleaks missing, a range it cannot read), refuses the push. Nothing leaves the machine.
+# Install once per clone (it covers all worktrees of the clone): git config core.hooksPath .githooks
+# Reviewed false positives go into .gitleaksignore by fingerprint, never an unrevoked key.
+set -u
+
+remote="$1"
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-push: gitleaks is not installed (brew install gitleaks). Push refused." >&2
+  exit 1
+fi
+
+status=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+  case "$local_sha" in *[!0]*) ;; *) continue ;; esac  # a branch deletion sends no commits
+  case "$remote_sha" in
+    *[!0]*)
+      if git cat-file -e "${remote_sha}^{commit}" 2>/dev/null; then
+        range="${remote_sha}..${local_sha}"
+      else
+        range="${local_sha} --not --remotes=${remote}"  # remote tip unknown here: scan all we have not fetched
+      fi
+      ;;
+    *) range="${local_sha} --not --remotes=${remote}" ;;  # a new branch: its commits the remote does not have
+  esac
+  echo "pre-push: gitleaks over ${local_ref} -> ${remote_ref}" >&2
+  if ! gitleaks git --redact --verbose --no-banner --log-level warn --log-opts="$range" .; then
+    status=1
+  fi
+done
+
+if [ "$status" -ne 0 ]; then
+  echo "pre-push: push refused. Remove the secret from the commits (rewrite them before pushing) and rotate it if it" >&2
+  echo "pre-push: was ever outside this machine. Never bypass this hook with --no-verify." >&2
+fi
+exit "$status"

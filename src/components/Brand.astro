@@ -1,0 +1,12 @@
+---
+/* The brand, top left: the wordmark "linkbot" in the site's face, without a diagram. */
+interface Props { href: string; name: string }
+const { href, name } = Astro.props;
+---
+<a class="brand" href={href}>
+  <span class="brand-word">{name.toLowerCase()}</span>
+</a>
+
+<style>
+  .brand { display: inline-flex; align-items: center; gap: 9px; min-height: var(--target); font-family: var(--display); font-size: 1.375rem; font-weight: 700; letter-spacing: -.02em; line-height: 1; text-decoration: none; color: var(--lb-ink); }
+</style>

@@ -1,0 +1,45 @@
+---
+/* Request a demo: how a demo works today (the recorded walkthrough on /demo), what is planned (a guided session, which
+   needs a demo space and published contact details, so it has no date), and how to ask: the address once
+   src/lib/contact.ts names one, until then the footer's sentence that contact details follow with the domain. No form,
+   nothing collected. Words: the catalogue's requestDemo, each sentence with its row in docs/truth-check.md. */
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { CONTACT_EMAIL } from '../../lib/contact';
+import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const r = t.requestDemo;
+const [before, after] = r.contact.write.split('{email}');
+---
+<Base lang={lang} t={t} fallback={fallback} title={r.title} description={r.description} path="/request-a-demo" crumbs={[[r.eyebrow, '/request-a-demo']]}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{r.eyebrow}</p>
+      <h1>{r.h1.map((line, index) => <span class:list={['h1-line', { 'h1-soft': index > 0 }]}>{line}</span>)}</h1>
+      <p class="lede">{r.lede}</p>
+    </div>
+  </section>
+  <div class="wrap doc-body demo-ask">
+    <section id="now" aria-labelledby="now-title">
+      <h2 id="now-title">{r.now.title}</h2>
+      <p>{r.now.body}</p>
+      <p><a class="link" href={pathFor(lang, '/demo')}>{r.now.link}<Icon name="arrow" /></a></p>
+    </section>
+    <section id="later" aria-labelledby="later-title">
+      <h2 id="later-title">{r.later.title}</h2>
+      <p>{r.later.body}</p>
+    </section>
+    <section id="ask" aria-labelledby="ask-title">
+      <h2 id="ask-title">{r.contact.title}</h2>
+      {CONTACT_EMAIL ? <p>{before}<a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>{after}</p> : <p data-contact-pending>{t.site.footer.contactPending}</p>}
+      <p class="note">{t.site.synthetic}</p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .demo-ask { padding-bottom: var(--band); }
+</style>

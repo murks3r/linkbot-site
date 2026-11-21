@@ -1,0 +1,13 @@
+---
+/* The app's three evidence squares (frontend/src/features/search/Marks.tsx), drawn the same way:
+   solid = stated, split = stated differently, dashed = not stated. On this site they also mark
+   product status: solid = works today, split = built, being proven, dashed = not built yet. */
+interface Props { tone: 'fit' | 'tradeoff' | 'unknown'; size?: number }
+const { tone, size = 12 } = Astro.props;
+const h = size - 1;
+---
+<svg class="mark" data-tone={tone} width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true" focusable="false">
+  {tone === 'fit' && <rect x=".5" y=".5" width={h} height={h} fill="currentColor" stroke="currentColor" />}
+  {tone === 'tradeoff' && <><rect x=".75" y=".75" width={h - .5} height={h - .5} fill="none" stroke="currentColor" stroke-width="1.5" /><path d={`M${size} 0V${size}H0Z`} fill="currentColor" /></>}
+  {tone === 'unknown' && <rect x=".75" y=".75" width={h - .5} height={h - .5} fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2.4 1.8" />}
+</svg>

@@ -1,0 +1,53 @@
+---
+/* /faq: the questions a person or a model asks first (src/faq), then Linkbot's fixed terms (src/i18n/terms.ts). The same
+   words go into the page's FAQPage and DefinedTermSet, so what a crawler reads is what the page says. */
+import Base from '../../layouts/Base.astro';
+import { FAQ, faqSchema } from '../../faq';
+import { TERMS, TERM_KEYS } from '../../i18n/terms';
+import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+const f = FAQ[lang];
+const terms = TERM_KEYS.map(key => ({ key, ...TERMS[lang][key] }));
+const glossary = new URL(`${pathFor(lang, '/faq')}#terms`, Astro.site).toString();
+const ld = [
+  faqSchema(f),
+  { '@type': 'DefinedTermSet', '@id': glossary, name: f.terms.title, inLanguage: lang,
+    hasDefinedTerm: terms.map(term => ({ '@type': 'DefinedTerm', name: term.term, description: term.definition, url: `${glossary}-${term.key}`, inDefinedTermSet: { '@id': glossary } })) },
+];
+---
+<Base lang={lang} t={t} fallback={fallback} title={f.title} description={f.description} path="/faq" crumbs={[[t.site.nav.faq, '/faq']]} ld={ld}>
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="eyebrow">{f.eyebrow}</p>
+      <h1>{f.h1}</h1>
+      <p class="lede">{f.lede}</p>
+    </div>
+  </section>
+  <div class="wrap doc-one">
+    {f.items.map(item => (
+      <section class="faq-item">
+        <h2>{item.q}</h2>
+        {item.a.map(p => <p>{p}</p>)}
+      </section>
+    ))}
+    <section id="terms" class="faq-terms" aria-labelledby="terms-title">
+      <h2 id="terms-title">{f.terms.title}</h2>
+      <p>{f.terms.lede}</p>
+      <dl>
+        {terms.map(term => (<div id={`terms-${term.key}`}><dt>{term.term}</dt><dd>{term.definition}</dd></div>))}
+      </dl>
+    </section>
+    <p class="note">{t.site.synthetic}</p>
+  </div>
+</Base>
+
+<style>
+  .faq-item, .faq-terms { display: grid; gap: 12px; }
+  .faq-item p, .faq-terms > p, dd { color: var(--lb-slate); max-width: var(--prose); }
+  dl { display: grid; gap: 16px; margin-top: 8px; }
+  dt { font-weight: 650; }
+  dd { margin: 4px 0 0; }
+</style>

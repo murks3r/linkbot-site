@@ -1,0 +1,47 @@
+/* The site's design tokens: the only place a colour of the site is written. The values are the widget design spec v1
+   of 2026-10-28, §5 (the workspace's plan/design/linkbot-widget-design/DESIGN-SPEC.md), under the spec's own names, and
+   the same values Connect's widget serves from packages/embed/src/v1/styles.css (embed 0.6.0-v1, read 2026-10-31), so
+   the site and the widget read as one product. Light only: the spec has no dark values. tests/tokens.test.mjs checks
+   that this file holds exactly the spec's colours and that no other stylesheet in src/ writes one. */
+:root {
+  color-scheme: light;
+  --lb-ground: #F2F4F1;        /* the page */
+  --lb-surface: #FFFFFF;       /* fields, lists, cards */
+  --lb-ink: #1D2928;           /* text, active toggles */
+  --lb-slate: #556360;         /* secondary text, at least 4.5:1 on ground and surface */
+  --lb-line: #C5CECA;          /* borders */
+  --lb-line-quiet: #E3E8E6;    /* quiet dividers */
+  --lb-track: #D3DAD7;         /* inactive progress */
+  --lb-accent: #2B4FA3;        /* the main action, a choice, progress */
+  --lb-accent-soft: #E8EEF9;   /* a chosen row */
+  --lb-accent-soft-2: #C9D5EE; /* the middle of a range */
+  --lb-marker: #F6DC7E;        /* only marked values and the active step */
+
+  /* Type (§5): Schibsted Grotesk, self-hosted (src/styles/fonts.css); numerals tabular. */
+  --lb-font: 'Schibsted Grotesk', system-ui, sans-serif;
+  --lb-size-question: 2rem;    /* 32 / 1.12 / 700, tracking -0.02em */
+  --lb-size-summary: 1.5625rem; /* 25 / 1.5 / 500, values 700 */
+  --lb-size-body: 1.0625rem;   /* 17 / 1.5 / 400 */
+  --lb-size-label: .9375rem;   /* 15 / 600 */
+  --lb-size-help: .875rem;     /* 14 / 1.45 */
+  --lb-size-footer: .8125rem;  /* 13 */
+
+  /* Measures (§5, §8): fields 56 px radius 12; the main button 56 px radius 14; chips 44 px, fully rounded; every target
+     at least 44 px; focus 3 px in accent at 2 px offset. */
+  --lb-field-h: 56px; --lb-field-r: 12px;
+  --lb-button-h: 56px; --lb-button-r: 14px;
+  --lb-chip-h: 44px;
+  --lb-target: 44px;
+  --lb-focus: 3px solid var(--lb-accent); --lb-focus-offset: 2px;
+}
+
+/* The widget on the site (the demo stage now, a live embed later) takes the same values through its documented
+   variables (Connect's docs/reference/embed.md, "Design"). */
+linkbot-embed, [data-linkbot] {
+  --linkbot-accent: var(--lb-accent);
+  --linkbot-text: var(--lb-ink);
+  --linkbot-muted: var(--lb-slate);
+  --linkbot-line: var(--lb-line);
+  --linkbot-surface: var(--lb-surface);
+  --linkbot-radius: 12px;
+}

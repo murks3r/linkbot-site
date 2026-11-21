@@ -1,0 +1,76 @@
+/* The home's "both say yes" demo (src/components/front/Trial.astro) in the widget design spec v1: the tokens of
+   src/styles/tokens.css, no shadows, no gradients. Motion only for those who did not ask for less. */
+
+/* Which parts show: with scripts the demo's state (data-off, src/front/trial.ts), without them the whole path and no
+   buttons (data-story-off). */
+.js [data-trial] [data-off], html:not(.js) [data-trial] [data-story-off], html:not(.js) [data-trial] button { display: none !important; }
+
+.tr { display: grid; gap: 20px; padding: clamp(16px, 3vw, 28px); border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.tr-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.tr-top h2 { font-size: 1.25rem; }
+.tr-label { font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-slate); }
+
+/* The three steps, in the widget's progress style: a bar per step, the active one marked. */
+.tr-progress { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tr-progress li { display: flex; align-items: center; gap: 8px; padding-top: 10px; border-top: 4px solid var(--lb-track); font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-slate); }
+.tr-progress li[data-state='done'], .tr-progress li[data-state='now'] { border-top-color: var(--lb-accent); color: var(--lb-ink); }
+html:not(.js) .tr-progress li { border-top-color: var(--lb-accent); color: var(--lb-ink); }
+.tr-n { display: inline-grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: var(--pill); background: var(--lb-line-quiet); font-variant-numeric: tabular-nums; }
+.tr-progress li[data-state='now'] .tr-n { background: var(--lb-marker); }
+/* Below the side-by-side width the answers come first in step 3; the possible fit stays on the wide layout only. */
+@media (max-width: 59.99rem) { .tr[data-at='3'] .tr-card { display: none; } }
+@media (max-width: 40rem) {
+  .tr-top h2 { font-size: 1.125rem; }
+  .tr-progress li { flex-direction: column; align-items: flex-start; gap: 6px; font-size: var(--lb-size-footer); line-height: 1.3; }
+  .tr-info h3 { font-size: 1.25rem; }
+}
+
+/* Phone: Linkbot's step first, then the buyer, the supplier and the button. Wide: buyer | Linkbot | supplier. */
+.tr-grid { display: grid; gap: 16px; grid-template-areas: 'info' 'buyer' 'supplier' 'nav'; }
+@media (min-width: 60rem) {
+  .tr-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); grid-template-areas: 'buyer info supplier' 'buyer nav supplier'; align-items: start; }
+}
+.tr-info { grid-area: info; display: grid; gap: 12px; align-content: start; }
+.tr-info h3 { font-size: 1.375rem; line-height: 1.2; outline: none; }
+.tr-info p { color: var(--lb-slate); }
+.tr-info > div:not(.tr-card) { display: grid; gap: 8px; }
+.tr-side[data-side='buyer'] { grid-area: buyer; }
+.tr-side[data-side='supplier'] { grid-area: supplier; }
+.tr-nav { grid-area: nav; display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* A side: who, what it wants, its check, its answer. */
+.tr-side { display: grid; gap: 12px; align-content: start; padding: 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-ground); }
+.tr-side header { display: grid; gap: 2px; }
+.tr-role { font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-slate); }
+.tr-name { font-size: 1.125rem; font-weight: 700; min-height: 1.5em; }
+.tr-hidden { display: inline-flex; align-items: center; gap: 8px; color: var(--lb-slate); font-weight: 600; }
+.tr-wants { font-size: var(--lb-size-help); line-height: 1.45; }
+.tr-wants span { font-weight: 600; }
+.tr-check, .tr-answer { display: grid; gap: 10px; justify-items: start; padding-top: 12px; border-top: 1px solid var(--lb-line-quiet); }
+.tr-check p { display: grid; gap: 2px; font-size: var(--lb-size-help); }
+.tr-key { font-weight: 600; }
+.tr-ok { display: inline-flex; align-items: center; gap: 6px; color: var(--lb-accent); font-weight: 600; }
+.tr-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.tr-said { font-size: var(--lb-size-help); line-height: 1.45; font-weight: 600; }
+
+/* The possible fit: a verdict per criterion, the word beside the mark. */
+.tr-card { display: grid; gap: 10px; padding: 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.tr-card-head { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--lb-ink) !important; }
+.tr-card ul { display: grid; }
+.tr-card li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; padding: 8px 0; border-top: 1px solid var(--lb-line-quiet); font-size: var(--lb-size-help); }
+.tr-crit { font-weight: 600; }
+.tr-value { grid-column: 1; color: var(--lb-slate); }
+.tr-verdict { grid-column: 2; grid-row: 1 / span 2; align-self: center; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.tr-approved { display: inline-flex; align-items: flex-start; gap: 8px; font-size: var(--lb-size-help); }
+.tr-approved svg { flex: none; margin-top: 3px; color: var(--lb-accent); }
+
+/* The end: both yes in the accent's soft tone, a no in the quiet one. */
+.tr-result { padding: 12px 14px; border-radius: var(--lb-field-r); font-weight: 600; color: var(--lb-ink) !important; }
+.tr-result[data-tone='yes'] { background: var(--lb-accent-soft); }
+.tr-result[data-tone='no'] { background: var(--lb-line-quiet); }
+.tr-mode { font-size: var(--lb-size-help); }
+
+/* What appears fades in (src/front/trial.ts), unless the visitor asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .tr-progress li { transition: border-color 220ms ease-out, color 220ms ease-out; }
+}

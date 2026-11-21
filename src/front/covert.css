@@ -1,0 +1,19 @@
+/* The covert yes on a posting's page and the list on /jobs/mine (src/components/front/CovertYes.astro, CovertMine.astro).
+   Phone first: one column, full-width buttons, every target at least --target high. */
+[data-when][hidden] { display: none; }
+.cy, .cm { display: grid; gap: 12px; }
+.cy [data-when], .cm [data-when] { display: grid; gap: 10px; justify-items: start; }
+.cy-title { font-size: 1.125rem; }
+.cy-label { font-size: var(--lb-size-footer); font-weight: 600; color: var(--lb-slate); }
+.cy-line { color: var(--lb-ink); font-weight: 600; }
+.cy-said { color: var(--lb-ink); }
+.cy-note { font-size: var(--lb-size-footer); }
+.cy .btn, .cm .btn { width: 100%; min-height: var(--target); }
+@media (min-width: 48rem) { .cm .btn { width: auto; } }
+.cm { padding-block: var(--space-block) 0; }
+.cm h2 { font-size: 1.25rem; }
+.cm > p, .cm [data-when] p { max-width: var(--prose); color: var(--lb-slate); }
+.cm-list { display: grid; gap: 12px; padding: 0; list-style: none; }
+.cm-list li { display: grid; gap: 6px; justify-items: start; padding: 16px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.cm-list a { font-weight: 600; min-height: var(--target); display: inline-flex; align-items: center; }
+.cm-list p { font-size: var(--lb-size-help); }

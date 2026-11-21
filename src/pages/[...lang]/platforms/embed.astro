@@ -1,0 +1,9 @@
+---
+import Integration from '../../../components/Integration.astro';
+import { langPaths, resolve, type Lang } from '../../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t, fallback } = resolve(lang);
+---
+<Integration lang={lang} t={t} fallback={fallback} page="embed" />

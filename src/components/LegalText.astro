@@ -1,0 +1,20 @@
+---
+/* A released legal text (src/legal/text.ts), shown as written, in the language it was written in. */
+import type { LegalText } from '../legal/text';
+interface Props { text: LegalText }
+const { text } = Astro.props;
+---
+<div class="legal" lang={text.lang}>
+  {text.sections.map(section => (
+    <section>
+      {section.title && <h2>{section.title}</h2>}
+      {section.paras.map(para => <p>{para}</p>)}
+    </section>
+  ))}
+</div>
+
+<style>
+  .legal { display: grid; gap: var(--space-block); }
+  .legal section { display: grid; gap: var(--space-head); }
+  .legal p { max-width: var(--measure); }
+</style>

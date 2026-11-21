@@ -1,0 +1,26 @@
+/* The home (src/components/front/Landing.astro) in the widget design spec v1: the tokens of src/styles/tokens.css,
+   sentence case, no shadows, no gradients, strokes for icons. The demo's own styles: src/front/trial.css. */
+
+/* 1 · The headline, its sub-line, then the demo. */
+.ln-open { padding-block: clamp(40px, 7vw, 96px) 0; }
+.ln-open-inner { display: grid; gap: var(--space-head); max-width: 46rem; margin-bottom: clamp(24px, 4vw, 48px); }
+.ln-open h1 { font-size: clamp(2.5rem, 1.2rem + 5vw, 4.75rem); line-height: 1.02; letter-spacing: -0.03em; }
+.ln-open .lede { max-width: 36em; color: var(--lb-ink); }
+
+/* The two labels: "Live" filled in the accent's soft tone, "Coming soon" outlined and dashed. Never a filter. */
+.ln-label { display: inline-flex; align-items: center; justify-self: start; min-height: 28px; padding: 2px 12px; border: 1px solid var(--lb-accent-soft-2); border-radius: var(--pill); background: var(--lb-accent-soft); font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-accent); }
+.ln-label[data-state='soon'] { border-style: dashed; border-color: var(--lb-line); background: transparent; color: var(--lb-slate); }
+.ln-small { font-size: var(--lb-size-help); line-height: 1.45; color: var(--lb-slate); }
+.ln-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: var(--space-head); }
+.ln-start { margin-top: 0; }
+.link.ln-quiet { color: var(--lb-slate); font-weight: 500; }
+
+/* 2 · For platforms. */
+.ln-snippet { display: grid; gap: 12px; max-width: 46rem; }
+.ln-snippet-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-weight: 600; }
+.ln-platforms .ln-actions { margin-top: var(--space-block); }
+
+/* 3 · The bottom. */
+.ln-bottom-inner { display: grid; gap: var(--space-head); justify-items: start; max-width: 46rem; }
+.ln-bottom h2 { font-size: clamp(1.75rem, 1.1rem + 2vw, 2.75rem); }
+.ln-bottom a:not(.btn) { color: var(--lb-ink); font-weight: 600; }

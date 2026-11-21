@@ -1,0 +1,11 @@
+---
+/* The home, in every language: the landing page of docs/front/landing-plan.md (src/components/front/Landing.astro),
+   its words from src/front/copy.ts. */
+import Landing from '../../components/front/Landing.astro';
+import { langPaths, resolve, type Lang } from '../../i18n';
+export const getStaticPaths = () => langPaths();
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const { t } = resolve(lang);
+---
+<Landing lang={lang} t={t} />

@@ -1,0 +1,42 @@
+---
+/* The jobs site's home: the job board. With listings (the catalogue's read, else its last good snapshot): the date of
+   the listings, the search, the live count and the newest listings first, each card with its source, fetched date,
+   label and the link to the original (src/components/front/Board.astro). Without any: a plain state that the listings
+   are being refreshed, and no search. Never a made-up posting (src/jobs/feed.ts). schema.org ItemList of the listings. */
+import Jobs from '../../layouts/Jobs.astro';
+import Board from '../../../components/front/Board.astro';
+import { jobsBoard } from '../../../drafts/jobs-board';
+import { labelOf } from '../../../jobs/feed';
+import { boardSchema, date } from '../../../jobs/format';
+import { pathFor } from '../../../i18n/locales';
+import { JOBS_COPY } from '../../copy';
+import { JOBS_LANGS, PARTICIPATING, boardState, type JobsLang } from '../../data';
+export const getStaticPaths = () => JOBS_LANGS.map(lang => ({ params: { lang: lang === 'en' ? undefined : lang }, props: { lang } }));
+const { lang } = Astro.props as { lang: JobsLang };
+const H = JOBS_COPY[lang].home;
+const state = await boardState();
+const today = new Date().toISOString().slice(0, 10);
+const words = { ...jobsBoard[lang].board, label: H.board.label };
+const ld = state.kind === 'listings'
+  ? [boardSchema(state.postings, words.h2, p => new URL(pathFor(lang, `/jobs/${p.id}`), Astro.site).toString())] : [];
+---
+<Jobs lang={lang} title={H.title} description={H.description} path="/" ld={ld}>
+  <section class="page-hero">
+    <div class="wrap">
+      <h1>{H.h1}</h1>
+      <p class="lede">{H.lede}</p>
+      {state.kind === 'listings' && <p class="eyebrow" data-as-of>{H.asOf.replace('{date}', date(state.asOf, lang))}</p>}
+    </div>
+  </section>
+  {state.kind === 'listings'
+    ? <Board W={words} lang={lang} postings={state.postings} today={today} original={H.board.original} labelOf={p => H.board.labels[labelOf(p, PARTICIPATING)]} />
+    : <section class="wrap refreshing" data-board-refreshing aria-labelledby="refreshing-title">
+        <h2 id="refreshing-title">{H.refreshing.title}</h2>
+        <p>{H.refreshing.p}</p>
+      </section>}
+</Jobs>
+
+<style>
+  .refreshing { display: grid; gap: 8px; justify-items: center; text-align: center; padding-bottom: var(--band); }
+  .refreshing p { color: var(--lb-slate); max-width: 40ch; }
+</style>

@@ -1,0 +1,11 @@
+---
+/* Where a capability stands, in words beside the product's own square: solid = on the staging
+   space now, split = in the contract and not on staging yet, dashed = not built yet. */
+import Mark from './Mark.astro';
+import type { Catalogue } from '../i18n';
+import type { Status } from '../i18n/en';
+interface Props { status: Status; t: Catalogue; size?: number }
+const { status, t, size = 10 } = Astro.props;
+const TONE = { now: 'fit', contract: 'tradeoff', later: 'unknown' } as const;
+---
+<span class="status" data-tone={status}><Mark tone={TONE[status]} size={size} />{t.site.status[status]}</span>
