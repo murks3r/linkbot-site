@@ -1,0 +1,58 @@
+/* The landing page (src/components/front/Landing.astro) in the widget design spec v1: the tokens of
+   src/styles/tokens.css, sentence case, no shadows, no gradients, strokes for icons. */
+
+/* 1 · The opening. */
+.ln-open { padding-block: clamp(48px, 9vw, 120px) 0; }
+.ln-open-inner { display: grid; gap: var(--space-head); max-width: 52rem; }
+.ln-open h1 { max-width: 18ch; font-size: clamp(2.25rem, 1rem + 4vw, 4rem); line-height: 1.08; }
+.ln-open .lede { color: var(--lb-ink); }
+.ln-open .btn { margin-top: 8px; }
+
+/* The two labels: "Live" filled in the accent's soft tone, "Coming soon" outlined and dashed. Never a filter. */
+.ln-label { display: inline-flex; align-items: center; justify-self: start; min-height: 28px; padding: 2px 12px; border: 1px solid var(--lb-accent-soft-2); border-radius: var(--pill); background: var(--lb-accent-soft); font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-accent); }
+.ln-label[data-state='soon'] { border-style: dashed; border-color: var(--lb-line); background: transparent; color: var(--lb-slate); }
+.ln-small { font-size: var(--lb-size-help); line-height: 1.45; color: var(--lb-slate); }
+.ln-more { margin-top: var(--space-head); }
+
+/* 2 · Three cards side by side, stacked on a phone. */
+.ln-cards { display: grid; gap: 16px; }
+@media (min-width: 56rem) { .ln-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ln-card { display: grid; grid-template-rows: auto auto 1fr auto auto; gap: 12px; padding: 24px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.ln-card h3 { font-size: 1.375rem; }
+.ln-card > p:not(.ln-label):not(.ln-small) { color: var(--lb-slate); }
+.ln-card .btn { justify-self: start; margin-top: 8px; }
+
+/* 3 · The demo stage: the switch, then one side's pictures. */
+.ln-stage { display: grid; gap: 16px; padding: 24px; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.ln-switch { display: inline-flex; justify-self: start; padding: 4px; border-radius: var(--pill); background: var(--lb-ground); border: 1px solid var(--lb-line); }
+.ln-switch button { min-height: var(--lb-chip-h); padding: 0 18px; border: 0; border-radius: var(--pill); background: transparent; font-weight: 600; color: var(--lb-slate); }
+.ln-switch button[aria-pressed='true'] { background: var(--lb-ink); color: var(--lb-surface); }
+.ln-recorded { font-size: var(--lb-size-help); font-weight: 600; color: var(--lb-slate); }
+.ln-side { display: grid; gap: 12px; }
+.ln-side + .ln-side { padding-top: 16px; border-top: 1px solid var(--lb-line-quiet); }
+.ln-stage[data-one] .ln-side + .ln-side { padding-top: 0; border-top: 0; }
+.ln-stage[data-one] .ln-side-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.ln-side-title { font-size: 1.125rem; }
+.ln-shots { display: grid; gap: 16px; }
+@media (min-width: 48rem) { .ln-shots { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.ln-shots li { display: grid; gap: 8px; align-content: start; max-width: 400px; }
+.ln-shots img { width: 100%; height: auto; border: 1px solid var(--lb-line); border-radius: var(--lb-field-r); background: var(--lb-surface); }
+.ln-shots p { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.ln-step { display: inline-grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: var(--pill); background: var(--lb-marker); font-size: var(--lb-size-help); font-variant-numeric: tabular-nums; }
+
+/* 4 · Who sees what, in the widget's progress style: a bar per stage. */
+.ln-progress { display: grid; gap: 16px; }
+@media (min-width: 48rem) { .ln-progress { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.ln-progress li { display: grid; gap: 6px; align-content: start; }
+.ln-bar { display: block; height: 4px; border-radius: 2px; background: var(--lb-accent); }
+.ln-progress span:not(.ln-bar) { font-size: var(--lb-size-help); line-height: 1.45; color: var(--lb-slate); }
+
+/* 5 · For platforms. */
+.ln-snippet { display: grid; gap: 12px; max-width: 46rem; }
+.ln-snippet-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-weight: 600; }
+.ln-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; margin-top: var(--space-block); }
+
+/* 6 · The bottom. */
+.ln-bottom-inner { display: grid; gap: var(--space-head); justify-items: start; max-width: 46rem; }
+.ln-bottom h2 { font-size: clamp(1.75rem, 1.1rem + 2vw, 2.75rem); }
+.ln-bottom a:not(.btn) { color: var(--lb-ink); font-weight: 600; }

@@ -21,12 +21,12 @@ const columns = statusColumns(t);
 
 <style>
   .today { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-  .today-col { display: grid; gap: 10px; align-content: start; padding: clamp(18px, 2.4vw, 26px); border: 1px solid var(--line-strong); border-radius: var(--r-3); background: var(--surface); }
+  .today-col { display: grid; gap: 10px; align-content: start; padding: clamp(18px, 2.4vw, 26px); border: 1px solid var(--lb-line); border-radius: var(--r-3); background: var(--lb-surface); }
   .today-col :is(h2, h3) { display: flex; align-items: center; gap: 10px; font-size: 1.125rem; }
-  .today-col > p { font-size: var(--size-small); color: var(--ink-2); }
-  .today-col ul { display: grid; gap: 6px; padding-top: 8px; border-top: 1px solid var(--line); font-size: var(--size-small); }
+  .today-col > p { font-size: var(--size-small); color: var(--lb-slate); }
+  .today-col ul { display: grid; gap: 6px; padding-top: 8px; border-top: 1px solid var(--lb-line-quiet); font-size: var(--size-small); }
   .today-col li { padding-left: 1em; text-indent: -1em; }
-  .today-col li::before { content: '·'; display: inline-block; width: 1em; text-indent: 0; color: var(--ink-3); }
-  .today-col[data-tone='planned'] { color: var(--ink-2); }
+  .today-col li::before { content: '·'; display: inline-block; width: 1em; text-indent: 0; color: var(--lb-slate); }
+  .today-col[data-tone='planned'] { color: var(--lb-slate); }
   @media (max-width: 56rem) { .today { grid-template-columns: minmax(0, 1fr); } }
 </style>

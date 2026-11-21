@@ -76,14 +76,14 @@ const section = (id: string) => ({ id, ...prose[ids.indexOf(id)] });
 </Base>
 
 <style>
-  .blocks, .steps { display: grid; gap: 0; border-top: 2px solid var(--ink); }
-  .blocks > div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-  .steps li { display: list-item; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .blocks, .steps { display: grid; gap: 0; border-top: 2px solid var(--lb-ink); }
+  .blocks > div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--lb-line-quiet); }
+  .steps li { display: list-item; padding: 14px 0; border-bottom: 1px solid var(--lb-line-quiet); }
   .steps li > p { margin-top: 4px; }
-  .blocks dt, .steps h3 { font-weight: 650; color: var(--ink); }
+  .blocks dt, .steps h3 { font-weight: 650; color: var(--lb-ink); }
   .steps { list-style: decimal inside; }
-  .steps li::marker { font-weight: 650; color: var(--green); }
+  .steps li::marker { font-weight: 650; color: var(--lb-ink); }
   .steps h3 { display: inline; font-size: inherit; }
-  .who { font-size: var(--size-small); color: var(--ink-2); }
+  .who { font-size: var(--size-small); color: var(--lb-slate); }
   .who span { font-weight: 600; }
 </style>

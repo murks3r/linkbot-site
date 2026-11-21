@@ -5,7 +5,6 @@
    catalogue's words), the platform and the pack, where it stands. Words: src/front/c-copy.ts (rows in
    docs/truth-check.md); the offer: src/front/c-stages.ts; in the reader's language through src/front/copy.ts. */
 import Icon from '../Icon.astro';
-import Reach from './Reach.astro';
 import Eye from './Eye.astro';
 import Verdict from './Verdict.astro';
 import { FRONT } from '../../front/copy';
@@ -24,7 +23,7 @@ const VERDICT = A.ledger.verdicts;
     <h1 id="hero-title"><span class="fc-line">{C.hero.h1[0]}</span> <span class="fc-line">{C.hero.h1[1]}</span></h1>
     <p class="lede fc-lede">{C.hero.lede}</p>
     <p class="fc-actions">
-      <Reach href={to('/for-platforms')} label={C.hero.primary}><Icon name="arrow" /></Reach>
+      <a class="btn btn-ink" href={to('/for-platforms')}>{C.hero.primary}<Icon name="arrow" /></a>
       <a class="link" href={`${to('/how-it-works')}#sees`}>{C.hero.secondary}<Icon name="arrow" /></a>
     </p>
   </div>

@@ -39,15 +39,15 @@ const s = sheet(lang, Astro.site!);
   .sheet { display: grid; gap: 28px; padding-block: clamp(32px, 6vw, 72px); max-width: 64rem; }
   .sheet-head { display: grid; gap: 10px; }
   .sheet-cols { columns: 2; column-gap: 40px; }
-  .sheet-cols section { padding-block: 10px 14px; border-top: 2px solid var(--ink); break-inside: avoid; }
+  .sheet-cols section { padding-block: 10px 14px; border-top: 2px solid var(--lb-ink); break-inside: avoid; }
   .sheet-cols h2 { font-size: 1.125rem; margin-bottom: 8px; }
-  .sheet-cols .para { color: var(--ink-2); margin-bottom: 8px; }
+  .sheet-cols .para { color: var(--lb-slate); margin-bottom: 8px; }
   .sheet-cols ul, .sheet-cols dl { display: grid; gap: 6px; }
   .sheet-cols li { padding-left: 1em; text-indent: -1em; }
-  .sheet-cols li::before { content: '–'; display: inline-block; width: 1em; text-indent: 0; color: var(--ink-2); }
-  .sheet-cols dt { display: inline; font-weight: 650; color: var(--ink); }
+  .sheet-cols li::before { content: '–'; display: inline-block; width: 1em; text-indent: 0; color: var(--lb-slate); }
+  .sheet-cols dt { display: inline; font-weight: 650; color: var(--lb-ink); }
   .sheet-cols dd { display: inline; }
-  .sheet-foot { display: grid; gap: 6px; padding-top: 14px; border-top: 1px solid var(--line-strong); font-size: var(--size-small); color: var(--ink-2); }
+  .sheet-foot { display: grid; gap: 6px; padding-top: 14px; border-top: 1px solid var(--lb-line); font-size: var(--size-small); color: var(--lb-slate); }
   @media screen and (max-width: 48rem) { .sheet-cols { columns: 1; } }
   @page { size: A4; margin: 14mm; }
   @media print {

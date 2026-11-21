@@ -65,13 +65,13 @@ const docs = (Object.keys(DOC_PATHS) as DocKey[]).map(key => ({ path: DOC_PATHS[
 </Base>
 
 <style>
-  .snippet { overflow-x: auto; padding: 16px 18px; border-radius: var(--r-2); background: var(--sand); font-size: var(--size-small); line-height: 1.55; }
+  .snippet { overflow-x: auto; padding: 16px 18px; border-radius: var(--r-2); background: var(--lb-line-quiet); font-size: var(--size-small); line-height: 1.55; }
   .snippet code { white-space: pre; }
-  .docs { display: grid; gap: 0; border-top: 2px solid var(--ink); }
-  .docs > div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .docs { display: grid; gap: 0; border-top: 2px solid var(--lb-ink); }
+  .docs > div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--lb-line-quiet); }
   .docs dt { font-weight: 650; }
-  .docs dt code { display: block; margin-top: 2px; font-weight: 400; font-size: var(--size-small); color: var(--ink-2); overflow-wrap: anywhere; }
-  .docs dd { color: var(--ink-2); }
-  .points { display: grid; gap: 0; border-top: 2px solid var(--ink); }
-  .points li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .docs dt code { display: block; margin-top: 2px; font-weight: 400; font-size: var(--size-small); color: var(--lb-slate); overflow-wrap: anywhere; }
+  .docs dd { color: var(--lb-slate); }
+  .points { display: grid; gap: 0; border-top: 2px solid var(--lb-ink); }
+  .points li { padding: 14px 0; border-bottom: 1px solid var(--lb-line-quiet); }
 </style>
