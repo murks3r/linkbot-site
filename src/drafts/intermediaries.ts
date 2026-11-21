@@ -3,20 +3,18 @@
    from nowhere, never indexed, out of the sitemap, and left out of production builds. Every sentence has its row in
    docs/truth-check.md (section "/for-intermediaries"). */
 import { statusDate } from '../i18n/status-date.ts';
+import { buildsDraft, type Draft } from './draft.ts';
 
 /** Whether a production build carries the draft. Set it to true once the owner approves the page. */
 export const INTERMEDIARIES_IN_PRODUCTION = false;
 
-/** Whether a build carries the draft: previews and local builds do; a production build (Vercel sets VERCEL_ENV to
-    "production") only once INTERMEDIARIES_IN_PRODUCTION is true. Pure, so tests/draft.test.mjs checks it without a build. */
+/** Whether a build carries the draft (src/drafts/draft.ts). */
 export const buildsIntermediaries = (env: { VERCEL_ENV?: string }, inProduction = INTERMEDIARIES_IN_PRODUCTION): boolean =>
-  inProduction || env.VERCEL_ENV !== 'production';
+  buildsDraft(env, inProduction);
 
 const AS_OF = statusDate('en');
 
-export interface DraftSection { id: string; title: string; paragraphs: string[] }
-
-export const intermediaries = {
+export const intermediaries: Draft = {
   banner: 'Draft, not published, for the owner’s review.',
   bannerNote: 'This page is linked from nowhere on the site, is never indexed and exists in English only. The positioning towards intermediaries is the owner’s open decision.',
   title: 'For intermediaries: introductions on both sides’ yes (draft)',
@@ -76,7 +74,7 @@ export const intermediaries = {
         'No recruiter, broker or agency runs a space, and there is no pack for their markets.',
       ],
     },
-  ] as DraftSection[],
+  ],
   open: {
     title: 'Open for the owner',
     items: [

@@ -1,6 +1,7 @@
 /* fr: the front's words (src/front/copy.ts); the page's sentences are the site's. Not yet read by a native speaker
    (docs/truth-check.md). */
 import type { FrontCopy } from '../copy.ts';
+import { PUBLIC_NAME } from '../../i18n/terms.ts';
 
 export const fr: FrontCopy = {
   a: {
@@ -25,7 +26,7 @@ export const fr: FrontCopy = {
           text: 'Un opérateur identifié et actif approuve le dossier. Une approbation seule ne divulgue rien.',
         },
         {
-          name: 'Double oui',
+          name: 'Les deux disent oui',
           text: 'Chaque côté répond pour lui-même. Avant que les deux aient dit oui, l’autre côté n’apprend rien.',
         },
         {
@@ -39,49 +40,85 @@ export const fr: FrontCopy = {
   },
   landing: {
     meta: {
-      title: 'Linkbot : votre plateforme réunit acheteurs et vendeurs, Linkbot trouve qui correspond',
-      description: 'Un widget pour les plateformes qui réunissent acheteurs et vendeurs : il demande à chaque côté ce qu’il cherche, juge chaque critère et attend deux oui.',
+      title: `${PUBLIC_NAME} : la confiance avant la rencontre`,
+      description: `${PUBLIC_NAME} confirme chaque côté, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui. Essayez avec deux entreprises fictives.`,
     },
     opening: {
-      h1: 'Votre plateforme réunit acheteurs et vendeurs. Linkbot trouve qui correspond.',
-      sub: 'Son widget demande à chaque côté ce qu’il cherche ; Linkbot montre un verdict pour chaque critère et ne met les deux côtés en relation qu’après le oui des deux.',
+      h1: 'La confiance avant la rencontre.',
+      sub: {
+        today: `${PUBLIC_NAME} confirme chaque côté, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui.`,
+        full: `${PUBLIC_NAME} contrôle qui est réel, rapproche en privé et ne met deux entreprises en relation que si les deux disent oui.`,
+      },
       button: 'Voir étape par étape',
+      try: 'Essayez',
+      start: 'Démarrer en 5 minutes',
+      contact: 'Contact',
     },
-    cards: {
-      h2: 'Ce qu’il fait pour vous',
-      items: [
-        { name: 'Demander avec les mots de votre marché', text: 'Chaque côté dit ce qu’il cherche ou propose, en une ligne ou par des questions adaptées à son marché ; rien n’est enregistré avant sa confirmation.', button: 'Voir la demande' },
-        { name: 'Nous continuons à chercher', text: 'Si rien ne correspond encore, Linkbot continue à chercher et ne prévient que vous quand quelque chose de nouveau correspond.', small: 'Dans la démo, ses e-mails vont à une boîte de test et n’atteignent personne.', button: 'Voir comment il continue à chercher' },
-        { name: 'Mis en relation seulement après deux oui', text: 'Deux côtés ne sont mis en relation qu’après l’accord d’une personne nommée et le oui des deux.', button: 'Voir la mise en relation' },
-      ],
+    trial: {
+      h2: 'Essayez : un acheteur, un fournisseur',
+      label: 'Données d’exemple inventées · fonctionne dans votre navigateur, rien n’est envoyé',
+      steps: ['Contrôle', 'Rapprochement en privé', 'Les deux disent oui'],
+      progress: 'Étapes',
+      buyer: { role: 'Acheteur', name: 'Northfield Fittings', wants: 'Cherche', text: 'Boîtiers en aluminium, 5 000 par an, ISO 9001, livraison dans l’UE' },
+      supplier: { role: 'Fournisseur', name: 'Lakeside Castings', wants: 'Propose', text: 'Pièces en aluminium moulées sous pression dès 1 000 pièces, ISO 9001, expédition dans toute l’UE' },
+      hidden: 'Nom masqué',
+      email: 'Adresse e-mail',
+      check: {
+        title: 'Chaque côté confirme son contact',
+        p: 'Chaque côté confirme ce qu’il a demandé et ouvre un lien envoyé à son adresse e-mail. Rien n’est enregistré avant sa confirmation.',
+        pending: 'Pas encore confirmée',
+        done: 'Confirmée par un lien',
+        button: 'Confirmer',
+        next: 'Chercher une correspondance',
+      },
+      match: {
+        title: 'Une correspondance possible, sans noms',
+        p: `${PUBLIC_NAME} compare les deux critère par critère. Chaque côté voit les verdicts, jamais le nom ni le contact de l’autre.`,
+        card: 'Correspondance possible',
+        criteria: [
+          { label: 'Matériau', value: 'Aluminium', verdict: 'meets' },
+          { label: 'Quantité', value: '5 000 par an ; dès 1 000 pièces', verdict: 'meets' },
+          { label: 'Certificat', value: 'ISO 9001', verdict: 'meets' },
+          { label: 'Livraison', value: 'Dans l’UE', verdict: 'meets' },
+          { label: 'Procédé', value: 'Moulage sous pression ; la demande ne le dit pas', verdict: 'unknown' },
+        ],
+        verdicts: { meets: 'Correspond', partly: 'Correspond en partie', conflicts: 'Contredit', unknown: 'Inconnu' },
+        approved: 'Une personne désignée de la plateforme a approuvé cette correspondance possible. L’approbation ne révèle rien.',
+        next: 'Demander aux deux côtés',
+      },
+      yes: {
+        title: 'Les deux disent oui, ou personne n’apprend rien',
+        p: 'Chaque côté répond seul. Tant que les deux n’ont pas dit oui, aucun ne sait qui est l’autre.',
+        ask: { buyer: 'Être mis en relation avec ce fournisseur ?', supplier: 'Être mis en relation avec cet acheteur ?' },
+        yes: 'Oui',
+        no: 'Non',
+        waiting: 'Oui. En attente de l’autre côté, qui ne voit pas cette réponse.',
+        said: 'Non.',
+        introduced: 'Mis en relation. Les deux ont dit oui ; c’est seulement maintenant que les noms et les adresses e-mail sont transmis.',
+        mode: 'Montré ici comme une mise en relation directe ; une plateforme peut aussi faire la mise en relation par sa propre équipe.',
+        declined: 'Pas de mise en relation. Un côté a dit non, donc aucun ne sait qui est l’autre.',
+        reset: 'Recommencer',
+      },
+      more: 'Qui voit quoi, étape par étape',
     },
     stage: {
-      h2: 'Une mise en relation, des deux côtés',
-      p: 'Une demande et une offre ne sont mises en relation qu’après l’accord d’une personne nommée et le oui des deux côtés.',
       roles: 'Quel côté montrer',
       buyer: 'Côté acheteur',
       supplier: 'Côté fournisseur',
-      label: 'Parcours enregistré · données fictives',
       supplierNote: 'Du côté du fournisseur, seul son oui est enregistré pour l’instant ; le fournisseur décrit son offre dans le même widget.',
-      link: 'Parcourir les six étapes',
-    },
-    sees: {
-      h2: 'Qui voit quoi, et quand',
-      p: 'Chaque étape ne montre que ce qu’elle permet ; les informations d’une mise en relation ne sortent qu’après le oui des deux côtés.',
-      link: 'Qui voit quoi, étape par étape',
     },
     platforms: {
       h2: 'Pour les plateformes',
       p: 'Un script et un élément sur votre page ; les questions s’adaptent à votre marché.',
       snippet: 'L’intégration la plus courte',
-      later: 'L’ajouter avec vos propres outils de build',
+      hosted: 'Accès hébergé pour d’autres plateformes',
       button: 'Pour les plateformes',
       developers: 'Pour les développeurs',
     },
     bottom: {
       h2: 'Votre marché n’y est pas encore ? Dites-nous ce que vous réunissez.',
       button: 'Dites-nous ce que vous réunissez',
-      prepared: 'L’adresse à laquelle écrire est en préparation ; la page derrière le bouton dit comment vous nous joindrez.',
+      prepared: 'L’adresse à laquelle écrire est en préparation ; la page derrière le lien dit comment vous nous joindrez.',
       line: 'Tout ce qui est montré ici fonctionne avec des données fictives ; contrôlé le {date}.',
       status: 'L’état complet',
     },
@@ -95,7 +132,7 @@ export const fr: FrontCopy = {
     hero: {
       eyebrow: 'Une couche d’appariement que toute plateforme peut intégrer',
       h1: ['Qui voit quoi,', 'et quand.'],
-      lede: 'Un pack donne une étape à chaque critère, et une étape est le point le plus loin qu’une valeur atteint : le tableau, une correspondance possible, la mise en relation, ou seulement l’équipe de la plateforme. Ci-dessous : une offre synthétique, étape par étape, et le reçu qui borne chaque lecture.',
+      lede: 'Le vocabulaire du marché donne une étape à chaque critère, et une étape est le point le plus loin qu’une valeur atteint : le tableau, une correspondance possible, la mise en relation, ou seulement l’équipe de la plateforme. Ci-dessous : une offre synthétique, étape par étape, et le reçu qui borne chaque lecture.',
       primary: 'Ce qu’une plateforme obtient',
       secondary: 'Qui voit quoi, en entier',
     },
@@ -138,17 +175,17 @@ export const fr: FrontCopy = {
     deletion: { h2: 'Suppression : ce qui part, et ce qui reste' },
     platforms: {
       h2: 'Pour les plateformes',
-      p: 'Un script et un élément mettent un espace sur votre page ; la console de votre équipe tourne sur votre machine ou derrière votre propre connexion ; votre serveur apprend les événements par des webhooks signés, qui sont dans le contrat et ne sont pas encore envoyés par l’espace staging.',
+      p: 'Un script et un élément mettent un espace sur votre page ; la console de votre équipe tourne sur votre machine ou derrière votre propre connexion ; votre serveur apprend les événements par des webhooks signés, qui sont dans le contrat et ne sont pas encore envoyés par l’espace de test.',
       link: 'Ce qu’une plateforme obtient',
     },
     verticals: {
       h2: 'Pour les secteurs',
-      p: 'Un pack décrit un marché : ses critères, options et unités, ses libellés et questions dans les langues de l’espace, ce que chaque critère divulgue à chaque étape, et les gates dont le marché a besoin. Le premier est celui des minéraux industriels.',
-      link: 'Ce qu’un pack contient',
+      p: 'Un vocabulaire du marché décrit un marché : ses critères, options et unités, ses libellés et questions dans les langues de l’espace, ce que chaque critère divulgue à chaque étape, et les gates dont le marché a besoin. Le premier est celui des minéraux industriels.',
+      link: 'Ce que contient un vocabulaire du marché',
     },
     state: {
       h2: 'État actuel',
-      p: 'L’offre ci-dessus est un texte fixe, écrit pour cette page dans le vocabulaire d’un pack synthétique ; le produit n’a pas tourné ici. La page de démo parcourt tout le chemin, étape par étape.',
+      p: 'L’offre ci-dessus est un texte fixe, écrit pour cette page dans un vocabulaire du marché synthétique ; le produit n’a pas tourné ici. La page de démo parcourt tout le chemin, étape par étape.',
     },
   },
   demo: {
@@ -166,8 +203,8 @@ export const fr: FrontCopy = {
       h2: 'Le parcours, étape par étape',
       who: 'Qui agit',
       items: [
-        { name: 'La demande', who: 'L’acheteur', text: 'L’acheteur décrit le besoin sur la page d’une plateforme, dans le formulaire que génère le pack du marché, ou en une ligne de texte que des règles fixes lisent et transforment en valeurs proposées. Rien n’est présélectionné, et ce que l’acheteur n’a pas indiqué reste inconnu.' },
-        { name: 'Les critères, confirmés', who: 'L’acheteur', text: 'L’acheteur contrôle chaque valeur et confirme. C’est seulement alors que quelque chose est enregistré : le serveur contrôle chaque valeur par rapport au pack et nomme chaque champ qui ne convient pas. L’adresse e-mail est confirmée par un lien.' },
+        { name: 'La demande', who: 'L’acheteur', text: 'L’acheteur décrit le besoin sur la page d’une plateforme, dans un formulaire avec les questions de son marché, ou en une ligne de texte que des règles fixes lisent et transforment en valeurs proposées. Rien n’est présélectionné, et ce que l’acheteur n’a pas indiqué reste inconnu.' },
+        { name: 'Les critères, confirmés', who: 'L’acheteur', text: 'L’acheteur contrôle chaque valeur et confirme. C’est seulement alors que quelque chose est enregistré : le serveur contrôle chaque valeur par rapport aux questions du marché et nomme chaque champ qui ne convient pas. L’adresse e-mail est confirmée par un lien.' },
         { name: 'Les correspondances possibles', who: 'L’espace', text: 'Le matching compare les critères enregistrés à ceux de l’autre côté, un par un : un verdict par critère, correspond, correspond en partie, contredit ou inconnu, jamais un score. Une correspondance possible ne montre à chaque côté que les verdicts et un avis indiquant que ce sont les personnes qui décident.' },
         { name: 'Les deux disent oui', who: 'L’acheteur et le fournisseur', text: 'Chaque côté répond à la correspondance possible pour lui-même. Avant que les deux aient dit oui, l’autre côté n’apprend rien, et un non ultérieur révoque un oui.' },
         { name: 'L’opérateur approuve', who: 'L’équipe de la plateforme', text: 'Un opérateur nommé enregistre les contrôles que l’espace exige et approuve la paire. Une approbation seule ne révèle rien, et chaque écriture indique qui l’a faite.' },
@@ -183,7 +220,7 @@ export const fr: FrontCopy = {
       previous: 'Étape précédente',
       next: 'Étape suivante',
       screens: [
-        ['Le widget de l’acheteur : le formulaire que génère le pack d’exemple, avec le phosphate naturel choisi et un minimum de P₂O₅ de 30 %. L’importance est marquée comme suggérée, et rien d’autre n’est choisi.'],
+        ['Le widget de l’acheteur : le formulaire avec les questions du marché d’exemple, avec le phosphate naturel choisi et un minimum de P₂O₅ de 30 %. L’importance est marquée comme suggérée, et rien d’autre n’est choisi.'],
         ['Le widget de l’acheteur après la confirmation : la demande est active, avec chaque critère et son importance. Aucune offre à afficher pour l’instant.'],
         ['Le widget de l’acheteur : une offre qui pourrait convenir, avec une coche par critère, la question « Souhaitez-vous une mise en relation ? » et la mention que ce sont les personnes qui décident.'],
         ['Le widget de l’acheteur après le oui : « Votre oui est enregistré. Sample space l’examine d’abord. »', 'Le widget du fournisseur : la même correspondance possible, vue du côté de l’offre comme une demande avec une coche par critère, après le propre oui du fournisseur, avec les mêmes mots.'],
@@ -197,9 +234,10 @@ export const fr: FrontCopy = {
       text: 'Après avoir confirmé, l’acheteur peut garder la demande ouverte et la suivre : à quelle fréquence, chaque semaine ou chaque jour ; sur quoi être informé ; et, dans les options d’e-mail, au plus combien par e-mail et aucun e-mail avant un jour choisi. Un suivi n’informe que son titulaire lorsque quelque chose de nouveau convient, et commence une fois l’adresse e-mail confirmée. Il dure 90 jours et peut être mis en pause, repris ou arrêté à tout moment, aussi depuis un lien dans ses e-mails.',
       screens: ['Le widget de l’acheteur après la confirmation, encore sans offre à afficher : un suivi hebdomadaire, sur tout ce qui remplit les critères obligatoires, au plus 5 par e-mail.', 'Le même widget après le lancement du suivi : il attend la confirmation de l’adresse e-mail, au plus 5 par e-mail, jusqu’au 23 janvier 2027. L’enregistrement n’a envoyé aucun e-mail, et l’adresse fictive n’existe pas.'],
     },
+    live: {
+      p: 'Ci-dessous, le widget lui-même, sur un espace de démonstration aux données fictives. Choisissez un côté et dites ce dont vous avez besoin ou ce que vous proposez ; rien n’est enregistré avant que vous confirmiez. Le parcours enregistré suit plus bas.',
+    },
     space: {
-      h2: 'Le tableau de l’espace de test',
-      on: 'Ci-dessous, le widget lui-même, servi par l’espace de test, en mode tableau : les demandes et offres ouvertes que leurs titulaires ont choisi de montrer, rendues moins précises comme le pack le déclare. Répondre à l’une d’elles commence à l’étape 1, de l’autre côté.',
       off: 'Cette page ne montre encore aucun widget : il attend un espace de démonstration aux données synthétiques. D’ici là, le parcours ci-dessus est montré en images.',
       notice: 'Un espace de test aux données fictives : n’y saisissez rien de réel. Ses e-mails n’atteignent personne.',
     },
@@ -211,7 +249,7 @@ export const fr: FrontCopy = {
       eyes: 3,
       open: 1,
       who: 'Toute personne qui peut voir le tableau',
-      rule: 'Seulement les champs à l’étape tableau, simplifiés comme le pack le déclare, et seulement pour les offres dont le propriétaire a donné son accord. Jamais l’auteur.',
+      rule: 'Seulement les champs à l’étape tableau, simplifiés comme le vocabulaire du marché le déclare, et seulement pour les offres dont le propriétaire a donné son accord. Jamais l’auteur.',
       fields: [
         { label: 'Produit', value: 'Phosphate naturel' },
         { label: 'Teneur en P₂O₅', value: '31–32 %' },
@@ -244,14 +282,14 @@ export const fr: FrontCopy = {
       eyes: 1,
       open: 0.5,
       who: 'En mode opérateur l’équipe de la plateforme ; en mode direct les deux côtés',
-      rule: 'Le nom affiché, l’adresse e-mail confirmée et les critères que le pack garde pour cette étape. Chaque lecture est enregistrée sur le reçu.',
+      rule: 'Le nom affiché, l’adresse e-mail confirmée et les critères que le vocabulaire du marché garde pour cette étape. Chaque lecture est enregistrée sur le reçu.',
       fields: [
         { label: 'Nom affiché', value: 'celui de l’offre, tel qu’il a été donné' },
         { label: 'Adresse e-mail', value: 'une seule, confirmée par un lien' },
-        { label: 'Critères à l’étape mise en relation', value: 'comme le pack le déclare' },
+        { label: 'Critères à l’étape mise en relation', value: 'comme le vocabulaire du marché le déclare' },
       ],
       not: [
-        'Les champs que le pack garde pour l’opérateur',
+        'Les champs que le vocabulaire du marché garde pour l’opérateur',
         'En mode opérateur : quoi que ce soit de l’autre côté ; le reçu de chaque côté dit que les deux ont accepté et que la plateforme les contactera',
       ],
     },
@@ -261,7 +299,7 @@ export const fr: FrontCopy = {
       eyes: 1,
       open: 0.3,
       who: 'Seulement l’équipe de la plateforme',
-      rule: 'Les champs que le pack garde pour la plateforme, comme les détails d’identité pour un contrôle de partie. Ils n’atteignent jamais l’autre côté, et chaque accès est enregistré.',
+      rule: 'Les champs que le vocabulaire du marché garde pour la plateforme, comme les détails d’identité pour un contrôle de partie. Ils n’atteignent jamais l’autre côté, et chaque accès est enregistré.',
       fields: [
         { label: 'Détails d’identité', value: 'pour le contrôle de partie de l’espace, vus par l’équipe' },
         { label: 'L’enregistrement de la gate', value: 'franchie, échouée ou renvoyée, avec une référence et sans données personnelles' },

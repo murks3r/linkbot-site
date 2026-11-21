@@ -1,18 +1,19 @@
 ---
-/* For a developer: the shortest embed and a short SDK example, both verbatim from the Connect repository; where its
-   docs and examples are (paths, not links, while the repository is private); and what is not available yet. Words:
-   the catalogue's developers; snippets and paths: src/lib/connect-docs.ts. Each sentence has its row in
+/* For a developer: the shortest embed and a short SDK example, both verbatim from the Connect repository; its docs,
+   rendered in English under /developers/docs (src/lib/open-core-docs.ts), section by section; and what is not
+   available yet. Words: the catalogue's developers; snippets: src/lib/connect-docs.ts. Each sentence has its row in
    docs/truth-check.md. */
 import Base from '../../layouts/Base.astro';
 import Toc from '../../components/Toc.astro';
 import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
-import { CONNECT_BRANCH, CONNECT_PUBLIC, CONNECT_REPO, DOC_PATHS, EMBED_SNIPPET, EMBED_URL, SDK_SNIPPET, connectUrl, type DocKey } from '../../lib/connect-docs';
+import { EMBED_SNIPPET, EMBED_URL, SDK_SNIPPET } from '../../lib/connect-docs';
+import { LINKED_SECTIONS } from '../../lib/open-core-docs';
 export const getStaticPaths = () => langPaths();
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const { t, fallback } = resolve(lang);
 const d = t.developers;
-const docs = (Object.keys(DOC_PATHS) as DocKey[]).map(key => ({ path: DOC_PATHS[key], ...d.docs.items[key] }));
+const docs = LINKED_SECTIONS.map(({ id, href }) => ({ href, ...d.docs.sections[id as keyof typeof d.docs.sections] }));
 ---
 <Base lang={lang} t={t} fallback={fallback} title={d.title} description={d.description} path="/developers" crumbs={[[t.site.nav.developers, '/developers']]}>
   <section class="page-hero">
@@ -43,11 +44,11 @@ const docs = (Object.keys(DOC_PATHS) as DocKey[]).map(key => ({ path: DOC_PATHS[
 
       <section id="docs" aria-labelledby="docs-title">
         <h2 id="docs-title">{d.docs.title}</h2>
-        <p>{d.docs.lede} <code translate="no">{CONNECT_REPO}</code>, <code translate="no">{CONNECT_BRANCH}</code></p>
+        <p>{d.docs.lede}</p>
         <dl class="docs">
           {docs.map(doc => (
             <div>
-              <dt>{doc.name} <code translate="no">{CONNECT_PUBLIC ? <a href={connectUrl(doc.path)}>{doc.path}</a> : doc.path}</code></dt>
+              <dt><a href={doc.href} hreflang={lang === 'en' ? undefined : 'en'}>{doc.name}</a></dt>
               <dd>{doc.body}</dd>
             </div>
           ))}
@@ -70,7 +71,6 @@ const docs = (Object.keys(DOC_PATHS) as DocKey[]).map(key => ({ path: DOC_PATHS[
   .docs { display: grid; gap: 0; border-top: 2px solid var(--lb-ink); }
   .docs > div { display: grid; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--lb-line-quiet); }
   .docs dt { font-weight: 650; }
-  .docs dt code { display: block; margin-top: 2px; font-weight: 400; font-size: var(--size-small); color: var(--lb-slate); overflow-wrap: anywhere; }
   .docs dd { color: var(--lb-slate); }
   .points { display: grid; gap: 0; border-top: 2px solid var(--lb-ink); }
   .points li { padding: 14px 0; border-bottom: 1px solid var(--lb-line-quiet); }

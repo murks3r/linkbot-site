@@ -1,0 +1,62 @@
+---
+/* The developer docs, in English only (src/lib/open-core-docs.ts): Connect's open-core export as copied into
+   src/content/open-core (SOURCE.json names the commit) and the site's own pages in src/content/developers, rendered at
+   build time. Every page says first that nothing of it is published yet; the words below are the export's own. */
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import DocsNav from '../../../components/DocsNav.astro';
+import { resolve } from '../../../i18n';
+import { DOCS_BASE, DOC_FILES, docDescription, docRoute, docTitle, pageRoute } from '../../../lib/open-core-docs';
+import source from '../../../content/open-core/SOURCE.json';
+
+export async function getStaticPaths() {
+  const exported = (await getCollection('openCore')).filter(entry => DOC_FILES.includes(entry.id))
+    .map(entry => ({ entry, route: docRoute(entry.id), file: `docs/${entry.id}` }));
+  const own = (await getCollection('developers')).map(entry => ({ entry, route: pageRoute(entry.id.replace(/\.md$/, '')), file: null }));
+  const pages = [...exported, ...own];
+  const titles = Object.fromEntries(pages.map(({ entry, route }) => [route, docTitle(entry.body ?? '')]));
+  return pages.map(page => ({ params: { slug: page.route.slice(DOCS_BASE.length + 1) || undefined }, props: { ...page, titles } }));
+}
+
+const { entry, route, file, titles } = Astro.props;
+const { Content } = await render(entry);
+const { t } = resolve('en');
+const title = titles[route];
+const crumbs: [string, string][] = [[t.site.nav.developers, '/developers'], ['Docs', DOCS_BASE], ...(route === DOCS_BASE ? [] : [[title, route] as [string, string]])];
+---
+<Base lang="en" t={t} title={route === DOCS_BASE ? title : `${title} · Linkbot docs`} description={docDescription(entry.body ?? '')} path={route} crumbs={crumbs} oneLanguage>
+  <p class="docs-note" role="note"><span class="wrap"><strong>Not published yet.</strong> The open-core repository is not public and its packages are not on npm; hosted access for other platforms is coming soon. The examples run against a local sample space with made-up example data. <code>OPEN_CORE_REPO_URL</code> stands for the repository's address, named when it is published.</span></p>
+  <div class="wrap doc docs">
+    <DocsNav current={route} titles={titles} />
+    <article class="docs-body">
+      <Content />
+      <p class="docs-source">{file
+        ? <>From the open-core export of the Connect repository, <code>{file}</code> at <code>{source.commit}</code>, in English.</>
+        : <>Written for this site, in English.</>}</p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .docs-note { padding: 12px 0; border-bottom: 1px solid var(--lb-line); background: var(--lb-line-quiet); font-size: var(--size-small); }
+  .docs-note .wrap { display: block; }
+  .docs { padding-top: 32px; }
+  .docs-body { min-width: 0; max-width: 48rem; display: grid; gap: 16px; align-content: start; }
+  .docs-body :global(h1) { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); line-height: 1.1; }
+  .docs-body :global(h2) { font-size: clamp(1.4rem, 1.2rem + 0.8vw, 1.8rem); margin-top: 24px; scroll-margin-top: var(--anchor-top); }
+  .docs-body :global(h3) { font-size: 1.15rem; margin-top: 12px; scroll-margin-top: var(--anchor-top); }
+  .docs-body :global(p), .docs-body :global(li) { max-width: var(--measure); }
+  .docs-body :global(ul), .docs-body :global(ol) { display: grid; gap: 6px; padding-left: 1.2em; }
+  .docs-body :global(ul) { list-style: disc; }
+  .docs-body :global(ol) { list-style: decimal; }
+  .docs-body :global(a) { color: var(--lb-ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--lb-line); }
+  .docs-body :global(a:hover) { text-decoration-color: currentColor; }
+  .docs-body :global(blockquote) { padding: 12px 16px; border-left: 3px solid var(--lb-ink); background: var(--lb-line-quiet); font-size: var(--size-small); }
+  .docs-body :global(code) { font-size: 0.92em; overflow-wrap: anywhere; }
+  .docs-body :global(pre) { overflow-x: auto; padding: 16px 18px; border-radius: var(--r-2); font-size: var(--size-small); line-height: 1.55; }
+  .docs-body :global(pre code) { overflow-wrap: normal; }
+  .docs-body :global(table) { display: block; overflow-x: auto; border-collapse: collapse; font-size: var(--size-small); }
+  .docs-body :global(th), .docs-body :global(td) { padding: 8px 10px; border-bottom: 1px solid var(--lb-line-quiet); text-align: left; vertical-align: top; }
+  .docs-body :global(th) { border-bottom: 2px solid var(--lb-ink); }
+  .docs-source { margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--lb-line-quiet); color: var(--lb-slate); font-size: var(--size-small); }
+</style>

@@ -16,3 +16,9 @@
 .fp-lines li:last-child { border-bottom: 1px solid var(--lb-line); }
 /* Code, as the integration pages set it. */
 .fp-code { margin: 0; padding: 16px 18px; border: 1px solid var(--lb-line); border-radius: var(--r-3); background: var(--lb-surface); font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: .86rem; line-height: 1.55; color: var(--lb-ink); overflow-x: auto; white-space: pre; }
+/* The role switch, "As a buyer" / "As a supplier" (src/front/sides.ts): one side at a time; the side's own title is
+   then read out only. */
+.fp-switch { display: inline-flex; justify-self: start; padding: 4px; border-radius: var(--pill); background: var(--lb-ground); border: 1px solid var(--lb-line); }
+.fp-switch button { min-height: var(--lb-chip-h); padding: 0 18px; border: 0; border-radius: var(--pill); background: transparent; font-weight: 600; color: var(--lb-slate); }
+.fp-switch button[aria-pressed='true'] { background: var(--lb-ink); color: var(--lb-surface); }
+[data-sides][data-one] .fp-side-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

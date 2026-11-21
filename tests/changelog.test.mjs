@@ -1,5 +1,6 @@
 /* /changelog is built from docs/changelog.yml. Here every entry has a source, a state and a true sentence in every
-   language, a malformed entry stops the build, and the built page shows every entry with its source. */
+   language, a malformed entry stops the build, and the built page shows every entry without its sources, which name
+   private repositories. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
@@ -35,13 +36,13 @@ test('an entry without a source, a state or a language stops the build', () => {
   assert.throws(() => parseChangelog(yml('sources: [{ repo: murks3r/linkbot, pr: 1 }]', 'built', 'en: a')), /no text in de/);
 });
 
-test('/changelog shows every entry with its day and sources, in every language', { skip }, () => {
+test('/changelog shows every entry with its day and none of its sources, in every language', { skip }, () => {
   for (const lang of LANGS) {
     const html = readFileSync(new URL(`.${pathFor(lang, '/changelog')}.html`, dist), 'utf8');
     for (const entry of entries) {
       assert.ok(html.includes(longDay(lang, entry.date)), `${lang}: the day ${entry.date}`);
-      for (const { repo, pr } of entry.sources) assert.ok(html.includes(`${repo} #${pr}`), `${lang}: ${repo} #${pr}`);
     }
     assert.equal((html.match(/class="entry"/g) ?? []).length, entries.length, `${lang}: one item per entry`);
+    assert.doesNotMatch(html, /murks3r/, `${lang}: an account name`);
   }
 });

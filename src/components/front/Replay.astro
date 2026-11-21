@@ -27,7 +27,7 @@ const picture = (shot: string, count: number) => pictureOf(lang, shot, count);
       </div>
       <div class="fr-caption">
         <p class="fd-n">{D.replay.position.replace('{n}', String(index + 1)).replace('{total}', total)}</p>
-        <h3>{step.name}</h3>
+        <h4>{step.name}</h4>
         <p class="fd-who"><span class="eyebrow">{D.steps.who}</span>{step.who}</p>
         <p class="fr-text">{step.text}</p>
       </div>
@@ -45,7 +45,7 @@ const picture = (shot: string, count: number) => pictureOf(lang, shot, count);
   </div>
   <div class="fr-caption">
     <p class="fr-label">{D.replay.label}</p>
-    <h3 id="watch">{D.watch.name}</h3>
+    <h4 id="watch">{D.watch.name}</h4>
     <p class="fd-who"><span class="eyebrow">{D.steps.who}</span>{D.watch.who}</p>
     <p class="fr-text">{D.watch.text}</p>
   </div>

@@ -1,0 +1,89 @@
+---
+/* The home's "both say yes" demo: buyer and supplier side by side (stacked on a phone), Linkbot's step in between.
+   Behaviour and states: src/front/trial.ts (no network call, nothing stored); words: landing.trial in the reader's
+   language (src/front/copy.ts). Rendered in the demo's first state for scripts (data-off) and as the whole path without
+   them (data-story-off, src/front/trial.css). */
+import Icon from '../Icon.astro';
+import Verdict from './Verdict.astro';
+import { START, STORY, holds } from '../../front/trial';
+import type { FrontCopy } from '../../front/copy';
+interface Props { T: FrontCopy['landing']['trial'] }
+const { T } = Astro.props;
+const SIDES = ['buyer', 'supplier'] as const;
+/** The attributes of an element shown only while its conditions hold (trial.ts, holds). */
+const when = (conditions: string) => ({ 'data-if': conditions, 'data-off': !holds(conditions, START) || undefined, 'data-story-off': !holds(conditions, STORY) || undefined });
+---
+<section class="tr" aria-labelledby="trial-title" data-trial>
+  <div class="tr-top">
+    <h2 id="trial-title">{T.h2}</h2>
+    <p class="tr-label">{T.label}</p>
+  </div>
+  <ol class="tr-progress" aria-label={T.progress}>
+    {T.steps.map((name, index) => <li data-step={index + 1} data-state={index === 0 ? 'now' : 'next'} aria-current={index === 0 ? 'step' : undefined}><span class="tr-n" aria-hidden="true">{index + 1}</span>{name}</li>)}
+  </ol>
+
+  <div class="tr-grid">
+    <!-- Linkbot's step: what it does, the possible fit, the end. -->
+    <div class="tr-info">
+      <div {...when('step:1')}>
+        <h3 data-title="1" tabindex="-1">{T.check.title}</h3>
+        <p>{T.check.p}</p>
+      </div>
+      <div {...when('step:2')}>
+        <h3 data-title="2" tabindex="-1">{T.match.title}</h3>
+        <p>{T.match.p}</p>
+      </div>
+      <div class="tr-card" {...when('step:2|3')}>
+        <p class="tr-card-head"><Icon name="fit" />{T.match.card}</p>
+        <ul>
+          {T.match.criteria.map(c => <li>
+            <span class="tr-crit">{c.label}</span>
+            <span class="tr-value">{c.value}</span>
+            <span class="tr-verdict" data-kind={c.verdict}><Verdict kind={c.verdict as 'meets' | 'unknown'} />{T.match.verdicts[c.verdict as keyof typeof T.match.verdicts]}</span>
+          </li>)}
+        </ul>
+      </div>
+      <div {...when('step:3')}>
+        <p class="tr-approved"><Icon name="check" />{T.match.approved}</p>
+        <h3 data-title="3" tabindex="-1">{T.yes.title}</h3>
+        <p>{T.yes.p}</p>
+      </div>
+      <p class="tr-result" data-result="introduced" data-tone="yes" {...when('end:introduced')}>{T.yes.introduced}</p>
+      <p class="tr-mode" {...when('end:introduced')}>{T.yes.mode}</p>
+      <p class="tr-result" data-result="declined" data-tone="no" {...when('end:declined')}>{T.yes.declined}</p>
+    </div>
+
+    {SIDES.map(side => <article class="tr-side" data-side={side} aria-labelledby={`tr-${side}`}>
+      <header>
+        <p class="tr-role" id={`tr-${side}`}>{T[side].role}</p>
+        <p class="tr-name"><span {...when('end:introduced')}>{T[side].name}</span><span class="tr-hidden" {...when('end:open|declined')}><Icon name="eye" />{T.hidden}</span></p>
+      </header>
+      <p class="tr-wants"><span>{T[side].wants}</span> {T[side].text}</p>
+      <div class="tr-check">
+        <p><span class="tr-key">{T.email}</span>
+          <span {...when(`${side}:new`)} data-note={`${side}-new`}>{T.check.pending}</span>
+          <span class="tr-ok" {...when(`${side}:confirmed|yes|no`)} data-note={`${side}-confirmed`}><Icon name="check" />{T.check.done}<span class="sr"> ({T[side].role})</span></span>
+        </p>
+        <button type="button" class="btn btn-secondary" data-size="sm" data-act={`confirm-${side}`} {...when(`step:1 ${side}:new`)}>{T.check.button}<span class="sr">: {T[side].role}</span></button>
+      </div>
+      <div class="tr-answer" {...when('step:3')}>
+        <p {...when(`${side}:confirmed end:open`)}>{T.yes.ask[side]}</p>
+        <div class="tr-buttons" {...when(`${side}:confirmed end:open`)}>
+          <button type="button" class="btn btn-primary" data-size="sm" data-act={`yes-${side}`}>{T.yes.yes}<span class="sr">: {T[side].role}</span></button>
+          <button type="button" class="btn btn-secondary" data-size="sm" data-act={`no-${side}`}>{T.yes.no}<span class="sr">: {T[side].role}</span></button>
+        </div>
+        <p class="tr-said" {...when(`${side}:yes end:open`)} data-note={`${side}-yes`}><span class="sr">{T[side].role}: </span>{T.yes.waiting}</p>
+        <p class="tr-said" {...when(`${side}:no`)} data-note={`${side}-no`}>{T[side].role}: {T.yes.said}</p>
+        <p class="tr-said tr-ok" {...when(`${side}:yes end:introduced|declined`)}><Icon name="check" />{T.yes.yes}</p>
+      </div>
+    </article>)}
+
+    <div class="tr-nav">
+      <button type="button" class="btn btn-primary" data-act="next" {...when('step:1|2')} disabled>
+        <span {...when('step:1')}>{T.check.next}</span><span {...when('step:2')}>{T.match.next}</span><Icon name="arrow" />
+      </button>
+      <button type="button" class="btn btn-secondary" data-act="reset" {...when('end:introduced|declined')}>{T.yes.reset}</button>
+    </div>
+  </div>
+  <p class="sr" role="status" data-say></p>
+</section>

@@ -1,5 +1,6 @@
-/* The demo page, /demo: a buyer's whole path in six steps, from the request to the introduction, and beside it the
-   widget of a test space when the build has one (src/demo/space.ts). Every step restates what the Space API contract
+/* The demo page, /demo: a buyer's whole path in six steps, from the request to the introduction, and above it the
+   widget of a demo space when the build turns it on (src/demo/space.ts). Plain visitor words, as on the landing page:
+   no "pack", "watch" or "staging". Every step restates what the Space API contract
    provides today, and each sentence has a row in docs/truth-check.md. The English source of src/front/copy.ts; no
    forbidden word (tests/front.test.mjs). */
 export const DEMO = {
@@ -17,8 +18,8 @@ export const DEMO = {
     h2: 'The path, step by step',
     who: 'Who acts',
     items: [
-      { name: 'The request', who: 'The buyer', text: 'The buyer describes the need on a platform’s page, in the form the market’s pack generates, or in one line of text that fixed rules read and turn into proposed values. Nothing is pre-selected, and what the buyer did not state stays unknown.' },
-      { name: 'The criteria, confirmed', who: 'The buyer', text: 'The buyer checks every value and confirms. Only now is anything stored: the server checks every value against the pack and names each field that fails. The email address is confirmed through a link.' },
+      { name: 'The request', who: 'The buyer', text: 'The buyer describes the need on a platform’s page, in a form with the questions of its market, or in one line of text that fixed rules read and turn into proposed values. Nothing is pre-selected, and what the buyer did not state stays unknown.' },
+      { name: 'The criteria, confirmed', who: 'The buyer', text: 'The buyer checks every value and confirms. Only now is anything stored: the server checks every value against the market’s questions and names each field that fails. The email address is confirmed through a link.' },
       { name: 'The possible fits', who: 'The space', text: 'Matching compares the stored criteria with the other side’s, one by one: a verdict per criterion, meets, partly, conflicts or unknown, never a score. A possible fit shows each side only the verdicts and a notice that people decide.' },
       { name: 'Both say yes', who: 'The buyer and the supplier', text: 'Each side answers the possible fit for its own side. Before both have said yes the other side learns nothing, and a later no revokes a yes.' },
       { name: 'The operator approves', who: 'The platform’s team', text: 'A named operator records the checks the space requires and approves the pair. An approval alone discloses nothing, and every write names who made it.' },
@@ -34,7 +35,7 @@ export const DEMO = {
     previous: 'Previous step',
     next: 'Next step',
     screens: [
-      ['The buyer’s widget: the form the sample pack generates, with rock phosphate chosen and a P₂O₅ minimum of 30 %. The importance “Must” is marked as suggested, and nothing else is chosen.'],
+      ['The buyer’s widget: the form with the sample market’s questions, with rock phosphate chosen and a P₂O₅ minimum of 30 %. The importance “Must” is marked as suggested, and nothing else is chosen.'],
       ['The buyer’s widget after confirming: the request is active, with each criterion and its importance. No offers to show yet.'],
       ['The buyer’s widget: an offer that may fit, with a tick per criterion, the question “Do you want an introduction?” and the notice that people decide.'],
       ['The buyer’s widget after the yes: “Your yes is recorded. Sample space reviews it first.”', 'The supplier’s widget: the same possible fit, seen from the offer’s side as a request with a tick per criterion, after the supplier’s own yes, with the same words.'],
@@ -43,14 +44,16 @@ export const DEMO = {
     ],
   },
   watch: {
-    name: 'If nothing fits yet: a watch',
+    name: 'If nothing fits yet: Linkbot keeps looking',
     who: 'The buyer',
-    text: 'After confirming, the buyer can keep the request open and watch it: how often, weekly or daily; what to hear about; and, in the email options, at most how many per email and no email before a chosen day. A watch tells only its owner when something new fits, and starts once the email address is confirmed. It runs for 90 days and can be paused, resumed or ended at any time, also from a link in its emails.',
-    screens: ['The buyer’s widget after confirming, with no offers to show yet: a watch set to weekly, on everything that meets the musts, at most 5 per email.', 'The same widget after “Start watching”: the watch waits for the email address to be confirmed, at most 5 per email, until 23 January 2027. The recording sent no email, and the fictional address never resolves.'],
+    text: 'After confirming, the buyer can keep the request open and have Linkbot keep looking: how often, weekly or daily; what to hear about; and, in the email options, at most how many per email and no email before a chosen day. Linkbot then tells only the buyer when something new fits, starting once the email address is confirmed. It keeps looking for 90 days and can be paused, resumed or ended at any time, also from a link in its emails.',
+    screens: ['The buyer’s widget after confirming, with no offers to show yet: keep looking weekly, for everything that meets the musts, at most 5 per email.', 'The same widget after “Start watching”: the search waits for the email address to be confirmed, at most 5 per email, until 23 January 2027. The recording sent no email, and the fictional address never resolves.'],
+  },
+  /* Only while the switch is on (src/demo/space.ts); its heading and button are the landing page's "Try it". */
+  live: {
+    p: 'Below is the widget itself, on a demo space with fictional data. Choose a side and say what you need or offer; nothing is stored until you confirm. The recorded walkthrough follows below.',
   },
   space: {
-    h2: 'The test space’s board',
-    on: 'Below is the widget itself, served by the test space, in board mode: the open requests and offers whose owners chose to show them, coarsened as the pack declares. Answering one starts at step 1, on the other side.',
     off: 'No widget on this page yet: it waits for a demo space with synthetic data. Until then the path above is shown in pictures.',
     notice: 'A test space with fictional data: enter nothing real. Its emails reach no one.',
   },

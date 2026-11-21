@@ -1,6 +1,7 @@
 /* de: the front's words (src/front/copy.ts); the page's sentences are the site's. Not yet read by a native speaker
    (docs/truth-check.md). */
 import type { FrontCopy } from '../copy.ts';
+import { PUBLIC_NAME } from '../../i18n/terms.ts';
 
 export const de: FrontCopy = {
   a: {
@@ -25,7 +26,7 @@ export const de: FrontCopy = {
           text: 'Ein benannter, aktiver Operator gibt den Fall frei. Eine Freigabe allein gibt nichts preis.',
         },
         {
-          name: 'Beide Ja',
+          name: 'Beide sagen Ja',
           text: 'Jede Seite antwortet für sich. Bevor beide Ja gesagt haben, erfährt die andere Seite nichts.',
         },
         {
@@ -39,49 +40,85 @@ export const de: FrontCopy = {
   },
   landing: {
     meta: {
-      title: 'Linkbot: Ihre Plattform bringt Käufer und Verkäufer zusammen, Linkbot findet, wer passt',
-      description: 'Für Plattformen, die Käufer und Verkäufer zusammenbringen: ein Widget, das jede Seite fragt, was sie braucht, je Kriterium urteilt und nach zwei Ja vorstellt.',
+      title: `${PUBLIC_NAME}: Vertrauen, bevor man sich kennt`,
+      description: `${PUBLIC_NAME} bestätigt jede Seite, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen. Ausprobieren mit zwei erfundenen Unternehmen.`,
     },
     opening: {
-      h1: 'Ihre Plattform bringt Käufer und Verkäufer zusammen. Linkbot findet, wer passt.',
-      sub: 'Sein Widget fragt jede Seite, was sie braucht; Linkbot zeigt für jedes Kriterium ein Urteil und stellt die beiden Seiten erst vor, wenn beide Ja sagen.',
+      h1: 'Vertrauen, bevor man sich kennt.',
+      sub: {
+        today: `${PUBLIC_NAME} bestätigt jede Seite, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen.`,
+        full: `${PUBLIC_NAME} prüft, wer echt ist, gleicht verborgen ab und stellt zwei Unternehmen erst vor, wenn beide Ja sagen.`,
+      },
       button: 'Schritt für Schritt ansehen',
+      try: 'Ausprobieren',
+      start: 'In 5 Minuten starten',
+      contact: 'Kontakt',
     },
-    cards: {
-      h2: 'Was es für Sie tut',
-      items: [
-        { name: 'Fragen in der Sprache Ihres Markts', text: 'Jede Seite sagt, was sie braucht oder anbietet, in einer Zeile oder in Fragen, die zu ihrem Markt passen; gespeichert wird erst, wenn sie bestätigt.', button: 'Die Anfrage ansehen' },
-        { name: 'Wir suchen weiter', text: 'Passt noch nichts, sucht Linkbot weiter und sagt nur Ihnen Bescheid, wenn etwas Neues passt.', small: 'In der Demo gehen seine E-Mails an ein Testpostfach und erreichen niemanden.', button: 'Ansehen, wie es weitersucht' },
-        { name: 'Vorgestellt erst nach zwei Ja', text: 'Zwei Seiten werden erst vorgestellt, wenn eine benannte Person zustimmt und beide Ja sagen.', button: 'Die Vorstellung ansehen' },
-      ],
+    trial: {
+      h2: 'Probieren Sie es aus: ein Käufer, ein Lieferant',
+      label: 'Erfundene Beispieldaten · läuft in Ihrem Browser, nichts wird gesendet',
+      steps: ['Prüfen', 'Verborgen abgleichen', 'Beide sagen Ja'],
+      progress: 'Schritte',
+      buyer: { role: 'Käufer', name: 'Northfield Fittings', wants: 'Braucht', text: 'Aluminiumgehäuse, 5.000 im Jahr, ISO 9001, Lieferung innerhalb der EU' },
+      supplier: { role: 'Lieferant', name: 'Lakeside Castings', wants: 'Bietet', text: 'Aluminium-Druckgussteile ab 1.000 Stück, ISO 9001, Versand in die ganze EU' },
+      hidden: 'Name verborgen',
+      email: 'E-Mail-Adresse',
+      check: {
+        title: 'Jede Seite bestätigt ihren Kontakt',
+        p: 'Jede Seite bestätigt, was sie angefragt hat, und öffnet einen Link, der an ihre E-Mail-Adresse geht. Vor der Bestätigung wird nichts gespeichert.',
+        pending: 'Noch nicht bestätigt',
+        done: 'Über einen Link bestätigt',
+        button: 'Bestätigen',
+        next: 'Passung suchen',
+      },
+      match: {
+        title: 'Eine mögliche Passung, ohne Namen',
+        p: `${PUBLIC_NAME} vergleicht beide Kriterium für Kriterium. Jede Seite sieht die Urteile, nie den Namen oder Kontakt der anderen.`,
+        card: 'Mögliche Passung',
+        criteria: [
+          { label: 'Material', value: 'Aluminium', verdict: 'meets' },
+          { label: 'Menge', value: '5.000 im Jahr; ab 1.000 Stück', verdict: 'meets' },
+          { label: 'Zertifikat', value: 'ISO 9001', verdict: 'meets' },
+          { label: 'Lieferung', value: 'Innerhalb der EU', verdict: 'meets' },
+          { label: 'Verfahren', value: 'Druckguss; die Anfrage sagt nichts dazu', verdict: 'unknown' },
+        ],
+        verdicts: { meets: 'Passt', partly: 'Passt teilweise', conflicts: 'Widerspricht', unknown: 'Unbekannt' },
+        approved: 'Eine benannte Person der Plattform hat diese mögliche Passung freigegeben. Die Freigabe gibt nichts preis.',
+        next: 'Beide Seiten fragen',
+      },
+      yes: {
+        title: 'Beide sagen Ja, oder niemand erfährt etwas',
+        p: 'Jede Seite antwortet für sich. Bevor beide Ja sagen, erfährt keine, wer die andere ist.',
+        ask: { buyer: 'Diesem Lieferanten vorgestellt werden?', supplier: 'Diesem Käufer vorgestellt werden?' },
+        yes: 'Ja',
+        no: 'Nein',
+        waiting: 'Ja. Wartet auf die andere Seite, die diese Antwort nicht sieht.',
+        said: 'Nein.',
+        introduced: 'Vorgestellt. Beide haben Ja gesagt; erst jetzt gehen Namen und E-Mail-Adressen hinaus.',
+        mode: 'Hier als direkte Vorstellung gezeigt; eine Plattform kann die Vorstellung auch über ihr eigenes Team machen.',
+        declined: 'Keine Vorstellung. Eine Seite hat Nein gesagt; keine erfährt, wer die andere ist.',
+        reset: 'Neu beginnen',
+      },
+      more: 'Wer was sieht, Schritt für Schritt',
     },
     stage: {
-      h2: 'Eine Vorstellung, von beiden Seiten',
-      p: 'Eine Anfrage und ein Angebot werden erst vorgestellt, wenn eine benannte Person zustimmt und beide Seiten Ja sagen.',
       roles: 'Welche Seite zeigen',
       buyer: 'Als Käufer',
       supplier: 'Als Lieferant',
-      label: 'Aufgezeichneter Durchgang · erfundene Daten',
       supplierNote: 'Von der Seite des Lieferanten ist bisher nur sein Ja aufgezeichnet; sein Angebot beschreibt der Lieferant im selben Widget.',
-      link: 'Alle sechs Schritte durchgehen',
-    },
-    sees: {
-      h2: 'Wer was sieht, und wann',
-      p: 'Jeder Schritt zeigt nur, was dieser Schritt erlaubt; die Angaben für eine Vorstellung gehen erst nach dem Ja beider Seiten hinaus.',
-      link: 'Wer was sieht, Schritt für Schritt',
     },
     platforms: {
       h2: 'Für Plattformen',
       p: 'Ein Skript und ein Element auf Ihrer Seite; die Fragen passen zu Ihrem Markt.',
       snippet: 'Die kürzeste Einbettung',
-      later: 'Mit Ihren eigenen Build-Werkzeugen einbinden',
+      hosted: 'Gehosteter Zugang für andere Plattformen',
       button: 'Für Plattformen',
       developers: 'Für Entwickler',
     },
     bottom: {
       h2: 'Ihr Markt ist noch nicht dabei? Sagen Sie uns, was Sie zusammenbringen.',
       button: 'Sagen Sie uns, was Sie zusammenbringen',
-      prepared: 'Die Adresse, an die Sie schreiben können, ist in Vorbereitung; die Seite hinter dem Knopf sagt, wie Sie uns erreichen werden.',
+      prepared: 'Die Adresse, an die Sie schreiben können, ist in Vorbereitung; die Seite hinter dem Link sagt, wie Sie uns erreichen werden.',
       line: 'Alles, was hier zu sehen ist, läuft mit erfundenen Daten; geprüft am {date}.',
       status: 'Der ganze Stand',
     },
@@ -95,7 +132,7 @@ export const de: FrontCopy = {
     hero: {
       eyebrow: 'Eine Matching-Schicht, die jede Plattform einbetten kann',
       h1: ['Wer was sieht,', 'und wann.'],
-      lede: 'Ein Pack gibt jedem Kriterium eine Stufe, und eine Stufe ist der weiteste Punkt, bis zu dem ein Wert gelangt: das Board, eine mögliche Passung, die Vorstellung oder allein das Team der Plattform. Unten: ein synthetisches Angebot, Stufe für Stufe, und die Quittung, die jeden Lesezugriff begrenzt.',
+      lede: 'Das Marktvokabular gibt jedem Kriterium eine Stufe, und eine Stufe ist der weiteste Punkt, bis zu dem ein Wert gelangt: das Board, eine mögliche Passung, die Vorstellung oder allein das Team der Plattform. Unten: ein synthetisches Angebot, Stufe für Stufe, und die Quittung, die jeden Lesezugriff begrenzt.',
       primary: 'Was eine Plattform bekommt',
       secondary: 'Wer was sieht, im Einzelnen',
     },
@@ -138,17 +175,17 @@ export const de: FrontCopy = {
     deletion: { h2: 'Löschung: was geht, und was bleibt' },
     platforms: {
       h2: 'Für Plattformen',
-      p: 'Ein Skript und ein Element bringen einen Space auf Ihre Seite; die Konsole für Ihr Team läuft auf Ihrem Rechner oder hinter Ihrem eigenen Login; Ihr Server erfährt von Ereignissen über signierte Webhooks, die im Vertrag stehen und vom Staging-Space noch nicht gesendet werden.',
+      p: 'Ein Skript und ein Element bringen einen Space auf Ihre Seite; die Konsole für Ihr Team läuft auf Ihrem Rechner oder hinter Ihrem eigenen Login; Ihr Server erfährt von Ereignissen über signierte Webhooks, die im Vertrag stehen und vom Test-Space noch nicht gesendet werden.',
       link: 'Was eine Plattform bekommt',
     },
     verticals: {
       h2: 'Für Branchen',
-      p: 'Ein Pack beschreibt einen Markt: seine Kriterien, Optionen und Einheiten, seine Beschriftungen und Fragen in den Sprachen des Space, was jedes Kriterium auf welcher Stufe preisgibt, und die Gates, die der Markt braucht. Das erste ist das für Industrieminerale.',
-      link: 'Was ein Pack enthält',
+      p: 'Ein Marktvokabular beschreibt einen Markt: seine Kriterien, Optionen und Einheiten, seine Beschriftungen und Fragen in den Sprachen des Space, was jedes Kriterium auf welcher Stufe preisgibt, und die Gates, die der Markt braucht. Das erste ist das für Industrieminerale.',
+      link: 'Was ein Marktvokabular enthält',
     },
     state: {
       h2: 'Wo Linkbot steht',
-      p: 'Das Angebot oben ist fester Text, für diese Seite im Vokabular eines synthetischen Packs geschrieben; das Produkt ist hier nicht gelaufen. Die Demo-Seite geht den ganzen Weg Schritt für Schritt durch.',
+      p: 'Das Angebot oben ist fester Text, für diese Seite in einem synthetischen Marktvokabular geschrieben; das Produkt ist hier nicht gelaufen. Die Demo-Seite geht den ganzen Weg Schritt für Schritt durch.',
     },
   },
   demo: {
@@ -166,8 +203,8 @@ export const de: FrontCopy = {
       h2: 'Der Weg, Schritt für Schritt',
       who: 'Wer handelt',
       items: [
-        { name: 'Die Anfrage', who: 'Der Einkäufer', text: 'Der Einkäufer beschreibt den Bedarf auf der Seite einer Plattform, im Formular, das das Pack des Marktes erzeugt, oder in einer Zeile Text, die feste Regeln lesen und in vorgeschlagene Werte umsetzen. Nichts ist vorausgewählt, und was der Einkäufer nicht angegeben hat, bleibt unbekannt.' },
-        { name: 'Die Kriterien, bestätigt', who: 'Der Einkäufer', text: 'Der Einkäufer prüft jeden Wert und bestätigt. Erst jetzt wird etwas gespeichert: Der Server prüft jeden Wert gegen das Pack und nennt jedes Feld, das nicht passt. Die E-Mail-Adresse wird über einen Link bestätigt.' },
+        { name: 'Die Anfrage', who: 'Der Einkäufer', text: 'Der Einkäufer beschreibt den Bedarf auf der Seite einer Plattform, in einem Formular mit den Fragen seines Marktes, oder in einer Zeile Text, die feste Regeln lesen und in vorgeschlagene Werte umsetzen. Nichts ist vorausgewählt, und was der Einkäufer nicht angegeben hat, bleibt unbekannt.' },
+        { name: 'Die Kriterien, bestätigt', who: 'Der Einkäufer', text: 'Der Einkäufer prüft jeden Wert und bestätigt. Erst jetzt wird etwas gespeichert: Der Server prüft jeden Wert gegen die Fragen des Marktes und nennt jedes Feld, das nicht passt. Die E-Mail-Adresse wird über einen Link bestätigt.' },
         { name: 'Die möglichen Passungen', who: 'Der Space', text: 'Das Matching vergleicht die gespeicherten Kriterien Stück für Stück mit denen der anderen Seite: ein Urteil pro Kriterium, passt, passt teilweise, widerspricht oder unbekannt, nie eine Punktzahl. Eine mögliche Passung zeigt jeder Seite nur die Urteile und einen Hinweis, dass Menschen entscheiden.' },
         { name: 'Beide sagen Ja', who: 'Der Einkäufer und der Lieferant', text: 'Jede Seite beantwortet die mögliche Passung für sich selbst. Bevor beide Ja gesagt haben, erfährt die andere Seite nichts, und ein späteres Nein widerruft ein Ja.' },
         { name: 'Der Operator gibt frei', who: 'Das Team der Plattform', text: 'Ein namentlich genannter Operator hält die Prüfungen fest, die der Space verlangt, und gibt das Paar frei. Eine Freigabe allein gibt nichts preis, und jede Änderung nennt, wer sie vorgenommen hat.' },
@@ -183,7 +220,7 @@ export const de: FrontCopy = {
       previous: 'Vorheriger Schritt',
       next: 'Nächster Schritt',
       screens: [
-        ['Das Widget des Einkäufers: das Formular, das das Beispiel-Pack erzeugt, mit Rohphosphat gewählt und einem P₂O₅-Minimum von 30 %. Die Gewichtung ist als vorgeschlagen markiert, sonst ist nichts gewählt.'],
+        ['Das Widget des Einkäufers: das Formular mit den Fragen des Beispielmarkts, mit Rohphosphat gewählt und einem P₂O₅-Minimum von 30 %. Die Gewichtung ist als vorgeschlagen markiert, sonst ist nichts gewählt.'],
         ['Das Widget des Einkäufers nach dem Bestätigen: Die Anfrage ist aktiv, mit jedem Kriterium und seiner Gewichtung. Noch keine Angebote zu zeigen.'],
         ['Das Widget des Einkäufers: ein Angebot, das passen könnte, mit einem Haken je Kriterium, der Frage „Möchten Sie vorgestellt werden?“ und dem Hinweis, dass Menschen entscheiden.'],
         ['Das Widget des Einkäufers nach dem Ja: „Ihr Ja ist festgehalten. Sample space prüft es zuerst.“', 'Das Widget des Lieferanten: dieselbe mögliche Passung, von der Angebotsseite aus als Anfrage mit einem Haken je Kriterium, nach dem eigenen Ja des Lieferanten, mit denselben Worten.'],
@@ -192,14 +229,15 @@ export const de: FrontCopy = {
       ],
     },
     watch: {
-      name: 'Wenn noch nichts passt: beobachten',
+      name: 'Wenn noch nichts passt: Linkbot sucht weiter',
       who: 'Der Einkäufer',
-      text: 'Nach dem Bestätigen kann der Einkäufer die Anfrage offen halten und beobachten: wie oft, wöchentlich oder täglich; worüber er hören will; und in den E-Mail-Optionen, höchstens wie viele pro E-Mail und keine E-Mail vor einem gewählten Tag. Eine Beobachtung meldet nur ihrem Inhaber, wenn etwas Neues passt, und beginnt, sobald die E-Mail-Adresse bestätigt ist. Sie läuft 90 Tage und lässt sich jederzeit pausieren, fortsetzen oder beenden, auch über einen Link in ihren E-Mails.',
-      screens: ['Das Widget des Einkäufers nach dem Bestätigen, noch ohne Angebote: eine Beobachtung, wöchentlich, auf alles, was die Muss-Kriterien erfüllt, höchstens 5 pro E-Mail.', 'Dasselbe Widget nach „Beobachten starten“: Die Beobachtung wartet darauf, dass die E-Mail-Adresse bestätigt wird, höchstens 5 pro E-Mail, bis zum 23.01.2027. Die Aufnahme hat keine E-Mail gesendet, und die erfundene Adresse existiert nicht.'],
+      text: 'Nach dem Bestätigen kann der Einkäufer die Anfrage offen halten und Linkbot weitersuchen lassen: wie oft, wöchentlich oder täglich; worüber er hören will; und in den E-Mail-Optionen, höchstens wie viele pro E-Mail und keine E-Mail vor einem gewählten Tag. Linkbot meldet dann nur dem Einkäufer, wenn etwas Neues passt, sobald die E-Mail-Adresse bestätigt ist. Die Suche läuft 90 Tage und lässt sich jederzeit pausieren, fortsetzen oder beenden, auch über einen Link in ihren E-Mails.',
+      screens: ['Das Widget des Einkäufers nach dem Bestätigen, noch ohne Angebote: weitersuchen, wöchentlich, nach allem, was die Muss-Kriterien erfüllt, höchstens 5 pro E-Mail.', 'Dasselbe Widget nach „Beobachten starten“: Die Suche wartet darauf, dass die E-Mail-Adresse bestätigt wird, höchstens 5 pro E-Mail, bis zum 23.01.2027. Die Aufnahme hat keine E-Mail gesendet, und die erfundene Adresse existiert nicht.'],
+    },
+    live: {
+      p: 'Unten steht das Widget selbst, auf einem Demo-Space mit erfundenen Daten. Wählen Sie eine Seite und sagen Sie, was Sie brauchen oder anbieten; gespeichert wird erst, wenn Sie bestätigen. Darunter folgt der aufgezeichnete Durchgang.',
     },
     space: {
-      h2: 'Das Board des Test-Space',
-      on: 'Unten steht das Widget selbst, vom Test-Space ausgeliefert, im Board-Modus: die offenen Anfragen und Angebote, deren Inhaber sie zeigen wollten, vergröbert, wie das Pack es festlegt. Wer auf einen Eintrag antwortet, beginnt bei Schritt 1, auf der anderen Seite.',
       off: 'Auf dieser Seite steht noch kein Widget: Es wartet auf einen Demo-Space mit synthetischen Daten. Bis dahin zeigt der Weg oben Bilder.',
       notice: 'Ein Test-Space mit erfundenen Daten: Geben Sie nichts Echtes ein. Seine E-Mails erreichen niemanden.',
     },
@@ -211,7 +249,7 @@ export const de: FrontCopy = {
       eyes: 3,
       open: 1,
       who: 'Alle, die das Board sehen können',
-      rule: 'Nur Felder der Board-Stufe, vergröbert, wie das Pack es festlegt, und nur für Angebote, deren Besitzer zugestimmt haben. Nie, wer eingestellt hat.',
+      rule: 'Nur Felder der Board-Stufe, vergröbert, wie das Marktvokabular es festlegt, und nur für Angebote, deren Besitzer zugestimmt haben. Nie, wer eingestellt hat.',
       fields: [
         { label: 'Produkt', value: 'Rohphosphat' },
         { label: 'P₂O₅-Gehalt', value: '31–32 %' },
@@ -244,14 +282,14 @@ export const de: FrontCopy = {
       eyes: 1,
       open: 0.5,
       who: 'Im Operator-Modus das Team der Plattform; im Direkt-Modus beide Seiten',
-      rule: 'Anzeigename, bestätigte E-Mail-Adresse und die Kriterien, die das Pack für diese Stufe vorsieht. Jeder Lesezugriff wird auf der Quittung vermerkt.',
+      rule: 'Anzeigename, bestätigte E-Mail-Adresse und die Kriterien, die das Marktvokabular für diese Stufe vorsieht. Jeder Lesezugriff wird auf der Quittung vermerkt.',
       fields: [
         { label: 'Anzeigename', value: 'der des Angebots, wie angegeben' },
         { label: 'E-Mail-Adresse', value: 'eine, über einen Link bestätigt' },
-        { label: 'Kriterien der Vorstellungsstufe', value: 'wie das Pack es festlegt' },
+        { label: 'Kriterien der Vorstellungsstufe', value: 'wie das Marktvokabular es festlegt' },
       ],
       not: [
-        'Felder, die das Pack dem Operator vorbehält',
+        'Felder, die das Marktvokabular dem Operator vorbehält',
         'Im Operator-Modus: alles von der anderen Seite; die Quittung jeder Seite sagt, dass beide zugestimmt haben und die Plattform sich meldet',
       ],
     },
@@ -261,7 +299,7 @@ export const de: FrontCopy = {
       eyes: 1,
       open: 0.3,
       who: 'Nur das Team der Plattform',
-      rule: 'Felder, die das Pack der Plattform vorbehält, etwa die Identitätsangaben für eine Prüfung der Partei. Sie erreichen die andere Seite nie, und jeder Zugriff wird festgehalten.',
+      rule: 'Felder, die das Marktvokabular der Plattform vorbehält, etwa die Identitätsangaben für eine Prüfung der Partei. Sie erreichen die andere Seite nie, und jeder Zugriff wird festgehalten.',
       fields: [
         { label: 'Identitätsangaben', value: 'für die Prüfung der Partei des Space, gesehen vom Team' },
         { label: 'Der Eintrag zum Gate', value: 'bestanden, nicht bestanden oder verwiesen, mit einer Referenz und ohne personenbezogene Daten' },

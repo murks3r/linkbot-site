@@ -1,6 +1,7 @@
 /* it: the front's words (src/front/copy.ts); the page's sentences are the site's. Not yet read by a native speaker
    (docs/truth-check.md). */
 import type { FrontCopy } from '../copy.ts';
+import { PUBLIC_NAME } from '../../i18n/terms.ts';
 
 export const it: FrontCopy = {
   a: {
@@ -25,7 +26,7 @@ export const it: FrontCopy = {
           text: 'Un operatore identificato e attivo approva il caso. Un’approvazione da sola non rivela nulla.',
         },
         {
-          name: 'Doppio sì',
+          name: 'Entrambe dicono sì',
           text: 'Ogni parte risponde per sé. Prima che entrambe abbiano detto sì, l’altra parte non apprende nulla.',
         },
         {
@@ -39,49 +40,85 @@ export const it: FrontCopy = {
   },
   landing: {
     meta: {
-      title: 'Linkbot: la sua piattaforma unisce acquirenti e venditori, Linkbot trova chi corrisponde',
-      description: 'Un widget per piattaforme che uniscono acquirenti e venditori: chiede a ogni parte che cosa cerca, dà un verdetto per criterio e presenta solo dopo due sì.',
+      title: `${PUBLIC_NAME}: fiducia prima di conoscersi`,
+      description: `${PUBLIC_NAME} conferma ogni parte, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì. Lo provi con due aziende inventate.`,
     },
     opening: {
-      h1: 'La sua piattaforma unisce acquirenti e venditori. Linkbot trova chi corrisponde.',
-      sub: 'Il suo widget chiede a ogni parte che cosa cerca; Linkbot mostra un verdetto per ogni criterio e presenta le due parti solo quando entrambe dicono sì.',
+      h1: 'Fiducia prima di conoscersi.',
+      sub: {
+        today: `${PUBLIC_NAME} conferma ogni parte, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì.`,
+        full: `${PUBLIC_NAME} controlla chi è reale, cerca la corrispondenza in privato e presenta due aziende solo quando entrambe dicono sì.`,
+      },
       button: 'Vederlo passo per passo',
+      try: 'Lo provi',
+      start: 'Inizi in 5 minuti',
+      contact: 'Contatti',
     },
-    cards: {
-      h2: 'Che cosa fa per lei',
-      items: [
-        { name: 'Chiedere con le parole del suo mercato', text: 'Ogni parte dice che cosa cerca o offre, in una riga o con domande adatte al suo mercato; non si salva nulla finché non conferma.', button: 'Vedere la richiesta' },
-        { name: 'Continuiamo a cercare', text: 'Se ancora non corrisponde nulla, Linkbot continua a cercare e avvisa solo lei quando qualcosa di nuovo corrisponde.', small: 'Nella demo le sue e-mail vanno a una casella di prova e non raggiungono nessuno.', button: 'Vedere come continua a cercare' },
-        { name: 'Presentati solo dopo due sì', text: 'Due parti vengono presentate solo dopo che una persona indicata approva ed entrambe dicono sì.', button: 'Vedere la presentazione' },
-      ],
+    trial: {
+      h2: 'Lo provi: un acquirente, un fornitore',
+      label: 'Dati di esempio inventati · funziona nel suo browser, non viene inviato nulla',
+      steps: ['Controllo', 'Corrispondenza in privato', 'Entrambe dicono sì'],
+      progress: 'Passi',
+      buyer: { role: 'Acquirente', name: 'Northfield Fittings', wants: 'Cerca', text: 'Alloggiamenti in alluminio, 5.000 all’anno, ISO 9001, consegna nell’UE' },
+      supplier: { role: 'Fornitore', name: 'Lakeside Castings', wants: 'Offre', text: 'Pezzi in alluminio pressofuso da 1.000 unità, ISO 9001, spedizione in tutta l’UE' },
+      hidden: 'Nome nascosto',
+      email: 'Indirizzo email',
+      check: {
+        title: 'Ogni parte conferma il proprio contatto',
+        p: 'Ogni parte conferma che cosa ha chiesto e apre un link inviato al suo indirizzo email. Prima della conferma non viene salvato nulla.',
+        pending: 'Non ancora confermato',
+        done: 'Confermato tramite un link',
+        button: 'Confermare',
+        next: 'Cercare una corrispondenza',
+      },
+      match: {
+        title: 'Una possibile corrispondenza, senza nomi',
+        p: `${PUBLIC_NAME} confronta le due parti criterio per criterio. Ogni parte vede i verdetti, mai il nome o il contatto dell’altra.`,
+        card: 'Possibile corrispondenza',
+        criteria: [
+          { label: 'Materiale', value: 'Alluminio', verdict: 'meets' },
+          { label: 'Quantità', value: '5.000 all’anno; da 1.000 unità', verdict: 'meets' },
+          { label: 'Certificato', value: 'ISO 9001', verdict: 'meets' },
+          { label: 'Consegna', value: 'Nell’UE', verdict: 'meets' },
+          { label: 'Processo', value: 'Pressofusione; la richiesta non lo dice', verdict: 'unknown' },
+        ],
+        verdicts: { meets: 'Corrisponde', partly: 'Corrisponde in parte', conflicts: 'Contraddice', unknown: 'Sconosciuto' },
+        approved: 'Una persona designata della piattaforma ha approvato questa possibile corrispondenza. L’approvazione non rivela nulla.',
+        next: 'Chiedere a entrambe le parti',
+      },
+      yes: {
+        title: 'Entrambe dicono sì, o nessuno sa nulla',
+        p: 'Ogni parte risponde per conto suo. Finché entrambe non dicono sì, nessuna sa chi è l’altra.',
+        ask: { buyer: 'Essere presentato a questo fornitore?', supplier: 'Essere presentato a questo acquirente?' },
+        yes: 'Sì',
+        no: 'No',
+        waiting: 'Sì. In attesa dell’altra parte, che non vede questa risposta.',
+        said: 'No.',
+        introduced: 'Presentate. Entrambe hanno detto sì; solo ora i nomi e gli indirizzi email vengono condivisi.',
+        mode: 'Qui come presentazione diretta; una piattaforma può fare la presentazione anche tramite il proprio team.',
+        declined: 'Nessuna presentazione. Una parte ha detto no, quindi nessuna sa chi è l’altra.',
+        reset: 'Ricominciare',
+      },
+      more: 'Chi vede che cosa, passo per passo',
     },
     stage: {
-      h2: 'Una presentazione, da entrambe le parti',
-      p: 'Una richiesta e un’offerta vengono presentate solo dopo che una persona indicata approva ed entrambe le parti dicono sì.',
       roles: 'Quale parte mostrare',
       buyer: 'Come acquirente',
       supplier: 'Come fornitore',
-      label: 'Percorso registrato · dati fittizi',
       supplierNote: 'Della parte del fornitore, finora è registrato solo il suo sì; il fornitore descrive la sua offerta nello stesso widget.',
-      link: 'Percorrere tutti e sei i passi',
-    },
-    sees: {
-      h2: 'Chi vede che cosa, e quando',
-      p: 'Ogni passo mostra solo ciò che quel passo consente; i dati per una presentazione escono solo dopo il sì di entrambe le parti.',
-      link: 'Chi vede che cosa, passo per passo',
     },
     platforms: {
       h2: 'Per le piattaforme',
       p: 'Uno script e un elemento sulla sua pagina; le domande si adattano al suo mercato.',
       snippet: 'L’integrazione più breve',
-      later: 'Aggiungerlo con i suoi strumenti di build',
+      hosted: 'Accesso ospitato per altre piattaforme',
       button: 'Per le piattaforme',
       developers: 'Per sviluppatori',
     },
     bottom: {
       h2: 'Il suo mercato non c’è ancora? Ci dica che cosa unisce.',
       button: 'Ci dica che cosa unisce',
-      prepared: 'L’indirizzo a cui scrivere è in preparazione; la pagina dietro il pulsante dice come ci raggiungerà.',
+      prepared: 'L’indirizzo a cui scrivere è in preparazione; la pagina dietro il link dice come ci raggiungerà.',
       line: 'Tutto ciò che si vede qui funziona con dati fittizi; controllato il {date}.',
       status: 'Lo stato completo',
     },
@@ -95,7 +132,7 @@ export const it: FrontCopy = {
     hero: {
       eyebrow: 'Uno strato di corrispondenza che ogni piattaforma può integrare',
       h1: ['Chi vede che cosa,', 'e quando.'],
-      lede: 'Un pack assegna a ogni criterio una fase, e una fase è il punto più lontano che un valore raggiunge: la bacheca, una possibile corrispondenza, la presentazione o solo il team della piattaforma. Qui sotto: un’offerta sintetica, fase per fase, e la ricevuta che delimita ogni lettura.',
+      lede: 'Il vocabolario del mercato assegna a ogni criterio una fase, e una fase è il punto più lontano che un valore raggiunge: la bacheca, una possibile corrispondenza, la presentazione o solo il team della piattaforma. Qui sotto: un’offerta sintetica, fase per fase, e la ricevuta che delimita ogni lettura.',
       primary: 'Cosa ottiene una piattaforma',
       secondary: 'Chi vede che cosa, per intero',
     },
@@ -138,17 +175,17 @@ export const it: FrontCopy = {
     deletion: { h2: 'Cancellazione: cosa va via e cosa resta' },
     platforms: {
       h2: 'Per le piattaforme',
-      p: 'Uno script e un elemento mettono uno spazio sulla Sua pagina; la console per il Suo team gira sulla Sua macchina o dietro il Suo login; il Suo server apprende gli eventi tramite webhook firmati, che sono nel contratto e non vengono ancora inviati dallo spazio di staging.',
+      p: 'Uno script e un elemento mettono uno spazio sulla Sua pagina; la console per il Suo team gira sulla Sua macchina o dietro il Suo login; il Suo server apprende gli eventi tramite webhook firmati, che sono nel contratto e non vengono ancora inviati dallo spazio di prova.',
       link: 'Cosa ottiene una piattaforma',
     },
     verticals: {
       h2: 'Per i verticali',
-      p: 'Un pack descrive un mercato: i suoi criteri, opzioni e unità, le sue etichette e domande nelle lingue dello spazio, ciò che ogni criterio rivela a ogni fase e i gate che il mercato richiede. Il primo è quello dei minerali industriali.',
-      link: 'Cosa contiene un pack',
+      p: 'Un vocabolario del mercato descrive un mercato: i suoi criteri, opzioni e unità, le sue etichette e domande nelle lingue dello spazio, ciò che ogni criterio rivela a ogni fase e i gate che il mercato richiede. Il primo è quello dei minerali industriali.',
+      link: 'Cosa contiene un vocabolario del mercato',
     },
     state: {
       h2: 'A che punto siamo',
-      p: 'L’offerta qui sopra è testo fisso, scritto per questa pagina nel vocabolario di un pack sintetico; il prodotto non ha girato qui. La pagina demo percorre tutto il cammino, passo dopo passo.',
+      p: 'L’offerta qui sopra è testo fisso, scritto per questa pagina in un vocabolario del mercato sintetico; il prodotto non ha girato qui. La pagina demo percorre tutto il cammino, passo dopo passo.',
     },
   },
   demo: {
@@ -166,10 +203,10 @@ export const it: FrontCopy = {
       h2: 'Il percorso, passo dopo passo',
       who: 'Chi agisce',
       items: [
-        { name: 'La richiesta', who: 'L’acquirente', text: 'L’acquirente descrive il fabbisogno nella pagina di una piattaforma, nel modulo che il pack del mercato genera, oppure in una riga di testo che regole fisse leggono e trasformano in valori proposti. Nulla è preselezionato, e ciò che l’acquirente non ha indicato resta sconosciuto.' },
-        { name: 'I criteri, confermati', who: 'L’acquirente', text: 'L’acquirente controlla ogni valore e conferma. Solo ora viene salvato qualcosa: il server controlla ogni valore rispetto al pack e nomina ogni campo che non lo rispetta. L’indirizzo email viene confermato tramite un link.' },
+        { name: 'La richiesta', who: 'L’acquirente', text: 'L’acquirente descrive il fabbisogno nella pagina di una piattaforma, in un modulo con le domande del suo mercato, oppure in una riga di testo che regole fisse leggono e trasformano in valori proposti. Nulla è preselezionato, e ciò che l’acquirente non ha indicato resta sconosciuto.' },
+        { name: 'I criteri, confermati', who: 'L’acquirente', text: 'L’acquirente controlla ogni valore e conferma. Solo ora viene salvato qualcosa: il server controlla ogni valore rispetto alle domande del mercato e nomina ogni campo che non lo rispetta. L’indirizzo email viene confermato tramite un link.' },
         { name: 'Le possibili corrispondenze', who: 'Lo spazio', text: 'Il matching confronta i criteri salvati con quelli dell’altra parte, uno per uno: un verdetto per criterio, corrisponde, corrisponde in parte, contraddice o sconosciuto, mai un punteggio. Una possibile corrispondenza mostra a ciascuna parte solo i verdetti e un avviso che decidono le persone.' },
-        { name: 'Entrambi dicono sì', who: 'L’acquirente e il fornitore', text: 'Ciascuna parte risponde alla possibile corrispondenza per sé. Prima che entrambe abbiano detto sì l’altra parte non sa nulla, e un no successivo revoca un sì.' },
+        { name: 'Entrambe dicono sì', who: 'L’acquirente e il fornitore', text: 'Ciascuna parte risponde alla possibile corrispondenza per sé. Prima che entrambe abbiano detto sì l’altra parte non sa nulla, e un no successivo revoca un sì.' },
         { name: 'L’operatore approva', who: 'Il team della piattaforma', text: 'Un operatore con nome registra i controlli che lo spazio richiede e approva la coppia. Un’approvazione da sola non rivela nulla, e ogni scrittura indica chi l’ha fatta.' },
         { name: 'La presentazione', who: 'Il server', text: 'Quando l’ultima delle tre condizioni è soddisfatta, in qualunque ordine, il server crea la presentazione, e la rifiuta per ogni altra via. Ciascuna parte riceve una ricevuta di chi può vedere quali campi. In modalità diretta, quella registrata qui, ciascuna parte può poi aprire i campi che l’altra condivide in questa fase. Una piattaforma può scegliere invece la modalità operatore: allora solo il suo team vede entrambe le parti e le contatta.' },
       ],
@@ -183,7 +220,7 @@ export const it: FrontCopy = {
       previous: 'Passaggio precedente',
       next: 'Passaggio successivo',
       screens: [
-        ['Il widget dell’acquirente: il modulo generato dal pack di esempio, con fosfato naturale scelto e un minimo di P₂O₅ del 30 %. L’importanza è segnata come suggerita, e nient’altro è scelto.'],
+        ['Il widget dell’acquirente: il modulo con le domande del mercato di esempio, con fosfato naturale scelto e un minimo di P₂O₅ del 30 %. L’importanza è segnata come suggerita, e nient’altro è scelto.'],
         ['Il widget dell’acquirente dopo la conferma: la richiesta è attiva, con ogni criterio e la sua importanza. Ancora nessuna offerta da mostrare.'],
         ['Il widget dell’acquirente: un’offerta che potrebbe essere adatta, con un segno di spunta per criterio, la domanda «Desidera essere presentato?» e l’avviso che decidono le persone.'],
         ['Il widget dell’acquirente dopo il sì: «Il Suo sì è registrato. Sample space lo esamina prima.»', 'Il widget del fornitore: la stessa possibile corrispondenza, vista dal lato dell’offerta come una richiesta con un segno di spunta per criterio, dopo il sì del fornitore stesso, con le stesse parole.'],
@@ -197,9 +234,10 @@ export const it: FrontCopy = {
       text: 'Dopo la conferma, l’acquirente può tenere aperta la richiesta e monitorarla: con che frequenza, settimanale o giornaliera; su che cosa vuole essere informato; e, nelle opzioni e-mail, al massimo quanti per e-mail e nessuna e-mail prima di un giorno scelto. Un monitoraggio avvisa solo il suo titolare quando qualcosa di nuovo è adatto, e inizia quando l’indirizzo e-mail è confermato. Dura 90 giorni e si può mettere in pausa, riprendere o terminare in qualsiasi momento, anche da un link nelle sue e-mail.',
       screens: ['Il widget dell’acquirente dopo la conferma, ancora senza offerte da mostrare: un monitoraggio settimanale, su tutto ciò che soddisfa i requisiti indispensabili, al massimo 5 per e-mail.', 'Lo stesso widget dopo l’avvio del monitoraggio: attende la conferma dell’indirizzo e-mail, al massimo 5 per e-mail, fino al 23 gennaio 2027. La registrazione non ha inviato alcuna e-mail, e l’indirizzo fittizio non esiste.'],
     },
+    live: {
+      p: 'Qui sotto c’è il widget stesso, su uno spazio demo con dati fittizi. Scelga una parte e dica di che cosa ha bisogno o che cosa offre; nulla viene salvato finché non conferma. Più sotto segue il percorso registrato.',
+    },
     space: {
-      h2: 'La bacheca dello spazio di prova',
-      on: 'Qui sotto c’è il widget stesso, servito dallo spazio di prova, in modalità bacheca: le richieste e le offerte aperte che i loro titolari hanno scelto di mostrare, rese meno precise come dichiara il pack. Rispondere a una comincia dal passo 1, dall’altra parte.',
       off: 'Questa pagina non mostra ancora alcun widget: attende uno spazio demo con dati sintetici. Fino ad allora il percorso qui sopra è mostrato in immagini.',
       notice: 'Uno spazio di prova con dati fittizi: non inserisca nulla di reale. Le sue email non raggiungono nessuno.',
     },
@@ -211,7 +249,7 @@ export const it: FrontCopy = {
       eyes: 3,
       open: 1,
       who: 'Chiunque possa vedere la bacheca',
-      rule: 'Solo i campi alla fase bacheca, resi meno precisi come dichiara il pack, e solo per le offerte il cui proprietario ha dato il consenso. Mai chi ha pubblicato.',
+      rule: 'Solo i campi alla fase bacheca, resi meno precisi come dichiara il vocabolario del mercato, e solo per le offerte il cui proprietario ha dato il consenso. Mai chi ha pubblicato.',
       fields: [
         { label: 'Prodotto', value: 'Fosfato naturale' },
         { label: 'Contenuto di P₂O₅', value: '31–32 %' },
@@ -244,14 +282,14 @@ export const it: FrontCopy = {
       eyes: 1,
       open: 0.5,
       who: 'In modalità operatore il team della piattaforma; in modalità diretta entrambe le parti',
-      rule: 'Nome visualizzato, indirizzo email confermato e i criteri che il pack conserva per questa fase. Ogni lettura viene registrata sulla ricevuta.',
+      rule: 'Nome visualizzato, indirizzo email confermato e i criteri che il vocabolario del mercato conserva per questa fase. Ogni lettura viene registrata sulla ricevuta.',
       fields: [
         { label: 'Nome visualizzato', value: 'quello dell’offerta, come indicato' },
         { label: 'Indirizzo email', value: 'uno, confermato tramite un link' },
-        { label: 'Criteri alla fase presentazione', value: 'come dichiara il pack' },
+        { label: 'Criteri alla fase presentazione', value: 'come dichiara il vocabolario del mercato' },
       ],
       not: [
-        'Campi che il pack riserva all’operatore',
+        'Campi che il vocabolario del mercato riserva all’operatore',
         'In modalità operatore: qualsiasi cosa dell’altra parte; la ricevuta di ogni parte dice che entrambe hanno acconsentito e che la piattaforma le contatterà',
       ],
     },
@@ -261,7 +299,7 @@ export const it: FrontCopy = {
       eyes: 1,
       open: 0.3,
       who: 'Solo il team della piattaforma',
-      rule: 'Campi che il pack riserva alla piattaforma, come i dettagli di identità per un controllo della parte. Non raggiungono mai l’altra parte, e ogni accesso viene registrato.',
+      rule: 'Campi che il vocabolario del mercato riserva alla piattaforma, come i dettagli di identità per un controllo della parte. Non raggiungono mai l’altra parte, e ogni accesso viene registrato.',
       fields: [
         { label: 'Dettagli di identità', value: 'per il controllo della parte dello spazio, visti dal team' },
         { label: 'La registrazione del gate', value: 'superato, non superato o rinviato, con un riferimento e senza dati personali' },

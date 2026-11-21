@@ -71,6 +71,9 @@ The site wears the widget's design so that both read as one product (`docs/front
 | `SITE_URL` | `https://linkbot-site.vercel.app` | canonical origin (canonical links, alternates, Open Graph, sitemap). The default is where production runs today. The launch domain is to be named by the owner (`linkbot-domain-tbd.invalid` until then). |
 | `PUBLIC_NOINDEX` | unset | `1`: `noindex` on every page and `Disallow: /` in robots.txt. Vercel's preview deployments do not need it: they are behind Vercel's login and send `X-Robots-Tag: noindex` themselves |
 
+The public name is one constant, `PUBLIC_NAME` in `src/i18n/terms.ts` (home, FAQ, terms, `llms.txt`, site name, schema.org).
+The steps from preview to the public address, with the values the owner names: `docs/ops/publish-checklist.md`.
+
 ## Develop and test
 
 ```bash

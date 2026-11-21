@@ -1,6 +1,7 @@
 ---
 /* What's new: one dated entry per product step a customer can notice, built from docs/changelog.yml
-   (src/lib/changelog.ts), each with where it stands and the pull request it rests on. Words: the catalogue's changelog. */
+   (src/lib/changelog.ts), each with where it stands. The pull requests an entry rests on stay in the file and are not
+   shown: they name private repositories. Words: the catalogue's changelog. */
 import Base from '../../layouts/Base.astro';
 import Mark from '../../components/Mark.astro';
 import { langPaths, pathFor, resolve, type Lang } from '../../i18n';
@@ -12,7 +13,8 @@ const { lang } = Astro.props;
 const { t, fallback } = resolve(lang);
 const c = t.changelog;
 const days = byDay(loadChangelog());
-const STATE = { 'on staging': { tone: 'fit', words: c.states.staging }, built: { tone: 'tradeoff', words: c.states.built } } as const;
+/* id: the state's name in the page, which says "test space" where the file says "staging". */
+const STATE = { 'on staging': { id: 'test', tone: 'fit', words: c.states.test }, built: { id: 'built', tone: 'tradeoff', words: c.states.built } } as const;
 ---
 <Base lang={lang} t={t} fallback={fallback} title={c.title} description={c.description} path="/changelog" crumbs={[[c.eyebrow, '/changelog']]}>
   <section class="page-hero">
@@ -27,11 +29,10 @@ const STATE = { 'on staging': { tone: 'fit', words: c.states.staging }, built: {
       {days.map(([day, entries]) => <li class="day">
         <h2><time datetime={day}>{longDay(lang, day)}</time></h2>
         <ul>
-          {entries.map(entry => <li class="entry" data-state={entry.state}>
+          {entries.map(entry => <li class="entry" data-state={STATE[entry.state].id}>
             <p>{entry.text[lang]}</p>
             <p class="meta">
               <span class="state"><Mark tone={STATE[entry.state].tone} size={10} />{STATE[entry.state].words}</span>
-              <span>{c.source}: {entry.sources.map(source => `${source.repo} #${source.pr}`).join(', ')}</span>
             </p>
           </li>)}
         </ul>
